@@ -8,8 +8,9 @@ import type { Contenu } from '../contenu/charger';
 import { nouvellePartie, type Action, type EtatPartie } from '../moteur/partie';
 import { genererCode, genererId, type Canal, type InfosPartie } from './types';
 
-const URL_SUPABASE = import.meta.env.VITE_SUPABASE_URL as string | undefined;
-const CLE_SUPABASE = import.meta.env.VITE_SUPABASE_ANON_KEY as string | undefined;
+// On accepte aussi une URL copiée avec « /rest/v1/ » ou un « / » final : on garde seulement https://identifiant.supabase.co
+const URL_SUPABASE = (import.meta.env.VITE_SUPABASE_URL as string | undefined)?.trim().replace(/\/rest\/v1\/?$/, '').replace(/\/+$/, '') || undefined;
+const CLE_SUPABASE = (import.meta.env.VITE_SUPABASE_ANON_KEY as string | undefined)?.trim() || undefined;
 
 export const enLigneConfigure = () => !!URL_SUPABASE && !!CLE_SUPABASE;
 
