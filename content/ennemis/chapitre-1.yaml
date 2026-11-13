@@ -5,6 +5,7 @@ ennemis:
     description: "Le golem d'argile de l'examen de la Guilde. Il ne frappe pas fort, mais il encaisse."
     niveau: 1
     categorie: construction
+    sprite: golem-de-pierre
     caracteristiques: { FOR: 8, AGI: 5, INT: 3, VIT: 10, ESP: 3, CHA: 3 }
     pv: 60
     armure: 4

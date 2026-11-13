@@ -11,6 +11,7 @@ Si une demande est floue ou contradictoire : poser la question plutôt que devin
   - moteur pur + 51 tests ; chapitre 1 complet joué de bout en bout par un robot de test (`tests/robot.ts`) ; test navigateur `tests/e2e/parcours.mjs`
   - interface Svelte + Phaser ; mode local OK ; mode Supabase écrit (`src/sync/supabase.ts`, `supabase/schema.sql`) mais **pas encore testé contre un vrai projet** (le groupe doit créer le projet)
   - textures du groupe intégrées (V2 : priorité 1 sauf portraits d'Aveline, calques de race, icônes ; bestiaire de 28 monstres)
+- [x] Combat libre + IA maison (13/11) : voir CONCEPTION § 7.5
 - [ ] Étape 3 et suivantes : chapitres 2 à 6, un par itération
 
 ## Décisions validées (étape 0)
@@ -19,7 +20,9 @@ Si une demande est floue ou contradictoire : poser la question plutôt que devin
 - **Style** : pixel art (tuiles de 32×32, sprites de combat de 64×64, boss de 128×128) + portraits anime en 512×512. **Les textures sont produites par le groupe en parallèle** (spécifications dans `docs/GRAPHISMES.md` et `docs/LISTE-TEXTURES.md`). Toute image manquante est remplacée par un provisoire généré automatiquement : ne jamais bloquer le développement sur une image.
 - **Hébergement** : GitHub Pages (statique) + Supabase gratuit (parties partagées, temps réel). Plus un **mode local** sans compte.
 - **Façon de jouer** : les deux. En direct pour la quête principale et les combats de groupe ; en asynchrone pour le temps libre, les contrats, les compagnes et le prologue.
-- **Narration** : écrite dans des fichiers de données, **sans IA**.
+- **Narration** : écrite dans des fichiers de données, **sans IA payante**.
+- **Combat libre (13/11)** : à chaque tour, « Suivre le script » (3 propositions) ou « Proposer mon action » (texte libre). **IA maison** (`src/ia/`) : classificateur bayésien entraîné par `npm run ia:entrainer` + reconnaissance d'entités + conseiller tactique, sans API payante (choix du groupe). **L'IA ne fixe jamais de chiffres** : `estimerAction` (moteur) vérifie et calcule. **3 propositions impossibles par tour**, ensuite on choisit parmi les propositions. Si un jour le groupe veut une vraie IA (Claude via une fonction Supabase), elle se branche par-dessus, sans rien jeter.
+- **Fusions** : variante d'une compétence (rang 2 requis dans les deux, éléments différents), formule fixe (75 % + 45 %, 75 % du mana, recharge +1) ; **5 rangs, 2 variantes par compétence (une active), 6 compétences équipées** ; grimoire **partagé dans la partie** (`etat.grimoire`), apprentissage à la Guilde. Format de sauvegarde v2 (migration 1→2).
 - **Départ** : chaque joueur choisit **invoqué adulte** (18 à 35 ans) ou **réincarné** (né en 994 AV, prologue d'enfance jouable aux âges de 6, 10, 14 et 17 ans, sans romance ni combat dangereux, 18 ans à l'an 0). Tous au niveau 1 à l'an 0.
 - **Durée** : saison 1 = 18 ans (1012 → 1030 AV), 6 chapitres de 3 ans, 3 sessions de 2 h par chapitre. Elle se termine par un **boss final**. Des **mises à jour ajouteront des saisons** : la chronologie continue, les âges augmentent et le niveau maximum monte (40 en saison 1).
 - **Ton** : mélange humour et sérieux. **Mort douce** : K.O. + pénalité, jamais de perte définitive du héros ; les PNJ peuvent mourir.

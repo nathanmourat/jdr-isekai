@@ -524,6 +524,46 @@ Pour un P non entier (par exemple 2,5), on interpole entre deux colonnes. Ces va
 
 ---
 
+### 7.5 Combat libre et IA maison (décidé le 13/11)
+
+À chaque tour, le joueur choisit entre deux façons de jouer, et le jeu mémorise son choix pour chaque héros :
+- **📜 Suivre le script** : l'IA maison propose les 3 meilleures actions du moment, avec leurs chiffres. On clique, c'est tout.
+- **✍️ Proposer mon action** : on écrit en français ce que fait le personnage (« je vise la tête du loup », « je combine feu et glace », « je me cache derrière le pilier »).
+
+**Ce que fait l'IA maison** :
+- Elle tourne dans le navigateur. Elle est gratuite, fonctionne hors ligne et n'utilise aucune IA payante.
+- **Compréhension** : un petit classificateur entraîné sur environ 5 000 phrases générées à partir de modèles (`src/ia/corpus.ts`), plus la reconnaissance des noms de compétences, d'ennemis, d'alliés, d'éléments et de parties du corps, avec tolérance aux fautes de frappe. Précision mesurée sur 69 phrases écrites à la main, jamais vues à l'entraînement : environ 93 %. Commande : `npm run ia:entrainer`.
+- **Vérification par le moteur** : il contrôle le mana, la recharge, la portée (corps à corps contre rang arrière), la cible, les ailes, les objets disponibles… puis il calcule les **vraies** chances de réussite et les dégâts. **L'IA ne décide jamais d'un chiffre**, c'est ce qui garde l'équilibrage intact.
+- **Si l'action est impossible**, l'IA explique pourquoi (« Votre personnage n'a pas d'ailes : impossible de voler ») et propose 3 alternatives déjà validées par le moteur.
+- **Règle des 3 essais** : 3 propositions impossibles (ou incomprises) dans un même tour, et le joueur doit choisir parmi les propositions du jeu jusqu'au tour suivant. « Observer l'ennemi » ne coûte ni le tour ni un essai.
+- **Actions libres prévues** :
+  - attaquer, viser une partie du corps, utiliser une compétence, se défendre, protéger un allié, fuir, se cacher, soigner ou boire une potion, lancer une bombe, parler pour pacifier (avec le don Langue universelle), changer de rang, observer, provoquer, invoquer, fusionner ;
+  - certaines actions sont toujours refusées avec explication, par exemple voler sans ailes.
+
+**Attaques visées** (le malus de toucher et les effets viennent du moteur) :
+
+| Partie visée | Toucher | Dégâts | Effet si le coup porte |
+|---|---|---|---|
+| Tête | −20 points | × 1,25 | 15 % : immobilisé 1 tour (moitié moins contre un boss) |
+| Jambes | −10 points | × 0,9 | 50 % : ralenti 2 tours |
+| Bras armé | −10 points | × 0,9 | 50 % : affaibli 2 tours (−20 % de dégâts) |
+
+On ne vise ni la tête ni les membres d'une gelée, d'un feu follet ou d'une tourelle.
+
+**Se cacher** : la chance dépend de l'Agilité contre la perception (Esprit) des ennemis (+20 points pour une Ombre ou le don Pas de l'ombre). En cas de réussite, le personnage ne peut plus être ciblé et sa prochaine attaque est critique.
+
+**Fusions et variantes** (pour éviter d'accumuler des centaines de compétences) :
+- Combiner deux compétences crée une **variante** de la première, pas une nouvelle compétence. Exemple : « Javelot de flamme ✦ givre ».
+- Conditions : les deux compétences sont connues, au **rang 2** au moins, et leurs éléments sont différents.
+- **Formule** : 75 % de la puissance de la compétence de base + 45 % de la seconde (dans son élément), ses effets à 80 % de chance, 75 % du mana des deux, et une recharge d'un tour de plus. Une fusion fait moins que les deux compétences jouées en deux tours, mais en un seul tour et avec deux éléments.
+- **Limites** :
+  - 5 rangs par compétence ;
+  - **2 variantes** par compétence, dont **une seule active** à la fois ;
+  - **6 compétences équipées** en combat.
+
+  Ces limites se règlent dans `content/config/campagne.yaml`.
+- **Grimoire de la partie** : chaque technique inventée y est ajoutée. Les autres joueurs de la campagne, y compris ceux qui arrivent plus tard, peuvent l'apprendre à la Guilde s'ils remplissent les conditions.
+
 ## 8. Quêtes
 
 | Type | Volume en saison 1 | Rôle |

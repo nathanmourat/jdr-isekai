@@ -98,6 +98,7 @@ async function jouerScene(captureNom) {
   }
 }
 let captureCombat = false;
+let libreTeste = false;
 async function combattre(nom) {
   for (let k = 0; k < 200; k++) {
     if (await page.getByRole('button', { name: 'Continuer', exact: true }).isVisible() && await page.getByText(/Victoire|Défaite|Fuite/).first().isVisible()) {
@@ -105,13 +106,31 @@ async function combattre(nom) {
       await page.getByRole('button', { name: 'Continuer', exact: true }).click();
       return;
     }
-    const attaque = page.getByRole('button', { name: 'Attaque', exact: true });
-    if (await attaque.isVisible()) {
-      await attaque.click();
-      const cible = page.locator('.panneau-actions .ligne button').first();
-      await cible.click();
-      if (!captureCombat) { await page.waitForTimeout(600); await capture(`${nom}`); captureCombat = true; }
-      continue;
+    const proposer = page.getByRole('button', { name: /Proposer mon action/ });
+    if (await proposer.isVisible()) {
+      if (!libreTeste) {
+        // un tour en écrivant librement : l'IA maison comprend et le moteur vérifie
+        libreTeste = true;
+        await proposer.click();
+        await page.getByLabel('Votre action, en toutes lettres').fill('je vise la tete du golem');
+        await page.getByRole('button', { name: 'Proposer', exact: true }).click();
+        await page.locator('.reponse').waitFor();
+        await page.waitForTimeout(400);
+        await page.screenshot({ path: `${dossier}/${String(++n).padStart(2, '0')}-${nom}-action-libre.png`, fullPage: true });
+        const valider = page.getByRole('button', { name: 'Valider' });
+        if (await valider.isVisible()) await valider.click();
+        else await page.locator('.reponse .carte-prop button').first().click();
+        await page.getByRole('button', { name: /Suivre le script/ }).click();
+        continue;
+      }
+      // sinon : on suit le script (le mode est mémorisé par héros : on y revient si besoin)
+      if (await page.getByLabel('Votre action, en toutes lettres').isVisible()) { await page.getByRole('button', { name: /Suivre le script/ }).click(); continue; }
+      const jouer = page.locator('.propositions .carte-prop button').first();
+      if (await jouer.isVisible()) {
+        await jouer.click();
+        if (!captureCombat) { await page.waitForTimeout(600); await capture(`${nom}`); captureCombat = true; }
+        continue;
+      }
     }
     await page.waitForTimeout(100);
   }

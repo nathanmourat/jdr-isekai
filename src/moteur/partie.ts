@@ -13,13 +13,14 @@ import {
   type ActionCombat, type Combat, type Combattant,
 } from './combat';
 import {
-  age, ameliorerCompetence, caracsTotales, choisirBranche, creerHeros, gagnerXp, niveauMoyen, repartirPoint,
+  age, ameliorerCompetence, caracsTotales, choisirBranche, competencesConnues, creerHeros, gagnerXp, niveauMoyen, repartirPoint,
   xpPourNiveau, type Carac, type Heros, type OptionsCreation,
 } from './personnage';
 import { creerRng, de, type Rng } from './rng';
+import { apprendre, creerTechnique, idFusion, peutApprendre, type Technique } from './fusions';
 import { anneeDepart, chapitreDe, fetesEntre, formaterDate, joursParMois, versDate, versJour } from './temps';
 
-export const VERSION_ETAT = 1;
+export const VERSION_ETAT = 2;
 export const MAX_JOUEURS = 6;
 
 export interface Joueur { id: string; pseudo: string; herosId: string | null; present: boolean }
@@ -99,6 +100,8 @@ export interface EtatPartie {
   secondDepart: Record<string, number>;
   dernieresNouvelles: string[];
   finChapitre: number | null;
+  /** Grimoire de la partie : techniques (fusions) inventées par les joueurs, que les autres peuvent apprendre. */
+  grimoire: Record<string, Technique>;
 }
 
 export type Action =
@@ -131,7 +134,13 @@ export type Action =
   | { type: 'contrat'; joueur: string; contrat: string }
   | { type: 'meneur'; joueur: string; nouveau: string }
   | { type: 'nouvelle_session'; joueur: string }
-  | { type: 'chapitre_suivant'; joueur: string };
+  | { type: 'chapitre_suivant'; joueur: string }
+  /** Combine deux compétences : crée la technique si besoin, l'apprend, et (en combat) l'utilise tout de suite. */
+  | { type: 'fusionner'; joueur: string; parent: string; secondaire: string; cle?: string; cible?: string }
+  | { type: 'apprendre_technique'; joueur: string; technique: string }
+  | { type: 'oublier_variante'; joueur: string; technique: string }
+  | { type: 'variante_active'; joueur: string; competence: string; technique: string | null }
+  | { type: 'equiper_competences'; joueur: string; competences: string[] };
 
 export class ErreurAction extends Error {
   constructor(message: string) { super(message); this.name = 'ErreurAction'; }
@@ -172,6 +181,7 @@ export function nouvellePartie(contenu: Contenu, id: string, nom: string, graine
     secondDepart: {},
     dernieresNouvelles: [],
     finChapitre: null,
+    grimoire: {},
   };
 }
 
@@ -471,7 +481,7 @@ function lancerCombat(contenu: Contenu, etat: EtatPartie, rencontre: string, cle
   for (const id of herosIds) {
     const h = etat.heros[id];
     const present = etat.joueurs[h.joueurId]?.present ?? false;
-    allies.push(combattantHeros(contenu, h, present));
+    allies.push(combattantHeros(contenu, h, present, etat.grimoire));
     const co = etat.equipe[id];
     if (co && etat.compagnonsRencontres.includes(co)) {
       const p = paliersAtteints(contenu, affinite(etat, id, co), queteTerminee(etat, contenu.compagnons[co].quete));
@@ -672,6 +682,7 @@ function resoudreTempsLibre(contenu: Contenu, etat: EtatPartie) {
 export function appliquer(contenu: Contenu, etatAvant: EtatPartie, action: Action): EtatPartie {
   const etat = structuredClone(etatAvant);
   etat.dernieresNouvelles = [];
+  etat.grimoire ??= {}; // parties créées avant le combat libre
   const j = etat.joueurs[action.joueur];
   if (action.type !== 'rejoindre' && !j) refuser('Joueur inconnu : rejoignez la partie d\'abord');
 
@@ -954,6 +965,71 @@ export function appliquer(contenu: Contenu, etatAvant: EtatPartie, action: Actio
       const idx = etat.ordreJoueurs.indexOf(etat.meneur ?? '');
       etat.meneur = etat.ordreJoueurs[(idx + 1) % etat.ordreJoueurs.length] ?? null;
       journal(contenu, etat, `Session ${etat.session} : ${etat.joueurs[etat.meneur ?? '']?.pseudo ?? '?'} est le meneur du jour.`);
+      break;
+    }
+    case 'fusionner': {
+      const h = herosDuJoueur(etat, action.joueur);
+      const id = idFusion(action.parent, action.secondaire);
+      let t = etat.grimoire[id];
+      if (!t) {
+        const r = creerTechnique(contenu, action.parent, action.secondaire, h.nom);
+        if (!r.ok) refuser(r.raison);
+        t = (r as { ok: true; technique: Technique }).technique;
+      }
+      const connue = (h.variantes[t.parent] ?? []).includes(t.id);
+      if (!connue) {
+        const pb = peutApprendre(contenu, h, t);
+        if (pb) refuser(pb);
+      }
+      // en combat : il faut que ce soit le tour du héros
+      const entree = action.cle ? etat.combats[action.cle] : undefined;
+      const acteur = entree?.combat.combattants.find((c) => c.herosId === h.id && c.type === 'heros');
+      if (action.cle && (!entree || !acteur || entree.combat.enAttente !== acteur.id)) refuser('Ce n\'est pas votre tour');
+      if (!etat.grimoire[id]) {
+        etat.grimoire[id] = t;
+        journal(contenu, etat, `${h.nom} invente une technique : ${t.nom}. Elle rejoint le grimoire de la partie.`);
+      }
+      if (!connue) apprendre(h, t); else h.varianteActive[t.parent] = t.id;
+      if (entree && acteur) {
+        // la variante remplace la compétence de base pour la suite du combat
+        acteur.competences = acteur.competences.filter((k) => k.id !== t.parent);
+        if (!acteur.competencesPropres.some((k) => k.id === t.id)) acteur.competencesPropres.push({ ...t });
+        acteur.compteurs[`rang:${t.id}`] = h.rangsCompetences[t.parent] ?? 1;
+        try { jouerAction(contenu, entree.combat, etat.rng, { type: 'competence', acteur: acteur.id, competence: t.id, cible: action.cible }); }
+        catch (e) { refuser((e as Error).message); }
+        if (entree.combat.resultat) terminerCombat(contenu, etat, action.cle!);
+      }
+      break;
+    }
+    case 'apprendre_technique': {
+      const h = herosDuJoueur(etat, action.joueur);
+      const t = etat.grimoire[action.technique] ?? refuser('Technique absente du grimoire');
+      const pb = peutApprendre(contenu, h, t);
+      if (pb) refuser(pb);
+      apprendre(h, t);
+      journal(contenu, etat, `${h.nom} apprend la technique ${t.nom}.`);
+      break;
+    }
+    case 'oublier_variante': {
+      const h = herosDuJoueur(etat, action.joueur);
+      const t = etat.grimoire[action.technique] ?? refuser('Technique inconnue');
+      h.variantes[t.parent] = (h.variantes[t.parent] ?? []).filter((x) => x !== t.id);
+      if (h.varianteActive[t.parent] === t.id) h.varianteActive[t.parent] = null;
+      break;
+    }
+    case 'variante_active': {
+      const h = herosDuJoueur(etat, action.joueur);
+      if (action.technique && !(h.variantes[action.competence] ?? []).includes(action.technique)) refuser('Variante non apprise');
+      h.varianteActive[action.competence] = action.technique;
+      break;
+    }
+    case 'equiper_competences': {
+      const h = herosDuJoueur(etat, action.joueur);
+      const max = contenu.config.personnage.competences_equipees_max;
+      if (action.competences.length > max) refuser(`${max} compétences équipées au maximum`);
+      const connues = competencesConnues(contenu, h);
+      if (action.competences.some((c) => !connues.includes(c))) refuser('Compétence non connue');
+      h.equipees = [...new Set(action.competences)];
       break;
     }
     case 'chapitre_suivant':

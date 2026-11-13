@@ -33,6 +33,8 @@ class Jeu {
   journalVu = $state(0);
   /** Combats de scène dont le joueur a lu l'introduction (affichage seulement, propre à cet appareil). */
   combatsVus = $state<string[]>([]);
+  /** Propositions impossibles par tour (« combat:tour:acteur » → nombre), règle des 3 essais. */
+  essais = $state<Record<string, number>>({});
   private arreter: (() => void) | null = null;
   private envoiEnCours = Promise.resolve();
 

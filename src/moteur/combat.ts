@@ -10,21 +10,21 @@
 import type { Contenu } from '../contenu/charger';
 import type { Competence, Effet, Ennemi } from '../contenu/schemas';
 import { aleatoire, chance, choisir, de, type Rng } from './rng';
-import { caracsTotales, competencesConnues, manaMax, pvMax, type Caracs, type Carac, type Heros } from './personnage';
+import { caracsTotales, competencesEquipees, manaMax, pvMax, type Caracs, type Carac, type Heros } from './personnage';
 
 export type Element = 'physique' | 'feu' | 'glace' | 'foudre' | 'sacre' | 'ombre' | 'poison' | 'arcane';
 export type EtatId =
   | 'brulure' | 'poison' | 'gel' | 'immobilise' | 'sommeil' | 'peur' | 'silence' | 'provoque' | 'marque'
   | 'furtif' | 'bonus_degats' | 'bonus_defense' | 'bonus_initiative' | 'bonus_precision' | 'malus_defense'
-  | 'regeneration' | 'garde' | 'expose';
+  | 'regeneration' | 'garde' | 'expose' | 'affaibli';
 
-const ETATS_NEGATIFS: EtatId[] = ['brulure', 'poison', 'gel', 'immobilise', 'sommeil', 'peur', 'silence', 'provoque', 'marque', 'malus_defense', 'expose'];
+const ETATS_NEGATIFS: EtatId[] = ['brulure', 'poison', 'gel', 'immobilise', 'sommeil', 'peur', 'silence', 'provoque', 'marque', 'malus_defense', 'expose', 'affaibli'];
 const ETATS_CONTROLE: EtatId[] = ['immobilise', 'sommeil', 'peur', 'provoque', 'silence'];
 export const NOMS_ETATS: Record<EtatId, string> = {
   brulure: 'Brûlure', poison: 'Poison', gel: 'Gel', immobilise: 'Immobilisé', sommeil: 'Sommeil', peur: 'Peur',
   silence: 'Silence', provoque: 'Provoqué', marque: 'Marqué', furtif: 'Furtif', bonus_degats: 'Dégâts +',
   bonus_defense: 'Défense +', bonus_initiative: 'Initiative +', bonus_precision: 'Précision +', malus_defense: 'Défense −',
-  regeneration: 'Régénération', garde: 'En garde', expose: 'Exposé',
+  regeneration: 'Régénération', garde: 'En garde', expose: 'Exposé', affaibli: 'Affaibli',
 };
 
 export interface EtatActif { id: EtatId; duree: number; valeur: number; source: string; cumul: number }
@@ -87,7 +87,23 @@ export type ActionCombat =
   | { type: 'defendre'; acteur: string }
   | { type: 'changer_rang'; acteur: string }
   | { type: 'pacifier'; acteur: string; cible: string }
+  | { type: 'viser'; acteur: string; cible: string; partie: PartieVisee }
+  | { type: 'se_cacher'; acteur: string }
   | { type: 'fuir'; acteur: string };
+
+export type PartieVisee = 'tete' | 'jambes' | 'bras';
+
+/** Attaques visées : malus de toucher, multiplicateur de dégâts, effet si le coup porte. */
+export const VISEES: Record<PartieVisee, { nom: string; toucher: number; degats: number; etat: EtatId; duree: number; valeur: number; chance: number; texte: string }> = {
+  tete: { nom: 'la tête', toucher: -0.2, degats: 1.25, etat: 'immobilise', duree: 1, valeur: 0, chance: 0.15, texte: 'vacille, sonné' },
+  jambes: { nom: 'les jambes', toucher: -0.1, degats: 0.9, etat: 'gel', duree: 2, valeur: 0, chance: 0.5, texte: 'est ralenti' },
+  bras: { nom: 'le bras armé', toucher: -0.1, degats: 0.9, etat: 'affaibli', duree: 2, valeur: 0.2, chance: 0.5, texte: 'frappe moins fort' },
+};
+
+/** Créatures sans tête ni membres (gelées, esprits, constructions simples). */
+export function sansMembres(x: { refId: string; categorie: string }): boolean {
+  return /^(gelee|feu-follet|tourelle|champignon)/.test(x.refId);
+}
 
 export interface EvenementCombat {
   tour: number;
@@ -127,7 +143,10 @@ function sansParticularite(): Pick<Combattant, 'passif' | 'trait' | 'don' | 'bon
   return { passif: null, trait: null, don: null, bonusCompagnon: [] };
 }
 
-export function combattantHeros(contenu: Contenu, h: Heros, controle: boolean): Combattant {
+/**
+ * @param techniques grimoire de la partie : les variantes actives du héros y sont prises
+ */
+export function combattantHeros(contenu: Contenu, h: Heros, controle: boolean, techniques: Record<string, Competence> = {}): Combattant {
   const cl = contenu.classes[h.classe];
   const race = contenu.races[h.race];
   const don = contenu.dons[h.don];
@@ -140,8 +159,14 @@ export function combattantHeros(contenu: Contenu, h: Heros, controle: boolean): 
     puissance += o?.bonus?.puissance ?? 0;
   }
   const pmax = Math.round(pvMax(contenu, caracs.VIT, h.niveau) * (h.blessure ? 1 - contenu.config.mort_douce.blessure_pv_pourcent / 100 : 1));
-  const competences = competencesConnues(contenu, h).map((id) => ({ id, rang: h.rangsCompetences[id] ?? 1 }));
   const propres: Competence[] = [];
+  const rangsVariantes: Record<string, number> = {};
+  const competences: { id: string; rang: number }[] = [];
+  for (const id of competencesEquipees(contenu, h)) {
+    const v = h.varianteActive?.[id];
+    if (v && techniques[v]) { propres.push({ ...techniques[v] }); rangsVariantes[v] = h.rangsCompetences[id] ?? 1; } // la variante remplace la compétence de base, au rang de celle-ci
+    else competences.push({ id, rang: h.rangsCompetences[id] ?? 1 });
+  }
   if (race.trait.id === 'ecailles-et-souffle') {
     propres.push({
       id: 'souffle-draconique', nom: 'Souffle draconique', description: 'Un souffle de feu sur tous les ennemis (une fois par combat).',
@@ -202,6 +227,7 @@ export function combattantHeros(contenu: Contenu, h: Heros, controle: boolean): 
       relances: don.parametres.relances ?? 0,
       determination: race.trait.id === 'determination' ? 1 : 0,
       objetGratuit: don.id === 'reserve-du-neant' ? 1 : 0,
+      ...Object.fromEntries(Object.entries(rangsVariantes).map(([k, v]) => [`rang:${k}`, v])),
     },
     derniereCible: null,
     potions,
@@ -439,7 +465,7 @@ function ajouterEtat(c: Combat, x: Combattant, e: EtatActif, cumulMax = 1) {
 
 export function competenceCombattant(contenu: Contenu, x: Combattant, id: string): { comp: Competence; rang: number } | null {
   const propre = x.competencesPropres.find((k) => k.id === id);
-  if (propre) return { comp: propre, rang: 1 };
+  if (propre) return { comp: propre, rang: x.compteurs[`rang:${id}`] ?? 1 };
   const r = x.competences.find((k) => k.id === id);
   if (r) return { comp: contenu.competences[id], rang: r.rang };
   return null;
@@ -448,7 +474,7 @@ export function competenceCombattant(contenu: Contenu, x: Combattant, id: string
 function toutesCompetences(contenu: Contenu, x: Combattant) {
   return [
     ...x.competences.map((k) => ({ comp: contenu.competences[k.id], rang: k.rang })),
-    ...x.competencesPropres.map((k) => ({ comp: k, rang: 1 })),
+    ...x.competencesPropres.map((k) => ({ comp: k, rang: x.compteurs[`rang:${k.id}`] ?? 1 })),
   ];
 }
 
@@ -485,6 +511,7 @@ const ELEMENTS_MAGIQUES: Element[] = ['feu', 'glace', 'foudre', 'sacre', 'ombre'
 
 function multiplicateurDegatsSource(combat: Combat, s: Combattant, cible: Combattant, element: Element): number {
   let m = 1 + valeurEtat(s, 'bonus_degats');
+  m *= 1 - valeurEtat(s, 'affaibli');
   // Présence (Charisme) : ±1 % de dégâts par point au-dessus ou en dessous de 10
   if (s.type === 'heros' || s.type === 'compagnon') m *= 1 + 0.01 * (s.caracs.CHA - 10);
   if (s.camp === 'ennemis') m *= s.compteurs.multDegats ?? 1;
@@ -532,6 +559,7 @@ function chanceToucher(contenu: Contenu, s: Combattant, cible: Combattant): numb
   if (aEtat(cible, 'sommeil') || aEtat(cible, 'immobilise')) return 1;
   let p = k.toucher_base + k.toucher_par_agi * (s.caracs.AGI - cible.caracs.AGI);
   p += valeurEtat(s, 'bonus_precision');
+  p += s.compteurs.modToucher ?? 0;
   if (s.trait?.id === 'entre-deux-mondes') p += s.trait.parametres.precision ?? 0;
   if (cible.trait?.id === 'ruse') p -= cible.trait.parametres.esquive ?? 0;
   return Math.min(k.toucher_max, Math.max(k.toucher_min, p));
@@ -956,6 +984,20 @@ function verifierAction(contenu: Contenu, combat: Combat, x: Combattant, a: Acti
     if (x.don?.id !== 'langue-universelle') throw new Error('Il faut le don Langue universelle');
     if (!pacifiable(x, c)) throw new Error('Cette créature ne peut pas être pacifiée maintenant');
   }
+  if (a.type === 'viser') {
+    const c = trouver(combat, a.cible);
+    if (!ciblesValides(combat, x, 'ennemi', x.attaque.portee).some((y) => y.id === c.id)) throw new Error(`${c.nom} est hors de portée`);
+    if (sansMembres(c)) throw new Error(`${c.nom} n'a ni tête ni membres à viser`);
+  }
+  if (a.type === 'se_cacher' && aEtat(x, 'furtif')) throw new Error('Vous êtes déjà caché');
+}
+
+/** Chance de réussir à se cacher (Agilité contre la perception des ennemis). */
+export function chanceSeCacher(combat: Combat, x: Combattant): number {
+  const perception = Math.max(0, ...adversaires(combat, x).map((y) => y.caracs.ESP));
+  let p = 0.35 + 0.03 * (x.caracs.AGI - perception);
+  if (x.refId === 'ombre' || x.don?.id === 'pas-de-l-ombre') p += 0.2;
+  return Math.min(0.85, Math.max(0.15, p));
 }
 
 function pacifiable(x: Combattant, c: Combattant) {
@@ -1012,6 +1054,33 @@ function executer(contenu: Contenu, combat: Combat, rng: Rng, x: Combattant, a: 
       const c = trouver(combat, a.cible);
       c.parti = true;
       log(combat, { type: 'fuite', source: x.id, cible: c.id, texte: `${x.nom} parle à ${c.nom}, qui renonce au combat et s'éloigne. (Langue universelle)` });
+      return false;
+    }
+    case 'viser': {
+      const v = VISEES[a.partie];
+      const c = trouver(combat, a.cible);
+      log(combat, { type: 'action', source: x.id, cible: c.id, competence: 'attaque', texte: `${x.nom} vise ${v.nom} de ${c.nom}.` });
+      const comp: Competence = {
+        id: 'attaque-visee', nom: 'Attaque visée', description: '', cout: 0, recharge: 0, cible: 'ennemi', portee: x.attaque.portee,
+        effets: [{ type: 'degats', puissance: x.attaque.puissance * v.degats, stat: x.attaque.stat, element: x.attaque.element, coups: 1, critique_garanti: false, cout_pv_pourcent: 0 }],
+        ia: { priorite: 1, quand: 'toujours' },
+      };
+      const avant = combat.evenements.length;
+      x.compteurs.modToucher = v.toucher;
+      appliquerEffets(contenu, combat, rng, x, comp, 1, c);
+      x.compteurs.modToucher = 0;
+      const touche = combat.evenements.slice(avant).some((e) => e.type === 'degats' && e.source === x.id);
+      if (touche && actif(c) && chance(rng, v.chance * (c.boss ? 0.5 : 1))) {
+        ajouterEtat(combat, c, { id: v.etat, duree: v.duree, valeur: v.valeur, source: x.id, cumul: 1 });
+        log(combat, { type: 'etat', source: x.id, cible: c.id, texte: `${c.nom} ${v.texte}.` });
+      }
+      return false;
+    }
+    case 'se_cacher': {
+      if (chance(rng, chanceSeCacher(combat, x))) {
+        ajouterEtat(combat, x, { id: 'furtif', duree: 2, valeur: 0, source: x.id, cumul: 1 });
+        log(combat, { type: 'action', source: x.id, texte: `${x.nom} se fond dans l'ombre : impossible à cibler, sa prochaine attaque sera critique.` });
+      } else log(combat, { type: 'action', source: x.id, texte: `${x.nom} tente de se cacher… mais se fait repérer.` });
       return false;
     }
     case 'fuir': {
@@ -1147,4 +1216,118 @@ export function recompensesCombat(contenu: Contenu, combat: Combat, rng: Rng) {
     orParHeros: Math.round((orTotal * facteur) / Math.max(1, heros.length) * 1.5),
     objets,
   };
+}
+
+// ───────────────────────────── Estimation (pour l'interface et l'IA maison) ─────────────────────────────
+
+export interface Estimation {
+  possible: boolean;
+  /** Pourquoi c'est impossible (phrase en français), ou null. */
+  raison: string | null;
+  /** Chance de réussite (toucher, se cacher, fuir), de 0 à 1 ; null si sans objet. */
+  reussite: number | null;
+  critique: number | null;
+  mana: number;
+  /** Dégâts estimés sur la cible principale (sans critique), min et max. */
+  degats: [number, number] | null;
+  soin: [number, number] | null;
+  nbCibles: number;
+  effets: string[];
+}
+
+const estimationImpossible = (raison: string): Estimation => ({ possible: false, raison, reussite: null, critique: null, mana: 0, degats: null, soin: null, nbCibles: 0, effets: [] });
+
+/** Estime une action SANS la jouer : faisabilité, chances, mana, dégâts. Ne modifie rien. */
+export function estimerAction(contenu: Contenu, combat: Combat, a: ActionCombat): Estimation {
+  const x = combat.combattants.find((y) => y.id === a.acteur);
+  if (!x) return estimationImpossible('Personnage inconnu.');
+  if (combat.resultat) return estimationImpossible('Le combat est terminé.');
+  if (combat.enAttente !== x.id) return estimationImpossible(`Ce n'est pas le tour de ${x.nom}.`);
+  try { verifierAction(contenu, combat, x, a); } catch (e) { return estimationImpossible(`${(e as Error).message}.`); }
+  const variance = contenu.config.combat.variance_degats;
+  const res: Estimation = { possible: true, raison: null, reussite: null, critique: null, mana: 0, degats: null, soin: null, nbCibles: 1, effets: [] };
+
+  const estimerDegats = (cible: Combattant, puissance: number, stat: Carac, element: Element, rang: number, coups: number) => {
+    const brut = puissance * (1 + 0.1 * (rang - 1)) * (1 + x.caracs[stat] / 20) * multiplicateurDegatsSource(combat, x, cible, element);
+    const net = Math.max(1, brut * reductionCible(combat, cible, element)) * coups;
+    return [Math.max(1, Math.round(net * (1 - variance))), Math.max(1, Math.round(net * (1 + variance)))] as [number, number];
+  };
+  const ajouter = (d: [number, number]) => { res.degats = res.degats ? [res.degats[0] + d[0], res.degats[1] + d[1]] : d; };
+  const verifierCible = (id: string | undefined, portee: 'melee' | 'distance'): Combattant | string => {
+    const c = id ? combat.combattants.find((y) => y.id === id) : undefined;
+    if (!c) return 'Il faut choisir une cible.';
+    if (!actif(c)) return `${c.nom} est déjà hors de combat.`;
+    if (c.camp === x.camp) return `${c.nom} est un allié.`;
+    if (!ciblesValides(combat, x, 'ennemi', portee).some((y) => y.id === c.id)) {
+      if (aEtat(c, 'furtif')) return `${c.nom} est caché : impossible de le viser.`;
+      const prov = x.etats.find((e) => e.id === 'provoque');
+      if (prov) return `Vous êtes provoqué : vous devez attaquer ${combat.combattants.find((y) => y.id === prov.source)?.nom ?? 'votre provocateur'}.`;
+      if (portee === 'melee' && c.rang === 'arriere') return `${c.nom} est protégé au rang arrière : il faut une attaque à distance, ou éliminer d'abord le rang avant.`;
+      return `${c.nom} est hors de portée.`;
+    }
+    return c;
+  };
+
+  switch (a.type) {
+    case 'attaque':
+    case 'viser': {
+      const c = verifierCible(a.cible, x.attaque.portee);
+      if (typeof c === 'string') return estimationImpossible(c);
+      const v = a.type === 'viser' ? VISEES[a.partie] : null;
+      x.compteurs.modToucher = v?.toucher ?? 0;
+      res.reussite = chanceToucher(contenu, x, c);
+      x.compteurs.modToucher = 0;
+      res.critique = aEtat(x, 'furtif') ? 1 : chanceCritique(contenu, x, c);
+      ajouter(estimerDegats(c, x.attaque.puissance * (v?.degats ?? 1), x.attaque.stat, x.attaque.element, 1, 1));
+      if (v) res.effets.push(`${Math.round(v.chance * (c.boss ? 0.5 : 1) * 100)} % : ${NOMS_ETATS[v.etat].toLowerCase()}`);
+      return res;
+    }
+    case 'competence': {
+      const k = competenceCombattant(contenu, x, a.competence)!;
+      res.mana = k.comp.cout;
+      let principale: Combattant | null = null;
+      if (k.comp.cible === 'ennemi') {
+        const c = verifierCible(a.cible, k.comp.portee);
+        if (typeof c === 'string') return estimationImpossible(c);
+        principale = c;
+      } else if (k.comp.cible === 'tous_ennemis' || k.comp.cible === 'ennemi_aleatoire') {
+        principale = ciblesValides(combat, x, 'ennemi', 'distance')[0] ?? null;
+        res.nbCibles = k.comp.cible === 'tous_ennemis' ? adversaires(combat, x).length : 1;
+      } else if (k.comp.cible === 'allie' || k.comp.cible === 'allie_ko') {
+        const liste = k.comp.cible === 'allie' ? allies(combat, x) : ciblesValides(combat, x, 'allie_ko', 'distance');
+        if (!a.cible || !liste.some((y) => y.id === a.cible)) return estimationImpossible(k.comp.cible === 'allie_ko' ? 'Il faut choisir un allié K.O.' : 'Il faut choisir un allié.');
+      } else if (k.comp.cible === 'tous_allies') res.nbCibles = allies(combat, x).length;
+      for (const ef of k.comp.effets) {
+        if (ef.type === 'degats' && principale) {
+          ajouter(estimerDegats(principale, ef.puissance, ef.stat, ef.element as Element, k.rang, ef.coups));
+          res.reussite ??= chanceToucher(contenu, x, principale);
+          res.critique ??= ef.critique_garanti || aEtat(x, 'furtif') ? 1 : chanceCritique(contenu, x, principale);
+        } else if (ef.type === 'soin') {
+          const s = ef.puissance * (1 + 0.1 * (k.rang - 1)) * (1 + x.caracs[ef.stat] / 20);
+          res.soin = [Math.round(s), Math.round(s)];
+        } else if (ef.type === 'etat') res.effets.push(`${ef.chance < 1 ? `${Math.round(ef.chance * 100)} % : ` : ''}${NOMS_ETATS[ef.etat as EtatId].toLowerCase()}`);
+        else if (ef.type === 'bouclier') res.effets.push(`bouclier (${Math.round(ef.pourcent_pv * 100)} % des PV)`);
+        else if (ef.type === 'invocation') res.effets.push(`invocation : ${contenu.ennemis[ef.creature]?.nom ?? ef.creature}`);
+      }
+      return res;
+    }
+    case 'se_cacher':
+      res.reussite = chanceSeCacher(combat, x);
+      res.effets.push('furtif : impossible à cibler, prochaine attaque critique');
+      return res;
+    case 'fuir':
+      res.reussite = Math.min(0.9, Math.max(0.2, 0.5 + 0.03 * (x.caracs.AGI - Math.max(...adversaires(combat, x).map((y) => y.caracs.AGI)))));
+      return res;
+    case 'objet':
+      if (a.objet === 'potion') {
+        const s = 16 * 1.5 * (x.passif?.id === 'fioles-optimisees' ? 1 + (x.passif.parametres.efficacite ?? 0.4) : 1);
+        res.soin = [Math.round(s), Math.round(s)];
+      }
+      return res;
+    case 'defendre':
+      res.effets.push('−50 % de dégâts reçus jusqu\'au prochain tour, +10 % de mana');
+      return res;
+    default:
+      return res;
+  }
 }

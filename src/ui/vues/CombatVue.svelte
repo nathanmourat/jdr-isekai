@@ -1,6 +1,7 @@
 <script lang="ts">
   import { jeu } from '../jeu.svelte';
   import PhaserHote from '../PhaserHote.svelte';
+  import ActionsLibres from './ActionsLibres.svelte';
   import type { SceneCombat } from '../../rendu/SceneCombat';
   import { actionsDisponibles, NOMS_ETATS, type ActionCombat, type Combattant } from '../../moteur/combat';
   import type { Competence } from '../../contenu/schemas';
@@ -85,6 +86,9 @@
             <button class="petit" onclick={() => (selection = null)}>Annuler</button>
           </div>
         {:else}
+          {#key acteur.id}<ActionsLibres {cle} acteur={acteur} />{/key}
+          <details class="manuel">
+          <summary>Toutes les actions (mode manuel)</summary>
           <div class="actions">
             <button onclick={() => choisir({ type: 'attaque' })}>Attaque</button>
             {#each dispo.competences as k (k.comp.id)}
@@ -99,6 +103,7 @@
             <button onclick={() => envoyer({ type: 'changer_rang', acteur: acteur!.id })}>Passer au rang {acteur.rang === 'avant' ? 'arrière' : 'avant'}</button>
             {#if dispo.fuite}<button class="danger" onclick={() => envoyer({ type: 'fuir', acteur: acteur!.id })}>Fuir</button>{/if}
           </div>
+          </details>
         {/if}
       {:else if acteur}
         <p>C'est au tour de <strong>{acteur.nom}</strong> ({etat.joueurs[acteur.joueurId ?? '']?.pseudo ?? '?'})…</p>
@@ -132,6 +137,8 @@
   .actions { display: flex; flex-wrap: wrap; gap: 0.4rem; }
   .actions small { display: block; color: var(--texte-2); font-size: 0.75rem; }
   .consigne { color: var(--or-2); }
+  .manuel { margin-top: 0.6rem; }
+  .manuel summary { cursor: pointer; color: var(--texte-2); margin-bottom: 0.4rem; }
   .combattant { display: grid; grid-template-columns: 1fr 90px; gap: 0.1rem 0.5rem; align-items: center; margin-bottom: 0.35rem; font-size: 0.9rem; }
   .combattant small { grid-column: 1 / -1; }
   .combattant.ko { opacity: 0.45; }

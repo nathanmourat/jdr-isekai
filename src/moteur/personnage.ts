@@ -36,6 +36,12 @@ export interface Heros {
   portrait: string | null;
   /** Quand le joueur est absent : son héros est joué par l'IA, ou reste au camp. */
   siAbsent: 'ia' | 'camp';
+  /** Variantes (fusions) connues, par compétence de base : au plus `variantes_max`. */
+  variantes: Record<string, string[]>;
+  /** Variante utilisée en combat à la place de la compétence de base (null = la compétence de base). */
+  varianteActive: Record<string, string | null>;
+  /** Compétences équipées pour le combat (null = les premières, dans la limite `competences_equipees_max`). */
+  equipees: string[] | null;
 }
 
 export interface OptionsCreation {
@@ -121,6 +127,9 @@ export function creerHeros(contenu: Contenu, o: OptionsCreation): Heros {
     contacts: [],
     portrait: null,
     siAbsent: 'ia',
+    variantes: {},
+    varianteActive: {},
+    equipees: null,
   };
   if (o.niveau && o.niveau > 1) monterJusquA(contenu, h, o.niveau, true);
   return h;
@@ -193,6 +202,14 @@ export function choisirBranche(contenu: Contenu, h: Heros, brancheId: string) {
   if (h.niveau < contenu.config.personnage.niveau_branche) throw new Error(`Branche disponible au niveau ${contenu.config.personnage.niveau_branche}`);
   if (!cl.branches.some((b) => b.id === brancheId)) throw new Error('Branche inconnue');
   h.branche = brancheId;
+}
+
+/** Compétences utilisables en combat (au plus `competences_equipees_max`). */
+export function competencesEquipees(contenu: Contenu, h: Heros): string[] {
+  const max = contenu.config.personnage.competences_equipees_max;
+  const connues = competencesConnues(contenu, h);
+  const choix = h.equipees ? h.equipees.filter((id) => connues.includes(id)) : connues;
+  return choix.slice(0, max);
 }
 
 export function competencesConnues(contenu: Contenu, h: Heros): string[] {

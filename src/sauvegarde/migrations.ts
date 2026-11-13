@@ -24,8 +24,13 @@ type Migration = (s: Sauvegarde) => Sauvegarde;
 
 /** migrations[n] transforme une sauvegarde de version n en version n+1. */
 export const migrations: Record<number, Migration> = {
-  // Exemple pour la saison 2 :
-  // 1: (s) => { s.depart.nouveauChamp = valeurParDefaut; s.version = 2; return s; },
+  // v1 → v2 (combat libre) : grimoire des fusions dans la partie. Les héros sont recréés en rejouant les actions,
+  // ils reçoivent donc automatiquement leurs nouveaux champs (variantes, compétences équipées).
+  1: (s) => {
+    (s.depart as { grimoire?: unknown }).grimoire ??= {};
+    s.version = 2;
+    return s;
+  },
 };
 
 export class ErreurSauvegarde extends Error {

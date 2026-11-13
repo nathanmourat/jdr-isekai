@@ -23,7 +23,7 @@ export const zElement = z.enum(ELEMENTS);
 export const ETATS = [
   'brulure', 'poison', 'gel', 'immobilise', 'sommeil', 'peur', 'silence', 'provoque', 'marque',
   'furtif', 'bonus_degats', 'bonus_defense', 'bonus_initiative', 'bonus_precision', 'malus_defense',
-  'regeneration', 'garde', 'expose',
+  'regeneration', 'garde', 'expose', 'affaibli',
 ] as const;
 export const zEtat = z.enum(ETATS);
 
@@ -431,6 +431,7 @@ export const zConfig = z.object({
     total_caracteristiques: z.number().int(), carac_min: z.number().int(), carac_max: z.number().int(), points_carac_par_niveau: z.number().int(),
     age_invoque_min: z.number().int(), age_invoque_max: z.number().int(), annee_naissance_reincarne: z.number().int(),
     niveau_branche: z.number().int(), rang_competence_max: z.number().int(),
+    variantes_max: z.number().int().default(2), competences_equipees_max: z.number().int().default(6), fusion_rang_min: z.number().int().default(2),
   }),
   experience: z.object({ base: z.number(), exposant: z.number() }),
   affinite: z.object({

@@ -36,7 +36,12 @@ Ouvrez ensuite l'adresse affichée (en général http://localhost:5173).
 2. Les **réincarnés** jouent leur prologue d'enfance (onglet « Histoire »), seuls et quand ils veulent.
 3. Sur la **carte**, un point doré pulsant indique la quête principale. Cliquez sur un lieu pour lancer une scène, acheter, prendre un contrat ou voir un compagnon.
 4. **Scènes de groupe** : chaque joueur présent vote. Quand tout le monde a voté, le choix majoritaire l'emporte ; en cas d'égalité, c'est le **meneur du jour** qui décide. Il peut aussi trancher sans attendre les retardataires.
-5. **Combat** au tour par tour : choisissez une action, puis cliquez sur la cible (ou utilisez les boutons). Les héros des joueurs absents sont joués par l'ordinateur, ou restent au camp (réglage dans « Personnage »).
+5. **Combat** au tour par tour, deux façons de jouer à chaque tour :
+   - **📜 Suivre le script** : le jeu propose les 3 meilleures actions, avec leurs chances, leurs dégâts et le mana. Un clic suffit.
+   - **✍️ Proposer mon action** : écrivez ce que fait votre personnage, par exemple « je vise la tête du loup », « je combine Javelot de flamme et Onde de givre » ou « je me cache derrière le pilier ». L'IA maison comprend la phrase, le moteur vérifie si c'est possible et donne les vraies chances. Si c'est impossible, elle explique pourquoi et propose des alternatives. Au bout de 3 propositions impossibles dans un tour, il faut choisir parmi les propositions.
+   - Les actions manuelles restent accessibles dans « Toutes les actions (mode manuel) ».
+   - Les héros des joueurs absents sont joués par l'ordinateur, ou restent au camp (réglage dans « Personnage »).
+   - **Fusions** : combiner deux compétences au rang 2 crée une variante, ajoutée au **grimoire de la partie** (visible à la Guilde, où les autres joueurs peuvent l'apprendre). 2 variantes au maximum par compétence, 6 compétences équipées au maximum (onglet « Personnage »).
 6. **Donjon** : le meneur du jour guide le groupe avec les flèches, ZQSD, un clic ou les boutons à l'écran.
 7. **Temps libre** : à chaque ellipse, chacun choisit 2 activités (entraînement, commerce, relation avec un compagnon…).
 8. **Mort douce** : une défaite blesse et coûte un peu d'or, mais personne ne meurt pour de bon. L'histoire continue autrement.
@@ -119,6 +124,7 @@ Rangez les images dans **`assets/`**, en respectant les noms et formats de [`doc
 | `npm test` | Tests automatiques (règles, contenu, chapitre 1 joué de bout en bout, sauvegarde) |
 | `npm run equilibrage` | Simulation d'équilibrage (rapport dans `rapports/`, tableau en CSV lisible dans Colab) |
 | `npm run assets:manquants` | Textures encore à fournir |
+| `npm run ia:entrainer` | Réentraîne l'IA maison après avoir ajouté des phrases dans `src/ia/corpus.ts` (affiche sa précision) |
 | `npm run verifier` | Vérification des types de l'interface |
 | `npm run build` puis `npm run preview` | Construire et tester la version publiée |
 | `npm run e2e` | Parcours complet dans un vrai navigateur (après `npm run preview` ; nécessite Playwright) |
@@ -128,7 +134,8 @@ Rangez les images dans **`assets/`**, en respectant les noms et formats de [`doc
 ```
 content/      tout le contenu du jeu (YAML)
 assets/       textures (PNG) du groupe
-src/moteur/   règles du jeu : combat, personnages, affinité, temps, partie (aucun affichage)
+src/moteur/   règles du jeu : combat, personnages, fusions, affinité, temps, partie (aucun affichage)
+src/ia/       IA maison : compréhension des actions écrites, conseiller tactique, modèle entraîné
 src/ui/       écrans (Svelte)
 src/rendu/    scènes 2D Phaser : combat en vue de côté, donjon en vue de dessus
 src/sync/     synchronisation : locale (navigateur) ou en ligne (Supabase)

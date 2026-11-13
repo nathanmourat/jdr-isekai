@@ -1,6 +1,6 @@
 <script lang="ts">
   import { jeu } from '../jeu.svelte';
-  import { caracsTotales, competencesConnues, manaMax, pvMax, xpPourNiveau, age } from '../../moteur/personnage';
+  import { caracsTotales, competencesConnues, competencesEquipees, manaMax, pvMax, xpPourNiveau, age } from '../../moteur/personnage';
   import { prixVente, rangGuilde } from '../../moteur/partie';
   import { CARACS } from '../../contenu/schemas';
   import { versDate } from '../../moteur/temps';
@@ -14,6 +14,12 @@
   const ra = $derived(c.races[h.race]);
   const k = $derived(caracsTotales(c, h));
   const connues = $derived(competencesConnues(c, h));
+  const equipees = $derived(competencesEquipees(c, h));
+  const maxEquipees = c.config.personnage.competences_equipees_max;
+  function basculerEquipee(id: string) {
+    const liste = equipees.includes(id) ? equipees.filter((x) => x !== id) : [...equipees, id];
+    jeu.agir({ type: 'equiper_competences', competences: liste });
+  }
   const inventaire = $derived(Object.entries(h.inventaire).filter(([, n]) => n > 0));
   const peutBranche = $derived(!h.branche && h.niveau >= c.config.personnage.niveau_branche);
 
@@ -61,14 +67,29 @@
 
   <div class="carte-ui">
     <h3>Compétences {#if h.pointsCompetenceDispo}<span class="badge or">{h.pointsCompetenceDispo} point(s) de compétence</span>{/if}</h3>
+    <p class="discret">Rang maximum {c.config.personnage.rang_competence_max} · {equipees.length}/{maxEquipees} compétences équipées pour le combat · {c.config.personnage.variantes_max} variantes au plus par compétence (une seule active).</p>
     {#each connues as id (id)}
-      <div class="ligne item">
-        <span><strong>{c.competences[id].nom}</strong> (rang {h.rangsCompetences[id] ?? 1}) <small class="discret">{c.competences[id].description}</small></span>
-        {#if h.pointsCompetenceDispo && (h.rangsCompetences[id] ?? 1) < c.config.personnage.rang_competence_max}
-          <button class="petit" onclick={() => jeu.agir({ type: 'ameliorer', competence: id })}>Améliorer (+10 %)</button>
+      <div class="item">
+        <div class="ligne">
+          <label class="equipe" title="Équipée pour le combat"><input type="checkbox" checked={equipees.includes(id)} disabled={!equipees.includes(id) && equipees.length >= maxEquipees} onchange={() => basculerEquipee(id)} /></label>
+          <span><strong>{c.competences[id].nom}</strong> (rang {h.rangsCompetences[id] ?? 1}/{c.config.personnage.rang_competence_max}) <small class="discret">{c.competences[id].description}</small></span>
+          {#if h.pointsCompetenceDispo && (h.rangsCompetences[id] ?? 1) < c.config.personnage.rang_competence_max}
+            <button class="petit" onclick={() => jeu.agir({ type: 'ameliorer', competence: id })}>Améliorer (+10 %)</button>
+          {/if}
+        </div>
+        {#if (h.variantes[id] ?? []).length}
+          <div class="variantes">
+            <label><input type="radio" name={`var-${id}`} checked={!h.varianteActive[id]} onchange={() => jeu.agir({ type: 'variante_active', competence: id, technique: null })} /> version de base</label>
+            {#each h.variantes[id] as v (v)}
+              {@const t = etat.grimoire?.[v]}
+              <label><input type="radio" name={`var-${id}`} checked={h.varianteActive[id] === v} onchange={() => jeu.agir({ type: 'variante_active', competence: id, technique: v })} /> {t?.nom ?? v} <small class="discret">({t ? `${t.cout} mana, recharge ${t.recharge}` : ''})</small></label>
+              <button class="petit danger" onclick={() => confirm(`Oublier la variante « ${t?.nom ?? v} » ?`) && jeu.agir({ type: 'oublier_variante', technique: v })}>Oublier</button>
+            {/each}
+          </div>
         {/if}
       </div>
     {/each}
+    <p class="discret">Astuce : en combat, choisissez « Proposer mon action » et écrivez par exemple « je combine {c.competences[connues[0]]?.nom ?? 'une compétence'} et {c.competences[connues[1]]?.nom ?? 'une autre'} » pour inventer une variante (les deux compétences doivent être au rang {c.config.personnage.fusion_rang_min}).</p>
     {#if peutBranche}
       <h3>Choisir une branche</h3>
       {#each cl.branches as b (b.id)}
@@ -107,4 +128,7 @@
   .stats strong { font-size: 1.3rem; color: var(--or-2); }
   .item { justify-content: space-between; border-bottom: 1px solid var(--bord); padding: 0.3rem 0; }
   .icone { width: 24px; height: 24px; }
+  .equipe input { width: auto; }
+  .variantes { display: flex; flex-wrap: wrap; gap: 0.3rem 0.8rem; align-items: center; padding: 0.3rem 0 0.2rem 2rem; font-size: 0.9rem; }
+  .variantes input { width: auto; }
 </style>

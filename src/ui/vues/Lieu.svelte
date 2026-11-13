@@ -3,6 +3,7 @@
   import { conditionHeros, conditionScene, listeHeros, palierCompagnon, prixAchat, rangGuilde, scenesDisponibles } from '../../moteur/partie';
   import { imageDecor } from '../../rendu/assets';
   import { portraitPersonnage } from '../outils';
+  import { peutApprendre } from '../../moteur/fusions';
 
   let { id, retour }: { id: string; retour: () => void } = $props();
   const c = jeu.contenu!;
@@ -17,6 +18,7 @@
   const rang = $derived(rangGuilde(c, etat.pointsGuilde[h.id] ?? 0));
   const ordre = ['F', 'E', 'D', 'C', 'B', 'A', 'S'];
   const nomPnj = (p: string) => c.compagnons[p]?.nom ?? c.pnj[p]?.nom ?? p;
+  const grimoire = $derived(id === 'guilde' ? Object.values(etat.grimoire ?? {}) : []);
 </script>
 
 <section class="lieu">
@@ -64,6 +66,22 @@
             <p class="discret">{ct.description} Récompense : {ct.recompenses.or} or, {ct.recompenses.xp} XP, {ct.recompenses.points_guilde} pts de guilde.</p>
             <button disabled={ordre.indexOf(rang) < ordre.indexOf(ct.rang_min)} onclick={() => jeu.agir({ type: 'contrat', contrat: ct.id })}>Accepter (en solo)</button>
           </div>
+        {/each}
+      </div>
+    {/if}
+    {#if id === 'guilde'}
+      <div class="carte-ui">
+        <h3>📖 Grimoire de la partie</h3>
+        {#each grimoire as t (t.id)}
+          {@const pb = peutApprendre(c, h, t)}
+          <div class="item">
+            <div class="ligne"><strong>{t.nom}</strong><span class="badge">inventée par {t.creePar}</span></div>
+            <p class="discret">{t.description} {t.cout} mana, recharge {t.recharge} tour(s).</p>
+            {#if (h.variantes[t.parent] ?? []).includes(t.id)}<span class="badge or">connue</span>
+            {:else}<button class="petit" disabled={!!pb} title={pb ?? ''} onclick={() => jeu.agir({ type: 'apprendre_technique', technique: t.id })}>Apprendre</button>{#if pb}<small class="discret"> {pb}</small>{/if}{/if}
+          </div>
+        {:else}
+          <p class="discret">Encore vide. En combat, combinez deux de vos compétences (« je combine X et Y ») pour inventer une technique : elle sera ajoutée ici pour tout le groupe.</p>
         {/each}
       </div>
     {/if}

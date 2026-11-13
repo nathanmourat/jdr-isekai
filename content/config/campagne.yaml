@@ -52,6 +52,9 @@ config:
     annee_naissance_reincarne: 994
     niveau_branche: 5             # niveau où l'on choisit sa première compétence de branche
     rang_competence_max: 5        # chaque point de compétence : +10 % de puissance
+    variantes_max: 2              # variantes (fusions comprises) par compétence ; une seule active à la fois
+    competences_equipees_max: 6   # compétences utilisables en combat
+    fusion_rang_min: 2            # rang requis dans les deux compétences pour les fusionner
 
   # XP pour passer du niveau n à n+1 = base × n^exposant
   experience:
