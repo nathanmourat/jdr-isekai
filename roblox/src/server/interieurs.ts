@@ -17,7 +17,7 @@ const HAUTEUR = -300;
 
 /** Costumes des PNJ du contenu (les autres reçoivent une tenue simple). */
 const COSTUMES_PNJ: Record<string, Costume> = {
-	mathis: { peau: rgb(225, 190, 160), haut: rgb(240, 235, 220), bas: rgb(220, 210, 190), tablier: rgb(217, 164, 65) },
+	aureliath: { peau: rgb(225, 190, 160), haut: rgb(240, 235, 220), bas: rgb(220, 210, 190), tablier: rgb(217, 164, 65) },
 	elianne: { peau: rgb(235, 205, 180), haut: rgb(120, 150, 210), bas: rgb(235, 230, 215), capuche: rgb(235, 230, 215) },
 	rowena: { peau: rgb(220, 185, 150), haut: rgb(70, 65, 60), bas: rgb(50, 45, 40), classe: "lame-runique" },
 	kaya: { peau: rgb(200, 200, 205), haut: rgb(90, 110, 90), bas: rgb(70, 60, 50), classe: "archer" },
@@ -26,6 +26,7 @@ const COSTUMES_PNJ: Record<string, Costume> = {
 	seraphine: { peau: rgb(240, 210, 190), haut: rgb(150, 190, 240), bas: rgb(150, 190, 240), couronne: true },
 	gareth: { peau: rgb(210, 165, 125), haut: rgb(110, 130, 80), bas: rgb(100, 80, 55), chapeau: rgb(200, 170, 100) },
 	ferrand: { peau: rgb(225, 190, 160), haut: rgb(110, 50, 130), bas: rgb(60, 30, 70) },
+	halvine: { peau: rgb(235, 200, 175), haut: rgb(90, 120, 110), bas: rgb(70, 60, 50), tablier: rgb(170, 130, 80), echelle: 0.85 },
 	lina: { peau: rgb(230, 195, 165), haut: rgb(150, 100, 70), bas: rgb(100, 80, 60), tablier: rgb(190, 170, 140) },
 	tobin: { peau: rgb(235, 205, 180), haut: rgb(200, 195, 180), bas: rgb(120, 115, 105) },
 };
@@ -217,6 +218,7 @@ function construireSalle(lieu: string, base: Vector3) {
 			for (let i = 0; i < 5; i++) tonneau(base.add(new Vector3(-2 + i * 3, 0, -16.5)), m);
 			cheminee(m, base.add(new Vector3(-22.5, 0, -6)), CFrame.Angles(0, math.rad(-90), 0));
 			for (const [x, z] of [[-12, 4], [4, 6], [-10, 12], [8, 12]] as const) tableBancs(m, base.add(new Vector3(x, 0, z)), 7);
+			if (pnjDuLieu.includes("ferrand")) pnj(m, lieu, "ferrand", base.add(new Vector3(-10, 0, 9)), base.add(new Vector3(-10, 0, 12)));
 			for (const [x, z, i] of [[-12, 1, 0], [4, 9, 2], [8, 9, 3]] as const) figurant(m, TENUES[i], base.add(new Vector3(x, 0, z)), base.add(new Vector3(x, 0, z + (z < 6 ? 3 : -3))));
 			// escalier vers l'étage
 			for (let i = 0; i < 8; i++) bloc(new Vector3(5, 1, 2), base.add(new Vector3(20, 0.5 + i, 14 - i * 2)), C.bois, { parent: m, matiere: Enum.Material.WoodPlanks });
@@ -235,7 +237,7 @@ function construireSalle(lieu: string, base: Vector3) {
 					lumiereInterieure(v, v.Color, 14);
 				}
 			}
-			pnj(m, lieu, "mathis", base.add(new Vector3(0, 2, -25)), base);
+			pnj(m, lieu, "aureliath", base.add(new Vector3(0, 2, -25)), base);
 			pnj(m, lieu, "elianne", base.add(new Vector3(-12, 0, -20)), base);
 			comptoir(m, base.add(new Vector3(14, 0, 26)), 8);
 			point(m, base.add(new Vector3(14, 2, 23)), lieu, "boutique", "Faire une offrande", "Comptoir des offrandes");
@@ -288,6 +290,25 @@ function construireSalle(lieu: string, base: Vector3) {
 			bloc(new Vector3(5, 2, 8), base.add(new Vector3(13, 1, -8)), rgb(200, 190, 170), { parent: m, matiere: Enum.Material.Fabric });
 			for (let i = 0; i < 4; i++) bloc(new Vector3(2, 2.5, 2), base.add(new Vector3(-14 + i * 0.4, 1.25 + (i % 2) * 2.5, -10 + i * 1.5)), rgb(200, 180, 120), { parent: m, matiere: Enum.Material.Fabric });
 			pnj(m, lieu, "gareth", base.add(new Vector3(-2, 0, 6)), base.add(new Vector3(0, 0, 12)));
+			break;
+		}
+		case "boutique": {
+			const m = salle(lieu, base, 34, 28, 13, { sol: rgb(130, 95, 60), mur: rgb(160, 120, 80), matSol: Enum.Material.WoodPlanks, matMur: Enum.Material.Wood });
+			comptoir(m, base.add(new Vector3(0, 0, -6)), 14);
+			pnj(m, lieu, "halvine", base.add(new Vector3(0, 0, -9.5)), base);
+			point(m, base.add(new Vector3(5, 2, -3.5)), lieu, "boutique", "Acheter / Vendre", "Comptoir de Halvine");
+			etagere(m, base.add(new Vector3(-9, 0, -13.2)));
+			etagere(m, base.add(new Vector3(9, 0, -13.2)));
+			etagere(m, base.add(new Vector3(-16.2, 0, 2)), CFrame.Angles(0, math.rad(90), 0));
+			etagere(m, base.add(new Vector3(16.2, 0, 2)), CFrame.Angles(0, math.rad(-90), 0));
+			for (const [x, z] of [[-10, 8], [-7, 9], [10, 7]] as const) tonneau(base.add(new Vector3(x, 0, z)), m);
+			// balance sur le comptoir, fioles colorées
+			bloc(new Vector3(0.3, 2, 0.3), base.add(new Vector3(-3, 5.4, -6)), rgb(200, 170, 80), { parent: m, matiere: Enum.Material.Metal });
+			bloc(new Vector3(3, 0.2, 0.2), base.add(new Vector3(-3, 6.4, -6)), rgb(200, 170, 80), { parent: m, matiere: Enum.Material.Metal });
+			for (const [k, c] of [[0, rgb(220, 60, 60)], [1, rgb(80, 120, 230)], [2, rgb(90, 200, 110)]] as const) {
+				const fiole = bloc(new Vector3(0.6, 1, 0.6), base.add(new Vector3(2 + k * 1, 4.9, -6)), c, { parent: m, forme: "boule", neon: true });
+				void fiole;
+			}
 			break;
 		}
 		case "crypte-fontaine": {

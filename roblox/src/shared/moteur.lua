@@ -3342,6 +3342,8 @@ ____exports.zScene = z:object({
     repetable = z:boolean():default(false),
     romance = z:boolean():default(false),
     quete = z:string():optional(),
+    pnj = z:string():optional(),
+    rend_quete = z:boolean():default(false),
     noeuds = z:record(
         z:string(),
         ____exports.zNoeud
@@ -3364,7 +3366,11 @@ ____exports.zQuete = z:object({
         id = z:string(),
         objectif = z:string(),
         scene = z:string():optional(),
-        lieu = z:string():optional()
+        lieu = z:string():optional(),
+        declencheur = z:object({
+            acheter = z:string():optional(),
+            vendre = z:boolean():optional()
+        }):optional()
     }))
 })
 ____exports.zLieu = z:object({
@@ -3376,17 +3382,38 @@ ____exports.zLieu = z:object({
         x = z:number(),
         y = z:number()
     }),
+    ville = z:string():optional(),
+    position_plan = z:object({
+        x = z:number(),
+        y = z:number()
+    }):optional(),
     disponible_si = ____exports.zCondition:optional(),
     pnj = z:array(z:object({
         id = z:string(),
-        si = ____exports.zCondition:optional()
+        si = ____exports.zCondition:optional(),
+        position = z:object({
+            x = z:number(),
+            y = z:number()
+        }):optional()
     })):default({}),
-    boutique = z:array(z:string()):default({})
+    boutique = z:array(z:string()):default({}),
+    auberge = z:boolean():default(false)
+})
+____exports.zVille = z:object({
+    id = z:string(),
+    nom = z:string(),
+    description = z:string():default(""),
+    plan = z:string(),
+    position = z:object({
+        x = z:number(),
+        y = z:number()
+    })
 })
 ____exports.zRegion = z:object({
     id = z:string(),
     nom = z:string(),
     carte = z:string(),
+    villes = z:array(____exports.zVille):default({}),
     lieux = z:array(____exports.zLieu)
 })
 ____exports.zPnj = z:object({
@@ -3433,6 +3460,21 @@ ____exports.zDonjon = z:object({
         unique = z:boolean():default(true),
         si = ____exports.zCondition:optional()
     }))
+})
+--- Phrase d'ambiance dite par un passant (version Roblox : bulles au-dessus des têtes).
+____exports.zAmbiance = z:object({
+    id = z:string(),
+    lieu = z:string():optional(),
+    moment = z:enum({"jour", "nuit", "toujours"}):default("toujours"),
+    qui = z:enum({
+        "villageois",
+        "garde",
+        "marchand",
+        "client",
+        "pretre"
+    }):default("villageois"),
+    texte = z:string(),
+    si = ____exports.zCondition:optional()
 })
 ____exports.zContrat = z:object({
     id = z:string(),
@@ -7229,11 +7271,12 @@ local __TS__ArrayFlatMap = ____lualib.__TS__ArrayFlatMap
 local __TS__ArrayPush = ____lualib.__TS__ArrayPush
 local Set = ____lualib.Set
 local __TS__Spread = ____lualib.__TS__Spread
+local __TS__ArrayFindIndex = ____lualib.__TS__ArrayFindIndex
 local Map = ____lualib.Map
 local __TS__Iterator = ____lualib.__TS__Iterator
 local __TS__InstanceOf = ____lualib.__TS__InstanceOf
 local ____exports = {}
-local journal, appliquerConsequence, avancerTemps, participantsGroupe, entrerNoeud, terminerScene, resoudreChoix, lancerCombat, reveler, resoudreVote, refuser
+local journal, appliquerConsequence, avancerTemps, participantsGroupe, entrerNoeud, terminerScene, resoudreChoix, lancerCombat, reveler, quantiteValide, declencherEtapes, resoudreVote, refuser
 local ____affinite = require("src.moteur.affinite")
 local affiniteVide = ____affinite.affiniteVide
 local modifierAffinite = ____affinite.modifierAffinite
@@ -7807,20 +7850,53 @@ function reveler(etat, x, y)
         end
     end
 end
+function quantiteValide(q)
+    if q == nil then
+        return 1
+    end
+    if q < 1 or q > 99 or math.floor(q) ~= q then
+        refuser("Quantité invalide (de 1 à 99)")
+    end
+    return q
+end
+function declencherEtapes(contenu, etat, correspond)
+    for ____, ____value in ipairs(entrees(etat.quetes)) do
+        local id = ____value[1]
+        local q = ____value[2]
+        local def = contenu.quetes[id]
+        if not def or q.terminee then
+            continue
+        end
+        local i = __TS__ArrayFindIndex(
+            def.etapes,
+            function(____, e) return e.id == q.etape end
+        )
+        if i < 0 or i + 1 >= #def.etapes then
+            continue
+        end
+        local d = def.etapes[i + 1].declencheur
+        if not d or not correspond(d) then
+            continue
+        end
+        q.etape = def.etapes[i + 1 + 1].id
+        local ____etat_dernieresNouvelles_94 = etat.dernieresNouvelles
+        ____etat_dernieresNouvelles_94[#____etat_dernieresNouvelles_94 + 1] = (("Quête « " .. def.titre) .. " » : ") .. def.etapes[i + 1 + 1].objectif
+    end
+end
 function resoudreVote(contenu, etat)
     local es = etat.scenes.groupe
     local comptes = __TS__New(Map)
     for ____, ____value in ipairs(entrees(es.votes)) do
         local joueur = ____value[1]
         local idx = ____value[2]
-        local ____comptes_set_94 = comptes.set
-        local ____idx_93 = idx
-        local ____array_92 = __TS__SparseArrayNew(table.unpack(comptes:get(idx) or ({})))
-        __TS__SparseArrayPush(____array_92, joueur)
-        ____comptes_set_94(
+        local ____comptes_set_97 = comptes.set
+        local ____idx_96 = idx
+        local ____array_95 = __TS__SparseArrayNew(table.unpack(comptes:get(idx) or ({})))
+        __TS__SparseArrayPush(____array_95, joueur)
+        ____comptes_set_97(
             comptes,
-            ____idx_93,
-            {__TS__SparseArraySpread(____array_92)}
+            ____idx_96,
+            {__TS__SparseArraySpread(____array_95)}
         )
     end
     local meilleur = -1
@@ -8999,12 +9075,20 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 if not __TS__ArrayIncludes(lieu.boutique, action.objet) then
                     refuser("Cet objet n'est pas vendu ici")
                 end
-                local prix = ____exports.prixAchat(contenu, h, action.objet)
+                local n = quantiteValide(action.quantite)
+                local prix = ____exports.prixAchat(contenu, h, action.objet) * n
                 if h["or"] < prix then
                     refuser("Pas assez d'or")
                 end
                 h["or"] = h["or"] - prix
-                h.inventaire[action.objet] = (h.inventaire[action.objet] or 0) + 1
+                h.inventaire[action.objet] = (h.inventaire[action.objet] or 0) + n
+                local ____etat_dernieresNouvelles_80 = etat.dernieresNouvelles
+                ____etat_dernieresNouvelles_80[#____etat_dernieresNouvelles_80 + 1] = (((((h.nom .. " achète ") .. (if n > 1 then tostring(n) .. " × " else "")) .. contenu.objets[action.objet].nom) .. " : −") .. tostring(prix)) .. " or."
+                declencherEtapes(
+                    contenu,
+                    etat,
+                    function(d) return d.acheter == action.lieu end
+                )
                 break
             end
         end
@@ -9019,9 +9103,21 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 if o.type == "quete" then
                     refuser("On ne vend pas un objet de quête")
                 end
-                local ____h_inventaire_80, ____o_id_81 = h.inventaire, o.id
-                ____h_inventaire_80[____o_id_81] = ____h_inventaire_80[____o_id_81] - 1
-                h["or"] = h["or"] + ____exports.prixVente(contenu, h, o.id)
+                local n = quantiteValide(action.quantite)
+                if h.inventaire[o.id] < n then
+                    refuser("Vous n'en avez que " .. tostring(h.inventaire[o.id]))
+                end
+                local gain = ____exports.prixVente(contenu, h, o.id) * n
+                local ____h_inventaire_81, ____o_id_82 = h.inventaire, o.id
+                ____h_inventaire_81[____o_id_82] = ____h_inventaire_81[____o_id_82] - n
+                h["or"] = h["or"] + gain
+                local ____etat_dernieresNouvelles_83 = etat.dernieresNouvelles
+                ____etat_dernieresNouvelles_83[#____etat_dernieresNouvelles_83 + 1] = (((((h.nom .. " vend ") .. (if n > 1 then tostring(n) .. " × " else "")) .. o.nom) .. " : +") .. tostring(gain)) .. " or."
+                declencherEtapes(
+                    contenu,
+                    etat,
+                    function(d) return d.vendre == true end
+                )
                 break
             end
         end
@@ -9177,14 +9273,14 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 etat.session = etat.session + 1
                 local idx = __TS__ArrayIndexOf(etat.ordreJoueurs, etat.meneur or "")
                 etat.meneur = etat.ordreJoueurs[(idx + 1) % #etat.ordreJoueurs + 1] or nil
-                local ____journal_86 = journal
-                local ____contenu_85 = contenu
-                local ____etat_session_84 = etat.session
-                local ____opt_82 = etat.joueurs[etat.meneur or ""]
-                ____journal_86(
-                    ____contenu_85,
+                local ____journal_88 = journal
+                local ____contenu_87 = contenu
+                local ____etat_session_86 = etat.session
+                local ____opt_84 = etat.joueurs[etat.meneur or ""]
+                ____journal_88(
+                    ____contenu_87,
                     etat,
-                    ((("Session " .. tostring(____etat_session_84)) .. " : ") .. (____opt_82 and ____opt_82.pseudo or "?")) .. " est le meneur du jour."
+                    ((("Session " .. tostring(____etat_session_86)) .. " : ") .. (____opt_84 and ____opt_84.pseudo or "?")) .. " est le meneur du jour."
                 )
                 break
             end
@@ -9210,8 +9306,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                     end
                 end
                 local entree = (if vrai(action.cle) then etat.combats[action.cle] else nil)
-                local ____opt_87 = entree
-                local acteur = ____opt_87 and __TS__ArrayFind(
+                local ____opt_89 = entree
+                local acteur = ____opt_89 and __TS__ArrayFind(
                     entree and entree.combat.combattants,
                     function(____, c) return c.herosId == h.id and c.type == "heros" end
                 )
@@ -9236,8 +9332,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                         acteur.competencesPropres,
                         function(____, k) return k.id == t.id end
                     ) then
-                        local ____acteur_competencesPropres_91 = acteur.competencesPropres
-                        ____acteur_competencesPropres_91[#____acteur_competencesPropres_91 + 1] = __TS__ObjectAssign({}, t)
+                        local ____acteur_competencesPropres_93 = acteur.competencesPropres
+                        ____acteur_competencesPropres_93[#____acteur_competencesPropres_93 + 1] = __TS__ObjectAssign({}, t)
                     end
                     acteur.compteurs["rang:" .. t.id] = h.rangsCompetences[t.parent] or 1
                     do
@@ -9366,6 +9462,8 @@ return ____exports
 local ____lualib = require("lualib_bundle")
 local __TS__ArraySome = ____lualib.__TS__ArraySome
 local __TS__ArrayFind = ____lualib.__TS__ArrayFind
+local __TS__ArrayIndexOf = ____lualib.__TS__ArrayIndexOf
+local __TS__ArrayFilter = ____lualib.__TS__ArrayFilter
 local ____exports = {}
 local ____partie = require("src.moteur.partie")
 local conditionHeros = ____partie.conditionHeros
@@ -9465,6 +9563,76 @@ function ____exports.prochaineEtape(contenu, etat, herosId)
         nomLieu = nomDuLieu(contenu, lieu),
         disponible = true
     }
+end
+local function marqueurScene(contenu, s)
+    if s.rend_quete then
+        return "rendre"
+    end
+    local ____vrai_result_9 = vrai(s.quete)
+    if ____vrai_result_9 then
+        local ____opt_7 = contenu.quetes[s.quete]
+        ____vrai_result_9 = (____opt_7 and ____opt_7.type) == "principale"
+    end
+    if ____vrai_result_9 then
+        return "principale"
+    end
+    return "secondaire"
+end
+local function plusImportant(a, b)
+    if a == nil then
+        return b
+    end
+    local ordre = {"secondaire", "rendre", "principale"}
+    return (if __TS__ArrayIndexOf(ordre, b) > __TS__ArrayIndexOf(ordre, a) then b else a)
+end
+--- Scènes disponibles dans ce lieu qui se lancent en parlant à ce PNJ.
+function ____exports.scenesDuPnj(contenu, etat, lieu, pnj, herosId)
+    return __TS__ArrayFilter(
+        scenesDisponibles(contenu, etat, lieu, herosId),
+        function(____, s) return s.pnj == pnj end
+    )
+end
+--- Symbole à afficher au-dessus d'un PNJ (null : rien d'important à dire).
+function ____exports.marqueurPnj(contenu, etat, lieu, pnj, herosId)
+    local res = nil
+    for ____, s in ipairs(____exports.scenesDuPnj(
+        contenu,
+        etat,
+        lieu,
+        pnj,
+        herosId
+    )) do
+        res = plusImportant(
+            res,
+            marqueurScene(contenu, s)
+        )
+    end
+    return res
+end
+--- Symbole à afficher sur un lieu de la carte ou du plan (le plus important de ses scènes).
+function ____exports.marqueurLieu(contenu, etat, lieu, herosId)
+    local res = nil
+    for ____, s in ipairs(scenesDisponibles(contenu, etat, lieu, herosId)) do
+        res = plusImportant(
+            res,
+            marqueurScene(contenu, s)
+        )
+    end
+    return res
+end
+--- Joueurs qui ne participeront pas à une scène de groupe lancée maintenant (absents dont le héros reste au camp, ou sans héros).
+function ____exports.absentsDuGroupe(etat)
+    local res = {}
+    for ____, j in ipairs(etat.ordreJoueurs) do
+        local joueur = etat.joueurs[j]
+        local h = (if vrai(joueur.herosId) then etat.heros[joueur.herosId] else nil)
+        if not h then
+            res[#res + 1] = joueur.pseudo .. " (pas encore de héros)"
+        elseif not joueur.present then
+            res[#res + 1] = ((joueur.pseudo .. " (absent : ") .. (if h.siAbsent == "ia" then "son héros sera joué par l'ordinateur" else "son héros reste au camp")) .. ")"
+        end
+    end
+    return res
 end
 return ____exports
  end,

@@ -158,8 +158,9 @@ Les bâtiments se remplacent plus tard sur le même principe, sur demande.
   - **Arène** : vestiaire, râteliers d'armes, maître d'armes.
   - **Combe-aux-Saules** : maison de Gareth.
   - **Crypte** : antichambre aux flambeaux et escalier pour « Descendre ».
-  - La **place de Lysmont** reste dehors : c'est le **marché**.
-- **PNJ** : touche **E** pour « Parler ». Le panneau s'ouvre sur ce qu'ils proposent. Un ⭐ au-dessus de la tête signale la quête principale, un ● autre chose à faire. Les PNJ que ta partie ne doit pas encore voir (Kaya avant l'examen…) sont cachés pour toi.
+  - **Comptoir de Halvine** : étagères pleines, balance et fioles, Halvine (Acheter / Vendre).
+  - La **place de Lysmont** reste dehors : c'est le **marché** (ses étals vendent le catalogue du Comptoir).
+- **PNJ** : touche **E** pour « Parler ». Chacun propose **ses** scènes. Au-dessus de la tête : **!** doré pour la quête principale, **!** argenté pour autre chose à faire, **?** quand on peut rendre une quête. Les PNJ que ta partie ne doit pas encore voir (Kaya avant l'examen…) sont cachés pour toi.
 - **Jour et nuit** : une journée dure environ 20 minutes. La nuit, les fenêtres et les lanternes s'allument et la lumière devient bleutée.
 - **Villageois** :
   - une douzaine marchent entre la place et les portes, et rentrent chez eux la nuit ;

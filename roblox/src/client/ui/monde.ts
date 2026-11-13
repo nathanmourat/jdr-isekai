@@ -168,7 +168,13 @@ function vueLieu(parent: Frame, id: string, fermer: () => void, redessiner: () =
 	const pnj = lieu.pnj.filter((p) => conditionScene(CONTENU, etat, p.si, tous));
 	if (pnj.size() > 0) texte(parent, `Ici : ${pnj.map((p) => CONTENU.compagnons[p.id]?.nom ?? CONTENU.pnj[p.id]?.nom ?? p.id).join(", ")}`, 14, { couleur: COULEURS.texte2 });
 
-	const scenes = voir("parler") ? scenesDisponibles(CONTENU, etat, id, h.id) : [];
+	// en parlant à un PNJ : ses scènes (et celles qui ne nomment personne, pour le premier PNJ du lieu)
+	const avecQui = section === "parler" ? affichage.pnj : undefined;
+	const premier = lieu.pnj[0]?.id === avecQui;
+	const scenes = voir("parler")
+		? scenesDisponibles(CONTENU, etat, id, h.id).filter((sc) => avecQui === undefined || sc.pnj === avecQui || (sc.pnj === undefined && premier))
+		: [];
+	if (avecQui !== undefined) texte(parent, `Tu parles à <b>${CONTENU.compagnons[avecQui]?.nom ?? CONTENU.pnj[avecQui]?.nom ?? avecQui}</b>.`, 15, { couleur: COULEURS.or });
 	const groupe = scenes.filter((s) => s.type === "groupe");
 	const perso = scenes.filter((s) => s.type === "individuel");
 	if (section === "parler" && scenes.size() === 0) texte(parent, "« Rien de neuf pour l'instant. Repasse plus tard ! »", 15, { couleur: COULEURS.texte2 });

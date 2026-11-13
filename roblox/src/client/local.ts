@@ -10,6 +10,8 @@ export const affichage = {
 	/** Panneau d'un lieu ouvert, et la section demandée (PNJ, tableau, comptoir…). */
 	lieu: undefined as string | undefined,
 	section: "tout" as Section,
+	/** PNJ à qui l'on parle (ses scènes seulement). */
+	pnj: undefined as string | undefined,
 	/** Intérieur dans lequel se trouve le personnage (undefined = dehors). */
 	dans: undefined as string | undefined,
 	combatsVus: new Set<string>(),

@@ -268,7 +268,9 @@ function etal(position: Vector3, regard: Vector3, couleur: Color3, nom: string) 
 		invite.HoldDuration = 0;
 		invite.MaxActivationDistance = 10;
 		invite.RequiresLineOfSight = false;
-		invite.SetAttribute("Lieu", "lysmont-place");
+		// les étals vendent le catalogue du Comptoir de Halvine (s'il existe, sinon celui de la place)
+		const catalogue = CONTENU.regions.aubeclaire.lieux.find((l) => l.id === "boutique") ? "boutique" : "lysmont-place";
+		invite.SetAttribute("Lieu", catalogue);
 		invite.SetAttribute("Action", "boutique");
 		invite.Parent = marchand.PrimaryPart;
 		marchand.Parent = m;

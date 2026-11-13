@@ -117,6 +117,10 @@ export interface SceneDef {
 	titre: string;
 	type: "groupe" | "individuel";
 	lieu?: string;
+	/** PNJ à qui parler pour lancer la scène */
+	pnj?: string;
+	/** la scène sert à rendre une quête (symbole « ? ») */
+	rend_quete?: boolean;
 	decor: string;
 	quete?: string;
 	noeuds: Record<string, Noeud>;

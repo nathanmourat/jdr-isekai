@@ -114,9 +114,12 @@ export function majPnj() {
 			marquesPnj.set(e, marque);
 		}
 		if (marque) {
-			const scenes = ok && etat && h ? scenesDisponibles(CONTENU, etat, lieuId, h.id) : [];
+			// scènes de ce PNJ (ou, pour le premier PNJ du lieu, celles qui ne nomment personne)
+			const premier = lieu?.pnj[0]?.id === pnjId;
+			const scenes = (ok && etat && h ? scenesDisponibles(CONTENU, etat, lieuId, h.id) : []).filter((sc) => sc.pnj === pnjId || (sc.pnj === undefined && premier));
 			const principale = scenes.some((sc) => sc.quete !== undefined && CONTENU.quetes[sc.quete]?.type === "principale");
-			marque.Text = principale ? '<font color="#ffd166">⭐</font>' : scenes.size() > 0 ? '<font color="#9fd3ff">●</font>' : "";
+			const rendre = scenes.some((sc) => sc.rend_quete === true);
+			marque.Text = rendre ? '<font color="#ffd166">?</font>' : principale ? '<font color="#ffd166">!</font>' : scenes.size() > 0 ? '<font color="#d0d6e0">!</font>' : "";
 			(marque.Parent as BillboardGui).Enabled = ok;
 		}
 	}
@@ -180,10 +183,11 @@ export function allerAuLieu(id: string) {
 }
 
 /** Appelle `gerer(lieu, action)` quand le joueur appuie sur E : entrer, sortir, parler, contrats, boutique, grimoire, tout. */
-export function surInteraction(gerer: (lieu: string, action: string) => void) {
+export function surInteraction(gerer: (lieu: string, action: string, pnj?: string) => void) {
 	ProximityPromptService.PromptTriggered.Connect((invite) => {
 		const lieu = invite.GetAttribute("Lieu");
 		const action = invite.GetAttribute("Action");
-		if (typeIs(lieu, "string")) gerer(lieu, typeIs(action, "string") ? action : "entrer");
+		const pnj = invite.Parent?.Parent?.GetAttribute("Pnj");
+		if (typeIs(lieu, "string")) gerer(lieu, typeIs(action, "string") ? action : "entrer", typeIs(pnj, "string") ? pnj : undefined);
 	});
 }

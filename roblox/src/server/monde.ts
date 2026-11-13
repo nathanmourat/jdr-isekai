@@ -105,6 +105,23 @@ function construire(l: LieuDef, centre: Vector3, parent: Model): Vector3 {
 			for (let i = -4; i <= 4; i++) bloc(new Vector3(0.5, 3, 0.5), centre.add(new Vector3(i * 4 - 2, 1.5, 15)), C.bois, { matiere: Enum.Material.Wood, parent });
 			return centre.add(new Vector3(0, 0, 9));
 		}
+		case "boutique": {
+			maison(centre, 14, 12, 9, C.toitBleu, parent, { murs: Color3.fromRGB(225, 210, 170) });
+			const enseigne = bloc(new Vector3(5, 2, 0.4), centre.add(new Vector3(0, 7.8, 6.4)), C.bois, { matiere: Enum.Material.Wood, parent });
+			const surface = new Instance("SurfaceGui");
+			surface.Face = Enum.NormalId.Front;
+			const t = new Instance("TextLabel");
+			t.Size = UDim2.fromScale(1, 1);
+			t.BackgroundTransparency = 1;
+			t.Text = "COMPTOIR";
+			t.Font = Enum.Font.Fantasy;
+			t.TextScaled = true;
+			t.TextColor3 = C.or;
+			t.Parent = surface;
+			surface.Parent = enseigne;
+			for (const [x, z] of [[6, 8], [-6, 8]] as const) tonneau(centre.add(new Vector3(x, 0, z)), parent);
+			return centre.add(new Vector3(0, 0, 7.5));
+		}
 		case "crypte-fontaine": {
 			terrain.FillBlock(new CFrame(centre.add(new Vector3(0, -0.5, 4))), new Vector3(30, 1, 30), Enum.Material.Mud);
 			bloc(new Vector3(20, 11, 16), centre.add(new Vector3(0, 5.5, 0)), C.pierreSombre, { matiere: Enum.Material.Slate, parent });

@@ -221,7 +221,7 @@ function redessiner() {
 	bandeau.BackgroundColor3 = jeu.erreur !== undefined ? COULEURS.rouge : COULEURS.fond2;
 }
 
-surInteraction((lieu, action) => {
+surInteraction((lieu, action, pnj) => {
 	if (!jeu.etat || !monHeros()) return;
 	affichage.panneau = undefined;
 	if (action === "entrer") {
@@ -239,6 +239,7 @@ surInteraction((lieu, action) => {
 		affichage.lieu = undefined;
 	} else {
 		affichage.lieu = lieu;
+		affichage.pnj = action === "parler" ? pnj : undefined;
 		affichage.section = action === "parler" || action === "contrats" || action === "boutique" || action === "grimoire" ? action : "tout";
 	}
 	redessiner();
