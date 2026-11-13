@@ -6,12 +6,14 @@ Si une demande est floue ou contradictoire : poser la question plutôt que devin
 
 ## État d'avancement
 - [x] Étape 0 : questions de cadrage (réponses ci-dessous)
-- [ ] Étape 1 : `docs/CONCEPTION.md` rédigé, **en attente de validation**
+- [ ] Étape 1 : `docs/CONCEPTION.md`, `docs/GRAPHISMES.md` et `docs/LISTE-TEXTURES.md` rédigés, **en attente de validation**
 - [ ] Étape 2 : version jouable 1 (création de personnage, prologue, chapitre 1, combat, Aveline, sauvegarde)
 - [ ] Étape 3 et suivantes : chapitres 2 à 6, un par itération
 
 ## Décisions validées (étape 0)
-- **Support** : jeu web (navigateur, PC et mobile).
+- **Support** : jeu web **2D** (navigateur, PC et mobile).
+- **Rendu 2D hybride** : villes et carte du monde = décors cliquables avec portraits ; donjons = vue de dessus en tuiles ; combats = vue de côté avec sprites animés.
+- **Style** : pixel art (tuiles de 32×32, sprites de combat de 64×64, boss de 128×128) + portraits anime en 512×512. **Les textures sont produites par le groupe en parallèle** (spécifications dans `docs/GRAPHISMES.md` et `docs/LISTE-TEXTURES.md`). Toute image manquante est remplacée par un provisoire généré automatiquement : ne jamais bloquer le développement sur une image.
 - **Hébergement** : GitHub Pages (statique) + Supabase gratuit (parties partagées, temps réel). Plus un **mode local** sans compte.
 - **Façon de jouer** : les deux. En direct pour la quête principale et les combats de groupe ; en asynchrone pour le temps libre, les contrats, les compagnes et le prologue.
 - **Narration** : écrite dans des fichiers de données, **sans IA**.
@@ -22,7 +24,7 @@ Si une demande est floue ou contradictoire : poser la question plutôt que devin
 - **Joueurs** : identifiés par **pseudo**, aucun prénom codé en dur.
 
 ## Choix techniques
-- TypeScript + Vite + Svelte ; tests avec Vitest ; Playwright pour le test de bout en bout.
+- TypeScript + Vite + **Phaser 3** (rendu 2D) + Svelte (menus et dialogues par-dessus) ; tests avec Vitest ; Playwright pour le test de bout en bout.
 - Le moteur de règles est **pur** (`src/moteur/`, sans interface ni réseau). Il est réutilisé par les tests et par `scripts/equilibrage.ts`.
 - **Hasard à graine** (RNG reproductible). La synchronisation se fait par **journal d'actions rejoué** (même graine + mêmes actions = même état). Des instantanés réguliers. Le journal d'actions sert aussi de journal de rattrapage.
 - Supabase : connexion anonyme + code de partie à 6 caractères + pseudo. Tables `parties`, `membres`, `actions`, `instantanes` ; règles de sécurité RLS réservées aux membres.

@@ -9,7 +9,12 @@
 
 - **Genre** : jeu de rôle (JDR) isekai/fantasy, au tour par tour, coopératif, en français.
 - **Joueurs** : de 1 à 6, identifiés par un **pseudo**. Un joueur peut rejoindre la partie à tout moment.
-- **Support** : jeu web dans le navigateur, sur PC comme sur mobile. On envoie un lien et un **code de partie** à 6 caractères.
+- **Support** : jeu web **en 2D** dans le navigateur, sur PC comme sur mobile. On envoie un lien et un **code de partie** à 6 caractères.
+- **Rendu 2D hybride** :
+  - les **villes et la carte du monde** sont des décors illustrés cliquables (PNJ, lieux), avec des **portraits** en dialogue ;
+  - les **donjons** s'explorent en **vue de dessus**, sur des cartes en tuiles où l'on déplace son héros ;
+  - les **combats** se jouent en **vue de côté**, avec des sprites animés.
+- **Style graphique** : **pixel art** pour le monde, les sprites, les combats et l'interface ; **portraits illustrés en style anime** pour les personnages. Le groupe produit les textures en parallèle, selon [`GRAPHISMES.md`](GRAPHISMES.md) et [`LISTE-TEXTURES.md`](LISTE-TEXTURES.md). En attendant, des images provisoires sont générées automatiquement.
 - **Façon de jouer** :
   - **en direct** (« session ») : la quête principale et les combats de groupe se jouent ensemble, chacun sur son écran ;
   - **en asynchrone** : le temps libre, les contrats de guilde, les dialogues avec les compagnes et le prologue d'enfance se jouent chacun quand il veut.
@@ -643,7 +648,7 @@ Chaque fin comprend un **épilogue par héros** (son âge en 1030, son domaine, 
 ```
  Navigateur de chaque joueur                         En ligne (gratuit)
 ┌──────────────────────────────────┐            ┌──────────────────────┐
-│  Interface (Svelte, en français) │            │  GitHub Pages        │
+│  Rendu 2D (Phaser) + menus (Svelte)│            │  GitHub Pages        │
 │        ↓ actions   ↑ état         │  ← site ── │  (fichiers du jeu)   │
 │  MOTEUR DE RÈGLES (TypeScript)   │            └──────────────────────┘
 │  combat · XP · affinité · temps  │            ┌──────────────────────┐
@@ -653,6 +658,8 @@ Chaque fin comprend un **épilogue par héros** (son âge en 1030, son domaine, 
 └──────────────────────────────────┘            └──────────────────────┘
 ```
 
+- **Le rendu 2D** utilise **Phaser 3**, un moteur de jeu 2D gratuit pour navigateur. Il gère les cartes en tuiles des donjons, les sprites animés, les effets et la caméra. Les **menus, dialogues et fiches** sont faits en Svelte par-dessus, ce qui donne un texte net et facile à lire sur mobile. Toutes les images sont chargées depuis `assets/` : **une image manquante est remplacée par un provisoire**, et `npm run assets:manquants` liste ce qu'il reste à fournir.
+- **Exploration à plusieurs** : dans un donjon, le groupe se déplace **ensemble** (le meneur du jour dirige, les autres suivent). Cela évite de synchroniser 6 déplacements en temps réel. Chaque joueur voit le même groupe sur son écran.
 - **Le contenu** (classes, dons, ennemis, quêtes, compagnes, dialogues, calendrier, réglages) est écrit dans des **fichiers YAML** du dossier `content/`. Pour ajouter une quête ou une compagne, on ajoute un fichier, sans toucher au code. Un vérificateur signale en français toute erreur, par exemple un champ manquant.
 - **Le moteur de règles** est le « cerveau » du jeu. Il ne s'occupe ni de l'affichage ni d'Internet. On peut donc le tester automatiquement et l'utiliser dans le **script de simulation d'équilibrage**.
 - **La synchronisation** : chaque joueur envoie des **actions** (« Kaya attaque le gobelin 2 »), rangées dans l'ordre dans Supabase. Chaque navigateur rejoue la même liste avec le même « dé truqué reproductible » (un hasard à graine) et obtient donc **exactement le même état**. La même liste sert de **sauvegarde** et de **journal**.
@@ -680,7 +687,8 @@ Chaque fin comprend un **épilogue par héros** (son âge en 1030, son domaine, 
 ## 13. Ce que contiendra la version jouable 1
 
 - Créer ou rejoindre une partie (code + pseudo), en mode local et en ligne.
-- Créer son personnage : les 10 classes, les 12 dons, invoqué ou réincarné.
+- Créer son personnage : les 10 classes, les 12 dons, invoqué ou réincarné, avec import d'un portrait personnel.
+- La carte d'Aubeclaire cliquable, les décors de ville, **le donjon de la Crypte de la Fontaine en vue de dessus**, et les combats 2D animés (avec les textures livrées ou les provisoires).
 - **Le prologue d'enfance** pour les réincarnés.
 - **Le chapitre 1 complet** : quête principale, 4 quêtes secondaires et plus, contrats de guilde.
 - Le combat au tour par tour, avec compétences, compagne et difficulté adaptée.
@@ -700,3 +708,5 @@ Chaque fin comprend un **épilogue par héros** (son âge en 1030, son domaine, 
 5. Les **votes** pour les décisions de groupe, avec un « meneur du jour » en cas d'égalité ?
 6. Les **4 fins** et leurs conditions ?
 7. La **race** sans effet sur les caractéristiques (choix seulement narratif) ?
+8. Dans les donjons, le groupe se déplace **ensemble**, dirigé par le meneur du jour, plutôt que chacun séparément ?
+9. Le cahier des charges graphique (tuiles de **32 × 32**, sprites de combat de **64 × 64**, portraits de **512 × 512**) convient-il aux packs ou à l'outil que vous comptez utiliser ?
