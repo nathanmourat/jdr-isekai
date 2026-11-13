@@ -16,13 +16,6 @@ objets:
   - { id: fleur-des-champs, nom: "Bouquet de fleurs des champs", description: "Simple et joli.", type: cadeau, prix: 4 }
   - { id: livre-ancien, nom: "Livre ancien", description: "Chroniques de chevalerie.", type: cadeau, prix: 25 }
   # ── Équipement ──
-  - { id: epee-courte, nom: "Épée courte", description: "+2 de puissance d'attaque.", type: equipement, emplacement: arme, prix: 40, bonus: { puissance: 2 } }
-  - { id: dague, nom: "Dague fine", description: "+1 de puissance, +1 AGI.", type: equipement, emplacement: arme, prix: 35, bonus: { puissance: 1, caracs: { AGI: 1 } } }
-  - { id: baton-apprenti, nom: "Bâton d'apprenti", description: "+1 INT, +1 ESP.", type: equipement, emplacement: arme, prix: 40, bonus: { caracs: { INT: 1, ESP: 1 } } }
-  - { id: arc-court, nom: "Arc court", description: "+2 de puissance d'attaque.", type: equipement, emplacement: arme, prix: 40, bonus: { puissance: 2 } }
-  - { id: bouclier-bois, nom: "Bouclier de bois", description: "+3 d'armure.", type: equipement, emplacement: accessoire, prix: 30, bonus: { armure: 3 } }
-  - { id: armure-cuir, nom: "Armure de cuir", description: "+3 d'armure.", type: equipement, emplacement: armure, prix: 45, bonus: { armure: 3 } }
-  - { id: robe-mage, nom: "Robe de mage", description: "+1 d'armure, +1 ESP.", type: equipement, emplacement: armure, prix: 40, bonus: { armure: 1, caracs: { ESP: 1 } } }
   # ── Quête et matériaux ──
   - { id: sceau-cendre, nom: "Sceau cendré", description: "Fragment de pierre noire marqué d'une rune violette.", type: quete }
   - { id: cle-crypte, nom: "Clé de bronze de la crypte", description: "Ouvre la salle du fond de la Crypte de la Fontaine.", type: quete }

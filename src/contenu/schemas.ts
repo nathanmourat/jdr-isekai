@@ -177,6 +177,9 @@ export const zRencontre = z.object({
 });
 export type Rencontre = z.infer<typeof zRencontre>;
 
+export const RARETES = ['commun', 'peu-commun', 'rare', 'epique', 'legendaire', 'mythique'] as const;
+export type Rarete = (typeof RARETES)[number];
+
 export const zObjet = z.object({
   id: z.string(),
   nom: z.string(),
@@ -187,6 +190,27 @@ export const zObjet = z.object({
   cible: zCible.default('soi'),
   emplacement: z.enum(['arme', 'armure', 'accessoire']).optional(),
   bonus: z.object({ armure: z.number().default(0), puissance: z.number().default(0), caracs: zCaracsPartielles.default({}) }).optional(),
+  // ── Équipement (catalogue validé par le groupe, voir equipements/CONCEPTION-EQUIPEMENTS.md)
+  rarete: z.enum(RARETES).optional(),
+  /** palier d'équipement : I à VI (un par chapitre), X pour les mythiques */
+  palier: z.string().optional(),
+  /** niveau requis pour l'équiper */
+  niveau: z.number().int().optional(),
+  /** type d'arme, de tenue ou d'accessoire (epee, arc, lourde, anneau…) */
+  categorie: z.string().optional(),
+  /** classes qui peuvent l'équiper (absent = toutes) */
+  classes: z.array(z.string()).optional(),
+  /** effets spéciaux (rare et plus) */
+  effets_equipement: z.array(z.object({
+    effet: z.enum(['critique', 'precision', 'resistance', 'touche', 'mana', 'vigueur']),
+    valeur: z.number().optional(),
+    puissance: z.number().optional(),
+    element: zElement.optional(),
+  })).default([]),
+  /** pouvoir unique (légendaires et mythiques), décrit en texte ; son effet est codé dans src/moteur/equipement.ts */
+  pouvoir_unique: z.string().optional(),
+  /** un seul exemplaire par partie (armes mythiques) */
+  unique_par_partie: z.boolean().default(false),
 });
 export type Objet = z.infer<typeof zObjet>;
 

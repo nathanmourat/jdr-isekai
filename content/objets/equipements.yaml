@@ -1,0 +1,7496 @@
+# Catalogue d'équipements (364 objets) — copie de equipements/equipements.yaml, généré par equipements/generer.py.
+# Pour le modifier : equipements/objets-nommes.yaml puis python3 equipements/generer.py, puis recopier ici.
+# Champs propres à l'équipement (lus par src/moteur/equipement.ts) : rarete, niveau, categorie, classes,
+# palier, effets_equipement, pouvoir_unique, unique_par_partie. Voir CONCEPTION-EQUIPEMENTS.md § 12.
+objets:
+- id: epee-courte
+  nom: Épée courte
+  description: +2 de puissance d'attaque.
+  type: equipement
+  emplacement: arme
+  prix: 40
+  bonus:
+    puissance: 2
+  rarete: commun
+  palier: I
+  niveau: 1
+  categorie: epee
+  classes:
+  - lame-runique
+  - gardien
+- id: epee-i-maitre
+  nom: Épée courte de maître
+  description: Version soignée par un maître artisan. +1 de puissance, +2 FOR.
+  type: equipement
+  emplacement: arme
+  prix: 65
+  bonus:
+    puissance: 1
+    caracs:
+      FOR: 2
+  rarete: peu-commun
+  palier: I
+  niveau: 1
+  categorie: epee
+  classes:
+  - lame-runique
+  - gardien
+- id: epee-ii
+  nom: Cimeterre des caravanes
+  description: Épée du palier II. +1 de puissance, +2 FOR, +1 VIT.
+  type: equipement
+  emplacement: arme
+  prix: 145
+  bonus:
+    puissance: 1
+    caracs:
+      FOR: 2
+      VIT: 1
+  rarete: commun
+  palier: II
+  niveau: 8
+  categorie: epee
+  classes:
+  - lame-runique
+  - gardien
+- id: epee-ii-maitre
+  nom: Cimeterre des caravanes de maître
+  description: Version soignée par un maître artisan. +1 de puissance, +3 FOR, +1 VIT.
+  type: equipement
+  emplacement: arme
+  prix: 180
+  bonus:
+    puissance: 1
+    caracs:
+      FOR: 3
+      VIT: 1
+  rarete: peu-commun
+  palier: II
+  niveau: 8
+  categorie: epee
+  classes:
+  - lame-runique
+  - gardien
+- id: epee-iii
+  nom: Épée-feuille sylvaine
+  description: Épée du palier III. +2 de puissance, +4 FOR, +1 VIT.
+  type: equipement
+  emplacement: arme
+  prix: 350
+  bonus:
+    puissance: 2
+    caracs:
+      FOR: 4
+      VIT: 1
+  rarete: commun
+  palier: III
+  niveau: 15
+  categorie: epee
+  classes:
+  - lame-runique
+  - gardien
+- id: epee-iii-maitre
+  nom: Épée-feuille sylvaine de maître
+  description: Version soignée par un maître artisan. +2 de puissance, +5 FOR, +1 VIT.
+  type: equipement
+  emplacement: arme
+  prix: 400
+  bonus:
+    puissance: 2
+    caracs:
+      FOR: 5
+      VIT: 1
+  rarete: peu-commun
+  palier: III
+  niveau: 15
+  categorie: epee
+  classes:
+  - lame-runique
+  - gardien
+- id: epee-iv
+  nom: Épée de Grisfer
+  description: Épée du palier IV. +3 de puissance, +5 FOR, +1 VIT.
+  type: equipement
+  emplacement: arme
+  prix: 575
+  bonus:
+    puissance: 3
+    caracs:
+      FOR: 5
+      VIT: 1
+  rarete: commun
+  palier: IV
+  niveau: 22
+  categorie: epee
+  classes:
+  - lame-runique
+  - gardien
+- id: epee-iv-maitre
+  nom: Épée de Grisfer de maître
+  description: Version soignée par un maître artisan. +3 de puissance, +6 FOR, +1 VIT.
+  type: equipement
+  emplacement: arme
+  prix: 640
+  bonus:
+    puissance: 3
+    caracs:
+      FOR: 6
+      VIT: 1
+  rarete: peu-commun
+  palier: IV
+  niveau: 22
+  categorie: epee
+  classes:
+  - lame-runique
+  - gardien
+- id: epee-v
+  nom: Épée d'aube-acier
+  description: Épée du palier V. +3 de puissance, +6 FOR, +1 VIT.
+  type: equipement
+  emplacement: arme
+  prix: 760
+  bonus:
+    puissance: 3
+    caracs:
+      FOR: 6
+      VIT: 1
+  rarete: commun
+  palier: V
+  niveau: 28
+  categorie: epee
+  classes:
+  - lame-runique
+  - gardien
+- id: epee-v-maitre
+  nom: Épée d'aube-acier de maître
+  description: Version soignée par un maître artisan. +4 de puissance, +6 FOR, +2 VIT.
+  type: equipement
+  emplacement: arme
+  prix: 910
+  bonus:
+    puissance: 4
+    caracs:
+      FOR: 6
+      VIT: 2
+  rarete: peu-commun
+  palier: V
+  niveau: 28
+  categorie: epee
+  classes:
+  - lame-runique
+  - gardien
+- id: epee-vi
+  nom: Épée de cendracier
+  description: Épée du palier VI. +4 de puissance, +6 FOR, +2 VIT.
+  type: equipement
+  emplacement: arme
+  prix: 1055
+  bonus:
+    puissance: 4
+    caracs:
+      FOR: 6
+      VIT: 2
+  rarete: commun
+  palier: VI
+  niveau: 34
+  categorie: epee
+  classes:
+  - lame-runique
+  - gardien
+- id: epee-vi-maitre
+  nom: Épée de cendracier de maître
+  description: Version soignée par un maître artisan. +5 de puissance, +8 FOR, +2 VIT.
+  type: equipement
+  emplacement: arme
+  prix: 1320
+  bonus:
+    puissance: 5
+    caracs:
+      FOR: 8
+      VIT: 2
+  rarete: peu-commun
+  palier: VI
+  niveau: 34
+  categorie: epee
+  classes:
+  - lame-runique
+  - gardien
+- id: deux-mains-i
+  nom: Hache de bûcheron
+  description: Arme à deux mains du palier I. +2 FOR.
+  type: equipement
+  emplacement: arme
+  prix: 45
+  bonus:
+    caracs:
+      FOR: 2
+  rarete: commun
+  palier: I
+  niveau: 1
+  categorie: deux-mains
+  classes:
+  - berserker
+  - lame-runique
+- id: deux-mains-i-maitre
+  nom: Hache de bûcheron de maître
+  description: Version soignée par un maître artisan. +1 de puissance, +2 FOR.
+  type: equipement
+  emplacement: arme
+  prix: 65
+  bonus:
+    puissance: 1
+    caracs:
+      FOR: 2
+  rarete: peu-commun
+  palier: I
+  niveau: 1
+  categorie: deux-mains
+  classes:
+  - berserker
+  - lame-runique
+- id: deux-mains-ii
+  nom: Grande hache du désert
+  description: Arme à deux mains du palier II. +1 de puissance, +3 FOR.
+  type: equipement
+  emplacement: arme
+  prix: 145
+  bonus:
+    puissance: 1
+    caracs:
+      FOR: 3
+  rarete: commun
+  palier: II
+  niveau: 8
+  categorie: deux-mains
+  classes:
+  - berserker
+  - lame-runique
+- id: deux-mains-ii-maitre
+  nom: Grande hache du désert de maître
+  description: Version soignée par un maître artisan. +1 de puissance, +4 FOR.
+  type: equipement
+  emplacement: arme
+  prix: 180
+  bonus:
+    puissance: 1
+    caracs:
+      FOR: 4
+  rarete: peu-commun
+  palier: II
+  niveau: 8
+  categorie: deux-mains
+  classes:
+  - berserker
+  - lame-runique
+- id: deux-mains-iii
+  nom: Espadon sylvain
+  description: Arme à deux mains du palier III. +2 de puissance, +5 FOR.
+  type: equipement
+  emplacement: arme
+  prix: 350
+  bonus:
+    puissance: 2
+    caracs:
+      FOR: 5
+  rarete: commun
+  palier: III
+  niveau: 15
+  categorie: deux-mains
+  classes:
+  - berserker
+  - lame-runique
+- id: deux-mains-iii-maitre
+  nom: Espadon sylvain de maître
+  description: Version soignée par un maître artisan. +2 de puissance, +6 FOR.
+  type: equipement
+  emplacement: arme
+  prix: 400
+  bonus:
+    puissance: 2
+    caracs:
+      FOR: 6
+  rarete: peu-commun
+  palier: III
+  niveau: 15
+  categorie: deux-mains
+  classes:
+  - berserker
+  - lame-runique
+- id: deux-mains-iv
+  nom: Espadon de forge-lave
+  description: Arme à deux mains du palier IV. +3 de puissance, +6 FOR.
+  type: equipement
+  emplacement: arme
+  prix: 575
+  bonus:
+    puissance: 3
+    caracs:
+      FOR: 6
+  rarete: commun
+  palier: IV
+  niveau: 22
+  categorie: deux-mains
+  classes:
+  - berserker
+  - lame-runique
+- id: deux-mains-iv-maitre
+  nom: Espadon de forge-lave de maître
+  description: Version soignée par un maître artisan. +3 de puissance, +7 FOR.
+  type: equipement
+  emplacement: arme
+  prix: 640
+  bonus:
+    puissance: 3
+    caracs:
+      FOR: 7
+  rarete: peu-commun
+  palier: IV
+  niveau: 22
+  categorie: deux-mains
+  classes:
+  - berserker
+  - lame-runique
+- id: deux-mains-v
+  nom: Grande hache d'aube-acier
+  description: Arme à deux mains du palier V. +3 de puissance, +7 FOR.
+  type: equipement
+  emplacement: arme
+  prix: 760
+  bonus:
+    puissance: 3
+    caracs:
+      FOR: 7
+  rarete: commun
+  palier: V
+  niveau: 28
+  categorie: deux-mains
+  classes:
+  - berserker
+  - lame-runique
+- id: deux-mains-v-maitre
+  nom: Grande hache d'aube-acier de maître
+  description: Version soignée par un maître artisan. +4 de puissance, +8 FOR.
+  type: equipement
+  emplacement: arme
+  prix: 910
+  bonus:
+    puissance: 4
+    caracs:
+      FOR: 8
+  rarete: peu-commun
+  palier: V
+  niveau: 28
+  categorie: deux-mains
+  classes:
+  - berserker
+  - lame-runique
+- id: deux-mains-vi
+  nom: Espadon de cendracier
+  description: Arme à deux mains du palier VI. +4 de puissance, +8 FOR.
+  type: equipement
+  emplacement: arme
+  prix: 1055
+  bonus:
+    puissance: 4
+    caracs:
+      FOR: 8
+  rarete: commun
+  palier: VI
+  niveau: 34
+  categorie: deux-mains
+  classes:
+  - berserker
+  - lame-runique
+- id: deux-mains-vi-maitre
+  nom: Espadon de cendracier de maître
+  description: Version soignée par un maître artisan. +5 de puissance, +10 FOR.
+  type: equipement
+  emplacement: arme
+  prix: 1320
+  bonus:
+    puissance: 5
+    caracs:
+      FOR: 10
+  rarete: peu-commun
+  palier: VI
+  niveau: 34
+  categorie: deux-mains
+  classes:
+  - berserker
+  - lame-runique
+- id: masse-i
+  nom: Masse de fer
+  description: Masse / marteau du palier I. +1 FOR, +1 VIT.
+  type: equipement
+  emplacement: arme
+  prix: 45
+  bonus:
+    caracs:
+      FOR: 1
+      VIT: 1
+  rarete: commun
+  palier: I
+  niveau: 1
+  categorie: masse
+  classes:
+  - gardien
+  - berserker
+- id: masse-i-maitre
+  nom: Masse de fer de maître
+  description: Version soignée par un maître artisan. +1 de puissance, +1 FOR, +1 VIT.
+  type: equipement
+  emplacement: arme
+  prix: 65
+  bonus:
+    puissance: 1
+    caracs:
+      FOR: 1
+      VIT: 1
+  rarete: peu-commun
+  palier: I
+  niveau: 1
+  categorie: masse
+  classes:
+  - gardien
+  - berserker
+- id: masse-ii
+  nom: Marteau des caravaniers
+  description: Masse / marteau du palier II. +1 de puissance, +2 FOR, +1 VIT.
+  type: equipement
+  emplacement: arme
+  prix: 145
+  bonus:
+    puissance: 1
+    caracs:
+      FOR: 2
+      VIT: 1
+  rarete: commun
+  palier: II
+  niveau: 8
+  categorie: masse
+  classes:
+  - gardien
+  - berserker
+- id: masse-ii-maitre
+  nom: Marteau des caravaniers de maître
+  description: Version soignée par un maître artisan. +1 de puissance, +3 FOR, +1 VIT.
+  type: equipement
+  emplacement: arme
+  prix: 180
+  bonus:
+    puissance: 1
+    caracs:
+      FOR: 3
+      VIT: 1
+  rarete: peu-commun
+  palier: II
+  niveau: 8
+  categorie: masse
+  classes:
+  - gardien
+  - berserker
+- id: masse-iii
+  nom: Masse de cœur-de-chêne
+  description: Masse / marteau du palier III. +2 de puissance, +4 FOR, +1 VIT.
+  type: equipement
+  emplacement: arme
+  prix: 350
+  bonus:
+    puissance: 2
+    caracs:
+      FOR: 4
+      VIT: 1
+  rarete: commun
+  palier: III
+  niveau: 15
+  categorie: masse
+  classes:
+  - gardien
+  - berserker
+- id: masse-iii-maitre
+  nom: Masse de cœur-de-chêne de maître
+  description: Version soignée par un maître artisan. +2 de puissance, +4 FOR, +2 VIT.
+  type: equipement
+  emplacement: arme
+  prix: 400
+  bonus:
+    puissance: 2
+    caracs:
+      FOR: 4
+      VIT: 2
+  rarete: peu-commun
+  palier: III
+  niveau: 15
+  categorie: masse
+  classes:
+  - gardien
+  - berserker
+- id: masse-iv
+  nom: Marteau de forge naine
+  description: Masse / marteau du palier IV. +3 de puissance, +4 FOR, +2 VIT.
+  type: equipement
+  emplacement: arme
+  prix: 575
+  bonus:
+    puissance: 3
+    caracs:
+      FOR: 4
+      VIT: 2
+  rarete: commun
+  palier: IV
+  niveau: 22
+  categorie: masse
+  classes:
+  - gardien
+  - berserker
+- id: masse-iv-maitre
+  nom: Marteau de forge naine de maître
+  description: Version soignée par un maître artisan. +3 de puissance, +5 FOR, +2 VIT.
+  type: equipement
+  emplacement: arme
+  prix: 640
+  bonus:
+    puissance: 3
+    caracs:
+      FOR: 5
+      VIT: 2
+  rarete: peu-commun
+  palier: IV
+  niveau: 22
+  categorie: masse
+  classes:
+  - gardien
+  - berserker
+- id: masse-v
+  nom: Marteau d'aube-acier
+  description: Masse / marteau du palier V. +3 de puissance, +5 FOR, +2 VIT.
+  type: equipement
+  emplacement: arme
+  prix: 760
+  bonus:
+    puissance: 3
+    caracs:
+      FOR: 5
+      VIT: 2
+  rarete: commun
+  palier: V
+  niveau: 28
+  categorie: masse
+  classes:
+  - gardien
+  - berserker
+- id: masse-v-maitre
+  nom: Marteau d'aube-acier de maître
+  description: Version soignée par un maître artisan. +4 de puissance, +6 FOR, +2 VIT.
+  type: equipement
+  emplacement: arme
+  prix: 910
+  bonus:
+    puissance: 4
+    caracs:
+      FOR: 6
+      VIT: 2
+  rarete: peu-commun
+  palier: V
+  niveau: 28
+  categorie: masse
+  classes:
+  - gardien
+  - berserker
+- id: masse-vi
+  nom: Masse de cendracier
+  description: Masse / marteau du palier VI. +4 de puissance, +6 FOR, +2 VIT.
+  type: equipement
+  emplacement: arme
+  prix: 1055
+  bonus:
+    puissance: 4
+    caracs:
+      FOR: 6
+      VIT: 2
+  rarete: commun
+  palier: VI
+  niveau: 34
+  categorie: masse
+  classes:
+  - gardien
+  - berserker
+- id: masse-vi-maitre
+  nom: Masse de cendracier de maître
+  description: Version soignée par un maître artisan. +5 de puissance, +7 FOR, +3 VIT.
+  type: equipement
+  emplacement: arme
+  prix: 1320
+  bonus:
+    puissance: 5
+    caracs:
+      FOR: 7
+      VIT: 3
+  rarete: peu-commun
+  palier: VI
+  niveau: 34
+  categorie: masse
+  classes:
+  - gardien
+  - berserker
+- id: dague
+  nom: Dague fine
+  description: +1 de puissance, +1 AGI.
+  type: equipement
+  emplacement: arme
+  prix: 35
+  bonus:
+    puissance: 1
+    caracs:
+      AGI: 1
+  rarete: commun
+  palier: I
+  niveau: 1
+  categorie: dague
+  classes:
+  - ombre
+  - barde
+- id: dague-i-maitre
+  nom: Dague fine de maître
+  description: Version soignée par un maître artisan. +1 de puissance, +2 AGI.
+  type: equipement
+  emplacement: arme
+  prix: 65
+  bonus:
+    puissance: 1
+    caracs:
+      AGI: 2
+  rarete: peu-commun
+  palier: I
+  niveau: 1
+  categorie: dague
+  classes:
+  - ombre
+  - barde
+- id: dague-ii
+  nom: Kriss du désert
+  description: Dague / lame courte du palier II. +1 de puissance, +2 AGI, +1 CHA.
+  type: equipement
+  emplacement: arme
+  prix: 145
+  bonus:
+    puissance: 1
+    caracs:
+      AGI: 2
+      CHA: 1
+  rarete: commun
+  palier: II
+  niveau: 8
+  categorie: dague
+  classes:
+  - ombre
+  - barde
+- id: dague-ii-maitre
+  nom: Kriss du désert de maître
+  description: Version soignée par un maître artisan. +1 de puissance, +3 AGI, +1 CHA.
+  type: equipement
+  emplacement: arme
+  prix: 180
+  bonus:
+    puissance: 1
+    caracs:
+      AGI: 3
+      CHA: 1
+  rarete: peu-commun
+  palier: II
+  niveau: 8
+  categorie: dague
+  classes:
+  - ombre
+  - barde
+- id: dague-iii
+  nom: Dague-épine sylvaine
+  description: Dague / lame courte du palier III. +2 de puissance, +4 AGI, +1 CHA.
+  type: equipement
+  emplacement: arme
+  prix: 350
+  bonus:
+    puissance: 2
+    caracs:
+      AGI: 4
+      CHA: 1
+  rarete: commun
+  palier: III
+  niveau: 15
+  categorie: dague
+  classes:
+  - ombre
+  - barde
+- id: dague-iii-maitre
+  nom: Dague-épine sylvaine de maître
+  description: Version soignée par un maître artisan. +2 de puissance, +5 AGI, +1 CHA.
+  type: equipement
+  emplacement: arme
+  prix: 400
+  bonus:
+    puissance: 2
+    caracs:
+      AGI: 5
+      CHA: 1
+  rarete: peu-commun
+  palier: III
+  niveau: 15
+  categorie: dague
+  classes:
+  - ombre
+  - barde
+- id: dague-iv
+  nom: Stylet de Grisfer
+  description: Dague / lame courte du palier IV. +3 de puissance, +5 AGI, +1 CHA.
+  type: equipement
+  emplacement: arme
+  prix: 575
+  bonus:
+    puissance: 3
+    caracs:
+      AGI: 5
+      CHA: 1
+  rarete: commun
+  palier: IV
+  niveau: 22
+  categorie: dague
+  classes:
+  - ombre
+  - barde
+- id: dague-iv-maitre
+  nom: Stylet de Grisfer de maître
+  description: Version soignée par un maître artisan. +3 de puissance, +6 AGI, +1 CHA.
+  type: equipement
+  emplacement: arme
+  prix: 640
+  bonus:
+    puissance: 3
+    caracs:
+      AGI: 6
+      CHA: 1
+  rarete: peu-commun
+  palier: IV
+  niveau: 22
+  categorie: dague
+  classes:
+  - ombre
+  - barde
+- id: dague-v
+  nom: Dague d'aube-acier
+  description: Dague / lame courte du palier V. +3 de puissance, +6 AGI, +1 CHA.
+  type: equipement
+  emplacement: arme
+  prix: 760
+  bonus:
+    puissance: 3
+    caracs:
+      AGI: 6
+      CHA: 1
+  rarete: commun
+  palier: V
+  niveau: 28
+  categorie: dague
+  classes:
+  - ombre
+  - barde
+- id: dague-v-maitre
+  nom: Dague d'aube-acier de maître
+  description: Version soignée par un maître artisan. +4 de puissance, +6 AGI, +2 CHA.
+  type: equipement
+  emplacement: arme
+  prix: 910
+  bonus:
+    puissance: 4
+    caracs:
+      AGI: 6
+      CHA: 2
+  rarete: peu-commun
+  palier: V
+  niveau: 28
+  categorie: dague
+  classes:
+  - ombre
+  - barde
+- id: dague-vi
+  nom: Dague de cendracier
+  description: Dague / lame courte du palier VI. +4 de puissance, +6 AGI, +2 CHA.
+  type: equipement
+  emplacement: arme
+  prix: 1055
+  bonus:
+    puissance: 4
+    caracs:
+      AGI: 6
+      CHA: 2
+  rarete: commun
+  palier: VI
+  niveau: 34
+  categorie: dague
+  classes:
+  - ombre
+  - barde
+- id: dague-vi-maitre
+  nom: Dague de cendracier de maître
+  description: Version soignée par un maître artisan. +5 de puissance, +8 AGI, +2 CHA.
+  type: equipement
+  emplacement: arme
+  prix: 1320
+  bonus:
+    puissance: 5
+    caracs:
+      AGI: 8
+      CHA: 2
+  rarete: peu-commun
+  palier: VI
+  niveau: 34
+  categorie: dague
+  classes:
+  - ombre
+  - barde
+- id: arc-court
+  nom: Arc court
+  description: +2 de puissance d'attaque.
+  type: equipement
+  emplacement: arme
+  prix: 40
+  bonus:
+    puissance: 2
+  rarete: commun
+  palier: I
+  niveau: 1
+  categorie: arc
+  classes:
+  - archer
+- id: arc-i-maitre
+  nom: Arc court de maître
+  description: Version soignée par un maître artisan. +1 de puissance, +1 AGI, +1 ESP.
+  type: equipement
+  emplacement: arme
+  prix: 65
+  bonus:
+    puissance: 1
+    caracs:
+      AGI: 1
+      ESP: 1
+  rarete: peu-commun
+  palier: I
+  niveau: 1
+  categorie: arc
+  classes:
+  - archer
+- id: arc-ii
+  nom: Arc composite du désert
+  description: Arc du palier II. +1 de puissance, +2 AGI, +1 ESP.
+  type: equipement
+  emplacement: arme
+  prix: 145
+  bonus:
+    puissance: 1
+    caracs:
+      AGI: 2
+      ESP: 1
+  rarete: commun
+  palier: II
+  niveau: 8
+  categorie: arc
+  classes:
+  - archer
+- id: arc-ii-maitre
+  nom: Arc composite du désert de maître
+  description: Version soignée par un maître artisan. +1 de puissance, +3 AGI, +1 ESP.
+  type: equipement
+  emplacement: arme
+  prix: 180
+  bonus:
+    puissance: 1
+    caracs:
+      AGI: 3
+      ESP: 1
+  rarete: peu-commun
+  palier: II
+  niveau: 8
+  categorie: arc
+  classes:
+  - archer
+- id: arc-iii
+  nom: Arc long sylvain
+  description: Arc du palier III. +2 de puissance, +4 AGI, +1 ESP.
+  type: equipement
+  emplacement: arme
+  prix: 350
+  bonus:
+    puissance: 2
+    caracs:
+      AGI: 4
+      ESP: 1
+  rarete: commun
+  palier: III
+  niveau: 15
+  categorie: arc
+  classes:
+  - archer
+- id: arc-iii-maitre
+  nom: Arc long sylvain de maître
+  description: Version soignée par un maître artisan. +2 de puissance, +4 AGI, +2 ESP.
+  type: equipement
+  emplacement: arme
+  prix: 400
+  bonus:
+    puissance: 2
+    caracs:
+      AGI: 4
+      ESP: 2
+  rarete: peu-commun
+  palier: III
+  niveau: 15
+  categorie: arc
+  classes:
+  - archer
+- id: arc-iv
+  nom: Arc de fer-souple
+  description: Arc du palier IV. +3 de puissance, +4 AGI, +2 ESP.
+  type: equipement
+  emplacement: arme
+  prix: 575
+  bonus:
+    puissance: 3
+    caracs:
+      AGI: 4
+      ESP: 2
+  rarete: commun
+  palier: IV
+  niveau: 22
+  categorie: arc
+  classes:
+  - archer
+- id: arc-iv-maitre
+  nom: Arc de fer-souple de maître
+  description: Version soignée par un maître artisan. +3 de puissance, +5 AGI, +2 ESP.
+  type: equipement
+  emplacement: arme
+  prix: 640
+  bonus:
+    puissance: 3
+    caracs:
+      AGI: 5
+      ESP: 2
+  rarete: peu-commun
+  palier: IV
+  niveau: 22
+  categorie: arc
+  classes:
+  - archer
+- id: arc-v
+  nom: Arc d'aube-bois
+  description: Arc du palier V. +3 de puissance, +5 AGI, +2 ESP.
+  type: equipement
+  emplacement: arme
+  prix: 760
+  bonus:
+    puissance: 3
+    caracs:
+      AGI: 5
+      ESP: 2
+  rarete: commun
+  palier: V
+  niveau: 28
+  categorie: arc
+  classes:
+  - archer
+- id: arc-v-maitre
+  nom: Arc d'aube-bois de maître
+  description: Version soignée par un maître artisan. +4 de puissance, +6 AGI, +2 ESP.
+  type: equipement
+  emplacement: arme
+  prix: 910
+  bonus:
+    puissance: 4
+    caracs:
+      AGI: 6
+      ESP: 2
+  rarete: peu-commun
+  palier: V
+  niveau: 28
+  categorie: arc
+  classes:
+  - archer
+- id: arc-vi
+  nom: Arc de cendre-if
+  description: Arc du palier VI. +4 de puissance, +6 AGI, +2 ESP.
+  type: equipement
+  emplacement: arme
+  prix: 1055
+  bonus:
+    puissance: 4
+    caracs:
+      AGI: 6
+      ESP: 2
+  rarete: commun
+  palier: VI
+  niveau: 34
+  categorie: arc
+  classes:
+  - archer
+- id: arc-vi-maitre
+  nom: Arc de cendre-if de maître
+  description: Version soignée par un maître artisan. +5 de puissance, +7 AGI, +3 ESP.
+  type: equipement
+  emplacement: arme
+  prix: 1320
+  bonus:
+    puissance: 5
+    caracs:
+      AGI: 7
+      ESP: 3
+  rarete: peu-commun
+  palier: VI
+  niveau: 34
+  categorie: arc
+  classes:
+  - archer
+- id: arbalete-i
+  nom: Arbalète de poing
+  description: Arbalète / lance-fioles du palier I. +1 AGI, +1 INT.
+  type: equipement
+  emplacement: arme
+  prix: 45
+  bonus:
+    caracs:
+      AGI: 1
+      INT: 1
+  rarete: commun
+  palier: I
+  niveau: 1
+  categorie: arbalete
+  classes:
+  - alchimiste
+  - archer
+- id: arbalete-i-maitre
+  nom: Arbalète de poing de maître
+  description: Version soignée par un maître artisan. +1 AGI, +2 INT.
+  type: equipement
+  emplacement: arme
+  prix: 65
+  bonus:
+    caracs:
+      AGI: 1
+      INT: 2
+  rarete: peu-commun
+  palier: I
+  niveau: 1
+  categorie: arbalete
+  classes:
+  - alchimiste
+  - archer
+- id: arbalete-ii
+  nom: Lance-fioles du bazar
+  description: Arbalète / lance-fioles du palier II. +1 de puissance, +1 AGI, +2 INT.
+  type: equipement
+  emplacement: arme
+  prix: 145
+  bonus:
+    puissance: 1
+    caracs:
+      AGI: 1
+      INT: 2
+  rarete: commun
+  palier: II
+  niveau: 8
+  categorie: arbalete
+  classes:
+  - alchimiste
+  - archer
+- id: arbalete-ii-maitre
+  nom: Lance-fioles du bazar de maître
+  description: Version soignée par un maître artisan. +1 de puissance, +2 AGI, +2 INT.
+  type: equipement
+  emplacement: arme
+  prix: 180
+  bonus:
+    puissance: 1
+    caracs:
+      AGI: 2
+      INT: 2
+  rarete: peu-commun
+  palier: II
+  niveau: 8
+  categorie: arbalete
+  classes:
+  - alchimiste
+  - archer
+- id: arbalete-iii
+  nom: Arbalète de bois-vif
+  description: Arbalète / lance-fioles du palier III. +1 de puissance, +2 AGI, +4 INT.
+  type: equipement
+  emplacement: arme
+  prix: 350
+  bonus:
+    puissance: 1
+    caracs:
+      AGI: 2
+      INT: 4
+  rarete: commun
+  palier: III
+  niveau: 15
+  categorie: arbalete
+  classes:
+  - alchimiste
+  - archer
+- id: arbalete-iii-maitre
+  nom: Arbalète de bois-vif de maître
+  description: Version soignée par un maître artisan. +2 de puissance, +2 AGI, +4 INT.
+  type: equipement
+  emplacement: arme
+  prix: 400
+  bonus:
+    puissance: 2
+    caracs:
+      AGI: 2
+      INT: 4
+  rarete: peu-commun
+  palier: III
+  niveau: 15
+  categorie: arbalete
+  classes:
+  - alchimiste
+  - archer
+- id: arbalete-iv
+  nom: Arbalète à vapeur
+  description: Arbalète / lance-fioles du palier IV. +2 de puissance, +3 AGI, +4 INT.
+  type: equipement
+  emplacement: arme
+  prix: 575
+  bonus:
+    puissance: 2
+    caracs:
+      AGI: 3
+      INT: 4
+  rarete: commun
+  palier: IV
+  niveau: 22
+  categorie: arbalete
+  classes:
+  - alchimiste
+  - archer
+- id: arbalete-iv-maitre
+  nom: Arbalète à vapeur de maître
+  description: Version soignée par un maître artisan. +2 de puissance, +3 AGI, +5 INT.
+  type: equipement
+  emplacement: arme
+  prix: 640
+  bonus:
+    puissance: 2
+    caracs:
+      AGI: 3
+      INT: 5
+  rarete: peu-commun
+  palier: IV
+  niveau: 22
+  categorie: arbalete
+  classes:
+  - alchimiste
+  - archer
+- id: arbalete-v
+  nom: Arbalète d'aube-acier
+  description: Arbalète / lance-fioles du palier V. +2 de puissance, +3 AGI, +5 INT.
+  type: equipement
+  emplacement: arme
+  prix: 760
+  bonus:
+    puissance: 2
+    caracs:
+      AGI: 3
+      INT: 5
+  rarete: commun
+  palier: V
+  niveau: 28
+  categorie: arbalete
+  classes:
+  - alchimiste
+  - archer
+- id: arbalete-v-maitre
+  nom: Arbalète d'aube-acier de maître
+  description: Version soignée par un maître artisan. +3 de puissance, +4 AGI, +5 INT.
+  type: equipement
+  emplacement: arme
+  prix: 910
+  bonus:
+    puissance: 3
+    caracs:
+      AGI: 4
+      INT: 5
+  rarete: peu-commun
+  palier: V
+  niveau: 28
+  categorie: arbalete
+  classes:
+  - alchimiste
+  - archer
+- id: arbalete-vi
+  nom: Arbalète de cendracier
+  description: Arbalète / lance-fioles du palier VI. +3 de puissance, +4 AGI, +5 INT.
+  type: equipement
+  emplacement: arme
+  prix: 1055
+  bonus:
+    puissance: 3
+    caracs:
+      AGI: 4
+      INT: 5
+  rarete: commun
+  palier: VI
+  niveau: 34
+  categorie: arbalete
+  classes:
+  - alchimiste
+  - archer
+- id: arbalete-vi-maitre
+  nom: Arbalète de cendracier de maître
+  description: Version soignée par un maître artisan. +3 de puissance, +5 AGI, +7 INT.
+  type: equipement
+  emplacement: arme
+  prix: 1320
+  bonus:
+    puissance: 3
+    caracs:
+      AGI: 5
+      INT: 7
+  rarete: peu-commun
+  palier: VI
+  niveau: 34
+  categorie: arbalete
+  classes:
+  - alchimiste
+  - archer
+- id: baton-apprenti
+  nom: Bâton d'apprenti
+  description: +1 INT, +1 ESP.
+  type: equipement
+  emplacement: arme
+  prix: 40
+  bonus:
+    caracs:
+      INT: 1
+      ESP: 1
+  rarete: commun
+  palier: I
+  niveau: 1
+  categorie: baton
+  classes:
+  - arcaniste
+  - invocateur
+  - guerisseur
+- id: baton-i-maitre
+  nom: Bâton d'apprenti de maître
+  description: Version soignée par un maître artisan. +2 INT, +1 ESP.
+  type: equipement
+  emplacement: arme
+  prix: 65
+  bonus:
+    caracs:
+      INT: 2
+      ESP: 1
+  rarete: peu-commun
+  palier: I
+  niveau: 1
+  categorie: baton
+  classes:
+  - arcaniste
+  - invocateur
+  - guerisseur
+- id: baton-ii
+  nom: Bâton de mage du désert
+  description: Bâton du palier II. +1 de puissance, +2 INT, +1 ESP.
+  type: equipement
+  emplacement: arme
+  prix: 145
+  bonus:
+    puissance: 1
+    caracs:
+      INT: 2
+      ESP: 1
+  rarete: commun
+  palier: II
+  niveau: 8
+  categorie: baton
+  classes:
+  - arcaniste
+  - invocateur
+  - guerisseur
+- id: baton-ii-maitre
+  nom: Bâton de mage du désert de maître
+  description: Version soignée par un maître artisan. +1 de puissance, +2 INT, +2 ESP.
+  type: equipement
+  emplacement: arme
+  prix: 180
+  bonus:
+    puissance: 1
+    caracs:
+      INT: 2
+      ESP: 2
+  rarete: peu-commun
+  palier: II
+  niveau: 8
+  categorie: baton
+  classes:
+  - arcaniste
+  - invocateur
+  - guerisseur
+- id: baton-iii
+  nom: Bâton de bois-de-lune
+  description: Bâton du palier III. +1 de puissance, +3 INT, +3 ESP.
+  type: equipement
+  emplacement: arme
+  prix: 350
+  bonus:
+    puissance: 1
+    caracs:
+      INT: 3
+      ESP: 3
+  rarete: commun
+  palier: III
+  niveau: 15
+  categorie: baton
+  classes:
+  - arcaniste
+  - invocateur
+  - guerisseur
+- id: baton-iii-maitre
+  nom: Bâton de bois-de-lune de maître
+  description: Version soignée par un maître artisan. +2 de puissance, +3 INT, +3 ESP.
+  type: equipement
+  emplacement: arme
+  prix: 400
+  bonus:
+    puissance: 2
+    caracs:
+      INT: 3
+      ESP: 3
+  rarete: peu-commun
+  palier: III
+  niveau: 15
+  categorie: baton
+  classes:
+  - arcaniste
+  - invocateur
+  - guerisseur
+- id: baton-iv
+  nom: Bâton de basalte
+  description: Bâton du palier IV. +2 de puissance, +4 INT, +3 ESP.
+  type: equipement
+  emplacement: arme
+  prix: 575
+  bonus:
+    puissance: 2
+    caracs:
+      INT: 4
+      ESP: 3
+  rarete: commun
+  palier: IV
+  niveau: 22
+  categorie: baton
+  classes:
+  - arcaniste
+  - invocateur
+  - guerisseur
+- id: baton-iv-maitre
+  nom: Bâton de basalte de maître
+  description: Version soignée par un maître artisan. +2 de puissance, +4 INT, +4 ESP.
+  type: equipement
+  emplacement: arme
+  prix: 640
+  bonus:
+    puissance: 2
+    caracs:
+      INT: 4
+      ESP: 4
+  rarete: peu-commun
+  palier: IV
+  niveau: 22
+  categorie: baton
+  classes:
+  - arcaniste
+  - invocateur
+  - guerisseur
+- id: baton-v
+  nom: Bâton d'aube-cristal
+  description: Bâton du palier V. +2 de puissance, +4 INT, +4 ESP.
+  type: equipement
+  emplacement: arme
+  prix: 760
+  bonus:
+    puissance: 2
+    caracs:
+      INT: 4
+      ESP: 4
+  rarete: commun
+  palier: V
+  niveau: 28
+  categorie: baton
+  classes:
+  - arcaniste
+  - invocateur
+  - guerisseur
+- id: baton-v-maitre
+  nom: Bâton d'aube-cristal de maître
+  description: Version soignée par un maître artisan. +3 de puissance, +5 INT, +4 ESP.
+  type: equipement
+  emplacement: arme
+  prix: 910
+  bonus:
+    puissance: 3
+    caracs:
+      INT: 5
+      ESP: 4
+  rarete: peu-commun
+  palier: V
+  niveau: 28
+  categorie: baton
+  classes:
+  - arcaniste
+  - invocateur
+  - guerisseur
+- id: baton-vi
+  nom: Bâton de cendre-cristal
+  description: Bâton du palier VI. +3 de puissance, +5 INT, +4 ESP.
+  type: equipement
+  emplacement: arme
+  prix: 1055
+  bonus:
+    puissance: 3
+    caracs:
+      INT: 5
+      ESP: 4
+  rarete: commun
+  palier: VI
+  niveau: 34
+  categorie: baton
+  classes:
+  - arcaniste
+  - invocateur
+  - guerisseur
+- id: baton-vi-maitre
+  nom: Bâton de cendre-cristal de maître
+  description: Version soignée par un maître artisan. +3 de puissance, +6 INT, +6 ESP.
+  type: equipement
+  emplacement: arme
+  prix: 1320
+  bonus:
+    puissance: 3
+    caracs:
+      INT: 6
+      ESP: 6
+  rarete: peu-commun
+  palier: VI
+  niveau: 34
+  categorie: baton
+  classes:
+  - arcaniste
+  - invocateur
+  - guerisseur
+- id: sceptre-i
+  nom: Sceptre de novice
+  description: Sceptre du palier I. +1 VIT, +1 ESP.
+  type: equipement
+  emplacement: arme
+  prix: 45
+  bonus:
+    caracs:
+      VIT: 1
+      ESP: 1
+  rarete: commun
+  palier: I
+  niveau: 1
+  categorie: sceptre
+  classes:
+  - guerisseur
+  - gardien
+- id: sceptre-i-maitre
+  nom: Sceptre de novice de maître
+  description: Version soignée par un maître artisan. +1 VIT, +2 ESP.
+  type: equipement
+  emplacement: arme
+  prix: 65
+  bonus:
+    caracs:
+      VIT: 1
+      ESP: 2
+  rarete: peu-commun
+  palier: I
+  niveau: 1
+  categorie: sceptre
+  classes:
+  - guerisseur
+  - gardien
+- id: sceptre-ii
+  nom: Sceptre de l'oasis
+  description: Sceptre du palier II. +1 de puissance, +1 VIT, +2 ESP.
+  type: equipement
+  emplacement: arme
+  prix: 145
+  bonus:
+    puissance: 1
+    caracs:
+      VIT: 1
+      ESP: 2
+  rarete: commun
+  palier: II
+  niveau: 8
+  categorie: sceptre
+  classes:
+  - guerisseur
+  - gardien
+- id: sceptre-ii-maitre
+  nom: Sceptre de l'oasis de maître
+  description: Version soignée par un maître artisan. +1 de puissance, +1 VIT, +3 ESP.
+  type: equipement
+  emplacement: arme
+  prix: 180
+  bonus:
+    puissance: 1
+    caracs:
+      VIT: 1
+      ESP: 3
+  rarete: peu-commun
+  palier: II
+  niveau: 8
+  categorie: sceptre
+  classes:
+  - guerisseur
+  - gardien
+- id: sceptre-iii
+  nom: Sceptre de sève
+  description: Sceptre du palier III. +1 de puissance, +2 VIT, +4 ESP.
+  type: equipement
+  emplacement: arme
+  prix: 350
+  bonus:
+    puissance: 1
+    caracs:
+      VIT: 2
+      ESP: 4
+  rarete: commun
+  palier: III
+  niveau: 15
+  categorie: sceptre
+  classes:
+  - guerisseur
+  - gardien
+- id: sceptre-iii-maitre
+  nom: Sceptre de sève de maître
+  description: Version soignée par un maître artisan. +2 de puissance, +2 VIT, +4 ESP.
+  type: equipement
+  emplacement: arme
+  prix: 400
+  bonus:
+    puissance: 2
+    caracs:
+      VIT: 2
+      ESP: 4
+  rarete: peu-commun
+  palier: III
+  niveau: 15
+  categorie: sceptre
+  classes:
+  - guerisseur
+  - gardien
+- id: sceptre-iv
+  nom: Sceptre de cristal de mine
+  description: Sceptre du palier IV. +2 de puissance, +2 VIT, +5 ESP.
+  type: equipement
+  emplacement: arme
+  prix: 575
+  bonus:
+    puissance: 2
+    caracs:
+      VIT: 2
+      ESP: 5
+  rarete: commun
+  palier: IV
+  niveau: 22
+  categorie: sceptre
+  classes:
+  - guerisseur
+  - gardien
+- id: sceptre-iv-maitre
+  nom: Sceptre de cristal de mine de maître
+  description: Version soignée par un maître artisan. +2 de puissance, +2 VIT, +6 ESP.
+  type: equipement
+  emplacement: arme
+  prix: 640
+  bonus:
+    puissance: 2
+    caracs:
+      VIT: 2
+      ESP: 6
+  rarete: peu-commun
+  palier: IV
+  niveau: 22
+  categorie: sceptre
+  classes:
+  - guerisseur
+  - gardien
+- id: sceptre-v
+  nom: Sceptre d'aube-cristal
+  description: Sceptre du palier V. +2 de puissance, +2 VIT, +6 ESP.
+  type: equipement
+  emplacement: arme
+  prix: 760
+  bonus:
+    puissance: 2
+    caracs:
+      VIT: 2
+      ESP: 6
+  rarete: commun
+  palier: V
+  niveau: 28
+  categorie: sceptre
+  classes:
+  - guerisseur
+  - gardien
+- id: sceptre-v-maitre
+  nom: Sceptre d'aube-cristal de maître
+  description: Version soignée par un maître artisan. +3 de puissance, +3 VIT, +6 ESP.
+  type: equipement
+  emplacement: arme
+  prix: 910
+  bonus:
+    puissance: 3
+    caracs:
+      VIT: 3
+      ESP: 6
+  rarete: peu-commun
+  palier: V
+  niveau: 28
+  categorie: sceptre
+  classes:
+  - guerisseur
+  - gardien
+- id: sceptre-vi
+  nom: Sceptre de cendre-cristal
+  description: Sceptre du palier VI. +3 de puissance, +3 VIT, +6 ESP.
+  type: equipement
+  emplacement: arme
+  prix: 1055
+  bonus:
+    puissance: 3
+    caracs:
+      VIT: 3
+      ESP: 6
+  rarete: commun
+  palier: VI
+  niveau: 34
+  categorie: sceptre
+  classes:
+  - guerisseur
+  - gardien
+- id: sceptre-vi-maitre
+  nom: Sceptre de cendre-cristal de maître
+  description: Version soignée par un maître artisan. +3 de puissance, +4 VIT, +8 ESP.
+  type: equipement
+  emplacement: arme
+  prix: 1320
+  bonus:
+    puissance: 3
+    caracs:
+      VIT: 4
+      ESP: 8
+  rarete: peu-commun
+  palier: VI
+  niveau: 34
+  categorie: sceptre
+  classes:
+  - guerisseur
+  - gardien
+- id: orbe-i
+  nom: Orbe de verre
+  description: Orbe / grimoire du palier I. +1 INT, +1 ESP.
+  type: equipement
+  emplacement: arme
+  prix: 45
+  bonus:
+    caracs:
+      INT: 1
+      ESP: 1
+  rarete: commun
+  palier: I
+  niveau: 1
+  categorie: orbe
+  classes:
+  - invocateur
+  - arcaniste
+- id: orbe-i-maitre
+  nom: Orbe de verre de maître
+  description: Version soignée par un maître artisan. +2 INT, +1 ESP.
+  type: equipement
+  emplacement: arme
+  prix: 65
+  bonus:
+    caracs:
+      INT: 2
+      ESP: 1
+  rarete: peu-commun
+  palier: I
+  niveau: 1
+  categorie: orbe
+  classes:
+  - invocateur
+  - arcaniste
+- id: orbe-ii
+  nom: Orbe de sable fondu
+  description: Orbe / grimoire du palier II. +1 de puissance, +2 INT, +1 ESP.
+  type: equipement
+  emplacement: arme
+  prix: 145
+  bonus:
+    puissance: 1
+    caracs:
+      INT: 2
+      ESP: 1
+  rarete: commun
+  palier: II
+  niveau: 8
+  categorie: orbe
+  classes:
+  - invocateur
+  - arcaniste
+- id: orbe-ii-maitre
+  nom: Orbe de sable fondu de maître
+  description: Version soignée par un maître artisan. +1 de puissance, +3 INT, +1 ESP.
+  type: equipement
+  emplacement: arme
+  prix: 180
+  bonus:
+    puissance: 1
+    caracs:
+      INT: 3
+      ESP: 1
+  rarete: peu-commun
+  palier: II
+  niveau: 8
+  categorie: orbe
+  classes:
+  - invocateur
+  - arcaniste
+- id: orbe-iii
+  nom: Grimoire de feuilles
+  description: Orbe / grimoire du palier III. +1 de puissance, +4 INT, +2 ESP.
+  type: equipement
+  emplacement: arme
+  prix: 350
+  bonus:
+    puissance: 1
+    caracs:
+      INT: 4
+      ESP: 2
+  rarete: commun
+  palier: III
+  niveau: 15
+  categorie: orbe
+  classes:
+  - invocateur
+  - arcaniste
+- id: orbe-iii-maitre
+  nom: Grimoire de feuilles de maître
+  description: Version soignée par un maître artisan. +2 de puissance, +4 INT, +2 ESP.
+  type: equipement
+  emplacement: arme
+  prix: 400
+  bonus:
+    puissance: 2
+    caracs:
+      INT: 4
+      ESP: 2
+  rarete: peu-commun
+  palier: III
+  niveau: 15
+  categorie: orbe
+  classes:
+  - invocateur
+  - arcaniste
+- id: orbe-iv
+  nom: Orbe de lave figée
+  description: Orbe / grimoire du palier IV. +2 de puissance, +5 INT, +2 ESP.
+  type: equipement
+  emplacement: arme
+  prix: 575
+  bonus:
+    puissance: 2
+    caracs:
+      INT: 5
+      ESP: 2
+  rarete: commun
+  palier: IV
+  niveau: 22
+  categorie: orbe
+  classes:
+  - invocateur
+  - arcaniste
+- id: orbe-iv-maitre
+  nom: Orbe de lave figée de maître
+  description: Version soignée par un maître artisan. +2 de puissance, +6 INT, +2 ESP.
+  type: equipement
+  emplacement: arme
+  prix: 640
+  bonus:
+    puissance: 2
+    caracs:
+      INT: 6
+      ESP: 2
+  rarete: peu-commun
+  palier: IV
+  niveau: 22
+  categorie: orbe
+  classes:
+  - invocateur
+  - arcaniste
+- id: orbe-v
+  nom: Orbe d'aube-cristal
+  description: Orbe / grimoire du palier V. +2 de puissance, +6 INT, +2 ESP.
+  type: equipement
+  emplacement: arme
+  prix: 760
+  bonus:
+    puissance: 2
+    caracs:
+      INT: 6
+      ESP: 2
+  rarete: commun
+  palier: V
+  niveau: 28
+  categorie: orbe
+  classes:
+  - invocateur
+  - arcaniste
+- id: orbe-v-maitre
+  nom: Orbe d'aube-cristal de maître
+  description: Version soignée par un maître artisan. +3 de puissance, +6 INT, +3 ESP.
+  type: equipement
+  emplacement: arme
+  prix: 910
+  bonus:
+    puissance: 3
+    caracs:
+      INT: 6
+      ESP: 3
+  rarete: peu-commun
+  palier: V
+  niveau: 28
+  categorie: orbe
+  classes:
+  - invocateur
+  - arcaniste
+- id: orbe-vi
+  nom: Grimoire de cendre
+  description: Orbe / grimoire du palier VI. +3 de puissance, +6 INT, +3 ESP.
+  type: equipement
+  emplacement: arme
+  prix: 1055
+  bonus:
+    puissance: 3
+    caracs:
+      INT: 6
+      ESP: 3
+  rarete: commun
+  palier: VI
+  niveau: 34
+  categorie: orbe
+  classes:
+  - invocateur
+  - arcaniste
+- id: orbe-vi-maitre
+  nom: Grimoire de cendre de maître
+  description: Version soignée par un maître artisan. +3 de puissance, +8 INT, +4 ESP.
+  type: equipement
+  emplacement: arme
+  prix: 1320
+  bonus:
+    puissance: 3
+    caracs:
+      INT: 8
+      ESP: 4
+  rarete: peu-commun
+  palier: VI
+  niveau: 34
+  categorie: orbe
+  classes:
+  - invocateur
+  - arcaniste
+- id: instrument-i
+  nom: Flûte de roseau
+  description: Instrument du palier I. +1 AGI, +1 CHA.
+  type: equipement
+  emplacement: arme
+  prix: 45
+  bonus:
+    caracs:
+      AGI: 1
+      CHA: 1
+  rarete: commun
+  palier: I
+  niveau: 1
+  categorie: instrument
+  classes:
+  - barde
+- id: instrument-i-maitre
+  nom: Flûte de roseau de maître
+  description: Version soignée par un maître artisan. +1 AGI, +2 CHA.
+  type: equipement
+  emplacement: arme
+  prix: 65
+  bonus:
+    caracs:
+      AGI: 1
+      CHA: 2
+  rarete: peu-commun
+  palier: I
+  niveau: 1
+  categorie: instrument
+  classes:
+  - barde
+- id: instrument-ii
+  nom: Oud du bazar
+  description: Instrument du palier II. +1 de puissance, +1 AGI, +2 CHA.
+  type: equipement
+  emplacement: arme
+  prix: 145
+  bonus:
+    puissance: 1
+    caracs:
+      AGI: 1
+      CHA: 2
+  rarete: commun
+  palier: II
+  niveau: 8
+  categorie: instrument
+  classes:
+  - barde
+- id: instrument-ii-maitre
+  nom: Oud du bazar de maître
+  description: Version soignée par un maître artisan. +1 de puissance, +1 AGI, +3 CHA.
+  type: equipement
+  emplacement: arme
+  prix: 180
+  bonus:
+    puissance: 1
+    caracs:
+      AGI: 1
+      CHA: 3
+  rarete: peu-commun
+  palier: II
+  niveau: 8
+  categorie: instrument
+  classes:
+  - barde
+- id: instrument-iii
+  nom: Harpe sylvaine
+  description: Instrument du palier III. +1 de puissance, +2 AGI, +4 CHA.
+  type: equipement
+  emplacement: arme
+  prix: 350
+  bonus:
+    puissance: 1
+    caracs:
+      AGI: 2
+      CHA: 4
+  rarete: commun
+  palier: III
+  niveau: 15
+  categorie: instrument
+  classes:
+  - barde
+- id: instrument-iii-maitre
+  nom: Harpe sylvaine de maître
+  description: Version soignée par un maître artisan. +2 de puissance, +2 AGI, +4 CHA.
+  type: equipement
+  emplacement: arme
+  prix: 400
+  bonus:
+    puissance: 2
+    caracs:
+      AGI: 2
+      CHA: 4
+  rarete: peu-commun
+  palier: III
+  niveau: 15
+  categorie: instrument
+  classes:
+  - barde
+- id: instrument-iv
+  nom: Cornemuse de Grisfer
+  description: Instrument du palier IV. +2 de puissance, +2 AGI, +5 CHA.
+  type: equipement
+  emplacement: arme
+  prix: 575
+  bonus:
+    puissance: 2
+    caracs:
+      AGI: 2
+      CHA: 5
+  rarete: commun
+  palier: IV
+  niveau: 22
+  categorie: instrument
+  classes:
+  - barde
+- id: instrument-iv-maitre
+  nom: Cornemuse de Grisfer de maître
+  description: Version soignée par un maître artisan. +2 de puissance, +2 AGI, +6 CHA.
+  type: equipement
+  emplacement: arme
+  prix: 640
+  bonus:
+    puissance: 2
+    caracs:
+      AGI: 2
+      CHA: 6
+  rarete: peu-commun
+  palier: IV
+  niveau: 22
+  categorie: instrument
+  classes:
+  - barde
+- id: instrument-v
+  nom: Luth d'aube-bois
+  description: Instrument du palier V. +2 de puissance, +2 AGI, +6 CHA.
+  type: equipement
+  emplacement: arme
+  prix: 760
+  bonus:
+    puissance: 2
+    caracs:
+      AGI: 2
+      CHA: 6
+  rarete: commun
+  palier: V
+  niveau: 28
+  categorie: instrument
+  classes:
+  - barde
+- id: instrument-v-maitre
+  nom: Luth d'aube-bois de maître
+  description: Version soignée par un maître artisan. +3 de puissance, +3 AGI, +6 CHA.
+  type: equipement
+  emplacement: arme
+  prix: 910
+  bonus:
+    puissance: 3
+    caracs:
+      AGI: 3
+      CHA: 6
+  rarete: peu-commun
+  palier: V
+  niveau: 28
+  categorie: instrument
+  classes:
+  - barde
+- id: instrument-vi
+  nom: Luth de cendre-if
+  description: Instrument du palier VI. +3 de puissance, +3 AGI, +6 CHA.
+  type: equipement
+  emplacement: arme
+  prix: 1055
+  bonus:
+    puissance: 3
+    caracs:
+      AGI: 3
+      CHA: 6
+  rarete: commun
+  palier: VI
+  niveau: 34
+  categorie: instrument
+  classes:
+  - barde
+- id: instrument-vi-maitre
+  nom: Luth de cendre-if de maître
+  description: Version soignée par un maître artisan. +3 de puissance, +4 AGI, +8 CHA.
+  type: equipement
+  emplacement: arme
+  prix: 1320
+  bonus:
+    puissance: 3
+    caracs:
+      AGI: 4
+      CHA: 8
+  rarete: peu-commun
+  palier: VI
+  niveau: 34
+  categorie: instrument
+  classes:
+  - barde
+- id: lourde-i
+  nom: Cotte de mailles
+  description: Tenue lourde du palier I. +2 d'armure, +1 VIT.
+  type: equipement
+  emplacement: armure
+  prix: 45
+  bonus:
+    armure: 2
+    caracs:
+      VIT: 1
+  rarete: commun
+  palier: I
+  niveau: 1
+  categorie: lourde
+  classes:
+  - gardien
+  - berserker
+  - lame-runique
+- id: lourde-i-maitre
+  nom: Cotte de mailles de maître
+  description: Version soignée par un maître artisan. +4 d'armure, +1 VIT.
+  type: equipement
+  emplacement: armure
+  prix: 65
+  bonus:
+    armure: 4
+    caracs:
+      VIT: 1
+  rarete: peu-commun
+  palier: I
+  niveau: 1
+  categorie: lourde
+  classes:
+  - gardien
+  - berserker
+  - lame-runique
+- id: lourde-ii
+  nom: Armure à écailles du désert
+  description: Tenue lourde du palier II. +4 d'armure, +1 FOR, +1 VIT.
+  type: equipement
+  emplacement: armure
+  prix: 145
+  bonus:
+    armure: 4
+    caracs:
+      FOR: 1
+      VIT: 1
+  rarete: commun
+  palier: II
+  niveau: 8
+  categorie: lourde
+  classes:
+  - gardien
+  - berserker
+  - lame-runique
+- id: lourde-ii-maitre
+  nom: Armure à écailles du désert de maître
+  description: Version soignée par un maître artisan. +6 d'armure, +1 FOR, +1 VIT.
+  type: equipement
+  emplacement: armure
+  prix: 180
+  bonus:
+    armure: 6
+    caracs:
+      FOR: 1
+      VIT: 1
+  rarete: peu-commun
+  palier: II
+  niveau: 8
+  categorie: lourde
+  classes:
+  - gardien
+  - berserker
+  - lame-runique
+- id: lourde-iii
+  nom: Cuirasse d'écorce
+  description: Tenue lourde du palier III. +8 d'armure, +1 FOR, +2 VIT.
+  type: equipement
+  emplacement: armure
+  prix: 350
+  bonus:
+    armure: 8
+    caracs:
+      FOR: 1
+      VIT: 2
+  rarete: commun
+  palier: III
+  niveau: 15
+  categorie: lourde
+  classes:
+  - gardien
+  - berserker
+  - lame-runique
+- id: lourde-iii-maitre
+  nom: Cuirasse d'écorce de maître
+  description: Version soignée par un maître artisan. +10 d'armure, +1 FOR, +2 VIT.
+  type: equipement
+  emplacement: armure
+  prix: 400
+  bonus:
+    armure: 10
+    caracs:
+      FOR: 1
+      VIT: 2
+  rarete: peu-commun
+  palier: III
+  niveau: 15
+  categorie: lourde
+  classes:
+  - gardien
+  - berserker
+  - lame-runique
+- id: lourde-iv
+  nom: Plates de Grisfer
+  description: Tenue lourde du palier IV. +10 d'armure, +2 FOR, +2 VIT.
+  type: equipement
+  emplacement: armure
+  prix: 575
+  bonus:
+    armure: 10
+    caracs:
+      FOR: 2
+      VIT: 2
+  rarete: commun
+  palier: IV
+  niveau: 22
+  categorie: lourde
+  classes:
+  - gardien
+  - berserker
+  - lame-runique
+- id: lourde-iv-maitre
+  nom: Plates de Grisfer de maître
+  description: Version soignée par un maître artisan. +12 d'armure, +2 FOR, +2 VIT.
+  type: equipement
+  emplacement: armure
+  prix: 640
+  bonus:
+    armure: 12
+    caracs:
+      FOR: 2
+      VIT: 2
+  rarete: peu-commun
+  palier: IV
+  niveau: 22
+  categorie: lourde
+  classes:
+  - gardien
+  - berserker
+  - lame-runique
+- id: lourde-v
+  nom: Plates d'aube-acier
+  description: Tenue lourde du palier V. +12 d'armure, +2 FOR, +2 VIT.
+  type: equipement
+  emplacement: armure
+  prix: 760
+  bonus:
+    armure: 12
+    caracs:
+      FOR: 2
+      VIT: 2
+  rarete: commun
+  palier: V
+  niveau: 28
+  categorie: lourde
+  classes:
+  - gardien
+  - berserker
+  - lame-runique
+- id: lourde-v-maitre
+  nom: Plates d'aube-acier de maître
+  description: Version soignée par un maître artisan. +14 d'armure, +2 FOR, +3 VIT.
+  type: equipement
+  emplacement: armure
+  prix: 910
+  bonus:
+    armure: 14
+    caracs:
+      FOR: 2
+      VIT: 3
+  rarete: peu-commun
+  palier: V
+  niveau: 28
+  categorie: lourde
+  classes:
+  - gardien
+  - berserker
+  - lame-runique
+- id: lourde-vi
+  nom: Plates de cendracier
+  description: Tenue lourde du palier VI. +14 d'armure, +2 FOR, +3 VIT.
+  type: equipement
+  emplacement: armure
+  prix: 1055
+  bonus:
+    armure: 14
+    caracs:
+      FOR: 2
+      VIT: 3
+  rarete: commun
+  palier: VI
+  niveau: 34
+  categorie: lourde
+  classes:
+  - gardien
+  - berserker
+  - lame-runique
+- id: lourde-vi-maitre
+  nom: Plates de cendracier de maître
+  description: Version soignée par un maître artisan. +18 d'armure, +3 FOR, +3 VIT.
+  type: equipement
+  emplacement: armure
+  prix: 1320
+  bonus:
+    armure: 18
+    caracs:
+      FOR: 3
+      VIT: 3
+  rarete: peu-commun
+  palier: VI
+  niveau: 34
+  categorie: lourde
+  classes:
+  - gardien
+  - berserker
+  - lame-runique
+- id: armure-cuir
+  nom: Armure de cuir
+  description: +4 d'armure.
+  type: equipement
+  emplacement: armure
+  prix: 45
+  bonus:
+    armure: 4
+  rarete: commun
+  palier: I
+  niveau: 1
+  categorie: intermediaire
+  classes:
+  - ombre
+  - archer
+  - alchimiste
+  - barde
+- id: intermediaire-i-maitre
+  nom: Armure de cuir de maître
+  description: Version soignée par un maître artisan. +2 d'armure, +1 AGI, +1 VIT.
+  type: equipement
+  emplacement: armure
+  prix: 65
+  bonus:
+    armure: 2
+    caracs:
+      AGI: 1
+      VIT: 1
+  rarete: peu-commun
+  palier: I
+  niveau: 1
+  categorie: intermediaire
+  classes:
+  - ombre
+  - archer
+  - alchimiste
+  - barde
+- id: intermediaire-ii
+  nom: Cuir de nomade
+  description: Tenue intermédiaire du palier II. +4 d'armure, +1 AGI, +1 VIT.
+  type: equipement
+  emplacement: armure
+  prix: 145
+  bonus:
+    armure: 4
+    caracs:
+      AGI: 1
+      VIT: 1
+  rarete: commun
+  palier: II
+  niveau: 8
+  categorie: intermediaire
+  classes:
+  - ombre
+  - archer
+  - alchimiste
+  - barde
+- id: intermediaire-ii-maitre
+  nom: Cuir de nomade de maître
+  description: Version soignée par un maître artisan. +6 d'armure, +1 AGI, +1 VIT.
+  type: equipement
+  emplacement: armure
+  prix: 180
+  bonus:
+    armure: 6
+    caracs:
+      AGI: 1
+      VIT: 1
+  rarete: peu-commun
+  palier: II
+  niveau: 8
+  categorie: intermediaire
+  classes:
+  - ombre
+  - archer
+  - alchimiste
+  - barde
+- id: intermediaire-iii
+  nom: Cuir de cerf sylvain
+  description: Tenue intermédiaire du palier III. +6 d'armure, +2 AGI, +2 VIT.
+  type: equipement
+  emplacement: armure
+  prix: 350
+  bonus:
+    armure: 6
+    caracs:
+      AGI: 2
+      VIT: 2
+  rarete: commun
+  palier: III
+  niveau: 15
+  categorie: intermediaire
+  classes:
+  - ombre
+  - archer
+  - alchimiste
+  - barde
+- id: intermediaire-iii-maitre
+  nom: Cuir de cerf sylvain de maître
+  description: Version soignée par un maître artisan. +8 d'armure, +2 AGI, +2 VIT.
+  type: equipement
+  emplacement: armure
+  prix: 400
+  bonus:
+    armure: 8
+    caracs:
+      AGI: 2
+      VIT: 2
+  rarete: peu-commun
+  palier: III
+  niveau: 15
+  categorie: intermediaire
+  classes:
+  - ombre
+  - archer
+  - alchimiste
+  - barde
+- id: intermediaire-iv
+  nom: Cuir renforcé de Grisfer
+  description: Tenue intermédiaire du palier IV. +10 d'armure, +2 AGI, +2 VIT.
+  type: equipement
+  emplacement: armure
+  prix: 575
+  bonus:
+    armure: 10
+    caracs:
+      AGI: 2
+      VIT: 2
+  rarete: commun
+  palier: IV
+  niveau: 22
+  categorie: intermediaire
+  classes:
+  - ombre
+  - archer
+  - alchimiste
+  - barde
+- id: intermediaire-iv-maitre
+  nom: Cuir renforcé de Grisfer de maître
+  description: Version soignée par un maître artisan. +10 d'armure, +3 AGI, +2 VIT.
+  type: equipement
+  emplacement: armure
+  prix: 640
+  bonus:
+    armure: 10
+    caracs:
+      AGI: 3
+      VIT: 2
+  rarete: peu-commun
+  palier: IV
+  niveau: 22
+  categorie: intermediaire
+  classes:
+  - ombre
+  - archer
+  - alchimiste
+  - barde
+- id: intermediaire-v
+  nom: Brigandine d'aube-acier
+  description: Tenue intermédiaire du palier V. +10 d'armure, +3 AGI, +2 VIT.
+  type: equipement
+  emplacement: armure
+  prix: 760
+  bonus:
+    armure: 10
+    caracs:
+      AGI: 3
+      VIT: 2
+  rarete: commun
+  palier: V
+  niveau: 28
+  categorie: intermediaire
+  classes:
+  - ombre
+  - archer
+  - alchimiste
+  - barde
+- id: intermediaire-v-maitre
+  nom: Brigandine d'aube-acier de maître
+  description: Version soignée par un maître artisan. +12 d'armure, +3 AGI, +3 VIT.
+  type: equipement
+  emplacement: armure
+  prix: 910
+  bonus:
+    armure: 12
+    caracs:
+      AGI: 3
+      VIT: 3
+  rarete: peu-commun
+  palier: V
+  niveau: 28
+  categorie: intermediaire
+  classes:
+  - ombre
+  - archer
+  - alchimiste
+  - barde
+- id: intermediaire-vi
+  nom: Cuir de cendre
+  description: Tenue intermédiaire du palier VI. +12 d'armure, +3 AGI, +3 VIT.
+  type: equipement
+  emplacement: armure
+  prix: 1055
+  bonus:
+    armure: 12
+    caracs:
+      AGI: 3
+      VIT: 3
+  rarete: commun
+  palier: VI
+  niveau: 34
+  categorie: intermediaire
+  classes:
+  - ombre
+  - archer
+  - alchimiste
+  - barde
+- id: intermediaire-vi-maitre
+  nom: Cuir de cendre de maître
+  description: Version soignée par un maître artisan. +14 d'armure, +4 AGI, +4 VIT.
+  type: equipement
+  emplacement: armure
+  prix: 1320
+  bonus:
+    armure: 14
+    caracs:
+      AGI: 4
+      VIT: 4
+  rarete: peu-commun
+  palier: VI
+  niveau: 34
+  categorie: intermediaire
+  classes:
+  - ombre
+  - archer
+  - alchimiste
+  - barde
+- id: robe-mage
+  nom: Robe de mage
+  description: +1 d'armure, +1 ESP.
+  type: equipement
+  emplacement: armure
+  prix: 40
+  bonus:
+    armure: 1
+    caracs:
+      ESP: 1
+  rarete: commun
+  palier: I
+  niveau: 1
+  categorie: legere
+  classes:
+  - arcaniste
+  - invocateur
+  - guerisseur
+- id: legere-i-maitre
+  nom: Robe de mage de maître
+  description: Version soignée par un maître artisan. +2 d'armure, +1 INT, +1 ESP.
+  type: equipement
+  emplacement: armure
+  prix: 65
+  bonus:
+    armure: 2
+    caracs:
+      INT: 1
+      ESP: 1
+  rarete: peu-commun
+  palier: I
+  niveau: 1
+  categorie: legere
+  classes:
+  - arcaniste
+  - invocateur
+  - guerisseur
+- id: legere-ii
+  nom: Robe de soie du désert
+  description: Tenue légère du palier II. +2 d'armure, +1 INT, +2 ESP.
+  type: equipement
+  emplacement: armure
+  prix: 145
+  bonus:
+    armure: 2
+    caracs:
+      INT: 1
+      ESP: 2
+  rarete: commun
+  palier: II
+  niveau: 8
+  categorie: legere
+  classes:
+  - arcaniste
+  - invocateur
+  - guerisseur
+- id: legere-ii-maitre
+  nom: Robe de soie du désert de maître
+  description: Version soignée par un maître artisan. +2 d'armure, +2 INT, +2 ESP.
+  type: equipement
+  emplacement: armure
+  prix: 180
+  bonus:
+    armure: 2
+    caracs:
+      INT: 2
+      ESP: 2
+  rarete: peu-commun
+  palier: II
+  niveau: 8
+  categorie: legere
+  classes:
+  - arcaniste
+  - invocateur
+  - guerisseur
+- id: legere-iii
+  nom: Robe de brume
+  description: Tenue légère du palier III. +4 d'armure, +2 INT, +3 ESP.
+  type: equipement
+  emplacement: armure
+  prix: 350
+  bonus:
+    armure: 4
+    caracs:
+      INT: 2
+      ESP: 3
+  rarete: commun
+  palier: III
+  niveau: 15
+  categorie: legere
+  classes:
+  - arcaniste
+  - invocateur
+  - guerisseur
+- id: legere-iii-maitre
+  nom: Robe de brume de maître
+  description: Version soignée par un maître artisan. +4 d'armure, +3 INT, +3 ESP.
+  type: equipement
+  emplacement: armure
+  prix: 400
+  bonus:
+    armure: 4
+    caracs:
+      INT: 3
+      ESP: 3
+  rarete: peu-commun
+  palier: III
+  niveau: 15
+  categorie: legere
+  classes:
+  - arcaniste
+  - invocateur
+  - guerisseur
+- id: legere-iv
+  nom: Robe de laine de forge
+  description: Tenue légère du palier IV. +6 d'armure, +3 INT, +3 ESP.
+  type: equipement
+  emplacement: armure
+  prix: 575
+  bonus:
+    armure: 6
+    caracs:
+      INT: 3
+      ESP: 3
+  rarete: commun
+  palier: IV
+  niveau: 22
+  categorie: legere
+  classes:
+  - arcaniste
+  - invocateur
+  - guerisseur
+- id: legere-iv-maitre
+  nom: Robe de laine de forge de maître
+  description: Version soignée par un maître artisan. +6 d'armure, +3 INT, +4 ESP.
+  type: equipement
+  emplacement: armure
+  prix: 640
+  bonus:
+    armure: 6
+    caracs:
+      INT: 3
+      ESP: 4
+  rarete: peu-commun
+  palier: IV
+  niveau: 22
+  categorie: legere
+  classes:
+  - arcaniste
+  - invocateur
+  - guerisseur
+- id: legere-v
+  nom: Robe d'aube-soie
+  description: Tenue légère du palier V. +6 d'armure, +3 INT, +4 ESP.
+  type: equipement
+  emplacement: armure
+  prix: 760
+  bonus:
+    armure: 6
+    caracs:
+      INT: 3
+      ESP: 4
+  rarete: commun
+  palier: V
+  niveau: 28
+  categorie: legere
+  classes:
+  - arcaniste
+  - invocateur
+  - guerisseur
+- id: legere-v-maitre
+  nom: Robe d'aube-soie de maître
+  description: Version soignée par un maître artisan. +8 d'armure, +4 INT, +4 ESP.
+  type: equipement
+  emplacement: armure
+  prix: 910
+  bonus:
+    armure: 8
+    caracs:
+      INT: 4
+      ESP: 4
+  rarete: peu-commun
+  palier: V
+  niveau: 28
+  categorie: legere
+  classes:
+  - arcaniste
+  - invocateur
+  - guerisseur
+- id: legere-vi
+  nom: Robe de cendre-soie
+  description: Tenue légère du palier VI. +8 d'armure, +4 INT, +4 ESP.
+  type: equipement
+  emplacement: armure
+  prix: 1055
+  bonus:
+    armure: 8
+    caracs:
+      INT: 4
+      ESP: 4
+  rarete: commun
+  palier: VI
+  niveau: 34
+  categorie: legere
+  classes:
+  - arcaniste
+  - invocateur
+  - guerisseur
+- id: legere-vi-maitre
+  nom: Robe de cendre-soie de maître
+  description: Version soignée par un maître artisan. +10 d'armure, +5 INT, +5 ESP.
+  type: equipement
+  emplacement: armure
+  prix: 1320
+  bonus:
+    armure: 10
+    caracs:
+      INT: 5
+      ESP: 5
+  rarete: peu-commun
+  palier: VI
+  niveau: 34
+  categorie: legere
+  classes:
+  - arcaniste
+  - invocateur
+  - guerisseur
+- id: bouclier-bois
+  nom: Bouclier de bois
+  description: +3 d'armure.
+  type: equipement
+  emplacement: accessoire
+  prix: 30
+  bonus:
+    armure: 3
+  rarete: commun
+  palier: I
+  niveau: 1
+  categorie: bouclier
+  classes:
+  - gardien
+  - lame-runique
+- id: bouclier-i-maitre
+  nom: Bouclier de bois de maître
+  description: Version soignée par un maître artisan. +4 d'armure, +1 VIT.
+  type: equipement
+  emplacement: accessoire
+  prix: 65
+  bonus:
+    armure: 4
+    caracs:
+      VIT: 1
+  rarete: peu-commun
+  palier: I
+  niveau: 1
+  categorie: bouclier
+  classes:
+  - gardien
+  - lame-runique
+- id: bouclier-ii
+  nom: Rondache du désert
+  description: Bouclier du palier II. +4 d'armure, +2 VIT.
+  type: equipement
+  emplacement: accessoire
+  prix: 145
+  bonus:
+    armure: 4
+    caracs:
+      VIT: 2
+  rarete: commun
+  palier: II
+  niveau: 8
+  categorie: bouclier
+  classes:
+  - gardien
+  - lame-runique
+- id: bouclier-ii-maitre
+  nom: Rondache du désert de maître
+  description: Version soignée par un maître artisan. +6 d'armure, +2 VIT.
+  type: equipement
+  emplacement: accessoire
+  prix: 180
+  bonus:
+    armure: 6
+    caracs:
+      VIT: 2
+  rarete: peu-commun
+  palier: II
+  niveau: 8
+  categorie: bouclier
+  classes:
+  - gardien
+  - lame-runique
+- id: bouclier-iii
+  nom: Bouclier de chêne
+  description: Bouclier du palier III. +8 d'armure, +3 VIT.
+  type: equipement
+  emplacement: accessoire
+  prix: 350
+  bonus:
+    armure: 8
+    caracs:
+      VIT: 3
+  rarete: commun
+  palier: III
+  niveau: 15
+  categorie: bouclier
+  classes:
+  - gardien
+  - lame-runique
+- id: bouclier-iii-maitre
+  nom: Bouclier de chêne de maître
+  description: Version soignée par un maître artisan. +10 d'armure, +3 VIT.
+  type: equipement
+  emplacement: accessoire
+  prix: 400
+  bonus:
+    armure: 10
+    caracs:
+      VIT: 3
+  rarete: peu-commun
+  palier: III
+  niveau: 15
+  categorie: bouclier
+  classes:
+  - gardien
+  - lame-runique
+- id: bouclier-iv
+  nom: Pavois de Grisfer
+  description: Bouclier du palier IV. +10 d'armure, +4 VIT.
+  type: equipement
+  emplacement: accessoire
+  prix: 575
+  bonus:
+    armure: 10
+    caracs:
+      VIT: 4
+  rarete: commun
+  palier: IV
+  niveau: 22
+  categorie: bouclier
+  classes:
+  - gardien
+  - lame-runique
+- id: bouclier-iv-maitre
+  nom: Pavois de Grisfer de maître
+  description: Version soignée par un maître artisan. +12 d'armure, +4 VIT.
+  type: equipement
+  emplacement: accessoire
+  prix: 640
+  bonus:
+    armure: 12
+    caracs:
+      VIT: 4
+  rarete: peu-commun
+  palier: IV
+  niveau: 22
+  categorie: bouclier
+  classes:
+  - gardien
+  - lame-runique
+- id: bouclier-v
+  nom: Bouclier d'aube-acier
+  description: Bouclier du palier V. +12 d'armure, +4 VIT.
+  type: equipement
+  emplacement: accessoire
+  prix: 760
+  bonus:
+    armure: 12
+    caracs:
+      VIT: 4
+  rarete: commun
+  palier: V
+  niveau: 28
+  categorie: bouclier
+  classes:
+  - gardien
+  - lame-runique
+- id: bouclier-v-maitre
+  nom: Bouclier d'aube-acier de maître
+  description: Version soignée par un maître artisan. +14 d'armure, +5 VIT.
+  type: equipement
+  emplacement: accessoire
+  prix: 910
+  bonus:
+    armure: 14
+    caracs:
+      VIT: 5
+  rarete: peu-commun
+  palier: V
+  niveau: 28
+  categorie: bouclier
+  classes:
+  - gardien
+  - lame-runique
+- id: bouclier-vi
+  nom: Bouclier de cendracier
+  description: Bouclier du palier VI. +14 d'armure, +5 VIT.
+  type: equipement
+  emplacement: accessoire
+  prix: 1055
+  bonus:
+    armure: 14
+    caracs:
+      VIT: 5
+  rarete: commun
+  palier: VI
+  niveau: 34
+  categorie: bouclier
+  classes:
+  - gardien
+  - lame-runique
+- id: bouclier-vi-maitre
+  nom: Bouclier de cendracier de maître
+  description: Version soignée par un maître artisan. +18 d'armure, +6 VIT.
+  type: equipement
+  emplacement: accessoire
+  prix: 1320
+  bonus:
+    armure: 18
+    caracs:
+      VIT: 6
+  rarete: peu-commun
+  palier: VI
+  niveau: 34
+  categorie: bouclier
+  classes:
+  - gardien
+  - lame-runique
+- id: anneau-i
+  nom: Anneau de cuivre
+  description: Anneau du palier I. +1 AGI, +1 CHA.
+  type: equipement
+  emplacement: accessoire
+  prix: 45
+  bonus:
+    caracs:
+      AGI: 1
+      CHA: 1
+  rarete: commun
+  palier: I
+  niveau: 1
+  categorie: anneau
+  classes:
+  - lame-runique
+  - arcaniste
+  - invocateur
+  - ombre
+  - gardien
+  - alchimiste
+  - archer
+  - guerisseur
+  - berserker
+  - barde
+- id: anneau-i-maitre
+  nom: Anneau de cuivre de maître
+  description: Version soignée par un maître artisan. +2 AGI, +1 CHA.
+  type: equipement
+  emplacement: accessoire
+  prix: 65
+  bonus:
+    caracs:
+      AGI: 2
+      CHA: 1
+  rarete: peu-commun
+  palier: I
+  niveau: 1
+  categorie: anneau
+  classes:
+  - lame-runique
+  - arcaniste
+  - invocateur
+  - ombre
+  - gardien
+  - alchimiste
+  - archer
+  - guerisseur
+  - berserker
+  - barde
+- id: anneau-ii
+  nom: Anneau de turquoise
+  description: Anneau du palier II. +2 AGI, +2 CHA.
+  type: equipement
+  emplacement: accessoire
+  prix: 145
+  bonus:
+    caracs:
+      AGI: 2
+      CHA: 2
+  rarete: commun
+  palier: II
+  niveau: 8
+  categorie: anneau
+  classes:
+  - lame-runique
+  - arcaniste
+  - invocateur
+  - ombre
+  - gardien
+  - alchimiste
+  - archer
+  - guerisseur
+  - berserker
+  - barde
+- id: anneau-ii-maitre
+  nom: Anneau de turquoise de maître
+  description: Version soignée par un maître artisan. +3 AGI, +2 CHA.
+  type: equipement
+  emplacement: accessoire
+  prix: 180
+  bonus:
+    caracs:
+      AGI: 3
+      CHA: 2
+  rarete: peu-commun
+  palier: II
+  niveau: 8
+  categorie: anneau
+  classes:
+  - lame-runique
+  - arcaniste
+  - invocateur
+  - ombre
+  - gardien
+  - alchimiste
+  - archer
+  - guerisseur
+  - berserker
+  - barde
+- id: anneau-iii
+  nom: Anneau de bois-de-lune
+  description: Anneau du palier III. +4 AGI, +3 CHA.
+  type: equipement
+  emplacement: accessoire
+  prix: 350
+  bonus:
+    caracs:
+      AGI: 4
+      CHA: 3
+  rarete: commun
+  palier: III
+  niveau: 15
+  categorie: anneau
+  classes:
+  - lame-runique
+  - arcaniste
+  - invocateur
+  - ombre
+  - gardien
+  - alchimiste
+  - archer
+  - guerisseur
+  - berserker
+  - barde
+- id: anneau-iii-maitre
+  nom: Anneau de bois-de-lune de maître
+  description: Version soignée par un maître artisan. +4 AGI, +4 CHA.
+  type: equipement
+  emplacement: accessoire
+  prix: 400
+  bonus:
+    caracs:
+      AGI: 4
+      CHA: 4
+  rarete: peu-commun
+  palier: III
+  niveau: 15
+  categorie: anneau
+  classes:
+  - lame-runique
+  - arcaniste
+  - invocateur
+  - ombre
+  - gardien
+  - alchimiste
+  - archer
+  - guerisseur
+  - berserker
+  - barde
+- id: anneau-iv
+  nom: Anneau de rubis de mine
+  description: Anneau du palier IV. +5 AGI, +4 CHA.
+  type: equipement
+  emplacement: accessoire
+  prix: 575
+  bonus:
+    caracs:
+      AGI: 5
+      CHA: 4
+  rarete: commun
+  palier: IV
+  niveau: 22
+  categorie: anneau
+  classes:
+  - lame-runique
+  - arcaniste
+  - invocateur
+  - ombre
+  - gardien
+  - alchimiste
+  - archer
+  - guerisseur
+  - berserker
+  - barde
+- id: anneau-iv-maitre
+  nom: Anneau de rubis de mine de maître
+  description: Version soignée par un maître artisan. +5 AGI, +5 CHA.
+  type: equipement
+  emplacement: accessoire
+  prix: 640
+  bonus:
+    caracs:
+      AGI: 5
+      CHA: 5
+  rarete: peu-commun
+  palier: IV
+  niveau: 22
+  categorie: anneau
+  classes:
+  - lame-runique
+  - arcaniste
+  - invocateur
+  - ombre
+  - gardien
+  - alchimiste
+  - archer
+  - guerisseur
+  - berserker
+  - barde
+- id: anneau-v
+  nom: Anneau d'aube-or
+  description: Anneau du palier V. +5 AGI, +5 CHA.
+  type: equipement
+  emplacement: accessoire
+  prix: 760
+  bonus:
+    caracs:
+      AGI: 5
+      CHA: 5
+  rarete: commun
+  palier: V
+  niveau: 28
+  categorie: anneau
+  classes:
+  - lame-runique
+  - arcaniste
+  - invocateur
+  - ombre
+  - gardien
+  - alchimiste
+  - archer
+  - guerisseur
+  - berserker
+  - barde
+- id: anneau-v-maitre
+  nom: Anneau d'aube-or de maître
+  description: Version soignée par un maître artisan. +6 AGI, +6 CHA.
+  type: equipement
+  emplacement: accessoire
+  prix: 910
+  bonus:
+    caracs:
+      AGI: 6
+      CHA: 6
+  rarete: peu-commun
+  palier: V
+  niveau: 28
+  categorie: anneau
+  classes:
+  - lame-runique
+  - arcaniste
+  - invocateur
+  - ombre
+  - gardien
+  - alchimiste
+  - archer
+  - guerisseur
+  - berserker
+  - barde
+- id: anneau-vi
+  nom: Anneau de cendre-or
+  description: Anneau du palier VI. +6 AGI, +6 CHA.
+  type: equipement
+  emplacement: accessoire
+  prix: 1055
+  bonus:
+    caracs:
+      AGI: 6
+      CHA: 6
+  rarete: commun
+  palier: VI
+  niveau: 34
+  categorie: anneau
+  classes:
+  - lame-runique
+  - arcaniste
+  - invocateur
+  - ombre
+  - gardien
+  - alchimiste
+  - archer
+  - guerisseur
+  - berserker
+  - barde
+- id: anneau-vi-maitre
+  nom: Anneau de cendre-or de maître
+  description: Version soignée par un maître artisan. +8 AGI, +7 CHA.
+  type: equipement
+  emplacement: accessoire
+  prix: 1320
+  bonus:
+    caracs:
+      AGI: 8
+      CHA: 7
+  rarete: peu-commun
+  palier: VI
+  niveau: 34
+  categorie: anneau
+  classes:
+  - lame-runique
+  - arcaniste
+  - invocateur
+  - ombre
+  - gardien
+  - alchimiste
+  - archer
+  - guerisseur
+  - berserker
+  - barde
+- id: amulette-i
+  nom: Amulette de bois
+  description: Amulette du palier I. +1 INT, +1 ESP.
+  type: equipement
+  emplacement: accessoire
+  prix: 45
+  bonus:
+    caracs:
+      INT: 1
+      ESP: 1
+  rarete: commun
+  palier: I
+  niveau: 1
+  categorie: amulette
+  classes:
+  - lame-runique
+  - arcaniste
+  - invocateur
+  - ombre
+  - gardien
+  - alchimiste
+  - archer
+  - guerisseur
+  - berserker
+  - barde
+- id: amulette-i-maitre
+  nom: Amulette de bois de maître
+  description: Version soignée par un maître artisan. +1 INT, +2 ESP.
+  type: equipement
+  emplacement: accessoire
+  prix: 65
+  bonus:
+    caracs:
+      INT: 1
+      ESP: 2
+  rarete: peu-commun
+  palier: I
+  niveau: 1
+  categorie: amulette
+  classes:
+  - lame-runique
+  - arcaniste
+  - invocateur
+  - ombre
+  - gardien
+  - alchimiste
+  - archer
+  - guerisseur
+  - berserker
+  - barde
+- id: amulette-ii
+  nom: Amulette de verre-sable
+  description: Amulette du palier II. +2 INT, +2 ESP.
+  type: equipement
+  emplacement: accessoire
+  prix: 145
+  bonus:
+    caracs:
+      INT: 2
+      ESP: 2
+  rarete: commun
+  palier: II
+  niveau: 8
+  categorie: amulette
+  classes:
+  - lame-runique
+  - arcaniste
+  - invocateur
+  - ombre
+  - gardien
+  - alchimiste
+  - archer
+  - guerisseur
+  - berserker
+  - barde
+- id: amulette-ii-maitre
+  nom: Amulette de verre-sable de maître
+  description: Version soignée par un maître artisan. +2 INT, +3 ESP.
+  type: equipement
+  emplacement: accessoire
+  prix: 180
+  bonus:
+    caracs:
+      INT: 2
+      ESP: 3
+  rarete: peu-commun
+  palier: II
+  niveau: 8
+  categorie: amulette
+  classes:
+  - lame-runique
+  - arcaniste
+  - invocateur
+  - ombre
+  - gardien
+  - alchimiste
+  - archer
+  - guerisseur
+  - berserker
+  - barde
+- id: amulette-iii
+  nom: Amulette de sève
+  description: Amulette du palier III. +3 INT, +4 ESP.
+  type: equipement
+  emplacement: accessoire
+  prix: 350
+  bonus:
+    caracs:
+      INT: 3
+      ESP: 4
+  rarete: commun
+  palier: III
+  niveau: 15
+  categorie: amulette
+  classes:
+  - lame-runique
+  - arcaniste
+  - invocateur
+  - ombre
+  - gardien
+  - alchimiste
+  - archer
+  - guerisseur
+  - berserker
+  - barde
+- id: amulette-iii-maitre
+  nom: Amulette de sève de maître
+  description: Version soignée par un maître artisan. +4 INT, +4 ESP.
+  type: equipement
+  emplacement: accessoire
+  prix: 400
+  bonus:
+    caracs:
+      INT: 4
+      ESP: 4
+  rarete: peu-commun
+  palier: III
+  niveau: 15
+  categorie: amulette
+  classes:
+  - lame-runique
+  - arcaniste
+  - invocateur
+  - ombre
+  - gardien
+  - alchimiste
+  - archer
+  - guerisseur
+  - berserker
+  - barde
+- id: amulette-iv
+  nom: Amulette de basalte
+  description: Amulette du palier IV. +4 INT, +5 ESP.
+  type: equipement
+  emplacement: accessoire
+  prix: 575
+  bonus:
+    caracs:
+      INT: 4
+      ESP: 5
+  rarete: commun
+  palier: IV
+  niveau: 22
+  categorie: amulette
+  classes:
+  - lame-runique
+  - arcaniste
+  - invocateur
+  - ombre
+  - gardien
+  - alchimiste
+  - archer
+  - guerisseur
+  - berserker
+  - barde
+- id: amulette-iv-maitre
+  nom: Amulette de basalte de maître
+  description: Version soignée par un maître artisan. +5 INT, +5 ESP.
+  type: equipement
+  emplacement: accessoire
+  prix: 640
+  bonus:
+    caracs:
+      INT: 5
+      ESP: 5
+  rarete: peu-commun
+  palier: IV
+  niveau: 22
+  categorie: amulette
+  classes:
+  - lame-runique
+  - arcaniste
+  - invocateur
+  - ombre
+  - gardien
+  - alchimiste
+  - archer
+  - guerisseur
+  - berserker
+  - barde
+- id: amulette-v
+  nom: Amulette d'aube-cristal
+  description: Amulette du palier V. +5 INT, +5 ESP.
+  type: equipement
+  emplacement: accessoire
+  prix: 760
+  bonus:
+    caracs:
+      INT: 5
+      ESP: 5
+  rarete: commun
+  palier: V
+  niveau: 28
+  categorie: amulette
+  classes:
+  - lame-runique
+  - arcaniste
+  - invocateur
+  - ombre
+  - gardien
+  - alchimiste
+  - archer
+  - guerisseur
+  - berserker
+  - barde
+- id: amulette-v-maitre
+  nom: Amulette d'aube-cristal de maître
+  description: Version soignée par un maître artisan. +6 INT, +6 ESP.
+  type: equipement
+  emplacement: accessoire
+  prix: 910
+  bonus:
+    caracs:
+      INT: 6
+      ESP: 6
+  rarete: peu-commun
+  palier: V
+  niveau: 28
+  categorie: amulette
+  classes:
+  - lame-runique
+  - arcaniste
+  - invocateur
+  - ombre
+  - gardien
+  - alchimiste
+  - archer
+  - guerisseur
+  - berserker
+  - barde
+- id: amulette-vi
+  nom: Amulette de cendre-cristal
+  description: Amulette du palier VI. +6 INT, +6 ESP.
+  type: equipement
+  emplacement: accessoire
+  prix: 1055
+  bonus:
+    caracs:
+      INT: 6
+      ESP: 6
+  rarete: commun
+  palier: VI
+  niveau: 34
+  categorie: amulette
+  classes:
+  - lame-runique
+  - arcaniste
+  - invocateur
+  - ombre
+  - gardien
+  - alchimiste
+  - archer
+  - guerisseur
+  - berserker
+  - barde
+- id: amulette-vi-maitre
+  nom: Amulette de cendre-cristal de maître
+  description: Version soignée par un maître artisan. +7 INT, +8 ESP.
+  type: equipement
+  emplacement: accessoire
+  prix: 1320
+  bonus:
+    caracs:
+      INT: 7
+      ESP: 8
+  rarete: peu-commun
+  palier: VI
+  niveau: 34
+  categorie: amulette
+  classes:
+  - lame-runique
+  - arcaniste
+  - invocateur
+  - ombre
+  - gardien
+  - alchimiste
+  - archer
+  - guerisseur
+  - berserker
+  - barde
+- id: talisman-i
+  nom: Talisman d'os
+  description: Talisman du palier I. +1 FOR, +1 VIT.
+  type: equipement
+  emplacement: accessoire
+  prix: 45
+  bonus:
+    caracs:
+      FOR: 1
+      VIT: 1
+  rarete: commun
+  palier: I
+  niveau: 1
+  categorie: talisman
+  classes:
+  - lame-runique
+  - arcaniste
+  - invocateur
+  - ombre
+  - gardien
+  - alchimiste
+  - archer
+  - guerisseur
+  - berserker
+  - barde
+- id: talisman-i-maitre
+  nom: Talisman d'os de maître
+  description: Version soignée par un maître artisan. +1 FOR, +2 VIT.
+  type: equipement
+  emplacement: accessoire
+  prix: 65
+  bonus:
+    caracs:
+      FOR: 1
+      VIT: 2
+  rarete: peu-commun
+  palier: I
+  niveau: 1
+  categorie: talisman
+  classes:
+  - lame-runique
+  - arcaniste
+  - invocateur
+  - ombre
+  - gardien
+  - alchimiste
+  - archer
+  - guerisseur
+  - berserker
+  - barde
+- id: talisman-ii
+  nom: Talisman de croc de chacal
+  description: Talisman du palier II. +2 FOR, +2 VIT.
+  type: equipement
+  emplacement: accessoire
+  prix: 145
+  bonus:
+    caracs:
+      FOR: 2
+      VIT: 2
+  rarete: commun
+  palier: II
+  niveau: 8
+  categorie: talisman
+  classes:
+  - lame-runique
+  - arcaniste
+  - invocateur
+  - ombre
+  - gardien
+  - alchimiste
+  - archer
+  - guerisseur
+  - berserker
+  - barde
+- id: talisman-ii-maitre
+  nom: Talisman de croc de chacal de maître
+  description: Version soignée par un maître artisan. +2 FOR, +3 VIT.
+  type: equipement
+  emplacement: accessoire
+  prix: 180
+  bonus:
+    caracs:
+      FOR: 2
+      VIT: 3
+  rarete: peu-commun
+  palier: II
+  niveau: 8
+  categorie: talisman
+  classes:
+  - lame-runique
+  - arcaniste
+  - invocateur
+  - ombre
+  - gardien
+  - alchimiste
+  - archer
+  - guerisseur
+  - berserker
+  - barde
+- id: talisman-iii
+  nom: Talisman de racine
+  description: Talisman du palier III. +3 FOR, +4 VIT.
+  type: equipement
+  emplacement: accessoire
+  prix: 350
+  bonus:
+    caracs:
+      FOR: 3
+      VIT: 4
+  rarete: commun
+  palier: III
+  niveau: 15
+  categorie: talisman
+  classes:
+  - lame-runique
+  - arcaniste
+  - invocateur
+  - ombre
+  - gardien
+  - alchimiste
+  - archer
+  - guerisseur
+  - berserker
+  - barde
+- id: talisman-iii-maitre
+  nom: Talisman de racine de maître
+  description: Version soignée par un maître artisan. +3 FOR, +5 VIT.
+  type: equipement
+  emplacement: accessoire
+  prix: 400
+  bonus:
+    caracs:
+      FOR: 3
+      VIT: 5
+  rarete: peu-commun
+  palier: III
+  niveau: 15
+  categorie: talisman
+  classes:
+  - lame-runique
+  - arcaniste
+  - invocateur
+  - ombre
+  - gardien
+  - alchimiste
+  - archer
+  - guerisseur
+  - berserker
+  - barde
+- id: talisman-iv
+  nom: Talisman de fer de forge
+  description: Talisman du palier IV. +4 FOR, +5 VIT.
+  type: equipement
+  emplacement: accessoire
+  prix: 575
+  bonus:
+    caracs:
+      FOR: 4
+      VIT: 5
+  rarete: commun
+  palier: IV
+  niveau: 22
+  categorie: talisman
+  classes:
+  - lame-runique
+  - arcaniste
+  - invocateur
+  - ombre
+  - gardien
+  - alchimiste
+  - archer
+  - guerisseur
+  - berserker
+  - barde
+- id: talisman-iv-maitre
+  nom: Talisman de fer de forge de maître
+  description: Version soignée par un maître artisan. +4 FOR, +6 VIT.
+  type: equipement
+  emplacement: accessoire
+  prix: 640
+  bonus:
+    caracs:
+      FOR: 4
+      VIT: 6
+  rarete: peu-commun
+  palier: IV
+  niveau: 22
+  categorie: talisman
+  classes:
+  - lame-runique
+  - arcaniste
+  - invocateur
+  - ombre
+  - gardien
+  - alchimiste
+  - archer
+  - guerisseur
+  - berserker
+  - barde
+- id: talisman-v
+  nom: Talisman d'aube-pierre
+  description: Talisman du palier V. +4 FOR, +6 VIT.
+  type: equipement
+  emplacement: accessoire
+  prix: 760
+  bonus:
+    caracs:
+      FOR: 4
+      VIT: 6
+  rarete: commun
+  palier: V
+  niveau: 28
+  categorie: talisman
+  classes:
+  - lame-runique
+  - arcaniste
+  - invocateur
+  - ombre
+  - gardien
+  - alchimiste
+  - archer
+  - guerisseur
+  - berserker
+  - barde
+- id: talisman-v-maitre
+  nom: Talisman d'aube-pierre de maître
+  description: Version soignée par un maître artisan. +5 FOR, +7 VIT.
+  type: equipement
+  emplacement: accessoire
+  prix: 910
+  bonus:
+    caracs:
+      FOR: 5
+      VIT: 7
+  rarete: peu-commun
+  palier: V
+  niveau: 28
+  categorie: talisman
+  classes:
+  - lame-runique
+  - arcaniste
+  - invocateur
+  - ombre
+  - gardien
+  - alchimiste
+  - archer
+  - guerisseur
+  - berserker
+  - barde
+- id: talisman-vi
+  nom: Talisman de cendre-pierre
+  description: Talisman du palier VI. +5 FOR, +7 VIT.
+  type: equipement
+  emplacement: accessoire
+  prix: 1055
+  bonus:
+    caracs:
+      FOR: 5
+      VIT: 7
+  rarete: commun
+  palier: VI
+  niveau: 34
+  categorie: talisman
+  classes:
+  - lame-runique
+  - arcaniste
+  - invocateur
+  - ombre
+  - gardien
+  - alchimiste
+  - archer
+  - guerisseur
+  - berserker
+  - barde
+- id: talisman-vi-maitre
+  nom: Talisman de cendre-pierre de maître
+  description: Version soignée par un maître artisan. +6 FOR, +9 VIT.
+  type: equipement
+  emplacement: accessoire
+  prix: 1320
+  bonus:
+    caracs:
+      FOR: 6
+      VIT: 9
+  rarete: peu-commun
+  palier: VI
+  niveau: 34
+  categorie: talisman
+  classes:
+  - lame-runique
+  - arcaniste
+  - invocateur
+  - ombre
+  - gardien
+  - alchimiste
+  - archer
+  - guerisseur
+  - berserker
+  - barde
+- id: carquois-i
+  nom: Carquois de cuir
+  description: Carquois du palier I. +1 AGI, +1 ESP.
+  type: equipement
+  emplacement: accessoire
+  prix: 45
+  bonus:
+    caracs:
+      AGI: 1
+      ESP: 1
+  rarete: commun
+  palier: I
+  niveau: 1
+  categorie: carquois
+  classes:
+  - archer
+- id: carquois-i-maitre
+  nom: Carquois de cuir de maître
+  description: Version soignée par un maître artisan. +2 AGI, +1 ESP.
+  type: equipement
+  emplacement: accessoire
+  prix: 65
+  bonus:
+    caracs:
+      AGI: 2
+      ESP: 1
+  rarete: peu-commun
+  palier: I
+  niveau: 1
+  categorie: carquois
+  classes:
+  - archer
+- id: carquois-ii
+  nom: Carquois du nomade
+  description: Carquois du palier II. +2 AGI, +2 ESP.
+  type: equipement
+  emplacement: accessoire
+  prix: 145
+  bonus:
+    caracs:
+      AGI: 2
+      ESP: 2
+  rarete: commun
+  palier: II
+  niveau: 8
+  categorie: carquois
+  classes:
+  - archer
+- id: carquois-ii-maitre
+  nom: Carquois du nomade de maître
+  description: Version soignée par un maître artisan. +3 AGI, +2 ESP.
+  type: equipement
+  emplacement: accessoire
+  prix: 180
+  bonus:
+    caracs:
+      AGI: 3
+      ESP: 2
+  rarete: peu-commun
+  palier: II
+  niveau: 8
+  categorie: carquois
+  classes:
+  - archer
+- id: carquois-iii
+  nom: Carquois sylvain
+  description: Carquois du palier III. +4 AGI, +3 ESP.
+  type: equipement
+  emplacement: accessoire
+  prix: 350
+  bonus:
+    caracs:
+      AGI: 4
+      ESP: 3
+  rarete: commun
+  palier: III
+  niveau: 15
+  categorie: carquois
+  classes:
+  - archer
+- id: carquois-iii-maitre
+  nom: Carquois sylvain de maître
+  description: Version soignée par un maître artisan. +5 AGI, +3 ESP.
+  type: equipement
+  emplacement: accessoire
+  prix: 400
+  bonus:
+    caracs:
+      AGI: 5
+      ESP: 3
+  rarete: peu-commun
+  palier: III
+  niveau: 15
+  categorie: carquois
+  classes:
+  - archer
+- id: carquois-iv
+  nom: Carquois de Grisfer
+  description: Carquois du palier IV. +5 AGI, +4 ESP.
+  type: equipement
+  emplacement: accessoire
+  prix: 575
+  bonus:
+    caracs:
+      AGI: 5
+      ESP: 4
+  rarete: commun
+  palier: IV
+  niveau: 22
+  categorie: carquois
+  classes:
+  - archer
+- id: carquois-iv-maitre
+  nom: Carquois de Grisfer de maître
+  description: Version soignée par un maître artisan. +6 AGI, +4 ESP.
+  type: equipement
+  emplacement: accessoire
+  prix: 640
+  bonus:
+    caracs:
+      AGI: 6
+      ESP: 4
+  rarete: peu-commun
+  palier: IV
+  niveau: 22
+  categorie: carquois
+  classes:
+  - archer
+- id: carquois-v
+  nom: Carquois d'aube-cuir
+  description: Carquois du palier V. +6 AGI, +4 ESP.
+  type: equipement
+  emplacement: accessoire
+  prix: 760
+  bonus:
+    caracs:
+      AGI: 6
+      ESP: 4
+  rarete: commun
+  palier: V
+  niveau: 28
+  categorie: carquois
+  classes:
+  - archer
+- id: carquois-v-maitre
+  nom: Carquois d'aube-cuir de maître
+  description: Version soignée par un maître artisan. +7 AGI, +5 ESP.
+  type: equipement
+  emplacement: accessoire
+  prix: 910
+  bonus:
+    caracs:
+      AGI: 7
+      ESP: 5
+  rarete: peu-commun
+  palier: V
+  niveau: 28
+  categorie: carquois
+  classes:
+  - archer
+- id: carquois-vi
+  nom: Carquois de cendre-cuir
+  description: Carquois du palier VI. +7 AGI, +5 ESP.
+  type: equipement
+  emplacement: accessoire
+  prix: 1055
+  bonus:
+    caracs:
+      AGI: 7
+      ESP: 5
+  rarete: commun
+  palier: VI
+  niveau: 34
+  categorie: carquois
+  classes:
+  - archer
+- id: carquois-vi-maitre
+  nom: Carquois de cendre-cuir de maître
+  description: Version soignée par un maître artisan. +9 AGI, +6 ESP.
+  type: equipement
+  emplacement: accessoire
+  prix: 1320
+  bonus:
+    caracs:
+      AGI: 9
+      ESP: 6
+  rarete: peu-commun
+  palier: VI
+  niveau: 34
+  categorie: carquois
+  classes:
+  - archer
+- id: sacoche-i
+  nom: Sacoche d'herboriste
+  description: Sacoche du palier I. +1 AGI, +1 INT.
+  type: equipement
+  emplacement: accessoire
+  prix: 45
+  bonus:
+    caracs:
+      AGI: 1
+      INT: 1
+  rarete: commun
+  palier: I
+  niveau: 1
+  categorie: sacoche
+  classes:
+  - alchimiste
+- id: sacoche-i-maitre
+  nom: Sacoche d'herboriste de maître
+  description: Version soignée par un maître artisan. +1 AGI, +2 INT.
+  type: equipement
+  emplacement: accessoire
+  prix: 65
+  bonus:
+    caracs:
+      AGI: 1
+      INT: 2
+  rarete: peu-commun
+  palier: I
+  niveau: 1
+  categorie: sacoche
+  classes:
+  - alchimiste
+- id: sacoche-ii
+  nom: Sacoche du bazar
+  description: Sacoche du palier II. +2 AGI, +2 INT.
+  type: equipement
+  emplacement: accessoire
+  prix: 145
+  bonus:
+    caracs:
+      AGI: 2
+      INT: 2
+  rarete: commun
+  palier: II
+  niveau: 8
+  categorie: sacoche
+  classes:
+  - alchimiste
+- id: sacoche-ii-maitre
+  nom: Sacoche du bazar de maître
+  description: Version soignée par un maître artisan. +2 AGI, +3 INT.
+  type: equipement
+  emplacement: accessoire
+  prix: 180
+  bonus:
+    caracs:
+      AGI: 2
+      INT: 3
+  rarete: peu-commun
+  palier: II
+  niveau: 8
+  categorie: sacoche
+  classes:
+  - alchimiste
+- id: sacoche-iii
+  nom: Sacoche de feuilles
+  description: Sacoche du palier III. +3 AGI, +4 INT.
+  type: equipement
+  emplacement: accessoire
+  prix: 350
+  bonus:
+    caracs:
+      AGI: 3
+      INT: 4
+  rarete: commun
+  palier: III
+  niveau: 15
+  categorie: sacoche
+  classes:
+  - alchimiste
+- id: sacoche-iii-maitre
+  nom: Sacoche de feuilles de maître
+  description: Version soignée par un maître artisan. +3 AGI, +5 INT.
+  type: equipement
+  emplacement: accessoire
+  prix: 400
+  bonus:
+    caracs:
+      AGI: 3
+      INT: 5
+  rarete: peu-commun
+  palier: III
+  niveau: 15
+  categorie: sacoche
+  classes:
+  - alchimiste
+- id: sacoche-iv
+  nom: Sacoche de forge
+  description: Sacoche du palier IV. +4 AGI, +5 INT.
+  type: equipement
+  emplacement: accessoire
+  prix: 575
+  bonus:
+    caracs:
+      AGI: 4
+      INT: 5
+  rarete: commun
+  palier: IV
+  niveau: 22
+  categorie: sacoche
+  classes:
+  - alchimiste
+- id: sacoche-iv-maitre
+  nom: Sacoche de forge de maître
+  description: Version soignée par un maître artisan. +4 AGI, +6 INT.
+  type: equipement
+  emplacement: accessoire
+  prix: 640
+  bonus:
+    caracs:
+      AGI: 4
+      INT: 6
+  rarete: peu-commun
+  palier: IV
+  niveau: 22
+  categorie: sacoche
+  classes:
+  - alchimiste
+- id: sacoche-v
+  nom: Sacoche d'aube-cuir
+  description: Sacoche du palier V. +4 AGI, +6 INT.
+  type: equipement
+  emplacement: accessoire
+  prix: 760
+  bonus:
+    caracs:
+      AGI: 4
+      INT: 6
+  rarete: commun
+  palier: V
+  niveau: 28
+  categorie: sacoche
+  classes:
+  - alchimiste
+- id: sacoche-v-maitre
+  nom: Sacoche d'aube-cuir de maître
+  description: Version soignée par un maître artisan. +5 AGI, +7 INT.
+  type: equipement
+  emplacement: accessoire
+  prix: 910
+  bonus:
+    caracs:
+      AGI: 5
+      INT: 7
+  rarete: peu-commun
+  palier: V
+  niveau: 28
+  categorie: sacoche
+  classes:
+  - alchimiste
+- id: sacoche-vi
+  nom: Sacoche de cendre-cuir
+  description: Sacoche du palier VI. +5 AGI, +7 INT.
+  type: equipement
+  emplacement: accessoire
+  prix: 1055
+  bonus:
+    caracs:
+      AGI: 5
+      INT: 7
+  rarete: commun
+  palier: VI
+  niveau: 34
+  categorie: sacoche
+  classes:
+  - alchimiste
+- id: sacoche-vi-maitre
+  nom: Sacoche de cendre-cuir de maître
+  description: Version soignée par un maître artisan. +6 AGI, +9 INT.
+  type: equipement
+  emplacement: accessoire
+  prix: 1320
+  bonus:
+    caracs:
+      AGI: 6
+      INT: 9
+  rarete: peu-commun
+  palier: VI
+  niveau: 34
+  categorie: sacoche
+  classes:
+  - alchimiste
+- id: lame-du-guet-de-lysmont
+  nom: Lame du Guet de Lysmont
+  description: L'épée réglementaire des sergents du guet, gravée d'une première rune par un forgeron curieux.
+  type: equipement
+  emplacement: arme
+  prix: 65
+  bonus:
+    puissance: 1
+    caracs:
+      FOR: 2
+  rarete: peu-commun
+  palier: I
+  niveau: 1
+  categorie: epee
+  classes:
+  - lame-runique
+  - gardien
+- id: haubert-du-temple-du-seuil
+  nom: Haubert du Temple du Seuil
+  description: Une cotte de mailles bénite le jour de l'Appel ; ses anneaux vibrent quand une rune s'allume.
+  type: equipement
+  emplacement: armure
+  prix: 65
+  bonus:
+    armure: 4
+    caracs:
+      VIT: 1
+  rarete: peu-commun
+  palier: I
+  niveau: 1
+  categorie: lourde
+  classes:
+  - gardien
+  - berserker
+  - lame-runique
+- id: rondache-des-caravaniers
+  nom: Rondache des caravaniers
+  description: Un petit bouclier de bronze martelé, poli par le sable de la Marche.
+  type: equipement
+  emplacement: accessoire
+  prix: 215
+  bonus:
+    armure: 8
+    caracs:
+      VIT: 2
+  rarete: rare
+  palier: II
+  niveau: 8
+  categorie: bouclier
+  classes:
+  - gardien
+  - lame-runique
+  effets_equipement:
+  - effet: resistance
+    element: feu
+    valeur: 0.08
+- id: fendeuse-de-qarzim
+  nom: Fendeuse de Qarzim
+  description: Une lame courbe à deux mains, forgée pour un champion des arènes du Grand Bazar.
+  type: equipement
+  emplacement: arme
+  prix: 215
+  bonus:
+    puissance: 2
+    caracs:
+      FOR: 4
+  rarete: rare
+  palier: II
+  niveau: 8
+  categorie: deux-mains
+  classes:
+  - berserker
+  - lame-runique
+  effets_equipement:
+  - effet: critique
+    valeur: 0.03
+- id: cuirasse-d-ecorce-fer
+  nom: Cuirasse d'écorce-fer
+  description: Des plaques taillées dans l'écorce durcie des arbres géants de Sylvenoire.
+  type: equipement
+  emplacement: armure
+  prix: 450
+  bonus:
+    armure: 10
+    caracs:
+      FOR: 2
+      VIT: 2
+  rarete: rare
+  palier: III
+  niveau: 15
+  categorie: lourde
+  classes:
+  - gardien
+  - berserker
+  - lame-runique
+  effets_equipement:
+  - effet: resistance
+    element: poison
+    valeur: 0.11
+- id: anneau-des-racines
+  nom: Anneau des Racines
+  description: Un anneau de bois vivant qui garde la mémoire de chaque rune qu'il a vue.
+  type: equipement
+  emplacement: accessoire
+  prix: 500
+  bonus:
+    caracs:
+      AGI: 5
+      CHA: 5
+  rarete: epique
+  palier: III
+  niveau: 15
+  categorie: anneau
+  classes:
+  - lame-runique
+  - arcaniste
+  - invocateur
+  - ombre
+  - gardien
+  - alchimiste
+  - archer
+  - guerisseur
+  - berserker
+  - barde
+  effets_equipement:
+  - effet: mana
+    valeur: 15
+  - effet: precision
+    valeur: 0.05
+- id: epee-des-mille-marches
+  nom: Épée des Mille Marches
+  description: Forgée à Karak-Dûm, une marche gravée sur la lame pour chaque étage conquis.
+  type: equipement
+  emplacement: arme
+  prix: 770
+  bonus:
+    puissance: 4
+    caracs:
+      FOR: 6
+      VIT: 2
+  rarete: rare
+  palier: IV
+  niveau: 22
+  categorie: epee
+  classes:
+  - lame-runique
+  - gardien
+  effets_equipement:
+  - effet: touche
+    element: foudre
+    puissance: 5
+- id: plates-de-la-forge-volcanique
+  nom: Plates de la forge volcanique
+  description: Une armure trempée dans la lave des Monts Grisfer, encore tiède au toucher.
+  type: equipement
+  emplacement: armure
+  prix: 895
+  bonus:
+    armure: 16
+    caracs:
+      FOR: 3
+      VIT: 3
+  rarete: epique
+  palier: IV
+  niveau: 22
+  categorie: lourde
+  classes:
+  - gardien
+  - berserker
+  - lame-runique
+  effets_equipement:
+  - effet: vigueur
+    valeur: 0.07
+  - effet: resistance
+    element: feu
+    valeur: 0.14
+- id: pavois-du-mur-d-aube
+  nom: Pavois du Mur d'Aube
+  description: Le grand bouclier des sentinelles de la frontière, couvert de sceaux de garde.
+  type: equipement
+  emplacement: accessoire
+  prix: 1140
+  bonus:
+    armure: 18
+    caracs:
+      VIT: 6
+  rarete: rare
+  palier: V
+  niveau: 28
+  categorie: bouclier
+  classes:
+  - gardien
+  - lame-runique
+  effets_equipement:
+  - effet: resistance
+    element: ombre
+    valeur: 0.17
+- id: sceau-lame-des-sentinelles
+  nom: Sceau-lame des Sentinelles
+  description: Chaque rune gravée sur cette lame scelle un démon tombé sur le Mur.
+  type: equipement
+  emplacement: arme
+  prix: 1290
+  bonus:
+    puissance: 5
+    caracs:
+      FOR: 10
+      VIT: 2
+  rarete: epique
+  palier: V
+  niveau: 28
+  categorie: epee
+  classes:
+  - lame-runique
+  - gardien
+  effets_equipement:
+  - effet: critique
+    valeur: 0.06
+  - effet: touche
+    element: sacre
+    puissance: 6
+- id: armure-de-cendre-trempee
+  nom: Armure de cendre trempée
+  description: Une armure récupérée dans les forteresses noires et purifiée par les runes.
+  type: equipement
+  emplacement: armure
+  prix: 1495
+  bonus:
+    armure: 20
+    caracs:
+      FOR: 3
+      VIT: 4
+  rarete: rare
+  palier: VI
+  niveau: 34
+  categorie: lourde
+  classes:
+  - gardien
+  - berserker
+  - lame-runique
+  effets_equipement:
+  - effet: resistance
+    element: ombre
+    valeur: 0.2
+- id: anneau-du-premier-sceau
+  nom: Anneau du Premier Sceau
+  description: On dit qu'il a fermé la première brèche du Voile.
+  type: equipement
+  emplacement: accessoire
+  prix: 1760
+  bonus:
+    caracs:
+      AGI: 10
+      CHA: 10
+  rarete: epique
+  palier: VI
+  niveau: 34
+  categorie: anneau
+  classes:
+  - lame-runique
+  - arcaniste
+  - invocateur
+  - ombre
+  - gardien
+  - alchimiste
+  - archer
+  - guerisseur
+  - berserker
+  - barde
+  effets_equipement:
+  - effet: critique
+    valeur: 0.07
+  - effet: mana
+    valeur: 30
+- id: velgraive
+  nom: Velgraive, la Lame-Grimoire
+  description: Une épée dont la lame est un livre de runes ; elle se réécrit à chaque combat.
+  type: equipement
+  emplacement: arme
+  prix: 1445
+  bonus:
+    puissance: 6
+    caracs:
+      FOR: 10
+      VIT: 3
+  rarete: legendaire
+  palier: V
+  niveau: 28
+  categorie: epee
+  classes:
+  - lame-runique
+  - gardien
+  effets_equipement:
+  - effet: critique
+    valeur: 0.06
+  - effet: touche
+    element: arcane
+    puissance: 6
+  pouvoir_unique: Commence chaque combat avec 1 charge de rune.
+- id: baton-de-l-apprenti-prodige
+  nom: Bâton de l'apprenti prodige
+  description: Le bâton d'un élève du Temple qui a fait exploser trois salles d'étude.
+  type: equipement
+  emplacement: arme
+  prix: 65
+  bonus:
+    caracs:
+      INT: 2
+      ESP: 1
+  rarete: peu-commun
+  palier: I
+  niveau: 1
+  categorie: baton
+  classes:
+  - arcaniste
+  - invocateur
+  - guerisseur
+- id: robe-des-etincelles
+  nom: Robe des étincelles
+  description: Une robe d'étude dont les ourlets crépitent d'étincelles bleues.
+  type: equipement
+  emplacement: armure
+  prix: 65
+  bonus:
+    armure: 2
+    caracs:
+      INT: 1
+      ESP: 1
+  rarete: peu-commun
+  palier: I
+  niveau: 1
+  categorie: legere
+  classes:
+  - arcaniste
+  - invocateur
+  - guerisseur
+- id: pendentif-de-verre-sable
+  nom: Pendentif de verre-sable
+  description: Du sable fondu par un éclair, monté en pendentif par un orfèvre de Qarzim.
+  type: equipement
+  emplacement: accessoire
+  prix: 215
+  bonus:
+    caracs:
+      INT: 3
+      ESP: 3
+  rarete: rare
+  palier: II
+  niveau: 8
+  categorie: amulette
+  classes:
+  - lame-runique
+  - arcaniste
+  - invocateur
+  - ombre
+  - gardien
+  - alchimiste
+  - archer
+  - guerisseur
+  - berserker
+  - barde
+  effets_equipement:
+  - effet: mana
+    valeur: 10
+- id: orbe-des-mirages
+  nom: Orbe des mirages
+  description: Une sphère où dansent les mirages du désert ; elle trouble les sorts ennemis.
+  type: equipement
+  emplacement: arme
+  prix: 215
+  bonus:
+    puissance: 1
+    caracs:
+      INT: 4
+      ESP: 1
+  rarete: rare
+  palier: II
+  niveau: 8
+  categorie: orbe
+  classes:
+  - invocateur
+  - arcaniste
+  effets_equipement:
+  - effet: critique
+    valeur: 0.03
+- id: manteau-de-brume-bleue
+  nom: Manteau de brume bleue
+  description: Tissé avec la brume des sous-bois de Sylvenoire, il ne se mouille jamais.
+  type: equipement
+  emplacement: armure
+  prix: 450
+  bonus:
+    armure: 6
+    caracs:
+      INT: 3
+      ESP: 3
+  rarete: rare
+  palier: III
+  niveau: 15
+  categorie: legere
+  classes:
+  - arcaniste
+  - invocateur
+  - guerisseur
+  effets_equipement:
+  - effet: resistance
+    element: glace
+    valeur: 0.11
+- id: larme-d-ithrael
+  nom: Larme d'Ithrael
+  description: Une goutte de sève cristallisée, offerte par la cité-arbre.
+  type: equipement
+  emplacement: accessoire
+  prix: 500
+  bonus:
+    caracs:
+      INT: 5
+      ESP: 5
+  rarete: epique
+  palier: III
+  niveau: 15
+  categorie: amulette
+  classes:
+  - lame-runique
+  - arcaniste
+  - invocateur
+  - ombre
+  - gardien
+  - alchimiste
+  - archer
+  - guerisseur
+  - berserker
+  - barde
+  effets_equipement:
+  - effet: mana
+    valeur: 15
+  - effet: precision
+    valeur: 0.05
+- id: baton-de-basalte-chantant
+  nom: Bâton de basalte chantant
+  description: Taillé dans une colonne de basalte qui résonne à chaque éruption.
+  type: equipement
+  emplacement: arme
+  prix: 770
+  bonus:
+    puissance: 3
+    caracs:
+      INT: 5
+      ESP: 4
+  rarete: rare
+  palier: IV
+  niveau: 22
+  categorie: baton
+  classes:
+  - arcaniste
+  - invocateur
+  - guerisseur
+  effets_equipement:
+  - effet: touche
+    element: foudre
+    puissance: 5
+- id: robe-des-brumes-salees
+  nom: Robe des Brumes salées
+  description: La robe des mages de Port-Vérane, cousue d'écailles de sirène.
+  type: equipement
+  emplacement: armure
+  prix: 895
+  bonus:
+    armure: 8
+    caracs:
+      INT: 5
+      ESP: 5
+  rarete: epique
+  palier: IV
+  niveau: 22
+  categorie: legere
+  classes:
+  - arcaniste
+  - invocateur
+  - guerisseur
+  effets_equipement:
+  - effet: mana
+    valeur: 20
+  - effet: resistance
+    element: glace
+    valeur: 0.14
+- id: medaillon-de-garde-du-mur
+  nom: Médaillon de garde du Mur
+  description: Les mages de la frontière y gravent un sort de bouclier.
+  type: equipement
+  emplacement: accessoire
+  prix: 1140
+  bonus:
+    caracs:
+      INT: 7
+      ESP: 8
+  rarete: rare
+  palier: V
+  niveau: 28
+  categorie: amulette
+  classes:
+  - lame-runique
+  - arcaniste
+  - invocateur
+  - ombre
+  - gardien
+  - alchimiste
+  - archer
+  - guerisseur
+  - berserker
+  - barde
+  effets_equipement:
+  - effet: resistance
+    element: ombre
+    valeur: 0.17
+- id: baton-des-trois-tempetes
+  nom: Bâton des trois tempêtes
+  description: Feu, glace et foudre tournent autour de sa pointe sans jamais se mélanger.
+  type: equipement
+  emplacement: arme
+  prix: 1290
+  bonus:
+    puissance: 4
+    caracs:
+      INT: 7
+      ESP: 6
+  rarete: epique
+  palier: V
+  niveau: 28
+  categorie: baton
+  classes:
+  - arcaniste
+  - invocateur
+  - guerisseur
+  effets_equipement:
+  - effet: critique
+    valeur: 0.06
+  - effet: touche
+    element: glace
+    puissance: 6
+- id: robe-tissee-de-cendre
+  nom: Robe tissée de cendre
+  description: Une robe que les flammes des Terres Cendrées n'arrivent pas à consumer.
+  type: equipement
+  emplacement: armure
+  prix: 1495
+  bonus:
+    armure: 10
+    caracs:
+      INT: 6
+      ESP: 6
+  rarete: rare
+  palier: VI
+  niveau: 34
+  categorie: legere
+  classes:
+  - arcaniste
+  - invocateur
+  - guerisseur
+  effets_equipement:
+  - effet: resistance
+    element: feu
+    valeur: 0.2
+- id: cur-d-ether-pur
+  nom: Cœur d'éther pur
+  description: Un cristal d'éther intact, rare depuis que la Concorde les exploite.
+  type: equipement
+  emplacement: accessoire
+  prix: 1760
+  bonus:
+    caracs:
+      INT: 10
+      ESP: 10
+  rarete: epique
+  palier: VI
+  niveau: 34
+  categorie: amulette
+  classes:
+  - lame-runique
+  - arcaniste
+  - invocateur
+  - ombre
+  - gardien
+  - alchimiste
+  - archer
+  - guerisseur
+  - berserker
+  - barde
+  effets_equipement:
+  - effet: mana
+    valeur: 30
+  - effet: critique
+    valeur: 0.07
+- id: ysgarde
+  nom: Ysgarde, Bâton des Quatre Vents
+  description: Un bâton qui a appartenu à la fondatrice de l'école élémentaire du Temple.
+  type: equipement
+  emplacement: arme
+  prix: 1445
+  bonus:
+    puissance: 4
+    caracs:
+      INT: 8
+      ESP: 7
+  rarete: legendaire
+  palier: V
+  niveau: 28
+  categorie: baton
+  classes:
+  - arcaniste
+  - invocateur
+  - guerisseur
+  effets_equipement:
+  - effet: critique
+    valeur: 0.06
+  - effet: mana
+    valeur: 25
+  pouvoir_unique: Les sorts de zone coûtent 15 % de mana en moins.
+- id: orbe-du-familier-timide
+  nom: Orbe du familier timide
+  description: Une petite sphère où vit un esprit qui sort seulement quand on a peur.
+  type: equipement
+  emplacement: arme
+  prix: 65
+  bonus:
+    caracs:
+      INT: 2
+      ESP: 1
+  rarete: peu-commun
+  palier: I
+  niveau: 1
+  categorie: orbe
+  classes:
+  - invocateur
+  - arcaniste
+- id: tunique-des-liens
+  nom: Tunique des liens
+  description: Brodée de cercles d'invocation qui s'illuminent quand un esprit est proche.
+  type: equipement
+  emplacement: armure
+  prix: 65
+  bonus:
+    armure: 2
+    caracs:
+      INT: 1
+      ESP: 1
+  rarete: peu-commun
+  palier: I
+  niveau: 1
+  categorie: legere
+  classes:
+  - arcaniste
+  - invocateur
+  - guerisseur
+- id: talisman-de-l-esprit-du-puits
+  nom: Talisman de l'esprit du puits
+  description: Un talisman offert par les gardiens d'une oasis ; un esprit y dort.
+  type: equipement
+  emplacement: accessoire
+  prix: 215
+  bonus:
+    caracs:
+      FOR: 2
+      VIT: 4
+  rarete: rare
+  palier: II
+  niveau: 8
+  categorie: talisman
+  classes:
+  - lame-runique
+  - arcaniste
+  - invocateur
+  - ombre
+  - gardien
+  - alchimiste
+  - archer
+  - guerisseur
+  - berserker
+  - barde
+  effets_equipement:
+  - effet: vigueur
+    valeur: 0.04
+- id: baton-des-chacals-d-ombre
+  nom: Bâton des chacals d'ombre
+  description: Les nomades disent qu'il appelle les esprits des chacals du canyon.
+  type: equipement
+  emplacement: arme
+  prix: 215
+  bonus:
+    puissance: 1
+    caracs:
+      INT: 3
+      ESP: 2
+  rarete: rare
+  palier: II
+  niveau: 8
+  categorie: baton
+  classes:
+  - arcaniste
+  - invocateur
+  - guerisseur
+  effets_equipement:
+  - effet: precision
+    valeur: 0.04
+- id: robe-de-mousse-ancienne
+  nom: Robe de mousse ancienne
+  description: Une robe vivante où poussent des mousses qui murmurent les noms des esprits.
+  type: equipement
+  emplacement: armure
+  prix: 450
+  bonus:
+    armure: 6
+    caracs:
+      INT: 3
+      ESP: 3
+  rarete: rare
+  palier: III
+  niveau: 15
+  categorie: legere
+  classes:
+  - arcaniste
+  - invocateur
+  - guerisseur
+  effets_equipement:
+  - effet: resistance
+    element: poison
+    valeur: 0.11
+- id: pendentif-de-la-dryade
+  nom: Pendentif de la dryade
+  description: Le présent d'une dryade de Sylvenoire à qui l'on a rendu service.
+  type: equipement
+  emplacement: accessoire
+  prix: 500
+  bonus:
+    caracs:
+      INT: 5
+      ESP: 5
+  rarete: epique
+  palier: III
+  niveau: 15
+  categorie: amulette
+  classes:
+  - lame-runique
+  - arcaniste
+  - invocateur
+  - ombre
+  - gardien
+  - alchimiste
+  - archer
+  - guerisseur
+  - berserker
+  - barde
+  effets_equipement:
+  - effet: mana
+    valeur: 15
+  - effet: vigueur
+    valeur: 0.05
+- id: orbe-du-wyrmling
+  nom: Orbe du wyrmling
+  description: Un œuf de wyrm vide, qui garde encore la chaleur de son occupant.
+  type: equipement
+  emplacement: arme
+  prix: 770
+  bonus:
+    puissance: 3
+    caracs:
+      INT: 6
+      ESP: 3
+  rarete: rare
+  palier: IV
+  niveau: 22
+  categorie: orbe
+  classes:
+  - invocateur
+  - arcaniste
+  effets_equipement:
+  - effet: touche
+    element: feu
+    puissance: 5
+- id: manteau-du-nid-des-wyrms
+  nom: Manteau du Nid des Wyrms
+  description: Taillé dans la mue d'un jeune dragon de l'Archipel.
+  type: equipement
+  emplacement: armure
+  prix: 895
+  bonus:
+    armure: 8
+    caracs:
+      INT: 5
+      ESP: 5
+  rarete: epique
+  palier: IV
+  niveau: 22
+  categorie: legere
+  classes:
+  - arcaniste
+  - invocateur
+  - guerisseur
+  effets_equipement:
+  - effet: vigueur
+    valeur: 0.07
+  - effet: resistance
+    element: feu
+    valeur: 0.14
+- id: talisman-des-ames-gardiennes
+  nom: Talisman des âmes gardiennes
+  description: Les âmes des sentinelles tombées veillent sur celui qui le porte.
+  type: equipement
+  emplacement: accessoire
+  prix: 1140
+  bonus:
+    caracs:
+      FOR: 6
+      VIT: 9
+  rarete: rare
+  palier: V
+  niveau: 28
+  categorie: talisman
+  classes:
+  - lame-runique
+  - arcaniste
+  - invocateur
+  - ombre
+  - gardien
+  - alchimiste
+  - archer
+  - guerisseur
+  - berserker
+  - barde
+  effets_equipement:
+  - effet: resistance
+    element: ombre
+    valeur: 0.17
+- id: orbe-du-pacte-brise
+  nom: Orbe du Pacte brisé
+  description: Une sphère fêlée qui contient un esprit libéré d'un pacte démoniaque.
+  type: equipement
+  emplacement: arme
+  prix: 1290
+  bonus:
+    puissance: 4
+    caracs:
+      INT: 9
+      ESP: 4
+  rarete: epique
+  palier: V
+  niveau: 28
+  categorie: orbe
+  classes:
+  - invocateur
+  - arcaniste
+  effets_equipement:
+  - effet: mana
+    valeur: 25
+  - effet: touche
+    element: arcane
+    puissance: 6
+- id: robe-du-lien-eternel
+  nom: Robe du Lien éternel
+  description: Les cercles brodés de cette robe ne s'éteignent jamais.
+  type: equipement
+  emplacement: armure
+  prix: 1495
+  bonus:
+    armure: 10
+    caracs:
+      INT: 6
+      ESP: 6
+  rarete: rare
+  palier: VI
+  niveau: 34
+  categorie: legere
+  classes:
+  - arcaniste
+  - invocateur
+  - guerisseur
+  effets_equipement:
+  - effet: vigueur
+    valeur: 0.1
+- id: sceau-des-mille-esprits
+  nom: Sceau des mille esprits
+  description: Un sceau de pierre où chaque invocateur du Temple a laissé une trace.
+  type: equipement
+  emplacement: accessoire
+  prix: 1760
+  bonus:
+    caracs:
+      INT: 10
+      ESP: 10
+  rarete: epique
+  palier: VI
+  niveau: 34
+  categorie: amulette
+  classes:
+  - lame-runique
+  - arcaniste
+  - invocateur
+  - ombre
+  - gardien
+  - alchimiste
+  - archer
+  - guerisseur
+  - berserker
+  - barde
+  effets_equipement:
+  - effet: mana
+    valeur: 30
+  - effet: precision
+    valeur: 0.08
+- id: nyxaliel
+  nom: Nyxaliel, l'Orbe-Portail
+  description: Une sphère qui ouvre une porte vers un monde d'esprits encore inconnu.
+  type: equipement
+  emplacement: arme
+  prix: 1445
+  bonus:
+    puissance: 4
+    caracs:
+      INT: 11
+      ESP: 4
+  rarete: legendaire
+  palier: V
+  niveau: 28
+  categorie: orbe
+  classes:
+  - invocateur
+  - arcaniste
+  effets_equipement:
+  - effet: mana
+    valeur: 25
+  - effet: vigueur
+    valeur: 0.08
+  pouvoir_unique: Les invocations commencent le combat avec 20 % de PV en plus.
+- id: surin-des-ruelles
+  nom: Surin des ruelles
+  description: Une lame fine retrouvée dans une ruelle de Lysmont, sans propriétaire connu.
+  type: equipement
+  emplacement: arme
+  prix: 65
+  bonus:
+    puissance: 1
+    caracs:
+      AGI: 2
+  rarete: peu-commun
+  palier: I
+  niveau: 1
+  categorie: dague
+  classes:
+  - ombre
+  - barde
+- id: pourpoint-du-voleur-de-minuit
+  nom: Pourpoint du voleur de minuit
+  description: Un pourpoint noir aux coutures silencieuses, qui ne craque jamais.
+  type: equipement
+  emplacement: armure
+  prix: 65
+  bonus:
+    armure: 2
+    caracs:
+      AGI: 1
+      VIT: 1
+  rarete: peu-commun
+  palier: I
+  niveau: 1
+  categorie: intermediaire
+  classes:
+  - ombre
+  - archer
+  - alchimiste
+  - barde
+- id: anneau-du-vulpin-rieur
+  nom: Anneau du Vulpin rieur
+  description: Une bague à tête de renard, gagnée aux dés ou volée, selon qui raconte.
+  type: equipement
+  emplacement: accessoire
+  prix: 215
+  bonus:
+    caracs:
+      AGI: 3
+      CHA: 3
+  rarete: rare
+  palier: II
+  niveau: 8
+  categorie: anneau
+  classes:
+  - lame-runique
+  - arcaniste
+  - invocateur
+  - ombre
+  - gardien
+  - alchimiste
+  - archer
+  - guerisseur
+  - berserker
+  - barde
+  effets_equipement:
+  - effet: critique
+    valeur: 0.03
+- id: crocs-jumeaux-du-canyon
+  nom: Crocs jumeaux du canyon
+  description: Deux dagues taillées dans les crocs d'un grand chacal du désert.
+  type: equipement
+  emplacement: arme
+  prix: 215
+  bonus:
+    puissance: 2
+    caracs:
+      AGI: 3
+      CHA: 1
+  rarete: rare
+  palier: II
+  niveau: 8
+  categorie: dague
+  classes:
+  - ombre
+  - barde
+  effets_equipement:
+  - effet: critique
+    valeur: 0.03
+- id: cape-de-feuilles-mortes
+  nom: Cape de feuilles mortes
+  description: Une cape qui prend la couleur du sous-bois de Sylvenoire.
+  type: equipement
+  emplacement: armure
+  prix: 450
+  bonus:
+    armure: 10
+    caracs:
+      AGI: 2
+      VIT: 2
+  rarete: rare
+  palier: III
+  niveau: 15
+  categorie: intermediaire
+  classes:
+  - ombre
+  - archer
+  - alchimiste
+  - barde
+  effets_equipement:
+  - effet: precision
+    valeur: 0.05
+- id: anneau-du-dernier-souffle
+  nom: Anneau du dernier souffle
+  description: Il refroidit d'un coup quand un ennemi tourne le dos.
+  type: equipement
+  emplacement: accessoire
+  prix: 500
+  bonus:
+    caracs:
+      AGI: 5
+      CHA: 5
+  rarete: epique
+  palier: III
+  niveau: 15
+  categorie: anneau
+  classes:
+  - lame-runique
+  - arcaniste
+  - invocateur
+  - ombre
+  - gardien
+  - alchimiste
+  - archer
+  - guerisseur
+  - berserker
+  - barde
+  effets_equipement:
+  - effet: critique
+    valeur: 0.04
+  - effet: precision
+    valeur: 0.05
+- id: stylet-du-brouillard
+  nom: Stylet du brouillard
+  description: Une lame de pirate, aussi grise que la brume de l'Archipel.
+  type: equipement
+  emplacement: arme
+  prix: 770
+  bonus:
+    puissance: 4
+    caracs:
+      AGI: 6
+      CHA: 2
+  rarete: rare
+  palier: IV
+  niveau: 22
+  categorie: dague
+  classes:
+  - ombre
+  - barde
+  effets_equipement:
+  - effet: touche
+    element: glace
+    puissance: 5
+- id: gilet-de-maille-de-grisargent
+  nom: Gilet de maille de grisargent
+  description: Une maille naine si fine qu'elle tient dans une main.
+  type: equipement
+  emplacement: armure
+  prix: 895
+  bonus:
+    armure: 14
+    caracs:
+      AGI: 4
+      VIT: 3
+  rarete: epique
+  palier: IV
+  niveau: 22
+  categorie: intermediaire
+  classes:
+  - ombre
+  - archer
+  - alchimiste
+  - barde
+  effets_equipement:
+  - effet: vigueur
+    valeur: 0.07
+  - effet: critique
+    valeur: 0.05
+- id: anneau-de-l-eclaireur-du-mur
+  nom: Anneau de l'éclaireur du Mur
+  description: Porté par les éclaireurs qui passent de l'autre côté du Mur d'Aube.
+  type: equipement
+  emplacement: accessoire
+  prix: 1140
+  bonus:
+    caracs:
+      AGI: 8
+      CHA: 7
+  rarete: rare
+  palier: V
+  niveau: 28
+  categorie: anneau
+  classes:
+  - lame-runique
+  - arcaniste
+  - invocateur
+  - ombre
+  - gardien
+  - alchimiste
+  - archer
+  - guerisseur
+  - berserker
+  - barde
+  effets_equipement:
+  - effet: resistance
+    element: ombre
+    valeur: 0.17
+- id: lame-sans-reflet
+  nom: Lame-sans-reflet
+  description: Une dague noire qui n'apparaît pas dans les miroirs.
+  type: equipement
+  emplacement: arme
+  prix: 1290
+  bonus:
+    puissance: 5
+    caracs:
+      AGI: 10
+      CHA: 2
+  rarete: epique
+  palier: V
+  niveau: 28
+  categorie: dague
+  classes:
+  - ombre
+  - barde
+  effets_equipement:
+  - effet: critique
+    valeur: 0.06
+  - effet: touche
+    element: ombre
+    puissance: 6
+- id: tenue-de-l-infiltre-cendre
+  nom: Tenue de l'infiltré cendré
+  description: Un cuir teint à la cendre pour se fondre dans les plaines du nord.
+  type: equipement
+  emplacement: armure
+  prix: 1495
+  bonus:
+    armure: 18
+    caracs:
+      AGI: 4
+      VIT: 4
+  rarete: rare
+  palier: VI
+  niveau: 34
+  categorie: intermediaire
+  classes:
+  - ombre
+  - archer
+  - alchimiste
+  - barde
+  effets_equipement:
+  - effet: precision
+    valeur: 0.08
+- id: anneau-du-prince-disparu
+  nom: Anneau du Prince disparu
+  description: Une chevalière aux armes d'Aubeclaire, trouvée là où personne ne l'attendait.
+  type: equipement
+  emplacement: accessoire
+  prix: 1760
+  bonus:
+    caracs:
+      AGI: 10
+      CHA: 10
+  rarete: epique
+  palier: VI
+  niveau: 34
+  categorie: anneau
+  classes:
+  - lame-runique
+  - arcaniste
+  - invocateur
+  - ombre
+  - gardien
+  - alchimiste
+  - archer
+  - guerisseur
+  - berserker
+  - barde
+  effets_equipement:
+  - effet: critique
+    valeur: 0.07
+  - effet: vigueur
+    valeur: 0.1
+- id: murmure
+  nom: Murmure, la Dague du Silence
+  description: Personne n'a jamais entendu le bruit qu'elle fait en frappant.
+  type: equipement
+  emplacement: arme
+  prix: 1445
+  bonus:
+    puissance: 6
+    caracs:
+      AGI: 10
+      CHA: 3
+  rarete: legendaire
+  palier: V
+  niveau: 28
+  categorie: dague
+  classes:
+  - ombre
+  - barde
+  effets_equipement:
+  - effet: critique
+    valeur: 0.06
+  - effet: precision
+    valeur: 0.07
+  pouvoir_unique: La première attaque du combat est toujours un coup critique.
+- id: masse-du-sacristain
+  nom: Masse du sacristain
+  description: La masse d'un sacristain du Temple, bénite plus souvent que nécessaire.
+  type: equipement
+  emplacement: arme
+  prix: 65
+  bonus:
+    puissance: 1
+    caracs:
+      FOR: 1
+      VIT: 1
+  rarete: peu-commun
+  palier: I
+  niveau: 1
+  categorie: masse
+  classes:
+  - gardien
+  - berserker
+- id: cuirasse-de-la-lumiere-sereine
+  nom: Cuirasse de la Lumière Sereine
+  description: L'armure de parade de l'Ordre, plus solide qu'elle n'en a l'air.
+  type: equipement
+  emplacement: armure
+  prix: 65
+  bonus:
+    armure: 4
+    caracs:
+      VIT: 1
+  rarete: peu-commun
+  palier: I
+  niveau: 1
+  categorie: lourde
+  classes:
+  - gardien
+  - berserker
+  - lame-runique
+- id: ecu-de-l-oasis
+  nom: Écu de l'oasis
+  description: Un bouclier peint d'un palmier, qui a protégé une caravane entière.
+  type: equipement
+  emplacement: accessoire
+  prix: 215
+  bonus:
+    armure: 8
+    caracs:
+      VIT: 2
+  rarete: rare
+  palier: II
+  niveau: 8
+  categorie: bouclier
+  classes:
+  - gardien
+  - lame-runique
+  effets_equipement:
+  - effet: vigueur
+    valeur: 0.04
+- id: epee-du-serment-des-sables
+  nom: Épée du serment des sables
+  description: Les gardes des caravanes jurent sur cette lame de ne jamais abandonner un voyageur.
+  type: equipement
+  emplacement: arme
+  prix: 215
+  bonus:
+    puissance: 2
+    caracs:
+      FOR: 3
+      VIT: 1
+  rarete: rare
+  palier: II
+  niveau: 8
+  categorie: epee
+  classes:
+  - lame-runique
+  - gardien
+  effets_equipement:
+  - effet: precision
+    valeur: 0.04
+- id: harnois-du-gardien-des-racines
+  nom: Harnois du gardien des racines
+  description: Une armure de plaques ornée de feuilles, portée par les protecteurs d'Ithrael.
+  type: equipement
+  emplacement: armure
+  prix: 450
+  bonus:
+    armure: 10
+    caracs:
+      FOR: 2
+      VIT: 2
+  rarete: rare
+  palier: III
+  niveau: 15
+  categorie: lourde
+  classes:
+  - gardien
+  - berserker
+  - lame-runique
+  effets_equipement:
+  - effet: resistance
+    element: poison
+    valeur: 0.11
+- id: bouclier-chene
+  nom: Bouclier-chêne
+  description: Taillé d'une seule pièce dans un chêne millénaire qui a accepté de le donner.
+  type: equipement
+  emplacement: accessoire
+  prix: 500
+  bonus:
+    armure: 12
+    caracs:
+      VIT: 4
+  rarete: epique
+  palier: III
+  niveau: 15
+  categorie: bouclier
+  classes:
+  - gardien
+  - lame-runique
+  effets_equipement:
+  - effet: vigueur
+    valeur: 0.05
+  - effet: resistance
+    element: arcane
+    valeur: 0.11
+- id: marteau-de-l-enclume-mere
+  nom: Marteau de l'enclume-mère
+  description: Le marteau cérémoniel des forgerons de Karak-Dûm.
+  type: equipement
+  emplacement: arme
+  prix: 770
+  bonus:
+    puissance: 4
+    caracs:
+      FOR: 6
+      VIT: 2
+  rarete: rare
+  palier: IV
+  niveau: 22
+  categorie: masse
+  classes:
+  - gardien
+  - berserker
+  effets_equipement:
+  - effet: touche
+    element: feu
+    puissance: 5
+- id: plates-du-rempart-nain
+  nom: Plates du Rempart nain
+  description: Une armure si lourde qu'il faut deux nains pour aider à l'enfiler.
+  type: equipement
+  emplacement: armure
+  prix: 895
+  bonus:
+    armure: 16
+    caracs:
+      FOR: 3
+      VIT: 3
+  rarete: epique
+  palier: IV
+  niveau: 22
+  categorie: lourde
+  classes:
+  - gardien
+  - berserker
+  - lame-runique
+  effets_equipement:
+  - effet: vigueur
+    valeur: 0.07
+  - effet: resistance
+    element: feu
+    valeur: 0.14
+- id: bouclier-de-l-aube
+  nom: Bouclier de l'Aube
+  description: Il brille d'un éclat doré quand un démon approche.
+  type: equipement
+  emplacement: accessoire
+  prix: 1140
+  bonus:
+    armure: 18
+    caracs:
+      VIT: 6
+  rarete: rare
+  palier: V
+  niveau: 28
+  categorie: bouclier
+  classes:
+  - gardien
+  - lame-runique
+  effets_equipement:
+  - effet: resistance
+    element: ombre
+    valeur: 0.17
+- id: sceptre-de-la-sainte-garde
+  nom: Sceptre de la sainte garde
+  description: Le sceptre des capitaines de l'Ordre sur le Mur d'Aube.
+  type: equipement
+  emplacement: arme
+  prix: 1290
+  bonus:
+    puissance: 4
+    caracs:
+      VIT: 4
+      ESP: 9
+  rarete: epique
+  palier: V
+  niveau: 28
+  categorie: sceptre
+  classes:
+  - guerisseur
+  - gardien
+  effets_equipement:
+  - effet: vigueur
+    valeur: 0.08
+  - effet: touche
+    element: sacre
+    puissance: 6
+- id: armure-du-dernier-rempart
+  nom: Armure du dernier rempart
+  description: Portée par celui qui reste debout quand tous les autres ont reculé.
+  type: equipement
+  emplacement: armure
+  prix: 1495
+  bonus:
+    armure: 20
+    caracs:
+      FOR: 3
+      VIT: 4
+  rarete: rare
+  palier: VI
+  niveau: 34
+  categorie: lourde
+  classes:
+  - gardien
+  - berserker
+  - lame-runique
+  effets_equipement:
+  - effet: vigueur
+    valeur: 0.1
+- id: egide-d-obsidienne
+  nom: Égide d'Obsidienne
+  description: Un bouclier taillé dans un éclat de la Citadelle d'Obsidienne, purifié.
+  type: equipement
+  emplacement: accessoire
+  prix: 1760
+  bonus:
+    armure: 24
+    caracs:
+      VIT: 8
+  rarete: epique
+  palier: VI
+  niveau: 34
+  categorie: bouclier
+  classes:
+  - gardien
+  - lame-runique
+  effets_equipement:
+  - effet: vigueur
+    valeur: 0.1
+  - effet: resistance
+    element: ombre
+    valeur: 0.2
+- id: solenne
+  nom: Solenne, le Marteau de l'Aube
+  description: Le marteau du premier gardien du Mur, qui a tenu seul une nuit entière.
+  type: equipement
+  emplacement: arme
+  prix: 1445
+  bonus:
+    puissance: 6
+    caracs:
+      FOR: 9
+      VIT: 4
+  rarete: legendaire
+  palier: V
+  niveau: 28
+  categorie: masse
+  classes:
+  - gardien
+  - berserker
+  effets_equipement:
+  - effet: vigueur
+    valeur: 0.08
+  - effet: touche
+    element: sacre
+    puissance: 6
+  pouvoir_unique: 'Rempart protège aussi le héros : il subit 10 % de dégâts en moins.'
+- id: lance-fioles-bricole
+  nom: Lance-fioles bricolé
+  description: Un mécanisme de récupération qui projette les fioles plus loin qu'un bras.
+  type: equipement
+  emplacement: arme
+  prix: 65
+  bonus:
+    caracs:
+      AGI: 1
+      INT: 2
+  rarete: peu-commun
+  palier: I
+  niveau: 1
+  categorie: arbalete
+  classes:
+  - alchimiste
+  - archer
+- id: tablier-ignifuge-de-halvine
+  nom: Tablier ignifugé de Halvine
+  description: Halvine jure qu'il a résisté à trois explosions et demie.
+  type: equipement
+  emplacement: armure
+  prix: 65
+  bonus:
+    armure: 2
+    caracs:
+      AGI: 1
+      VIT: 1
+  rarete: peu-commun
+  palier: I
+  niveau: 1
+  categorie: intermediaire
+  classes:
+  - ombre
+  - archer
+  - alchimiste
+  - barde
+- id: sacoche-du-marchand-d-epices
+  nom: Sacoche du marchand d'épices
+  description: Une sacoche aux mille poches, qui sent toujours le cumin.
+  type: equipement
+  emplacement: accessoire
+  prix: 215
+  bonus:
+    caracs:
+      AGI: 2
+      INT: 4
+  rarete: rare
+  palier: II
+  niveau: 8
+  categorie: sacoche
+  classes:
+  - alchimiste
+  effets_equipement:
+  - effet: mana
+    valeur: 10
+- id: arbalete-a-ether-de-la-concorde
+  nom: Arbalète à éther de la Concorde
+  description: Une arme de marchand, alimentée par un petit cristal d'éther.
+  type: equipement
+  emplacement: arme
+  prix: 215
+  bonus:
+    puissance: 1
+    caracs:
+      AGI: 2
+      INT: 3
+  rarete: rare
+  palier: II
+  niveau: 8
+  categorie: arbalete
+  classes:
+  - alchimiste
+  - archer
+  effets_equipement:
+  - effet: precision
+    valeur: 0.04
+- id: veste-d-herboriste
+  nom: Veste d'herboriste
+  description: Une veste couverte de poches à graines, cousue par un botaniste elfe.
+  type: equipement
+  emplacement: armure
+  prix: 450
+  bonus:
+    armure: 10
+    caracs:
+      AGI: 2
+      VIT: 2
+  rarete: rare
+  palier: III
+  niveau: 15
+  categorie: intermediaire
+  classes:
+  - ombre
+  - archer
+  - alchimiste
+  - barde
+  effets_equipement:
+  - effet: resistance
+    element: poison
+    valeur: 0.11
+- id: besace-des-racines
+  nom: Besace des racines
+  description: Les ingrédients qu'on y range ne pourrissent jamais.
+  type: equipement
+  emplacement: accessoire
+  prix: 500
+  bonus:
+    caracs:
+      AGI: 4
+      INT: 6
+  rarete: epique
+  palier: III
+  niveau: 15
+  categorie: sacoche
+  classes:
+  - alchimiste
+  effets_equipement:
+  - effet: mana
+    valeur: 15
+  - effet: vigueur
+    valeur: 0.05
+- id: arbalete-soufflet-naine
+  nom: Arbalète-soufflet naine
+  description: Une arbalète à vapeur conçue par des ingénieurs gnomes de Karak-Dûm.
+  type: equipement
+  emplacement: arme
+  prix: 770
+  bonus:
+    puissance: 3
+    caracs:
+      AGI: 4
+      INT: 5
+  rarete: rare
+  palier: IV
+  niveau: 22
+  categorie: arbalete
+  classes:
+  - alchimiste
+  - archer
+  effets_equipement:
+  - effet: touche
+    element: feu
+    puissance: 5
+- id: combinaison-du-plongeur-de-l-archipel
+  nom: Combinaison du plongeur de l'Archipel
+  description: Cuir huilé et casque de verre, pour récolter les algues du Phare noyé.
+  type: equipement
+  emplacement: armure
+  prix: 895
+  bonus:
+    armure: 14
+    caracs:
+      AGI: 4
+      VIT: 3
+  rarete: epique
+  palier: IV
+  niveau: 22
+  categorie: intermediaire
+  classes:
+  - ombre
+  - archer
+  - alchimiste
+  - barde
+  effets_equipement:
+  - effet: vigueur
+    valeur: 0.07
+  - effet: resistance
+    element: glace
+    valeur: 0.14
+- id: sacoche-de-l-artificier-du-mur
+  nom: Sacoche de l'artificier du Mur
+  description: Les artificiers de la frontière y rangent leurs bombes de siège.
+  type: equipement
+  emplacement: accessoire
+  prix: 1140
+  bonus:
+    caracs:
+      AGI: 6
+      INT: 9
+  rarete: rare
+  palier: V
+  niveau: 28
+  categorie: sacoche
+  classes:
+  - alchimiste
+  effets_equipement:
+  - effet: precision
+    valeur: 0.07
+- id: canon-de-poing-a-cristal
+  nom: Canon de poing à cristal
+  description: 'Plus une arbalète, plus tout à fait un canon : une invention interdite à Lysmont.'
+  type: equipement
+  emplacement: arme
+  prix: 1290
+  bonus:
+    puissance: 4
+    caracs:
+      AGI: 5
+      INT: 8
+  rarete: epique
+  palier: V
+  niveau: 28
+  categorie: arbalete
+  classes:
+  - alchimiste
+  - archer
+  effets_equipement:
+  - effet: critique
+    valeur: 0.06
+  - effet: touche
+    element: feu
+    puissance: 6
+- id: tenue-anti-cendre
+  nom: Tenue anti-cendre
+  description: Masque à filtre et cuir doublé, pour respirer dans les Terres Cendrées.
+  type: equipement
+  emplacement: armure
+  prix: 1495
+  bonus:
+    armure: 18
+    caracs:
+      AGI: 4
+      VIT: 4
+  rarete: rare
+  palier: VI
+  niveau: 34
+  categorie: intermediaire
+  classes:
+  - ombre
+  - archer
+  - alchimiste
+  - barde
+  effets_equipement:
+  - effet: resistance
+    element: poison
+    valeur: 0.2
+- id: laboratoire-portatif
+  nom: Laboratoire portatif
+  description: Une sacoche qui se déplie en petit atelier complet.
+  type: equipement
+  emplacement: accessoire
+  prix: 1760
+  bonus:
+    caracs:
+      AGI: 8
+      INT: 12
+  rarete: epique
+  palier: VI
+  niveau: 34
+  categorie: sacoche
+  classes:
+  - alchimiste
+  effets_equipement:
+  - effet: mana
+    valeur: 30
+  - effet: critique
+    valeur: 0.07
+- id: prisme
+  nom: Prisme, l'Arbalète-Alambic
+  description: Elle distille ses propres fioles pendant qu'on la recharge.
+  type: equipement
+  emplacement: arme
+  prix: 1445
+  bonus:
+    puissance: 4
+    caracs:
+      AGI: 6
+      INT: 9
+  rarete: legendaire
+  palier: V
+  niveau: 28
+  categorie: arbalete
+  classes:
+  - alchimiste
+  - archer
+  effets_equipement:
+  - effet: precision
+    valeur: 0.07
+  - effet: touche
+    element: poison
+    puissance: 6
+  pouvoir_unique: Les objets de soin et les bombes utilisés par le héros sont 25 % plus efficaces.
+- id: arc-du-chasseur-de-la-plaine
+  nom: Arc du chasseur de la plaine
+  description: Un arc de frêne tendu par un chasseur des plaines d'Aubeclaire.
+  type: equipement
+  emplacement: arme
+  prix: 65
+  bonus:
+    puissance: 1
+    caracs:
+      AGI: 1
+      ESP: 1
+  rarete: peu-commun
+  palier: I
+  niveau: 1
+  categorie: arc
+  classes:
+  - archer
+- id: cape-du-guetteur
+  nom: Cape du guetteur
+  description: La cape des guetteurs royaux, qui guettent sans être vus.
+  type: equipement
+  emplacement: armure
+  prix: 65
+  bonus:
+    armure: 2
+    caracs:
+      AGI: 1
+      VIT: 1
+  rarete: peu-commun
+  palier: I
+  niveau: 1
+  categorie: intermediaire
+  classes:
+  - ombre
+  - archer
+  - alchimiste
+  - barde
+- id: carquois-du-vent-du-sud
+  nom: Carquois du vent du sud
+  description: Les flèches qu'il contient sifflent comme le vent du désert.
+  type: equipement
+  emplacement: accessoire
+  prix: 215
+  bonus:
+    caracs:
+      AGI: 4
+      ESP: 2
+  rarete: rare
+  palier: II
+  niveau: 8
+  categorie: carquois
+  classes:
+  - archer
+  effets_equipement:
+  - effet: critique
+    valeur: 0.03
+- id: arc-de-corne-d-ourvalis
+  nom: Arc de corne d'Ourvalis
+  description: Un arc composite des peuples-loups, en corne et en tendon.
+  type: equipement
+  emplacement: arme
+  prix: 215
+  bonus:
+    puissance: 2
+    caracs:
+      AGI: 3
+      ESP: 1
+  rarete: rare
+  palier: II
+  niveau: 8
+  categorie: arc
+  classes:
+  - archer
+  effets_equipement:
+  - effet: precision
+    valeur: 0.04
+- id: tunique-de-l-eclaireur-sylvain
+  nom: Tunique de l'éclaireur sylvain
+  description: Elle garde l'odeur de la forêt, et les bêtes ne la sentent pas.
+  type: equipement
+  emplacement: armure
+  prix: 450
+  bonus:
+    armure: 10
+    caracs:
+      AGI: 2
+      VIT: 2
+  rarete: rare
+  palier: III
+  niveau: 15
+  categorie: intermediaire
+  classes:
+  - ombre
+  - archer
+  - alchimiste
+  - barde
+  effets_equipement:
+  - effet: vigueur
+    valeur: 0.05
+- id: carquois-des-esprits
+  nom: Carquois des esprits
+  description: Un esprit de la forêt y remplace chaque flèche tirée.
+  type: equipement
+  emplacement: accessoire
+  prix: 500
+  bonus:
+    caracs:
+      AGI: 6
+      ESP: 4
+  rarete: epique
+  palier: III
+  niveau: 15
+  categorie: carquois
+  classes:
+  - archer
+  effets_equipement:
+  - effet: critique
+    valeur: 0.04
+  - effet: mana
+    valeur: 15
+- id: arc-de-fer-cerf
+  nom: Arc de fer-cerf
+  description: Un arc nain en métal souple, inventé pour tirer dans les mines.
+  type: equipement
+  emplacement: arme
+  prix: 770
+  bonus:
+    puissance: 4
+    caracs:
+      AGI: 6
+      ESP: 2
+  rarete: rare
+  palier: IV
+  niveau: 22
+  categorie: arc
+  classes:
+  - archer
+  effets_equipement:
+  - effet: touche
+    element: foudre
+    puissance: 5
+- id: armure-de-plumes-de-wyrm
+  nom: Armure de plumes de wyrm
+  description: Des plumes de dragon tissées sur du cuir, pour tirer en plein vol.
+  type: equipement
+  emplacement: armure
+  prix: 895
+  bonus:
+    armure: 14
+    caracs:
+      AGI: 4
+      VIT: 3
+  rarete: epique
+  palier: IV
+  niveau: 22
+  categorie: intermediaire
+  classes:
+  - ombre
+  - archer
+  - alchimiste
+  - barde
+  effets_equipement:
+  - effet: critique
+    valeur: 0.05
+  - effet: resistance
+    element: feu
+    valeur: 0.14
+- id: carquois-des-fleches-benites
+  nom: Carquois des flèches bénites
+  description: Les prêtres du Mur bénissent chaque flèche avant la bataille.
+  type: equipement
+  emplacement: accessoire
+  prix: 1140
+  bonus:
+    caracs:
+      AGI: 9
+      ESP: 6
+  rarete: rare
+  palier: V
+  niveau: 28
+  categorie: carquois
+  classes:
+  - archer
+  effets_equipement:
+  - effet: touche
+    element: sacre
+    puissance: 6
+- id: arc-de-l-etoile-du-mur
+  nom: Arc de l'Étoile du Mur
+  description: On dit qu'une de ses flèches a touché un démon à une lieue de distance.
+  type: equipement
+  emplacement: arme
+  prix: 1290
+  bonus:
+    puissance: 5
+    caracs:
+      AGI: 8
+      ESP: 4
+  rarete: epique
+  palier: V
+  niveau: 28
+  categorie: arc
+  classes:
+  - archer
+  effets_equipement:
+  - effet: critique
+    valeur: 0.06
+  - effet: touche
+    element: sacre
+    puissance: 6
+- id: cuirasse-de-cuir-cendre
+  nom: Cuirasse de cuir cendré
+  description: Un cuir noir, durci au feu des plaines du nord.
+  type: equipement
+  emplacement: armure
+  prix: 1495
+  bonus:
+    armure: 18
+    caracs:
+      AGI: 4
+      VIT: 4
+  rarete: rare
+  palier: VI
+  niveau: 34
+  categorie: intermediaire
+  classes:
+  - ombre
+  - archer
+  - alchimiste
+  - barde
+  effets_equipement:
+  - effet: resistance
+    element: feu
+    valeur: 0.2
+- id: carquois-sans-fond
+  nom: Carquois sans fond
+  description: Personne n'a jamais vu le fond de ce carquois.
+  type: equipement
+  emplacement: accessoire
+  prix: 1760
+  bonus:
+    caracs:
+      AGI: 12
+      ESP: 8
+  rarete: epique
+  palier: VI
+  niveau: 34
+  categorie: carquois
+  classes:
+  - archer
+  effets_equipement:
+  - effet: critique
+    valeur: 0.07
+  - effet: precision
+    valeur: 0.08
+- id: kestrevane
+  nom: Kestrévane, l'Arc du Faucon d'Âme
+  description: L'arc d'un esprit faucon, qui guide la flèche jusqu'au cœur de la cible.
+  type: equipement
+  emplacement: arme
+  prix: 1445
+  bonus:
+    puissance: 6
+    caracs:
+      AGI: 9
+      ESP: 4
+  rarete: legendaire
+  palier: V
+  niveau: 28
+  categorie: arc
+  classes:
+  - archer
+  effets_equipement:
+  - effet: critique
+    valeur: 0.06
+  - effet: precision
+    valeur: 0.07
+  pouvoir_unique: Œil du faucon touche toujours, même un ennemi caché.
+- id: baton-du-dispensaire
+  nom: Bâton du dispensaire
+  description: Le bâton de marche des soigneurs du dispensaire de Lysmont.
+  type: equipement
+  emplacement: arme
+  prix: 65
+  bonus:
+    caracs:
+      INT: 2
+      ESP: 1
+  rarete: peu-commun
+  palier: I
+  niveau: 1
+  categorie: baton
+  classes:
+  - arcaniste
+  - invocateur
+  - guerisseur
+- id: aube-de-la-novice
+  nom: Aube de la novice
+  description: La robe blanche des novices de l'Ordre, cousue de fils de lumière.
+  type: equipement
+  emplacement: armure
+  prix: 65
+  bonus:
+    armure: 2
+    caracs:
+      INT: 1
+      ESP: 1
+  rarete: peu-commun
+  palier: I
+  niveau: 1
+  categorie: legere
+  classes:
+  - arcaniste
+  - invocateur
+  - guerisseur
+- id: talisman-du-puits-sacre
+  nom: Talisman du puits sacré
+  description: Une pierre plongée dans le puits sacré d'une oasis.
+  type: equipement
+  emplacement: accessoire
+  prix: 215
+  bonus:
+    caracs:
+      FOR: 2
+      VIT: 4
+  rarete: rare
+  palier: II
+  niveau: 8
+  categorie: talisman
+  classes:
+  - lame-runique
+  - arcaniste
+  - invocateur
+  - ombre
+  - gardien
+  - alchimiste
+  - archer
+  - guerisseur
+  - berserker
+  - barde
+  effets_equipement:
+  - effet: vigueur
+    valeur: 0.04
+- id: sceptre-de-l-eau-vive
+  nom: Sceptre de l'eau vive
+  description: Un sceptre d'argent qui fait jaillir quelques gouttes fraîches quand on soigne.
+  type: equipement
+  emplacement: arme
+  prix: 215
+  bonus:
+    puissance: 1
+    caracs:
+      VIT: 1
+      ESP: 4
+  rarete: rare
+  palier: II
+  niveau: 8
+  categorie: sceptre
+  classes:
+  - guerisseur
+  - gardien
+  effets_equipement:
+  - effet: mana
+    valeur: 10
+- id: robe-de-seve
+  nom: Robe de sève
+  description: Une robe qui guérit doucement les égratignures de celui qui la porte.
+  type: equipement
+  emplacement: armure
+  prix: 450
+  bonus:
+    armure: 6
+    caracs:
+      INT: 3
+      ESP: 3
+  rarete: rare
+  palier: III
+  niveau: 15
+  categorie: legere
+  classes:
+  - arcaniste
+  - invocateur
+  - guerisseur
+  effets_equipement:
+  - effet: vigueur
+    valeur: 0.05
+- id: graine-du-premier-arbre
+  nom: Graine du Premier Arbre
+  description: Une graine qui n'a jamais germé et ne germera peut-être jamais.
+  type: equipement
+  emplacement: accessoire
+  prix: 500
+  bonus:
+    caracs:
+      INT: 5
+      ESP: 5
+  rarete: epique
+  palier: III
+  niveau: 15
+  categorie: amulette
+  classes:
+  - lame-runique
+  - arcaniste
+  - invocateur
+  - ombre
+  - gardien
+  - alchimiste
+  - archer
+  - guerisseur
+  - berserker
+  - barde
+  effets_equipement:
+  - effet: mana
+    valeur: 15
+  - effet: vigueur
+    valeur: 0.05
+- id: baton-de-corail-blanc
+  nom: Bâton de corail blanc
+  description: Taillé dans un corail des récifs de l'Archipel, il apaise les brûlures.
+  type: equipement
+  emplacement: arme
+  prix: 770
+  bonus:
+    puissance: 3
+    caracs:
+      INT: 5
+      ESP: 4
+  rarete: rare
+  palier: IV
+  niveau: 22
+  categorie: baton
+  classes:
+  - arcaniste
+  - invocateur
+  - guerisseur
+  effets_equipement:
+  - effet: resistance
+    element: feu
+    valeur: 0.14
+- id: chasuble-de-la-source-chaude
+  nom: Chasuble de la source chaude
+  description: Les guérisseurs nains la trempent dans les sources des Monts Grisfer.
+  type: equipement
+  emplacement: armure
+  prix: 895
+  bonus:
+    armure: 8
+    caracs:
+      INT: 5
+      ESP: 5
+  rarete: epique
+  palier: IV
+  niveau: 22
+  categorie: legere
+  classes:
+  - arcaniste
+  - invocateur
+  - guerisseur
+  effets_equipement:
+  - effet: mana
+    valeur: 20
+  - effet: resistance
+    element: poison
+    valeur: 0.14
+- id: medaillon-de-la-sur-de-garde
+  nom: Médaillon de la sœur de garde
+  description: Porté par les soigneuses qui suivent les sentinelles au combat.
+  type: equipement
+  emplacement: accessoire
+  prix: 1140
+  bonus:
+    caracs:
+      INT: 7
+      ESP: 8
+  rarete: rare
+  palier: V
+  niveau: 28
+  categorie: amulette
+  classes:
+  - lame-runique
+  - arcaniste
+  - invocateur
+  - ombre
+  - gardien
+  - alchimiste
+  - archer
+  - guerisseur
+  - berserker
+  - barde
+  effets_equipement:
+  - effet: mana
+    valeur: 25
+- id: sceptre-de-la-lumiere-premiere
+  nom: Sceptre de la lumière première
+  description: Une relique de l'Ordre, d'avant que l'Ordre ait des secrets.
+  type: equipement
+  emplacement: arme
+  prix: 1290
+  bonus:
+    puissance: 4
+    caracs:
+      VIT: 4
+      ESP: 9
+  rarete: epique
+  palier: V
+  niveau: 28
+  categorie: sceptre
+  classes:
+  - guerisseur
+  - gardien
+  effets_equipement:
+  - effet: vigueur
+    valeur: 0.08
+  - effet: touche
+    element: sacre
+    puissance: 6
+- id: robe-de-l-esperance
+  nom: Robe de l'espérance
+  description: Une robe simple, que les flammes et la cendre ne salissent jamais.
+  type: equipement
+  emplacement: armure
+  prix: 1495
+  bonus:
+    armure: 10
+    caracs:
+      INT: 6
+      ESP: 6
+  rarete: rare
+  palier: VI
+  niveau: 34
+  categorie: legere
+  classes:
+  - arcaniste
+  - invocateur
+  - guerisseur
+  effets_equipement:
+  - effet: resistance
+    element: ombre
+    valeur: 0.2
+- id: cur-de-l-aube
+  nom: Cœur de l'Aube
+  description: Un talisman qui bat doucement, comme un cœur, quand un allié est en danger.
+  type: equipement
+  emplacement: accessoire
+  prix: 1760
+  bonus:
+    caracs:
+      FOR: 8
+      VIT: 12
+  rarete: epique
+  palier: VI
+  niveau: 34
+  categorie: talisman
+  classes:
+  - lame-runique
+  - arcaniste
+  - invocateur
+  - ombre
+  - gardien
+  - alchimiste
+  - archer
+  - guerisseur
+  - berserker
+  - barde
+  effets_equipement:
+  - effet: vigueur
+    valeur: 0.1
+  - effet: mana
+    valeur: 30
+- id: lumenae
+  nom: Lumenaë, le Sceptre de Miséricorde
+  description: Le sceptre d'une sainte oubliée, qui soignait amis et ennemis.
+  type: equipement
+  emplacement: arme
+  prix: 1445
+  bonus:
+    puissance: 4
+    caracs:
+      VIT: 4
+      ESP: 11
+  rarete: legendaire
+  palier: V
+  niveau: 28
+  categorie: sceptre
+  classes:
+  - guerisseur
+  - gardien
+  effets_equipement:
+  - effet: mana
+    valeur: 25
+  - effet: vigueur
+    valeur: 0.08
+  pouvoir_unique: Les soins du héros rendent 15 % de PV en plus.
+- id: hache-du-bucheron-colerique
+  nom: Hache du bûcheron colérique
+  description: Une hache de bûcheron si lourde que son propriétaire l'a lâchée de rage.
+  type: equipement
+  emplacement: arme
+  prix: 65
+  bonus:
+    puissance: 1
+    caracs:
+      FOR: 2
+  rarete: peu-commun
+  palier: I
+  niveau: 1
+  categorie: deux-mains
+  classes:
+  - berserker
+  - lame-runique
+- id: cuir-cloute-de-la-fosse
+  nom: Cuir clouté de la fosse
+  description: L'armure des combattants de la fosse aux paris, sous le Chaudron Fêlé.
+  type: equipement
+  emplacement: armure
+  prix: 65
+  bonus:
+    armure: 4
+    caracs:
+      VIT: 1
+  rarete: peu-commun
+  palier: I
+  niveau: 1
+  categorie: lourde
+  classes:
+  - gardien
+  - berserker
+  - lame-runique
+- id: croc-de-lion-des-sables
+  nom: Croc de lion des sables
+  description: Un croc porté en pendentif, arraché au roi des fauves du désert.
+  type: equipement
+  emplacement: accessoire
+  prix: 215
+  bonus:
+    caracs:
+      FOR: 2
+      VIT: 4
+  rarete: rare
+  palier: II
+  niveau: 8
+  categorie: talisman
+  classes:
+  - lame-runique
+  - arcaniste
+  - invocateur
+  - ombre
+  - gardien
+  - alchimiste
+  - archer
+  - guerisseur
+  - berserker
+  - barde
+  effets_equipement:
+  - effet: vigueur
+    valeur: 0.04
+- id: espadon-du-soleil-brulant
+  nom: Espadon du soleil brûlant
+  description: Sa lame chauffe au soleil jusqu'à brûler ce qu'elle touche.
+  type: equipement
+  emplacement: arme
+  prix: 215
+  bonus:
+    puissance: 2
+    caracs:
+      FOR: 4
+  rarete: rare
+  palier: II
+  niveau: 8
+  categorie: deux-mains
+  classes:
+  - berserker
+  - lame-runique
+  effets_equipement:
+  - effet: critique
+    valeur: 0.03
+- id: armure-d-ecailles-de-sanglier-roi
+  nom: Armure d'écailles de sanglier-roi
+  description: Taillée dans le cuir d'un sanglier géant des forêts de l'ouest.
+  type: equipement
+  emplacement: armure
+  prix: 450
+  bonus:
+    armure: 10
+    caracs:
+      FOR: 2
+      VIT: 2
+  rarete: rare
+  palier: III
+  niveau: 15
+  categorie: lourde
+  classes:
+  - gardien
+  - berserker
+  - lame-runique
+  effets_equipement:
+  - effet: vigueur
+    valeur: 0.05
+- id: anneau-du-cri-sauvage
+  nom: Anneau du cri sauvage
+  description: Quand on le serre, on entend un rugissement lointain.
+  type: equipement
+  emplacement: accessoire
+  prix: 500
+  bonus:
+    caracs:
+      AGI: 5
+      CHA: 5
+  rarete: epique
+  palier: III
+  niveau: 15
+  categorie: anneau
+  classes:
+  - lame-runique
+  - arcaniste
+  - invocateur
+  - ombre
+  - gardien
+  - alchimiste
+  - archer
+  - guerisseur
+  - berserker
+  - barde
+  effets_equipement:
+  - effet: critique
+    valeur: 0.04
+  - effet: vigueur
+    valeur: 0.05
+- id: marteau-volcan
+  nom: Marteau-volcan
+  description: Un marteau de forge naine, qui crache des étincelles à chaque coup.
+  type: equipement
+  emplacement: arme
+  prix: 770
+  bonus:
+    puissance: 4
+    caracs:
+      FOR: 6
+      VIT: 2
+  rarete: rare
+  palier: IV
+  niveau: 22
+  categorie: masse
+  classes:
+  - gardien
+  - berserker
+  effets_equipement:
+  - effet: touche
+    element: feu
+    puissance: 5
+- id: plates-d-ecailles-de-dragon
+  nom: Plates d'écailles de dragon
+  description: Une armure taillée dans les écailles d'un dragon de l'Archipel, avec sa permission.
+  type: equipement
+  emplacement: armure
+  prix: 895
+  bonus:
+    armure: 16
+    caracs:
+      FOR: 3
+      VIT: 3
+  rarete: epique
+  palier: IV
+  niveau: 22
+  categorie: lourde
+  classes:
+  - gardien
+  - berserker
+  - lame-runique
+  effets_equipement:
+  - effet: vigueur
+    valeur: 0.07
+  - effet: resistance
+    element: feu
+    valeur: 0.14
+- id: talisman-de-sang-dragon
+  nom: Talisman de sang-dragon
+  description: Une écaille qui réchauffe le sang de celui qui la porte.
+  type: equipement
+  emplacement: accessoire
+  prix: 1140
+  bonus:
+    caracs:
+      FOR: 6
+      VIT: 9
+  rarete: rare
+  palier: V
+  niveau: 28
+  categorie: talisman
+  classes:
+  - lame-runique
+  - arcaniste
+  - invocateur
+  - ombre
+  - gardien
+  - alchimiste
+  - archer
+  - guerisseur
+  - berserker
+  - barde
+  effets_equipement:
+  - effet: resistance
+    element: glace
+    valeur: 0.17
+- id: fleau-des-cendres
+  nom: Fléau des Cendres
+  description: Une grande hache forgée pour fendre les démons les plus massifs.
+  type: equipement
+  emplacement: arme
+  prix: 1290
+  bonus:
+    puissance: 5
+    caracs:
+      FOR: 12
+  rarete: epique
+  palier: V
+  niveau: 28
+  categorie: deux-mains
+  classes:
+  - berserker
+  - lame-runique
+  effets_equipement:
+  - effet: critique
+    valeur: 0.06
+  - effet: touche
+    element: sacre
+    puissance: 6
+- id: armure-de-l-enrage
+  nom: Armure de l'enragé
+  description: Elle a été réparée tant de fois qu'il ne reste presque rien de l'originale.
+  type: equipement
+  emplacement: armure
+  prix: 1495
+  bonus:
+    armure: 20
+    caracs:
+      FOR: 3
+      VIT: 4
+  rarete: rare
+  palier: VI
+  niveau: 34
+  categorie: lourde
+  classes:
+  - gardien
+  - berserker
+  - lame-runique
+  effets_equipement:
+  - effet: vigueur
+    valeur: 0.1
+- id: anneau-du-feu-interieur
+  nom: Anneau du feu intérieur
+  description: Un anneau d'écaille qui brûle quand le porteur est blessé.
+  type: equipement
+  emplacement: accessoire
+  prix: 1760
+  bonus:
+    caracs:
+      AGI: 10
+      CHA: 10
+  rarete: epique
+  palier: VI
+  niveau: 34
+  categorie: anneau
+  classes:
+  - lame-runique
+  - arcaniste
+  - invocateur
+  - ombre
+  - gardien
+  - alchimiste
+  - archer
+  - guerisseur
+  - berserker
+  - barde
+  effets_equipement:
+  - effet: critique
+    valeur: 0.07
+  - effet: vigueur
+    valeur: 0.1
+- id: drakhaar
+  nom: Drakhaar, la Hache des Dragons-Rois
+  description: La hache d'un ancien pacte entre les dragons-rois et les hommes.
+  type: equipement
+  emplacement: arme
+  prix: 1445
+  bonus:
+    puissance: 6
+    caracs:
+      FOR: 13
+  rarete: legendaire
+  palier: V
+  niveau: 28
+  categorie: deux-mains
+  classes:
+  - berserker
+  - lame-runique
+  effets_equipement:
+  - effet: critique
+    valeur: 0.06
+  - effet: touche
+    element: feu
+    puissance: 6
+  pouvoir_unique: Sang de dragon se déclenche dès 50 % de PV au lieu du seuil habituel.
+- id: luth-du-chaudron-fele
+  nom: Luth du Chaudron Fêlé
+  description: Le luth que Bram garde derrière son comptoir, pour les soirs de fête.
+  type: equipement
+  emplacement: arme
+  prix: 65
+  bonus:
+    caracs:
+      AGI: 1
+      CHA: 2
+  rarete: peu-commun
+  palier: I
+  niveau: 1
+  categorie: instrument
+  classes:
+  - barde
+- id: pourpoint-du-menestrel
+  nom: Pourpoint du ménestrel
+  description: Un pourpoint de velours aux couleurs vives, impossible à ne pas remarquer.
+  type: equipement
+  emplacement: armure
+  prix: 65
+  bonus:
+    armure: 2
+    caracs:
+      AGI: 1
+      VIT: 1
+  rarete: peu-commun
+  palier: I
+  niveau: 1
+  categorie: intermediaire
+  classes:
+  - ombre
+  - archer
+  - alchimiste
+  - barde
+- id: anneau-des-contes-du-bazar
+  nom: Anneau des contes du bazar
+  description: Le conteur du Grand Bazar le portait en racontant mille et une histoires.
+  type: equipement
+  emplacement: accessoire
+  prix: 215
+  bonus:
+    caracs:
+      AGI: 3
+      CHA: 3
+  rarete: rare
+  palier: II
+  niveau: 8
+  categorie: anneau
+  classes:
+  - lame-runique
+  - arcaniste
+  - invocateur
+  - ombre
+  - gardien
+  - alchimiste
+  - archer
+  - guerisseur
+  - berserker
+  - barde
+  effets_equipement:
+  - effet: precision
+    valeur: 0.04
+- id: flute-des-dunes-chantantes
+  nom: Flûte des dunes chantantes
+  description: Sa mélodie imite le chant des dunes de la Marche.
+  type: equipement
+  emplacement: arme
+  prix: 215
+  bonus:
+    puissance: 1
+    caracs:
+      AGI: 1
+      CHA: 4
+  rarete: rare
+  palier: II
+  niveau: 8
+  categorie: instrument
+  classes:
+  - barde
+  effets_equipement:
+  - effet: mana
+    valeur: 10
+- id: cape-du-conteur-sylvain
+  nom: Cape du conteur sylvain
+  description: Une cape brodée de toutes les légendes de Sylvenoire.
+  type: equipement
+  emplacement: armure
+  prix: 450
+  bonus:
+    armure: 10
+    caracs:
+      AGI: 2
+      VIT: 2
+  rarete: rare
+  palier: III
+  niveau: 15
+  categorie: intermediaire
+  classes:
+  - ombre
+  - archer
+  - alchimiste
+  - barde
+  effets_equipement:
+  - effet: resistance
+    element: arcane
+    valeur: 0.11
+- id: anneau-de-la-dryade-chanteuse
+  nom: Anneau de la dryade chanteuse
+  description: Il fredonne tout seul quand le porteur se tait trop longtemps.
+  type: equipement
+  emplacement: accessoire
+  prix: 500
+  bonus:
+    caracs:
+      AGI: 5
+      CHA: 5
+  rarete: epique
+  palier: III
+  niveau: 15
+  categorie: anneau
+  classes:
+  - lame-runique
+  - arcaniste
+  - invocateur
+  - ombre
+  - gardien
+  - alchimiste
+  - archer
+  - guerisseur
+  - berserker
+  - barde
+  effets_equipement:
+  - effet: mana
+    valeur: 15
+  - effet: critique
+    valeur: 0.04
+- id: rapiere-du-corsaire
+  nom: Rapière du corsaire
+  description: Une lame fine et élégante, gagnée à un capitaine pirate en duel de chansons.
+  type: equipement
+  emplacement: arme
+  prix: 770
+  bonus:
+    puissance: 4
+    caracs:
+      AGI: 6
+      CHA: 2
+  rarete: rare
+  palier: IV
+  niveau: 22
+  categorie: dague
+  classes:
+  - ombre
+  - barde
+  effets_equipement:
+  - effet: critique
+    valeur: 0.05
+- id: habit-de-gala-de-port-verane
+  nom: Habit de gala de Port-Vérane
+  description: La tenue de cérémonie des fêtes des sirènes.
+  type: equipement
+  emplacement: armure
+  prix: 895
+  bonus:
+    armure: 14
+    caracs:
+      AGI: 4
+      VIT: 3
+  rarete: epique
+  palier: IV
+  niveau: 22
+  categorie: intermediaire
+  classes:
+  - ombre
+  - archer
+  - alchimiste
+  - barde
+  effets_equipement:
+  - effet: vigueur
+    valeur: 0.07
+  - effet: resistance
+    element: glace
+    valeur: 0.14
+- id: anneau-de-l-hymne-du-mur
+  nom: Anneau de l'hymne du Mur
+  description: Il porte gravées les paroles de l'hymne que chantent les sentinelles.
+  type: equipement
+  emplacement: accessoire
+  prix: 1140
+  bonus:
+    caracs:
+      AGI: 8
+      CHA: 7
+  rarete: rare
+  palier: V
+  niveau: 28
+  categorie: anneau
+  classes:
+  - lame-runique
+  - arcaniste
+  - invocateur
+  - ombre
+  - gardien
+  - alchimiste
+  - archer
+  - guerisseur
+  - berserker
+  - barde
+  effets_equipement:
+  - effet: resistance
+    element: ombre
+    valeur: 0.17
+- id: harpe-de-l-aube
+  nom: Harpe de l'Aube
+  description: Ses cordes en fil d'or donnent du courage à tout un bataillon.
+  type: equipement
+  emplacement: arme
+  prix: 1290
+  bonus:
+    puissance: 4
+    caracs:
+      AGI: 4
+      CHA: 9
+  rarete: epique
+  palier: V
+  niveau: 28
+  categorie: instrument
+  classes:
+  - barde
+  effets_equipement:
+  - effet: mana
+    valeur: 25
+  - effet: touche
+    element: sacre
+    puissance: 6
+- id: manteau-du-dernier-refrain
+  nom: Manteau du dernier refrain
+  description: Le manteau d'un barde qui a chanté jusqu'aux portes de la Citadelle.
+  type: equipement
+  emplacement: armure
+  prix: 1495
+  bonus:
+    armure: 18
+    caracs:
+      AGI: 4
+      VIT: 4
+  rarete: rare
+  palier: VI
+  niveau: 34
+  categorie: intermediaire
+  classes:
+  - ombre
+  - archer
+  - alchimiste
+  - barde
+  effets_equipement:
+  - effet: vigueur
+    valeur: 0.1
+- id: anneau-des-voix-perdues
+  nom: Anneau des voix perdues
+  description: Il garde les voix des héros tombés, qui chantent encore pour les vivants.
+  type: equipement
+  emplacement: accessoire
+  prix: 1760
+  bonus:
+    caracs:
+      AGI: 10
+      CHA: 10
+  rarete: epique
+  palier: VI
+  niveau: 34
+  categorie: anneau
+  classes:
+  - lame-runique
+  - arcaniste
+  - invocateur
+  - ombre
+  - gardien
+  - alchimiste
+  - archer
+  - guerisseur
+  - berserker
+  - barde
+  effets_equipement:
+  - effet: mana
+    valeur: 30
+  - effet: critique
+    valeur: 0.07
+- id: melisande
+  nom: Mélisande, le Luth des Âges
+  description: Un luth qui joue les chansons de toutes les époques, même celles à venir.
+  type: equipement
+  emplacement: arme
+  prix: 1445
+  bonus:
+    puissance: 4
+    caracs:
+      AGI: 4
+      CHA: 11
+  rarete: legendaire
+  palier: V
+  niveau: 28
+  categorie: instrument
+  classes:
+  - barde
+  effets_equipement:
+  - effet: mana
+    valeur: 25
+  - effet: critique
+    valeur: 0.06
+  pouvoir_unique: Refrain dure 1 tour de plus.
+- id: aube-premiere
+  nom: Aube-Première, l'Épée du Premier Serment
+  description: La lame sur laquelle fut prêté le premier serment de protéger le monde, bien avant le Voile.
+  type: equipement
+  emplacement: arme
+  prix: 2800
+  bonus:
+    puissance: 9
+    caracs:
+      FOR: 15
+      VIT: 4
+  rarete: mythique
+  palier: X
+  niveau: 40
+  categorie: epee
+  classes:
+  - lame-runique
+  - gardien
+  effets_equipement:
+  - effet: critique
+    valeur: 0.08
+  - effet: touche
+    element: sacre
+    puissance: 8
+  - effet: vigueur
+    valeur: 0.12
+  pouvoir_unique: Une fois par combat, quand un allié tombe K.O., le porteur le relève avec 30 % de ses PV.
+  unique_par_partie: true
+- id: brise-monde
+  nom: Brise-Monde, la Hache du Premier Pacte
+  description: Forgée dans le souffle du premier dragon-roi, pour sceller l'alliance entre les dragons et les hommes.
+  type: equipement
+  emplacement: arme
+  prix: 2800
+  bonus:
+    puissance: 9
+    caracs:
+      FOR: 19
+  rarete: mythique
+  palier: X
+  niveau: 40
+  categorie: deux-mains
+  classes:
+  - berserker
+  - lame-runique
+  effets_equipement:
+  - effet: critique
+    valeur: 0.08
+  - effet: vigueur
+    valeur: 0.12
+  - effet: touche
+    element: feu
+    puissance: 8
+  pouvoir_unique: Chaque ennemi vaincu par le porteur lui rend 10 % de ses PV max.
+  unique_par_partie: true
+- id: nuit-premiere
+  nom: Nuit-Première, le Croc d'avant le Voile
+  description: Une lame taillée dans la première ombre du monde, quand la nuit n'avait pas encore de nom.
+  type: equipement
+  emplacement: arme
+  prix: 2800
+  bonus:
+    puissance: 9
+    caracs:
+      AGI: 15
+      CHA: 4
+  rarete: mythique
+  palier: X
+  niveau: 40
+  categorie: dague
+  classes:
+  - ombre
+  - barde
+  effets_equipement:
+  - effet: critique
+    valeur: 0.08
+  - effet: precision
+    valeur: 0.09
+  - effet: touche
+    element: ombre
+    puissance: 8
+  pouvoir_unique: Les coups critiques du porteur infligent × 2 au lieu de × 1,5.
+  unique_par_partie: true
+- id: lointain
+  nom: Lointain, l'Arc de l'Horizon Perdu
+  description: Un arc dont les flèches atteignaient, dit-on, des terres que le Voile a effacées des cartes.
+  type: equipement
+  emplacement: arme
+  prix: 2800
+  bonus:
+    puissance: 9
+    caracs:
+      AGI: 13
+      ESP: 6
+  rarete: mythique
+  palier: X
+  niveau: 40
+  categorie: arc
+  classes:
+  - archer
+  effets_equipement:
+  - effet: critique
+    valeur: 0.08
+  - effet: precision
+    valeur: 0.09
+  - effet: touche
+    element: foudre
+    puissance: 8
+  pouvoir_unique: Chaque attaque a 25 % de chances de tirer une seconde flèche sur un autre ennemi.
+  unique_par_partie: true
+- id: il-du-voile
+  nom: Œil-du-Voile, l'Arbalète des Étoiles fixes
+  description: Un mécanisme d'avant le Voile, que personne n'a jamais su démonter ni reproduire.
+  type: equipement
+  emplacement: arme
+  prix: 2800
+  bonus:
+    puissance: 7
+    caracs:
+      AGI: 8
+      INT: 13
+  rarete: mythique
+  palier: X
+  niveau: 40
+  categorie: arbalete
+  classes:
+  - alchimiste
+  - archer
+  effets_equipement:
+  - effet: precision
+    valeur: 0.09
+  - effet: mana
+    valeur: 35
+  - effet: touche
+    element: glace
+    puissance: 8
+  pouvoir_unique: Les tirs du porteur ignorent 30 % de la défense et des résistances de la cible.
+  unique_par_partie: true
+- id: ylvarae
+  nom: Ylvarae, le Bâton des Premières Racines
+  description: Une branche de l'arbre-monde dont toutes les forêts descendent, Sylvenoire comprise.
+  type: equipement
+  emplacement: arme
+  prix: 2800
+  bonus:
+    puissance: 7
+    caracs:
+      INT: 11
+      ESP: 10
+  rarete: mythique
+  palier: X
+  niveau: 40
+  categorie: baton
+  classes:
+  - arcaniste
+  - invocateur
+  - guerisseur
+  effets_equipement:
+  - effet: mana
+    valeur: 35
+  - effet: vigueur
+    valeur: 0.12
+  - effet: touche
+    element: arcane
+    puissance: 8
+  pouvoir_unique: Les compétences du porteur coûtent 20 % de mana en moins.
+  unique_par_partie: true

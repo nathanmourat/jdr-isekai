@@ -3132,6 +3132,14 @@ ____exports.zRencontre = z:object({
     renforts = z:array(z:string()):default({}),
     fuite_possible = z:boolean():default(true)
 })
+____exports.RARETES = {
+    "commun",
+    "peu-commun",
+    "rare",
+    "epique",
+    "legendaire",
+    "mythique"
+}
 ____exports.zObjet = z:object({
     id = z:string(),
     nom = z:string(),
@@ -3151,7 +3159,27 @@ ____exports.zObjet = z:object({
         armure = z:number():default(0),
         puissance = z:number():default(0),
         caracs = ____exports.zCaracsPartielles:default({})
-    }):optional()
+    }):optional(),
+    rarete = z:enum(____exports.RARETES):optional(),
+    palier = z:string():optional(),
+    niveau = z:number():int():optional(),
+    categorie = z:string():optional(),
+    classes = z:array(z:string()):optional(),
+    effets_equipement = z:array(z:object({
+        effet = z:enum({
+            "critique",
+            "precision",
+            "resistance",
+            "touche",
+            "mana",
+            "vigueur"
+        }),
+        valeur = z:number():optional(),
+        puissance = z:number():optional(),
+        element = ____exports.zElement:optional()
+    })):default({}),
+    pouvoir_unique = z:string():optional(),
+    unique_par_partie = z:boolean():default(false)
 })
 ____exports.zCompagnon = z:object({
     id = z:string(),
@@ -4571,11 +4599,187 @@ function ____exports.competenceDe(contenu, id)
 end
 return ____exports
  end,
+["src.moteur.equipement"] = function(...) 
+local ____lualib = require("lualib_bundle")
+local __TS__ArrayIncludes = ____lualib.__TS__ArrayIncludes
+local __TS__ArrayMap = ____lualib.__TS__ArrayMap
+local ____exports = {}
+local ____outils = require("src.moteur.outils")
+local valeurs = ____outils.valeurs
+local vrai = ____outils.vrai
+--- Pouvoirs uniques codés (id de l'objet → description courte, pour les tests et l'interface).
+____exports.POUVOIRS = {
+    velgraive = "Commence chaque combat avec 1 charge de rune.",
+    ysgarde = "Les sorts de zone coûtent 15 % de mana en moins.",
+    nyxaliel = "Les invocations commencent le combat avec 20 % de PV en plus.",
+    murmure = "La première attaque du combat est toujours un coup critique.",
+    solenne = "Le héros subit 10 % de dégâts en moins.",
+    prisme = "Les objets de soin et les bombes sont 25 % plus efficaces.",
+    kestrevane = "L'attaque touche toujours, même un ennemi caché.",
+    lumenae = "Les soins du héros rendent 15 % de PV en plus.",
+    drakhaar = "Sang de dragon donne son plein effet dès 50 % de PV.",
+    melisande = "Refrain dure 1 tour de plus.",
+    ["aube-premiere"] = "Une fois par combat, relève un allié K.O. avec 30 % de ses PV.",
+    ["brise-monde"] = "Chaque ennemi vaincu par le porteur lui rend 10 % de ses PV max.",
+    ["nuit-premiere"] = "Les coups critiques infligent × 2 au lieu de × 1,5.",
+    lointain = "25 % de chances de tirer une seconde flèche sur un autre ennemi.",
+    ["il-du-voile"] = "Les tirs ignorent 30 % de la défense et des résistances de la cible.",
+    ylvarae = "Les compétences coûtent 20 % de mana en moins."
+}
+--- Couleurs des raretés (gris, vert, bleu, violet, or, rouge), pour les interfaces.
+____exports.COULEURS_RARETE = {
+    commun = "#b8b8b8",
+    ["peu-commun"] = "#5fc95f",
+    rare = "#4a9bff",
+    epique = "#b26bff",
+    legendaire = "#f2b53a",
+    mythique = "#ff4a4a"
+}
+____exports.NOMS_RARETE = {
+    commun = "Commun",
+    ["peu-commun"] = "Peu commun",
+    rare = "Rare",
+    epique = "Épique",
+    legendaire = "Légendaire",
+    mythique = "Mythique"
+}
+function ____exports.bonusVide()
+    return {
+        critique = 0,
+        precision = 0,
+        mana = 0,
+        vigueur = 0,
+        resistances = {},
+        touches = {},
+        pouvoirs = {}
+    }
+end
+--- Additionne les effets de l'équipement porté par un héros.
+function ____exports.bonusEquipement(contenu, h)
+    local b = ____exports.bonusVide()
+    for ____, slot in ipairs(valeurs(h.equipement)) do
+        if not vrai(slot) then
+            continue
+        end
+        local o = contenu.objets[slot]
+        if o == nil then
+            continue
+        end
+        for ____, e in ipairs(o.effets_equipement or ({})) do
+            local v = e.valeur or 0
+            if e.effet == "critique" then
+                b.critique = b.critique + v
+            elseif e.effet == "precision" then
+                b.precision = b.precision + v
+            elseif e.effet == "mana" then
+                b.mana = b.mana + v
+            elseif e.effet == "vigueur" then
+                b.vigueur = b.vigueur + v
+            elseif e.effet == "resistance" and e.element ~= nil then
+                local el = e.element
+                b.resistances[el] = (b.resistances[el] or 0) + v
+            elseif e.effet == "touche" and e.element ~= nil then
+                local ____b_touches_0 = b.touches
+                ____b_touches_0[#____b_touches_0 + 1] = {element = e.element, puissance = e.puissance or 0}
+            end
+        end
+        if vrai(o.pouvoir_unique) and ____exports.POUVOIRS[o.id] ~= nil then
+            local ____b_pouvoirs_1 = b.pouvoirs
+            ____b_pouvoirs_1[#____b_pouvoirs_1 + 1] = o.id
+        end
+    end
+    return b
+end
+--- Raison pour laquelle le héros ne peut pas équiper l'objet (undefined : il peut).
+function ____exports.problemeEquipement(contenu, h, o)
+    if o.type ~= "equipement" or o.emplacement == nil then
+        return "Cet objet ne s'équipe pas"
+    end
+    if o.niveau ~= nil and h.niveau < o.niveau then
+        return ("Niveau " .. tostring(o.niveau)) .. " requis"
+    end
+    if o.classes ~= nil and #o.classes > 0 and not __TS__ArrayIncludes(o.classes, h.classe) then
+        return "Réservé à : " .. table.concat(
+            __TS__ArrayMap(
+                o.classes,
+                function(____, c)
+                    local ____opt_2 = contenu.classes[c]
+                    return ____opt_2 and ____opt_2.nom or c
+                end
+            ),
+            ", "
+        )
+    end
+    return nil
+end
+--- Nombre d'exemplaires d'un objet dans la partie (inventaires et équipement de tous les héros).
+function ____exports.exemplaires(heros, objet)
+    local n = 0
+    for ____, h in ipairs(heros) do
+        n = n + (h.inventaire[objet] or 0)
+        for ____, slot in ipairs(valeurs(h.equipement)) do
+            if slot == objet then
+                n = n + 1
+            end
+        end
+    end
+    return n
+end
+--- Description des effets d'un objet, en français (fiche, boutique, Roblox).
+function ____exports.texteEffets(o)
+    local res = {}
+    local function pct(v)
+        return tostring(math.floor(v * 100 + 0.5)) .. " %"
+    end
+    local b = o.bonus
+    if b ~= nil then
+        if b.puissance ~= 0 then
+            res[#res + 1] = ("+" .. tostring(b.puissance)) .. " puissance"
+        end
+        if b.armure ~= 0 then
+            res[#res + 1] = ("+" .. tostring(b.armure)) .. " armure"
+        end
+        for ____, ____value in ipairs({
+            {"FOR", b.caracs.FOR},
+            {"AGI", b.caracs.AGI},
+            {"INT", b.caracs.INT},
+            {"VIT", b.caracs.VIT},
+            {"ESP", b.caracs.ESP},
+            {"CHA", b.caracs.CHA}
+        }) do
+            local k = ____value[1]
+            local v = ____value[2]
+            if v ~= nil and v ~= 0 then
+                res[#res + 1] = (((if v > 0 then "+" else "") .. tostring(v)) .. " ") .. k
+            end
+        end
+    end
+    for ____, e in ipairs(o.effets_equipement or ({})) do
+        local v = e.valeur or 0
+        if e.effet == "critique" then
+            res[#res + 1] = ("+" .. pct(v)) .. " critique"
+        elseif e.effet == "precision" then
+            res[#res + 1] = ("+" .. pct(v)) .. " précision"
+        elseif e.effet == "mana" then
+            res[#res + 1] = ("+" .. tostring(v)) .. " mana max"
+        elseif e.effet == "vigueur" then
+            res[#res + 1] = ("+" .. pct(v)) .. " PV max"
+        elseif e.effet == "resistance" then
+            res[#res + 1] = (("résistance " .. (e.element or "")) .. " ") .. pct(v)
+        elseif e.effet == "touche" then
+            res[#res + 1] = ((("touche de " .. (e.element or "")) .. " (+") .. tostring(e.puissance or 0)) .. ")"
+        end
+    end
+    return res
+end
+return ____exports
+ end,
 ["src.moteur.combat"] = function(...) 
 local ____lualib = require("lualib_bundle")
 local __TS__StringStartsWith = ____lualib.__TS__StringStartsWith
 local __TS__ArraySome = ____lualib.__TS__ArraySome
 local __TS__ObjectAssign = ____lualib.__TS__ObjectAssign
+local __TS__ArrayIncludes = ____lualib.__TS__ArrayIncludes
 local __TS__ArrayMap = ____lualib.__TS__ArrayMap
 local __TS__ObjectFromEntries = ____lualib.__TS__ObjectFromEntries
 local __TS__ArrayFilter = ____lualib.__TS__ArrayFilter
@@ -4594,7 +4798,6 @@ local __TS__SparseArrayNew = ____lualib.__TS__SparseArrayNew
 local __TS__SparseArrayPush = ____lualib.__TS__SparseArrayPush
 local __TS__SparseArraySpread = ____lualib.__TS__SparseArraySpread
 local __TS__ArrayFind = ____lualib.__TS__ArrayFind
-local __TS__ArrayIncludes = ____lualib.__TS__ArrayIncludes
 local __TS__ArrayIndexOf = ____lualib.__TS__ArrayIndexOf
 local Map = ____lualib.Map
 local __TS__ArrayEvery = ____lualib.__TS__ArrayEvery
@@ -4612,6 +4815,8 @@ local entrees = ____outils.entrees
 local trier = ____outils.trier
 local valeurs = ____outils.valeurs
 local vrai = ____outils.vrai
+local ____equipement = require("src.moteur.equipement")
+local bonusEquipement = ____equipement.bonusEquipement
 local ____personnage = require("src.moteur.personnage")
 local caracsTotales = ____personnage.caracsTotales
 local competencesEquipees = ____personnage.competencesEquipees
@@ -4770,6 +4975,21 @@ function toutesCompetences(contenu, x)
     )
     return {__TS__SparseArraySpread(____array_22)}
 end
+--- Le combattant porte-t-il l'objet qui donne ce pouvoir unique ?
+function ____exports.aPouvoir(x, objet)
+    return x.objets ~= nil and __TS__ArrayIncludes(x.objets.pouvoirs, objet)
+end
+--- Mana réellement payé pour une compétence (pouvoirs d'équipement qui réduisent le coût).
+function ____exports.coutMana(x, comp)
+    local c = comp.cout
+    if ____exports.aPouvoir(x, "ylvarae") then
+        c = c * 0.8
+    end
+    if ____exports.aPouvoir(x, "ysgarde") and (comp.cible == "tous_ennemis" or comp.cible == "tous_allies") then
+        c = c * 0.85
+    end
+    return math.floor(c + 0.5)
+end
 function ____exports.competenceUtilisable(contenu, x, comp)
     if aEtat(x, "silence") then
         return false
@@ -4777,7 +4997,7 @@ function ____exports.competenceUtilisable(contenu, x, comp)
     if (x.recharges[comp.id] or 0) > 0 then
         return false
     end
-    if x.mana < comp.cout then
+    if x.mana < ____exports.coutMana(x, comp) then
         return false
     end
     if comp.id == "souffle-draconique" and (x.compteurs.souffle or 0) > 0 then
@@ -4840,7 +5060,8 @@ function multiplicateurDegatsSource(combat, s, cible, element)
     local ____opt_23 = s.passif
     if (____opt_23 and ____opt_23.id) == "sang-de-dragon" then
         local manque = 1 - s.pv / s.pvMax
-        m = m * (1 + math.min(s.passif.parametres.max or 0.4, manque / 2))
+        local max = s.passif.parametres.max or 0.4
+        m = m * (1 + (if ____exports.aPouvoir(s, "drakhaar") and s.pv / s.pvMax <= 0.5 then max else math.min(max, manque / 2)))
     end
     local ____opt_25 = s.don
     if (____opt_25 and ____opt_25.id) == "oeil-du-seuil" then
@@ -4871,18 +5092,22 @@ function multiplicateurDegatsSource(combat, s, cible, element)
     end
     return m
 end
-function reductionCible(combat, cible, element)
+function reductionCible(combat, cible, element, source)
     local cfg = {def = 2, res = 2}
+    local perce = (if source ~= nil and ____exports.aPouvoir(source, "il-du-voile") then 0.7 else 1)
     local m = 1
     if element == "physique" or element == "poison" then
-        local defense = cible.caracs.VIT * cfg.def + cible.armure
+        local defense = (cible.caracs.VIT * cfg.def + cible.armure) * perce
         m = m * (100 / (100 + defense))
     else
-        local res = cible.caracs.ESP * cfg.res
+        local res = cible.caracs.ESP * cfg.res * perce
         m = m * (100 / (100 + res))
-        m = m * (1 - cible.resistanceMagique)
+        m = m * (1 - cible.resistanceMagique * perce)
     end
-    m = m * (1 - (cible.resistances[element] or 0))
+    m = m * (1 - (cible.resistances[element] or 0) * perce)
+    if ____exports.aPouvoir(cible, "solenne") then
+        m = m * 0.9
+    end
     local def = valeurEtat(cible, "bonus_defense") - valeurEtat(cible, "malus_defense")
     local ____opt_33 = cible.trait
     if (____opt_33 and ____opt_33.id) == "robuste" then
@@ -4912,15 +5137,20 @@ function chanceToucher(contenu, s, cible)
     if aEtat(cible, "sommeil") or aEtat(cible, "immobilise") then
         return 1
     end
+    if ____exports.aPouvoir(s, "kestrevane") then
+        return 1
+    end
     local p = k.toucher_base + k.toucher_par_agi * (s.caracs.AGI - cible.caracs.AGI)
+    local ____opt_37 = s.objets
+    p = p + (____opt_37 and ____opt_37.precision or 0)
     p = p + valeurEtat(s, "bonus_precision")
     p = p + (s.compteurs.modToucher or 0)
-    local ____opt_37 = s.trait
-    if (____opt_37 and ____opt_37.id) == "entre-deux-mondes" then
+    local ____opt_39 = s.trait
+    if (____opt_39 and ____opt_39.id) == "entre-deux-mondes" then
         p = p + (s.trait.parametres.precision or 0)
     end
-    local ____opt_39 = cible.trait
-    if (____opt_39 and ____opt_39.id) == "ruse" then
+    local ____opt_41 = cible.trait
+    if (____opt_41 and ____opt_41.id) == "ruse" then
         p = p - (cible.trait.parametres.esquive or 0)
     end
     return math.min(
@@ -4931,8 +5161,10 @@ end
 function chanceCritique(contenu, s, cible)
     local k = contenu.config.combat
     local p = k.critique_base + k.critique_par_agi * s.caracs.AGI
-    local ____opt_41 = s.passif
-    if (____opt_41 and ____opt_41.id) == "dans-le-dos" then
+    local ____opt_43 = s.objets
+    p = p + (____opt_43 and ____opt_43.critique or 0)
+    local ____opt_45 = s.passif
+    if (____opt_45 and ____opt_45.id) == "dans-le-dos" then
         local affaiblie = __TS__ArraySome(
             cible.etats,
             function(____, e) return __TS__ArrayIncludes(ETATS_NEGATIFS, e.id) end
@@ -4950,8 +5182,8 @@ function infliger(contenu, combat, rng, s, cibleInitiale, brut, element, critiqu
             if g.id == cible.id then
                 continue
             end
-            local ____opt_43 = g.passif
-            local rempart = (if (____opt_43 and ____opt_43.id) == "rempart" then g.passif.parametres else nil)
+            local ____opt_47 = g.passif
+            local rempart = (if (____opt_47 and ____opt_47.id) == "rempart" then g.passif.parametres else nil)
             local garde = __TS__ArrayFind(
                 g.bonusCompagnon,
                 function(____, b) return b.id == "garde-partagee" end
@@ -4969,7 +5201,7 @@ function infliger(contenu, combat, rng, s, cibleInitiale, brut, element, critiqu
     end
     local degats = math.max(
         1,
-        math.floor(brut * reductionCible(combat, cible, element) + 0.5)
+        math.floor(brut * reductionCible(combat, cible, element, s) + 0.5)
     )
     if cible.bouclier > 0 then
         local abs = math.min(cible.bouclier, degats)
@@ -4988,12 +5220,12 @@ function infliger(contenu, combat, rng, s, cibleInitiale, brut, element, critiqu
         end
     end
     cible.pv = cible.pv - degats
-    local ____combat_frappesCeTour_45, ____cible_id_46 = combat.frappesCeTour, cible.id
-    if ____combat_frappesCeTour_45[____cible_id_46] == nil then
-        ____combat_frappesCeTour_45[____cible_id_46] = {}
+    local ____combat_frappesCeTour_49, ____cible_id_50 = combat.frappesCeTour, cible.id
+    if ____combat_frappesCeTour_49[____cible_id_50] == nil then
+        ____combat_frappesCeTour_49[____cible_id_50] = {}
     end
-    local ____combat_frappesCeTour_cible_id_48 = combat.frappesCeTour[cible.id]
-    ____combat_frappesCeTour_cible_id_48[#____combat_frappesCeTour_cible_id_48 + 1] = s.id
+    local ____combat_frappesCeTour_cible_id_52 = combat.frappesCeTour[cible.id]
+    ____combat_frappesCeTour_cible_id_52[#____combat_frappesCeTour_cible_id_52 + 1] = s.id
     cible.etats = __TS__ArrayFilter(
         cible.etats,
         function(____, e) return e.id ~= "sommeil" end
@@ -5027,6 +5259,25 @@ function infliger(contenu, combat, rng, s, cibleInitiale, brut, element, critiqu
     end
     if cible.pv <= 0 then
         mettreKo(combat, cible)
+        if cible.ko and cible.camp ~= s.camp and ____exports.aPouvoir(s, "brise-monde") and actif(s) then
+            local v = math.min(
+                s.pvMax - s.pv,
+                math.floor(s.pvMax * 0.1 + 0.5)
+            )
+            if v > 0 then
+                s.pv = s.pv + v
+                log(
+                    combat,
+                    {
+                        type = "soin",
+                        source = s.id,
+                        cible = s.id,
+                        valeur = v,
+                        texte = ((s.nom .. " récupère ") .. tostring(v)) .. " PV. (Brise-Monde)"
+                    }
+                )
+            end
+        end
     elseif vrai(cible.fuitSous) and cible.pv / cible.pvMax <= cible.fuitSous then
         cible.parti = true
         log(combat, {type = "fuite", cible = cible.id, texte = cible.nom .. " bat en retraite dans un nuage de cendres !"})
@@ -5062,6 +5313,28 @@ function mettreKo(combat, x)
     x.etats = {}
     x.bouclier = 0
     log(combat, {type = "ko", cible = x.id, texte = (if x.camp == "heros" then x.nom .. " est K.O. !" else x.nom .. " est vaincu.")})
+    if x.type == "heros" or x.type == "compagnon" then
+        local porteur = __TS__ArrayFind(
+            combat.combattants,
+            function(____, g) return g.id ~= x.id and g.camp == x.camp and actif(g) and (g.compteurs.aubePrete or 0) > 0 end
+        )
+        if porteur ~= nil then
+            porteur.compteurs.aubePrete = 0
+            x.ko = false
+            x.pv = math.max(
+                1,
+                math.floor(x.pvMax * 0.3 + 0.5)
+            )
+            log(combat, {
+                type = "soin",
+                source = porteur.id,
+                cible = x.id,
+                valeur = x.pv,
+                texte = ((porteur.nom .. " relève ") .. x.nom) .. " ! (Aube-Première)"
+            })
+            return
+        end
+    end
     if x.type == "invocation" then
         x.parti = x.dureeInvocation ~= nil
     end
@@ -5071,9 +5344,9 @@ function mettreKo(combat, x)
             function(____, y) return y.id == x.maitreId end
         )
         if m then
-            local ____m_compteurs_51 = m.compteurs
-            local ____opt_49 = m.passif
-            ____m_compteurs_51.retourFamilier = ____opt_49 and ____opt_49.parametres.retour or 3
+            local ____m_compteurs_55 = m.compteurs
+            local ____opt_53 = m.passif
+            ____m_compteurs_55.retourFamilier = ____opt_53 and ____opt_53.parametres.retour or 3
         end
     end
 end
@@ -5082,9 +5355,12 @@ function soigner(contenu, combat, s, cible, montant)
         return
     end
     local m = montant
-    local ____opt_52 = cible.trait
-    if (____opt_52 and ____opt_52.id) == "sang-cendre" and s.id ~= cible.id and (s.refId == "guerisseur" or s.refId == "gardien") then
+    local ____opt_56 = cible.trait
+    if (____opt_56 and ____opt_56.id) == "sang-cendre" and s.id ~= cible.id and (s.refId == "guerisseur" or s.refId == "gardien") then
         m = m * (1 + (cible.trait.parametres.soins_sacres or 0))
+    end
+    if ____exports.aPouvoir(s, "lumenae") then
+        m = m * 1.15
     end
     m = math.floor(m + 0.5)
     local manque = cible.pvMax - cible.pv
@@ -5100,8 +5376,8 @@ function soigner(contenu, combat, s, cible, montant)
             texte = ((cible.nom .. " récupère ") .. tostring(reel)) .. " PV."
         }
     )
-    local ____opt_54 = s.passif
-    if (____opt_54 and ____opt_54.id) == "main-bienveillante" and m > reel then
+    local ____opt_58 = s.passif
+    if (____opt_58 and ____opt_58.id) == "main-bienveillante" and m > reel then
         local b = math.floor((m - reel) * (s.passif.parametres.bouclier_surplus or 0.5) + 0.5)
         if b > 0 then
             cible.bouclier = cible.bouclier + b
@@ -5133,40 +5409,40 @@ function invoquer(contenu, combat, maitre, creature, duree)
     inv.herosId = maitre.herosId
     inv.dureeInvocation = duree
     inv.niveau = maitre.niveau
-    inv.pvMax = math.floor(inv.pvMax * f + 0.5)
+    inv.pvMax = math.floor(inv.pvMax * f * (if ____exports.aPouvoir(maitre, "nyxaliel") then 1.2 else 1) + 0.5)
     inv.pv = inv.pvMax
     inv.compteurs = {multDegats = f}
     inv.recompenses = nil
     inv.sprite = "invocations/" .. creature
-    local ____combat_combattants_56 = combat.combattants
-    ____combat_combattants_56[#____combat_combattants_56 + 1] = inv
+    local ____combat_combattants_60 = combat.combattants
+    ____combat_combattants_60[#____combat_combattants_60 + 1] = inv
     log(combat, {type = "invocation", source = maitre.id, cible = inv.id, texte = ((maitre.nom .. " invoque : ") .. inv.nom) .. " !"})
 end
 function resoudreCibles(combat, rng, s, ____type, cibleChoisie, portee)
     repeat
-        local ____switch155 = ____type
-        local ____cond155 = ____switch155 == "soi"
-        if ____cond155 then
+        local ____switch169 = ____type
+        local ____cond169 = ____switch169 == "soi"
+        if ____cond169 then
             return {s}
         end
-        ____cond155 = ____cond155 or ____switch155 == "tous_allies"
-        if ____cond155 then
+        ____cond169 = ____cond169 or ____switch169 == "tous_allies"
+        if ____cond169 then
             return ____exports.allies(combat, s)
         end
-        ____cond155 = ____cond155 or ____switch155 == "tous_ennemis"
-        if ____cond155 then
+        ____cond169 = ____cond169 or ____switch169 == "tous_ennemis"
+        if ____cond169 then
             return ____exports.adversaires(combat, s)
         end
-        ____cond155 = ____cond155 or ____switch155 == "ennemi_aleatoire"
-        if ____cond155 then
+        ____cond169 = ____cond169 or ____switch169 == "ennemi_aleatoire"
+        if ____cond169 then
             return {}
         end
-        ____cond155 = ____cond155 or ____switch155 == "allie_ko"
-        if ____cond155 then
+        ____cond169 = ____cond169 or ____switch169 == "allie_ko"
+        if ____cond169 then
             return (if cibleChoisie then {cibleChoisie} else {})
         end
-        ____cond155 = ____cond155 or ____switch155 == "allie"
-        if ____cond155 then
+        ____cond169 = ____cond169 or ____switch169 == "allie"
+        if ____cond169 then
             return {cibleChoisie or s}
         end
         do
@@ -5198,8 +5474,8 @@ function appliquerEffets(contenu, combat, rng, s, comp, rang, cibleChoisie, depu
         function(____, e) return e.element end
     )
     local bonusResonance = 1
-    local ____opt_57 = s.passif
-    if (____opt_57 and ____opt_57.id) == "resonance" and #elementsComp > 0 then
+    local ____opt_61 = s.passif
+    if (____opt_61 and ____opt_61.id) == "resonance" and #elementsComp > 0 then
         local dernier = s.compteurs.dernierElement
         local code = __TS__ArrayIndexOf(ELEMENTS_MAGIQUES, elementsComp[1]) + 1
         if vrai(dernier) and vrai(code) and dernier ~= code then
@@ -5210,20 +5486,23 @@ function appliquerEffets(contenu, combat, rng, s, comp, rang, cibleChoisie, depu
         end
     end
     local bonusRunes = 1
-    local ____opt_59 = s.passif
-    if (____opt_59 and ____opt_59.id) == "runes-gravees" and not depuisObjet and #elementsComp > 0 then
+    local ____opt_63 = s.passif
+    if (____opt_63 and ____opt_63.id) == "runes-gravees" and not depuisObjet and #elementsComp > 0 then
         local charges = s.compteurs.runes or 0
         bonusRunes = 1 + charges * (s.passif.parametres.bonus_par_charge or 0.2)
         if charges > 0 then
             consommeRunes = true
         end
     end
-    local ____depuisObjet_63 = depuisObjet
-    if ____depuisObjet_63 then
-        local ____opt_61 = s.passif
-        ____depuisObjet_63 = (____opt_61 and ____opt_61.id) == "fioles-optimisees"
+    local ____depuisObjet_67 = depuisObjet
+    if ____depuisObjet_67 then
+        local ____opt_65 = s.passif
+        ____depuisObjet_67 = (____opt_65 and ____opt_65.id) == "fioles-optimisees"
     end
-    local multObjet = (if ____depuisObjet_63 then 1 + (s.passif.parametres.efficacite or 0.4) else 1)
+    local multObjet = (if ____depuisObjet_67 then 1 + (s.passif.parametres.efficacite or 0.4) else 1)
+    if depuisObjet and ____exports.aPouvoir(s, "prisme") then
+        multObjet = multObjet * 1.25
+    end
     for ____, ef in ipairs(comp.effets) do
         local typeCible = (if ef.cible ~= nil and ef.cible then ef.cible else comp.cible)
         if ef.type == "degats" then
@@ -5258,16 +5537,16 @@ function appliquerEffets(contenu, combat, rng, s, comp, rang, cibleChoisie, depu
                             chanceToucher(contenu, s, cible)
                         )
                         if not touche and (s.compteurs.relances or 0) > 0 then
-                            local ____s_compteurs_64, ____relances_65 = s.compteurs, "relances"
-                            ____s_compteurs_64[____relances_65] = ____s_compteurs_64[____relances_65] - 1
+                            local ____s_compteurs_68, ____relances_69 = s.compteurs, "relances"
+                            ____s_compteurs_68[____relances_69] = ____s_compteurs_68[____relances_69] - 1
                             touche = chance(
                                 rng,
                                 chanceToucher(contenu, s, cible)
                             )
                         end
                         if touche and (cible.compteurs.esquives or 0) > 0 and monoCible then
-                            local ____cible_compteurs_66, ____esquives_67 = cible.compteurs, "esquives"
-                            ____cible_compteurs_66[____esquives_67] = ____cible_compteurs_66[____esquives_67] - 1
+                            local ____cible_compteurs_70, ____esquives_71 = cible.compteurs, "esquives"
+                            ____cible_compteurs_70[____esquives_71] = ____cible_compteurs_70[____esquives_71] - 1
                             touche = false
                             ajouterEtat(combat, cible, {
                                 id = "furtif",
@@ -5288,9 +5567,13 @@ function appliquerEffets(contenu, combat, rng, s, comp, rang, cibleChoisie, depu
                             rng,
                             chanceCritique(contenu, s, cible)
                         )
+                        if (s.compteurs.premierCritique or 0) > 0 then
+                            critique = true
+                            s.compteurs.premierCritique = 0
+                        end
                         if not critique and (s.compteurs.relancesCrit or 0) > 0 then
-                            local ____s_compteurs_68, ____relancesCrit_69 = s.compteurs, "relancesCrit"
-                            ____s_compteurs_68[____relancesCrit_69] = ____s_compteurs_68[____relancesCrit_69] - 1
+                            local ____s_compteurs_72, ____relancesCrit_73 = s.compteurs, "relancesCrit"
+                            ____s_compteurs_72[____relancesCrit_73] = ____s_compteurs_72[____relancesCrit_73] - 1
                             critique = chance(
                                 rng,
                                 chanceCritique(contenu, s, cible)
@@ -5301,7 +5584,7 @@ function appliquerEffets(contenu, combat, rng, s, comp, rang, cibleChoisie, depu
                         local brut = ef.puissance * facteurRang * (1 + statVal / 20) * variance * multObjet
                         brut = brut * (multiplicateurDegatsSource(combat, s, cible, ef.element) * bonusResonance * bonusRunes)
                         if critique then
-                            brut = brut * contenu.config.combat.multiplicateur_critique
+                            brut = brut * (if ____exports.aPouvoir(s, "nuit-premiere") then 2 else contenu.config.combat.multiplicateur_critique)
                         end
                         if vrai(ef.executer_sous_pourcent) and cible.pv / cible.pvMax <= ef.executer_sous_pourcent then
                             brut = brut * 2
@@ -5371,8 +5654,8 @@ function appliquerEffets(contenu, combat, rng, s, comp, rang, cibleChoisie, depu
                     if cible.boss then
                         p = p * 0.5
                     end
-                    local ____opt_70 = cible.trait
-                    if (____opt_70 and ____opt_70.id) == "instinct-de-meute" then
+                    local ____opt_74 = cible.trait
+                    if (____opt_74 and ____opt_74.id) == "instinct-de-meute" then
                         p = p * (1 - (cible.trait.parametres.resistance_controle or 0))
                     end
                 end
@@ -5388,33 +5671,34 @@ function appliquerEffets(contenu, combat, rng, s, comp, rang, cibleChoisie, depu
                     continue
                 end
                 local duree = ef.duree
-                local ____temp_74 = ef.etat == "poison"
-                if ____temp_74 then
-                    local ____opt_72 = cible.trait
-                    ____temp_74 = (____opt_72 and ____opt_72.id) == "sang-ancien"
+                local ____temp_78 = ef.etat == "poison"
+                if ____temp_78 then
+                    local ____opt_76 = cible.trait
+                    ____temp_78 = (____opt_76 and ____opt_76.id) == "sang-ancien"
                 end
-                if ____temp_74 then
+                if ____temp_78 then
                     duree = duree + (cible.trait.parametres.duree_poison_bonus or 1)
                 end
-                local ____temp_77 = ef.etat == "poison"
-                if ____temp_77 then
-                    local ____opt_75 = cible.trait
-                    ____temp_77 = (____opt_75 and ____opt_75.id) == "robuste"
+                local ____temp_81 = ef.etat == "poison"
+                if ____temp_81 then
+                    local ____opt_79 = cible.trait
+                    ____temp_81 = (____opt_79 and ____opt_79.id) == "robuste"
                 end
-                if ____temp_77 then
+                if ____temp_81 then
                     if chance(rng, cible.trait.parametres.resistance_poison or 0.5) then
                         log(combat, {type = "info", cible = cible.id, texte = cible.nom .. " résiste au poison."})
                         continue
                     end
                 end
-                local ____opt_78 = s.passif
-                if (____opt_78 and ____opt_78.id) == "refrain" and typeCible == "tous_allies" then
+                local ____opt_82 = s.passif
+                if (____opt_82 and ____opt_82.id) == "refrain" and typeCible == "tous_allies" then
                     duree = 99
                 end
                 local valeur = (if ef.etat == "poison" or ef.etat == "brulure" then ef.valeur * facteurRang * (1 + s.caracs[s.attaque.stat] / 40) else ef.valeur)
+                local bonusRefrain = (if ____exports.aPouvoir(s, "melisande") and cible.camp == s.camp then 1 else 0)
                 ajouterEtat(combat, cible, {
                     id = ef.etat,
-                    duree = duree + (if cible.id == s.id then 1 else 0),
+                    duree = duree + (if cible.id == s.id then 1 else 0) + bonusRefrain,
                     valeur = valeur,
                     source = s.id,
                     cumul = 1
@@ -5468,9 +5752,9 @@ function appliquerEffets(contenu, combat, rng, s, comp, rang, cibleChoisie, depu
                 log(combat, {type = "etat", cible = cible.id, texte = cible.nom .. " est purifié."})
             end
         elseif ef.type == "charge_rune" then
-            local ____s_compteurs_82 = s.compteurs
-            local ____opt_80 = s.passif
-            ____s_compteurs_82.runes = math.min(____opt_80 and ____opt_80.parametres.max or 3, (s.compteurs.runes or 0) + ef.nombre)
+            local ____s_compteurs_86 = s.compteurs
+            local ____opt_84 = s.passif
+            ____s_compteurs_86.runes = math.min(____opt_84 and ____opt_84.parametres.max or 3, (s.compteurs.runes or 0) + ef.nombre)
         elseif ef.type == "mana" then
             for ____, cible in ipairs(resoudreCibles(
                 combat,
@@ -5550,12 +5834,57 @@ function attaqueSimple(contenu, combat, rng, s, cible)
         combat.combattants,
         function(____, x) return x.id == s.derniereCible end
     ) else nil)
-    local ____opt_85 = s.passif
-    if (____opt_85 and ____opt_85.id) == "runes-gravees" and c and c.pv < avantPv then
+    if c and c.pv < avantPv and s.objets ~= nil then
+        for ____, t in ipairs(s.objets.touches) do
+            if not actif(c) then
+                break
+            end
+            local brut = t.puissance * (1 + s.caracs[s.attaque.stat] / 20) * multiplicateurDegatsSource(combat, s, c, t.element)
+            infliger(
+                contenu,
+                combat,
+                rng,
+                s,
+                c,
+                brut,
+                t.element,
+                false,
+                true,
+                "touche"
+            )
+        end
+    end
+    if ____exports.aPouvoir(s, "lointain") and chance(rng, 0.25) then
+        local autres = __TS__ArrayFilter(
+            ____exports.ciblesValides(combat, s, "ennemi", "distance"),
+            function(____, y) return c == nil or c == nil or y.id ~= c.id end
+        )
+        if #autres > 0 then
+            local autre = choisir(rng, autres)
+            log(combat, {
+                type = "action",
+                source = s.id,
+                cible = autre.id,
+                competence = "attaque",
+                texte = s.nom .. " tire une seconde flèche ! (Lointain)"
+            })
+            appliquerEffets(
+                contenu,
+                combat,
+                rng,
+                s,
+                comp,
+                1,
+                autre
+            )
+        end
+    end
+    local ____opt_89 = s.passif
+    if (____opt_89 and ____opt_89.id) == "runes-gravees" and c and c.pv < avantPv then
         s.compteurs.runes = math.min(s.passif.parametres.max or 3, (s.compteurs.runes or 0) + 1)
     end
-    local ____opt_87 = s.passif
-    if (____opt_87 and ____opt_87.id) == "oeil-du-faucon" and c and actif(c) and chance(rng, s.passif.parametres.chance_marque or 0.3) then
+    local ____opt_91 = s.passif
+    if (____opt_91 and ____opt_91.id) == "oeil-du-faucon" and c and actif(c) and chance(rng, s.passif.parametres.chance_marque or 0.3) then
         ajouterEtat(combat, c, {
             id = "marque",
             duree = 2,
@@ -5657,12 +5986,12 @@ function debutTour(contenu, combat, rng, x)
         end
     end
     local regen = valeurEtat(x, "regeneration")
-    local ____opt_89 = x.don
-    if (____opt_89 and ____opt_89.id) == "coeur-inepuisable" then
+    local ____opt_93 = x.don
+    if (____opt_93 and ____opt_93.id) == "coeur-inepuisable" then
         regen = regen + (x.don.parametres.regeneration or 0.03)
     end
-    local ____opt_91 = x.trait
-    if (____opt_91 and ____opt_91.id) == "sang-cendre" and x.pv / x.pvMax < 0.5 then
+    local ____opt_95 = x.trait
+    if (____opt_95 and ____opt_95.id) == "sang-cendre" and x.pv / x.pvMax < 0.5 then
         regen = regen + (x.trait.parametres.regeneration or 0.02)
     end
     if regen > 0 and x.pv < x.pvMax then
@@ -5712,8 +6041,8 @@ function finTour(combat, x)
     )
     for ____, k in ipairs(cles(x.recharges)) do
         if x.recharges[k] > 0 then
-            local ____x_recharges_93, ____k_94 = x.recharges, k
-            ____x_recharges_93[____k_94] = ____x_recharges_93[____k_94] - 1
+            local ____x_recharges_97, ____k_98 = x.recharges, k
+            ____x_recharges_97[____k_98] = ____x_recharges_97[____k_98] - 1
         end
     end
     if x.type == "invocation" and x.dureeInvocation ~= nil then
@@ -5745,17 +6074,17 @@ function debutRound(contenu, combat, rng)
     for ____, m in ipairs(__TS__ArrayFilter(
         combat.combattants,
         function(____, y)
-            local ____actif_result_99 = actif(y)
-            if ____actif_result_99 then
-                local ____opt_97 = y.passif
-                ____actif_result_99 = (____opt_97 and ____opt_97.id) == "lien-d-ame"
+            local ____actif_result_103 = actif(y)
+            if ____actif_result_103 then
+                local ____opt_101 = y.passif
+                ____actif_result_103 = (____opt_101 and ____opt_101.id) == "lien-d-ame"
             end
-            return ____actif_result_99
+            return ____actif_result_103
         end
     )) do
         if (m.compteurs.retourFamilier or 0) > 0 then
-            local ____m_compteurs_95, ____retourFamilier_96 = m.compteurs, "retourFamilier"
-            ____m_compteurs_95[____retourFamilier_96] = ____m_compteurs_95[____retourFamilier_96] - 1
+            local ____m_compteurs_99, ____retourFamilier_100 = m.compteurs, "retourFamilier"
+            ____m_compteurs_99[____retourFamilier_100] = ____m_compteurs_99[____retourFamilier_100] - 1
             if m.compteurs.retourFamilier == 0 then
                 invoquer(
                     contenu,
@@ -5858,8 +6187,8 @@ function verifierAction(contenu, combat, x, a)
     end
     if a.type == "pacifier" then
         local c = ____exports.trouver(combat, a.cible)
-        local ____opt_100 = x.don
-        if (____opt_100 and ____opt_100.id) ~= "langue-universelle" then
+        local ____opt_104 = x.don
+        if (____opt_104 and ____opt_104.id) ~= "langue-universelle" then
             error(
                 __TS__New(Error, "Il faut le don Langue universelle"),
                 0
@@ -5907,12 +6236,12 @@ function ____exports.chanceSeCacher(combat, x)
         ))
     )
     local p = 0.35 + 0.03 * (x.caracs.AGI - perception)
-    local ____temp_104 = x.refId == "ombre"
-    if not ____temp_104 then
-        local ____opt_102 = x.don
-        ____temp_104 = (____opt_102 and ____opt_102.id) == "pas-de-l-ombre"
+    local ____temp_108 = x.refId == "ombre"
+    if not ____temp_108 then
+        local ____opt_106 = x.don
+        ____temp_108 = (____opt_106 and ____opt_106.id) == "pas-de-l-ombre"
     end
-    if ____temp_104 then
+    if ____temp_108 then
         p = p + 0.2
     end
     return math.min(
@@ -5921,19 +6250,19 @@ function ____exports.chanceSeCacher(combat, x)
     )
 end
 function pacifiable(x, c)
-    local ____temp_108 = actif(c) and c.camp ~= x.camp and not c.boss and (c.categorie == "bete" or c.categorie == "demon")
-    if ____temp_108 then
-        local ____temp_107 = c.pv / c.pvMax
-        local ____opt_105 = x.don
-        ____temp_108 = ____temp_107 <= (____opt_105 and ____opt_105.parametres.seuil_pacifier or 0.3)
+    local ____temp_112 = actif(c) and c.camp ~= x.camp and not c.boss and (c.categorie == "bete" or c.categorie == "demon")
+    if ____temp_112 then
+        local ____temp_111 = c.pv / c.pvMax
+        local ____opt_109 = x.don
+        ____temp_112 = ____temp_111 <= (____opt_109 and ____opt_109.parametres.seuil_pacifier or 0.3)
     end
-    return ____temp_108
+    return ____temp_112
 end
 function executer(contenu, combat, rng, x, a)
     repeat
-        local ____switch312 = a.type
-        local ____cond312 = ____switch312 == "attaque"
-        if ____cond312 then
+        local ____switch335 = a.type
+        local ____cond335 = ____switch335 == "attaque"
+        if ____cond335 then
             do
                 log(combat, {
                     type = "action",
@@ -5955,11 +6284,11 @@ function executer(contenu, combat, rng, x, a)
                 return false
             end
         end
-        ____cond312 = ____cond312 or ____switch312 == "competence"
-        if ____cond312 then
+        ____cond335 = ____cond335 or ____switch335 == "competence"
+        if ____cond335 then
             do
                 local k = ____exports.competenceCombattant(contenu, x, a.competence)
-                x.mana = x.mana - k.comp.cout
+                x.mana = x.mana - ____exports.coutMana(x, k.comp)
                 if vrai(k.comp.recharge) then
                     x.recharges[k.comp.id] = k.comp.recharge + 1
                 end
@@ -5989,12 +6318,12 @@ function executer(contenu, combat, rng, x, a)
                     for ____, m in ipairs(__TS__ArrayFilter(
                         ____exports.adversaires(combat, x),
                         function(____, y)
-                            local ____opt_110 = y.don
-                            return (____opt_110 and ____opt_110.id) == "mimetisme" and not vrai(y.compteurs.copie)
+                            local ____opt_114 = y.don
+                            return (____opt_114 and ____opt_114.id) == "mimetisme" and not vrai(y.compteurs.copie)
                         end
                     )) do
-                        local ____m_competencesPropres_109 = m.competencesPropres
-                        ____m_competencesPropres_109[#____m_competencesPropres_109 + 1] = __TS__ObjectAssign({}, k.comp, {id = "copie:" .. k.comp.id, nom = k.comp.nom .. " (copiée)", cout = 4, ia = {priorite = 2, quand = "toujours"}})
+                        local ____m_competencesPropres_113 = m.competencesPropres
+                        ____m_competencesPropres_113[#____m_competencesPropres_113 + 1] = __TS__ObjectAssign({}, k.comp, {id = "copie:" .. k.comp.id, nom = k.comp.nom .. " (copiée)", cout = 4, ia = {priorite = 2, quand = "toujours"}})
                         m.compteurs.copie = 1
                         log(combat, {type = "info", cible = m.id, texte = ((m.nom .. " copie la technique « ") .. k.comp.nom) .. " » ! (Mimétisme)"})
                     end
@@ -6002,8 +6331,8 @@ function executer(contenu, combat, rng, x, a)
                 return false
             end
         end
-        ____cond312 = ____cond312 or ____switch312 == "objet"
-        if ____cond312 then
+        ____cond335 = ____cond335 or ____switch335 == "objet"
+        if ____cond335 then
             do
                 local cible = (if vrai(a.cible) then __TS__ArrayFind(
                     combat.combattants,
@@ -6011,8 +6340,8 @@ function executer(contenu, combat, rng, x, a)
                 ) or x else x)
                 local objetId = (if a.objet == "potion" then "potion-soin-petite" else "bombe-feu")
                 local obj = contenu.objets[objetId]
-                local ____opt_112 = x.passif
-                local economise = (____opt_112 and ____opt_112.id) == "fioles-optimisees" and chance(rng, x.passif.parametres.economie or 0.25)
+                local ____opt_116 = x.passif
+                local economise = (____opt_116 and ____opt_116.id) == "fioles-optimisees" and chance(rng, x.passif.parametres.economie or 0.25)
                 if a.objet == "potion" then
                     if not economise then
                         x.potions = x.potions - 1
@@ -6021,8 +6350,8 @@ function executer(contenu, combat, rng, x, a)
                     x.bombes = x.bombes - 1
                 end
                 if a.objet == "potion" and not economise and (x.compteurs.potionsInventaire or 0) > 0 then
-                    local ____x_compteurs_114, ____potionsInventaire_115 = x.compteurs, "potionsInventaire"
-                    ____x_compteurs_114[____potionsInventaire_115] = ____x_compteurs_114[____potionsInventaire_115] - 1
+                    local ____x_compteurs_118, ____potionsInventaire_119 = x.compteurs, "potionsInventaire"
+                    ____x_compteurs_118[____potionsInventaire_119] = ____x_compteurs_118[____potionsInventaire_119] - 1
                     x.compteurs.potionsUtilisees = (x.compteurs.potionsUtilisees or 0) + 1
                 end
                 log(combat, {
@@ -6060,8 +6389,8 @@ function executer(contenu, combat, rng, x, a)
                 return false
             end
         end
-        ____cond312 = ____cond312 or ____switch312 == "defendre"
-        if ____cond312 then
+        ____cond335 = ____cond335 or ____switch335 == "defendre"
+        if ____cond335 then
             ajouterEtat(combat, x, {
                 id = "garde",
                 duree = 2,
@@ -6076,14 +6405,14 @@ function executer(contenu, combat, rng, x, a)
             log(combat, {type = "action", source = x.id, texte = x.nom .. " se met en garde."})
             return false
         end
-        ____cond312 = ____cond312 or ____switch312 == "changer_rang"
-        if ____cond312 then
+        ____cond335 = ____cond335 or ____switch335 == "changer_rang"
+        if ____cond335 then
             x.rang = (if x.rang == "avant" then "arriere" else "avant")
             log(combat, {type = "action", source = x.id, texte = ((x.nom .. " passe au rang ") .. (if x.rang == "avant" then "avant" else "arrière")) .. "."})
             return false
         end
-        ____cond312 = ____cond312 or ____switch312 == "pacifier"
-        if ____cond312 then
+        ____cond335 = ____cond335 or ____switch335 == "pacifier"
+        if ____cond335 then
             do
                 local c = ____exports.trouver(combat, a.cible)
                 c.parti = true
@@ -6091,8 +6420,8 @@ function executer(contenu, combat, rng, x, a)
                 return false
             end
         end
-        ____cond312 = ____cond312 or ____switch312 == "viser"
-        if ____cond312 then
+        ____cond335 = ____cond335 or ____switch335 == "viser"
+        if ____cond335 then
             do
                 local v = ____exports.VISEES[a.partie]
                 local c = ____exports.trouver(combat, a.cible)
@@ -6151,8 +6480,8 @@ function executer(contenu, combat, rng, x, a)
                 return false
             end
         end
-        ____cond312 = ____cond312 or ____switch312 == "se_cacher"
-        if ____cond312 then
+        ____cond335 = ____cond335 or ____switch335 == "se_cacher"
+        if ____cond335 then
             do
                 if chance(
                     rng,
@@ -6172,8 +6501,8 @@ function executer(contenu, combat, rng, x, a)
                 return false
             end
         end
-        ____cond312 = ____cond312 or ____switch312 == "fuir"
-        if ____cond312 then
+        ____cond335 = ____cond335 or ____switch335 == "fuir"
+        if ____cond335 then
             do
                 local p = 0.5 + 0.03 * (x.caracs.AGI - math.max(table.unpack(__TS__ArrayMap(
                     ____exports.adversaires(combat, x),
@@ -6201,35 +6530,35 @@ function conditionIA(combat, x, comp)
     local q = comp.ia.quand
     local amis = ____exports.allies(combat, x)
     repeat
-        local ____switch342 = q
-        local ____cond342 = ____switch342 == "allie_blesse"
-        if ____cond342 then
+        local ____switch365 = q
+        local ____cond365 = ____switch365 == "allie_blesse"
+        if ____cond365 then
             return __TS__ArraySome(
                 amis,
                 function(____, a) return a.pv / a.pvMax < 0.6 and a.type ~= "invocation" end
             )
         end
-        ____cond342 = ____cond342 or ____switch342 == "soi_blesse"
-        if ____cond342 then
+        ____cond365 = ____cond365 or ____switch365 == "soi_blesse"
+        if ____cond365 then
             return x.pv / x.pvMax < 0.5
         end
-        ____cond342 = ____cond342 or ____switch342 == "plusieurs_ennemis"
-        if ____cond342 then
+        ____cond365 = ____cond365 or ____switch365 == "plusieurs_ennemis"
+        if ____cond365 then
             return #____exports.adversaires(combat, x) >= 2
         end
-        ____cond342 = ____cond342 or ____switch342 == "debut_combat"
-        if ____cond342 then
+        ____cond365 = ____cond365 or ____switch365 == "debut_combat"
+        if ____cond365 then
             return combat.tour <= 2
         end
-        ____cond342 = ____cond342 or ____switch342 == "cible_faible"
-        if ____cond342 then
+        ____cond365 = ____cond365 or ____switch365 == "cible_faible"
+        if ____cond365 then
             return __TS__ArraySome(
                 ____exports.adversaires(combat, x),
                 function(____, a) return a.pv / a.pvMax < 0.4 end
             )
         end
-        ____cond342 = ____cond342 or ____switch342 == "allie_ko"
-        if ____cond342 then
+        ____cond365 = ____cond365 or ____switch365 == "allie_ko"
+        if ____cond365 then
             return __TS__ArraySome(
                 combat.combattants,
                 function(____, a) return a.camp == x.camp and a.ko and a.type ~= "invocation" end
@@ -6270,8 +6599,8 @@ function ____exports.choisirActionIA(contenu, combat, rng, x)
     if x.bombes > 0 and #____exports.adversaires(combat, x) >= 2 then
         return {type = "objet", acteur = x.id, objet = "bombe"}
     end
-    local ____opt_116 = x.don
-    if (____opt_116 and ____opt_116.id) == "langue-universelle" then
+    local ____opt_120 = x.don
+    if (____opt_120 and ____opt_120.id) == "langue-universelle" then
         local p = __TS__ArrayFind(
             ____exports.adversaires(combat, x),
             function(____, c) return pacifiable(x, c) end
@@ -6313,14 +6642,14 @@ function ____exports.choisirActionIA(contenu, combat, rng, x)
             )[1]
             cible = blesse and blesse.id or x.id
         elseif meilleure.cible == "allie_ko" then
-            local ____opt_120 = __TS__ArrayFind(
+            local ____opt_124 = __TS__ArrayFind(
                 combat.combattants,
                 function(____, a) return a.camp == x.camp and a.ko and a.type ~= "invocation" end
             )
-            cible = ____opt_120 and ____opt_120.id
+            cible = ____opt_124 and ____opt_124.id
         elseif meilleure.cible == "ennemi" then
-            local ____opt_122 = choisirCibleEnnemie(combat, rng, x, meilleure.portee)
-            cible = ____opt_122 and ____opt_122.id
+            local ____opt_126 = choisirCibleEnnemie(combat, rng, x, meilleure.portee)
+            cible = ____opt_126 and ____opt_126.id
         end
         return {type = "competence", acteur = x.id, competence = meilleure.id, cible = cible}
     end
@@ -6449,7 +6778,8 @@ function ____exports.combattantHeros(contenu, h, controle, techniques)
         local ____opt_4 = o and o.bonus
         puissance = puissance + (____opt_4 and ____opt_4.puissance or 0)
     end
-    local pmax = math.floor(pvMax(contenu, caracs.VIT, h.niveau) * (if h.blessure then 1 - contenu.config.mort_douce.blessure_pv_pourcent / 100 else 1) + 0.5)
+    local be = bonusEquipement(contenu, h)
+    local pmax = math.floor(pvMax(contenu, caracs.VIT, h.niveau) * (if h.blessure then 1 - contenu.config.mort_douce.blessure_pv_pourcent / 100 else 1) * (1 + be.vigueur) + 0.5)
     local propres = {}
     local rangsVariantes = {}
     local competences = {}
@@ -6503,6 +6833,12 @@ function ____exports.combattantHeros(contenu, h, controle, techniques)
     if vrai(tp.resistance_poison) then
         res.poison = tp.resistance_poison
     end
+    for ____, ____value in ipairs(entrees(be.resistances)) do
+        local el = ____value[1]
+        local v = ____value[2]
+        res[el] = (res[el] or 0) + (v or 0)
+    end
+    local manaTotal = manaMax(caracs.ESP, h.niveau) + be.mana
     return {
         id = "h:" .. h.id,
         nom = h.nom,
@@ -6518,8 +6854,8 @@ function ____exports.combattantHeros(contenu, h, controle, techniques)
         caracs = caracs,
         pvMax = pmax,
         pv = pmax,
-        manaMax = manaMax(caracs.ESP, h.niveau),
-        mana = manaMax(caracs.ESP, h.niveau),
+        manaMax = manaTotal,
+        mana = manaTotal,
         armure = armure,
         rang = cl.rang_prefere,
         attaque = __TS__ObjectAssign({}, cl.attaque, {puissance = puissance}),
@@ -6546,7 +6882,10 @@ function ____exports.combattantHeros(contenu, h, controle, techniques)
                 esquives = don.parametres.esquives or 0,
                 relances = don.parametres.relances or 0,
                 determination = (if race.trait.id == "determination" then 1 else 0),
-                objetGratuit = (if don.id == "reserve-du-neant" then 1 else 0)
+                objetGratuit = (if don.id == "reserve-du-neant" then 1 else 0),
+                runes = (if __TS__ArrayIncludes(be.pouvoirs, "velgraive") and cl.passif.id == "runes-gravees" then 1 else 0),
+                premierCritique = (if __TS__ArrayIncludes(be.pouvoirs, "murmure") then 1 else 0),
+                aubePrete = (if __TS__ArrayIncludes(be.pouvoirs, "aube-premiere") then 1 else 0)
             },
             __TS__ObjectFromEntries(__TS__ArrayMap(
                 entrees(rangsVariantes),
@@ -6564,6 +6903,7 @@ function ____exports.combattantHeros(contenu, h, controle, techniques)
         bombes = don.parametres.objets_improvises or 0,
         recompenses = nil,
         sprite = "heros/" .. h.classe,
+        objets = be,
         echelle = race.echelle,
         teinte = race.teinte or nil,
         race = h.race
@@ -6846,12 +7186,12 @@ function ____exports.annulerTour(combat)
         )
     end
     local restaure = copieProfonde(combat.instantane)
-    local ____array_126 = __TS__SparseArrayNew(table.unpack(__TS__ArrayFilter(
+    local ____array_130 = __TS__SparseArrayNew(table.unpack(__TS__ArrayFilter(
         combat.evenements,
         function(____, e) return e.tour < combat.tour end
     )))
-    __TS__SparseArrayPush(____array_126, {tour = combat.tour, type = "info", texte = "Le temps se replie… le tour recommence ! (Second départ)"})
-    restaure.evenements = {__TS__SparseArraySpread(____array_126)}
+    __TS__SparseArrayPush(____array_130, {tour = combat.tour, type = "info", texte = "Le temps se replie… le tour recommence ! (Second départ)"})
+    restaure.evenements = {__TS__SparseArraySpread(____array_130)}
     restaure.instantane = combat.instantane
     restaure.resultat = nil
     return restaure
@@ -6870,18 +7210,18 @@ function ____exports.actionsDisponibles(contenu, combat, acteurId)
                 comp = comp,
                 rang = rang,
                 utilisable = ____exports.competenceUtilisable(contenu, x, comp),
-                raison = (if aEtat(x, "silence") then "Réduit au silence" else (if (x.recharges[comp.id] or 0) > 0 then ("Recharge : " .. tostring(x.recharges[comp.id])) .. " tour(s)" else (if x.mana < comp.cout then "Mana insuffisant" else (if comp.id == "souffle-draconique" and vrai(x.compteurs.souffle) then "Déjà utilisé" else ""))))
+                raison = (if aEtat(x, "silence") then "Réduit au silence" else (if (x.recharges[comp.id] or 0) > 0 then ("Recharge : " .. tostring(x.recharges[comp.id])) .. " tour(s)" else (if x.mana < ____exports.coutMana(x, comp) then "Mana insuffisant" else (if comp.id == "souffle-draconique" and vrai(x.compteurs.souffle) then "Déjà utilisé" else ""))))
             }
         end
     )
-    local ____x_potions_129 = x.potions
-    local ____x_bombes_130 = x.bombes
-    local ____opt_127 = x.don
+    local ____x_potions_133 = x.potions
+    local ____x_bombes_134 = x.bombes
+    local ____opt_131 = x.don
     return {
         competences = comps,
-        potions = ____x_potions_129,
-        bombes = ____x_bombes_130,
-        pacifier = (if (____opt_127 and ____opt_127.id) == "langue-universelle" then __TS__ArrayMap(
+        potions = ____x_potions_133,
+        bombes = ____x_bombes_134,
+        pacifier = (if (____opt_131 and ____opt_131.id) == "langue-universelle" then __TS__ArrayMap(
             __TS__ArrayFilter(
                 ____exports.adversaires(combat, x),
                 function(____, c) return pacifiable(x, c) end
@@ -7042,11 +7382,11 @@ function ____exports.estimerAction(contenu, combat, a)
                 function(____, e) return e.id == "provoque" end
             )
             if prov then
-                local ____opt_131 = __TS__ArrayFind(
+                local ____opt_135 = __TS__ArrayFind(
                     combat.combattants,
                     function(____, y) return y.id == prov.source end
                 )
-                return ("Vous êtes provoqué : vous devez attaquer " .. (____opt_131 and ____opt_131.nom or "votre provocateur")) .. "."
+                return ("Vous êtes provoqué : vous devez attaquer " .. (____opt_135 and ____opt_135.nom or "votre provocateur")) .. "."
             end
             if portee == "melee" and c.rang == "arriere" then
                 return c.nom .. " est protégé au rang arrière : il faut une attaque à distance, ou éliminer d'abord le rang avant."
@@ -7056,9 +7396,9 @@ function ____exports.estimerAction(contenu, combat, a)
         return c
     end
     repeat
-        local ____switch423 = a.type
-        local ____cond423 = ____switch423 == "attaque" or ____switch423 == "viser"
-        if ____cond423 then
+        local ____switch446 = a.type
+        local ____cond446 = ____switch446 == "attaque" or ____switch446 == "viser"
+        if ____cond446 then
             do
                 local c = verifierCible(a.cible, x.attaque.portee)
                 if type(c) == "string" then
@@ -7078,17 +7418,17 @@ function ____exports.estimerAction(contenu, combat, a)
                     1
                 ))
                 if v then
-                    local ____res_effets_137 = res.effets
-                    ____res_effets_137[#____res_effets_137 + 1] = (tostring(math.floor(v.chance * (if c.boss then 0.5 else 1) * 100 + 0.5)) .. " % : ") .. string.lower(____exports.NOMS_ETATS[v.etat])
+                    local ____res_effets_141 = res.effets
+                    ____res_effets_141[#____res_effets_141 + 1] = (tostring(math.floor(v.chance * (if c.boss then 0.5 else 1) * 100 + 0.5)) .. " % : ") .. string.lower(____exports.NOMS_ETATS[v.etat])
                 end
                 return res
             end
         end
-        ____cond423 = ____cond423 or ____switch423 == "competence"
-        if ____cond423 then
+        ____cond446 = ____cond446 or ____switch446 == "competence"
+        if ____cond446 then
             do
                 local k = ____exports.competenceCombattant(contenu, x, a.competence)
-                res.mana = k.comp.cout
+                res.mana = ____exports.coutMana(x, k.comp)
                 local principale = nil
                 if k.comp.cible == "ennemi" then
                     local c = verifierCible(a.cible, k.comp.portee)
@@ -7133,29 +7473,29 @@ function ____exports.estimerAction(contenu, combat, a)
                             math.floor(s + 0.5)
                         }
                     elseif ef.type == "etat" then
-                        local ____res_effets_138 = res.effets
-                        ____res_effets_138[#____res_effets_138 + 1] = (if ef.chance < 1 then tostring(math.floor(ef.chance * 100 + 0.5)) .. " % : " else "") .. string.lower(____exports.NOMS_ETATS[ef.etat])
-                    elseif ef.type == "bouclier" then
-                        local ____res_effets_139 = res.effets
-                        ____res_effets_139[#____res_effets_139 + 1] = ("bouclier (" .. tostring(math.floor(ef.pourcent_pv * 100 + 0.5))) .. " % des PV)"
-                    elseif ef.type == "invocation" then
                         local ____res_effets_142 = res.effets
-                        local ____opt_140 = contenu.ennemis[ef.creature]
-                        ____res_effets_142[#____res_effets_142 + 1] = "invocation : " .. (____opt_140 and ____opt_140.nom or ef.creature)
+                        ____res_effets_142[#____res_effets_142 + 1] = (if ef.chance < 1 then tostring(math.floor(ef.chance * 100 + 0.5)) .. " % : " else "") .. string.lower(____exports.NOMS_ETATS[ef.etat])
+                    elseif ef.type == "bouclier" then
+                        local ____res_effets_143 = res.effets
+                        ____res_effets_143[#____res_effets_143 + 1] = ("bouclier (" .. tostring(math.floor(ef.pourcent_pv * 100 + 0.5))) .. " % des PV)"
+                    elseif ef.type == "invocation" then
+                        local ____res_effets_146 = res.effets
+                        local ____opt_144 = contenu.ennemis[ef.creature]
+                        ____res_effets_146[#____res_effets_146 + 1] = "invocation : " .. (____opt_144 and ____opt_144.nom or ef.creature)
                     end
                 end
                 return res
             end
         end
-        ____cond423 = ____cond423 or ____switch423 == "se_cacher"
-        if ____cond423 then
+        ____cond446 = ____cond446 or ____switch446 == "se_cacher"
+        if ____cond446 then
             res.reussite = ____exports.chanceSeCacher(combat, x)
-            local ____res_effets_143 = res.effets
-            ____res_effets_143[#____res_effets_143 + 1] = "furtif : impossible à cibler, prochaine attaque critique"
+            local ____res_effets_147 = res.effets
+            ____res_effets_147[#____res_effets_147 + 1] = "furtif : impossible à cibler, prochaine attaque critique"
             return res
         end
-        ____cond423 = ____cond423 or ____switch423 == "fuir"
-        if ____cond423 then
+        ____cond446 = ____cond446 or ____switch446 == "fuir"
+        if ____cond446 then
             res.reussite = math.min(
                 0.9,
                 math.max(
@@ -7168,12 +7508,12 @@ function ____exports.estimerAction(contenu, combat, a)
             )
             return res
         end
-        ____cond423 = ____cond423 or ____switch423 == "objet"
-        if ____cond423 then
+        ____cond446 = ____cond446 or ____switch446 == "objet"
+        if ____cond446 then
             if a.objet == "potion" then
-                local ____temp_146 = 16 * 1.5
-                local ____opt_144 = x.passif
-                local s = ____temp_146 * (if (____opt_144 and ____opt_144.id) == "fioles-optimisees" then 1 + (x.passif.parametres.efficacite or 0.4) else 1)
+                local ____temp_150 = 16 * 1.5
+                local ____opt_148 = x.passif
+                local s = ____temp_150 * (if (____opt_148 and ____opt_148.id) == "fioles-optimisees" then 1 + (x.passif.parametres.efficacite or 0.4) else 1)
                 res.soin = {
                     math.floor(s + 0.5),
                     math.floor(s + 0.5)
@@ -7181,10 +7521,10 @@ function ____exports.estimerAction(contenu, combat, a)
             end
             return res
         end
-        ____cond423 = ____cond423 or ____switch423 == "defendre"
-        if ____cond423 then
-            local ____res_effets_147 = res.effets
-            ____res_effets_147[#____res_effets_147 + 1] = "−50 % de dégâts reçus jusqu'au prochain tour, +10 % de mana"
+        ____cond446 = ____cond446 or ____switch446 == "defendre"
+        if ____cond446 then
+            local ____res_effets_151 = res.effets
+            ____res_effets_151[#____res_effets_151 + 1] = "−50 % de dégâts reçus jusqu'au prochain tour, +10 % de mana"
             return res
         end
         do
@@ -7354,7 +7694,7 @@ local Map = ____lualib.Map
 local __TS__Iterator = ____lualib.__TS__Iterator
 local __TS__InstanceOf = ____lualib.__TS__InstanceOf
 local ____exports = {}
-local journal, appliquerConsequence, avancerTemps, accorder, participantsGroupe, entrerNoeud, repondreParole, terminerScene, resoudreChoix, lancerCombat, reveler, repartirAncienGrimoire, avancerContrat, quantiteValide, declencherEtapes, resoudreVote, refuser, ordreRangs
+local journal, appliquerConsequence, avancerTemps, accorder, participantsGroupe, entrerNoeud, repondreParole, terminerScene, resoudreChoix, lancerCombat, reveler, repartirAncienGrimoire, avancerContrat, quantiteValide, declencherEtapes, resoudreVote, dejaUnique, refuser, ordreRangs
 local ____affinite = require("src.moteur.affinite")
 local affiniteVide = ____affinite.affiniteVide
 local modifierAffinite = ____affinite.modifierAffinite
@@ -7400,6 +7740,9 @@ local idFusion = ____fusions.idFusion
 local peutApprendre = ____fusions.peutApprendre
 local ____personnage = require("src.moteur.personnage")
 local connuesDe = ____personnage.competencesConnues
+local ____equipement = require("src.moteur.equipement")
+local exemplaires = ____equipement.exemplaires
+local problemeEquipement = ____equipement.problemeEquipement
 local ____temps = require("src.moteur.temps")
 local anneeDepart = ____temps.anneeDepart
 local chapitreDe = ____temps.chapitreDe
@@ -7661,8 +8004,12 @@ function appliquerConsequence(contenu, etat, eff, heros, messages)
     for ____, o in ipairs(liste(eff.objet)) do
         local h = hs[1]
         if h ~= nil then
-            h.inventaire[o] = (h.inventaire[o] or 0) + 1
-            messages[#messages + 1] = (h.nom .. " obtient : ") .. contenu.objets[o].nom
+            if dejaUnique(contenu, etat, o) then
+                messages[#messages + 1] = contenu.objets[o].nom .. " existe déjà dans la partie : il n'en existe qu'un."
+            else
+                h.inventaire[o] = (h.inventaire[o] or 0) + 1
+                messages[#messages + 1] = (h.nom .. " obtient : ") .. contenu.objets[o].nom
+            end
         end
     end
     if vrai(eff.retirer_objet) then
@@ -8241,8 +8588,8 @@ function repartirAncienGrimoire(contenu, etat)
 end
 --- Étape en cours du contrat d'un héros (null s'il n'a pas de contrat).
 function ____exports.etapeContrat(contenu, etat, herosId)
-    local ____opt_119 = etat.contrats
-    local st = ____opt_119 and ____opt_119[herosId]
+    local ____opt_121 = etat.contrats
+    local st = ____opt_121 and ____opt_121[herosId]
     if not st then
         return nil
     end
@@ -8264,8 +8611,8 @@ function avancerContrat(contenu, etat, h)
     local ct = contenu.contrats[st.id]
     st.etape = st.etape + 1
     if st.etape < #ct.etapes then
-        local ____etat_dernieresNouvelles_121 = etat.dernieresNouvelles
-        ____etat_dernieresNouvelles_121[#____etat_dernieresNouvelles_121 + 1] = (("Contrat « " .. ct.titre) .. " » : ") .. ct.etapes[st.etape + 1].objectif
+        local ____etat_dernieresNouvelles_123 = etat.dernieresNouvelles
+        ____etat_dernieresNouvelles_123[#____etat_dernieresNouvelles_123 + 1] = (("Contrat « " .. ct.titre) .. " » : ") .. ct.etapes[st.etape + 1].objectif
         return
     end
     local msgs = {}
@@ -8313,8 +8660,8 @@ function declencherEtapes(contenu, etat, correspond)
             continue
         end
         q.etape = def.etapes[i + 1 + 1].id
-        local ____etat_dernieresNouvelles_122 = etat.dernieresNouvelles
-        ____etat_dernieresNouvelles_122[#____etat_dernieresNouvelles_122 + 1] = (("Quête « " .. def.titre) .. " » : ") .. def.etapes[i + 1 + 1].objectif
+        local ____etat_dernieresNouvelles_124 = etat.dernieresNouvelles
+        ____etat_dernieresNouvelles_124[#____etat_dernieresNouvelles_124 + 1] = (("Quête « " .. def.titre) .. " » : ") .. def.etapes[i + 1 + 1].objectif
     end
 end
 function resoudreVote(contenu, etat)
@@ -8323,14 +8670,14 @@ function resoudreVote(contenu, etat)
     for ____, ____value in ipairs(entrees(es.votes)) do
         local joueur = ____value[1]
         local idx = ____value[2]
-        local ____comptes_set_125 = comptes.set
-        local ____idx_124 = idx
-        local ____array_123 = __TS__SparseArrayNew(table.unpack(comptes:get(idx) or ({})))
-        __TS__SparseArrayPush(____array_123, joueur)
-        ____comptes_set_125(
+        local ____comptes_set_127 = comptes.set
+        local ____idx_126 = idx
+        local ____array_125 = __TS__SparseArrayNew(table.unpack(comptes:get(idx) or ({})))
+        __TS__SparseArrayPush(____array_125, joueur)
+        ____comptes_set_127(
             comptes,
-            ____idx_124,
-            {__TS__SparseArraySpread(____array_123)}
+            ____idx_126,
+            {__TS__SparseArraySpread(____array_125)}
         )
     end
     local meilleur = -1
@@ -8365,6 +8712,13 @@ function ____exports.prixVente(contenu, h, objet)
         0,
         math.floor(p * (if h.don == "reserve-du-neant" then 0.6 else 0.5))
     )
+end
+function dejaUnique(contenu, etat, objet)
+    local ____opt_128 = contenu.objets[objet]
+    return (____opt_128 and ____opt_128.unique_par_partie) == true and exemplaires(
+        ____exports.listeHeros(etat),
+        objet
+    ) > 0
 end
 ____exports.VERSION_ETAT = 5
 ____exports.MAX_JOUEURS = 6
@@ -8636,6 +8990,9 @@ local function terminerCombat(contenu, etat, cle)
             r.objets,
             function(____, o, i)
                 local h = heros[i % #heros + 1]
+                if dejaUnique(contenu, etat, o) then
+                    return
+                end
                 h.inventaire[o] = (h.inventaire[o] or 0) + 1
                 bilan[#bilan + 1] = (h.nom .. " récupère : ") .. contenu.objets[o].nom
             end
@@ -8771,9 +9128,9 @@ local function deplacerDonjon(contenu, etat, dx, dy)
     end
     local heros = participantsGroupe(etat)
     repeat
-        local ____switch272 = ev.type
-        local ____cond272 = ____switch272 == "combat"
-        if ____cond272 then
+        local ____switch275 = ev.type
+        local ____cond275 = ____switch275 == "combat"
+        if ____cond275 then
             lancerCombat(
                 contenu,
                 etat,
@@ -8796,8 +9153,8 @@ local function deplacerDonjon(contenu, etat, dx, dy)
             end
             return
         end
-        ____cond272 = ____cond272 or ____switch272 == "coffre"
-        if ____cond272 then
+        ____cond275 = ____cond275 or ____switch275 == "coffre"
+        if ____cond275 then
             do
                 local ____dj_faits_81 = dj.faits
                 ____dj_faits_81[#____dj_faits_81 + 1] = ev.id
@@ -8825,8 +9182,8 @@ local function deplacerDonjon(contenu, etat, dx, dy)
                 return
             end
         end
-        ____cond272 = ____cond272 or ____switch272 == "piege"
-        if ____cond272 then
+        ____cond275 = ____cond275 or ____switch275 == "piege"
+        if ____cond275 then
             do
                 local ____dj_faits_82 = dj.faits
                 ____dj_faits_82[#____dj_faits_82 + 1] = ev.id
@@ -8851,8 +9208,8 @@ local function deplacerDonjon(contenu, etat, dx, dy)
                 return
             end
         end
-        ____cond272 = ____cond272 or ____switch272 == "texte"
-        if ____cond272 then
+        ____cond275 = ____cond275 or ____switch275 == "texte"
+        if ____cond275 then
             if ev.unique then
                 local ____dj_faits_83 = dj.faits
                 ____dj_faits_83[#____dj_faits_83 + 1] = ev.id
@@ -8860,8 +9217,8 @@ local function deplacerDonjon(contenu, etat, dx, dy)
             dj.messages = {ev.texte or ""}
             return
         end
-        ____cond272 = ____cond272 or ____switch272 == "sortie"
-        if ____cond272 then
+        ____cond275 = ____cond275 or ____switch275 == "sortie"
+        if ____cond275 then
             do
                 local cle = dj.sceneCle
                 local sortie = dj.sortie
@@ -8872,8 +9229,8 @@ local function deplacerDonjon(contenu, etat, dx, dy)
                 return
             end
         end
-        ____cond272 = ____cond272 or ____switch272 == "scene"
-        if ____cond272 then
+        ____cond275 = ____cond275 or ____switch275 == "scene"
+        if ____cond275 then
             local ____dj_faits_84 = dj.faits
             ____dj_faits_84[#____dj_faits_84 + 1] = ev.id
             dj.messages = {ev.texte or ""}
@@ -8989,9 +9346,9 @@ function ____exports.appliquer(contenu, etatAvant, action)
         refuser("Joueur inconnu : rejoignez la partie d'abord")
     end
     repeat
-        local ____switch311 = action.type
-        local ____cond311 = ____switch311 == "rejoindre"
-        if ____cond311 then
+        local ____switch314 = action.type
+        local ____cond314 = ____switch314 == "rejoindre"
+        if ____cond314 then
             do
                 if j ~= nil then
                     j.pseudo = action.pseudo
@@ -9025,13 +9382,13 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 break
             end
         end
-        ____cond311 = ____cond311 or ____switch311 == "presence"
-        if ____cond311 then
+        ____cond314 = ____cond314 or ____switch314 == "presence"
+        if ____cond314 then
             j.present = action.present
             break
         end
-        ____cond311 = ____cond311 or ____switch311 == "creer_heros"
-        if ____cond311 then
+        ____cond314 = ____cond314 or ____switch314 == "creer_heros"
+        if ____cond314 then
             do
                 if vrai(j.herosId) then
                     refuser("Vous avez déjà un héros")
@@ -9107,8 +9464,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 break
             end
         end
-        ____cond311 = ____cond311 or ____switch311 == "portrait"
-        if ____cond311 then
+        ____cond314 = ____cond314 or ____switch314 == "portrait"
+        if ____cond314 then
             do
                 local h = ____exports.herosDuJoueur(etat, action.joueur)
                 if vrai(action.image) and #action.image > 300000 then
@@ -9118,13 +9475,13 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 break
             end
         end
-        ____cond311 = ____cond311 or ____switch311 == "si_absent"
-        if ____cond311 then
+        ____cond314 = ____cond314 or ____switch314 == "si_absent"
+        if ____cond314 then
             ____exports.herosDuJoueur(etat, action.joueur).siAbsent = action.mode
             break
         end
-        ____cond311 = ____cond311 or ____switch311 == "lancer_scene"
-        if ____cond311 then
+        ____cond314 = ____cond314 or ____switch314 == "lancer_scene"
+        if ____cond314 then
             do
                 local s = contenu.scenes[action.scene] or refuser("Scène inconnue")
                 local h = ____exports.herosDuJoueur(etat, action.joueur)
@@ -9176,8 +9533,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 break
             end
         end
-        ____cond311 = ____cond311 or ____switch311 == "choisir"
-        if ____cond311 then
+        ____cond314 = ____cond314 or ____switch314 == "choisir"
+        if ____cond314 then
             do
                 local es = etat.scenes[action.cle] or refuser("Aucune scène")
                 if action.cle ~= "groupe" and j.herosId ~= action.cle then
@@ -9225,8 +9582,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 break
             end
         end
-        ____cond311 = ____cond311 or ____switch311 == "repondre"
-        if ____cond311 then
+        ____cond314 = ____cond314 or ____switch314 == "repondre"
+        if ____cond314 then
             do
                 local es = etat.scenes[action.cle] or refuser("Aucune scène")
                 local p = es.parole or refuser("Personne ne vous pose de question")
@@ -9240,8 +9597,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 break
             end
         end
-        ____cond311 = ____cond311 or ____switch311 == "trancher"
-        if ____cond311 then
+        ____cond314 = ____cond314 or ____switch314 == "trancher"
+        if ____cond314 then
             do
                 if etat.meneur ~= action.joueur then
                     refuser("Seul le meneur du jour peut trancher")
@@ -9254,8 +9611,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 break
             end
         end
-        ____cond311 = ____cond311 or ____switch311 == "continuer"
-        if ____cond311 then
+        ____cond314 = ____cond314 or ____switch314 == "continuer"
+        if ____cond314 then
             do
                 if action.cle ~= "groupe" and j.herosId ~= action.cle then
                     refuser("Ce n'est pas votre scène")
@@ -9274,8 +9631,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 break
             end
         end
-        ____cond311 = ____cond311 or ____switch311 == "quitter_scene"
-        if ____cond311 then
+        ____cond314 = ____cond314 or ____switch314 == "quitter_scene"
+        if ____cond314 then
             do
                 local es = etat.scenes[action.cle]
                 if not es then
@@ -9291,8 +9648,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 break
             end
         end
-        ____cond311 = ____cond311 or ____switch311 == "combat"
-        if ____cond311 then
+        ____cond314 = ____cond314 or ____switch314 == "combat"
+        if ____cond314 then
             do
                 local entree = etat.combats[action.cle] or refuser("Aucun combat")
                 local acteur = __TS__ArrayFind(
@@ -9319,8 +9676,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 break
             end
         end
-        ____cond311 = ____cond311 or ____switch311 == "second_depart"
-        if ____cond311 then
+        ____cond314 = ____cond314 or ____switch314 == "second_depart"
+        if ____cond314 then
             do
                 local h = ____exports.herosDuJoueur(etat, action.joueur)
                 if h.don ~= "second-depart" then
@@ -9340,8 +9697,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 break
             end
         end
-        ____cond311 = ____cond311 or ____switch311 == "fin_combat"
-        if ____cond311 then
+        ____cond314 = ____cond314 or ____switch314 == "fin_combat"
+        if ____cond314 then
             do
                 local entree = etat.combats[action.cle] or refuser("Aucun combat")
                 if not entree.combat.resultat then
@@ -9351,8 +9708,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 break
             end
         end
-        ____cond311 = ____cond311 or ____switch311 == "donjon_deplacer"
-        if ____cond311 then
+        ____cond314 = ____cond314 or ____switch314 == "donjon_deplacer"
+        if ____cond314 then
             local ____temp_92 = etat.meneur ~= action.joueur
             if ____temp_92 then
                 local ____opt_90 = etat.joueurs[etat.meneur or ""]
@@ -9364,8 +9721,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
             deplacerDonjon(contenu, etat, action.dx, action.dy)
             break
         end
-        ____cond311 = ____cond311 or ____switch311 == "temps_libre"
-        if ____cond311 then
+        ____cond314 = ____cond314 or ____switch314 == "temps_libre"
+        if ____cond314 then
             do
                 local tl = etat.tempsLibre or refuser("Pas de temps libre en cours")
                 if tl.resultats then
@@ -9402,8 +9759,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 break
             end
         end
-        ____cond311 = ____cond311 or ____switch311 == "valider_temps_libre"
-        if ____cond311 then
+        ____cond314 = ____cond314 or ____switch314 == "valider_temps_libre"
+        if ____cond314 then
             do
                 local tl = etat.tempsLibre or refuser("Pas de temps libre en cours")
                 if tl.resultats then
@@ -9422,8 +9779,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 break
             end
         end
-        ____cond311 = ____cond311 or ____switch311 == "jour_passe"
-        if ____cond311 then
+        ____cond314 = ____cond314 or ____switch314 == "jour_passe"
+        if ____cond314 then
             do
                 if action.jour ~= etat.jour then
                     refuser("Ce jour est déjà passé")
@@ -9438,8 +9795,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 break
             end
         end
-        ____cond311 = ____cond311 or ____switch311 == "proposer_repos"
-        if ____cond311 then
+        ____cond314 = ____cond314 or ____switch314 == "proposer_repos"
+        if ____cond314 then
             do
                 ____exports.herosDuJoueur(etat, action.joueur)
                 local pb = reposImpossible(etat)
@@ -9474,8 +9831,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 break
             end
         end
-        ____cond311 = ____cond311 or ____switch311 == "repondre_repos"
-        if ____cond311 then
+        ____cond314 = ____cond314 or ____switch314 == "repondre_repos"
+        if ____cond314 then
             do
                 local r = etat.repos or refuser("Personne ne propose de dormir pour le moment")
                 ____exports.herosDuJoueur(etat, action.joueur)
@@ -9499,8 +9856,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 break
             end
         end
-        ____cond311 = ____cond311 or ____switch311 == "cadeau"
-        if ____cond311 then
+        ____cond314 = ____cond314 or ____switch314 == "cadeau"
+        if ____cond314 then
             do
                 local h = ____exports.herosDuJoueur(etat, action.joueur)
                 if not __TS__ArrayIncludes(etat.compagnonsRencontres, action.compagnon) then
@@ -9531,8 +9888,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 break
             end
         end
-        ____cond311 = ____cond311 or ____switch311 == "equipe"
-        if ____cond311 then
+        ____cond314 = ____cond314 or ____switch314 == "equipe"
+        if ____cond314 then
             do
                 local h = ____exports.herosDuJoueur(etat, action.joueur)
                 if vrai(action.compagnon) then
@@ -9560,16 +9917,17 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 break
             end
         end
-        ____cond311 = ____cond311 or ____switch311 == "equiper"
-        if ____cond311 then
+        ____cond314 = ____cond314 or ____switch314 == "equiper"
+        if ____cond314 then
             do
                 local h = ____exports.herosDuJoueur(etat, action.joueur)
                 local o = contenu.objets[action.objet] or refuser("Objet inconnu")
-                if o.type ~= "equipement" or not o.emplacement then
-                    refuser("Cet objet ne s'équipe pas")
-                end
                 if not (h.inventaire[o.id] > 0) then
                     refuser("Vous n'avez pas cet objet")
+                end
+                local probleme = problemeEquipement(contenu, h, o)
+                if probleme ~= nil then
+                    refuser(probleme)
                 end
                 local emplacement = o.emplacement
                 local ancien = h.equipement[emplacement]
@@ -9582,8 +9940,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 break
             end
         end
-        ____cond311 = ____cond311 or ____switch311 == "desequiper"
-        if ____cond311 then
+        ____cond314 = ____cond314 or ____switch314 == "desequiper"
+        if ____cond314 then
             do
                 local h = ____exports.herosDuJoueur(etat, action.joueur)
                 local ancien = h.equipement[action.emplacement]
@@ -9594,8 +9952,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 break
             end
         end
-        ____cond311 = ____cond311 or ____switch311 == "acheter"
-        if ____cond311 then
+        ____cond314 = ____cond314 or ____switch314 == "acheter"
+        if ____cond314 then
             do
                 local h = ____exports.herosDuJoueur(etat, action.joueur)
                 local lieu = __TS__ArrayFind(
@@ -9609,14 +9967,18 @@ function ____exports.appliquer(contenu, etatAvant, action)
                     refuser("Cet objet n'est pas vendu ici")
                 end
                 local n = quantiteValide(action.quantite)
+                local ____opt_102 = contenu.objets[action.objet]
+                if ____opt_102 and ____opt_102.unique_par_partie and (n > 1 or dejaUnique(contenu, etat, action.objet)) then
+                    refuser("Cet objet est unique : il n'en existe qu'un dans la partie")
+                end
                 local prix = ____exports.prixAchat(contenu, h, action.objet) * n
                 if h["or"] < prix then
                     refuser("Pas assez d'or")
                 end
                 h["or"] = h["or"] - prix
                 h.inventaire[action.objet] = (h.inventaire[action.objet] or 0) + n
-                local ____etat_dernieresNouvelles_102 = etat.dernieresNouvelles
-                ____etat_dernieresNouvelles_102[#____etat_dernieresNouvelles_102 + 1] = (((((h.nom .. " achète ") .. (if n > 1 then tostring(n) .. " × " else "")) .. contenu.objets[action.objet].nom) .. " : −") .. tostring(prix)) .. " or."
+                local ____etat_dernieresNouvelles_104 = etat.dernieresNouvelles
+                ____etat_dernieresNouvelles_104[#____etat_dernieresNouvelles_104 + 1] = (((((h.nom .. " achète ") .. (if n > 1 then tostring(n) .. " × " else "")) .. contenu.objets[action.objet].nom) .. " : −") .. tostring(prix)) .. " or."
                 declencherEtapes(
                     contenu,
                     etat,
@@ -9625,8 +9987,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 break
             end
         end
-        ____cond311 = ____cond311 or ____switch311 == "vendre"
-        if ____cond311 then
+        ____cond314 = ____cond314 or ____switch314 == "vendre"
+        if ____cond314 then
             do
                 local h = ____exports.herosDuJoueur(etat, action.joueur)
                 local o = contenu.objets[action.objet] or refuser("Objet inconnu")
@@ -9641,11 +10003,11 @@ function ____exports.appliquer(contenu, etatAvant, action)
                     refuser("Vous n'en avez que " .. tostring(h.inventaire[o.id]))
                 end
                 local gain = ____exports.prixVente(contenu, h, o.id) * n
-                local ____h_inventaire_103, ____o_id_104 = h.inventaire, o.id
-                ____h_inventaire_103[____o_id_104] = ____h_inventaire_103[____o_id_104] - n
+                local ____h_inventaire_105, ____o_id_106 = h.inventaire, o.id
+                ____h_inventaire_105[____o_id_106] = ____h_inventaire_105[____o_id_106] - n
                 h["or"] = h["or"] + gain
-                local ____etat_dernieresNouvelles_105 = etat.dernieresNouvelles
-                ____etat_dernieresNouvelles_105[#____etat_dernieresNouvelles_105 + 1] = (((((h.nom .. " vend ") .. (if n > 1 then tostring(n) .. " × " else "")) .. o.nom) .. " : +") .. tostring(gain)) .. " or."
+                local ____etat_dernieresNouvelles_107 = etat.dernieresNouvelles
+                ____etat_dernieresNouvelles_107[#____etat_dernieresNouvelles_107 + 1] = (((((h.nom .. " vend ") .. (if n > 1 then tostring(n) .. " × " else "")) .. o.nom) .. " : +") .. tostring(gain)) .. " or."
                 declencherEtapes(
                     contenu,
                     etat,
@@ -9654,8 +10016,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 break
             end
         end
-        ____cond311 = ____cond311 or ____switch311 == "utiliser"
-        if ____cond311 then
+        ____cond314 = ____cond314 or ____switch314 == "utiliser"
+        if ____cond314 then
             do
                 local h = ____exports.herosDuJoueur(etat, action.joueur)
                 if not (h.inventaire[action.objet] > 0) then
@@ -9668,8 +10030,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 break
             end
         end
-        ____cond311 = ____cond311 or ____switch311 == "repartir"
-        if ____cond311 then
+        ____cond314 = ____cond314 or ____switch314 == "repartir"
+        if ____cond314 then
             do
                 local h = ____exports.herosDuJoueur(etat, action.joueur)
                 do
@@ -9686,8 +10048,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 break
             end
         end
-        ____cond311 = ____cond311 or ____switch311 == "ameliorer"
-        if ____cond311 then
+        ____cond314 = ____cond314 or ____switch314 == "ameliorer"
+        if ____cond314 then
             do
                 local h = ____exports.herosDuJoueur(etat, action.joueur)
                 do
@@ -9704,8 +10066,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 break
             end
         end
-        ____cond311 = ____cond311 or ____switch311 == "branche"
-        if ____cond311 then
+        ____cond314 = ____cond314 or ____switch314 == "branche"
+        if ____cond314 then
             do
                 local h = ____exports.herosDuJoueur(etat, action.joueur)
                 do
@@ -9722,8 +10084,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 break
             end
         end
-        ____cond311 = ____cond311 or ____switch311 == "contrat"
-        if ____cond311 then
+        ____cond314 = ____cond314 or ____switch314 == "contrat"
+        if ____cond314 then
             do
                 local h = ____exports.herosDuJoueur(etat, action.joueur)
                 local ct = contenu.contrats[action.contrat] or refuser("Contrat inconnu")
@@ -9741,12 +10103,12 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 end
                 if #ct.etapes > 0 then
                     if etat.contrats[h.id] then
-                        local ____opt_106 = contenu.contrats[etat.contrats[h.id].id]
-                        refuser("Terminez d'abord votre contrat en cours : " .. (____opt_106 and ____opt_106.titre or ""))
+                        local ____opt_108 = contenu.contrats[etat.contrats[h.id].id]
+                        refuser("Terminez d'abord votre contrat en cours : " .. (____opt_108 and ____opt_108.titre or ""))
                     end
                     etat.contrats[h.id] = {id = ct.id, etape = 0, notes = {}}
-                    local ____etat_dernieresNouvelles_108 = etat.dernieresNouvelles
-                    ____etat_dernieresNouvelles_108[#____etat_dernieresNouvelles_108 + 1] = (("Contrat accepté : " .. ct.titre) .. ". ") .. ct.etapes[1].objectif
+                    local ____etat_dernieresNouvelles_110 = etat.dernieresNouvelles
+                    ____etat_dernieresNouvelles_110[#____etat_dernieresNouvelles_110 + 1] = (("Contrat accepté : " .. ct.titre) .. ". ") .. ct.etapes[1].objectif
                 elseif vrai(ct.rencontre) then
                     lancerCombat(
                         contenu,
@@ -9800,8 +10162,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 break
             end
         end
-        ____cond311 = ____cond311 or ____switch311 == "etape_contrat"
-        if ____cond311 then
+        ____cond314 = ____cond314 or ____switch314 == "etape_contrat"
+        if ____cond314 then
             do
                 local h = ____exports.herosDuJoueur(etat, action.joueur)
                 local x = ____exports.etapeContrat(contenu, etat, h.id) or refuser("Vous n'avez pas de contrat en cours")
@@ -9879,8 +10241,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 break
             end
         end
-        ____cond311 = ____cond311 or ____switch311 == "abandonner_contrat"
-        if ____cond311 then
+        ____cond314 = ____cond314 or ____switch314 == "abandonner_contrat"
+        if ____cond314 then
             do
                 local h = ____exports.herosDuJoueur(etat, action.joueur)
                 if not etat.contrats[h.id] then
@@ -9893,34 +10255,34 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 break
             end
         end
-        ____cond311 = ____cond311 or ____switch311 == "meneur"
-        if ____cond311 then
+        ____cond314 = ____cond314 or ____switch314 == "meneur"
+        if ____cond314 then
             if not etat.joueurs[action.nouveau] then
                 refuser("Joueur inconnu")
             end
             etat.meneur = action.nouveau
             break
         end
-        ____cond311 = ____cond311 or ____switch311 == "nouvelle_session"
-        if ____cond311 then
+        ____cond314 = ____cond314 or ____switch314 == "nouvelle_session"
+        if ____cond314 then
             do
                 etat.session = etat.session + 1
                 local idx = __TS__ArrayIndexOf(etat.ordreJoueurs, etat.meneur or "")
                 etat.meneur = etat.ordreJoueurs[(idx + 1) % #etat.ordreJoueurs + 1] or nil
-                local ____journal_113 = journal
-                local ____contenu_112 = contenu
-                local ____etat_session_111 = etat.session
-                local ____opt_109 = etat.joueurs[etat.meneur or ""]
-                ____journal_113(
-                    ____contenu_112,
+                local ____journal_115 = journal
+                local ____contenu_114 = contenu
+                local ____etat_session_113 = etat.session
+                local ____opt_111 = etat.joueurs[etat.meneur or ""]
+                ____journal_115(
+                    ____contenu_114,
                     etat,
-                    ((("Session " .. tostring(____etat_session_111)) .. " : ") .. (____opt_109 and ____opt_109.pseudo or "?")) .. " est le meneur du jour."
+                    ((("Session " .. tostring(____etat_session_113)) .. " : ") .. (____opt_111 and ____opt_111.pseudo or "?")) .. " est le meneur du jour."
                 )
                 break
             end
         end
-        ____cond311 = ____cond311 or ____switch311 == "fusionner"
-        if ____cond311 then
+        ____cond314 = ____cond314 or ____switch314 == "fusionner"
+        if ____cond314 then
             do
                 local h = ____exports.herosDuJoueur(etat, action.joueur)
                 local id = idFusion(action.parent, action.secondaire)
@@ -9940,8 +10302,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                     end
                 end
                 local entree = (if vrai(action.cle) then etat.combats[action.cle] else nil)
-                local ____opt_114 = entree
-                local acteur = ____opt_114 and __TS__ArrayFind(
+                local ____opt_116 = entree
+                local acteur = ____opt_116 and __TS__ArrayFind(
                     entree and entree.combat.combattants,
                     function(____, c) return c.herosId == h.id and c.type == "heros" end
                 )
@@ -9965,8 +10327,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                         acteur.competencesPropres,
                         function(____, k) return k.id == t.id end
                     ) then
-                        local ____acteur_competencesPropres_118 = acteur.competencesPropres
-                        ____acteur_competencesPropres_118[#____acteur_competencesPropres_118 + 1] = __TS__ObjectAssign({}, t)
+                        local ____acteur_competencesPropres_120 = acteur.competencesPropres
+                        ____acteur_competencesPropres_120[#____acteur_competencesPropres_120 + 1] = __TS__ObjectAssign({}, t)
                     end
                     acteur.compteurs["rang:" .. t.id] = h.rangsCompetences[t.parent] or 1
                     do
@@ -9987,8 +10349,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 break
             end
         end
-        ____cond311 = ____cond311 or ____switch311 == "apprendre_technique"
-        if ____cond311 then
+        ____cond314 = ____cond314 or ____switch314 == "apprendre_technique"
+        if ____cond314 then
             do
                 local h = ____exports.herosDuJoueur(etat, action.joueur)
                 local t = nil
@@ -10016,8 +10378,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 break
             end
         end
-        ____cond311 = ____cond311 or ____switch311 == "oublier_variante"
-        if ____cond311 then
+        ____cond314 = ____cond314 or ____switch314 == "oublier_variante"
+        if ____cond314 then
             do
                 local h = ____exports.herosDuJoueur(etat, action.joueur)
                 local t = h.grimoire[action.technique] or refuser("Technique inconnue")
@@ -10032,8 +10394,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 break
             end
         end
-        ____cond311 = ____cond311 or ____switch311 == "variante_active"
-        if ____cond311 then
+        ____cond314 = ____cond314 or ____switch314 == "variante_active"
+        if ____cond314 then
             do
                 local h = ____exports.herosDuJoueur(etat, action.joueur)
                 if vrai(action.technique) and not __TS__ArrayIncludes(h.variantes[action.competence] or ({}), action.technique) then
@@ -10043,8 +10405,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 break
             end
         end
-        ____cond311 = ____cond311 or ____switch311 == "equiper_competences"
-        if ____cond311 then
+        ____cond314 = ____cond314 or ____switch314 == "equiper_competences"
+        if ____cond314 then
             do
                 local h = ____exports.herosDuJoueur(etat, action.joueur)
                 local max = contenu.config.personnage.competences_equipees_max
@@ -10062,8 +10424,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 break
             end
         end
-        ____cond311 = ____cond311 or ____switch311 == "chapitre_suivant"
-        if ____cond311 then
+        ____cond314 = ____cond314 or ____switch314 == "chapitre_suivant"
+        if ____cond314 then
             if not vrai(etat.finChapitre) then
                 refuser("Le chapitre n'est pas terminé")
             end
@@ -12669,6 +13031,14 @@ do
 end
 do
     local ____export = require("src.moteur.outils")
+    for ____exportKey, ____exportValue in pairs(____export) do
+        if ____exportKey ~= "default" then
+            ____exports[____exportKey] = ____exportValue
+        end
+    end
+end
+do
+    local ____export = require("src.moteur.equipement")
     for ____exportKey, ____exportValue in pairs(____export) do
         if ____exportKey ~= "default" then
             ____exports[____exportKey] = ____exportValue

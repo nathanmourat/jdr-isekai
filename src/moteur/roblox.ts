@@ -11,6 +11,7 @@ export * from './personnage';
 export * from './affinite';
 export * from './rng';
 export * from './outils';
+export * from './equipement';
 export { creerSauvegarde, verifierSauvegarde, ErreurSauvegarde, FORMAT } from '../sauvegarde/migrations';
 export { interpreter, propositionsScript, conseiller } from '../ia/interpreteur';
 export { normaliser } from '../ia/texte';

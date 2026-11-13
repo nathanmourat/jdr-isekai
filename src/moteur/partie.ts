@@ -20,6 +20,7 @@ import { choisir as choisirAuHasard, creerRng, de, type Rng } from './rng';
 import { cles, copieProfonde, entrees, valeurs, vrai } from './outils';
 import { apprendre, creerTechnique, idFusion, peutApprendre, type Technique } from './fusions';
 import { competencesConnues as connuesDe } from './personnage';
+import { exemplaires, problemeEquipement } from './equipement';
 import { anneeDepart, chapitreDe, fetesEntre, formaterDate, joursParMois, versDate, versJour } from './temps';
 
 export const VERSION_ETAT = 5;
@@ -337,7 +338,10 @@ function appliquerConsequence(contenu: Contenu, etat: EtatPartie, eff: Consequen
   if (vrai(eff.or)) for (const h of hs) { h.or = Math.max(0, h.or + eff.or); messages.push(`${h.nom} ${eff.or > 0 ? 'gagne' : 'perd'} ${Math.abs(eff.or)} pièces d'or`); }
   for (const o of liste(eff.objet)) {
     const h = hs[0];
-    if (h !== undefined) { h.inventaire[o] = (h.inventaire[o] ?? 0) + 1; messages.push(`${h.nom} obtient : ${contenu.objets[o].nom}`); }
+    if (h !== undefined) {
+      if (dejaUnique(contenu, etat, o)) messages.push(`${contenu.objets[o].nom} existe déjà dans la partie : il n'en existe qu'un.`);
+      else { h.inventaire[o] = (h.inventaire[o] ?? 0) + 1; messages.push(`${h.nom} obtient : ${contenu.objets[o].nom}`); }
+    }
   }
   if (vrai(eff.retirer_objet)) for (const h of hs) if (vrai(h.inventaire[eff.retirer_objet])) { h.inventaire[eff.retirer_objet]--; break; }
   if (vrai(eff.points_guilde)) for (const h of hs) {
@@ -702,6 +706,7 @@ function terminerCombat(contenu: Contenu, etat: EtatPartie, cle: string) {
     }
     r.objets.forEach((o, i) => {
       const h = heros[i % heros.length];
+      if (dejaUnique(contenu, etat, o)) return;
       h.inventaire[o] = (h.inventaire[o] ?? 0) + 1;
       bilan.push(`${h.nom} récupère : ${contenu.objets[o].nom}`);
     });
@@ -1126,8 +1131,9 @@ export function appliquer(contenu: Contenu, etatAvant: EtatPartie, action: Actio
     case 'equiper': {
       const h = herosDuJoueur(etat, action.joueur);
       const o = contenu.objets[action.objet] ?? refuser('Objet inconnu');
-      if (o.type !== 'equipement' || !o.emplacement) refuser('Cet objet ne s\'équipe pas');
       if (!(h.inventaire[o.id] > 0)) refuser('Vous n\'avez pas cet objet');
+      const probleme = problemeEquipement(contenu, h, o);
+      if (probleme !== undefined) refuser(probleme);
       const emplacement = o.emplacement!;
       const ancien = h.equipement[emplacement];
       if (vrai(ancien)) h.inventaire[ancien] = (h.inventaire[ancien] ?? 0) + 1;
@@ -1146,6 +1152,7 @@ export function appliquer(contenu: Contenu, etatAvant: EtatPartie, action: Actio
       const lieu = valeurs(contenu.regions).flatMap((r) => r.lieux).find((l) => l.id === action.lieu) ?? refuser('Lieu inconnu');
       if (!lieu.boutique.includes(action.objet)) refuser('Cet objet n\'est pas vendu ici');
       const n = quantiteValide(action.quantite);
+      if (contenu.objets[action.objet]?.unique_par_partie && (n > 1 || dejaUnique(contenu, etat, action.objet))) refuser('Cet objet est unique : il n\'en existe qu\'un dans la partie');
       const prix = prixAchat(contenu, h, action.objet) * n;
       if (h.or < prix) refuser('Pas assez d\'or');
       h.or -= prix;
@@ -1455,3 +1462,8 @@ export function moisRestants(contenu: Contenu, etat: EtatPartie): number {
 }
 
 export { formaterDate, versDate };
+
+/** Objet « unique par partie » (armes mythiques) dont un exemplaire existe déjà chez un héros. */
+function dejaUnique(contenu: Contenu, etat: EtatPartie, objet: string): boolean {
+  return contenu.objets[objet]?.unique_par_partie === true && exemplaires(listeHeros(etat), objet) > 0;
+}

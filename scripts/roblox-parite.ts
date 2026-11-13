@@ -45,13 +45,26 @@ const graine = process.argv[2] ?? 'chapitre';
 // graine « desordre » : 3 joueurs, héros créés dans le désordre (le 1er joueur crée le sien en dernier)
 const r = graine === 'desordre' ? groupeDesordre() : groupeDeDeux(c, graine);
 jouerPrologues(c, r);
+// graine « equipement » : héros de niveau 12 équipés d'objets à pouvoirs (touches, vigueur, Aube-Première, Ylvarae…)
+let departEquipe: typeof r.etat | undefined;
+let debutActions = 0;
+if (graine === 'equipement') {
+  const [kael, ilo] = [r.etat.heros.h1, r.etat.heros.h2];
+  kael.niveau = 12; ilo.niveau = 12;
+  kael.equipement = { arme: 'aube-premiere', armure: 'plates-du-rempart-nain', accessoire: 'anneau-du-cri-sauvage' };
+  ilo.equipement = { arme: 'ylvarae', armure: 'manteau-du-nid-des-wyrms', accessoire: 'cur-d-ether-pur' };
+  kael.inventaire['epee-des-mille-marches'] = 1;
+  departEquipe = JSON.parse(JSON.stringify(r.etat));
+  debutActions = r.actions.length;
+}
 if (graine === 'contrats') scenarioContrats();
 if (graine !== 'contrats') for (const s of ['ch1-appel', 'ch1-examen', 'sq-tournoi', 'sq-loups', 'ch1-crypte', 'sq-tanneurs', 'ch1-lanternes', 'ch1-serment']) jouerSceneGroupe(c, r, s);
 finirTempsLibre(c, r);
 
 mkdirSync('roblox/parite/tmp', { recursive: true });
 writeFileSync('roblox/parite/tmp/contenu.json', JSON.stringify(c));
-const depart = nouvellePartie(c, 'p1', 'Partie de test', graine === 'desordre' ? 'desordre' : graine);
+const depart = departEquipe ?? nouvellePartie(c, 'p1', 'Partie de test', graine === 'desordre' ? 'desordre' : graine);
+r.actions.splice(0, debutActions);
 // états intermédiaires à comparer (pour trouver la première action qui diverge)
 const points = (process.env.POINTS ?? '').split(',').filter(Boolean).map(Number);
 writeFileSync('roblox/parite/tmp/entree.json', JSON.stringify({ depart, actions: r.actions, points }));
