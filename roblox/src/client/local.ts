@@ -2,12 +2,16 @@
  * État d'affichage propre à ce joueur (jamais envoyé au serveur) : panneau ouvert, combats dont
  * l'introduction a été lue, propositions impossibles par tour, façon de jouer en combat.
  */
+export type Section = "tout" | "parler" | "contrats" | "boutique" | "grimoire";
 export type Panneau = "fiche" | "quetes" | "journal" | "compagnons" | "carte" | "partie" | "histoire";
 
 export const affichage = {
 	panneau: undefined as Panneau | undefined,
-	/** Lieu ouvert (bâtiment dans lequel on est entré). */
+	/** Panneau d'un lieu ouvert, et la section demandée (PNJ, tableau, comptoir…). */
 	lieu: undefined as string | undefined,
+	section: "tout" as Section,
+	/** Intérieur dans lequel se trouve le personnage (undefined = dehors). */
+	dans: undefined as string | undefined,
 	combatsVus: new Set<string>(),
 	/** « combat:tour:acteur » → nombre de propositions impossibles (règle des 3 essais) */
 	essais: new Map<string, number>(),

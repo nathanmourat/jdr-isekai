@@ -73,6 +73,16 @@ export function barreHaut(parent: Frame, redessiner: () => void, allerA: (lieu: 
 		15,
 		{ largeur: new UDim(1, -320) },
 	);
+	if (affichage.dans !== undefined) {
+		const ld = ligne(c, 8);
+		texte(ld, `📍 Tu es dans : <b>${nomLieu(affichage.dans)}</b>`, 15, { largeur: new UDim(0, 320) });
+		bouton(ld, "Que faire ici ?", () => {
+			affichage.lieu = affichage.dans;
+			affichage.section = "tout";
+			affichage.panneau = undefined;
+			redessiner();
+		}, { hauteur: 30, taille: 14 });
+	}
 	const etape = prochaineEtape(CONTENU, etat, h.id);
 	if (etape) {
 		const l2 = ligne(c, 8);
@@ -104,7 +114,7 @@ export function panneauLateral(parent: Frame, redessiner: () => void, allerA: (l
 		redessiner();
 	};
 	if (affichage.lieu !== undefined) {
-		vueLieu(parent, affichage.lieu, fermer);
+		vueLieu(parent, affichage.lieu, fermer, redessiner);
 		return true;
 	}
 	if (affichage.panneau === undefined) return false;
@@ -138,22 +148,30 @@ export function panneauLateral(parent: Frame, redessiner: () => void, allerA: (l
 
 // ───────────────────────────── Lieu ─────────────────────────────
 
-function vueLieu(parent: Frame, id: string, fermer: () => void) {
+/**
+ * Panneau d'un lieu. `affichage.section` dit ce que le joueur a demandé dans la salle :
+ * parler (scènes), contrats (tableau), boutique (comptoir), grimoire (pupitre), ou tout.
+ */
+function vueLieu(parent: Frame, id: string, fermer: () => void, redessiner: () => void) {
 	const etat = jeu.etat!;
 	const h = monHeros()!;
 	const lieu = lieux().find((l) => l.id === id);
 	if (!lieu) return;
+	const section = affichage.section;
+	const voir = (s: string) => section === "tout" || section === s;
 	const tous = listeHeros(etat).map((x) => x.id);
 	const entete = ligne(parent);
-	bouton(entete, "← Sortir", fermer, { hauteur: 30, taille: 14 });
+	bouton(entete, "✕ Fermer", fermer, { hauteur: 30, taille: 14 });
+	if (section !== "tout") bouton(entete, "Tout ce qu'on peut faire ici", () => ((affichage.section = "tout"), redessiner()), { hauteur: 30, taille: 14 });
 	texte(parent, lieu.nom, 24, { gras: true, couleur: COULEURS.or });
-	texte(parent, lieu.description, 15);
+	if (section === "tout") texte(parent, lieu.description, 15);
 	const pnj = lieu.pnj.filter((p) => conditionScene(CONTENU, etat, p.si, tous));
 	if (pnj.size() > 0) texte(parent, `Ici : ${pnj.map((p) => CONTENU.compagnons[p.id]?.nom ?? CONTENU.pnj[p.id]?.nom ?? p.id).join(", ")}`, 14, { couleur: COULEURS.texte2 });
 
-	const scenes = scenesDisponibles(CONTENU, etat, id, h.id);
+	const scenes = voir("parler") ? scenesDisponibles(CONTENU, etat, id, h.id) : [];
 	const groupe = scenes.filter((s) => s.type === "groupe");
 	const perso = scenes.filter((s) => s.type === "individuel");
+	if (section === "parler" && scenes.size() === 0) texte(parent, "« Rien de neuf pour l'instant. Repasse plus tard ! »", 15, { couleur: COULEURS.texte2 });
 	if (groupe.size() > 0) {
 		const c = carte(parent, "Avec le groupe");
 		for (const s of groupe) {
@@ -172,7 +190,7 @@ function vueLieu(parent: Frame, id: string, fermer: () => void) {
 			bouton(l, "Y aller", () => agir({ type: "lancer_scene", scene: s.id }), { hauteur: 34 });
 		}
 	}
-	if (id === "guilde") {
+	if (id === "guilde" && voir("contrats")) {
 		const rang = rangGuilde(CONTENU, etat.pointsGuilde[h.id] ?? 0);
 		const c = carte(parent, `Tableau des contrats (ton rang : ${rang})`);
 		for (const [, ct] of pairs(CONTENU.contrats)) {
@@ -182,6 +200,8 @@ function vueLieu(parent: Frame, id: string, fermer: () => void) {
 			const ok = RANGS.indexOf(rang) >= RANGS.indexOf(ct.rang_min);
 			bouton(c, ok ? "Accepter (en solo)" : `Rang ${ct.rang_min} requis`, () => agir({ type: "contrat", contrat: ct.id }), { actif: ok, hauteur: 32, taille: 14 });
 		}
+	}
+	if (id === "guilde" && voir("grimoire")) {
 		const g = carte(parent, "📖 Grimoire de la partie");
 		let vide = true;
 		for (const [, t] of pairs(etat.grimoire ?? {})) {
@@ -195,7 +215,7 @@ function vueLieu(parent: Frame, id: string, fermer: () => void) {
 		}
 		if (vide) texte(g, "Encore vide. En combat, écris « je combine X et Y » pour inventer une technique : elle sera ajoutée ici pour tout le groupe.", 13, { couleur: COULEURS.texte2 });
 	}
-	if (lieu.boutique.size() > 0) {
+	if (lieu.boutique.size() > 0 && voir("boutique")) {
 		const c = carte(parent, `Boutique (${h.or} or)`);
 		for (const o of lieu.boutique) {
 			const l = ligne(c);
@@ -204,7 +224,7 @@ function vueLieu(parent: Frame, id: string, fermer: () => void) {
 			bouton(l, `${prix} or`, () => agir({ type: "acheter", objet: o, lieu: id }), { actif: h.or >= prix, hauteur: 32, taille: 14 });
 		}
 	}
-	if (groupe.size() === 0 && perso.size() === 0 && id !== "guilde" && lieu.boutique.size() === 0) {
+	if (section === "tout" && groupe.size() === 0 && perso.size() === 0 && id !== "guilde" && lieu.boutique.size() === 0) {
 		texte(parent, "Rien de particulier à faire ici pour le moment.", 14, { couleur: COULEURS.texte2 });
 	}
 }

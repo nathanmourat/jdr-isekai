@@ -2,7 +2,7 @@
  * Type du contenu chargé, sans dépendance à zod ni à YAML : le moteur l'importe sur le web comme sur Roblox.
  */
 import type {
-  Activite, Classe, Compagnon, Competence, Config, Contrat, Don, Donjon, Ennemi, Objet, Pnj, Quete, Race, Region, Rencontre, Scene,
+  Activite, Ambiance, Classe, Compagnon, Competence, Config, Contrat, Don, Donjon, Ennemi, Objet, Pnj, Quete, Race, Region, Rencontre, Scene,
 } from './schemas';
 
 export interface Contenu {
@@ -22,4 +22,5 @@ export interface Contenu {
   donjons: Record<string, Donjon>;
   contrats: Record<string, Contrat>;
   activites: Record<string, Activite>;
+  ambiance: Record<string, Ambiance>;
 }

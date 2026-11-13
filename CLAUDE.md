@@ -38,6 +38,9 @@ Si une demande est floue ou contradictoire : poser la question plutôt que devin
 - Tests sous Lune : parité moteur (`npm run roblox:parite`, graines chapitre/alpha/bravo/desordre), parité IA (`scripts/roblox-parite-ia.ts`), fonctions de l'interface (`roblox/parite/interface.luau`). Pièges Luau corrigés : listes à trous, opérateur virgule, `filter(Boolean)`, `?:` sans parenthèses, `_G`, bitwise.
 - Contenu Roblox : `npm run roblox:contenu` (romance désactivée, paliers renommés « Amie fidèle » / « Lien indéfectible », contrôle des textes). Scène romantique = `romance: true` dans le YAML.
 - Nathan teste dans Studio (je n'ai pas Studio) : chaque étape a une liste de contrôle dans `roblox/README-ROBLOX.md`.
+- **Graphismes Roblox (13/11)** : tout en 3D ; héros = avatar Roblox + arme de classe ; ennemis = modèles du serveur (`roblox/src/server/modeles.ts`), remplaçables par `ServerStorage/ModelesDuGroupe/<id>` ; combat tour par tour modernisé, sur place.
+- **Intérieurs + ville vivante (13/11)** : entrée par téléportation dans une salle (`roblox/src/server/interieurs.ts`), points d'interaction (attributs `Lieu`/`Action`) ; jour/nuit réel de 20 min, villageois, gardes, marché, animaux (`roblox/src/server/vie.ts`) ; phrases d'ambiance dans `content/monde/ambiance.yaml` ; sons dans `roblox/src/shared/sons.ts` (vides : le groupe choisit).
+- Deux sessions Claude travaillent sur la branche : celle-ci (cloud) s'occupe de Roblox, celle du PC de Nathan de la version web. Toujours `git fetch` + rebase avant de pousser.
 
 ## Choix techniques
 - TypeScript + Vite + **Phaser 3** (rendu 2D) + Svelte (menus et dialogues par-dessus) ; tests avec Vitest ; Playwright pour le test de bout en bout.

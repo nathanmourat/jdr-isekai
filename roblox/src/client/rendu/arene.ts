@@ -9,6 +9,7 @@ import { arme } from "shared/construction";
 import { CONTENU } from "shared/donnees";
 import { LIEU_DU_DECOR, positionLieu } from "shared/geo";
 import type { Combat, Combattant, EvenementCombat } from "shared/moteur";
+import { jouer } from "../sons";
 
 const COULEUR_ELEMENT: Record<string, Color3> = {
 	physique: Color3.fromRGB(255, 255, 255),
@@ -319,6 +320,7 @@ function jouerEvenement(e: EvenementCombat): number {
 		}
 		case "degats":
 			if (cible) {
+				jouer("coup");
 				cible.pv = math.max(0, cible.pv - (e.valeur ?? 0));
 				majBarre(cible);
 				chiffre(cible, `${e.valeur ?? 0}`, e.critique ? Color3.fromRGB(255, 220, 60) : Color3.fromRGB(255, 90, 70), e.critique === true);
@@ -359,6 +361,7 @@ function jouerEvenement(e: EvenementCombat): number {
 			}
 			return 0.6;
 		case "fin":
+			if (e.texte.find("Victoire")[0] !== undefined) jouer("victoire");
 			if (e.texte.find("Victoire")[0] !== undefined) for (const [, p] of pions) if (!p.ko && p.modele.Name.sub(1, 2) === "h:") jouerAnim(p, "victoire");
 			return 0.3;
 	}

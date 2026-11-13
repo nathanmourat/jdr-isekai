@@ -1,0 +1,45 @@
+# Phrases d'ambiance dites par les passants (version Roblox : bulles au-dessus des têtes).
+# lieu : près de quel lieu on l'entend (absent = partout en ville) · moment : jour, nuit ou toujours
+# qui : villageois, garde, marchand, client, pretre · si : condition (même format que les scènes)
+# Version tout public : pas de romance ici (vérifié par npm run roblox:contenu).
+ambiance:
+  # ─── En ville, partout
+  - { id: v-temps, texte: "Belle journée pour la saison, pas vrai ?", moment: jour }
+  - { id: v-pain, texte: "Le pain a encore augmenté. Deux sous de plus, cette semaine.", moment: jour }
+  - { id: v-appeles, texte: "Ce sont eux, les Appelés ? Ils ont l'air… normaux.", si: { flag: appel-fait } }
+  - { id: v-appeles-2, texte: "On dit que l'Ordre les a fait venir d'un autre monde. Brr.", si: { flag: appel-fait } }
+  - { id: v-avant-appel, texte: "Il paraît que le Temple prépare une grande cérémonie.", si: { pas_flag: appel-fait } }
+  - { id: v-guilde, texte: "La Guilde recrute. Faut juste survivre à l'examen…", si: { pas_flag: examen-reussi } }
+  - { id: v-guilde-ok, texte: "Les nouveaux de la Guilde ont battu le golem d'entraînement, il paraît !", si: { flag: examen-reussi } }
+  - { id: v-crypte, texte: "Personne ne descend dans la Crypte de la Fontaine. Personne de sensé, en tout cas.", si: { pas_flag: sceau-trouve } }
+  - { id: v-crypte-ok, texte: "Ils sont revenus de la crypte avec un sceau tout noir. Ça ne me dit rien qui vaille.", si: { flag: sceau-trouve } }
+  - { id: v-lanternes, texte: "Vivement la Fête des Lanternes !", si: { pas_flag: lanternes-faites } }
+  - { id: v-vorthak, texte: "Un démon, en pleine fête… J'en fais encore des cauchemars.", si: { flag: lanternes-faites } }
+  - { id: v-nuit-1, texte: "Rentrez vite, la nuit tombe.", moment: nuit }
+  - { id: v-nuit-2, texte: "*bâille* Encore une longue journée demain.", moment: nuit }
+  # ─── Gardes
+  - { id: g-ronde, qui: garde, texte: "Circulez. Rien à voir." }
+  - { id: g-ordre, qui: garde, texte: "Ordre du roi : pas d'armes dégainées dans les rues." }
+  - { id: g-nuit, qui: garde, moment: nuit, texte: "Restez dans la lumière des lanternes, la nuit." }
+  - { id: g-cultistes, qui: garde, texte: "On a doublé les rondes depuis l'attaque des cultistes.", si: { flag: lanternes-faites } }
+  - { id: g-serment, qui: garde, texte: "Le roi compte sur vous. Faites honneur à la couronne.", si: { flag: serment-couronne } }
+  # ─── Marché de la place
+  - { id: m-pommes, lieu: lysmont-place, qui: marchand, moment: jour, texte: "Pommes de la Combe ! Croquantes et sucrées !" }
+  - { id: m-tissu, lieu: lysmont-place, qui: marchand, moment: jour, texte: "Tissus de Valgrane, la plus belle laine du royaume !" }
+  - { id: m-epices, lieu: lysmont-place, qui: marchand, moment: jour, texte: "Épices du Sud, rapportées par la dernière caravane !" }
+  - { id: m-potions, lieu: lysmont-place, qui: marchand, moment: jour, texte: "Une potion de soin, aventurier ? Ça peut sauver une vie !" }
+  # ─── Lieux
+  - { id: t-prieres, lieu: temple-du-seuil, qui: pretre, texte: "Que la Lumière Sereine guide vos pas." }
+  - { id: t-silence, lieu: temple-du-seuil, qui: pretre, texte: "Silence, s'il vous plaît. C'est l'heure de la méditation." }
+  - { id: gu-contrat, lieu: guilde, qui: client, texte: "Qui veut un contrat facile ? Des rats dans ma cave, rien de bien méchant…", si: { flag: examen-reussi } }
+  - { id: gu-rang, lieu: guilde, qui: client, texte: "Rang C à vingt ans ! Moi, à vingt ans, je trayais des chèvres." }
+  - { id: ta-chope, lieu: taverne, qui: client, texte: "Bram ! Une autre chope !" }
+  - { id: ta-reliques, lieu: taverne, qui: client, texte: "Le marchand d'os de saint ? Arnaque, je vous dis.", si: { pas_flag: ferrand-demasque } }
+  - { id: ta-ferrand, lieu: taverne, qui: client, texte: "Bien fait pour Ferrand. Vendre des os de poulet comme reliques…", si: { flag: ferrand-demasque } }
+  - { id: ta-chanson, lieu: taverne, qui: client, moment: nuit, texte: "🎵 Au bord de la Fontaine, j'ai perdu ma chopine… 🎵" }
+  - { id: co-loups, lieu: combe-aux-saules, texte: "Encore des loups cette nuit… Gareth a perdu trois moutons.", si: { pas_flag: loups-sauves } }
+  - { id: co-loups-ok, lieu: combe-aux-saules, texte: "Plus un hurlement depuis que les aventuriers sont passés. Merci à eux !", si: { flag: loups-sauves } }
+  - { id: tn-disparus, lieu: quartier-tanneurs, texte: "Encore quelqu'un a disparu dans les ruelles. On n'ose plus sortir le soir.", si: { pas_flag: lina-sauvee } }
+  - { id: tn-lina, lieu: quartier-tanneurs, texte: "La petite Lina est rentrée saine et sauve. Quel soulagement !", si: { flag: lina-sauvee } }
+  - { id: ar-tournoi, lieu: arene, texte: "Le tournoi des écuyers, ça, c'est du spectacle !" }
+  - { id: ch-cour, lieu: chateau, qui: garde, texte: "La cour reçoit sur rendez-vous. Ou sur convocation du roi." }

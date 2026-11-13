@@ -32,7 +32,7 @@ function construit(nom: string, hauteur: number, f: (m: Model, racine: Part) => 
 
 // ───────────────────────────── Humanoïdes ─────────────────────────────
 
-interface Costume {
+export interface Costume {
 	peau: Color3;
 	haut: Color3;
 	bas: Color3;
@@ -41,9 +41,15 @@ interface Costume {
 	capuche?: Color3;
 	yeux?: Color3;
 	classe?: string;
+	/** couronne dorée (roi, princesse) */
+	couronne?: boolean;
+	/** chapeau à large bord (fermier) */
+	chapeau?: Color3;
+	/** tablier (tavernier, artisan) */
+	tablier?: Color3;
 }
 
-function humanoide(nom: string, c: Costume): Model {
+export function humanoide(nom: string, c: Costume): Model {
 	const d = new Instance("HumanoidDescription");
 	d.HeadColor = c.peau;
 	d.LeftArmColor = c.haut;
@@ -76,12 +82,27 @@ function humanoide(nom: string, c: Costume): Model {
 			souder(tete, oeil);
 		}
 	}
+	if (tete && c.couronne) {
+		const couronne = piece(m, "Couronne", new Vector3(1.3, 0.5, 1.3).mul(e), tete.CFrame.mul(new CFrame(0, 0.75 * e, 0)), rgb(230, 185, 60), { matiere: Enum.Material.Metal });
+		souder(tete, couronne);
+	}
+	if (tete && c.chapeau) {
+		const bord = piece(m, "Bord", new Vector3(0.2, 2.6, 2.6).mul(e), tete.CFrame.mul(new CFrame(0, 0.6 * e, 0)).mul(CFrame.Angles(0, 0, math.rad(90))), c.chapeau, { forme: Enum.PartType.Cylinder, matiere: Enum.Material.Fabric });
+		const calotte = piece(m, "Calotte", new Vector3(1.3, 0.8, 1.3).mul(e), tete.CFrame.mul(new CFrame(0, 0.95 * e, 0)), c.chapeau, { matiere: Enum.Material.Fabric });
+		souder(tete, bord);
+		souder(tete, calotte);
+	}
+	const torse = (m.FindFirstChild("UpperTorso") ?? m.FindFirstChild("Torso")) as BasePart | undefined;
+	if (torse && c.tablier) {
+		const tablier = piece(m, "Tablier", new Vector3(1.8, 2.6, 0.15).mul(e), torse.CFrame.mul(new CFrame(0, -0.8 * e, -0.55 * e)), c.tablier, { matiere: Enum.Material.Fabric });
+		souder(torse, tablier);
+	}
 	if (c.classe !== undefined) arme(m, c.classe);
 	m.SetAttribute("Hauteur", 5.5 * e);
 	return m;
 }
 
-function preparerHumanoide(m: Model) {
+export function preparerHumanoide(m: Model) {
 	const h = m.FindFirstChildOfClass("Humanoid");
 	if (h) {
 		h.DisplayDistanceType = Enum.HumanoidDisplayDistanceType.None;
@@ -99,7 +120,7 @@ function preparerHumanoide(m: Model) {
 
 // ───────────────────────────── Bêtes, golems, esprits ─────────────────────────────
 
-function quadrupede(nom: string, couleur: Color3, taille: number, options: { defenses?: boolean; spectral?: boolean } = {}): Model {
+export function quadrupede(nom: string, couleur: Color3, taille: number, options: { defenses?: boolean; spectral?: boolean } = {}): Model {
 	return construit(nom, 3.2 * taille, (m, r) => {
 		const o = r.CFrame.mul(new CFrame(0, 0.6 * taille, 0));
 		const opt = options.spectral ? { matiere: Enum.Material.ForceField, transparence: 0.2 } : { matiere: Enum.Material.Fabric };
@@ -183,7 +204,7 @@ function tourelle(nom: string): Model {
 
 // ───────────────────────────── Catalogue ─────────────────────────────
 
-const COSTUMES: Record<string, Costume> = {
+export const COSTUMES: Record<string, Costume> = {
 	"gobelin-cendre": { peau: rgb(110, 140, 70), haut: rgb(90, 70, 50), bas: rgb(70, 55, 40), echelle: 0.7, yeux: rgb(255, 120, 40), classe: "ombre" },
 	bandit: { peau: rgb(225, 180, 140), haut: rgb(110, 80, 55), bas: rgb(60, 50, 40), capuche: rgb(70, 60, 50), classe: "ombre" },
 	cultiste: { peau: rgb(220, 190, 160), haut: rgb(110, 25, 30), bas: rgb(70, 15, 20), capuche: rgb(90, 20, 25), yeux: rgb(255, 60, 60), classe: "arcaniste" },

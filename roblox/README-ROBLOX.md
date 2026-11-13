@@ -146,6 +146,46 @@ Roblox interdit de le régler par script. Dans Studio : **Explorer → Lighting*
 
 Les bâtiments se remplacent plus tard sur le même principe, sur demande.
 
+## Intérieurs et ville vivante (mise à jour du 13/11)
+
+### Ce qui a été ajouté
+- **Intérieurs** : chaque lieu a sa salle. Approche-toi de la porte, appuie sur **E** (« Entrer ») : fondu au noir, et tu es dedans. La porte « **Sortir** » te ramène dehors.
+  - **Guilde** : comptoir de Dame Rowena (Acheter), **tableau des contrats** (Consulter), **pupitre du grimoire** (Lire), tables, mannequins d'entraînement.
+  - **Taverne** : bar de Bram (Commander), tonneaux, cheminée qui brûle, clients attablés, escalier.
+  - **Temple** : nef, bancs, autel lumineux, vitraux, Grand Prieur Mathis et Sœur Elianne, comptoir des offrandes.
+  - **Château** : salle du trône, tapis rouge, gardes, le roi Edmund IV et la princesse Séraphine.
+  - **Tanneurs** : atelier avec cuves de teinture et peaux tendues, Lina.
+  - **Arène** : vestiaire, râteliers d'armes, maître d'armes.
+  - **Combe-aux-Saules** : maison de Gareth.
+  - **Crypte** : antichambre aux flambeaux et escalier pour « Descendre ».
+  - La **place de Lysmont** reste dehors : c'est le **marché**.
+- **PNJ** : touche **E** pour « Parler ». Le panneau s'ouvre sur ce qu'ils proposent. Un ⭐ au-dessus de la tête signale la quête principale, un ● autre chose à faire. Les PNJ que ta partie ne doit pas encore voir (Kaya avant l'examen…) sont cachés pour toi.
+- **Jour et nuit** : une journée dure environ 20 minutes. La nuit, les fenêtres et les lanternes s'allument et la lumière devient bleutée.
+- **Villageois** :
+  - une douzaine marchent entre la place et les portes, et rentrent chez eux la nuit ;
+  - **3 gardes** font des rondes, jour et nuit ;
+  - des **bulles de phrases** s'affichent au-dessus des têtes, et elles changent avec l'histoire (« Encore des loups à la Combe… » puis « Plus un hurlement depuis que les aventuriers sont passés ! »).
+- **Marché** : six étals colorés autour de la fontaine. Leurs marchands crient leurs produits, et **E** sur un marchand ouvre la boutique de la place.
+- **Animaux** : poules qui picorent à la Combe et aux Tanneurs, chats (la queue bouge), chevaux devant le château.
+- Les phrases d'ambiance sont dans **`content/monde/ambiance.yaml`**. Le groupe peut en ajouter sans toucher au code.
+
+### Ajouter des sons (facultatif)
+Le jeu est prêt à jouer : ambiance de ville le jour et la nuit, taverne, temple, musique de combat, coups, fanfare de victoire. Il manque seulement les numéros des sons :
+1. Dans Studio : **Boîte à outils** (*Toolbox*) → onglet **Audio** → écoute et choisis un son.
+2. Clic droit sur le son → **Copier l'identifiant de l'asset**.
+3. Colle-le dans `roblox/src/shared/sons.ts`, par exemple `ambianceVille: "rbxassetid://123456789",`. Enregistre : `npm run watch` s'occupe du reste.
+
+Je n'ai mis aucun numéro moi-même : je ne peux pas vérifier qu'un son existe et qu'il est libre d'utilisation.
+
+### Liste de contrôle
+- [ ] Entrer dans chaque bâtiment (E), et en ressortir par la porte « Sortir ».
+- [ ] Dans la Guilde : Parler à Rowena, Consulter le tableau (contrats), Lire le grimoire, Acheter au comptoir.
+- [ ] Le bandeau du haut indique « 📍 Tu es dans : … » avec « Que faire ici ? ».
+- [ ] Des villageois marchent sur la place et vers les bâtiments ; des bulles de phrases apparaissent.
+- [ ] Attendre la nuit (environ 10 minutes après le début) : les fenêtres et les lanternes s'allument et les villageois rentrent. Les gardes restent.
+- [ ] Marché : E sur un marchand → boutique.
+- [ ] À 2 joueurs : chacun peut être dans une salle différente.
+
 ## Publier sur Roblox (quand tout marche)
 
 1. **Fichier → Publier sur Roblox**, si ce n'est pas déjà fait.

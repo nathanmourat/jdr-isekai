@@ -3,13 +3,13 @@
  *
  * Chaque fichier YAML de `content/` peut contenir une ou plusieurs de ces clés :
  *   config, classe, races, dons, ennemis, rencontres, objets, compagnon,
- *   regions, pnj, scenes, quetes, donjons, contrats, activites
+ *   regions, pnj, scenes, quetes, donjons, contrats, activites, ambiance
  * Les listes de tous les fichiers sont fusionnées. Ajouter du contenu = ajouter un fichier.
  */
 import { parse } from 'yaml';
 import type { z } from 'zod';
 import {
-  zActivite, zClasse, zCompagnon, zConfig, zContrat, zDon, zDonjon, zEnnemi, zObjet, zPnj, zQuete, zRace,
+  zActivite, zAmbiance, zClasse, zCompagnon, zConfig, zContrat, zDon, zDonjon, zEnnemi, zObjet, zPnj, zQuete, zRace,
   zRegion, zRencontre, zScene,
   type Activite, type Classe, type Compagnon, type Competence, type Condition, type Config, type Consequence,
   type Contrat, type Don, type Donjon, type Ennemi, type Objet, type Pnj, type Quete, type Race, type Region,
@@ -51,7 +51,7 @@ export function chargerContenu(fichiers: Record<string, string>): Contenu {
   const c: Contenu = {
     config: undefined as unknown as Config,
     classes: {}, competences: {}, races: {}, dons: {}, ennemis: {}, rencontres: {}, objets: {}, compagnons: {},
-    regions: {}, pnj: {}, scenes: {}, quetes: {}, donjons: {}, contrats: {}, activites: {},
+    regions: {}, pnj: {}, scenes: {}, quetes: {}, donjons: {}, contrats: {}, activites: {}, ambiance: {},
   };
 
   const ajouter = <T extends { id: string }>(
@@ -96,7 +96,8 @@ export function chargerContenu(fichiers: Record<string, string>): Contenu {
         case 'donjons': ajouter(fichier, cle, valeur, zDonjon, c.donjons); break;
         case 'contrats': ajouter(fichier, cle, valeur, zContrat, c.contrats); break;
         case 'activites': ajouter(fichier, cle, valeur, zActivite, c.activites); break;
-        default: erreurs.push(`${fichier} › clé inconnue « ${cle} » (clés possibles : config, classe, races, dons, ennemis, rencontres, objets, compagnon, regions, pnj, scenes, quetes, donjons, contrats, activites)`);
+        case 'ambiance': ajouter(fichier, cle, valeur, zAmbiance, c.ambiance); break;
+        default: erreurs.push(`${fichier} › clé inconnue « ${cle} » (clés possibles : config, classe, races, dons, ennemis, rencontres, objets, compagnon, regions, pnj, scenes, quetes, donjons, contrats, activites, ambiance)`);
       }
     }
   }
@@ -128,6 +129,8 @@ function verifierReferences(c: Contenu): string[] {
     for (const b of cl.branches) for (const x of b.competences) if (!c.competences[x.competence]) e.push(`Classe ${cl.id} › branche ${b.id} › compétence « ${x.competence} » introuvable`);
     for (const comp of cl.competences_detail) for (const ef of comp.effets) if (ef.type === 'invocation' && !c.ennemis[ef.creature]) e.push(`Compétence ${comp.id} › créature « ${ef.creature} » introuvable dans les ennemis`);
   }
+  const lieuxConnus = new Set(Object.values(c.regions).flatMap((r) => r.lieux.map((l) => l.id)));
+  for (const a of Object.values(c.ambiance)) if (a.lieu && !lieuxConnus.has(a.lieu)) e.push(`Ambiance ${a.id} › lieu « ${a.lieu} » introuvable`);
   for (const r of Object.values(c.races)) {
     const somme = Object.values(r.modificateurs).reduce((a, b) => a + (b ?? 0), 0);
     const libre = r.modificateurs_libres ? r.modificateurs_libres.plus - r.modificateurs_libres.moins : 0;

@@ -407,6 +407,18 @@ export const zDonjon = z.object({
 });
 export type Donjon = z.infer<typeof zDonjon>;
 
+/** Phrase d'ambiance dite par un passant (version Roblox : bulles au-dessus des têtes). */
+export const zAmbiance = z.object({
+  id: z.string(),
+  /** Lieu où on l'entend (absent = partout en ville). */
+  lieu: z.string().optional(),
+  moment: z.enum(['jour', 'nuit', 'toujours']).default('toujours'),
+  qui: z.enum(['villageois', 'garde', 'marchand', 'client', 'pretre']).default('villageois'),
+  texte: z.string(),
+  si: zCondition.optional(),
+});
+export type Ambiance = z.infer<typeof zAmbiance>;
+
 export const zContrat = z.object({
   id: z.string(),
   titre: z.string(),

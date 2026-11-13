@@ -56,6 +56,9 @@ for _, etat in sortie.points do
 			end)
 		end
 	end
+	for id, a in contenu.ambiance or {} do
+		if a.si then essai("ambiance " .. id, function() moteur.conditionScene(contenu, etat, a.si, tous) end) end
+	end
 	if etat.donjon then essai("donjon", function() moteur.caseDonjon(contenu, etat.donjon.id, etat.donjon.x, etat.donjon.y) end) end
 end
 print(`{#sortie.points} états testés, {appels} appels, {erreurs} erreur(s).`)

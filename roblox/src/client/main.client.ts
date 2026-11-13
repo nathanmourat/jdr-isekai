@@ -10,7 +10,7 @@ import { affichage } from "./local";
 import { effacerMessages, jeu, monHeros, surChangement } from "./partie";
 import { afficherArene, cacherArene } from "./rendu/arene";
 import { afficherDonjon, cacherDonjon } from "./rendu/donjon3d";
-import { allerAuLieu, majMarqueurs, surEntree } from "./rendu/marqueurs";
+import { allerAuLieu, entrerDans, majMarqueurs, majPnj, sortirDe, surInteraction } from "./rendu/marqueurs";
 import { vueCombat } from "./ui/combat";
 import { vueDialogue } from "./ui/dialogue";
 import { activerClavier, vueDonjon } from "./ui/donjon";
@@ -18,6 +18,7 @@ import { ecranAccueil, ecranCreation } from "./ui/ecrans";
 import { COULEURS, vider } from "./ui/kit";
 import { barreHaut, panneauLateral } from "./ui/monde";
 import { vueFinChapitre, vueTempsLibre } from "./ui/temps";
+import { majSons } from "./sons";
 
 const joueur = Players.LocalPlayer;
 const gui = new Instance("ScreenGui");
@@ -121,6 +122,7 @@ bandeau.Parent = gui;
 function allerA(lieu: string) {
 	affichage.panneau = undefined;
 	affichage.lieu = undefined;
+	affichage.dans = undefined;
 	allerAuLieu(lieu);
 	redessiner();
 }
@@ -173,7 +175,7 @@ function redessiner() {
 	laterale.Visible = false;
 
 	const etroit = (Workspace.CurrentCamera?.ViewportSize.X ?? 1000) < 820;
-	const haut = barre.Visible ? 130 : 8;
+	const haut = barre.Visible ? (affichage.dans !== undefined ? 168 : 130) : 8;
 	laterale.Position = new UDim2(1, etroit ? 0 : -8, 0, haut);
 	laterale.Size = etroit ? new UDim2(1, 0, 0.55, -haut) : new UDim2(0, 470, 1, -haut - 8);
 	bas.Size = new UDim2(etroit ? 1 : 0.9, 0, etroit ? 0.5 : 0.42, 0);
@@ -204,6 +206,8 @@ function redessiner() {
 	if (vue !== "combat" && vue !== "donjon") cameraNormale();
 	activerClavier(vue === "donjon");
 	majMarqueurs(vue === "monde");
+	majPnj();
+	majSons(vue, affichage.dans);
 	if (vue !== vuePrecedente) {
 		plein.CanvasPosition = new Vector2();
 		laterale.CanvasPosition = new Vector2();
@@ -217,13 +221,36 @@ function redessiner() {
 	bandeau.BackgroundColor3 = jeu.erreur !== undefined ? COULEURS.rouge : COULEURS.fond2;
 }
 
-surEntree((lieu) => {
+surInteraction((lieu, action) => {
 	if (!jeu.etat || !monHeros()) return;
 	affichage.panneau = undefined;
-	affichage.lieu = lieu;
+	if (action === "entrer") {
+		// bâtiment avec intérieur : on y entre ; sinon, on ouvre simplement le panneau du lieu
+		if (entrerDans(lieu)) {
+			affichage.dans = lieu;
+			affichage.lieu = undefined;
+		} else {
+			affichage.lieu = lieu;
+			affichage.section = "tout";
+		}
+	} else if (action === "sortir") {
+		sortirDe(lieu);
+		affichage.dans = undefined;
+		affichage.lieu = undefined;
+	} else {
+		affichage.lieu = lieu;
+		affichage.section = action === "parler" || action === "contrats" || action === "boutique" || action === "grimoire" ? action : "tout";
+	}
 	redessiner();
 });
 surChangement(redessiner);
 redessiner();
+// l'ambiance sonore suit aussi le jour et la nuit, même sans action dans la partie
+task.spawn(() => {
+	while (true) {
+		task.wait(10);
+		majSons(vuePrecedente, affichage.dans);
+	}
+});
 gui.Parent = joueur.WaitForChild("PlayerGui");
 print("[Velmaris] Client prêt.");

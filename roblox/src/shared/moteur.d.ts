@@ -155,6 +155,7 @@ export interface Contenu {
 	contrats: Record<string, ContratDef>;
 	activites: Record<string, { id: string; nom: string; description: string; disponible_si?: Condition; choix_compagnon?: boolean }>;
 	donjons: Record<string, { id: string; nom: string; carte: string[]; legende: Record<string, string>; depart: { x: number; y: number } }>;
+	ambiance: Record<string, { id: string; lieu?: string; moment: "jour" | "nuit" | "toujours"; qui: "villageois" | "garde" | "marchand" | "client" | "pretre"; texte: string; si?: Condition }>;
 	[cle: string]: unknown;
 }
 
