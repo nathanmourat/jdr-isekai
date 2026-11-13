@@ -233,7 +233,7 @@ export function vueCombat(calque: Frame, cle: string, redessiner: () => void) {
 function contexte(combat: Combat, acteur: Combattant): ContexteIA {
 	const etat = jeu.etat!;
 	const heros = acteur.herosId !== undefined ? etat.heros[acteur.herosId] : undefined;
-	return { contenu: CONTENU, combat, acteur: acteur.id, heros, grimoire: etat.grimoire ?? {} };
+	return { contenu: CONTENU, combat, acteur: acteur.id, heros, grimoire: heros?.grimoire ?? {} };
 }
 
 /** « Proposer mon action » : texte libre compris par l'IA maison, 3 propositions impossibles par tour au plus. */

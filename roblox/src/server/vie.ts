@@ -385,7 +385,8 @@ export function animerVille() {
 	centrePlace = place ? positionLieu(place) : new Vector3();
 	const monde = Workspace.WaitForChild("Velmaris");
 	for (const e of monde.GetDescendants()) {
-		if (e.IsA("BasePart") && e.Name === "Entree") {
+		// les balises des lieux d'étape (hors de la ville) ne sont pas des portes de maisons
+		if (e.IsA("BasePart") && e.Name === "Entree" && e.Parent?.GetAttribute("Etape") === undefined) {
 			const lieu = e.GetAttribute("Lieu") as string;
 			if (lieu !== "lysmont-place") portes.push({ lieu, position: new Vector3(e.Position.X, 0, e.Position.Z) });
 		}

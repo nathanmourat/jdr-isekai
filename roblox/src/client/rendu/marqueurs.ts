@@ -7,10 +7,18 @@
  */
 import { Players, ProximityPromptService, TweenService, Workspace } from "@rbxts/services";
 import { CONTENU } from "shared/donnees";
-import { conditionScene, lieuAvecCombat, listeHeros, scenesDisponibles } from "shared/moteur";
+import { conditionScene, lieuAvecCombat, lieuxDesEtapes, listeHeros, scenesDisponibles } from "shared/moteur";
 import { jeu, monHeros } from "../partie";
 
 const panneaux = new Map<string, TextLabel>();
+
+function montrer(modele: Model, oui: boolean) {
+	for (const e of modele.GetDescendants()) {
+		if (e.IsA("BasePart") || e.IsA("Decal")) e.LocalTransparencyModifier = oui ? 0 : 1;
+		else if (e.IsA("ProximityPrompt")) e.Enabled = oui;
+		else if (e.IsA("BillboardGui")) e.Enabled = oui;
+	}
+}
 
 function entrees(): BasePart[] {
 	const dossier = Workspace.FindFirstChild("Velmaris");
@@ -25,6 +33,7 @@ export function majMarqueurs(visible: boolean) {
 	const etat = jeu.etat;
 	const h = monHeros();
 	const tous = etat ? listeHeros(etat).map((x) => x.id) : [];
+	const etapes = etat && h ? lieuxDesEtapes(CONTENU, etat, h.id) : [];
 	for (const ancre of entrees()) {
 		const id = ancre.GetAttribute("Lieu") as string;
 		const lieu = CONTENU.regions.aubeclaire.lieux.find((l) => l.id === id);
@@ -55,7 +64,10 @@ export function majMarqueurs(visible: boolean) {
 			if (invite) invite.Enabled = visible && etat !== undefined && h !== undefined;
 			continue;
 		}
-		const accessible = conditionScene(CONTENU, etat, lieu.disponible_si, tous);
+		// balise d'un lieu d'étape : visible seulement pendant l'étape qui y mène
+		const balise = ancre.Parent?.GetAttribute("Etape") !== undefined;
+		if (balise) montrer(ancre.Parent as Model, etapes.includes(id));
+		const accessible = balise ? etapes.includes(id) : conditionScene(CONTENU, etat, lieu.disponible_si, tous);
 		if (invite) invite.Enabled = accessible;
 		gui.Enabled = accessible;
 		if (!accessible) continue;
@@ -63,19 +75,12 @@ export function majMarqueurs(visible: boolean) {
 		const principale = scenes.some((s) => s.quete !== undefined && CONTENU.quetes[s.quete]?.type === "principale");
 		const marque = principale ? '<font color="#ffd166">⭐</font> ' : scenes.size() > 0 ? '<font color="#9fd3ff">●</font> ' : "";
 		const combat = lieuAvecCombat(CONTENU, etat, id, h.id) ? ' <font color="#ff9b8a">⚔</font>' : "";
-		etiquette.Text = `${marque}${lieu.nom}${combat}`;
+		const etape = etapes.includes(id) ? '<font color="#ffd166">📍</font> ' : "";
+		etiquette.Text = `${etape}${marque}${lieu.nom}${combat}`;
 	}
 }
 
 // ───────────────────────────── PNJ des intérieurs ─────────────────────────────
-
-function visible(modele: Model, oui: boolean) {
-	for (const e of modele.GetDescendants()) {
-		if (e.IsA("BasePart") || e.IsA("Decal")) e.LocalTransparencyModifier = oui ? 0 : 1;
-		else if (e.IsA("ProximityPrompt")) e.Enabled = oui;
-		else if (e.IsA("BillboardGui")) e.Enabled = oui;
-	}
-}
 
 const marquesPnj = new Map<Model, TextLabel>();
 
@@ -93,7 +98,7 @@ export function majPnj() {
 		const lieu = CONTENU.regions.aubeclaire.lieux.find((l) => l.id === lieuId);
 		const entree = lieu?.pnj.find((p) => p.id === pnjId);
 		const ok = etat !== undefined && (entree === undefined || conditionScene(CONTENU, etat, entree.si, tous));
-		visible(e, ok);
+		montrer(e, ok);
 		let marque = marquesPnj.get(e);
 		if (!marque && e.PrimaryPart) {
 			const gui = new Instance("BillboardGui");

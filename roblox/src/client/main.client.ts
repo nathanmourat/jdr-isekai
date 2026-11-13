@@ -175,7 +175,7 @@ function redessiner() {
 	laterale.Visible = false;
 
 	const etroit = (Workspace.CurrentCamera?.ViewportSize.X ?? 1000) < 820;
-	const haut = barre.Visible ? (affichage.dans !== undefined ? 168 : 130) : 8;
+	const haut = barre.Visible ? 130 : 8;
 	laterale.Position = new UDim2(1, etroit ? 0 : -8, 0, haut);
 	laterale.Size = etroit ? new UDim2(1, 0, 0.55, -haut) : new UDim2(0, 470, 1, -haut - 8);
 	bas.Size = new UDim2(etroit ? 1 : 0.9, 0, etroit ? 0.5 : 0.42, 0);
@@ -208,6 +208,14 @@ function redessiner() {
 	majMarqueurs(vue === "monde");
 	majPnj();
 	majSons(vue, affichage.dans);
+	// le panneau latéral commence juste sous la barre du haut (sa hauteur varie avec son contenu)
+	if (barre.Visible) {
+		task.defer(() => {
+			const y = barre.AbsoluteSize.Y + 8;
+			laterale.Position = new UDim2(1, etroit ? 0 : -8, 0, y);
+			laterale.Size = etroit ? new UDim2(1, 0, 0.55, -y) : new UDim2(0, 470, 1, -y - 8);
+		});
+	}
 	if (vue !== vuePrecedente) {
 		plein.CanvasPosition = new Vector2();
 		laterale.CanvasPosition = new Vector2();
@@ -240,7 +248,8 @@ surInteraction((lieu, action, pnj) => {
 	} else {
 		affichage.lieu = lieu;
 		affichage.pnj = action === "parler" ? pnj : undefined;
-		affichage.section = action === "parler" || action === "contrats" || action === "boutique" || action === "grimoire" ? action : "tout";
+		affichage.section =
+			action === "parler" || action === "contrats" || action === "boutique" || action === "grimoire" || action === "auberge" || action === "etape" ? action : "tout";
 	}
 	redessiner();
 });

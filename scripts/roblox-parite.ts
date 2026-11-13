@@ -8,9 +8,27 @@ import { execFileSync } from 'node:child_process';
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { contenuDisque } from '../src/contenu/node';
 import { appliquer, nouvellePartie } from '../src/moteur/partie';
-import { finirTempsLibre, groupeDeDeux, jouer, jouerPrologues, jouerSceneGroupe, nouvellePartieDeTest } from '../tests/robot';
+import { finirCombats, finirTempsLibre, groupeDeDeux, jouer, jouerPrologues, jouerSceneGroupe, nouvellePartieDeTest } from '../tests/robot';
 
 const lune = process.env.LUNE ?? 'lune';
+
+/** Contrats à étapes, jours qui passent, repos à l'auberge, paris : les nouveautés du web (lots C à E). */
+function scenarioContrats() {
+  for (const s of ['ch1-appel', 'ch1-examen']) jouerSceneGroupe(c, r, s);
+  finirTempsLibre(c, r);
+  if (r.etat.tempsLibre) jouer(c, r, { type: 'valider_temps_libre', joueur: 'j1' });
+  for (const [joueur, contrat] of [['j1', 'c-loups'], ['j2', 'c-herbes']] as const) {
+    try { jouer(c, r, { type: 'contrat', joueur, contrat }); } catch { continue; }
+    for (let k = 0; k < 20 && r.etat.contrats[r.etat.joueurs[joueur].herosId!]; k++) {
+      try { jouer(c, r, { type: 'etape_contrat', joueur, choix: 0 }); } catch { break; }
+      finirCombats(c, r);
+    }
+  }
+  for (let k = 0; k < 3; k++) { try { jouer(c, r, { type: 'jour_passe', joueur: 'j1', jour: r.etat.jour }); } catch { break; } }
+  jouer(c, r, { type: 'proposer_repos', joueur: 'j1', mois: 1 });
+  jouer(c, r, { type: 'repondre_repos', joueur: 'j2', accepte: true });
+  finirTempsLibre(c, r);
+}
 
 function groupeDesordre() {
   const r = nouvellePartieDeTest(c, 'desordre');
@@ -27,7 +45,8 @@ const graine = process.argv[2] ?? 'chapitre';
 // graine « desordre » : 3 joueurs, héros créés dans le désordre (le 1er joueur crée le sien en dernier)
 const r = graine === 'desordre' ? groupeDesordre() : groupeDeDeux(c, graine);
 jouerPrologues(c, r);
-for (const s of ['ch1-appel', 'ch1-examen', 'sq-tournoi', 'sq-loups', 'ch1-crypte', 'sq-tanneurs', 'ch1-lanternes', 'ch1-serment']) jouerSceneGroupe(c, r, s);
+if (graine === 'contrats') scenarioContrats();
+if (graine !== 'contrats') for (const s of ['ch1-appel', 'ch1-examen', 'sq-tournoi', 'sq-loups', 'ch1-crypte', 'sq-tanneurs', 'ch1-lanternes', 'ch1-serment']) jouerSceneGroupe(c, r, s);
 finirTempsLibre(c, r);
 
 mkdirSync('roblox/parite/tmp', { recursive: true });

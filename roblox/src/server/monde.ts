@@ -254,6 +254,38 @@ function villageois(centrePlace: Vector3) {
 	});
 }
 
+/**
+ * Lieu d'étape (quête ou contrat) : pas de bâtiment, une balise lumineuse avec une invite.
+ * Chaque joueur ne la voit que pendant l'étape qui y mène (client/rendu/marqueurs.ts).
+ */
+function balise(l: LieuDef) {
+	const pos = positionLieu(l);
+	const m = new Instance("Model");
+	m.Name = `etape-${l.id}`;
+	m.SetAttribute("Etape", l.id);
+	m.Parent = dossier;
+	const socle = bloc(new Vector3(6, 1, 6), pos.add(new Vector3(0, 0.5, 0)), C.pierre, { parent: m, matiere: Enum.Material.Cobblestone });
+	void socle;
+	const colonne = bloc(new Vector3(1.6, 10, 1.6), pos.add(new Vector3(0, 6, 0)), C.or, { parent: m, neon: true, nom: "Entree" });
+	colonne.Transparency = 0.35;
+	colonne.CanCollide = false;
+	colonne.SetAttribute("Lieu", l.id);
+	const l2 = new Instance("PointLight");
+	l2.Color = C.or;
+	l2.Range = 20;
+	l2.Brightness = 2;
+	l2.Parent = colonne;
+	const invite = new Instance("ProximityPrompt");
+	invite.ActionText = "Examiner";
+	invite.ObjectText = l.nom;
+	invite.HoldDuration = 0;
+	invite.MaxActivationDistance = 14;
+	invite.RequiresLineOfSight = false;
+	invite.SetAttribute("Lieu", l.id);
+	invite.SetAttribute("Action", "etape");
+	invite.Parent = colonne;
+}
+
 /** Construit le monde (une seule fois, au démarrage du serveur). */
 export function construireMonde() {
 	Workspace.FindFirstChild("Baseplate")?.Destroy();
@@ -279,6 +311,10 @@ export function construireMonde() {
 	const place = region.lieux.find((l) => l.id === "lysmont-place");
 	const centrePlace = place ? positionLieu(place) : new Vector3();
 	for (const l of region.lieux) {
+		if (l.etape_seulement === true) {
+			balise(l);
+			continue;
+		}
 		const modele = new Instance("Model");
 		modele.Name = l.id;
 		modele.Parent = dossier;

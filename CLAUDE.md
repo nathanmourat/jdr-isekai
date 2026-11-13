@@ -41,6 +41,7 @@ Si une demande est floue ou contradictoire : poser la question plutôt que devin
 - Nathan teste dans Studio (je n'ai pas Studio) : chaque étape a une liste de contrôle dans `roblox/README-ROBLOX.md`.
 - **Graphismes Roblox (13/11)** : tout en 3D ; héros = avatar Roblox + arme de classe ; ennemis = modèles du serveur (`roblox/src/server/modeles.ts`), remplaçables par `ServerStorage/ModelesDuGroupe/<id>` ; combat tour par tour modernisé, sur place.
 - **Intérieurs + ville vivante (13/11)** : entrée par téléportation dans une salle (`roblox/src/server/interieurs.ts`), points d'interaction (attributs `Lieu`/`Action`) ; jour/nuit réel de 20 min, villageois, gardes, marché, animaux (`roblox/src/server/vie.ts`) ; phrases d'ambiance dans `content/monde/ambiance.yaml` ; sons dans `roblox/src/shared/sons.ts` (vides : le groupe choisit).
+- Roblox suit les lots C/D/E du web (13/11) : jours par le serveur (`boucleJours`), lit de l'auberge (taverne), `parole_a`, paris, grimoire personnel, contrats à étapes (balises dorées des lieux `etape_seulement`), migrations au chargement. Parité Lune : graine `contrats` en plus.
 - Deux sessions Claude travaillent sur la branche : celle-ci (cloud) s'occupe de Roblox, celle du PC de Nathan de la version web. Toujours `git fetch` + rebase avant de pousser.
 
 ## Choix techniques

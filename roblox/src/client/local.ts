@@ -2,7 +2,7 @@
  * État d'affichage propre à ce joueur (jamais envoyé au serveur) : panneau ouvert, combats dont
  * l'introduction a été lue, propositions impossibles par tour, façon de jouer en combat.
  */
-export type Section = "tout" | "parler" | "contrats" | "boutique" | "grimoire";
+export type Section = "tout" | "parler" | "contrats" | "boutique" | "grimoire" | "auberge" | "etape";
 export type Panneau = "fiche" | "quetes" | "journal" | "compagnons" | "carte" | "partie" | "histoire";
 
 export const affichage = {

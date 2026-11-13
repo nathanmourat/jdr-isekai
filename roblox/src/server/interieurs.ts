@@ -222,6 +222,12 @@ function construireSalle(lieu: string, base: Vector3) {
 			for (const [x, z, i] of [[-12, 1, 0], [4, 9, 2], [8, 9, 3]] as const) figurant(m, TENUES[i], base.add(new Vector3(x, 0, z)), base.add(new Vector3(x, 0, z + (z < 6 ? 3 : -3))));
 			// escalier vers l'étage
 			for (let i = 0; i < 8; i++) bloc(new Vector3(5, 1, 2), base.add(new Vector3(20, 0.5 + i, 14 - i * 2)), C.bois, { parent: m, matiere: Enum.Material.WoodPlanks });
+			// la chambre (auberge) : le lit fait passer les mois, si tout le monde est d'accord
+			bloc(new Vector3(5, 1.6, 8), base.add(new Vector3(-18, 0.8, 12)), C.bois, { parent: m, matiere: Enum.Material.WoodPlanks });
+			bloc(new Vector3(4.6, 0.8, 7.4), base.add(new Vector3(-18, 2, 12)), rgb(230, 225, 210), { parent: m, matiere: Enum.Material.Fabric });
+			bloc(new Vector3(4.6, 0.3, 4.5), base.add(new Vector3(-18, 2.5, 13.3)), rgb(150, 40, 50), { parent: m, matiere: Enum.Material.Fabric });
+			bloc(new Vector3(3, 0.6, 1.4), base.add(new Vector3(-18, 2.6, 9)), rgb(245, 240, 230), { parent: m, matiere: Enum.Material.Fabric });
+			point(m, base.add(new Vector3(-14, 2, 12)), lieu, "auberge", "Dormir", "Le lit de l'auberge");
 			break;
 		}
 		case "temple-du-seuil": {
@@ -343,7 +349,7 @@ export function construireInterieurs() {
 	dossier.Parent = Workspace;
 	let i = 0;
 	for (const l of CONTENU.regions.aubeclaire.lieux) {
-		if (l.id === "lysmont-place") continue;
+		if (l.id === "lysmont-place" || l.etape_seulement === true) continue;
 		const base = new Vector3(-1200 + i * 320, HAUTEUR, 1400);
 		i++;
 		const [ok, err] = pcall(() => construireSalle(l.id, base));

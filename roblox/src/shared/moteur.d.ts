@@ -78,6 +78,20 @@ export interface LieuDef {
 	disponible_si?: Condition;
 	pnj: { id: string; si?: Condition }[];
 	boutique: string[];
+	/** lieu d'étape : visible seulement pendant l'étape de quête ou de contrat qui y mène */
+	etape_seulement?: boolean;
+	/** on peut y dormir (le lit fait passer les mois) */
+	auberge?: boolean;
+}
+
+export interface EtapeContratDef {
+	lieu: string;
+	objectif: string;
+	texte: string;
+	bouton?: string;
+	choix: { texte: string; resultat: string }[];
+	test?: { carac: Carac; difficulte: number };
+	combat?: string;
 }
 
 export interface ContratDef {
@@ -85,6 +99,7 @@ export interface ContratDef {
 	titre: string;
 	description: string;
 	rang_min: string;
+	etapes: EtapeContratDef[];
 	disponible_si?: Condition;
 	recompenses: { or: number; xp: number; points_guilde: number };
 }
@@ -98,12 +113,15 @@ export interface Replique {
 
 export interface Choix {
 	texte: string;
+	effets: { miser?: number }[];
 	si?: Condition;
 	test?: { carac: Carac; difficulte: number };
 }
 
 export interface Noeud {
 	decor?: string;
+	/** un personnage interroge un joueur précis : lui seul répond */
+	parole_a?: { question: Replique; reponses: { texte: string }[] };
 	repliques: Replique[];
 	choix: Choix[];
 	suite?: string;
@@ -141,7 +159,9 @@ export interface Contenu {
 			[cle: string]: unknown;
 		};
 		affinite: { paliers: { id: string; nom: string; seuil: number }[] };
-		ellipses: { activites_temps_libre: number };
+		ellipses: { activites_temps_libre: number; durees_auberge_mois: number[] };
+		jours_temps_reel: { minutes_par_jour: number; inactivite_minutes: number };
+		calendrier: { jours_par_mois: number };
 		[cle: string]: unknown;
 	};
 	classes: Record<string, ClasseDef>;
@@ -191,6 +211,8 @@ export interface Heros {
 	siAbsent: "ia" | "camp";
 	variantes: Record<string, string[]>;
 	varianteActive: Record<string, string | undefined>;
+	/** grimoire personnel (fusions connues de ce héros) */
+	grimoire: Record<string, Technique>;
 	[cle: string]: unknown;
 }
 
@@ -265,6 +287,8 @@ export interface EtatScene {
 	votes: Record<string, number>;
 	dernierTest?: { carac: Carac; jet: number; total: number; difficulte: number; reussi: boolean; heros: string };
 	messages: string[];
+	/** un personnage interroge ce héros : lui seul répond, parmi ces réponses (index dans parole_a.reponses) */
+	parole?: { heros: string; reponses: number[] };
 }
 
 export interface ContexteCombat {
@@ -297,6 +321,7 @@ export interface Technique extends CompetenceDef {
 }
 
 export interface EtatPartie {
+	version: number;
 	id: string;
 	nom: string;
 	numeroAction: number;
@@ -316,7 +341,10 @@ export interface EtatPartie {
 	finChapitre?: number;
 	compagnonsRencontres: string[];
 	equipe: Record<string, string | undefined>;
-	grimoire: Record<string, Technique>;
+	repos?: { par: string; mois: number; jusqua: number; accords: string[] };
+	mises: Record<string, number>;
+	mouvementsOr: { heros: string; montant: number; raison: string }[];
+	contrats: Record<string, { id: string; etape: number; notes: string[] }>;
 	secondDepart: Record<string, number>;
 	journal: { jour: number; chapitre: number; texte: string }[];
 	dernieresNouvelles: string[];
@@ -338,6 +366,8 @@ export interface OptionsHeros {
 }
 
 export const VERSION_ETAT: number;
+export const FORMAT: string;
+export function verifierSauvegarde(brut: unknown): { version: number; depart: EtatPartie; actions: Action[] };
 export function nouvellePartie(contenu: Contenu, id: string, nom: string, graine: string): EtatPartie;
 export function appliquer(contenu: Contenu, etat: EtatPartie, action: Action): EtatPartie;
 export function rejouer(
@@ -366,7 +396,19 @@ export function prochaineEtape(
 // ─── Scènes, lieux, quêtes ───
 export function noeudCourant(contenu: Contenu, etat: EtatPartie, cle: string): Noeud | undefined;
 export function choixVisibles(contenu: Contenu, etat: EtatPartie, cle: string): { choix: Choix; index: number; possible: boolean }[];
-export function remplacerVariables(contenu: Contenu, etat: EtatPartie, texte: string, heros: string[]): string;
+export function remplacerVariables(contenu: Contenu, etat: EtatPartie, texte: string, heros: string[], interroge?: string): string;
+export function miseDuChoix(ch: Choix): number;
+export function jourPeutPasser(contenu: Contenu, etat: EtatPartie): boolean;
+export function prochaineDateHistoire(contenu: Contenu, etat: EtatPartie): { jour: number; raison: string } | undefined;
+export function attenteRepos(etat: EtatPartie): string[];
+export function etapeContrat(
+	contenu: Contenu,
+	etat: EtatPartie,
+	herosId: string,
+): { contrat: ContratDef; etape: EtapeContratDef; numero: number; total: number; notes: string[]; derniere: boolean } | undefined;
+export function lieuxDesEtapes(contenu: Contenu, etat: EtatPartie, herosId: string | undefined): string[];
+export function fusionsPossibles(contenu: Contenu, h: Heros): { technique: Technique; probleme?: string }[];
+export function absentsDuGroupe(etat: EtatPartie): string[];
 export function conditionScene(contenu: Contenu, etat: EtatPartie, c: Condition | undefined, heros: string[]): boolean;
 export function conditionHeros(contenu: Contenu, etat: EtatPartie, c: Condition | undefined, h: Heros | undefined): boolean;
 export function scenesDisponibles(contenu: Contenu, etat: EtatPartie, lieu: string | undefined, herosId: string | undefined): SceneDef[];

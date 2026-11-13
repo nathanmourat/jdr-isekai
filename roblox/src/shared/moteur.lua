@@ -3240,6 +3240,8 @@ ____exports.zCondition = z:lazy(function() return z:object({
         jour = z:number():default(1)
     }):optional(),
     rang_guilde_min = z:string():optional(),
+    groupe_min = z:number():optional(),
+    groupe_max = z:number():optional(),
     ou = z:array(____exports.zCondition):optional()
 }) end)
 ____exports.zConsequence = z:object({
@@ -3293,7 +3295,10 @@ ____exports.zConsequence = z:object({
         titre = z:string()
     }):optional(),
     fin_chapitre = z:number():optional(),
-    soigner_groupe = z:boolean():optional()
+    soigner_groupe = z:boolean():optional(),
+    miser = z:number():int():min(1):optional(),
+    gain_pari = z:number():min(0):optional(),
+    perte_pari = z:boolean():optional()
 })
 ____exports.zReplique = z:object({
     qui = z:string():default("narrateur"),
@@ -3314,8 +3319,23 @@ ____exports.zChoix = z:object({
     effets = z:array(____exports.zConsequence):default({}),
     aller = z:string():optional()
 })
+--- Un personnage s'adresse à UN joueur précis, par son pseudo. Seul ce joueur répond, parmi 3 réponses au plus.
+--  - `regle` : quel héros est interrogé (ex. { classe: arcaniste }) ; si plusieurs conviennent, ou aucun, tirage à graine ;
+--  - `question` : dans le texte, {pseudo} = pseudo du joueur, {nom} = nom de son héros ;
+--  - `reponses` : celles dont le `si` correspond au héros passent d'abord, puis celles sans `si`.
+____exports.zParoleA = z:object({
+    regle = ____exports.zCondition:optional(),
+    question = ____exports.zReplique,
+    reponses = z:array(z:object({
+        texte = z:string(),
+        si = ____exports.zCondition:optional(),
+        effets = z:array(____exports.zConsequence):default({}),
+        aller = z:string()
+    })):min(1)
+})
 ____exports.zNoeud = z:object({
     decor = z:string():optional(),
+    parole_a = ____exports.zParoleA:optional(),
     repliques = z:array(____exports.zReplique):default({}),
     effets = z:array(____exports.zConsequence):default({}),
     choix = z:array(____exports.zChoix):default({}),
@@ -3397,6 +3417,7 @@ ____exports.zLieu = z:object({
         }):optional()
     })):default({}),
     boutique = z:array(z:string()):default({}),
+    etape_seulement = z:boolean():default(false),
     auberge = z:boolean():default(false)
 })
 ____exports.zVille = z:object({
@@ -3476,11 +3497,35 @@ ____exports.zAmbiance = z:object({
     texte = z:string(),
     si = ____exports.zCondition:optional()
 })
+--- Étape d'un contrat, jouée sur la carte : on se rend au `lieu`, on lit le `texte`, puis
+--  - `choix` : un petit choix (chaque réponse a son `resultat` et ses `effets`) ;
+--  - `test` : un jet de caractéristique (raté : le contrat échoue, avec le texte `echec`) ;
+--  - `combat` : une rencontre à gagner pour passer à la suite ;
+--  - rien : on continue simplement. La dernière étape se joue à la Guilde et donne la récompense.
+____exports.zEtapeContrat = z:object({
+    lieu = z:string(),
+    objectif = z:string(),
+    texte = z:string(),
+    bouton = z:string():optional(),
+    choix = z:array(z:object({
+        texte = z:string(),
+        resultat = z:string():default(""),
+        effets = z:array(____exports.zConsequence):default({})
+    })):default({}),
+    test = z:object({
+        carac = ____exports.zCarac,
+        difficulte = z:number(),
+        reussite = z:string():default(""),
+        echec = z:string():default("")
+    }):optional(),
+    combat = z:string():optional()
+})
 ____exports.zContrat = z:object({
     id = z:string(),
     titre = z:string(),
     description = z:string(),
     rang_min = z:string():default("F"),
+    etapes = z:array(____exports.zEtapeContrat):default({}),
     rencontre = z:string():optional(),
     test = z:object({
         carac = ____exports.zCarac,
@@ -3550,8 +3595,13 @@ ____exports.zConfig = z:object({
     ellipses = z:object({
         entre_quetes_mois = z:array(z:number()):length(2),
         activites_temps_libre = z:number():int(),
-        duree_reference_mois = z:number()
+        duree_reference_mois = z:number(),
+        durees_auberge_mois = z:array(z:number():int():min(1)):default({1, 3, 6})
     }),
+    jours_temps_reel = z:object({
+        minutes_par_jour = z:number():default(10),
+        inactivite_minutes = z:number():default(10)
+    }):default({minutes_par_jour = 10, inactivite_minutes = 10}),
     personnage = z:object({
         total_caracteristiques = z:number():int(),
         carac_min = z:number():int(),
@@ -3933,6 +3983,190 @@ function ____exports.choisir(rng, liste)
 end
 return ____exports
  end,
+["src.moteur.fusions"] = function(...) 
+local ____lualib = require("lualib_bundle")
+local __TS__ArrayFind = ____lualib.__TS__ArrayFind
+local __TS__ArrayFilter = ____lualib.__TS__ArrayFilter
+local __TS__ObjectAssign = ____lualib.__TS__ObjectAssign
+local __TS__ArrayMap = ____lualib.__TS__ArrayMap
+local __TS__ArrayIncludes = ____lualib.__TS__ArrayIncludes
+local __TS__SparseArrayNew = ____lualib.__TS__SparseArrayNew
+local __TS__SparseArrayPush = ____lualib.__TS__SparseArrayPush
+local __TS__SparseArraySpread = ____lualib.__TS__SparseArraySpread
+local ____exports = {}
+local ____personnage = require("src.moteur.personnage")
+local competencesConnues = ____personnage.competencesConnues
+local ____outils = require("src.moteur.outils")
+local vrai = ____outils.vrai
+____exports.NOM_ELEMENT = {
+    physique = "acier",
+    feu = "flamme",
+    glace = "givre",
+    foudre = "foudre",
+    sacre = "lumière",
+    ombre = "ombre",
+    poison = "venin",
+    arcane = "runes"
+}
+local ELEMENT_D_ETAT = {
+    brulure = "feu",
+    gel = "glace",
+    poison = "poison",
+    silence = "arcane",
+    peur = "ombre",
+    sommeil = "arcane",
+    marque = "arcane",
+    immobilise = "physique"
+}
+--- Élément « dominant » d'une compétence : celui de ses dégâts, sinon celui de son principal effet.
+function ____exports.elementDe(c)
+    local d = __TS__ArrayFind(
+        c.effets,
+        function(____, e) return e.type == "degats" end
+    )
+    if d then
+        return d.element
+    end
+    local s = __TS__ArrayFind(
+        c.effets,
+        function(____, e) return e.type == "etat" end
+    )
+    return (if s then ELEMENT_D_ETAT[s.etat] or nil else nil)
+end
+____exports.idFusion = function(parent, secondaire) return (("fusion:" .. parent) .. "+") .. secondaire end
+--- Construit la technique (sans l'apprendre).
+function ____exports.creerTechnique(contenu, parentId, secondaireId, auteur)
+    local p = contenu.competences[parentId]
+    local q = contenu.competences[secondaireId]
+    if not p or not q then
+        return {ok = false, raison = "Compétence inconnue."}
+    end
+    if parentId == secondaireId then
+        return {ok = false, raison = "Il faut deux compétences différentes."}
+    end
+    local dp = __TS__ArrayFind(
+        p.effets,
+        function(____, e) return e.type == "degats" end
+    )
+    if not dp then
+        return {ok = false, raison = ("« " .. p.nom) .. " » n'inflige pas de dégâts : elle ne peut pas servir de base à une fusion. Essayez dans l'autre sens."}
+    end
+    local e1 = dp.element
+    local e2 = ____exports.elementDe(q)
+    if not vrai(e2) then
+        return {ok = false, raison = ("« " .. q.nom) .. " » n'a pas d'élément à transmettre."}
+    end
+    if e1 == e2 then
+        return {ok = false, raison = ((((("« " .. p.nom) .. " » et « ") .. q.nom) .. " » sont du même élément (") .. ____exports.NOM_ELEMENT[e1]) .. ") : rien à fusionner."}
+    end
+    local dq = __TS__ArrayFind(
+        q.effets,
+        function(____, e) return e.type == "degats" end
+    )
+    local etatsQ = __TS__ArrayFilter(
+        q.effets,
+        function(____, e) return e.type == "etat" and e.cible ~= "soi" and e.cible ~= "tous_allies" end
+    )
+    local effets = {
+        __TS__ObjectAssign(
+            {},
+            dp,
+            {puissance = math.floor(dp.puissance * 0.75 * 10 + 0.5) / 10}
+        ),
+        {
+            type = "degats",
+            puissance = math.floor((dq and dq.puissance or 8) * 0.45 * 10 + 0.5) / 10,
+            stat = dq and dq.stat or dp.stat,
+            element = e2,
+            coups = 1,
+            critique_garanti = false,
+            cout_pv_pourcent = 0
+        },
+        table.unpack(__TS__ArrayMap(
+            etatsQ,
+            function(____, e) return __TS__ObjectAssign(
+                {},
+                e,
+                {chance = math.floor(e.chance * 0.8 * 100 + 0.5) / 100}
+            ) end
+        ))
+    }
+    local technique = {
+        id = ____exports.idFusion(parentId, secondaireId),
+        nom = (p.nom .. " ✦ ") .. ____exports.NOM_ELEMENT[e2],
+        description = ((((("Variante de « " .. p.nom) .. " » imprégnée de ") .. ____exports.NOM_ELEMENT[e2]) .. " (fusion avec « ") .. q.nom) .. " »).",
+        cout = math.floor((p.cout + q.cout) * 0.75 + 0.5),
+        recharge = math.max(p.recharge, q.recharge) + 1,
+        cible = p.cible,
+        portee = p.portee,
+        effets = effets,
+        ia = {priorite = 3, quand = "toujours"},
+        parent = parentId,
+        secondaire = secondaireId,
+        elementPrincipal = e1,
+        elementSecondaire = e2,
+        creePar = auteur
+    }
+    return {ok = true, technique = technique}
+end
+--- Le héros peut-il apprendre cette technique ? (raison en français sinon)
+function ____exports.peutApprendre(contenu, h, t)
+    local cfg = contenu.config.personnage
+    local connues = competencesConnues(contenu, h)
+    for ____, id in ipairs({t.parent, t.secondaire}) do
+        if not __TS__ArrayIncludes(connues, id) then
+            local ____opt_4 = contenu.competences[id]
+            return ("Il faut connaître « " .. (____opt_4 and ____opt_4.nom or id)) .. " »."
+        end
+        if (h.rangsCompetences[id] or 1) < cfg.fusion_rang_min then
+            return ((((("Il faut « " .. contenu.competences[id].nom) .. " » au rang ") .. tostring(cfg.fusion_rang_min)) .. " au moins (actuellement ") .. tostring(h.rangsCompetences[id] or 1)) .. ")."
+        end
+    end
+    local deja = h.variantes[t.parent] or ({})
+    if __TS__ArrayIncludes(deja, t.id) then
+        return "Vous connaissez déjà cette technique."
+    end
+    if #deja >= cfg.variantes_max then
+        return ((("« " .. contenu.competences[t.parent].nom) .. " » a déjà ") .. tostring(cfg.variantes_max)) .. " variantes : oubliez-en une d'abord (fiche du personnage)."
+    end
+    return nil
+end
+--- Apprend la technique et l'active.
+function ____exports.apprendre(h, t)
+    local ____h_variantes_7 = h.variantes
+    local ____t_parent_8 = t.parent
+    local ____array_6 = __TS__SparseArrayNew(table.unpack(h.variantes[t.parent] or ({})))
+    __TS__SparseArrayPush(____array_6, t.id)
+    ____h_variantes_7[____t_parent_8] = {__TS__SparseArraySpread(____array_6)}
+    h.varianteActive[t.parent] = t.id
+end
+--- Fusions que ce héros pourrait apprendre à la Guilde : toutes les combinaisons de SES compétences
+-- (sa classe, sa branche) que les règles de fusion autorisent. `probleme` dit ce qui manque encore (rang…), ou null.
+function ____exports.fusionsPossibles(contenu, h)
+    local connues = competencesConnues(contenu, h)
+    local res = {}
+    for ____, a in ipairs(connues) do
+        for ____, b in ipairs(connues) do
+            if a == b then
+                continue
+            end
+            local r = ____exports.creerTechnique(contenu, a, b, h.nom)
+            if not r.ok then
+                continue
+            end
+            if __TS__ArrayIncludes(h.variantes[a] or ({}), r.technique.id) then
+                continue
+            end
+            res[#res + 1] = {
+                technique = r.technique,
+                probleme = ____exports.peutApprendre(contenu, h, r.technique)
+            }
+        end
+    end
+    return res
+end
+return ____exports
+ end,
 ["src.moteur.personnage"] = function(...) 
 local ____lualib = require("lualib_bundle")
 local Error = ____lualib.Error
@@ -4252,7 +4486,8 @@ function ____exports.creerHeros(contenu, o)
         siAbsent = "ia",
         variantes = {},
         varianteActive = {},
-        equipees = nil
+        equipees = nil,
+        grimoire = {}
     }
     if vrai(o.niveau) and o.niveau > 1 then
         ____exports.monterJusquA(contenu, h, o.niveau, true)
@@ -6959,165 +7194,6 @@ function ____exports.estimerAction(contenu, combat, a)
 end
 return ____exports
  end,
-["src.moteur.fusions"] = function(...) 
-local ____lualib = require("lualib_bundle")
-local __TS__ArrayFind = ____lualib.__TS__ArrayFind
-local __TS__ArrayFilter = ____lualib.__TS__ArrayFilter
-local __TS__ObjectAssign = ____lualib.__TS__ObjectAssign
-local __TS__ArrayMap = ____lualib.__TS__ArrayMap
-local __TS__ArrayIncludes = ____lualib.__TS__ArrayIncludes
-local __TS__SparseArrayNew = ____lualib.__TS__SparseArrayNew
-local __TS__SparseArrayPush = ____lualib.__TS__SparseArrayPush
-local __TS__SparseArraySpread = ____lualib.__TS__SparseArraySpread
-local ____exports = {}
-local ____personnage = require("src.moteur.personnage")
-local competencesConnues = ____personnage.competencesConnues
-local ____outils = require("src.moteur.outils")
-local vrai = ____outils.vrai
-____exports.NOM_ELEMENT = {
-    physique = "acier",
-    feu = "flamme",
-    glace = "givre",
-    foudre = "foudre",
-    sacre = "lumière",
-    ombre = "ombre",
-    poison = "venin",
-    arcane = "runes"
-}
-local ELEMENT_D_ETAT = {
-    brulure = "feu",
-    gel = "glace",
-    poison = "poison",
-    silence = "arcane",
-    peur = "ombre",
-    sommeil = "arcane",
-    marque = "arcane",
-    immobilise = "physique"
-}
---- Élément « dominant » d'une compétence : celui de ses dégâts, sinon celui de son principal effet.
-function ____exports.elementDe(c)
-    local d = __TS__ArrayFind(
-        c.effets,
-        function(____, e) return e.type == "degats" end
-    )
-    if d then
-        return d.element
-    end
-    local s = __TS__ArrayFind(
-        c.effets,
-        function(____, e) return e.type == "etat" end
-    )
-    return (if s then ELEMENT_D_ETAT[s.etat] or nil else nil)
-end
-____exports.idFusion = function(parent, secondaire) return (("fusion:" .. parent) .. "+") .. secondaire end
---- Construit la technique (sans l'apprendre).
-function ____exports.creerTechnique(contenu, parentId, secondaireId, auteur)
-    local p = contenu.competences[parentId]
-    local q = contenu.competences[secondaireId]
-    if not p or not q then
-        return {ok = false, raison = "Compétence inconnue."}
-    end
-    if parentId == secondaireId then
-        return {ok = false, raison = "Il faut deux compétences différentes."}
-    end
-    local dp = __TS__ArrayFind(
-        p.effets,
-        function(____, e) return e.type == "degats" end
-    )
-    if not dp then
-        return {ok = false, raison = ("« " .. p.nom) .. " » n'inflige pas de dégâts : elle ne peut pas servir de base à une fusion. Essayez dans l'autre sens."}
-    end
-    local e1 = dp.element
-    local e2 = ____exports.elementDe(q)
-    if not vrai(e2) then
-        return {ok = false, raison = ("« " .. q.nom) .. " » n'a pas d'élément à transmettre."}
-    end
-    if e1 == e2 then
-        return {ok = false, raison = ((((("« " .. p.nom) .. " » et « ") .. q.nom) .. " » sont du même élément (") .. ____exports.NOM_ELEMENT[e1]) .. ") : rien à fusionner."}
-    end
-    local dq = __TS__ArrayFind(
-        q.effets,
-        function(____, e) return e.type == "degats" end
-    )
-    local etatsQ = __TS__ArrayFilter(
-        q.effets,
-        function(____, e) return e.type == "etat" and e.cible ~= "soi" and e.cible ~= "tous_allies" end
-    )
-    local effets = {
-        __TS__ObjectAssign(
-            {},
-            dp,
-            {puissance = math.floor(dp.puissance * 0.75 * 10 + 0.5) / 10}
-        ),
-        {
-            type = "degats",
-            puissance = math.floor((dq and dq.puissance or 8) * 0.45 * 10 + 0.5) / 10,
-            stat = dq and dq.stat or dp.stat,
-            element = e2,
-            coups = 1,
-            critique_garanti = false,
-            cout_pv_pourcent = 0
-        },
-        table.unpack(__TS__ArrayMap(
-            etatsQ,
-            function(____, e) return __TS__ObjectAssign(
-                {},
-                e,
-                {chance = math.floor(e.chance * 0.8 * 100 + 0.5) / 100}
-            ) end
-        ))
-    }
-    local technique = {
-        id = ____exports.idFusion(parentId, secondaireId),
-        nom = (p.nom .. " ✦ ") .. ____exports.NOM_ELEMENT[e2],
-        description = ((((("Variante de « " .. p.nom) .. " » imprégnée de ") .. ____exports.NOM_ELEMENT[e2]) .. " (fusion avec « ") .. q.nom) .. " »).",
-        cout = math.floor((p.cout + q.cout) * 0.75 + 0.5),
-        recharge = math.max(p.recharge, q.recharge) + 1,
-        cible = p.cible,
-        portee = p.portee,
-        effets = effets,
-        ia = {priorite = 3, quand = "toujours"},
-        parent = parentId,
-        secondaire = secondaireId,
-        elementPrincipal = e1,
-        elementSecondaire = e2,
-        creePar = auteur
-    }
-    return {ok = true, technique = technique}
-end
---- Le héros peut-il apprendre cette technique ? (raison en français sinon)
-function ____exports.peutApprendre(contenu, h, t)
-    local cfg = contenu.config.personnage
-    local connues = competencesConnues(contenu, h)
-    for ____, id in ipairs({t.parent, t.secondaire}) do
-        if not __TS__ArrayIncludes(connues, id) then
-            local ____opt_4 = contenu.competences[id]
-            return ("Il faut connaître « " .. (____opt_4 and ____opt_4.nom or id)) .. " »."
-        end
-        if (h.rangsCompetences[id] or 1) < cfg.fusion_rang_min then
-            return ((((("Il faut « " .. contenu.competences[id].nom) .. " » au rang ") .. tostring(cfg.fusion_rang_min)) .. " au moins (actuellement ") .. tostring(h.rangsCompetences[id] or 1)) .. ")."
-        end
-    end
-    local deja = h.variantes[t.parent] or ({})
-    if __TS__ArrayIncludes(deja, t.id) then
-        return "Vous connaissez déjà cette technique."
-    end
-    if #deja >= cfg.variantes_max then
-        return ((("« " .. contenu.competences[t.parent].nom) .. " » a déjà ") .. tostring(cfg.variantes_max)) .. " variantes : oubliez-en une d'abord (fiche du personnage)."
-    end
-    return nil
-end
---- Apprend la technique et l'active.
-function ____exports.apprendre(h, t)
-    local ____h_variantes_7 = h.variantes
-    local ____t_parent_8 = t.parent
-    local ____array_6 = __TS__SparseArrayNew(table.unpack(h.variantes[t.parent] or ({})))
-    __TS__SparseArrayPush(____array_6, t.id)
-    ____h_variantes_7[____t_parent_8] = {__TS__SparseArraySpread(____array_6)}
-    h.varianteActive[t.parent] = t.id
-end
-return ____exports
- end,
 ["src.moteur.temps"] = function(...) 
 local ____lualib = require("lualib_bundle")
 local __TS__ArrayFind = ____lualib.__TS__ArrayFind
@@ -7252,19 +7328,21 @@ local __TS__ArrayMap = ____lualib.__TS__ArrayMap
 local __TS__ArrayIndexOf = ____lualib.__TS__ArrayIndexOf
 local __TS__StringStartsWith = ____lualib.__TS__StringStartsWith
 local __TS__Delete = ____lualib.__TS__Delete
+local __TS__ArrayFind = ____lualib.__TS__ArrayFind
 local __TS__ArrayFilter = ____lualib.__TS__ArrayFilter
-local __TS__ArraySlice = ____lualib.__TS__ArraySlice
+local __TS__StringSlice = ____lualib.__TS__StringSlice
+local __TS__StringSplit = ____lualib.__TS__StringSplit
 local __TS__StringReplaceAll = ____lualib.__TS__StringReplaceAll
-local __TS__ObjectRest = ____lualib.__TS__ObjectRest
-local __TS__ObjectAssign = ____lualib.__TS__ObjectAssign
-local __TS__ArrayReduce = ____lualib.__TS__ArrayReduce
-local __TS__ArrayUnshift = ____lualib.__TS__ArrayUnshift
+local __TS__ArraySlice = ____lualib.__TS__ArraySlice
 local __TS__ArrayForEach = ____lualib.__TS__ArrayForEach
 local __TS__SparseArrayNew = ____lualib.__TS__SparseArrayNew
 local __TS__SparseArrayPush = ____lualib.__TS__SparseArrayPush
 local __TS__SparseArraySpread = ____lualib.__TS__SparseArraySpread
+local __TS__ArrayUnshift = ____lualib.__TS__ArrayUnshift
+local __TS__ObjectRest = ____lualib.__TS__ObjectRest
+local __TS__ObjectAssign = ____lualib.__TS__ObjectAssign
+local __TS__ArrayReduce = ____lualib.__TS__ArrayReduce
 local __TS__StringAccess = ____lualib.__TS__StringAccess
-local __TS__ArrayFind = ____lualib.__TS__ArrayFind
 local __TS__StringTrim = ____lualib.__TS__StringTrim
 local __TS__ArrayEvery = ____lualib.__TS__ArrayEvery
 local __TS__ArrayFlatMap = ____lualib.__TS__ArrayFlatMap
@@ -7276,7 +7354,7 @@ local Map = ____lualib.Map
 local __TS__Iterator = ____lualib.__TS__Iterator
 local __TS__InstanceOf = ____lualib.__TS__InstanceOf
 local ____exports = {}
-local journal, appliquerConsequence, avancerTemps, participantsGroupe, entrerNoeud, terminerScene, resoudreChoix, lancerCombat, reveler, quantiteValide, declencherEtapes, resoudreVote, refuser
+local journal, appliquerConsequence, avancerTemps, accorder, participantsGroupe, entrerNoeud, repondreParole, terminerScene, resoudreChoix, lancerCombat, reveler, repartirAncienGrimoire, avancerContrat, quantiteValide, declencherEtapes, resoudreVote, refuser, ordreRangs
 local ____affinite = require("src.moteur.affinite")
 local affiniteVide = ____affinite.affiniteVide
 local modifierAffinite = ____affinite.modifierAffinite
@@ -7306,6 +7384,7 @@ local niveauMoyen = ____personnage.niveauMoyen
 local repartirPoint = ____personnage.repartirPoint
 local xpPourNiveau = ____personnage.xpPourNiveau
 local ____rng = require("src.moteur.rng")
+local choisirAuHasard = ____rng.choisir
 local creerRng = ____rng.creerRng
 local de = ____rng.de
 local ____outils = require("src.moteur.outils")
@@ -7319,6 +7398,8 @@ local apprendre = ____fusions.apprendre
 local creerTechnique = ____fusions.creerTechnique
 local idFusion = ____fusions.idFusion
 local peutApprendre = ____fusions.peutApprendre
+local ____personnage = require("src.moteur.personnage")
+local connuesDe = ____personnage.competencesConnues
 local ____temps = require("src.moteur.temps")
 local anneeDepart = ____temps.anneeDepart
 local chapitreDe = ____temps.chapitreDe
@@ -7369,6 +7450,19 @@ function ____exports.queteTerminee(etat, q)
     end
     return ____vrai_result_9
 end
+function ____exports.palierCompagnon(contenu, etat, herosId, compagnon)
+    local ____palier_16 = palier
+    local ____contenu_14 = contenu
+    local ____exports_affinite_result_15 = ____exports.affinite(etat, herosId, compagnon)
+    local ____exports_queteTerminee_13 = ____exports.queteTerminee
+    local ____etat_12 = etat
+    local ____opt_10 = contenu.compagnons[compagnon]
+    return ____palier_16(
+        ____contenu_14,
+        ____exports_affinite_result_15,
+        ____exports_queteTerminee_13(____etat_12, ____opt_10 and ____opt_10.quete)
+    )
+end
 function ____exports.rangGuilde(contenu, points)
     local r = "F"
     for ____, x in ipairs(contenu.config.guilde.rangs) do
@@ -7377,6 +7471,129 @@ function ____exports.rangGuilde(contenu, points)
         end
     end
     return r
+end
+--- Une condition sur un héros précis (scènes individuelles, dialogues).
+function ____exports.conditionHeros(contenu, etat, c, h)
+    if not c then
+        return true
+    end
+    local function liste(v)
+        return (if v == nil then nil else (if __TS__ArrayIsArray(v) then v else {v}))
+    end
+    if vrai(c.flag) and not ____exports.aFlag(etat, c.flag, h and h.id) then
+        return false
+    end
+    if vrai(c.pas_flag) and ____exports.aFlag(etat, c.pas_flag, h and h.id) then
+        return false
+    end
+    for ____, ____value in ipairs(entrees(c.quete_etape or ({}))) do
+        local q = ____value[1]
+        local et = ____value[2]
+        local ____opt_21 = etat.quetes[q]
+        if (____opt_21 and ____opt_21.etape) ~= et then
+            return false
+        end
+    end
+    local ____vrai_result_25 = vrai(c.quete_terminee)
+    if ____vrai_result_25 then
+        local ____opt_23 = etat.quetes[c.quete_terminee]
+        ____vrai_result_25 = not (____opt_23 and ____opt_23.terminee)
+    end
+    if ____vrai_result_25 then
+        return false
+    end
+    for ____, ____value in ipairs(entrees(c.reputation_min or ({}))) do
+        local f = ____value[1]
+        local v = ____value[2]
+        if (etat.reputation[f] or 0) < v then
+            return false
+        end
+    end
+    if c.date_min and etat.jour < versJour(contenu, c.date_min) then
+        return false
+    end
+    if c.ou and not __TS__ArraySome(
+        c.ou,
+        function(____, x) return ____exports.conditionHeros(contenu, etat, x, h) end
+    ) then
+        return false
+    end
+    local besoinHeros = __TS__ArraySome(
+        {
+            c.race,
+            c.classe,
+            c.origine,
+            c.don,
+            c.affinite_min,
+            c.affinite_palier,
+            c.carac_min,
+            c.objet,
+            c.rang_guilde_min
+        },
+        function(____, x) return vrai(x) end
+    ) or c.niveau_min ~= nil or c.or_min ~= nil
+    if not besoinHeros then
+        return true
+    end
+    if not h then
+        return false
+    end
+    local races = liste(c.race)
+    if races and not __TS__ArrayIncludes(races, h.race) then
+        return false
+    end
+    local classes = liste(c.classe)
+    if classes and not __TS__ArrayIncludes(classes, h.classe) then
+        return false
+    end
+    if c.origine and h.origine ~= c.origine then
+        return false
+    end
+    if vrai(c.don) and h.don ~= c.don then
+        return false
+    end
+    for ____, ____value in ipairs(entrees(c.affinite_min or ({}))) do
+        local co = ____value[1]
+        local v = ____value[2]
+        if ____exports.affinite(etat, h.id, co).points < v then
+            return false
+        end
+    end
+    for ____, ____value in ipairs(entrees(c.affinite_palier or ({}))) do
+        local co = ____value[1]
+        local p = ____value[2]
+        local ps = __TS__ArrayMap(
+            contenu.config.affinite.paliers,
+            function(____, x) return x.id end
+        )
+        if ____exports.palierCompagnon(contenu, etat, h.id, co).index < __TS__ArrayIndexOf(ps, p) then
+            return false
+        end
+    end
+    local ca = caracsTotales(contenu, h)
+    for ____, ____value in ipairs(entrees(c.carac_min or ({}))) do
+        local k = ____value[1]
+        local v = ____value[2]
+        if ca[k] < (v or 0) then
+            return false
+        end
+    end
+    if c.niveau_min ~= nil and h.niveau < c.niveau_min then
+        return false
+    end
+    if c.or_min ~= nil and h["or"] < c.or_min then
+        return false
+    end
+    if vrai(c.objet) and not (h.inventaire[c.objet] > 0) then
+        return false
+    end
+    if vrai(c.rang_guilde_min) and __TS__ArrayIndexOf(
+        ordreRangs,
+        ____exports.rangGuilde(contenu, etat.pointsGuilde[h.id] or 0)
+    ) < __TS__ArrayIndexOf(ordreRangs, c.rang_guilde_min) then
+        return false
+    end
+    return true
 end
 function appliquerConsequence(contenu, etat, eff, heros, messages)
     local hs = __TS__ArrayMap(
@@ -7552,12 +7769,49 @@ function appliquerConsequence(contenu, etat, eff, heros, messages)
             h.blessure = false
         end
     end
+    if eff.miser ~= nil then
+        for ____, h in ipairs(hs) do
+            if h["or"] < eff.miser then
+                continue
+            end
+            h["or"] = h["or"] - eff.miser
+            etat.mises[h.id] = (etat.mises[h.id] or 0) + eff.miser
+            local ____etat_mouvementsOr_40 = etat.mouvementsOr
+            ____etat_mouvementsOr_40[#____etat_mouvementsOr_40 + 1] = {heros = h.id, montant = -eff.miser, raison = "mise"}
+            messages[#messages + 1] = ((h.nom .. " mise ") .. tostring(eff.miser)) .. " pièces d'or."
+        end
+    end
+    if eff.gain_pari ~= nil then
+        for ____, h in ipairs(hs) do
+            local mise = etat.mises[h.id] or 0
+            if mise <= 0 then
+                continue
+            end
+            local gain = math.floor(mise * eff.gain_pari + 0.5)
+            h["or"] = h["or"] + gain
+            __TS__Delete(etat.mises, h.id)
+            local ____etat_mouvementsOr_41 = etat.mouvementsOr
+            ____etat_mouvementsOr_41[#____etat_mouvementsOr_41 + 1] = {heros = h.id, montant = gain, raison = "pari gagné"}
+            messages[#messages + 1] = ((h.nom .. " gagne son pari : +") .. tostring(gain)) .. " pièces d'or (mise comprise)."
+        end
+    end
+    if eff.perte_pari == true then
+        for ____, h in ipairs(hs) do
+            local mise = etat.mises[h.id] or 0
+            if mise <= 0 then
+                continue
+            end
+            __TS__Delete(etat.mises, h.id)
+            messages[#messages + 1] = ((h.nom .. " perd sa mise de ") .. tostring(mise)) .. " pièces d'or."
+        end
+    end
     if vrai(eff.fin_chapitre) then
         etat.finChapitre = eff.fin_chapitre
+        etat.flags[("chapitre-" .. tostring(eff.fin_chapitre)) .. "-fini"] = true
         journal(
             contenu,
             etat,
-            ("Fin du chapitre " .. tostring(eff.fin_chapitre)) .. "."
+            ("Fin du chapitre " .. tostring(eff.fin_chapitre)) .. ". Un long moment va passer : rendez-vous à l'auberge quand tout le monde est prêt."
         )
     end
     for ____, h in ipairs(hs) do
@@ -7581,8 +7835,8 @@ function avancerTemps(contenu, etat, jours)
     local avant = etat.jour
     etat.jour = etat.jour + jours
     for ____, f in ipairs(fetesEntre(contenu, avant, etat.jour)) do
-        local ____etat_journal_40 = etat.journal
-        ____etat_journal_40[#____etat_journal_40 + 1] = {
+        local ____etat_journal_42 = etat.journal
+        ____etat_journal_42[#____etat_journal_42 + 1] = {
             jour = f.jour,
             chapitre = etat.chapitre,
             texte = ((formaterDate(contenu, f.jour) .. " — ") .. f.nom) .. "."
@@ -7596,13 +7850,56 @@ end
 function ____exports.nomFaction(f)
     return ({couronne = "Couronne", guilde = "Guilde", concorde = "Concorde", ordre = "Ordre"})[f] or f
 end
-function ____exports.remplacerVariables(contenu, etat, texte, heros)
+function accorder(texte, seul)
+    local res = ""
+    local reste = texte
+    do
+        local garde = 0
+        while garde < 100 do
+            local i = (string.find(reste, "[[", nil, true) or 0) - 1
+            if i < 0 then
+                break
+            end
+            local j = (string.find(
+                reste,
+                "]]",
+                math.max(i + 1, 1),
+                true
+            ) or 0) - 1
+            if j < 0 then
+                break
+            end
+            local morceaux = __TS__StringSplit(
+                __TS__StringSlice(reste, i + 2, j),
+                "||"
+            )
+            res = res .. __TS__StringSlice(reste, 0, i) .. (if seul then morceaux[1] else morceaux[2] or morceaux[1])
+            reste = __TS__StringSlice(reste, j + 2)
+            garde = garde + 1
+        end
+    end
+    return res .. reste
+end
+---
+-- @param interroge héros à qui un personnage s'adresse : {pseudo} = pseudo de son joueur, {nom} = son nom
+function ____exports.remplacerVariables(contenu, etat, texteBrut, heros, interroge)
+    local texte = accorder(texteBrut, #heros <= 1)
+    local hi = (if vrai(interroge) then etat.heros[interroge] else nil)
+    if hi then
+        local ____texte_50 = texte
+        local ____opt_48 = etat.joueurs[hi.joueurId]
+        texte = __TS__StringReplaceAll(
+            __TS__StringReplaceAll(____texte_50, "{pseudo}", ____opt_48 and ____opt_48.pseudo or hi.nom),
+            "{nom}",
+            hi.nom
+        )
+    end
     local noms = __TS__ArrayFilter(
         __TS__ArrayMap(
             heros,
             function(____, h)
-                local ____opt_41 = etat.heros[h]
-                return ____opt_41 and ____opt_41.nom
+                local ____opt_51 = etat.heros[h]
+                return ____opt_51 and ____opt_51.nom
             end
         ),
         function(____, n) return vrai(n) end
@@ -7611,13 +7908,13 @@ function ____exports.remplacerVariables(contenu, etat, texte, heros)
         __TS__ArraySlice(noms, 0, -1),
         ", "
     ) .. " et ") .. noms[#noms])
-    local ____vrai_result_46 = vrai(etat.meneur)
-    if ____vrai_result_46 then
-        local ____vrai_45 = vrai
-        local ____opt_43 = etat.joueurs[etat.meneur]
-        ____vrai_result_46 = ____vrai_45(____opt_43 and ____opt_43.herosId)
+    local ____vrai_result_56 = vrai(etat.meneur)
+    if ____vrai_result_56 then
+        local ____vrai_55 = vrai
+        local ____opt_53 = etat.joueurs[etat.meneur]
+        ____vrai_result_56 = ____vrai_55(____opt_53 and ____opt_53.herosId)
     end
-    local meneur = (if ____vrai_result_46 then etat.heros[etat.joueurs[etat.meneur].herosId].nom else noms[1] or "")
+    local meneur = (if ____vrai_result_56 then etat.heros[etat.joueurs[etat.meneur].herosId].nom else noms[1] or "")
     local h0 = (if vrai(heros[1]) then etat.heros[heros[1]] else nil)
     return __TS__StringReplaceAll(
         __TS__StringReplaceAll(
@@ -7646,8 +7943,8 @@ function participantsGroupe(etat)
         __TS__ArrayFilter(
             ____exports.listeHeros(etat),
             function(____, h)
-                local ____opt_47 = etat.joueurs[h.joueurId]
-                return ____opt_47 and ____opt_47.present or h.siAbsent == "ia"
+                local ____opt_57 = etat.joueurs[h.joueurId]
+                return ____opt_57 and ____opt_57.present or h.siAbsent == "ia"
             end
         ),
         function(____, h) return h.id end
@@ -7660,6 +7957,7 @@ function entrerNoeud(contenu, etat, cle, noeudId)
     es.noeud = noeudId
     es.votes = {}
     es.messages = {}
+    es.parole = nil
     for ____, eff in ipairs(n.effets) do
         appliquerConsequence(
             contenu,
@@ -7668,6 +7966,52 @@ function entrerNoeud(contenu, etat, cle, noeudId)
             es.heros,
             es.messages
         )
+    end
+    if n.parole_a then
+        local pa = n.parole_a
+        local candidats = __TS__ArrayFilter(
+            es.heros,
+            function(____, h) return ____exports.conditionHeros(contenu, etat, pa.regle, etat.heros[h]) end
+        )
+        if #candidats == 0 then
+            candidats = es.heros
+        end
+        local elu = choisirAuHasard(etat.rng, candidats)
+        local h = etat.heros[elu]
+        local specifiques = {}
+        local generiques = {}
+        __TS__ArrayForEach(
+            pa.reponses,
+            function(____, r, i)
+                if not r.si then
+                    generiques[#generiques + 1] = i
+                elseif ____exports.conditionHeros(contenu, etat, r.si, h) then
+                    specifiques[#specifiques + 1] = i
+                end
+            end
+        )
+        local ____array_59 = __TS__SparseArrayNew(table.unpack(specifiques))
+        __TS__SparseArrayPush(
+            ____array_59,
+            table.unpack(generiques)
+        )
+        es.parole = {
+            heros = elu,
+            reponses = __TS__ArraySlice(
+                {__TS__SparseArraySpread(____array_59)},
+                0,
+                3
+            )
+        }
+        local ____opt_60 = etat.joueurs[h.joueurId]
+        local ____temp_62 = ____opt_60 and ____opt_60.present
+        if ____temp_62 == nil then
+            ____temp_62 = false
+        end
+        if not ____temp_62 then
+            repondreParole(contenu, etat, cle, es.parole.reponses[1])
+        end
+        return
     end
     if n.combat then
         lancerCombat(
@@ -7703,12 +8047,39 @@ function entrerNoeud(contenu, etat, cle, noeudId)
         terminerScene(contenu, etat, cle)
     end
 end
+function repondreParole(contenu, etat, cle, index)
+    local es = etat.scenes[cle]
+    local n = ____exports.noeudCourant(contenu, etat, cle)
+    local p = es.parole
+    local rep = n.parole_a.reponses[index + 1]
+    local msgs = {(etat.heros[p.heros].nom .. " répond : ") .. ____exports.remplacerVariables(
+        contenu,
+        etat,
+        rep.texte,
+        es.heros,
+        p.heros
+    )}
+    for ____, eff in ipairs(rep.effets) do
+        appliquerConsequence(
+            contenu,
+            etat,
+            eff,
+            {p.heros},
+            msgs
+        )
+    end
+    entrerNoeud(contenu, etat, cle, rep.aller)
+    __TS__ArrayUnshift(
+        etat.scenes[cle].messages,
+        table.unpack(msgs)
+    )
+end
 function terminerScene(contenu, etat, cle)
     local es = etat.scenes[cle]
     local s = contenu.scenes[es.sceneId]
     if not s.repetable then
-        local ____etat_scenesVues_49 = etat.scenesVues
-        ____etat_scenesVues_49[#____etat_scenesVues_49 + 1] = (if s.type == "individuel" then (s.id .. "@") .. es.heros[1] else s.id)
+        local ____etat_scenesVues_63 = etat.scenesVues
+        ____etat_scenesVues_63[#____etat_scenesVues_63 + 1] = (if s.type == "individuel" then (s.id .. "@") .. es.heros[1] else s.id)
     end
     es.noeud = "__fin__"
 end
@@ -7725,8 +8096,8 @@ function resoudreChoix(contenu, etat, cle, index, votants)
     local ch = n.choix[index + 1]
     local herosVotants = {}
     for ____, j in ipairs(votants) do
-        local ____opt_50 = etat.joueurs[j]
-        local h = ____opt_50 and ____opt_50.herosId
+        local ____opt_64 = etat.joueurs[j]
+        local h = ____opt_64 and ____opt_64.herosId
         if vrai(h) and __TS__ArrayIncludes(es.heros, h) then
             herosVotants[#herosVotants + 1] = h
         end
@@ -7735,7 +8106,8 @@ function resoudreChoix(contenu, etat, cle, index, votants)
     for ____, eff in ipairs(ch.effets) do
         local aff = eff.affinite
         local flag = eff.flag
-        local reste = __TS__ObjectRest(eff, {affinite = true, flag = true})
+        local miser = eff.miser
+        local reste = __TS__ObjectRest(eff, {affinite = true, flag = true, miser = true})
         local flags = (if flag == nil then {} else (if __TS__ArrayIsArray(flag) then flag else {flag}))
         local perso = __TS__ArrayFilter(
             flags,
@@ -7752,11 +8124,11 @@ function resoudreChoix(contenu, etat, cle, index, votants)
             es.heros,
             msgs
         )
-        if aff or #perso > 0 then
+        if aff or #perso > 0 or miser ~= nil then
             appliquerConsequence(
                 contenu,
                 etat,
-                {affinite = aff, flag = perso},
+                {affinite = aff, flag = perso, miser = miser},
                 (if #herosVotants > 0 then herosVotants else es.heros),
                 msgs
             )
@@ -7800,13 +8172,13 @@ function lancerCombat(contenu, etat, rencontre, cle, contexte)
     local allies = {}
     for ____, id in ipairs(herosIds) do
         local h = etat.heros[id]
-        local ____opt_52 = etat.joueurs[h.joueurId]
-        local ____temp_54 = ____opt_52 and ____opt_52.present
-        if ____temp_54 == nil then
-            ____temp_54 = false
+        local ____opt_66 = etat.joueurs[h.joueurId]
+        local ____temp_68 = ____opt_66 and ____opt_66.present
+        if ____temp_68 == nil then
+            ____temp_68 = false
         end
-        local present = ____temp_54
-        allies[#allies + 1] = combattantHeros(contenu, h, present, etat.grimoire)
+        local present = ____temp_68
+        allies[#allies + 1] = combattantHeros(contenu, h, present, h.grimoire)
         local co = etat.equipe[id]
         if vrai(co) and __TS__ArrayIncludes(etat.compagnonsRencontres, co) then
             local p = paliersAtteints(
@@ -7840,8 +8212,8 @@ function reveler(etat, x, y)
                 while dx <= 3 do
                     local k = (tostring(x + dx) .. ",") .. tostring(y + dy)
                     if not __TS__ArrayIncludes(etat.donjon.vus, k) then
-                        local ____etat_donjon_vus_59 = etat.donjon.vus
-                        ____etat_donjon_vus_59[#____etat_donjon_vus_59 + 1] = k
+                        local ____etat_donjon_vus_77 = etat.donjon.vus
+                        ____etat_donjon_vus_77[#____etat_donjon_vus_77 + 1] = k
                     end
                     dx = dx + 1
                 end
@@ -7849,6 +8221,68 @@ function reveler(etat, x, y)
             dy = dy + 1
         end
     end
+end
+function repartirAncienGrimoire(contenu, etat)
+    for ____, t in ipairs(valeurs(etat.grimoire or ({}))) do
+        local heros = valeurs(etat.heros)
+        local appris = __TS__ArrayFilter(
+            heros,
+            function(____, h) return __TS__ArrayIncludes(h.variantes[t.parent] or ({}), t.id) end
+        )
+        local cibles = (if #appris > 0 then appris else __TS__ArrayFilter(
+            heros,
+            function(____, h) return peutApprendre(contenu, h, t) == nil end
+        ))
+        for ____, h in ipairs(cibles) do
+            h.grimoire[t.id] = t
+        end
+    end
+    __TS__Delete(etat, "grimoire")
+end
+--- Étape en cours du contrat d'un héros (null s'il n'a pas de contrat).
+function ____exports.etapeContrat(contenu, etat, herosId)
+    local ____opt_119 = etat.contrats
+    local st = ____opt_119 and ____opt_119[herosId]
+    if not st then
+        return nil
+    end
+    local ct = contenu.contrats[st.id]
+    if not ct or st.etape >= #ct.etapes then
+        return nil
+    end
+    return {
+        contrat = ct,
+        etape = ct.etapes[st.etape + 1],
+        numero = st.etape + 1,
+        total = #ct.etapes,
+        notes = st.notes,
+        derniere = st.etape == #ct.etapes - 1
+    }
+end
+function avancerContrat(contenu, etat, h)
+    local st = etat.contrats[h.id]
+    local ct = contenu.contrats[st.id]
+    st.etape = st.etape + 1
+    if st.etape < #ct.etapes then
+        local ____etat_dernieresNouvelles_121 = etat.dernieresNouvelles
+        ____etat_dernieresNouvelles_121[#____etat_dernieresNouvelles_121 + 1] = (("Contrat « " .. ct.titre) .. " » : ") .. ct.etapes[st.etape + 1].objectif
+        return
+    end
+    local msgs = {}
+    appliquerConsequence(
+        contenu,
+        etat,
+        {["or"] = ct.recompenses["or"], xp = ct.recompenses.xp, points_guilde = ct.recompenses.points_guilde, objet = ct.recompenses.objets},
+        {h.id},
+        msgs
+    )
+    __TS__Delete(etat.contrats, h.id)
+    __TS__ArrayPush(
+        etat.dernieresNouvelles,
+        ("Contrat rempli : " .. ct.titre) .. ".",
+        table.unpack(msgs)
+    )
+    journal(contenu, etat, ((h.nom .. " remplit le contrat « ") .. ct.titre) .. " ».")
 end
 function quantiteValide(q)
     if q == nil then
@@ -7879,8 +8313,8 @@ function declencherEtapes(contenu, etat, correspond)
             continue
         end
         q.etape = def.etapes[i + 1 + 1].id
-        local ____etat_dernieresNouvelles_94 = etat.dernieresNouvelles
-        ____etat_dernieresNouvelles_94[#____etat_dernieresNouvelles_94 + 1] = (("Quête « " .. def.titre) .. " » : ") .. def.etapes[i + 1 + 1].objectif
+        local ____etat_dernieresNouvelles_122 = etat.dernieresNouvelles
+        ____etat_dernieresNouvelles_122[#____etat_dernieresNouvelles_122 + 1] = (("Quête « " .. def.titre) .. " » : ") .. def.etapes[i + 1 + 1].objectif
     end
 end
 function resoudreVote(contenu, etat)
@@ -7889,14 +8323,14 @@ function resoudreVote(contenu, etat)
     for ____, ____value in ipairs(entrees(es.votes)) do
         local joueur = ____value[1]
         local idx = ____value[2]
-        local ____comptes_set_97 = comptes.set
-        local ____idx_96 = idx
-        local ____array_95 = __TS__SparseArrayNew(table.unpack(comptes:get(idx) or ({})))
-        __TS__SparseArrayPush(____array_95, joueur)
-        ____comptes_set_97(
+        local ____comptes_set_125 = comptes.set
+        local ____idx_124 = idx
+        local ____array_123 = __TS__SparseArrayNew(table.unpack(comptes:get(idx) or ({})))
+        __TS__SparseArrayPush(____array_123, joueur)
+        ____comptes_set_125(
             comptes,
-            ____idx_96,
-            {__TS__SparseArraySpread(____array_95)}
+            ____idx_124,
+            {__TS__SparseArraySpread(____array_123)}
         )
     end
     local meilleur = -1
@@ -7932,7 +8366,7 @@ function ____exports.prixVente(contenu, h, objet)
         math.floor(p * (if h.don == "reserve-du-neant" then 0.6 else 0.5))
     )
 end
-____exports.VERSION_ETAT = 2
+____exports.VERSION_ETAT = 5
 ____exports.MAX_JOUEURS = 6
 ____exports.ErreurAction = __TS__Class()
 local ErreurAction = ____exports.ErreurAction
@@ -7976,6 +8410,7 @@ function ____exports.nouvellePartie(contenu, id, nom, graine)
         combats = {},
         donjon = nil,
         tempsLibre = nil,
+        repos = nil,
         journal = {{
             jour = 0,
             chapitre = 1,
@@ -7984,27 +8419,16 @@ function ____exports.nouvellePartie(contenu, id, nom, graine)
         secondDepart = {},
         dernieresNouvelles = {},
         finChapitre = nil,
-        grimoire = {}
+        mises = {},
+        mouvementsOr = {},
+        contrats = {}
     }
 end
 function ____exports.herosDuJoueur(etat, joueur)
     local j = etat.joueurs[joueur] or refuser("Joueur inconnu")
     return etat.heros[j.herosId or ""] or refuser("Ce joueur n'a pas encore de héros")
 end
-function ____exports.palierCompagnon(contenu, etat, herosId, compagnon)
-    local ____palier_16 = palier
-    local ____contenu_14 = contenu
-    local ____exports_affinite_result_15 = ____exports.affinite(etat, herosId, compagnon)
-    local ____exports_queteTerminee_13 = ____exports.queteTerminee
-    local ____etat_12 = etat
-    local ____opt_10 = contenu.compagnons[compagnon]
-    return ____palier_16(
-        ____contenu_14,
-        ____exports_affinite_result_15,
-        ____exports_queteTerminee_13(____etat_12, ____opt_10 and ____opt_10.quete)
-    )
-end
-local ordreRangs = {
+ordreRangs = {
     "F",
     "E",
     "D",
@@ -8013,133 +8437,16 @@ local ordreRangs = {
     "A",
     "S"
 }
---- Une condition sur un héros précis (scènes individuelles, dialogues).
-function ____exports.conditionHeros(contenu, etat, c, h)
-    if not c then
-        return true
-    end
-    local function liste(v)
-        return (if v == nil then nil else (if __TS__ArrayIsArray(v) then v else {v}))
-    end
-    if vrai(c.flag) and not ____exports.aFlag(etat, c.flag, h and h.id) then
-        return false
-    end
-    if vrai(c.pas_flag) and ____exports.aFlag(etat, c.pas_flag, h and h.id) then
-        return false
-    end
-    for ____, ____value in ipairs(entrees(c.quete_etape or ({}))) do
-        local q = ____value[1]
-        local et = ____value[2]
-        local ____opt_21 = etat.quetes[q]
-        if (____opt_21 and ____opt_21.etape) ~= et then
-            return false
-        end
-    end
-    local ____vrai_result_25 = vrai(c.quete_terminee)
-    if ____vrai_result_25 then
-        local ____opt_23 = etat.quetes[c.quete_terminee]
-        ____vrai_result_25 = not (____opt_23 and ____opt_23.terminee)
-    end
-    if ____vrai_result_25 then
-        return false
-    end
-    for ____, ____value in ipairs(entrees(c.reputation_min or ({}))) do
-        local f = ____value[1]
-        local v = ____value[2]
-        if (etat.reputation[f] or 0) < v then
-            return false
-        end
-    end
-    if c.date_min and etat.jour < versJour(contenu, c.date_min) then
-        return false
-    end
-    if c.ou and not __TS__ArraySome(
-        c.ou,
-        function(____, x) return ____exports.conditionHeros(contenu, etat, x, h) end
-    ) then
-        return false
-    end
-    local besoinHeros = __TS__ArraySome(
-        {
-            c.race,
-            c.classe,
-            c.origine,
-            c.don,
-            c.affinite_min,
-            c.affinite_palier,
-            c.carac_min,
-            c.objet,
-            c.rang_guilde_min
-        },
-        function(____, x) return vrai(x) end
-    ) or c.niveau_min ~= nil or c.or_min ~= nil
-    if not besoinHeros then
-        return true
-    end
-    if not h then
-        return false
-    end
-    local races = liste(c.race)
-    if races and not __TS__ArrayIncludes(races, h.race) then
-        return false
-    end
-    local classes = liste(c.classe)
-    if classes and not __TS__ArrayIncludes(classes, h.classe) then
-        return false
-    end
-    if c.origine and h.origine ~= c.origine then
-        return false
-    end
-    if vrai(c.don) and h.don ~= c.don then
-        return false
-    end
-    for ____, ____value in ipairs(entrees(c.affinite_min or ({}))) do
-        local co = ____value[1]
-        local v = ____value[2]
-        if ____exports.affinite(etat, h.id, co).points < v then
-            return false
-        end
-    end
-    for ____, ____value in ipairs(entrees(c.affinite_palier or ({}))) do
-        local co = ____value[1]
-        local p = ____value[2]
-        local ps = __TS__ArrayMap(
-            contenu.config.affinite.paliers,
-            function(____, x) return x.id end
-        )
-        if ____exports.palierCompagnon(contenu, etat, h.id, co).index < __TS__ArrayIndexOf(ps, p) then
-            return false
-        end
-    end
-    local ca = caracsTotales(contenu, h)
-    for ____, ____value in ipairs(entrees(c.carac_min or ({}))) do
-        local k = ____value[1]
-        local v = ____value[2]
-        if ca[k] < (v or 0) then
-            return false
-        end
-    end
-    if c.niveau_min ~= nil and h.niveau < c.niveau_min then
-        return false
-    end
-    if c.or_min ~= nil and h["or"] < c.or_min then
-        return false
-    end
-    if vrai(c.objet) and not (h.inventaire[c.objet] > 0) then
-        return false
-    end
-    if vrai(c.rang_guilde_min) and __TS__ArrayIndexOf(
-        ordreRangs,
-        ____exports.rangGuilde(contenu, etat.pointsGuilde[h.id] or 0)
-    ) < __TS__ArrayIndexOf(ordreRangs, c.rang_guilde_min) then
-        return false
-    end
-    return true
-end
 --- Une condition dans une scène : vraie si au moins un héros participant la remplit.
 function ____exports.conditionScene(contenu, etat, c, heros)
     if not c then
         return true
+    end
+    if c.groupe_min ~= nil and #heros < c.groupe_min then
+        return false
+    end
+    if c.groupe_max ~= nil and #heros > c.groupe_max then
+        return false
     end
     if #heros == 0 then
         return ____exports.conditionHeros(contenu, etat, c, nil)
@@ -8148,6 +8455,94 @@ function ____exports.conditionScene(contenu, etat, c, heros)
         heros,
         function(____, h) return ____exports.conditionHeros(contenu, etat, c, etat.heros[h]) end
     )
+end
+--- Vrai si le minuteur de jeu actif peut encore faire passer un jour (il ne change jamais de mois).
+function ____exports.jourPeutPasser(contenu, etat)
+    if etat.tempsLibre ~= nil then
+        return false
+    end
+    return versDate(contenu, etat.jour).jour < joursParMois(contenu)
+end
+--- Prochaine date que l'histoire attend : la scène principale en cours si elle exige une date,
+-- sinon le début du chapitre suivant quand le chapitre est terminé. Null s'il n'y a rien à attendre.
+function ____exports.prochaineDateHistoire(contenu, etat)
+    for ____, ____value in ipairs(entrees(etat.quetes)) do
+        local id = ____value[1]
+        local q = ____value[2]
+        local def = contenu.quetes[id]
+        if not def or def.type ~= "principale" or q.terminee then
+            continue
+        end
+        local e = __TS__ArrayFind(
+            def.etapes,
+            function(____, x) return x.id == q.etape end
+        )
+        local scene = (if e and vrai(e.scene) then contenu.scenes[e.scene] else nil)
+        local ____opt_43 = scene and scene.disponible_si
+        local d = ____opt_43 and ____opt_43.date_min
+        if d then
+            local jour = versJour(contenu, d)
+            if jour > etat.jour then
+                return {jour = jour, raison = e.objectif}
+            end
+        end
+    end
+    if ____exports.aFlag(
+        etat,
+        ("chapitre-" .. tostring(etat.chapitre)) .. "-fini"
+    ) then
+        local s = contenu.config.saisons[1]
+        local jour = versJour(contenu, {annee = s.annee_debut + etat.chapitre * s.annees_par_chapitre})
+        if jour > etat.jour then
+            return {
+                jour = jour,
+                raison = "Début du chapitre " .. tostring(etat.chapitre + 1)
+            }
+        end
+    end
+    return nil
+end
+--- Joueurs dont on attend encore l'accord pour dormir (présents, avec un héros).
+function ____exports.attenteRepos(etat)
+    if not etat.repos then
+        return {}
+    end
+    local r = etat.repos
+    return __TS__ArrayFilter(
+        etat.ordreJoueurs,
+        function(____, j) return etat.joueurs[j].present and vrai(etat.joueurs[j].herosId) and not __TS__ArrayIncludes(r.accords, j) end
+    )
+end
+local function reposImpossible(etat)
+    if etat.tempsLibre ~= nil then
+        return "Un temps libre est déjà en cours"
+    end
+    if etat.donjon then
+        return "Le groupe est dans un donjon"
+    end
+    if #cles(etat.combats) > 0 then
+        return "Un combat est en cours"
+    end
+    for ____, es in ipairs(valeurs(etat.scenes)) do
+        if es.noeud ~= "__fin__" then
+            return "Une scène est en cours : terminez-la d'abord"
+        end
+    end
+    return nil
+end
+--- Tous les joueurs présents sont d'accord : le temps libre commence (les mois passeront à sa résolution).
+local function commencerRepos(contenu, etat)
+    local r = etat.repos
+    etat.repos = nil
+    etat.tempsLibre = {
+        titre = ("Repos au Chaudron Fêlé (" .. tostring(r.mois)) .. " mois)",
+        jusqua = r.jusqua,
+        mois = r.mois,
+        choix = {},
+        resultats = nil
+    }
+    local ____etat_dernieresNouvelles_47 = etat.dernieresNouvelles
+    ____etat_dernieresNouvelles_47[#____etat_dernieresNouvelles_47 + 1] = ("Tout le monde est d'accord : " .. tostring(r.mois)) .. " mois vont passer. Chacun choisit ses activités."
 end
 function ____exports.sceneEstDisponible(contenu, etat, s, herosId)
     if s.romance and contenu.config.romance == false then
@@ -8182,6 +8577,14 @@ function ____exports.scenesDisponibles(contenu, etat, lieu, herosId)
         function(____, s) return (if lieu == nil then not vrai(s.lieu) else s.lieu == lieu) and ____exports.sceneEstDisponible(contenu, etat, s, herosId) end
     )
 end
+--- Somme qu'un choix fait miser (0 si ce n'est pas un pari).
+function ____exports.miseDuChoix(ch)
+    local total = 0
+    for ____, eff in ipairs(ch.effets) do
+        total = total + (eff.miser or 0)
+    end
+    return total
+end
 function ____exports.choixVisibles(contenu, etat, cle)
     local n = ____exports.noeudCourant(contenu, etat, cle)
     if not n then
@@ -8201,9 +8604,9 @@ function ____exports.choixVisibles(contenu, etat, cle)
     )
 end
 local function terminerCombat(contenu, etat, cle)
-    local ____etat_combats_cle_55 = etat.combats[cle]
-    local combat = ____etat_combats_cle_55.combat
-    local contexte = ____etat_combats_cle_55.contexte
+    local ____etat_combats_cle_69 = etat.combats[cle]
+    local combat = ____etat_combats_cle_69.combat
+    local contexte = ____etat_combats_cle_69.contexte
     local bilan = {}
     local heros = __TS__ArrayMap(
         __TS__ArrayFilter(
@@ -8251,9 +8654,9 @@ local function terminerCombat(contenu, etat, cle)
     contexte.bilan = bilan
 end
 local function apresCombat(contenu, etat, cle)
-    local ____etat_combats_cle_56 = etat.combats[cle]
-    local combat = ____etat_combats_cle_56.combat
-    local contexte = ____etat_combats_cle_56.contexte
+    local ____etat_combats_cle_70 = etat.combats[cle]
+    local combat = ____etat_combats_cle_70.combat
+    local contexte = ____etat_combats_cle_70.contexte
     __TS__Delete(etat.combats, cle)
     local victoire = combat.resultat == "victoire"
     if contexte.origine == "scene" and vrai(contexte.sceneCle) and etat.scenes[contexte.sceneCle] then
@@ -8264,30 +8667,47 @@ local function apresCombat(contenu, etat, cle)
         )
     elseif contexte.origine == "donjon" and etat.donjon then
         if victoire and vrai(contexte.evenementDonjon) then
-            local ____etat_donjon_faits_57 = etat.donjon.faits
-            ____etat_donjon_faits_57[#____etat_donjon_faits_57 + 1] = contexte.evenementDonjon
+            local ____etat_donjon_faits_71 = etat.donjon.faits
+            ____etat_donjon_faits_71[#____etat_donjon_faits_71 + 1] = contexte.evenementDonjon
         end
         etat.donjon.messages = {table.unpack(contexte.bilan or ({}))}
         if not victoire then
             local d = etat.donjon
-            local ____array_58 = __TS__SparseArrayNew(table.unpack(contexte.bilan or ({})))
-            __TS__SparseArrayPush(____array_58, "Vous reprenez connaissance près de l'escalier d'entrée. Les ennemis vaincus ne se relèveront pas.")
-            local msg = (if combat.resultat == "defaite" then {__TS__SparseArraySpread(____array_58)} else {"Le groupe se replie vers l'entrée."})
+            local ____array_72 = __TS__SparseArrayNew(table.unpack(contexte.bilan or ({})))
+            __TS__SparseArrayPush(____array_72, "Vous reprenez connaissance près de l'escalier d'entrée. Les ennemis vaincus ne se relèveront pas.")
+            local msg = (if combat.resultat == "defaite" then {__TS__SparseArraySpread(____array_72)} else {"Le groupe se replie vers l'entrée."})
             etat.donjon = __TS__ObjectAssign({}, d, {x = contenu.donjons[d.id].depart.x, y = contenu.donjons[d.id].depart.y, messages = msg})
         end
-    elseif contexte.origine == "contrat" and vrai(contexte.contrat) then
-        local h = etat.heros[cle]
-        local ct = contenu.contrats[contexte.contrat]
-        if victoire then
-            local msgs = {}
-            appliquerConsequence(
-                contenu,
-                etat,
-                {["or"] = ct.recompenses["or"], xp = ct.recompenses.xp, points_guilde = ct.recompenses.points_guilde, objet = ct.recompenses.objets},
-                {h.id},
-                msgs
-            )
-            journal(contenu, etat, ((h.nom .. " remplit le contrat « ") .. ct.titre) .. " ».")
+    else
+        local ____temp_75 = contexte.origine == "contrat" and vrai(contexte.contrat)
+        if ____temp_75 then
+            local ____opt_73 = etat.contrats[cle]
+            ____temp_75 = (____opt_73 and ____opt_73.id) == contexte.contrat
+        end
+        if ____temp_75 then
+            local st = etat.contrats[cle]
+            if victoire then
+                st.notes = {table.unpack(contexte.bilan or ({}))}
+                avancerContrat(contenu, etat, etat.heros[cle])
+            else
+                local ____array_76 = __TS__SparseArrayNew(table.unpack(contexte.bilan or ({})))
+                __TS__SparseArrayPush(____array_76, (if combat.resultat == "defaite" then "Vous êtes repoussé. Reprenez des forces, puis revenez : le contrat tient toujours." else "Vous vous repliez. Le contrat tient toujours : revenez quand vous êtes prêt."))
+                st.notes = {__TS__SparseArraySpread(____array_76)}
+            end
+        elseif contexte.origine == "contrat" and vrai(contexte.contrat) then
+            local h = etat.heros[cle]
+            local ct = contenu.contrats[contexte.contrat]
+            if victoire then
+                local msgs = {}
+                appliquerConsequence(
+                    contenu,
+                    etat,
+                    {["or"] = ct.recompenses["or"], xp = ct.recompenses.xp, points_guilde = ct.recompenses.points_guilde, objet = ct.recompenses.objets},
+                    {h.id},
+                    msgs
+                )
+                journal(contenu, etat, ((h.nom .. " remplit le contrat « ") .. ct.titre) .. " ».")
+            end
         end
     end
 end
@@ -8351,9 +8771,9 @@ local function deplacerDonjon(contenu, etat, dx, dy)
     end
     local heros = participantsGroupe(etat)
     repeat
-        local ____switch214 = ev.type
-        local ____cond214 = ____switch214 == "combat"
-        if ____cond214 then
+        local ____switch272 = ev.type
+        local ____cond272 = ____switch272 == "combat"
+        if ____cond272 then
             lancerCombat(
                 contenu,
                 etat,
@@ -8371,16 +8791,16 @@ local function deplacerDonjon(contenu, etat, dx, dy)
                 }
             )
             if vrai(ev.texte) then
-                local ____dj_messages_62 = dj.messages
-                ____dj_messages_62[#____dj_messages_62 + 1] = ev.texte
+                local ____dj_messages_80 = dj.messages
+                ____dj_messages_80[#____dj_messages_80 + 1] = ev.texte
             end
             return
         end
-        ____cond214 = ____cond214 or ____switch214 == "coffre"
-        if ____cond214 then
+        ____cond272 = ____cond272 or ____switch272 == "coffre"
+        if ____cond272 then
             do
-                local ____dj_faits_63 = dj.faits
-                ____dj_faits_63[#____dj_faits_63 + 1] = ev.id
+                local ____dj_faits_81 = dj.faits
+                ____dj_faits_81[#____dj_faits_81 + 1] = ev.id
                 local msgs = {ev.texte or "Un coffre !"}
                 if vrai(ev["or"]) then
                     appliquerConsequence(
@@ -8405,11 +8825,11 @@ local function deplacerDonjon(contenu, etat, dx, dy)
                 return
             end
         end
-        ____cond214 = ____cond214 or ____switch214 == "piege"
-        if ____cond214 then
+        ____cond272 = ____cond272 or ____switch272 == "piege"
+        if ____cond272 then
             do
-                local ____dj_faits_64 = dj.faits
-                ____dj_faits_64[#____dj_faits_64 + 1] = ev.id
+                local ____dj_faits_82 = dj.faits
+                ____dj_faits_82[#____dj_faits_82 + 1] = ev.id
                 local t2 = ev.test or ({carac = "AGI", difficulte = 15})
                 local meilleur = __TS__ArrayReduce(
                     __TS__ArrayMap(
@@ -8431,17 +8851,17 @@ local function deplacerDonjon(contenu, etat, dx, dy)
                 return
             end
         end
-        ____cond214 = ____cond214 or ____switch214 == "texte"
-        if ____cond214 then
+        ____cond272 = ____cond272 or ____switch272 == "texte"
+        if ____cond272 then
             if ev.unique then
-                local ____dj_faits_65 = dj.faits
-                ____dj_faits_65[#____dj_faits_65 + 1] = ev.id
+                local ____dj_faits_83 = dj.faits
+                ____dj_faits_83[#____dj_faits_83 + 1] = ev.id
             end
             dj.messages = {ev.texte or ""}
             return
         end
-        ____cond214 = ____cond214 or ____switch214 == "sortie"
-        if ____cond214 then
+        ____cond272 = ____cond272 or ____switch272 == "sortie"
+        if ____cond272 then
             do
                 local cle = dj.sceneCle
                 local sortie = dj.sortie
@@ -8452,10 +8872,10 @@ local function deplacerDonjon(contenu, etat, dx, dy)
                 return
             end
         end
-        ____cond214 = ____cond214 or ____switch214 == "scene"
-        if ____cond214 then
-            local ____dj_faits_66 = dj.faits
-            ____dj_faits_66[#____dj_faits_66 + 1] = ev.id
+        ____cond272 = ____cond272 or ____switch272 == "scene"
+        if ____cond272 then
+            local ____dj_faits_84 = dj.faits
+            ____dj_faits_84[#____dj_faits_84 + 1] = ev.id
             dj.messages = {ev.texte or ""}
             return
         end
@@ -8546,17 +8966,32 @@ end
 function ____exports.appliquer(contenu, etatAvant, action)
     local etat = copieProfonde(etatAvant)
     etat.dernieresNouvelles = {}
-    if etat.grimoire == nil then
-        etat.grimoire = {}
+    etat.mouvementsOr = {}
+    if etat.mises == nil then
+        etat.mises = {}
+    end
+    if etat.contrats == nil then
+        etat.contrats = {}
+    end
+    for ____, h in ipairs(valeurs(etat.heros)) do
+        if h.grimoire == nil then
+            h.grimoire = {}
+        end
+    end
+    if etat.grimoire then
+        repartirAncienGrimoire(contenu, etat)
+    end
+    if etat.repos == nil then
+        etat.repos = nil
     end
     local j = etat.joueurs[action.joueur]
     if action.type ~= "rejoindre" and not j then
         refuser("Joueur inconnu : rejoignez la partie d'abord")
     end
     repeat
-        local ____switch249 = action.type
-        local ____cond249 = ____switch249 == "rejoindre"
-        if ____cond249 then
+        local ____switch311 = action.type
+        local ____cond311 = ____switch311 == "rejoindre"
+        if ____cond311 then
             do
                 if j ~= nil then
                     j.pseudo = action.pseudo
@@ -8581,8 +9016,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                     refuser("Ce pseudo est déjà pris dans cette partie")
                 end
                 etat.joueurs[action.joueur] = {id = action.joueur, pseudo = pseudo, herosId = nil, present = true}
-                local ____etat_ordreJoueurs_67 = etat.ordreJoueurs
-                ____etat_ordreJoueurs_67[#____etat_ordreJoueurs_67 + 1] = action.joueur
+                local ____etat_ordreJoueurs_85 = etat.ordreJoueurs
+                ____etat_ordreJoueurs_85[#____etat_ordreJoueurs_85 + 1] = action.joueur
                 if etat.meneur == nil then
                     etat.meneur = action.joueur
                 end
@@ -8590,13 +9025,13 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 break
             end
         end
-        ____cond249 = ____cond249 or ____switch249 == "presence"
-        if ____cond249 then
+        ____cond311 = ____cond311 or ____switch311 == "presence"
+        if ____cond311 then
             j.present = action.present
             break
         end
-        ____cond249 = ____cond249 or ____switch249 == "creer_heros"
-        if ____cond249 then
+        ____cond311 = ____cond311 or ____switch311 == "creer_heros"
+        if ____cond311 then
             do
                 if vrai(j.herosId) then
                     refuser("Vous avez déjà un héros")
@@ -8606,8 +9041,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                     ____exports.listeHeros(etat),
                     function(____, x) return x.don == h.don end
                 ) then
-                    local ____opt_68 = contenu.dons[h.don]
-                    refuser(("Le don « " .. (____opt_68 and ____opt_68.nom or h.don)) .. " » est déjà pris par un autre joueur")
+                    local ____opt_86 = contenu.dons[h.don]
+                    refuser(("Le don « " .. (____opt_86 and ____opt_86.nom or h.don)) .. " » est déjà pris par un autre joueur")
                 end
                 local existants = ____exports.listeHeros(etat)
                 local enCours = etat.jour > 0 or __TS__ArraySome(
@@ -8672,8 +9107,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 break
             end
         end
-        ____cond249 = ____cond249 or ____switch249 == "portrait"
-        if ____cond249 then
+        ____cond311 = ____cond311 or ____switch311 == "portrait"
+        if ____cond311 then
             do
                 local h = ____exports.herosDuJoueur(etat, action.joueur)
                 if vrai(action.image) and #action.image > 300000 then
@@ -8683,13 +9118,13 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 break
             end
         end
-        ____cond249 = ____cond249 or ____switch249 == "si_absent"
-        if ____cond249 then
+        ____cond311 = ____cond311 or ____switch311 == "si_absent"
+        if ____cond311 then
             ____exports.herosDuJoueur(etat, action.joueur).siAbsent = action.mode
             break
         end
-        ____cond249 = ____cond249 or ____switch249 == "lancer_scene"
-        if ____cond249 then
+        ____cond311 = ____cond311 or ____switch311 == "lancer_scene"
+        if ____cond311 then
             do
                 local s = contenu.scenes[action.scene] or refuser("Scène inconnue")
                 local h = ____exports.herosDuJoueur(etat, action.joueur)
@@ -8712,10 +9147,11 @@ function ____exports.appliquer(contenu, etatAvant, action)
                         heros = participantsGroupe(etat),
                         votes = {},
                         dernierTest = nil,
-                        messages = {}
+                        messages = {},
+                        parole = nil
                     }
-                    local ____opt_70 = etat.tempsLibre
-                    if ____opt_70 and ____opt_70.resultats then
+                    local ____opt_88 = etat.tempsLibre
+                    if ____opt_88 and ____opt_88.resultats then
                         etat.tempsLibre = nil
                     end
                     entrerNoeud(contenu, etat, "groupe", s.debut)
@@ -8732,15 +9168,16 @@ function ____exports.appliquer(contenu, etatAvant, action)
                         heros = {h.id},
                         votes = {},
                         dernierTest = nil,
-                        messages = {}
+                        messages = {},
+                        parole = nil
                     }
                     entrerNoeud(contenu, etat, h.id, s.debut)
                 end
                 break
             end
         end
-        ____cond249 = ____cond249 or ____switch249 == "choisir"
-        if ____cond249 then
+        ____cond311 = ____cond311 or ____switch311 == "choisir"
+        if ____cond311 then
             do
                 local es = etat.scenes[action.cle] or refuser("Aucune scène")
                 if action.cle ~= "groupe" and j.herosId ~= action.cle then
@@ -8759,6 +9196,10 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 )
                 if not c or not c.possible then
                     refuser("Choix impossible")
+                end
+                local mise = ____exports.miseDuChoix(c.choix)
+                if mise > 0 and vrai(j.herosId) and etat.heros[j.herosId]["or"] < mise then
+                    refuser(((("Pas assez d'or pour miser " .. tostring(mise)) .. " pièces (vous en avez ") .. tostring(etat.heros[j.herosId]["or"])) .. ")")
                 end
                 if action.cle ~= "groupe" then
                     resoudreChoix(
@@ -8784,8 +9225,23 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 break
             end
         end
-        ____cond249 = ____cond249 or ____switch249 == "trancher"
-        if ____cond249 then
+        ____cond311 = ____cond311 or ____switch311 == "repondre"
+        if ____cond311 then
+            do
+                local es = etat.scenes[action.cle] or refuser("Aucune scène")
+                local p = es.parole or refuser("Personne ne vous pose de question")
+                if j.herosId ~= p.heros then
+                    refuser(("C'est à " .. etat.heros[p.heros].nom) .. " de répondre")
+                end
+                if not __TS__ArrayIncludes(p.reponses, action.index) then
+                    refuser("Réponse impossible")
+                end
+                repondreParole(contenu, etat, action.cle, action.index)
+                break
+            end
+        end
+        ____cond311 = ____cond311 or ____switch311 == "trancher"
+        if ____cond311 then
             do
                 if etat.meneur ~= action.joueur then
                     refuser("Seul le meneur du jour peut trancher")
@@ -8798,8 +9254,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 break
             end
         end
-        ____cond249 = ____cond249 or ____switch249 == "continuer"
-        if ____cond249 then
+        ____cond311 = ____cond311 or ____switch311 == "continuer"
+        if ____cond311 then
             do
                 if action.cle ~= "groupe" and j.herosId ~= action.cle then
                     refuser("Ce n'est pas votre scène")
@@ -8818,8 +9274,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 break
             end
         end
-        ____cond249 = ____cond249 or ____switch249 == "quitter_scene"
-        if ____cond249 then
+        ____cond311 = ____cond311 or ____switch311 == "quitter_scene"
+        if ____cond311 then
             do
                 local es = etat.scenes[action.cle]
                 if not es then
@@ -8835,8 +9291,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 break
             end
         end
-        ____cond249 = ____cond249 or ____switch249 == "combat"
-        if ____cond249 then
+        ____cond311 = ____cond311 or ____switch311 == "combat"
+        if ____cond311 then
             do
                 local entree = etat.combats[action.cle] or refuser("Aucun combat")
                 local acteur = __TS__ArrayFind(
@@ -8863,8 +9319,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 break
             end
         end
-        ____cond249 = ____cond249 or ____switch249 == "second_depart"
-        if ____cond249 then
+        ____cond311 = ____cond311 or ____switch311 == "second_depart"
+        if ____cond311 then
             do
                 local h = ____exports.herosDuJoueur(etat, action.joueur)
                 if h.don ~= "second-depart" then
@@ -8884,8 +9340,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 break
             end
         end
-        ____cond249 = ____cond249 or ____switch249 == "fin_combat"
-        if ____cond249 then
+        ____cond311 = ____cond311 or ____switch311 == "fin_combat"
+        if ____cond311 then
             do
                 local entree = etat.combats[action.cle] or refuser("Aucun combat")
                 if not entree.combat.resultat then
@@ -8895,21 +9351,21 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 break
             end
         end
-        ____cond249 = ____cond249 or ____switch249 == "donjon_deplacer"
-        if ____cond249 then
-            local ____temp_74 = etat.meneur ~= action.joueur
-            if ____temp_74 then
-                local ____opt_72 = etat.joueurs[etat.meneur or ""]
-                ____temp_74 = ____opt_72 and ____opt_72.present
+        ____cond311 = ____cond311 or ____switch311 == "donjon_deplacer"
+        if ____cond311 then
+            local ____temp_92 = etat.meneur ~= action.joueur
+            if ____temp_92 then
+                local ____opt_90 = etat.joueurs[etat.meneur or ""]
+                ____temp_92 = ____opt_90 and ____opt_90.present
             end
-            if ____temp_74 then
+            if ____temp_92 then
                 refuser("C'est le meneur du jour qui guide le groupe")
             end
             deplacerDonjon(contenu, etat, action.dx, action.dy)
             break
         end
-        ____cond249 = ____cond249 or ____switch249 == "temps_libre"
-        if ____cond249 then
+        ____cond311 = ____cond311 or ____switch311 == "temps_libre"
+        if ____cond311 then
             do
                 local tl = etat.tempsLibre or refuser("Pas de temps libre en cours")
                 if tl.resultats then
@@ -8946,8 +9402,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 break
             end
         end
-        ____cond249 = ____cond249 or ____switch249 == "valider_temps_libre"
-        if ____cond249 then
+        ____cond311 = ____cond311 or ____switch311 == "valider_temps_libre"
+        if ____cond311 then
             do
                 local tl = etat.tempsLibre or refuser("Pas de temps libre en cours")
                 if tl.resultats then
@@ -8966,8 +9422,85 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 break
             end
         end
-        ____cond249 = ____cond249 or ____switch249 == "cadeau"
-        if ____cond249 then
+        ____cond311 = ____cond311 or ____switch311 == "jour_passe"
+        if ____cond311 then
+            do
+                if action.jour ~= etat.jour then
+                    refuser("Ce jour est déjà passé")
+                end
+                if not ____exports.jourPeutPasser(contenu, etat) then
+                    refuser("Dernier jour du mois : pour changer de mois, dormez à l'auberge")
+                end
+                avancerTemps(contenu, etat, 1)
+                local fete = fetesEntre(contenu, etat.jour - 1, etat.jour)[1]
+                local ____etat_dernieresNouvelles_93 = etat.dernieresNouvelles
+                ____etat_dernieresNouvelles_93[#____etat_dernieresNouvelles_93 + 1] = (if fete then ("Un nouveau jour se lève : " .. fete.nom) .. " !" else ("Un nouveau jour se lève : " .. formaterDate(contenu, etat.jour)) .. ".")
+                break
+            end
+        end
+        ____cond311 = ____cond311 or ____switch311 == "proposer_repos"
+        if ____cond311 then
+            do
+                ____exports.herosDuJoueur(etat, action.joueur)
+                local pb = reposImpossible(etat)
+                if vrai(pb) then
+                    refuser(pb)
+                end
+                local mois = action.mois or 0
+                local jusqua = etat.jour + mois * joursParMois(contenu)
+                if action.histoire == true then
+                    local d = ____exports.prochaineDateHistoire(contenu, etat) or refuser("L'histoire n'attend aucune date pour le moment")
+                    jusqua = d.jour
+                    mois = math.max(
+                        1,
+                        math.floor((d.jour - etat.jour) / joursParMois(contenu) + 0.5)
+                    )
+                elseif not __TS__ArrayIncludes(contenu.config.ellipses.durees_auberge_mois, mois) then
+                    refuser("Durée de repos non proposée")
+                end
+                etat.repos = {par = action.joueur, mois = mois, jusqua = jusqua, accords = {action.joueur}}
+                if #____exports.attenteRepos(etat) == 0 then
+                    commencerRepos(contenu, etat)
+                else
+                    local ____etat_dernieresNouvelles_94 = etat.dernieresNouvelles
+                    ____etat_dernieresNouvelles_94[#____etat_dernieresNouvelles_94 + 1] = ((((j.pseudo .. " propose de dormir ") .. tostring(mois)) .. " mois à l'auberge. En attente de : ") .. table.concat(
+                        __TS__ArrayMap(
+                            ____exports.attenteRepos(etat),
+                            function(____, x) return etat.joueurs[x].pseudo end
+                        ),
+                        ", "
+                    )) .. "."
+                end
+                break
+            end
+        end
+        ____cond311 = ____cond311 or ____switch311 == "repondre_repos"
+        if ____cond311 then
+            do
+                local r = etat.repos or refuser("Personne ne propose de dormir pour le moment")
+                ____exports.herosDuJoueur(etat, action.joueur)
+                if not action.accepte then
+                    etat.repos = nil
+                    local ____etat_dernieresNouvelles_95 = etat.dernieresNouvelles
+                    ____etat_dernieresNouvelles_95[#____etat_dernieresNouvelles_95 + 1] = ((j.pseudo .. " préfère ne pas dormir ") .. tostring(r.mois)) .. " mois. Proposez une autre durée."
+                    break
+                end
+                local pb = reposImpossible(etat)
+                if vrai(pb) then
+                    refuser(pb)
+                end
+                if not __TS__ArrayIncludes(r.accords, action.joueur) then
+                    local ____r_accords_96 = r.accords
+                    ____r_accords_96[#____r_accords_96 + 1] = action.joueur
+                end
+                if #____exports.attenteRepos(etat) == 0 then
+                    commencerRepos(contenu, etat)
+                end
+                break
+            end
+        end
+        ____cond311 = ____cond311 or ____switch311 == "cadeau"
+        if ____cond311 then
             do
                 local h = ____exports.herosDuJoueur(etat, action.joueur)
                 if not __TS__ArrayIncludes(etat.compagnonsRencontres, action.compagnon) then
@@ -8980,8 +9513,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 if not peutOffrir(contenu, a, etat.jour) then
                     refuser(("Un cadeau tous les " .. tostring(contenu.config.affinite.jours_entre_cadeaux)) .. " jours au plus")
                 end
-                local ____h_inventaire_75, ____action_objet_76 = h.inventaire, action.objet
-                ____h_inventaire_75[____action_objet_76] = ____h_inventaire_75[____action_objet_76] - 1
+                local ____h_inventaire_97, ____action_objet_98 = h.inventaire, action.objet
+                ____h_inventaire_97[____action_objet_98] = ____h_inventaire_97[____action_objet_98] - 1
                 local r = reactionCadeau(contenu, action.compagnon, action.objet)
                 local d = modifierAffinite(
                     contenu,
@@ -8993,13 +9526,13 @@ function ____exports.appliquer(contenu, etatAvant, action)
                     )}
                 )
                 a.dernierCadeau = etat.jour
-                local ____etat_dernieresNouvelles_77 = etat.dernieresNouvelles
-                ____etat_dernieresNouvelles_77[#____etat_dernieresNouvelles_77 + 1] = (((((contenu.compagnons[action.compagnon].nom .. " ") .. ({prefere = "adore", apprecie = "apprécie", neutre = "accepte poliment", deteste = "n'aime pas du tout"})[r]) .. " ce cadeau (") .. (if d >= 0 then "+" else "")) .. tostring(d)) .. ")."
+                local ____etat_dernieresNouvelles_99 = etat.dernieresNouvelles
+                ____etat_dernieresNouvelles_99[#____etat_dernieresNouvelles_99 + 1] = (((((contenu.compagnons[action.compagnon].nom .. " ") .. ({prefere = "adore", apprecie = "apprécie", neutre = "accepte poliment", deteste = "n'aime pas du tout"})[r]) .. " ce cadeau (") .. (if d >= 0 then "+" else "")) .. tostring(d)) .. ")."
                 break
             end
         end
-        ____cond249 = ____cond249 or ____switch249 == "equipe"
-        if ____cond249 then
+        ____cond311 = ____cond311 or ____switch311 == "equipe"
+        if ____cond311 then
             do
                 local h = ____exports.herosDuJoueur(etat, action.joueur)
                 if vrai(action.compagnon) then
@@ -9027,8 +9560,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 break
             end
         end
-        ____cond249 = ____cond249 or ____switch249 == "equiper"
-        if ____cond249 then
+        ____cond311 = ____cond311 or ____switch311 == "equiper"
+        if ____cond311 then
             do
                 local h = ____exports.herosDuJoueur(etat, action.joueur)
                 local o = contenu.objets[action.objet] or refuser("Objet inconnu")
@@ -9043,14 +9576,14 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 if vrai(ancien) then
                     h.inventaire[ancien] = (h.inventaire[ancien] or 0) + 1
                 end
-                local ____h_inventaire_78, ____o_id_79 = h.inventaire, o.id
-                ____h_inventaire_78[____o_id_79] = ____h_inventaire_78[____o_id_79] - 1
+                local ____h_inventaire_100, ____o_id_101 = h.inventaire, o.id
+                ____h_inventaire_100[____o_id_101] = ____h_inventaire_100[____o_id_101] - 1
                 h.equipement[emplacement] = o.id
                 break
             end
         end
-        ____cond249 = ____cond249 or ____switch249 == "desequiper"
-        if ____cond249 then
+        ____cond311 = ____cond311 or ____switch311 == "desequiper"
+        if ____cond311 then
             do
                 local h = ____exports.herosDuJoueur(etat, action.joueur)
                 local ancien = h.equipement[action.emplacement]
@@ -9061,8 +9594,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 break
             end
         end
-        ____cond249 = ____cond249 or ____switch249 == "acheter"
-        if ____cond249 then
+        ____cond311 = ____cond311 or ____switch311 == "acheter"
+        if ____cond311 then
             do
                 local h = ____exports.herosDuJoueur(etat, action.joueur)
                 local lieu = __TS__ArrayFind(
@@ -9082,8 +9615,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 end
                 h["or"] = h["or"] - prix
                 h.inventaire[action.objet] = (h.inventaire[action.objet] or 0) + n
-                local ____etat_dernieresNouvelles_80 = etat.dernieresNouvelles
-                ____etat_dernieresNouvelles_80[#____etat_dernieresNouvelles_80 + 1] = (((((h.nom .. " achète ") .. (if n > 1 then tostring(n) .. " × " else "")) .. contenu.objets[action.objet].nom) .. " : −") .. tostring(prix)) .. " or."
+                local ____etat_dernieresNouvelles_102 = etat.dernieresNouvelles
+                ____etat_dernieresNouvelles_102[#____etat_dernieresNouvelles_102 + 1] = (((((h.nom .. " achète ") .. (if n > 1 then tostring(n) .. " × " else "")) .. contenu.objets[action.objet].nom) .. " : −") .. tostring(prix)) .. " or."
                 declencherEtapes(
                     contenu,
                     etat,
@@ -9092,8 +9625,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 break
             end
         end
-        ____cond249 = ____cond249 or ____switch249 == "vendre"
-        if ____cond249 then
+        ____cond311 = ____cond311 or ____switch311 == "vendre"
+        if ____cond311 then
             do
                 local h = ____exports.herosDuJoueur(etat, action.joueur)
                 local o = contenu.objets[action.objet] or refuser("Objet inconnu")
@@ -9108,11 +9641,11 @@ function ____exports.appliquer(contenu, etatAvant, action)
                     refuser("Vous n'en avez que " .. tostring(h.inventaire[o.id]))
                 end
                 local gain = ____exports.prixVente(contenu, h, o.id) * n
-                local ____h_inventaire_81, ____o_id_82 = h.inventaire, o.id
-                ____h_inventaire_81[____o_id_82] = ____h_inventaire_81[____o_id_82] - n
+                local ____h_inventaire_103, ____o_id_104 = h.inventaire, o.id
+                ____h_inventaire_103[____o_id_104] = ____h_inventaire_103[____o_id_104] - n
                 h["or"] = h["or"] + gain
-                local ____etat_dernieresNouvelles_83 = etat.dernieresNouvelles
-                ____etat_dernieresNouvelles_83[#____etat_dernieresNouvelles_83 + 1] = (((((h.nom .. " vend ") .. (if n > 1 then tostring(n) .. " × " else "")) .. o.nom) .. " : +") .. tostring(gain)) .. " or."
+                local ____etat_dernieresNouvelles_105 = etat.dernieresNouvelles
+                ____etat_dernieresNouvelles_105[#____etat_dernieresNouvelles_105 + 1] = (((((h.nom .. " vend ") .. (if n > 1 then tostring(n) .. " × " else "")) .. o.nom) .. " : +") .. tostring(gain)) .. " or."
                 declencherEtapes(
                     contenu,
                     etat,
@@ -9121,8 +9654,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 break
             end
         end
-        ____cond249 = ____cond249 or ____switch249 == "utiliser"
-        if ____cond249 then
+        ____cond311 = ____cond311 or ____switch311 == "utiliser"
+        if ____cond311 then
             do
                 local h = ____exports.herosDuJoueur(etat, action.joueur)
                 if not (h.inventaire[action.objet] > 0) then
@@ -9135,8 +9668,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 break
             end
         end
-        ____cond249 = ____cond249 or ____switch249 == "repartir"
-        if ____cond249 then
+        ____cond311 = ____cond311 or ____switch311 == "repartir"
+        if ____cond311 then
             do
                 local h = ____exports.herosDuJoueur(etat, action.joueur)
                 do
@@ -9153,8 +9686,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 break
             end
         end
-        ____cond249 = ____cond249 or ____switch249 == "ameliorer"
-        if ____cond249 then
+        ____cond311 = ____cond311 or ____switch311 == "ameliorer"
+        if ____cond311 then
             do
                 local h = ____exports.herosDuJoueur(etat, action.joueur)
                 do
@@ -9171,8 +9704,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 break
             end
         end
-        ____cond249 = ____cond249 or ____switch249 == "branche"
-        if ____cond249 then
+        ____cond311 = ____cond311 or ____switch311 == "branche"
+        if ____cond311 then
             do
                 local h = ____exports.herosDuJoueur(etat, action.joueur)
                 do
@@ -9189,8 +9722,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 break
             end
         end
-        ____cond249 = ____cond249 or ____switch249 == "contrat"
-        if ____cond249 then
+        ____cond311 = ____cond311 or ____switch311 == "contrat"
+        if ____cond311 then
             do
                 local h = ____exports.herosDuJoueur(etat, action.joueur)
                 local ct = contenu.contrats[action.contrat] or refuser("Contrat inconnu")
@@ -9206,7 +9739,15 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 if not ____exports.conditionHeros(contenu, etat, ct.disponible_si, h) then
                     refuser("Contrat indisponible")
                 end
-                if vrai(ct.rencontre) then
+                if #ct.etapes > 0 then
+                    if etat.contrats[h.id] then
+                        local ____opt_106 = contenu.contrats[etat.contrats[h.id].id]
+                        refuser("Terminez d'abord votre contrat en cours : " .. (____opt_106 and ____opt_106.titre or ""))
+                    end
+                    etat.contrats[h.id] = {id = ct.id, etape = 0, notes = {}}
+                    local ____etat_dernieresNouvelles_108 = etat.dernieresNouvelles
+                    ____etat_dernieresNouvelles_108[#____etat_dernieresNouvelles_108 + 1] = (("Contrat accepté : " .. ct.titre) .. ". ") .. ct.etapes[1].objectif
+                elseif vrai(ct.rencontre) then
                     lancerCombat(
                         contenu,
                         etat,
@@ -9259,38 +9800,131 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 break
             end
         end
-        ____cond249 = ____cond249 or ____switch249 == "meneur"
-        if ____cond249 then
+        ____cond311 = ____cond311 or ____switch311 == "etape_contrat"
+        if ____cond311 then
+            do
+                local h = ____exports.herosDuJoueur(etat, action.joueur)
+                local x = ____exports.etapeContrat(contenu, etat, h.id) or refuser("Vous n'avez pas de contrat en cours")
+                local st = etat.contrats[h.id]
+                local e = x.etape
+                if etat.combats[h.id] then
+                    refuser("Vous êtes déjà en combat")
+                end
+                if vrai(e.combat) then
+                    st.notes = {}
+                    lancerCombat(
+                        contenu,
+                        etat,
+                        e.combat,
+                        h.id,
+                        {
+                            cle = h.id,
+                            origine = "contrat",
+                            sceneCle = nil,
+                            victoire = nil,
+                            defaite = nil,
+                            evenementDonjon = nil,
+                            contrat = x.contrat.id,
+                            bilan = nil
+                        }
+                    )
+                    break
+                end
+                if e.test then
+                    local jet = de(etat.rng, 20)
+                    local total = jet + caracsTotales(contenu, h)[e.test.carac]
+                    local detail = (((((((e.test.carac .. " : dé ") .. tostring(jet)) .. " + ") .. tostring(total - jet)) .. " = ") .. tostring(total)) .. " contre ") .. tostring(e.test.difficulte)
+                    if jet == 20 or jet ~= 1 and total >= e.test.difficulte then
+                        st.notes = {(("Réussi (" .. detail) .. "). ") .. e.test.reussite}
+                        avancerContrat(contenu, etat, h)
+                    else
+                        local msgs = {}
+                        appliquerConsequence(
+                            contenu,
+                            etat,
+                            {xp = math.floor(x.contrat.recompenses.xp / 3 + 0.5)},
+                            {h.id},
+                            msgs
+                        )
+                        __TS__Delete(etat.contrats, h.id)
+                        __TS__ArrayPush(
+                            etat.dernieresNouvelles,
+                            ((("Contrat raté (" .. detail) .. "). ") .. e.test.echec) .. " Vous en tirez quand même une leçon.",
+                            table.unpack(msgs)
+                        )
+                    end
+                    break
+                end
+                if #e.choix > 0 then
+                    local ch = e.choix[(action.choix or -1) + 1] or refuser("Choisissez une des réponses proposées")
+                    local msgs = {}
+                    for ____, eff in ipairs(ch.effets) do
+                        appliquerConsequence(
+                            contenu,
+                            etat,
+                            eff,
+                            {h.id},
+                            msgs
+                        )
+                    end
+                    st.notes = (if vrai(ch.resultat) then {
+                        ch.resultat,
+                        table.unpack(msgs)
+                    } else msgs)
+                    avancerContrat(contenu, etat, h)
+                    break
+                end
+                st.notes = {}
+                avancerContrat(contenu, etat, h)
+                break
+            end
+        end
+        ____cond311 = ____cond311 or ____switch311 == "abandonner_contrat"
+        if ____cond311 then
+            do
+                local h = ____exports.herosDuJoueur(etat, action.joueur)
+                if not etat.contrats[h.id] then
+                    refuser("Vous n'avez pas de contrat en cours")
+                end
+                if etat.combats[h.id] then
+                    refuser("Terminez d'abord le combat")
+                end
+                __TS__Delete(etat.contrats, h.id)
+                break
+            end
+        end
+        ____cond311 = ____cond311 or ____switch311 == "meneur"
+        if ____cond311 then
             if not etat.joueurs[action.nouveau] then
                 refuser("Joueur inconnu")
             end
             etat.meneur = action.nouveau
             break
         end
-        ____cond249 = ____cond249 or ____switch249 == "nouvelle_session"
-        if ____cond249 then
+        ____cond311 = ____cond311 or ____switch311 == "nouvelle_session"
+        if ____cond311 then
             do
                 etat.session = etat.session + 1
                 local idx = __TS__ArrayIndexOf(etat.ordreJoueurs, etat.meneur or "")
                 etat.meneur = etat.ordreJoueurs[(idx + 1) % #etat.ordreJoueurs + 1] or nil
-                local ____journal_88 = journal
-                local ____contenu_87 = contenu
-                local ____etat_session_86 = etat.session
-                local ____opt_84 = etat.joueurs[etat.meneur or ""]
-                ____journal_88(
-                    ____contenu_87,
+                local ____journal_113 = journal
+                local ____contenu_112 = contenu
+                local ____etat_session_111 = etat.session
+                local ____opt_109 = etat.joueurs[etat.meneur or ""]
+                ____journal_113(
+                    ____contenu_112,
                     etat,
-                    ((("Session " .. tostring(____etat_session_86)) .. " : ") .. (____opt_84 and ____opt_84.pseudo or "?")) .. " est le meneur du jour."
+                    ((("Session " .. tostring(____etat_session_111)) .. " : ") .. (____opt_109 and ____opt_109.pseudo or "?")) .. " est le meneur du jour."
                 )
                 break
             end
         end
-        ____cond249 = ____cond249 or ____switch249 == "fusionner"
-        if ____cond249 then
+        ____cond311 = ____cond311 or ____switch311 == "fusionner"
+        if ____cond311 then
             do
                 local h = ____exports.herosDuJoueur(etat, action.joueur)
                 local id = idFusion(action.parent, action.secondaire)
-                local t = etat.grimoire[id]
+                local t = h.grimoire[id]
                 if not t then
                     local r = creerTechnique(contenu, action.parent, action.secondaire, h.nom)
                     if not r.ok then
@@ -9306,17 +9940,16 @@ function ____exports.appliquer(contenu, etatAvant, action)
                     end
                 end
                 local entree = (if vrai(action.cle) then etat.combats[action.cle] else nil)
-                local ____opt_89 = entree
-                local acteur = ____opt_89 and __TS__ArrayFind(
+                local ____opt_114 = entree
+                local acteur = ____opt_114 and __TS__ArrayFind(
                     entree and entree.combat.combattants,
                     function(____, c) return c.herosId == h.id and c.type == "heros" end
                 )
                 if vrai(action.cle) and (not entree or not acteur or entree.combat.enAttente ~= acteur.id) then
                     refuser("Ce n'est pas votre tour")
                 end
-                if not etat.grimoire[id] then
-                    etat.grimoire[id] = t
-                    journal(contenu, etat, ((h.nom .. " invente une technique : ") .. t.nom) .. ". Elle rejoint le grimoire de la partie.")
+                if not h.grimoire[id] then
+                    h.grimoire[id] = t
                 end
                 if not connue then
                     apprendre(h, t)
@@ -9332,8 +9965,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                         acteur.competencesPropres,
                         function(____, k) return k.id == t.id end
                     ) then
-                        local ____acteur_competencesPropres_93 = acteur.competencesPropres
-                        ____acteur_competencesPropres_93[#____acteur_competencesPropres_93 + 1] = __TS__ObjectAssign({}, t)
+                        local ____acteur_competencesPropres_118 = acteur.competencesPropres
+                        ____acteur_competencesPropres_118[#____acteur_competencesPropres_118 + 1] = __TS__ObjectAssign({}, t)
                     end
                     acteur.compteurs["rang:" .. t.id] = h.rangsCompetences[t.parent] or 1
                     do
@@ -9354,25 +9987,40 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 break
             end
         end
-        ____cond249 = ____cond249 or ____switch249 == "apprendre_technique"
-        if ____cond249 then
+        ____cond311 = ____cond311 or ____switch311 == "apprendre_technique"
+        if ____cond311 then
             do
                 local h = ____exports.herosDuJoueur(etat, action.joueur)
-                local t = etat.grimoire[action.technique] or refuser("Technique absente du grimoire")
+                local t = nil
+                local connues = connuesDe(contenu, h)
+                for ____, a in ipairs(connues) do
+                    for ____, b in ipairs(connues) do
+                        if t == nil and a ~= b and idFusion(a, b) == action.technique then
+                            local r = creerTechnique(contenu, a, b, h.nom)
+                            if not r.ok then
+                                refuser(r.raison)
+                            end
+                            t = r.technique
+                        end
+                    end
+                end
+                if t == nil then
+                    return refuser("Votre classe ne peut pas apprendre cette fusion")
+                end
                 local pb = peutApprendre(contenu, h, t)
                 if vrai(pb) then
                     refuser(pb)
                 end
                 apprendre(h, t)
-                journal(contenu, etat, ((h.nom .. " apprend la technique ") .. t.nom) .. ".")
+                h.grimoire[t.id] = t
                 break
             end
         end
-        ____cond249 = ____cond249 or ____switch249 == "oublier_variante"
-        if ____cond249 then
+        ____cond311 = ____cond311 or ____switch311 == "oublier_variante"
+        if ____cond311 then
             do
                 local h = ____exports.herosDuJoueur(etat, action.joueur)
-                local t = etat.grimoire[action.technique] or refuser("Technique inconnue")
+                local t = h.grimoire[action.technique] or refuser("Technique inconnue")
                 h.variantes[t.parent] = __TS__ArrayFilter(
                     h.variantes[t.parent] or ({}),
                     function(____, x) return x ~= t.id end
@@ -9380,11 +10028,12 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 if h.varianteActive[t.parent] == t.id then
                     h.varianteActive[t.parent] = nil
                 end
+                __TS__Delete(h.grimoire, t.id)
                 break
             end
         end
-        ____cond249 = ____cond249 or ____switch249 == "variante_active"
-        if ____cond249 then
+        ____cond311 = ____cond311 or ____switch311 == "variante_active"
+        if ____cond311 then
             do
                 local h = ____exports.herosDuJoueur(etat, action.joueur)
                 if vrai(action.technique) and not __TS__ArrayIncludes(h.variantes[action.competence] or ({}), action.technique) then
@@ -9394,8 +10043,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 break
             end
         end
-        ____cond249 = ____cond249 or ____switch249 == "equiper_competences"
-        if ____cond249 then
+        ____cond311 = ____cond311 or ____switch311 == "equiper_competences"
+        if ____cond311 then
             do
                 local h = ____exports.herosDuJoueur(etat, action.joueur)
                 local max = contenu.config.personnage.competences_equipees_max
@@ -9413,8 +10062,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 break
             end
         end
-        ____cond249 = ____cond249 or ____switch249 == "chapitre_suivant"
-        if ____cond249 then
+        ____cond311 = ____cond311 or ____switch311 == "chapitre_suivant"
+        if ____cond311 then
             if not vrai(etat.finChapitre) then
                 refuser("Le chapitre n'est pas terminé")
             end
@@ -9464,15 +10113,19 @@ local __TS__ArraySome = ____lualib.__TS__ArraySome
 local __TS__ArrayFind = ____lualib.__TS__ArrayFind
 local __TS__ArrayIndexOf = ____lualib.__TS__ArrayIndexOf
 local __TS__ArrayFilter = ____lualib.__TS__ArrayFilter
+local __TS__ArrayIncludes = ____lualib.__TS__ArrayIncludes
 local ____exports = {}
 local ____partie = require("src.moteur.partie")
 local conditionHeros = ____partie.conditionHeros
+local etapeContrat = ____partie.etapeContrat
 local scenesDisponibles = ____partie.scenesDisponibles
 local sceneEstDisponible = ____partie.sceneEstDisponible
 local ____outils = require("src.moteur.outils")
 local entrees = ____outils.entrees
 local valeurs = ____outils.valeurs
 local vrai = ____outils.vrai
+local ____temps = require("src.moteur.temps")
+local versJour = ____temps.versJour
 --- Vrai si un des nœuds de la scène lance un combat ou un donjon.
 function ____exports.sceneAvecCombat(s)
     return __TS__ArraySome(
@@ -9486,6 +10139,10 @@ function ____exports.lieuAvecCombat(contenu, etat, lieu, herosId)
         scenesDisponibles(contenu, etat, lieu, herosId),
         function(____, s) return ____exports.sceneAvecCombat(s) end
     ) then
+        return true
+    end
+    local ec = (if vrai(herosId) then etapeContrat(contenu, etat, herosId) else nil)
+    if ec and ec.etape.lieu == lieu and vrai(ec.etape.combat) then
         return true
     end
     if lieu == "guilde" and vrai(herosId) then
@@ -9530,22 +10187,26 @@ function ____exports.prochaineEtape(contenu, etat, herosId)
         end
         local scene = (if vrai(e.scene) then contenu.scenes[e.scene] else nil)
         local lieu = e.lieu or scene and scene.lieu or nil
+        local ____opt_2 = scene and scene.disponible_si
+        local dateMin = ____opt_2 and ____opt_2.date_min
+        local jourMin = (if dateMin then versJour(contenu, dateMin) else nil)
         return {
             objectif = e.objectif,
             lieu = lieu,
             nomLieu = nomDuLieu(contenu, lieu),
-            disponible = not not scene and sceneEstDisponible(contenu, etat, scene, herosId)
+            disponible = not not scene and sceneEstDisponible(contenu, etat, scene, herosId),
+            attenteJour = (if jourMin ~= nil and jourMin > etat.jour then jourMin else nil)
         }
     end
     local debut = __TS__ArrayFind(
         valeurs(contenu.scenes),
         function(____, s)
-            local ____vrai_result_4 = vrai(s.quete)
-            if ____vrai_result_4 then
-                local ____opt_2 = contenu.quetes[s.quete]
-                ____vrai_result_4 = (____opt_2 and ____opt_2.type) == "principale"
+            local ____vrai_result_8 = vrai(s.quete)
+            if ____vrai_result_8 then
+                local ____opt_6 = contenu.quetes[s.quete]
+                ____vrai_result_8 = (____opt_6 and ____opt_6.type) == "principale"
             end
-            return ____vrai_result_4 and sceneEstDisponible(contenu, etat, s, herosId)
+            return ____vrai_result_8 and sceneEstDisponible(contenu, etat, s, herosId)
         end
     )
     if not debut then
@@ -9561,19 +10222,20 @@ function ____exports.prochaineEtape(contenu, etat, herosId)
         objectif = e and e.objectif or debut.titre,
         lieu = lieu,
         nomLieu = nomDuLieu(contenu, lieu),
-        disponible = true
+        disponible = true,
+        attenteJour = nil
     }
 end
 local function marqueurScene(contenu, s)
     if s.rend_quete then
         return "rendre"
     end
-    local ____vrai_result_9 = vrai(s.quete)
-    if ____vrai_result_9 then
-        local ____opt_7 = contenu.quetes[s.quete]
-        ____vrai_result_9 = (____opt_7 and ____opt_7.type) == "principale"
+    local ____vrai_result_13 = vrai(s.quete)
+    if ____vrai_result_13 then
+        local ____opt_11 = contenu.quetes[s.quete]
+        ____vrai_result_13 = (____opt_11 and ____opt_11.type) == "principale"
     end
-    if ____vrai_result_9 then
+    if ____vrai_result_13 then
         return "principale"
     end
     return "secondaire"
@@ -9634,10 +10296,42 @@ function ____exports.absentsDuGroupe(etat)
     end
     return res
 end
+--- Lieux où mène une étape en cours (quêtes de la partie, contrat du héros) : ils clignotent sur la carte.
+-- Les lieux « etape_seulement » ne sont visibles que s'ils sont dans cette liste.
+function ____exports.lieuxDesEtapes(contenu, etat, herosId)
+    local res = {}
+    for ____, ____value in ipairs(entrees(etat.quetes)) do
+        local id = ____value[1]
+        local q = ____value[2]
+        local def = contenu.quetes[id]
+        if not def or q.terminee then
+            continue
+        end
+        local e = __TS__ArrayFind(
+            def.etapes,
+            function(____, x) return x.id == q.etape end
+        )
+        local ____e_lieu_16 = e.lieu
+        if ____e_lieu_16 == nil then
+            local ____opt_14 = contenu.scenes[e.scene]
+            ____e_lieu_16 = (if vrai(e.scene) then ____opt_14 and ____opt_14.lieu else nil)
+        end
+        local lieu = (if e then ____e_lieu_16 else nil)
+        if vrai(lieu) and not __TS__ArrayIncludes(res, lieu) then
+            res[#res + 1] = lieu
+        end
+    end
+    local ec = (if vrai(herosId) then etapeContrat(contenu, etat, herosId) else nil)
+    if ec and not __TS__ArrayIncludes(res, ec.etape.lieu) then
+        res[#res + 1] = ec.etape.lieu
+    end
+    return res
+end
 return ____exports
  end,
 ["src.sauvegarde.migrations"] = function(...) 
 local ____lualib = require("lualib_bundle")
+local __TS__Delete = ____lualib.__TS__Delete
 local __TS__Class = ____lualib.__TS__Class
 local Error = ____lualib.Error
 local RangeError = ____lualib.RangeError
@@ -9648,11 +10342,11 @@ local URIError = ____lualib.URIError
 local __TS__ClassExtends = ____lualib.__TS__ClassExtends
 local __TS__New = ____lualib.__TS__New
 local __TS__ArrayIsArray = ____lualib.__TS__ArrayIsArray
-local __TS__Delete = ____lualib.__TS__Delete
 local ____exports = {}
 local ____partie = require("src.moteur.partie")
 local VERSION_ETAT = ____partie.VERSION_ETAT
 local ____outils = require("src.moteur.outils")
+local cles = ____outils.cles
 local copieProfonde = ____outils.copieProfonde
 function ____exports.migrer(s)
     local res = s
@@ -9676,14 +10370,46 @@ function ____exports.migrer(s)
 end
 ____exports.FORMAT = "velmaris-sauvegarde"
 --- migrations[n] transforme une sauvegarde de version n en version n+1.
-____exports.migrations = {[1] = function(s)
-    local ____s_depart_0, ____grimoire_1 = s.depart, "grimoire"
-    if ____s_depart_0[____grimoire_1] == nil then
-        ____s_depart_0[____grimoire_1] = {}
+____exports.migrations = {
+    [1] = function(s)
+        local ____s_depart_0, ____grimoire_1 = s.depart, "grimoire"
+        if ____s_depart_0[____grimoire_1] == nil then
+            ____s_depart_0[____grimoire_1] = {}
+        end
+        s.version = 2
+        return s
+    end,
+    [2] = function(s)
+        local ____s_depart_2, ____repos_3 = s.depart, "repos"
+        if ____s_depart_2[____repos_3] == nil then
+            ____s_depart_2[____repos_3] = nil
+        end
+        s.version = 3
+        return s
+    end,
+    [3] = function(s)
+        local d = s.depart
+        if d.grimoire and #cles(d.grimoire) == 0 then
+            __TS__Delete(d, "grimoire")
+        end
+        if d.mises == nil then
+            d.mises = {}
+        end
+        if d.mouvementsOr == nil then
+            d.mouvementsOr = {}
+        end
+        s.version = 4
+        return s
+    end,
+    [4] = function(s)
+        local ____s_depart_4, ____contrats_5 = s.depart, "contrats"
+        if ____s_depart_4[____contrats_5] == nil then
+            ____s_depart_4[____contrats_5] = {}
+        end
+        s.version = 5
+        return s
     end
-    s.version = 2
-    return s
-end}
+}
 ____exports.ErreurSauvegarde = __TS__Class()
 local ErreurSauvegarde = ____exports.ErreurSauvegarde
 ErreurSauvegarde.name = "ErreurSauvegarde"

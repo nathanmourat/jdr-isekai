@@ -3,7 +3,7 @@
  */
 import { HttpService, Players, TextService } from "@rbxts/services";
 import { CONTENU } from "shared/donnees";
-import { appliquer, nouvellePartie, rejouer, type Action, type EtatPartie } from "shared/moteur";
+import { appliquer, FORMAT, jourPeutPasser, nouvellePartie, rejouer, verifierSauvegarde, type Action, type EtatPartie } from "shared/moteur";
 import { idJoueur, reseau, type ActionJoueur } from "shared/reseau";
 import { ajouterPartieAuJoueur, chargerEtVerrouiller, enregistrer, partieExiste, type DonneesPartie } from "./stockage";
 
@@ -15,7 +15,17 @@ export class PartieOuverte {
 	membres = new Set<Player>();
 	modifiee = false;
 
+	/** Temps de jeu actif accumulé (secondes) et dernière action « réelle » (pour le passage des jours). */
+	tempsActif = 0;
+	derniereActivite = os.clock();
+
 	constructor(public donnees: DonneesPartie) {
+		// parties enregistrées avec un ancien format : le moteur les met à jour (mêmes migrations que le web)
+		const [ok, migree] = pcall(() => verifierSauvegarde({ format: FORMAT, version: donnees.depart.version ?? 1, depart: donnees.depart, actions: donnees.actions }));
+		if (ok) {
+			donnees.depart = migree.depart;
+			donnees.actions = migree.actions;
+		} else warn(`[Velmaris] Migration de ${donnees.code} : ${tostring(migree)}`);
 		const res = rejouer(CONTENU, donnees.depart, donnees.actions);
 		if (res.erreurs.size() > 0) warn(`[Velmaris] ${res.erreurs.size()} action(s) ignorée(s) au rechargement de ${donnees.code}`);
 		this.etat = res.etat;
@@ -32,6 +42,7 @@ export class PartieOuverte {
 		}
 		if (erreur !== undefined || nouvel === undefined) return erreur ?? "Action refusée.";
 		this.etat = nouvel;
+		if (action.type !== "jour_passe" && action.type !== "presence") this.derniereActivite = os.clock();
 		const debut = this.donnees.actions.size();
 		this.donnees.actions.push(action);
 		this.modifiee = true;
@@ -157,6 +168,29 @@ export function actionDuJoueur(joueur: Player, brute: ActionJoueur) {
 	if (action.type === "rejoindre" || action.type === "portrait") return r.erreur.FireClient(joueur, "Action non disponible sur Roblox.");
 	const err = p.jouer(action);
 	if (err !== undefined) r.erreur.FireClient(joueur, err);
+}
+
+/**
+ * Les jours passent en jouant (comme sur le web) : 1 jour toutes les `minutes_par_jour` minutes de jeu actif,
+ * seulement si quelqu'un a agi depuis moins de `inactivite_minutes`, et jamais d'un mois à l'autre.
+ * Ici c'est le serveur qui envoie l'action, au nom du premier joueur présent.
+ */
+export function boucleJours() {
+	const cfg = CONTENU.config.jours_temps_reel;
+	while (true) {
+		task.wait(15);
+		for (const [, p] of ouvertes) {
+			if (p.membres.size() === 0) continue;
+			if (os.clock() - p.derniereActivite > cfg.inactivite_minutes * 60) continue;
+			p.tempsActif += 15;
+			if (p.tempsActif < cfg.minutes_par_jour * 60) continue;
+			p.tempsActif = 0;
+			const etat = p.etat;
+			if (!jourPeutPasser(CONTENU, etat)) continue;
+			const responsable = etat.ordreJoueurs.find((j) => etat.joueurs[j].present && etat.joueurs[j].herosId !== undefined);
+			if (responsable !== undefined) p.jouer({ type: "jour_passe", joueur: responsable, jour: etat.jour });
+		}
+	}
 }
 
 /** Sauvegarde régulière des parties modifiées (toutes les 10 s), et prolongation des verrous. */

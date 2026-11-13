@@ -4,7 +4,7 @@
  */
 import { Players } from "@rbxts/services";
 import { idJoueur, reseau, type Commande, type ReponseCommande } from "shared/reseau";
-import { actionDuJoueur, boucleSauvegarde, creerPartie, entrer, messageErreur, ouvrirPartie, partieDe, sortir, toutEnregistrer } from "./parties";
+import { actionDuJoueur, boucleJours, boucleSauvegarde, creerPartie, entrer, messageErreur, ouvrirPartie, partieDe, sortir, toutEnregistrer } from "./parties";
 import { partiesDuJoueur, sauvegardeActive } from "./stockage";
 import { construireMonde } from "./monde";
 import { preparerModeles } from "./modeles";
@@ -60,5 +60,6 @@ r.action.OnServerEvent.Connect((joueur, a) => actionDuJoueur(joueur, a as never)
 Players.PlayerRemoving.Connect((joueur) => sortir(joueur));
 game.BindToClose(() => toutEnregistrer());
 task.spawn(boucleSauvegarde);
+task.spawn(boucleJours);
 
 print("[Velmaris] Serveur prêt.");

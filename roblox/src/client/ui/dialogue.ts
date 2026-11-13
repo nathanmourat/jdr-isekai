@@ -3,9 +3,9 @@
  * tests de caractéristique, passage au combat.
  */
 import { CONTENU } from "shared/donnees";
-import { choixVisibles, conditionScene, noeudCourant, remplacerVariables, type EtatPartie } from "shared/moteur";
+import { choixVisibles, conditionScene, miseDuChoix, noeudCourant, remplacerVariables, type EtatPartie } from "shared/moteur";
 import { affichage } from "../local";
-import { agir, jeu } from "../partie";
+import { agir, jeu, monHeros } from "../partie";
 import { bouton, carte, COULEURS, esc, ligne, texte } from "./kit";
 
 const NOMS_CARACS: Record<string, string> = { FOR: "Force", AGI: "Agilité", INT: "Intelligence", VIT: "Vitalité", ESP: "Esprit", CHA: "Charisme" };
@@ -68,6 +68,24 @@ export function vueDialogue(parent: Frame, cle: string, redessiner: () => void) 
 		bouton(c, "Terminer la scène", () => agir({ type: "quitter_scene", cle }), { principal: true });
 		return;
 	}
+	// un personnage s'adresse à un joueur précis : lui seul répond
+	const parole = es.parole;
+	if (parole && noeud?.parole_a) {
+		const q = noeud.parole_a.question;
+		const dire = (t: string) => remplacerVariables(CONTENU, etat, t, es.heros, parole.heros);
+		const qui = nomPersonnage(etat, q.qui, es.heros);
+		if (qui !== "") texte(c, qui, 16, { gras: true, couleur: COULEURS.or });
+		texte(c, dire(q.dit), 18);
+		const interroge = etat.heros[parole.heros];
+		if (monHeros()?.id === parole.heros) {
+			texte(c, "C'est à toi de répondre :", 14, { couleur: COULEURS.or });
+			for (const i of parole.reponses) bouton(c, dire(noeud.parole_a.reponses[i].texte), () => agir({ type: "repondre", cle, index: i }), { largeur: new UDim(1, 0), hauteur: 40, taille: 15 });
+		} else {
+			const pseudo = etat.joueurs[interroge?.joueurId ?? ""]?.pseudo ?? "?";
+			texte(c, `<i>${esc(interroge?.nom ?? "?")} (${esc(pseudo)}) réfléchit à sa réponse…</i>`, 15, { couleur: COULEURS.texte2 });
+		}
+		return;
+	}
 	if (combatEnAttente) {
 		bouton(
 			c,
@@ -88,8 +106,12 @@ export function vueDialogue(parent: Frame, cle: string, redessiner: () => void) 
 			const votants: string[] = [];
 			for (const [j, v] of pairs(es.votes)) if (v === ch.index) votants.push(esc(etat.joueurs[j]?.pseudo ?? "?"));
 			const test = ch.choix.test ? ` <font color="#beaf96">[test de ${NOMS_CARACS[ch.choix.test.carac]}]</font>` : "";
-			texte(l, `${txt(ch.choix.texte)}${test}${ch.possible ? "" : ' <font color="#c4483c">(indisponible)</font>'}${groupe && votants.size() > 0 ? `\n<font color="#d9a441">Votes : ${votants.join(", ")}</font>` : ""}`, 15, { largeur: new UDim(1, -110) });
-			bouton(l, groupe ? "Voter" : "Choisir", () => agir({ type: "choisir", cle, index: ch.index }), { actif: ch.possible, choisi: es.votes[jeu.moi] === ch.index, hauteur: 34 });
+			// pari : la mise sort vraiment du porte-monnaie
+			const mise = miseDuChoix(ch.choix);
+			const orDispo = monHeros()?.or ?? 0;
+			const pari = mise > 0 ? ` <font color="#d9a441">[mise ${mise} or${orDispo < mise ? " — pas assez d'or" : ""}]</font>` : "";
+			texte(l, `${txt(ch.choix.texte)}${test}${pari}${ch.possible ? "" : ' <font color="#c4483c">(indisponible)</font>'}${groupe && votants.size() > 0 ? `\n<font color="#d9a441">Votes : ${votants.join(", ")}</font>` : ""}`, 15, { largeur: new UDim(1, -110) });
+			bouton(l, groupe ? "Voter" : "Choisir", () => agir({ type: "choisir", cle, index: ch.index }), { actif: ch.possible && orDispo >= mise, choisi: es.votes[jeu.moi] === ch.index, hauteur: 34 });
 		}
 		if (groupe) {
 			const attente = presents.filter((j) => es.votes[j] === undefined).map((j) => esc(etat.joueurs[j].pseudo));

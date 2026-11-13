@@ -187,6 +187,24 @@ Je n'ai mis aucun numéro moi-même : je ne peux pas vérifier qu'un son existe 
 - [ ] Marché : E sur un marchand → boutique.
 - [ ] À 2 joueurs : chacun peut être dans une salle différente.
 
+## Nouveautés du web intégrées (lots C, D et E)
+
+- **Les jours passent en jouant** : 1 jour toutes les 10 minutes de jeu actif (le serveur s'en charge), jamais d'un mois à l'autre.
+- **Les mois passent à l'auberge** : dans la taverne, le **lit** (touche E) propose de dormir 1, 3 ou 6 mois, ou « jusqu'à la suite de l'histoire ». Tous les joueurs présents doivent accepter. La demande s'affiche dans la barre du haut, où qu'ils soient.
+- **Questions adressées à un joueur** : pendant certaines scènes, un PNJ interroge un joueur par son pseudo. Lui seul choisit parmi 3 réponses, adaptées à sa classe ou à sa race. Les autres voient « … réfléchit à sa réponse ».
+- **Paris** : la mise est indiquée sur le choix, et grisée si tu n'as pas assez d'or.
+- **Grimoire personnel** : chacun a ses fusions. La Guilde n'enseigne que celles de ta classe (pupitre du grimoire).
+- **Contrats et quêtes par étapes** : on accepte le contrat au tableau de la Guilde, puis chaque étape se joue dans un lieu.
+  - Les **lieux d'étape** (lisière de la Combe, gué de Valmont, égouts…) apparaissent comme une **balise lumineuse dorée**, visible seulement pendant l'étape qui y mène. On l'examine avec E.
+  - La barre du haut rappelle le contrat en cours, avec un bouton **Y aller**.
+- **Anciennes parties Roblox** : mises à jour automatiquement au chargement (mêmes migrations que le web).
+
+### Liste de contrôle
+- [ ] Taverne → lit → « Dormir 1 mois » : l'autre joueur voit la demande en haut ; quand il accepte, le temps libre commence.
+- [ ] Scène de l'Appel : le Grand Prieur interroge un joueur par son pseudo, et seul ce joueur a les 3 réponses.
+- [ ] Guilde → tableau → accepter « Les loups… » → une balise dorée apparaît (Y aller) → Examiner → étape suivante… → retour à la Guilde pour la récompense.
+- [ ] Pupitre du grimoire : seules les fusions de ta classe sont proposées.
+
 ## Publier sur Roblox (quand tout marche)
 
 1. **Fichier → Publier sur Roblox**, si ce n'est pas déjà fait.

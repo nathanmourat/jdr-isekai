@@ -19,6 +19,9 @@ for _, etat in sortie.points do
 	for _, h in moteur.listeHeros(etat) do table.insert(tous, h.id) end
 	for _, h in moteur.listeHeros(etat) do
 		essai("prochaineEtape", function() moteur.prochaineEtape(contenu, etat, h.id) end)
+		essai("contrat/etapes", function() moteur.etapeContrat(contenu, etat, h.id); moteur.lieuxDesEtapes(contenu, etat, h.id) end)
+		essai("fusions", function() moteur.fusionsPossibles(contenu, h) end)
+		essai("auberge", function() moteur.attenteRepos(etat); moteur.prochaineDateHistoire(contenu, etat); moteur.jourPeutPasser(contenu, etat) end)
 		essai("caracsTotales", function() moteur.caracsTotales(contenu, h) end)
 		essai("competences", function() moteur.competencesConnues(contenu, h); moteur.competencesEquipees(contenu, h) end)
 		essai("scenesDisponibles(partout)", function() moteur.scenesDisponibles(contenu, etat, nil, h.id) end)
@@ -39,7 +42,11 @@ for _, etat in sortie.points do
 		essai("scene " .. es.sceneId, function()
 			local n = moteur.noeudCourant(contenu, etat, cle)
 			if n then for _, r in n.repliques do moteur.remplacerVariables(contenu, etat, r.dit, es.heros); moteur.conditionScene(contenu, etat, r.si, es.heros) end end
-			moteur.choixVisibles(contenu, etat, cle)
+			for _, ch in moteur.choixVisibles(contenu, etat, cle) do moteur.miseDuChoix(ch.choix) end
+			if n and n.parole_a and es.parole then
+				moteur.remplacerVariables(contenu, etat, n.parole_a.question.dit, es.heros, es.parole.heros)
+				for _, i in es.parole.reponses do moteur.remplacerVariables(contenu, etat, n.parole_a.reponses[i + 1].texte, es.heros, es.parole.heros) end
+			end
 		end)
 	end
 	for cle, e in etat.combats do
@@ -49,7 +56,7 @@ for _, etat in sortie.points do
 				moteur.actionsDisponibles(contenu, c, c.enAttente)
 				local x
 				for _, y in c.combattants do if y.id == c.enAttente then x = y end end
-				local ctx = { contenu = contenu, combat = c, acteur = c.enAttente, heros = x and x.herosId and etat.heros[x.herosId], grimoire = etat.grimoire or {} }
+				local ctx = { contenu = contenu, combat = c, acteur = c.enAttente, heros = x and x.herosId and etat.heros[x.herosId], grimoire = (x and x.herosId and etat.heros[x.herosId].grimoire) or {} }
 				moteur.propositionsScript(ctx)
 				moteur.interpreter(ctx, "je vise la tête")
 				moteur.interpreter(ctx, "je combine les deux")
