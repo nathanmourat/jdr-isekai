@@ -146,6 +146,7 @@ function verifierReferences(c: Contenu): string[] {
     for (const o of l.boutique) if (!c.objets[o]) e.push(`Lieu ${l.id} › objet de boutique « ${o} » introuvable`);
     for (const p of l.pnj) if (!c.pnj[p.id] && !c.compagnons[p.id]) e.push(`Lieu ${l.id} › PNJ « ${p.id} » introuvable`);
     if (l.disponible_si) verifierCondition(c, `Lieu ${l.id}`, l.disponible_si, e);
+    if (l.ville && !reg.villes.some((v) => v.id === l.ville)) e.push(`Lieu ${l.id} › ville « ${l.ville} » introuvable dans la région ${reg.id}`);
   }
   const lieux = new Set(Object.values(c.regions).flatMap((r) => r.lieux.map((l) => l.id)));
   for (const s of Object.values(c.scenes)) {
@@ -153,6 +154,7 @@ function verifierReferences(c: Contenu): string[] {
     if (!s.noeuds[s.debut]) e.push(`${ou} › nœud de départ « ${s.debut} » introuvable`);
     if (s.lieu && !lieux.has(s.lieu)) e.push(`${ou} › lieu « ${s.lieu} » introuvable`);
     if (s.quete && !c.quetes[s.quete]) e.push(`${ou} › quête « ${s.quete} » introuvable`);
+    if (s.pnj && !c.pnj[s.pnj] && !c.compagnons[s.pnj]) e.push(`${ou} › PNJ « ${s.pnj} » introuvable`);
     if (s.disponible_si) verifierCondition(c, ou, s.disponible_si, e);
     for (const [nid, n] of Object.entries(s.noeuds)) {
       const lien = (cible: string | undefined, quoi: string) => { if (cible && !s.noeuds[cible]) e.push(`${ou} › nœud ${nid} › ${quoi} vers « ${cible} » introuvable`); };
@@ -174,7 +176,11 @@ function verifierReferences(c: Contenu): string[] {
       }
     }
   }
-  for (const q of Object.values(c.quetes)) for (const et of q.etapes) if (et.scene && !c.scenes[et.scene]) e.push(`Quête ${q.id} › étape ${et.id} › scène « ${et.scene} » introuvable`);
+  for (const q of Object.values(c.quetes)) for (const et of q.etapes) {
+    if (et.scene && !c.scenes[et.scene]) e.push(`Quête ${q.id} › étape ${et.id} › scène « ${et.scene} » introuvable`);
+    if (et.lieu && !lieux.has(et.lieu)) e.push(`Quête ${q.id} › étape ${et.id} › lieu « ${et.lieu} » introuvable`);
+    if (et.declencheur?.acheter && !lieux.has(et.declencheur.acheter)) e.push(`Quête ${q.id} › étape ${et.id} › boutique « ${et.declencheur.acheter} » introuvable`);
+  }
   for (const d of Object.values(c.donjons)) {
     const largeur = d.carte[0].length;
     d.carte.forEach((ligne, y) => {

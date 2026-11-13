@@ -28,4 +28,5 @@ objets:
   - { id: cle-crypte, nom: "Clé de bronze de la crypte", description: "Ouvre la salle du fond de la Crypte de la Fontaine.", type: quete }
   - { id: croc-de-loup, nom: "Croc de loup", description: "Matériau d'artisanat.", type: materiau, prix: 4 }
   - { id: soie-d-araignee, nom: "Soie d'araignée", description: "Matériau d'artisanat.", type: materiau, prix: 6 }
+  - { id: breloque-cabossee, nom: "Breloque cabossée", description: "Une vieille breloque en cuivre, trouvée entre deux pavés. Elle ne sert à rien, mais elle se vend.", type: materiau, prix: 12 }
   - { id: relique-douteuse, nom: "Relique douteuse", description: "Un « os de saint » vendu sous le manteau.", type: quete, prix: 0 }

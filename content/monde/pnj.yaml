@@ -1,6 +1,6 @@
 # Personnages non jouables (hors compagnons). Les compagnons sont dans content/compagnons/.
 pnj:
-  - { id: mathis, nom: "Grand Prieur Mathis", titre: "Ordre de la Lumière Sereine", description: "Crâne rasé, barbe blanche, sourire bienveillant un peu trop parfait." }
+  - { id: aureliath, nom: "Grand Prieur Auréliath", titre: "Ordre de la Lumière Sereine", description: "Crâne rasé, barbe blanche, sourire bienveillant un peu trop parfait." }
   - { id: rowena, nom: "Dame Rowena", titre: "Maîtresse de la Guilde", description: "Cheveux gris coupés court, cicatrice sur l'œil, pipe éteinte entre les dents." }
   - { id: edmund-iv, nom: "Edmund IV", titre: "Roi d'Aubeclaire", description: "Couronne lourde, barbe grise, regard fatigué et dur." }
   - { id: seraphine, nom: "Séraphine d'Aubeclaire", titre: "Princesse", description: "Seconde de la lignée, espiègle sous l'étiquette." }
@@ -8,6 +8,7 @@ pnj:
   - { id: kaya, nom: "Kaya Lunecroc", titre: "Aventurière ourvalis, rang E", description: "Oreilles de loup argentées, franche jusqu'à la gaffe." }
   - { id: vorthak, nom: "Vorthak", titre: "Émissaire des Cendres", description: "Démon en armure noire aux flammes violettes." }
   - { id: ferrand, nom: "Ferrand", titre: "Marchand de reliques", description: "Sourire huileux, manteau trop beau pour son commerce." }
+  - { id: halvine, nom: "Dame Halvine Corbelet", titre: "Marchande du Comptoir", description: "Petite femme vive aux lunettes rondes, tablier plein de poches, compte plus vite que son boulier." }
   - { id: bram, nom: "Bram", titre: "Tavernier du Chaudron Fêlé", description: "Colosse jovial, tablier taché, cœur d'or." }
   - { id: lina, nom: "Lina", titre: "Jeune tanneuse", description: "Disparue du quartier des Tanneurs." }
   - { id: tobin, nom: "Tobin", titre: "Apprenti de l'Ordre", description: "Dix-neuf ans, curieux, trop curieux." }

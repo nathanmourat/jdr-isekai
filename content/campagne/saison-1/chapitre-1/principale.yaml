@@ -2,6 +2,7 @@
 scenes:
   # ─────────────────────────────────────────────────────────────
   - id: ch1-appel
+    pnj: aureliath
     titre: "L'Appel"
     type: groupe
     lieu: temple-du-seuil
@@ -13,8 +14,8 @@ scenes:
         repliques:
           - { dit: "Printemps 1012. Un cercle de lumière bleue embrase le sol du Temple du Seuil. Des chants montent, des vitraux vibrent… puis le silence." }
           - { dit: "Au centre du cercle, des silhouettes se relèvent, hagardes : les invoqués. À la lisière de la lumière, d'autres jeunes gens, attirés ici par une résonance qu'ils ne savent pas nommer : les réincarnés.", si: { origine: reincarne } }
-          - { qui: mathis, dit: "« Bienvenue à Velmaris, Appelés. Je suis Mathis, Grand Prieur de l'Ordre de la Lumière Sereine. N'ayez crainte : la Lumière vous a choisis. »" }
-          - { qui: mathis, dit: "« Le Souverain des Cendres s'est éveillé au nord. Le Mur d'Aube faiblit. Le royaume a besoin de héros. »" }
+          - { qui: aureliath, dit: "« Bienvenue à Velmaris, Appelés. Je suis Auréliath, Grand Prieur de l'Ordre de la Lumière Sereine. N'ayez crainte : la Lumière vous a choisis. »" }
+          - { qui: aureliath, dit: "« Le Souverain des Cendres s'est éveillé au nord. Le Mur d'Aube faiblit. Le royaume a besoin de héros. »" }
           - { qui: aveline, expression: neutre, dit: "Une jeune femme en armure argentée s'avance, la main sur le pommeau. « Capitaine Aveline de Castelroc. Je suis chargée de votre sécurité. » Son regard s'attarde sur vous, méfiant." }
         choix:
           - texte: "« Un monde de magie ? Génial. Où est-ce qu'on signe ? » (enthousiaste)"
@@ -28,22 +29,22 @@ scenes:
             aller: humour
       enthousiaste:
         repliques:
-          - { qui: mathis, dit: "Le Grand Prieur sourit largement. « Voilà l'esprit des héros ! »" }
+          - { qui: aureliath, dit: "Le Grand Prieur sourit largement. « Voilà l'esprit des héros ! »" }
           - { qui: aveline, dit: "Aveline soupire. « Les derniers à avoir dit ça sont enterrés sous le Mur d'Aube. »" }
         suite: suite
       mefiant:
         repliques:
-          - { qui: mathis, dit: "Le sourire du Grand Prieur se fige une fraction de seconde. « La Lumière a ses raisons. Vous les comprendrez. »" }
+          - { qui: aureliath, dit: "Le sourire du Grand Prieur se fige une fraction de seconde. « La Lumière a ses raisons. Vous les comprendrez. »" }
           - { qui: aveline, dit: "Aveline vous jette un regard nouveau. Presque… approbateur." }
         suite: suite
       humour:
         repliques:
-          - { dit: "Un acolyte s'étrangle. Mathis cligne des yeux." }
+          - { dit: "Un acolyte s'étrangle. Auréliath cligne des yeux." }
           - { qui: aveline, expression: joie, dit: "Aveline détourne la tête, mais vous l'avez vue : elle a souri. « Par ici. Et oui, il y en a. »" }
         suite: suite
       suite:
         repliques:
-          - { qui: mathis, dit: "« Reposez-vous. Demain, la Couronne vous recevra. En attendant, la Guilde de la Rose des Vents vous ouvrira ses portes : vous y apprendrez à survivre. »" }
+          - { qui: aureliath, dit: "« Reposez-vous. Demain, la Couronne vous recevra. En attendant, la Guilde de la Rose des Vents vous ouvrira ses portes : vous y apprendrez à survivre. »" }
           - { dit: "Ce soir-là, en contemplant les tours blanches de Lysmont depuis la fenêtre du temple, chacun de vous voit flotter devant ses yeux une fenêtre translucide : votre niveau, vos capacités… et votre don." }
         effets:
           - { flag: [appel-fait, aveline-rencontree], recruter: aveline, quete: { id: q-ch1-appel, etape: examen }, journal: "L'Appel : {groupe} arrivent au Temple du Seuil. La capitaine Aveline de Castelroc est chargée de leur sécurité." }
@@ -51,6 +52,7 @@ scenes:
 
   # ─────────────────────────────────────────────────────────────
   - id: ch1-examen
+    pnj: rowena
     titre: "L'examen de la Guilde"
     type: groupe
     lieu: guilde
@@ -227,6 +229,7 @@ scenes:
 
   # ─────────────────────────────────────────────────────────────
   - id: ch1-serment
+    pnj: edmund-iv
     titre: "Le Serment"
     type: groupe
     lieu: chateau

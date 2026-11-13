@@ -58,3 +58,51 @@ export function prochaineEtape(contenu: Contenu, etat: EtatPartie, herosId: stri
   const lieu = debut.lieu ?? null;
   return { objectif: e?.objectif ?? debut.titre, lieu, nomLieu: nomDuLieu(contenu, lieu), disponible: true };
 }
+
+// ───────────────────────────── PNJ et symboles (« ! » et « ? ») ─────────────────────────────
+
+/** 'principale' = « ! » doré, 'secondaire' = « ! » argenté, 'rendre' = « ? » (quête à rendre). */
+export type Marqueur = 'principale' | 'secondaire' | 'rendre';
+
+function marqueurScene(contenu: Contenu, s: Scene): Marqueur {
+  if (s.rend_quete) return 'rendre';
+  if (vrai(s.quete) && contenu.quetes[s.quete]?.type === 'principale') return 'principale';
+  return 'secondaire';
+}
+
+function plusImportant(a: Marqueur | null, b: Marqueur): Marqueur {
+  if (a === null) return b;
+  const ordre: Marqueur[] = ['secondaire', 'rendre', 'principale'];
+  return ordre.indexOf(b) > ordre.indexOf(a) ? b : a;
+}
+
+/** Scènes disponibles dans ce lieu qui se lancent en parlant à ce PNJ. */
+export function scenesDuPnj(contenu: Contenu, etat: EtatPartie, lieu: string, pnj: string, herosId: string | null): Scene[] {
+  return scenesDisponibles(contenu, etat, lieu, herosId).filter((s) => s.pnj === pnj);
+}
+
+/** Symbole à afficher au-dessus d'un PNJ (null : rien d'important à dire). */
+export function marqueurPnj(contenu: Contenu, etat: EtatPartie, lieu: string, pnj: string, herosId: string | null): Marqueur | null {
+  let res: Marqueur | null = null;
+  for (const s of scenesDuPnj(contenu, etat, lieu, pnj, herosId)) res = plusImportant(res, marqueurScene(contenu, s));
+  return res;
+}
+
+/** Symbole à afficher sur un lieu de la carte ou du plan (le plus important de ses scènes). */
+export function marqueurLieu(contenu: Contenu, etat: EtatPartie, lieu: string, herosId: string | null): Marqueur | null {
+  let res: Marqueur | null = null;
+  for (const s of scenesDisponibles(contenu, etat, lieu, herosId)) res = plusImportant(res, marqueurScene(contenu, s));
+  return res;
+}
+
+/** Joueurs qui ne participeront pas à une scène de groupe lancée maintenant (absents dont le héros reste au camp, ou sans héros). */
+export function absentsDuGroupe(etat: EtatPartie): string[] {
+  const res: string[] = [];
+  for (const j of etat.ordreJoueurs) {
+    const joueur = etat.joueurs[j];
+    const h = vrai(joueur.herosId) ? etat.heros[joueur.herosId] : null;
+    if (!h) res.push(`${joueur.pseudo} (pas encore de héros)`);
+    else if (!joueur.present) res.push(`${joueur.pseudo} (absent : ${h.siAbsent === 'ia' ? "son héros sera joué par l'ordinateur" : 'son héros reste au camp'})`);
+  }
+  return res;
+}

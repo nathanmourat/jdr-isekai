@@ -1,6 +1,7 @@
 # Chapitre 1 — quêtes secondaires (scènes de groupe, disponibles après l'examen de la Guilde).
 scenes:
   - id: sq-loups
+    pnj: gareth
     titre: "Les loups de la Combe-aux-Saules"
     type: groupe
     lieu: combe-aux-saules
@@ -49,6 +50,7 @@ scenes:
         fin: true
 
   - id: sq-reliques
+    pnj: ferrand
     titre: "Le marchand de reliques"
     type: groupe
     lieu: taverne
@@ -138,6 +140,7 @@ scenes:
         fin: true
 
   - id: sq-apprenti
+    pnj: elianne
     titre: "L'apprenti de l'Ordre"
     type: groupe
     lieu: temple-du-seuil
@@ -157,7 +160,7 @@ scenes:
           - texte: "Le convaincre de remettre le registre en place avant qu'il ne soit trop tard."
             effets: [{ reputation: { ordre: 5 } }]
             aller: raisonner
-          - texte: "Le dénoncer au Grand Prieur Mathis."
+          - texte: "Le dénoncer au Grand Prieur Auréliath."
             effets: [{ reputation: { ordre: 10 }, flag: tobin-denonce }]
             aller: denonce
       lire:
@@ -171,13 +174,14 @@ scenes:
         suite: fin
       denonce:
         repliques:
-          - { qui: mathis, dit: "Le Grand Prieur vous remercie chaleureusement. Le lendemain, Tobin a été « envoyé dans un monastère du nord ». Elianne ne vous adresse plus la parole." }
+          - { qui: aureliath, dit: "Le Grand Prieur vous remercie chaleureusement. Le lendemain, Tobin a été « envoyé dans un monastère du nord ». Elianne ne vous adresse plus la parole." }
         suite: fin
       fin:
         effets: [{ terminer_quete: q-apprenti, points_guilde: 15 }]
         fin: true
 
   - id: sq-tournoi
+    pnj: aveline
     titre: "Le tournoi des écuyers"
     type: groupe
     lieu: arene
@@ -208,4 +212,42 @@ scenes:
         suite: fin
       fin:
         effets: [{ terminer_quete: q-tournoi, points_guilde: 25 }]
+        fin: true
+
+  # ─────────────────────────────────────────────────────────────
+  #  Quête d'initiation : la boutique (changement 4 du test 1)
+  - id: sq-boutique
+    pnj: halvine
+    titre: "Premiers pas au Comptoir"
+    type: individuel
+    lieu: boutique
+    decor: boutique
+    quete: q-boutique
+    disponible_si: { flag: examen-reussi, pas_flag: boutique-decouverte }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: halvine, dit: "« Un nouveau visage de la Guilde ! Entrez, entrez. Dame Halvine Corbelet, pour vous servir. Ici, tout a un prix, et le prix est juste. »" }
+          - { qui: halvine, dit: "« C'est simple : l'onglet Acheter montre ce que je vends, l'onglet Vendre montre ce que vous avez dans votre sac. Je reprends tout à moitié prix, sauf les objets de quête. »" }
+          - { dit: "En vous penchant vers le comptoir, vous remarquez quelque chose qui brille entre deux pavés : une vieille breloque de cuivre." }
+          - { qui: halvine, dit: "« Tiens, ça traîne là depuis des semaines. Gardez-la. Achetez-moi d'abord quelque chose d'utile, une petite potion par exemple, puis revendez-moi cette breloque : vous saurez tout faire. »" }
+        effets:
+          - { flag: boutique-decouverte, objet: breloque-cabossee, quete: { id: q-boutique, etape: acheter } }
+        fin: true
+  - id: sq-boutique-fin
+    pnj: halvine
+    rend_quete: true
+    titre: "Premiers pas au Comptoir : le compte est bon"
+    type: individuel
+    lieu: boutique
+    decor: boutique
+    quete: q-boutique
+    disponible_si: { quete_etape: { q-boutique: retour } }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: halvine, dit: "« Acheté, vendu, et sans vous faire rouler : vous apprenez vite. » Elle pousse une petite fiole et quelques pièces vers vous." }
+          - { qui: halvine, dit: "« Cadeau de la maison. Revenez quand votre bourse sera plus lourde : j'ai toujours de quoi l'alléger. »" }
+        effets:
+          - { terminer_quete: q-boutique, or: 15, xp: 20, objet: potion-soin-petite }
         fin: true

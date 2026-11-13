@@ -126,8 +126,8 @@ export type Action =
   | { type: 'equipe'; joueur: string; compagnon: string | null }
   | { type: 'equiper'; joueur: string; objet: string }
   | { type: 'desequiper'; joueur: string; emplacement: 'arme' | 'armure' | 'accessoire' }
-  | { type: 'acheter'; joueur: string; objet: string; lieu: string }
-  | { type: 'vendre'; joueur: string; objet: string }
+  | { type: 'acheter'; joueur: string; objet: string; lieu: string; quantite?: number }
+  | { type: 'vendre'; joueur: string; objet: string; quantite?: number }
   | { type: 'utiliser'; joueur: string; objet: string }
   | { type: 'repartir'; joueur: string; carac: Carac }
   | { type: 'ameliorer'; joueur: string; competence: string }
@@ -907,10 +907,13 @@ export function appliquer(contenu: Contenu, etatAvant: EtatPartie, action: Actio
       const h = herosDuJoueur(etat, action.joueur);
       const lieu = valeurs(contenu.regions).flatMap((r) => r.lieux).find((l) => l.id === action.lieu) ?? refuser('Lieu inconnu');
       if (!lieu.boutique.includes(action.objet)) refuser('Cet objet n\'est pas vendu ici');
-      const prix = prixAchat(contenu, h, action.objet);
+      const n = quantiteValide(action.quantite);
+      const prix = prixAchat(contenu, h, action.objet) * n;
       if (h.or < prix) refuser('Pas assez d\'or');
       h.or -= prix;
-      h.inventaire[action.objet] = (h.inventaire[action.objet] ?? 0) + 1;
+      h.inventaire[action.objet] = (h.inventaire[action.objet] ?? 0) + n;
+      etat.dernieresNouvelles.push(`${h.nom} achète ${n > 1 ? `${n} × ` : ''}${contenu.objets[action.objet].nom} : −${prix} or.`);
+      declencherEtapes(contenu, etat, (d) => d.acheter === action.lieu);
       break;
     }
     case 'vendre': {
@@ -918,8 +921,13 @@ export function appliquer(contenu: Contenu, etatAvant: EtatPartie, action: Actio
       const o = contenu.objets[action.objet] ?? refuser('Objet inconnu');
       if (!(h.inventaire[o.id] > 0)) refuser('Vous n\'avez pas cet objet');
       if (o.type === 'quete') refuser('On ne vend pas un objet de quête');
-      h.inventaire[o.id]--;
-      h.or += prixVente(contenu, h, o.id);
+      const n = quantiteValide(action.quantite);
+      if (h.inventaire[o.id] < n) refuser(`Vous n'en avez que ${h.inventaire[o.id]}`);
+      const gain = prixVente(contenu, h, o.id) * n;
+      h.inventaire[o.id] -= n;
+      h.or += gain;
+      etat.dernieresNouvelles.push(`${h.nom} vend ${n > 1 ? `${n} × ` : ''}${o.nom} : +${gain} or.`);
+      declencherEtapes(contenu, etat, (d) => d.vendre === true);
       break;
     }
     case 'utiliser': {
@@ -1050,6 +1058,26 @@ export function appliquer(contenu: Contenu, etatAvant: EtatPartie, action: Actio
   }
   etat.numeroAction++;
   return etat;
+}
+
+function quantiteValide(q: number | undefined): number {
+  if (q === undefined) return 1;
+  if (q < 1 || q > 99 || Math.floor(q) !== q) refuser('Quantité invalide (de 1 à 99)');
+  return q;
+}
+
+/** Fait avancer les quêtes dont l'étape en cours se valide par une action (acheter, vendre…). */
+function declencherEtapes(contenu: Contenu, etat: EtatPartie, correspond: (d: { acheter?: string; vendre?: boolean }) => boolean) {
+  for (const [id, q] of entrees(etat.quetes)) {
+    const def = contenu.quetes[id];
+    if (!def || q.terminee) continue;
+    const i = def.etapes.findIndex((e) => e.id === q.etape);
+    if (i < 0 || i + 1 >= def.etapes.length) continue;
+    const d = def.etapes[i].declencheur;
+    if (!d || !correspond(d)) continue;
+    q.etape = def.etapes[i + 1].id;
+    etat.dernieresNouvelles.push(`Quête « ${def.titre} » : ${def.etapes[i + 1].objectif}`);
+  }
 }
 
 function resoudreVote(contenu: Contenu, etat: EtatPartie) {

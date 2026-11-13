@@ -641,7 +641,7 @@ Chaque action importante écrit une ligne datée dans le journal de la partie :
   - **Brumaire 1013** : exploration de la **Crypte de la Fontaine**, le premier donjon. On y trouve un sceau cendré.
   - **Floréal 1014** : **attaque de Lysmont pendant la Fête des Lanternes** par Vorthak, émissaire de la Légion Cendrée. C'est le premier grand combat.
   - **Nivôse 1014** : le roi exige que les héros jurent fidélité à la Couronne. **Choix majeur** : jurer (Couronne +) ou rester indépendants avec la Guilde (Guilde +).
-- **Personnages** : Aveline, Séraphine, Sœur Elianne, Kaya (rencontrée lors d'un contrat), le Grand Prieur Mathis (Ordre), Dame Rowena (maîtresse de la Guilde), le roi Edmund IV.
+- **Personnages** : Aveline, Séraphine, Sœur Elianne, Kaya (rencontrée lors d'un contrat), le Grand Prieur Auréliath (Ordre), Dame Rowena (maîtresse de la Guilde), le roi Edmund IV.
 - **Quêtes secondaires** (au moins 4) :
   - « Les loups de la Combe-aux-Saules » ;
   - « Le marchand de reliques » ;

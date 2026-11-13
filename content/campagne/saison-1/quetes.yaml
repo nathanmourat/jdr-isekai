@@ -11,6 +11,15 @@ quetes:
       - { id: lanternes, objectif: "Assister à la Fête des Lanternes (15 Floréal 1014).", scene: ch1-lanternes, lieu: lysmont-place }
       - { id: serment, objectif: "Répondre à la convocation du roi (Nivôse 1014).", scene: ch1-serment, lieu: chateau }
       - { id: fin, objectif: "Chapitre terminé." }
+  - id: q-boutique
+    titre: "Premiers pas au Comptoir"
+    type: secondaire
+    chapitre: 1
+    resume: "Dame Halvine vous montre comment acheter et vendre dans sa boutique."
+    etapes:
+      - { id: acheter, objectif: "Acheter un objet utile au Comptoir de Halvine (une petite potion de soin, par exemple).", lieu: boutique, declencheur: { acheter: boutique } }
+      - { id: vendre, objectif: "Vendre la breloque cabossée (onglet « Vendre » de la boutique).", lieu: boutique, declencheur: { vendre: true } }
+      - { id: retour, objectif: "Retourner parler à Dame Halvine.", scene: sq-boutique-fin, lieu: boutique }
   - id: q-loups
     titre: "Les loups de la Combe-aux-Saules"
     type: secondaire

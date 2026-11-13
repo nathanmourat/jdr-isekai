@@ -125,3 +125,56 @@ export function imagePortrait(chemins: string[], cle: string, nom: string): stri
   for (const ch of chemins) { const u = urlAsset(ch); if (u) return u; }
   return portraitProvisoire(cle, nom);
 }
+
+// ───────────────────────────── Plans de ville et positions livrées avec les images ─────────────────────────────
+
+const positionsJson = import.meta.glob('/assets/{cartes,decors}/*.json', { import: 'default', eager: true }) as Record<string, unknown>;
+
+/**
+ * Positions livrées par le graphiste à côté d'une image (ex. « cartes/lysmont-plan » ou « decors/auberge-chambre ») :
+ * `{ "guilde": { "x": 900, "y": 430 }, … }`, en pixels de l'image (1280 × 720). Null si le fichier n'est pas encore là.
+ * Le fichier peut aussi ranger les positions sous une clé « lieux » ou « positions ».
+ */
+export function positionsImage(chemin: string): Record<string, { x: number; y: number }> | null {
+  const brut = positionsJson[`/assets/${chemin}.json`] as Record<string, unknown> | undefined;
+  if (!brut || typeof brut !== 'object') return null;
+  const source = (brut.lieux ?? brut.positions ?? brut) as Record<string, unknown>;
+  const res: Record<string, { x: number; y: number }> = {};
+  for (const [k, v] of Object.entries(source)) {
+    const p = v as { x?: unknown; y?: unknown } | null;
+    if (p && typeof p.x === 'number' && typeof p.y === 'number') res[k] = { x: p.x, y: p.y };
+  }
+  return Object.keys(res).length ? res : null;
+}
+
+/** Plan de ville provisoire (1280 × 720) : remparts, rues, place centrale. */
+export function planProvisoire(nom: string, titre: string): string {
+  const k = `plan:${nom}`;
+  if (cache.has(k)) return cache.get(k)!;
+  const [c, ctx] = canvas(1280, 720);
+  ctx.fillStyle = '#b9c79a';
+  ctx.fillRect(0, 0, 1280, 720);
+  // remparts
+  ctx.fillStyle = '#d8ccb0';
+  ctx.strokeStyle = '#6b5a3c'; ctx.lineWidth = 10;
+  ctx.beginPath(); ctx.roundRect(110, 60, 1060, 600, 60); ctx.fill(); ctx.stroke();
+  // rues
+  ctx.strokeStyle = '#a8977a'; ctx.lineWidth = 34;
+  ctx.beginPath(); ctx.moveTo(640, 60); ctx.lineTo(640, 660); ctx.moveTo(110, 400); ctx.lineTo(1170, 400); ctx.stroke();
+  ctx.lineWidth = 18;
+  ctx.beginPath(); ctx.moveTo(300, 200); ctx.lineTo(1000, 600); ctx.moveTo(980, 200); ctx.lineTo(360, 600); ctx.stroke();
+  // place centrale
+  ctx.fillStyle = '#e6dcc4';
+  ctx.beginPath(); ctx.arc(640, 400, 70, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = '#7fb3ff';
+  ctx.beginPath(); ctx.arc(640, 400, 18, 0, Math.PI * 2); ctx.fill();
+  etiquette(ctx, titre, 640, 30, 26, 700);
+  etiquette(ctx, `plan provisoire — assets/cartes/${nom}.png`, 640, 695, 16, 700);
+  const url = c.toDataURL();
+  cache.set(k, url);
+  return url;
+}
+
+export function imagePlan(nom: string, titre: string): string {
+  return urlAsset(`cartes/${nom}`) ?? planProvisoire(nom, titre);
+}

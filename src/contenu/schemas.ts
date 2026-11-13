@@ -316,6 +316,10 @@ export const zScene = z.object({
   /** Scène romantique : masquée dans la version tout public (config.romance = false). */
   romance: z.boolean().default(false),
   quete: z.string().optional(),
+  /** PNJ à qui il faut parler pour lancer la scène (on clique sur lui dans le lieu). */
+  pnj: z.string().optional(),
+  /** true : la scène sert à rendre une quête (symbole « ? » au-dessus du PNJ). */
+  rend_quete: z.boolean().default(false),
   noeuds: z.record(z.string(), zNoeud),
 });
 export type Scene = z.infer<typeof zScene>;
@@ -327,7 +331,11 @@ export const zQuete = z.object({
   chapitre: z.number().int(),
   region: z.string().default('aubeclaire'),
   resume: z.string(),
-  etapes: z.array(z.object({ id: z.string(), objectif: z.string(), scene: z.string().optional(), lieu: z.string().optional() })),
+  etapes: z.array(z.object({
+    id: z.string(), objectif: z.string(), scene: z.string().optional(), lieu: z.string().optional(),
+    /** L'étape se valide toute seule quand le héros fait cette action (puis la quête passe à l'étape suivante). */
+    declencheur: z.object({ acheter: z.string().optional(), vendre: z.boolean().optional() }).optional(),
+  })),
 });
 export type Quete = z.infer<typeof zQuete>;
 
@@ -337,14 +345,30 @@ export const zLieu = z.object({
   description: z.string(),
   decor: z.string(),
   position: z.object({ x: z.number(), y: z.number() }),
+  /** Ville qui contient ce lieu : il n'apparaît alors que sur le plan de la ville, pas sur la carte du monde. */
+  ville: z.string().optional(),
+  /** Position sur le plan de la ville (1280 × 720), utilisée tant que le fichier assets/cartes/<plan>.json n'est pas livré. */
+  position_plan: z.object({ x: z.number(), y: z.number() }).optional(),
   disponible_si: zCondition.optional(),
-  pnj: z.array(z.object({ id: z.string(), si: zCondition.optional() })).default([]),
+  /** `position` : endroit du décor (1280 × 720) où se tient le PNJ, pour pouvoir cliquer sur sa silhouette. */
+  pnj: z.array(z.object({ id: z.string(), si: zCondition.optional(), position: z.object({ x: z.number(), y: z.number() }).optional() })).default([]),
   boutique: z.array(z.string()).default([]),
+  /** true : on peut y dormir (le lit de l'auberge fait passer les mois). */
+  auberge: z.boolean().default(false),
+});
+export const zVille = z.object({
+  id: z.string(),
+  nom: z.string(),
+  description: z.string().default(''),
+  /** Image du plan : assets/cartes/<plan>.png, avec les positions des lieux dans assets/cartes/<plan>.json. */
+  plan: z.string(),
+  position: z.object({ x: z.number(), y: z.number() }),
 });
 export const zRegion = z.object({
   id: z.string(),
   nom: z.string(),
   carte: z.string(),
+  villes: z.array(zVille).default([]),
   lieux: z.array(zLieu),
 });
 export type Region = z.infer<typeof zRegion>;

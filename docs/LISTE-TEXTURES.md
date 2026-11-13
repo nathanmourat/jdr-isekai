@@ -148,8 +148,8 @@ Description : femme de 24 ans, chevalière, cheveux châtain cuivré en tresse c
 | [ ] | 65 | `personnages/pnj/kaya/portrait-neutre.png` | 512 × 512 | Ourvalis (femme-loup), 22 ans : oreilles et queue de loup argentées, cheveux argent en bataille, yeux jaunes, tenue de cuir, bandeau rouge. — expression : **neutre**. |
 | [ ] | 66 | `personnages/pnj/kaya/portrait-joie.png` | 512 × 512 | Même personnage — expression : **joie**. |
 | [ ] | 67 | `personnages/pnj/kaya/portrait-colere.png` | 512 × 512 | Même personnage — expression : **colere**. |
-| [ ] | 68 | `personnages/pnj/mathis/portrait-neutre.png` | 512 × 512 | Grand Prieur de l'Ordre, environ 60 ans : crâne rasé, barbe blanche taillée, sourire bienveillant un peu trop parfait, robe blanche et or. — expression : **neutre**. |
-| [ ] | 69 | `personnages/pnj/mathis/portrait-colere.png` | 512 × 512 | Même personnage — expression : **colere**. |
+| [ ] | 68 | `personnages/pnj/aureliath/portrait-neutre.png` | 512 × 512 | Grand Prieur de l'Ordre, environ 60 ans : crâne rasé, barbe blanche taillée, sourire bienveillant un peu trop parfait, robe blanche et or. — expression : **neutre**. |
+| [ ] | 69 | `personnages/pnj/aureliath/portrait-colere.png` | 512 × 512 | Même personnage — expression : **colere**. |
 | [ ] | 70 | `personnages/pnj/rowena/portrait-neutre.png` | 512 × 512 | Maîtresse de la Guilde, environ 45 ans : cheveux gris coupés court, cicatrice sur l'œil, veste d'aventurière, pipe. — expression : **neutre**. |
 | [ ] | 71 | `personnages/pnj/rowena/portrait-joie.png` | 512 × 512 | Même personnage — expression : **joie**. |
 | [ ] | 72 | `personnages/pnj/edmund-iv/portrait-neutre.png` | 512 × 512 | Roi d'Aubeclaire, environ 55 ans : couronne, barbe grise, air fatigué et dur, manteau d'hermine bleu. — expression : **neutre**. |

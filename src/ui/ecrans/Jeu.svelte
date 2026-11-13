@@ -22,7 +22,13 @@
   type Panneau = 'carte' | 'histoire' | 'fiche' | 'compagnons' | 'quetes' | 'journal' | 'partie';
   let panneau = $state<Panneau>('carte');
   let lieu = $state<string | null>(null);
+  let ville = $state<string | null>(null);
   let ficheOuverte = $state(false);
+  /** Ouvre un lieu ; s'il est dans une ville, on reviendra ensuite sur le plan de cette ville. */
+  function ouvrirLieu(id: string) {
+    lieu = id;
+    ville = c.regions.aubeclaire.lieux.find((l) => l.id === id)?.ville ?? null;
+  }
   let aideDateOuverte = $state(false);
 
   const etat = $derived(jeu.etat!);
@@ -97,14 +103,14 @@
     {:else}
       <nav class="onglets" aria-label="Menu du jeu">
         {#each onglets as [id, nom] (id)}
-          <button class:actif={panneau === id} onclick={() => { panneau = id; if (id === 'carte') lieu = null; }}>
+          <button class:actif={panneau === id} onclick={() => { panneau = id; if (id === 'carte') { lieu = null; ville = null; } }}>
             {nom}{#if id === 'journal' && nouvellesEntrees > 0} <span class="pastille">{nouvellesEntrees}</span>{/if}
             {#if id === 'fiche' && (h.pointsCaracDispo || h.pointsCompetenceDispo)} <span class="pastille">!</span>{/if}
           </button>
         {/each}
       </nav>
       {#if panneau === 'carte'}
-        {#if lieu}<Lieu id={lieu} retour={() => (lieu = null)} />{:else}<Carte choisir={(id) => (lieu = id)} />{/if}
+        {#if lieu}<Lieu id={lieu} retour={() => (lieu = null)} />{:else}<Carte choisir={ouvrirLieu} bind:ville />{/if}
       {:else if panneau === 'histoire'}<Histoire />
       {:else if panneau === 'fiche'}<Fiche />
       {:else if panneau === 'compagnons'}<Compagnons />

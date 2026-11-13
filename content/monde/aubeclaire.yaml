@@ -3,63 +3,97 @@ regions:
   - id: aubeclaire
     nom: "Royaume d'Aubeclaire"
     carte: aubeclaire
+    # Une ville regroupe plusieurs lieux : un seul point sur la carte du monde, puis un plan cliquable.
+    # Les positions du plan viennent de assets/cartes/lysmont-plan.json quand le graphiste l'a livré ;
+    # en attendant, on utilise `position_plan` (image de 1280 × 720).
+    villes:
+      - id: lysmont
+        nom: "Ville de Lysmont"
+        description: "La capitale d'Aubeclaire : tours blanches, toits bleus, et toujours du monde dans les rues."
+        plan: lysmont-plan
+        position: { x: 960, y: 570 }
     lieux:
       - id: temple-du-seuil
         nom: "Temple du Seuil"
         description: "Le grand temple blanc où l'Ordre accomplit l'Appel."
         decor: temple-du-seuil
         position: { x: 960, y: 345 }
-        pnj: [{ id: mathis }, { id: elianne }]
+        # `position` : où se tient le personnage sur le décor (1280 × 720), pour cliquer sur lui.
+        pnj: [{ id: aureliath, position: { x: 640, y: 330 } }, { id: elianne }]
         boutique: [potion-soin-petite, antidote]
       - id: lysmont-place
         nom: "Place de Lysmont"
         description: "Le cœur de la capitale : fontaine, étals, rumeurs."
         decor: lysmont-place
+        ville: lysmont
         position: { x: 960, y: 570 }
+        position_plan: { x: 640, y: 380 }
         disponible_si: { flag: appel-fait }
         pnj: [{ id: aveline, si: { flag: aveline-rencontree } }]
-        boutique: [potion-soin-petite, potion-soin, potion-mana, ration, gateau-lysmont, fleur-des-champs, bijou-dore]
       - id: guilde
         nom: "Guilde de la Rose des Vents"
         description: "Le hall des aventuriers : contrats, comptoir et bagarres."
         decor: guilde
+        ville: lysmont
         position: { x: 1075, y: 610 }
+        position_plan: { x: 900, y: 430 }
         disponible_si: { flag: appel-fait }
         pnj: [{ id: rowena }, { id: kaya, si: { flag: examen-reussi } }]
         boutique: [potion-soin-petite, antidote, bombe-feu, bombe-fumee, epee-courte, dague, arc-court, baton-apprenti, bouclier-bois, armure-cuir, robe-mage, kit-entretien-armes]
       - id: taverne
         nom: "Le Chaudron Fêlé"
-        description: "La taverne de Bram, où l'on mange bien et où l'on parle trop."
+        description: "La taverne et l'auberge de Bram : on y mange bien, on y parle trop, et on y dort à l'étage."
         decor: taverne
+        ville: lysmont
+        auberge: true
         position: { x: 845, y: 610 }
+        position_plan: { x: 380, y: 430 }
         disponible_si: { flag: appel-fait }
-        pnj: [{ id: bram, si: { pas_flag: mort:bram } }]
+        pnj: [{ id: bram, si: { pas_flag: mort:bram } }, { id: ferrand, si: { flag: examen-reussi } }]
         boutique: [ration, gateau-lysmont, livre-ancien]
+      - id: boutique
+        nom: "Le Comptoir de Halvine"
+        description: "Une boutique encombrée du sol au plafond : potions, armes, cadeaux, et une balance qui ne ment jamais."
+        decor: boutique
+        ville: lysmont
+        position: { x: 900, y: 640 }
+        position_plan: { x: 560, y: 560 }
+        disponible_si: { flag: appel-fait }
+        pnj: [{ id: halvine }]
+        boutique: [potion-soin-petite, potion-soin, potion-mana, antidote, bombe-feu, bombe-fumee, ration, fleur-des-champs, gateau-lysmont, bijou-dore, epee-courte, dague, arc-court, baton-apprenti, bouclier-bois, armure-cuir, robe-mage]
       - id: chateau
         nom: "Château de Lysmont"
         description: "Le siège de la Couronne, tours blanches et toits bleus."
         decor: chateau-trone
+        ville: lysmont
         position: { x: 960, y: 480 }
+        position_plan: { x: 640, y: 150 }
         disponible_si: { flag: appel-fait }
         pnj: [{ id: edmund-iv }, { id: seraphine }]
       - id: quartier-tanneurs
         nom: "Quartier des Tanneurs"
         description: "Ruelles pauvres et cuves de teinture. On y disparaît, ces temps-ci."
         decor: quartier-tanneurs
+        ville: lysmont
         position: { x: 1060, y: 680 }
+        position_plan: { x: 980, y: 610 }
         disponible_si: { flag: examen-reussi }
       - id: arene
         nom: "Arène de Lysmont"
         description: "Le sable du tournoi des écuyers."
         decor: arene
+        ville: lysmont
         position: { x: 1120, y: 530 }
+        position_plan: { x: 1020, y: 230 }
         disponible_si: { flag: examen-reussi }
+        pnj: [{ id: aveline, si: { flag: aveline-rencontree } }]
       - id: combe-aux-saules
         nom: "Combe-aux-Saules"
         description: "Forêt de saules au sud-ouest, fermes isolées et loups affamés."
         decor: combe-aux-saules
         position: { x: 440, y: 790 }
         disponible_si: { flag: examen-reussi }
+        pnj: [{ id: gareth }]
       - id: crypte-fontaine
         nom: "Crypte de la Fontaine"
         description: "Des ruines couvertes de lierre, un escalier qui descend dans le noir."

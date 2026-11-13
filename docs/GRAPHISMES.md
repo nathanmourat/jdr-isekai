@@ -155,7 +155,7 @@ Les planches de `assets/ennemis/<id>/combat.png` servent aussi aux **invocations
 | `combat/fonds/` : `foret`, `rues-nuit`, `arene` | Fonds de combat |
 | `ennemis/` : `araignee-geante`, `bandit`, `cultiste`, `golem-fontaine` (mini-boss, 128 × 128), `vorthak` (boss, 128 × 128) | Ennemis |
 | `personnages/compagnes/aveline/combat.png` et `exploration.png` | Aveline en combat et en exploration |
-| `personnages/pnj/` : `seraphine`, `elianne`, `kaya` (2 ou 3 expressions chacune, car ce sont de futures compagnes), `mathis`, `rowena`, `edmund-iv`, `vorthak` (neutre) | PNJ |
+| `personnages/pnj/` : `seraphine`, `elianne`, `kaya` (2 ou 3 expressions chacune, car ce sont de futures compagnes), `aureliath`, `rowena`, `edmund-iv`, `vorthak` (neutre) | PNJ |
 | `personnages/races/<race>/calque-combat.png` et `calque-exploration.png` × 7 | Calques de race (§ 4) |
 | `personnages/races/<race>/portrait-defaut.png` × 8 | Un portrait par défaut **par race**. **Chaque joueur peut aussi importer son propre portrait** (512 × 512). |
 | `effets/` : `entaille`, `feu`, `glace`, `soin`, `poison`, `rune`, `bouclier`, `bonus`, `malus`, `critique` | Effets |

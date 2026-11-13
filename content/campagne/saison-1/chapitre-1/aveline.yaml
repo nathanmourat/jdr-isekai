@@ -2,6 +2,7 @@
 # Rappel : elle peut refuser un héros (lignes rouges), et rien n'est explicite.
 scenes:
   - id: av-ronde
+    pnj: aveline
     titre: "Aveline — La ronde de nuit"
     type: individuel
     lieu: lysmont-place
