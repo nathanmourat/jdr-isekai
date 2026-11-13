@@ -32,7 +32,14 @@ describe('Aide de la fiche', () => {
     const k = chiffresCompetence(c, sujetHeros(c, ombre), c.competences['lame-empoisonnee'], 1);
     expect(k.degats![0]).toBeGreaterThan(0);
     expect(k.degats![1]).toBeGreaterThanOrEqual(k.degats![0]);
-    expect(k.toucher).toBe(c.config.combat.toucher_base);
+    // « plus c'est puissant, moins c'est sûr » : les 5 premiers points de mana sont gratuits, donc 4 mana ne coûtent rien…
+    expect(k.toucher).toBeCloseTo(c.config.combat.toucher_base, 5);
+    // …mais une compétence à 8 mana perd 3 points
+    expect(chiffresCompetence(c, sujetHeros(c, ombre), c.competences['onde-de-givre'], 1).toucher).toBeCloseTo(c.config.combat.toucher_base - 0.03, 5);
+    // la maîtrise rend la compétence plus forte et plus sûre
+    const maitre = chiffresCompetence(c, sujetHeros(c, ombre), c.competences['lame-empoisonnee'], 1, 5);
+    expect(maitre.toucher!).toBeGreaterThan(k.toucher!);
+    expect(maitre.degats![1]).toBeGreaterThan(k.degats![1]);
     expect(k.effets.join(' ')).toMatch(/poison pendant 3 tours \(\d+ dégâts par tour, cumulable 3 fois\)/);
     // un rang de plus = plus de dégâts
     const k2 = chiffresCompetence(c, sujetHeros(c, ombre), c.competences['lame-empoisonnee'], 3);

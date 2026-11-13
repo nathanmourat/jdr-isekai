@@ -1,7 +1,7 @@
 <script lang="ts">
   /** Scène de dialogue : décor, portrait, répliques une par une, choix (votés en groupe), tests de caractéristique. */
   import { jeu } from '../jeu.svelte';
-  import { choixVisibles, conditionScene, miseDuChoix, noeudCourant, remplacerVariables } from '../../moteur/partie';
+  import { choixVisibles, conditionScene, miseDuChoix, noeudAffiche, remplacerVariables } from '../../moteur/partie';
   import { imageDecor } from '../../rendu/assets';
   import { NOMS_CARACS, nomPersonnage, portraitHeros, portraitPersonnage } from '../outils';
 
@@ -10,7 +10,8 @@
   const etat = $derived(jeu.etat!);
   const es = $derived(etat.scenes[cle]);
   const scene = $derived(c.scenes[es.sceneId]);
-  const noeud = $derived(noeudCourant(c, etat, cle));
+  // une scène terminée affiche encore les répliques de son dernier nœud, avant « Terminer la scène »
+  const noeud = $derived(noeudAffiche(c, etat, cle));
   const repliques = $derived(noeud ? noeud.repliques.filter((r) => conditionScene(c, etat, r.si, es.heros)) : []);
   const decor = $derived(noeud?.decor ?? scene.decor);
   let vues = $state(1);

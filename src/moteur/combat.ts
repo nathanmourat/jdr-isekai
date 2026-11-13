@@ -12,7 +12,7 @@ import type { Competence, Effet, Ennemi } from '../contenu/schemas';
 import { aleatoire, chance, choisir, de, type Rng } from './rng';
 import { cles, copieProfonde, entrees, trier, valeurs, vrai } from './outils';
 import { bonusEquipement, type BonusEquipement } from './equipement';
-import { caracsTotales, competencesEquipees, manaMax, pvMax, type Caracs, type Carac, type Heros } from './personnage';
+import { caracsTotales, competencesEquipees, manaMax, pvMax, rangMaitrise, type Caracs, type Carac, type Heros } from './personnage';
 
 export type Element = 'physique' | 'feu' | 'glace' | 'foudre' | 'sacre' | 'ombre' | 'poison' | 'arcane';
 export type EtatId =
@@ -84,6 +84,11 @@ export interface Combattant {
   echelle: number;
   teinte: string | null;
   race: string | null;
+  /** Attaques de base nommées (ennemis) : une est tirée à chaque attaque. */
+  attaques: { nom: string; phrase: string; element?: string; effet?: string }[];
+  /** Phrase et effet de l'attaque nommée en cours (le temps de la résoudre). */
+  phrase: string | null;
+  effetAttaque: string | null;
 }
 
 export type ActionCombat =
@@ -120,6 +125,12 @@ export interface EvenementCombat {
   critique?: boolean;
   element?: Element;
   competence?: string;
+  /** Chance de toucher au moment du jet (pour l'animation de suspense). */
+  chance?: number;
+  /** État posé ou subi (événements « etat », dégâts de poison ou de brûlure). */
+  etat?: EtatId;
+  /** Effet visuel à jouer (assets/effets/<id>.png). */
+  effet?: string;
   texte: string;
 }
 
@@ -242,6 +253,8 @@ export function combattantHeros(contenu: Contenu, h: Heros, controle: boolean, t
       runes: be.pouvoirs.includes('velgraive') && cl.passif.id === 'runes-gravees' ? 1 : 0,
       premierCritique: be.pouvoirs.includes('murmure') ? 1 : 0,
       aubePrete: be.pouvoirs.includes('aube-premiere') ? 1 : 0,
+      // rang de maîtrise de chaque compétence (une variante suit la maîtrise de sa compétence de base)
+      ...Object.fromEntries(entrees(h.maitrise ?? {}).map(([k, v]) => [`maitrise:${k}`, rangMaitrise(contenu, v)])),
       ...Object.fromEntries(entrees(rangsVariantes).map(([k, v]) => [`rang:${k}`, v])),
     },
     derniereCible: null,
@@ -254,6 +267,9 @@ export function combattantHeros(contenu: Contenu, h: Heros, controle: boolean, t
     echelle: race.echelle,
     teinte: race.teinte ?? null,
     race: h.race,
+    attaques: [],
+    phrase: null,
+    effetAttaque: null,
   };
 }
 
@@ -301,6 +317,9 @@ export function combattantEnnemi(contenu: Contenu, def: Ennemi, id: string, mult
     echelle: 1,
     teinte: null,
     race: null,
+    attaques: def.attaques ?? [],
+    phrase: null,
+    effetAttaque: null,
   };
 }
 
@@ -357,6 +376,9 @@ export function combattantCompagnon(contenu: Contenu, compagnonId: string, h: He
     echelle: 1,
     teinte: null,
     race: null,
+    attaques: [],
+    phrase: null,
+    effetAttaque: null,
   };
 }
 
@@ -590,12 +612,44 @@ function reductionCible(combat: Combat, cible: Combattant, element: Element, sou
   return Math.max(0, m);
 }
 
-function chanceToucher(contenu: Contenu, s: Combattant, cible: Combattant): number {
+/** Compétence de base dont dépend la maîtrise (une fusion « fusion:a+b » suit la compétence a). */
+export function competenceDeBase(id: string): string {
+  if (!id.startsWith('fusion:')) return id;
+  const i = id.indexOf('+');
+  return i < 0 ? id.slice(7) : id.slice(7, i);
+}
+
+/** Points de chance de toucher perdus par une compétence selon son coût en mana (les premiers points de mana sont gratuits). */
+export function malusPuissance(contenu: Contenu, cout: number): number {
+  const k = contenu.config.combat;
+  return Math.min(k.toucher_malus_max, Math.max(0, cout - k.toucher_mana_gratuit) * k.toucher_malus_par_mana);
+}
+
+/** Rang de maîtrise (0 à 5) du combattant pour cette compétence. */
+export function maitriseDe(x: Combattant, competence: string): number {
+  return x.compteurs[`maitrise:${competenceDeBase(competence)}`] ?? 0;
+}
+
+/**
+ * Chance de toucher. « Plus c'est puissant, moins c'est sûr » (pour les héros et leurs alliés) :
+ *   base + 2 % par point d'Agilité d'écart
+ *   + 2 points pour une attaque de base ;
+ *   − 1 point par point de mana de la compétence au-delà des 5 premiers (5 points au plus) ;
+ *   + 0,5 point par niveau d'écart avec la cible (10 niveaux au plus) ; + 1 point par rang de maîtrise ;
+ * le tout borné entre toucher_min et toucher_max. Les ennemis gardent la formule de base (leurs compétences ne coûtent pas de mana).
+ */
+function chanceToucher(contenu: Contenu, s: Combattant, cible: Combattant, comp?: Competence): number {
   const k = contenu.config.combat;
   if (aEtat(cible, 'sommeil') || aEtat(cible, 'immobilise')) return 1;
   if (aPouvoir(s, 'kestrevane')) return 1;
   let p = k.toucher_base + k.toucher_par_agi * (s.caracs.AGI - cible.caracs.AGI);
   p += s.objets?.precision ?? 0;
+  if (comp && s.camp === 'heros') {
+    if (comp.id === 'attaque' || comp.id === 'attaque-visee') p += k.toucher_bonus_attaque_base;
+    else p -= malusPuissance(contenu, comp.cout);
+    p += contenu.config.maitrise.toucher_par_rang * maitriseDe(s, comp.id);
+  }
+  p += k.toucher_par_niveau * Math.max(-10, Math.min(10, s.niveau - cible.niveau));
   p += valeurEtat(s, 'bonus_precision');
   p += s.compteurs.modToucher ?? 0;
   if (s.trait?.id === 'entre-deux-mondes') p += s.trait.parametres.precision ?? 0;
@@ -646,7 +700,11 @@ function infliger(contenu: Contenu, combat: Combat, rng: Rng, s: Combattant, cib
   cible.etats = cible.etats.filter((e) => e.id !== 'sommeil');
   log(combat, {
     type: 'degats', source: s.id, cible: cible.id, valeur: degats, critique, element, competence,
-    texte: `${s.nom} inflige ${degats} dégâts${element !== 'physique' ? ` (${element})` : ''} à ${cible.nom}${critique ? ' (critique !)' : ''}.`,
+    effet: s.effetAttaque ?? undefined,
+    // attaque nommée d'un ennemi : « Le loup gris bondit et mord Daleko à la jambe : 7 dégâts. »
+    texte: s.phrase !== null
+      ? `${s.nom} ${s.phrase.replaceAll('{cible}', cible.nom)} : ${degats} dégâts${critique ? ' (critique !)' : ''}.`
+      : `${s.nom} inflige ${degats} dégâts${element !== 'physique' ? ` (${element})` : ''} à ${cible.nom}${critique ? ' (critique !)' : ''}.`,
   });
   if (cible.pv > 0 && cible.pv / cible.pvMax < 0.25 && (cible.compteurs.determination ?? 0) > 0) {
     const v = Math.round(cible.pvMax * 0.1);
@@ -768,6 +826,7 @@ function resoudreCibles(combat: Combat, rng: Rng, s: Combattant, type: string, c
 
 function appliquerEffets(contenu: Contenu, combat: Combat, rng: Rng, s: Combattant, comp: Competence, rang: number, cibleChoisie: Combattant | null, depuisObjet = false) {
   const facteurRang = 1 + 0.1 * (rang - 1);
+  const facteurMaitrise = depuisObjet ? 1 : 1 + contenu.config.maitrise.degats_par_rang * maitriseDe(s, comp.id);
   let consommeRunes = false;
   let premiereCibleOffensive: Combattant | null = null;
   // éléments utilisés par cette compétence (Résonance)
@@ -803,8 +862,9 @@ function appliquerEffets(contenu: Contenu, combat: Combat, rng: Rng, s: Combatta
           premiereCibleOffensive ??= cible;
           const monoCible = typeCible === 'ennemi';
           // toucher
-          let touche = depuisObjet || chance(rng, chanceToucher(contenu, s, cible));
-          if (!touche && (s.compteurs.relances ?? 0) > 0) { s.compteurs.relances--; touche = chance(rng, chanceToucher(contenu, s, cible)); }
+          const pToucher = depuisObjet ? 1 : chanceToucher(contenu, s, cible, comp);
+          let touche = depuisObjet || chance(rng, pToucher);
+          if (!touche && (s.compteurs.relances ?? 0) > 0) { s.compteurs.relances--; touche = chance(rng, pToucher); }
           if (touche && (cible.compteurs.esquives ?? 0) > 0 && monoCible) {
             cible.compteurs.esquives--;
             touche = false;
@@ -812,7 +872,7 @@ function appliquerEffets(contenu: Contenu, combat: Combat, rng: Rng, s: Combatta
             log(combat, { type: 'rate', source: s.id, cible: cible.id, texte: `${cible.nom} disparaît dans l'ombre et esquive ! (Pas de l'ombre)` });
             continue;
           }
-          if (!touche) { log(combat, { type: 'rate', source: s.id, cible: cible.id, texte: `${s.nom} rate ${cible.nom}.` }); continue; }
+          if (!touche) { log(combat, { type: 'rate', source: s.id, cible: cible.id, chance: pToucher, competence: comp.id, texte: `${s.nom} rate ${cible.nom}.` }); continue; }
           const furtif = aEtat(s, 'furtif');
           let critique = ef.critique_garanti || furtif || chance(rng, chanceCritique(contenu, s, cible));
           // Murmure : la première attaque du combat est toujours un coup critique
@@ -823,20 +883,23 @@ function appliquerEffets(contenu: Contenu, combat: Combat, rng: Rng, s: Combatta
           if (!critique && (s.compteurs.relancesCrit ?? 0) > 0) { s.compteurs.relancesCrit--; critique = chance(rng, chanceCritique(contenu, s, cible)); }
           const statVal = depuisObjet ? 10 : s.caracs[ef.stat];
           const variance = 1 + (aleatoire(rng) * 2 - 1) * contenu.config.combat.variance_degats;
-          let brut = ef.puissance * facteurRang * (1 + statVal / 20) * variance * multObjet;
+          let brut = ef.puissance * facteurRang * facteurMaitrise * (1 + statVal / 20) * variance * multObjet;
           if (comp.id !== 'attaque' && !depuisObjet) brut *= s.facteurArme ?? 1;
           brut *= multiplicateurDegatsSource(combat, s, cible, ef.element as Element) * bonusResonance * bonusRunes;
           if (critique) brut *= aPouvoir(s, 'nuit-premiere') ? 2 : contenu.config.combat.multiplicateur_critique;
           if (vrai(ef.executer_sous_pourcent) && cible.pv / cible.pvMax <= ef.executer_sous_pourcent) brut *= 2;
           if (vrai(ef.cout_pv_pourcent)) { s.pv = Math.max(1, s.pv - Math.round(s.pvMax * ef.cout_pv_pourcent)); }
+          const avantEvt = combat.evenements.length;
           infliger(contenu, combat, rng, s, cible, brut, ef.element as Element, critique, monoCible, comp.id);
+          // la chance de toucher accompagne le résultat (pour l'animation de suspense)
+          for (let i = avantEvt; i < combat.evenements.length; i++) if (combat.evenements[i].type === 'degats' && combat.evenements[i].source === s.id) combat.evenements[i].chance = pToucher;
           if (furtif) s.etats = s.etats.filter((e) => e.id !== 'furtif');
         }
       }
     } else if (ef.type === 'soin') {
       const cibles = resoudreCibles(combat, rng, s, typeCible, cibleChoisie, 'distance');
       const statVal = depuisObjet ? 10 : s.caracs[ef.stat];
-      for (const cible of cibles) soigner(contenu, combat, s, cible, ef.puissance * facteurRang * (1 + statVal / 20) * multObjet * (depuisObjet ? 1 : s.facteurArme ?? 1));
+      for (const cible of cibles) soigner(contenu, combat, s, cible, ef.puissance * facteurRang * facteurMaitrise * (1 + statVal / 20) * multObjet * (depuisObjet ? 1 : s.facteurArme ?? 1));
     } else if (ef.type === 'etat') {
       const cibles = typeCible === 'ennemi' && premiereCibleOffensive ? [premiereCibleOffensive] : resoudreCibles(combat, rng, s, typeCible, cibleChoisie, comp.portee);
       for (const cible of cibles) {
@@ -856,7 +919,11 @@ function appliquerEffets(contenu: Contenu, combat: Combat, rng: Rng, s: Combatta
         const valeur = ef.etat === 'poison' || ef.etat === 'brulure' ? ef.valeur * facteurRang * (1 + s.caracs[s.attaque.stat] / 40) : ef.valeur;
         const bonusRefrain = aPouvoir(s, 'melisande') && cible.camp === s.camp ? 1 : 0;
         ajouterEtat(combat, cible, { id: ef.etat as EtatId, duree: duree + (cible.id === s.id ? 1 : 0) + bonusRefrain, valeur, source: s.id, cumul: 1 }, ef.cumul_max);
-        log(combat, { type: 'etat', source: s.id, cible: cible.id, texte: `${cible.nom} : ${NOMS_ETATS[ef.etat as EtatId]}.` });
+        const pose = cible.etats.find((e) => e.id === ef.etat);
+        const cumulTexte = pose && pose.cumul > 1 ? ` ×${pose.cumul}` : '';
+        log(combat, { type: 'etat', source: s.id, cible: cible.id, etat: ef.etat as EtatId, texte: ef.etat === 'poison' || ef.etat === 'brulure'
+          ? `${cible.nom} : ${NOMS_ETATS[ef.etat as EtatId]}${cumulTexte} (${Math.max(1, Math.round(valeur * (pose?.cumul ?? 1)))} dégâts par tour pendant ${pose?.duree ?? duree} tours).`
+          : `${cible.nom} : ${NOMS_ETATS[ef.etat as EtatId]}.` });
       }
     } else if (ef.type === 'bouclier') {
       const cibles = resoudreCibles(combat, rng, s, typeCible, cibleChoisie, 'distance');
@@ -891,13 +958,22 @@ function appliquerEffets(contenu: Contenu, combat: Combat, rng: Rng, s: Combatta
 }
 
 function attaqueSimple(contenu: Contenu, combat: Combat, rng: Rng, s: Combattant, cible: Combattant | null) {
+  // Attaque nommée (ennemis) : même puissance, mais un nom, une phrase et un effet visuel
+  const nommee = s.attaques.length > 0 ? choisir(rng, s.attaques) : null;
+  const element = (nommee?.element ?? s.attaque.element) as Element;
   const comp: Competence = {
-    id: 'attaque', nom: 'Attaque', description: '', cout: 0, recharge: 0, cible: 'ennemi', portee: s.attaque.portee,
-    effets: [{ type: 'degats', puissance: s.attaque.puissance, stat: s.attaque.stat, element: s.attaque.element, coups: 1, critique_garanti: false, cout_pv_pourcent: 0 }],
+    id: 'attaque', nom: nommee?.nom ?? 'Attaque', description: '', cout: 0, recharge: 0, cible: 'ennemi', portee: s.attaque.portee,
+    effets: [{ type: 'degats', puissance: s.attaque.puissance, stat: s.attaque.stat, element, coups: 1, critique_garanti: false, cout_pv_pourcent: 0 }],
     ia: { priorite: 1, quand: 'toujours' },
   };
   const avantPv = cible?.pv ?? 0;
+  if (nommee) {
+    s.phrase = nommee.phrase;
+    s.effetAttaque = nommee.effet ?? null;
+  }
   appliquerEffets(contenu, combat, rng, s, comp, 1, cible);
+  s.phrase = null;
+  s.effetAttaque = null;
   const c = vrai(s.derniereCible) ? combat.combattants.find((x) => x.id === s.derniereCible) : null;
   // Touches élémentaires de l'équipement : un coup supplémentaire de l'élément, si l'attaque a porté
   if (c && c.pv < avantPv && s.objets !== undefined) {
@@ -959,7 +1035,7 @@ function debutTour(contenu: Contenu, combat: Combat, rng: Rng, x: Combattant): b
     if ((x.resistances[element] ?? 0) >= 1) dg = 0;
     if (dg > 0) {
       x.pv -= dg;
-      log(combat, { type: 'degats', cible: x.id, valeur: dg, element, texte: `${x.nom} subit ${dg} dégâts de ${NOMS_ETATS[e.id].toLowerCase()}.` });
+      log(combat, { type: 'degats', cible: x.id, valeur: dg, element, etat: e.id, texte: `${x.nom} : −${dg} PV (${NOMS_ETATS[e.id].toLowerCase()}${e.cumul > 1 ? ` ×${e.cumul}` : ''}, encore ${e.duree} tour${e.duree > 1 ? 's' : ''}).` });
       if (x.pv <= 0) { mettreKo(combat, x); return false; }
     }
   }
@@ -1101,6 +1177,8 @@ function executer(contenu: Contenu, combat: Combat, rng: Rng, x: Combattant, a: 
     case 'competence': {
       const k = competenceCombattant(contenu, x, a.competence)!;
       x.mana -= coutMana(x, k.comp);
+      // chaque utilisation fait progresser la maîtrise (comptée à la fin du combat)
+      if (x.type === 'heros') { const cu = `usage:${competenceDeBase(k.comp.id)}`; x.compteurs[cu] = (x.compteurs[cu] ?? 0) + 1; }
       if (vrai(k.comp.recharge)) x.recharges[k.comp.id] = k.comp.recharge + 1;
       if (k.comp.id === 'souffle-draconique') x.compteurs.souffle = 1;
       log(combat, { type: 'action', source: x.id, cible: a.cible, competence: k.comp.id, texte: `${x.nom} utilise ${k.comp.nom} !` });
@@ -1321,6 +1399,9 @@ export interface Estimation {
   effets: string[];
 }
 
+/** Sert seulement à dire à `chanceToucher` qu'il s'agit d'une attaque de base (bonus de fiabilité). */
+const ATTAQUE_DE_BASE: Competence = { id: 'attaque', nom: 'Attaque', description: '', cout: 0, recharge: 0, cible: 'ennemi', portee: 'melee', effets: [{ type: 'charge_rune', nombre: 0 }], ia: { priorite: 1, quand: 'toujours' } };
+
 const estimationImpossible = (raison: string): Estimation => ({ possible: false, raison, reussite: null, critique: null, mana: 0, degats: null, soin: null, nbCibles: 0, effets: [] });
 
 /** Estime une action SANS la jouer : faisabilité, chances, mana, dégâts. Ne modifie rien. */
@@ -1333,8 +1414,8 @@ export function estimerAction(contenu: Contenu, combat: Combat, a: ActionCombat)
   const variance = contenu.config.combat.variance_degats;
   const res: Estimation = { possible: true, raison: null, reussite: null, critique: null, mana: 0, degats: null, soin: null, nbCibles: 1, effets: [] };
 
-  const estimerDegats = (cible: Combattant, puissance: number, stat: Carac, element: Element, rang: number, coups: number) => {
-    const brut = puissance * (1 + 0.1 * (rang - 1)) * (1 + x.caracs[stat] / 20) * multiplicateurDegatsSource(combat, x, cible, element);
+  const estimerDegats = (cible: Combattant, puissance: number, stat: Carac, element: Element, rang: number, coups: number, maitrise = 0) => {
+    const brut = puissance * (1 + 0.1 * (rang - 1)) * (1 + contenu.config.maitrise.degats_par_rang * maitrise) * (1 + x.caracs[stat] / 20) * multiplicateurDegatsSource(combat, x, cible, element);
     const net = Math.max(1, brut * reductionCible(combat, cible, element)) * coups;
     return [Math.max(1, Math.round(net * (1 - variance))), Math.max(1, Math.round(net * (1 + variance)))] as [number, number];
   };
@@ -1361,7 +1442,7 @@ export function estimerAction(contenu: Contenu, combat: Combat, a: ActionCombat)
       if (typeof c === 'string') return estimationImpossible(c);
       const v = a.type === 'viser' ? VISEES[a.partie] : null;
       x.compteurs.modToucher = v?.toucher ?? 0;
-      res.reussite = chanceToucher(contenu, x, c);
+      res.reussite = chanceToucher(contenu, x, c, ATTAQUE_DE_BASE);
       x.compteurs.modToucher = 0;
       res.critique = aEtat(x, 'furtif') ? 1 : chanceCritique(contenu, x, c);
       ajouter(estimerDegats(c, x.attaque.puissance * (v?.degats ?? 1), x.attaque.stat, x.attaque.element, 1, 1));
@@ -1385,11 +1466,11 @@ export function estimerAction(contenu: Contenu, combat: Combat, a: ActionCombat)
       } else if (k.comp.cible === 'tous_allies') res.nbCibles = allies(combat, x).length;
       for (const ef of k.comp.effets) {
         if (ef.type === 'degats' && principale) {
-          ajouter(estimerDegats(principale, ef.puissance, ef.stat, ef.element as Element, k.rang, ef.coups));
-          res.reussite ??= chanceToucher(contenu, x, principale);
+          ajouter(estimerDegats(principale, ef.puissance, ef.stat, ef.element as Element, k.rang, ef.coups, maitriseDe(x, k.comp.id)));
+          res.reussite ??= chanceToucher(contenu, x, principale, k.comp);
           res.critique ??= ef.critique_garanti || aEtat(x, 'furtif') ? 1 : chanceCritique(contenu, x, principale);
         } else if (ef.type === 'soin') {
-          const s = ef.puissance * (1 + 0.1 * (k.rang - 1)) * (1 + x.caracs[ef.stat] / 20);
+          const s = ef.puissance * (1 + 0.1 * (k.rang - 1)) * (1 + contenu.config.maitrise.degats_par_rang * maitriseDe(x, k.comp.id)) * (1 + x.caracs[ef.stat] / 20);
           res.soin = [Math.round(s), Math.round(s)];
         } else if (ef.type === 'etat') res.effets.push(`${ef.chance < 1 ? `${Math.round(ef.chance * 100)} % : ` : ''}${NOMS_ETATS[ef.etat as EtatId].toLowerCase()}`);
         else if (ef.type === 'bouclier') res.effets.push(`bouclier (${Math.round(ef.pourcent_pv * 100)} % des PV)`);

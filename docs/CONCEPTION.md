@@ -145,7 +145,15 @@ La **réputation** auprès de chaque faction va de −100 à +100, avec 6 palier
 - Mana max = 10 + 3 × ESP + 2 × (niveau − 1)
 - Initiative = AGI + 1d10, tirée à chaque tour
 - Toucher = 85 % + 2 % × (AGI attaquant − AGI défenseur), borné entre 50 % et 95 %
-- Critique = 5 % + 0,5 % × AGI, avec des dégâts × 1,5
+- **« Plus c'est puissant, moins c'est sûr »** (test 1, pour les héros et leurs alliés ; réglages dans `campagne.yaml`, section `combat`) :
+  - une **attaque de base** est fiable : +2 points de chance de toucher ;
+  - une **compétence** perd 1 point par point de mana au-delà des 5 premiers, 5 points au plus (une compétence à 8 mana : −3 points) ;
+  - **niveau** : +0,5 point par niveau d'avance sur la cible, −0,5 par niveau de retard (10 niveaux au plus), pour tout le monde ;
+  - **maîtrise** : +1 point par rang (voir ci-dessous) ;
+  - la chance de réussite est **affichée avant de valider**, et le moteur la calcule (`estimerAction`), jamais l'IA.
+- **Maîtrise d'une compétence** (rang 0 à 5, section `maitrise`) : 1 point par utilisation en combat, plus l'activité « Entraînement » à l'auberge (6 points par compétence équipée pour 6 mois). Seuils : 5, 15, 30, 50 et 80 points. Chaque rang donne +2 % de dégâts et de soins et +1 point de chance de toucher (au plus +10 % et +5 points). Une fusion suit la maîtrise de sa compétence de base.
+- **Poison et brûlure** : la cible perd des PV **au début de chacun de ses tours**, pendant la durée prévue ; « Lame empoisonnée » se cumule jusqu'à 3 fois. Le journal écrit « −6 PV (poison ×2, encore 2 tours) », la cible est teintée en vert avec des bulles, et une icône indique les tours restants.
+- **Attaques nommées des ennemis** : chaque ennemi a 2 ou 3 attaques de base nommées (`attaques:` dans `content/ennemis/`), de même puissance, avec une phrase et un effet visuel : « Loup gris bondit et mord Daleko à la jambe : 7 dégâts ».- Critique = 5 % + 0,5 % × AGI, avec des dégâts × 1,5
 - Dégâts = puissance de la compétence × (1 + caractéristique utilisée / 20) × (100 / (100 + défense))
 - À chaque niveau : +3 points de caractéristiques à répartir librement et +1 point de compétence (§ 4.2).
 

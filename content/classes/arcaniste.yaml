@@ -6,7 +6,7 @@ classe:
   caracteristiques: { FOR: 5, AGI: 9, INT: 15, VIT: 8, ESP: 14, CHA: 9 }
   attaque: { stat: INT, element: arcane, portee: distance, puissance: 7 }
   rang_prefere: arriere
-  armure: 3
+  armure: 4
   passif:
     id: resonance
     nom: Résonance

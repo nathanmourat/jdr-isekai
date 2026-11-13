@@ -1,21 +1,21 @@
 # Équilibrage de l'équipement (palier I)
 
-- 500 combats par rencontre de référence et par cas (27 s), niveau 1, race humaine, don « Œil du Seuil »
+- 500 combats par rencontre de référence et par cas (31 s), niveau 1, race humaine, don « Œil du Seuil »
 - Critère : chaque classe à ± 10 points de la moyenne des classes, pour chaque ensemble
 
 | Classe | Sans équipement | Communs | « De maître » | Nommés | Gain (nommés) |
 |---|---|---|---|---|---|
-| Alchimiste-artificier | 72,2 % | 91,3 % | 97,3 % | 97,4 % | +25,3 pts |
-| Arcaniste élémentaire | 74,6 % | 87,3 % | 88,8 % | 89,1 % | +14,5 pts |
-| Archer spirituel | 79,0 % | 97,0 % | 99,4 % | 99,0 % | +20,1 pts |
-| Barde enchanteur | 80,1 % | 95,4 % | 99,5 % | 99,8 % | +19,6 pts |
-| Berserker draconique | 76,3 % | 92,6 % | 97,3 % | 96,2 % | +19,9 pts |
-| Gardien sacré | 74,2 % | 94,3 % | 97,4 % | 95,5 % | +21,3 pts |
-| Guérisseur | 79,2 % | 92,6 % | 97,3 % | 93,8 % | +14,6 pts |
-| Invocateur | 73,1 % | 84,7 % | 86,7 % | 87,0 % | +14,0 pts |
-| Lame runique | 74,2 % | 97,3 % | 98,6 % | 98,4 % | +24,3 pts |
-| Ombre | 80,0 % | 94,4 % | 99,0 % | 99,1 % | +19,2 pts |
-| **Moyenne** | **76,3 %** | **92,7 %** | **96,1 %** | **95,5 %** | |
+| Alchimiste-artificier | 72,0 % | 91,8 % | 97,3 % | 96,6 % | +24,6 pts |
+| Arcaniste élémentaire | 74,5 % | 86,1 % | 88,5 % | 89,0 % | +14,5 pts |
+| Archer spirituel | 79,2 % | 97,4 % | 99,3 % | 99,4 % | +20,2 pts |
+| Barde enchanteur | 83,4 % | 95,6 % | 99,8 % | 99,7 % | +16,3 pts |
+| Berserker draconique | 75,6 % | 94,0 % | 97,0 % | 95,9 % | +20,3 pts |
+| Gardien sacré | 71,5 % | 95,0 % | 97,8 % | 96,3 % | +24,8 pts |
+| Guérisseur | 79,0 % | 92,4 % | 97,4 % | 94,9 % | +15,9 pts |
+| Invocateur | 72,8 % | 85,9 % | 88,0 % | 87,4 % | +14,6 pts |
+| Lame runique | 73,2 % | 97,2 % | 98,8 % | 98,0 % | +24,8 pts |
+| Ombre | 80,2 % | 94,6 % | 98,9 % | 99,0 % | +18,9 pts |
+| **Moyenne** | **76,1 %** | **93,0 %** | **96,3 %** | **95,6 %** | |
 
 ## Objets utilisés
 

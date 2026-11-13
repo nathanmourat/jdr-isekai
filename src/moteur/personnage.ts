@@ -47,6 +47,8 @@ export interface Heros {
   equipees: string[] | null;
   /** Grimoire personnel et privé : les fusions que CE héros a apprises (les autres joueurs ne les voient pas). */
   grimoire: Record<string, Technique>;
+  /** Points de maîtrise par compétence (utilisations en combat et entraînement) ; le rang s'en déduit. */
+  maitrise: Record<string, number>;
 }
 
 export interface OptionsCreation {
@@ -136,6 +138,7 @@ export function creerHeros(contenu: Contenu, o: OptionsCreation): Heros {
     varianteActive: {},
     equipees: null,
     grimoire: {},
+    maitrise: {},
   };
   if (vrai(o.niveau) && o.niveau > 1) monterJusquA(contenu, h, o.niveau, true);
   return h;
@@ -233,6 +236,20 @@ export function ameliorerCompetence(contenu: Contenu, h: Heros, id: string) {
   if (r >= contenu.config.personnage.rang_competence_max) throw new Error('Rang maximum atteint');
   h.rangsCompetences[id] = r + 1;
   h.pointsCompetenceDispo--;
+}
+
+/** Rang de maîtrise (0 à 5) pour un nombre de points. */
+export function rangMaitrise(contenu: Contenu, points: number): number {
+  let rang = 0;
+  for (const s of contenu.config.maitrise.seuils) if (points >= s) rang++;
+  return rang;
+}
+
+/** Ajoute des points de maîtrise à une compétence (plafonnés au dernier seuil). */
+export function gagnerMaitrise(contenu: Contenu, h: Heros, competence: string, points: number) {
+  const seuils = contenu.config.maitrise.seuils;
+  const max = seuils.length > 0 ? seuils[seuils.length - 1] : 0;
+  h.maitrise[competence] = Math.min(max, (h.maitrise[competence] ?? 0) + points);
 }
 
 export function caracsTotales(contenu: Contenu, h: Heros): Caracs {

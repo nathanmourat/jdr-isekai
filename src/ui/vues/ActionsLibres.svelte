@@ -69,7 +69,7 @@
         <p class="message">{reponse.message}</p>
         {#if reponse.proposition && reponse.possible}
           <div class="carte-prop principale">
-            <div><strong>{reponse.proposition.libelle}</strong><br /><small>{reponse.proposition.details}</small>
+            <div><strong>{reponse.proposition.libelle}</strong>{#if reponse.proposition.source} <small class="source">({reponse.proposition.source})</small>{/if}<br /><small>{reponse.proposition.details}</small>
               {#if reponse.proposition.estimation.effets.length}<br /><small class="discret">Effets : {reponse.proposition.estimation.effets.join(', ')}</small>{/if}
               {#if reponse.proposition.conseil}<br /><small class="conseil">💡 {reponse.proposition.conseil}</small>{/if}
             </div>
@@ -81,7 +81,7 @@
           <p class="discret">{reponse.possible ? 'Autres idées :' : 'Propositions :'}</p>
           {#each reponse.alternatives as p (p.libelle)}
             <div class="carte-prop">
-              <div><strong>{p.libelle}</strong><br /><small>{p.details}</small>{#if p.conseil}<br /><small class="conseil">💡 {p.conseil}</small>{/if}</div>
+              <div><strong>{p.libelle}</strong>{#if p.source} <small class="source">({p.source})</small>{/if}<br /><small>{p.details}</small>{#if p.conseil}<br /><small class="conseil">💡 {p.conseil}</small>{/if}</div>
               <button onclick={() => jouer(p)}>Jouer</button>
             </div>
           {/each}
@@ -95,7 +95,7 @@
     <div class="propositions">
       {#each script as p, i (p.libelle)}
         <div class="carte-prop" class:principale={i === 0}>
-          <div><strong>{p.libelle}</strong><br /><small>{p.details}</small>{#if p.conseil}<br /><small class="conseil">💡 {p.conseil}</small>{/if}</div>
+          <div><strong>{p.libelle}</strong>{#if p.source} <small class="source">({p.source})</small>{/if}<br /><small>{p.details}</small>{#if p.conseil}<br /><small class="conseil">💡 {p.conseil}</small>{/if}</div>
           <button class:principal={i === 0} onclick={() => jouer(p)}>Jouer</button>
         </div>
       {:else}<p class="discret">Aucune proposition : utilisez les actions manuelles ci-dessous.</p>{/each}
@@ -116,6 +116,7 @@
   .carte-prop.principale { border-color: var(--or); }
   .carte-prop small { color: var(--texte-2); }
   .conseil { color: var(--or-2) !important; }
+  .source { font-style: italic; }
   .info { margin: 0.2rem 0; font-size: 0.9rem; }
   .alerte { background: #3a2a14; border: 1px solid #7a5a20; padding: 0.5rem 0.7rem; border-radius: 8px; }
 </style>

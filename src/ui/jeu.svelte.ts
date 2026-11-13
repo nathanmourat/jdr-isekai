@@ -13,6 +13,9 @@ type SansJoueur = Action extends infer A ? (A extends Action ? Omit<A, 'joueur'>
 function lireLocaux(partie: string): string[] {
   try { return JSON.parse(localStorage.getItem(`velmaris:locaux:${partie}`) ?? '[]'); } catch { return []; }
 }
+function lireOption(cle: string): boolean {
+  try { return localStorage.getItem(cle) === '1'; } catch { return false; }
+}
 function ecrireLocaux(partie: string, l: string[]) {
   localStorage.setItem(`velmaris:locaux:${partie}`, JSON.stringify(l));
 }
@@ -35,6 +38,12 @@ class Jeu {
   combatsVus = $state<string[]>([]);
   /** Propositions impossibles par tour (« combat:tour:acteur » → nombre), règle des 3 essais. */
   essais = $state<Record<string, number>>({});
+  /** Option « Animations rapides » : raccourcit le suspense et les délais du combat (propre à cet appareil). */
+  animationsRapides = $state(lireOption('velmaris:animations-rapides'));
+  changerAnimationsRapides(v: boolean) {
+    this.animationsRapides = v;
+    try { localStorage.setItem('velmaris:animations-rapides', v ? '1' : '0'); } catch { /* stockage indisponible */ }
+  }
   private arreter: (() => void) | null = null;
   /** Minuteur des jours : temps de jeu actif cumulé, et moment de la dernière action reçue. */
   private tempsActifMs = 0;

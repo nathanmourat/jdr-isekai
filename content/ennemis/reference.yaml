@@ -8,6 +8,10 @@ ennemis:
     pv: 135
     armure: 6
     attaque: { stat: FOR, portee: melee, puissance: 11 }
+    # Attaques de base nommées : même puissance que « attaque », avec un nom, une phrase ({cible} = la cible) et un effet visuel.
+    attaques:
+      - { nom: "Coup de massue", phrase: "abat sa massue sur {cible}", effet: impact }
+      - { nom: "Coup de poing", phrase: "envoie son poing dans les côtes de {cible}", effet: impact }
     competences:
       - id: ref-coup-ecrasant
         nom: Coup écrasant
@@ -26,6 +30,10 @@ ennemis:
     pv: 95
     armure: 2
     attaque: { stat: AGI, portee: melee, puissance: 10 }
+    # Attaques de base nommées : même puissance que « attaque », avec un nom, une phrase ({cible} = la cible) et un effet visuel.
+    attaques:
+      - { nom: "Morsure éclair", phrase: "mord {cible} avant qu'on l'ait vu bouger", effet: entaille }
+      - { nom: "Coup de griffes", phrase: "griffe {cible} en passant", effet: entaille }
     competences:
       - id: ref-double-morsure
         nom: Double morsure
@@ -45,6 +53,10 @@ ennemis:
     armure: 1
     rang: arriere
     attaque: { stat: INT, element: arcane, portee: distance, puissance: 10 }
+    # Attaques de base nommées : même puissance que « attaque », avec un nom, une phrase ({cible} = la cible) et un effet visuel.
+    attaques:
+      - { nom: "Trait arcanique", phrase: "lance un trait d'énergie sur {cible}", effet: rune }
+      - { nom: "Éclat de runes", phrase: "fait éclater une rune devant {cible}", effet: rune }
     competences:
       - id: ref-boule-de-feu
         nom: Boule de feu
@@ -64,6 +76,10 @@ ennemis:
     pv: 42
     armure: 1
     attaque: { stat: FOR, portee: melee, puissance: 8 }
+    # Attaques de base nommées : même puissance que « attaque », avec un nom, une phrase ({cible} = la cible) et un effet visuel.
+    attaques:
+      - { nom: "Coup de bâton", phrase: "frappe {cible} de son bâton", effet: impact }
+      - { nom: "Coup de pied", phrase: "donne un coup de pied à {cible}", effet: impact }
     recompenses: { xp: 10, or: 3 }
   - id: ref-chef
     nom: Chef de référence (mini-boss)
@@ -74,6 +90,11 @@ ennemis:
     pv: 210
     armure: 7
     attaque: { stat: FOR, portee: melee, puissance: 11 }
+    # Attaques de base nommées : même puissance que « attaque », avec un nom, une phrase ({cible} = la cible) et un effet visuel.
+    attaques:
+      - { nom: "Coup de hache", phrase: "abat sa hache sur {cible}", effet: entaille }
+      - { nom: "Coup de pommeau", phrase: "frappe {cible} du pommeau de son arme", effet: impact }
+      - { nom: "Coup de botte", phrase: "repousse {cible} d'un coup de botte", effet: impact }
     competences:
       - id: ref-balayage
         nom: Balayage

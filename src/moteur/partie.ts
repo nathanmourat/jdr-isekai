@@ -13,7 +13,7 @@ import {
   type ActionCombat, type Combat, type Combattant,
 } from './combat';
 import {
-  age, ameliorerCompetence, caracsTotales, choisirBranche, competencesConnues, creerHeros, gagnerXp, niveauMoyen, repartirPoint,
+  age, ameliorerCompetence, caracsTotales, choisirBranche, competencesConnues, competencesEquipees, creerHeros, gagnerMaitrise, gagnerXp, niveauMoyen, rangMaitrise, repartirPoint,
   xpPourNiveau, type Carac, type Heros, type OptionsCreation,
 } from './personnage';
 import { choisir as choisirAuHasard, creerRng, de, type Rng } from './rng';
@@ -40,6 +40,8 @@ export interface EtatScene {
   messages: string[];
   /** Un personnage interroge ce héros : lui seul répond, parmi ces réponses (index dans `parole_a.reponses`). */
   parole?: { heros: string; reponses: number[] } | null;
+  /** Dernier nœud joué quand la scène est terminée : ses répliques restent à lire avant de quitter. */
+  noeudFin?: string;
 }
 
 /** Contrat en cours d'un héros : numéro de l'étape à jouer, et ce qui vient de se passer. */
@@ -614,7 +616,16 @@ function terminerScene(contenu: Contenu, etat: EtatPartie, cle: string) {
   const s = contenu.scenes[es.sceneId];
   if (!s.repetable) etat.scenesVues.push(s.type === 'individuel' ? `${s.id}@${es.heros[0]}` : s.id);
   // une scène individuelle non répétable est « vue » pour ce héros seulement
+  es.noeudFin = es.noeud;
   es.noeud = '__fin__';
+}
+
+/** Nœud à afficher : le nœud en cours, ou le dernier nœud d'une scène terminée (ses répliques restent à lire). */
+export function noeudAffiche(contenu: Contenu, etat: EtatPartie, cle: string): Noeud | null {
+  const es = etat.scenes[cle];
+  if (!es) return null;
+  if (es.noeud !== '__fin__') return contenu.scenes[es.sceneId].noeuds[es.noeud] ?? null;
+  return vrai(es.noeudFin) ? contenu.scenes[es.sceneId].noeuds[es.noeudFin] ?? null : null;
 }
 
 export function noeudCourant(contenu: Contenu, etat: EtatPartie, cle: string): Noeud | null {
@@ -696,6 +707,15 @@ function terminerCombat(contenu: Contenu, etat: EtatPartie, cle: string) {
     const h = etat.heros[c.herosId!];
     const utilisees = c.compteurs.potionsUtilisees ?? 0;
     if (vrai(utilisees)) h.inventaire['potion-soin-petite'] = Math.max(0, (h.inventaire['potion-soin-petite'] ?? 0) - utilisees);
+    // Maîtrise : chaque utilisation d'une compétence pendant le combat compte pour un point
+    for (const [k, n] of entrees(c.compteurs)) {
+      if (!k.startsWith('usage:') || n <= 0) continue;
+      const id = k.slice(6);
+      const avant = rangMaitrise(contenu, h.maitrise[id] ?? 0);
+      gagnerMaitrise(contenu, h, id, n);
+      const apres = rangMaitrise(contenu, h.maitrise[id] ?? 0);
+      if (apres > avant) bilan.push(`${h.nom} maîtrise mieux « ${contenu.competences[id]?.nom ?? id} » : maîtrise ${apres}/${contenu.config.maitrise.seuils.length}.`);
+    }
   }
   if (combat.resultat === 'victoire') {
     const r = recompensesCombat(contenu, combat, etat.rng);
@@ -869,6 +889,17 @@ function resoudreTempsLibre(contenu: Contenu, etat: EtatPartie) {
       }
       if (vrai(g.affinite_tous)) for (const co of etat.compagnonsRencontres) modifierAffinite(contenu, affinite(etat, h.id, co), g.affinite_tous, { ageHeros: age(h, versDate(contenu, tl.jusqua).annee) });
       if (g.soigne_blessure) { h.blessure = false; r.push(`${a.nom} : blessures guéries`); }
+      if (vrai(g.maitrise)) {
+        // l'entraînement fait progresser la maîtrise de toutes les compétences équipées
+        const points = Math.max(1, Math.round(g.maitrise * f));
+        const montees: string[] = [];
+        for (const id of competencesEquipees(contenu, h)) {
+          const avant = rangMaitrise(contenu, h.maitrise[id] ?? 0);
+          gagnerMaitrise(contenu, h, id, points);
+          if (rangMaitrise(contenu, h.maitrise[id] ?? 0) > avant) montees.push(`${contenu.competences[id].nom} (maîtrise ${rangMaitrise(contenu, h.maitrise[id])})`);
+        }
+        r.push(`${a.nom} : +${points} points de maîtrise par compétence équipée${montees.length > 0 ? ` — progrès : ${montees.join(', ')}` : ''}`);
+      }
     }
     resultats[h.id] = r;
   }
@@ -886,7 +917,7 @@ export function appliquer(contenu: Contenu, etatAvant: EtatPartie, action: Actio
   etat.mouvementsOr = [];
   etat.mises ??= {};
   etat.contrats ??= {};
-  for (const h of valeurs(etat.heros)) h.grimoire ??= {};
+  for (const h of valeurs(etat.heros)) { h.grimoire ??= {}; h.maitrise ??= {}; }
   if (etat.grimoire) repartirAncienGrimoire(contenu, etat); // parties d'avant le grimoire personnel
   if (etat.repos === undefined) etat.repos = null; // parties créées avant le repos à l'auberge
   const j = etat.joueurs[action.joueur];

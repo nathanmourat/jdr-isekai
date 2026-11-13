@@ -9,6 +9,10 @@ ennemis:
     pv: 18
     armure: 1
     attaque: { stat: FOR, element: arcane, portee: melee, puissance: 4 }
+    # Attaques de base nommées : même puissance que « attaque », avec un nom, une phrase ({cible} = la cible) et un effet visuel.
+    attaques:
+      - { nom: "Morsure spectrale", phrase: "traverse {cible} d'une morsure glacée", effet: rune }
+      - { nom: "Griffes d'éther", phrase: "lacère {cible} de ses griffes translucides", effet: rune }
     recompenses: { xp: 0 }
   - id: golem-de-pierre
     nom: Golem de pierre
@@ -19,6 +23,10 @@ ennemis:
     pv: 34
     armure: 8
     attaque: { stat: FOR, portee: melee, puissance: 6 }
+    # Attaques de base nommées : même puissance que « attaque », avec un nom, une phrase ({cible} = la cible) et un effet visuel.
+    attaques:
+      - { nom: "Poing de pierre", phrase: "écrase son poing sur {cible}", effet: impact }
+      - { nom: "Bousculade", phrase: "bouscule {cible} de tout son poids", effet: impact }
     competences:
       - id: grondement
         nom: Grondement
@@ -36,6 +44,10 @@ ennemis:
     caracteristiques: { FOR: 3, AGI: 12, INT: 9, VIT: 3, ESP: 5, CHA: 3 }
     pv: 14
     attaque: { stat: INT, element: feu, portee: distance, puissance: 6 }
+    # Attaques de base nommées : même puissance que « attaque », avec un nom, une phrase ({cible} = la cible) et un effet visuel.
+    attaques:
+      - { nom: "Flammèche", phrase: "crache une flammèche sur {cible}", effet: feu }
+      - { nom: "Étincelles", phrase: "crible {cible} d'étincelles", effet: feu }
     rang: arriere
     recompenses: { xp: 0 }
   - id: colosse
@@ -47,6 +59,10 @@ ennemis:
     pv: 60
     armure: 10
     attaque: { stat: FOR, portee: melee, puissance: 10 }
+    # Attaques de base nommées : même puissance que « attaque », avec un nom, une phrase ({cible} = la cible) et un effet visuel.
+    attaques:
+      - { nom: "Poing du colosse", phrase: "abat un poing énorme sur {cible}", effet: impact }
+      - { nom: "Écrasement", phrase: "tente d'écraser {cible} sous son pied", effet: impact }
     competences:
       - id: grondement-colosse
         nom: Grondement
@@ -66,4 +82,8 @@ ennemis:
     armure: 4
     rang: arriere
     attaque: { stat: INT, portee: distance, puissance: 5 }
+    # Attaques de base nommées : même puissance que « attaque », avec un nom, une phrase ({cible} = la cible) et un effet visuel.
+    attaques:
+      - { nom: "Carreau", phrase: "tire un carreau sur {cible}", effet: impact }
+      - { nom: "Rafale de billes", phrase: "crible {cible} de billes d'acier", effet: impact }
     recompenses: { xp: 0 }

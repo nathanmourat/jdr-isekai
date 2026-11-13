@@ -71,8 +71,12 @@ function fourchette(contenu: Contenu, net: number): [number, number] {
 const tours = (n: number) => `${n} tour${n > 1 ? 's' : ''}`;
 
 /** Chiffres d'une compétence pour ce sujet, au rang donné. Hors combat : contre une cible moyenne. */
-export function chiffresCompetence(contenu: Contenu, s: SujetChiffres, comp: Competence, rang: number): ChiffresCompetence {
-  const facteurRang = 1 + 0.1 * (rang - 1);
+export function chiffresCompetence(contenu: Contenu, s: SujetChiffres, comp: Competence, rang: number, maitrise = 0): ChiffresCompetence {
+  const k = contenu.config.combat;
+  const m = contenu.config.maitrise;
+  const facteurRang = (1 + 0.1 * (rang - 1)) * (1 + m.degats_par_rang * maitrise);
+  // « Plus c'est puissant, moins c'est sûr » : −1 point par point de mana au-delà des 5 premiers (voir chanceToucher dans combat.ts)
+  const toucher = Math.min(k.toucher_max, Math.max(k.toucher_min, k.toucher_base - Math.min(k.toucher_malus_max, Math.max(0, comp.cout - k.toucher_mana_gratuit) * k.toucher_malus_par_mana) + m.toucher_par_rang * maitrise));
   const presence = 1 + 0.01 * (s.caracs.CHA - 10);
   const res: ChiffresCompetence = {
     cout: comp.cout, recharge: comp.recharge, cible: NOMS_CIBLES[comp.cible] ?? comp.cible,
@@ -84,7 +88,7 @@ export function chiffresCompetence(contenu: Contenu, s: SujetChiffres, comp: Com
       const f = fourchette(contenu, net);
       res.degats = res.degats === null ? f : [res.degats[0] + f[0], res.degats[1] + f[1]];
       res.element ??= NOMS_ELEMENTS[ef.element] ?? ef.element;
-      res.toucher ??= contenu.config.combat.toucher_base;
+      res.toucher ??= toucher;
       if (ef.coups > 1) res.effets.push(`${ef.coups} coups`);
       if (ef.critique_garanti) res.effets.push('coup critique garanti');
       if (vrai(ef.executer_sous_pourcent)) res.effets.push(`dégâts doublés si la cible a moins de ${Math.round(ef.executer_sous_pourcent * 100)} % de ses PV`);

@@ -8,6 +8,10 @@ ennemis:
     caracteristiques: { FOR: 6, AGI: 6, INT: 2, VIT: 9, ESP: 4, CHA: 2 }
     pv: 28
     attaque: { stat: FOR, element: poison, portee: melee, puissance: 6 }
+    # Attaques de base nommées : même puissance que « attaque », avec un nom, une phrase ({cible} = la cible) et un effet visuel.
+    attaques:
+      - { nom: "Éclaboussure acide", phrase: "éclabousse {cible} d'une giclée acide", effet: poison }
+      - { nom: "Engloutissement", phrase: "s'étale sur les jambes de {cible}", effet: poison }
     resistances: { physique: 0.15, feu: -0.25 }
     recompenses: { xp: 12, or: 1 }
   - id: rat-geant
@@ -18,6 +22,10 @@ ennemis:
     caracteristiques: { FOR: 6, AGI: 12, INT: 2, VIT: 5, ESP: 3, CHA: 2 }
     pv: 22
     attaque: { stat: AGI, portee: melee, puissance: 6 }
+    # Attaques de base nommées : même puissance que « attaque », avec un nom, une phrase ({cible} = la cible) et un effet visuel.
+    attaques:
+      - { nom: "Morsure", phrase: "mord {cible} au mollet", effet: entaille }
+      - { nom: "Griffure", phrase: "griffe {cible} en lui grimpant dessus", effet: entaille }
     competences:
       - id: morsure-infectee
         nom: Morsure infectée
@@ -39,6 +47,10 @@ ennemis:
     caracteristiques: { FOR: 5, AGI: 15, INT: 3, VIT: 5, ESP: 6, CHA: 2 }
     pv: 24
     attaque: { stat: AGI, portee: distance, puissance: 6 }
+    # Attaques de base nommées : même puissance que « attaque », avec un nom, une phrase ({cible} = la cible) et un effet visuel.
+    attaques:
+      - { nom: "Piqué", phrase: "fond en piqué sur {cible}", effet: entaille }
+      - { nom: "Morsure au cou", phrase: "mord {cible} au cou avant de s'envoler", effet: entaille }
     competences:
       - id: cri-ultrasonique
         nom: Cri ultrasonique
@@ -59,6 +71,10 @@ ennemis:
     pv: 52
     armure: 4
     attaque: { stat: FOR, portee: melee, puissance: 8 }
+    # Attaques de base nommées : même puissance que « attaque », avec un nom, une phrase ({cible} = la cible) et un effet visuel.
+    attaques:
+      - { nom: "Coup de boutoir", phrase: "charge {cible} tête baissée", effet: impact }
+      - { nom: "Coup de défenses", phrase: "embroche presque {cible} de ses défenses", effet: entaille }
     competences:
       - id: charge-du-sanglier
         nom: Charge

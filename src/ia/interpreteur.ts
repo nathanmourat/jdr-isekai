@@ -6,6 +6,7 @@
  * (`estimerAction`), ce qui garde l'équilibrage intact.
  */
 import type { Contenu } from '../contenu/types';
+import { origineCompetence } from '../moteur/fiche';
 import type { Competence } from '../contenu/schemas';
 import {
   actionsDisponibles, adversaires, allies, estimerAction, NOMS_ETATS, VISEES,
@@ -44,6 +45,8 @@ export interface Proposition {
   /** remarque tactique éventuelle */
   conseil: string;
   score: number;
+  /** D'où vient ce que la proposition utilise : « compétence de départ de l'Ombre », « objet de ton inventaire »… */
+  source: string;
 }
 
 export interface Interpretation {
@@ -159,6 +162,20 @@ function nomCible(ctx: ContexteIA, id?: string) {
   return vrai(id) ? ctx.combat.combattants.find((c) => c.id === id)?.nom ?? '?' : '';
 }
 
+/** Explique d'où vient l'action proposée (compétence de départ, de niveau, du grimoire, objet de l'inventaire…). */
+function sourceAction(ctx: ContexteIA, a: ActionProposee): string {
+  if (a.kind === 'fusion') return 'fusion de deux de tes compétences';
+  const x = a.action;
+  if (x.type === 'competence') {
+    if (x.competence.startsWith('copie:')) return 'technique copiée sur un ennemi (don Mimétisme)';
+    return ctx.heros ? origineCompetence(ctx.contenu, ctx.heros, x.competence) : '';
+  }
+  if (x.type === 'objet') return x.objet === 'potion' ? 'potion de ton inventaire' : 'bombe de ta réserve';
+  if (x.type === 'pacifier') return 'don Langue universelle';
+  if (x.type === 'attaque' || x.type === 'viser') return 'attaque de base, fiable';
+  return '';
+}
+
 function libelleAction(ctx: ContexteIA, a: ActionProposee): string {
   if (a.kind === 'fusion') {
     const p = ctx.contenu.competences[a.parent], q = ctx.contenu.competences[a.secondaire];
@@ -205,7 +222,7 @@ function estimerFusion(ctx: ContexteIA, parent: string, secondaire: string, cibl
 
 function proposer(ctx: ContexteIA, action: ActionProposee): Proposition {
   const estimation = action.kind === 'fusion' ? estimerFusion(ctx, action.parent, action.secondaire, action.cible).estimation : estimerAction(ctx.contenu, ctx.combat, action.action);
-  return { libelle: libelleAction(ctx, action), action, estimation, details: details(estimation), conseil: '', score: 0 };
+  return { libelle: libelleAction(ctx, action), action, estimation, details: details(estimation), conseil: '', score: 0, source: sourceAction(ctx, action) };
 }
 
 // ───────────────────────────── Conseiller tactique ─────────────────────────────

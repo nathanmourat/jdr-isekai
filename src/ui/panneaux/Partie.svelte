@@ -21,6 +21,11 @@
     </div>
   </div>
   <div class="carte-ui">
+    <h2>Options</h2>
+    <label class="option"><input type="checkbox" checked={jeu.animationsRapides} onchange={(e) => jeu.changerAnimationsRapides((e.target as HTMLInputElement).checked)} />
+      <span><strong>Animations rapides</strong><br /><small class="discret">Raccourcit le suspense avant le résultat d'une attaque et les pauses entre les ripostes des ennemis. Ce réglage ne vaut que pour cet appareil.</small></span></label>
+  </div>
+  <div class="carte-ui">
     <h2>Joueurs</h2>
     {#each etat.ordreJoueurs as j (j)}
       {@const jo = etat.joueurs[j]}
@@ -39,4 +44,6 @@
   </div>
 </section>
 
-<style>.code { font-size: 1.1rem; letter-spacing: 0.2em; }</style>
+<style>
+  .option { display: flex; gap: 0.6rem; align-items: flex-start; }
+  .option input { width: auto; margin-top: 0.3rem; }.code { font-size: 1.1rem; letter-spacing: 0.2em; }</style>

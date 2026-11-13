@@ -10,6 +10,10 @@ ennemis:
     pv: 60
     armure: 4
     attaque: { stat: FOR, portee: melee, puissance: 6 }
+    # Attaques de base nommées : même puissance que « attaque », avec un nom, une phrase ({cible} = la cible) et un effet visuel.
+    attaques:
+      - { nom: "Coup de poing d'argile", phrase: "abat son poing d'argile sur {cible}", effet: impact }
+      - { nom: "Balayage", phrase: "balaie {cible} d'un large revers du bras", effet: impact }
     recompenses: { xp: 25 }
 
   - id: loup-gris
@@ -21,6 +25,11 @@ ennemis:
     pv: 34
     armure: 1
     attaque: { stat: AGI, portee: melee, puissance: 7 }
+    # Attaques de base nommées : même puissance que « attaque », avec un nom, une phrase ({cible} = la cible) et un effet visuel.
+    attaques:
+      - { nom: "Morsure à la jambe", phrase: "bondit et mord {cible} à la jambe", effet: entaille }
+      - { nom: "Coup de crocs", phrase: "referme ses crocs sur le bras de {cible}", effet: entaille }
+      - { nom: "Griffes", phrase: "laboure {cible} d'un coup de griffes", effet: entaille }
     competences:
       - id: morsure-sauvage
         nom: Morsure sauvage
@@ -43,6 +52,11 @@ ennemis:
     pv: 38
     armure: 3
     attaque: { stat: FOR, portee: melee, puissance: 7 }
+    # Attaques de base nommées : même puissance que « attaque », avec un nom, une phrase ({cible} = la cible) et un effet visuel.
+    attaques:
+      - { nom: "Coup de lance", phrase: "pique {cible} de sa lance rouillée", effet: entaille }
+      - { nom: "Coup bas", phrase: "frappe {cible} aux genoux en ricanant", effet: impact }
+      - { nom: "Jet de pierre", phrase: "lance une pierre noircie sur {cible}", effet: impact }
     resistances: { ombre: 0.25, sacre: -0.25 }
     recompenses: { xp: 22, or: 6, objets: [{ id: potion-soin-petite, chance: 0.15 }] }
 
@@ -55,6 +69,10 @@ ennemis:
     pv: 44
     armure: 6
     attaque: { stat: FOR, portee: melee, puissance: 8 }
+    # Attaques de base nommées : même puissance que « attaque », avec un nom, une phrase ({cible} = la cible) et un effet visuel.
+    attaques:
+      - { nom: "Taille d'épée", phrase: "taillade {cible} de son épée ébréchée", effet: entaille }
+      - { nom: "Coup de bouclier", phrase: "cogne {cible} avec le bord de son bouclier", effet: impact }
     resistances: { poison: 1.0, glace: 0.25, sacre: -0.5 }
     recompenses: { xp: 26, or: 8 }
 
@@ -67,6 +85,10 @@ ennemis:
     pv: 40
     armure: 3
     attaque: { stat: AGI, element: poison, portee: melee, puissance: 7 }
+    # Attaques de base nommées : même puissance que « attaque », avec un nom, une phrase ({cible} = la cible) et un effet visuel.
+    attaques:
+      - { nom: "Morsure venimeuse", phrase: "plante ses crochets dans {cible}", effet: poison }
+      - { nom: "Pattes acérées", phrase: "frappe {cible} de ses pattes avant", effet: entaille }
     competences:
       - id: toile-collante
         nom: Toile collante
@@ -86,6 +108,11 @@ ennemis:
     pv: 42
     armure: 4
     attaque: { stat: FOR, portee: melee, puissance: 7 }
+    # Attaques de base nommées : même puissance que « attaque », avec un nom, une phrase ({cible} = la cible) et un effet visuel.
+    attaques:
+      - { nom: "Coup de gourdin", phrase: "assène un coup de gourdin à {cible}", effet: impact }
+      - { nom: "Coup de couteau", phrase: "pique {cible} d'un coup de couteau rapide", effet: entaille }
+      - { nom: "Coup d'épaule", phrase: "bouscule {cible} d'un coup d'épaule", effet: impact }
     competences:
       - id: coup-sournois
         nom: Coup sournois
@@ -107,6 +134,10 @@ ennemis:
     pv: 46
     armure: 2
     attaque: { stat: INT, element: ombre, portee: distance, puissance: 8 }
+    # Attaques de base nommées : même puissance que « attaque », avec un nom, une phrase ({cible} = la cible) et un effet visuel.
+    attaques:
+      - { nom: "Trait d'ombre", phrase: "lance un trait d'ombre sur {cible}", effet: ombre }
+      - { nom: "Murmure des Cendres", phrase: "murmure une malédiction qui glace {cible}", effet: ombre }
     resistances: { ombre: 0.5, sacre: -0.25 }
     competences:
       - id: trait-cendre
@@ -137,6 +168,11 @@ ennemis:
     pv: 170
     armure: 10
     attaque: { stat: FOR, portee: melee, puissance: 9 }
+    # Attaques de base nommées : même puissance que « attaque », avec un nom, une phrase ({cible} = la cible) et un effet visuel.
+    attaques:
+      - { nom: "Poing de pierre", phrase: "écrase son poing de pierre sur {cible}", effet: impact }
+      - { nom: "Jet d'eau sous pression", phrase: "projette un jet d'eau glacée sur {cible}", effet: glace }
+      - { nom: "Piétinement", phrase: "piétine le sol et renverse {cible}", effet: impact }
     resistances: { poison: 1.0, foudre: -0.25 }
     competences:
       - id: deferlante
@@ -168,6 +204,11 @@ ennemis:
     pv: 230
     armure: 9
     attaque: { stat: FOR, element: ombre, portee: melee, puissance: 10 }
+    # Attaques de base nommées : même puissance que « attaque », avec un nom, une phrase ({cible} = la cible) et un effet visuel.
+    attaques:
+      - { nom: "Lame cendrée", phrase: "abat sa lame noire sur {cible}", effet: ombre }
+      - { nom: "Revers de gantelet", phrase: "frappe {cible} d'un revers de gantelet", effet: ombre }
+      - { nom: "Flammes violettes", phrase: "enveloppe {cible} de flammes violettes", effet: ombre }
     resistances: { feu: 0.5, ombre: 0.5, sacre: -0.25 }
     competences:
       - id: lame-violette

@@ -158,6 +158,11 @@ export const zEnnemi = z.object({
   attaque: z.object({ stat: zCarac, element: zElement.default('physique'), portee: z.enum(['melee', 'distance']), puissance: z.number().default(8) }),
   rang: z.enum(['avant', 'arriere']).default('avant'),
   competences: z.array(zCompetence).default([]),
+  /**
+   * Attaques de base nommées (2 ou 3 par ennemi) : même puissance que ttaque, mais avec un nom, une phrase
+   * ({cible} = nom de la cible) et un effet visuel. Ex. « bondit et mord {cible} à la jambe ».
+   */
+  attaques: z.array(z.object({ nom: z.string(), phrase: z.string(), element: zElement.optional(), effet: z.string().optional() })).default([]),
   recompenses: z.object({ xp: z.number(), or: z.number().default(0), objets: z.array(z.object({ id: z.string(), chance: z.number() })).default([]) }),
   categorie: z.enum(['bete', 'demon', 'mort-vivant', 'humanoide', 'construction', 'esprit']).default('humanoide'),
   boss: z.boolean().default(false),
@@ -515,6 +520,8 @@ export const zActivite = z.object({
     objet_artisanat: z.boolean().default(false),
     carac_plus_un: z.boolean().default(false),
     soigne_blessure: z.boolean().default(false),
+    /** Points de maîtrise donnés à chaque compétence équipée (pour 6 mois). */
+    maitrise: z.number().default(0),
   }),
   choix_compagnon: z.boolean().default(false),
 });
@@ -560,7 +567,20 @@ export const zConfig = z.object({
     toucher_base: z.number(), toucher_par_agi: z.number(), toucher_min: z.number(), toucher_max: z.number(),
     critique_base: z.number(), critique_par_agi: z.number(), multiplicateur_critique: z.number(), variance_degats: z.number(),
     potions_depart: z.number().int(),
+    /** « Plus c'est puissant, moins c'est sûr » : une attaque de base est fiable, une compétence coûteuse l'est moins. */
+    toucher_bonus_attaque_base: z.number().default(0),
+    toucher_malus_par_mana: z.number().default(0),
+    toucher_malus_max: z.number().default(0),
+    toucher_mana_gratuit: z.number().default(0),
+    /** Chance de toucher par niveau d'écart entre l'attaquant et sa cible (10 niveaux d'écart au plus). */
+    toucher_par_niveau: z.number().default(0),
   }),
+  /** Maîtrise d'une compétence (rang 0 à 5) : elle monte en l'utilisant et en s'entraînant. */
+  maitrise: z.object({
+    seuils: z.array(z.number()).default([5, 15, 30, 50, 80]),
+    degats_par_rang: z.number().default(0.02),
+    toucher_par_rang: z.number().default(0.01),
+  }).default({ seuils: [5, 15, 30, 50, 80], degats_par_rang: 0.02, toucher_par_rang: 0.01 }),
   mort_douce: z.object({ perte_or_pourcent: z.number(), blessure_pv_pourcent: z.number() }),
   graphismes: z.record(z.string(), z.number()),
 });

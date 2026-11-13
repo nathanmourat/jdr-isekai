@@ -123,6 +123,20 @@ config:
     multiplicateur_critique: 1.5
     variance_degats: 0.1
     potions_depart: 2
+    # « Plus c'est puissant, moins c'est sûr » (voir CONCEPTION § 3.3)
+    # (règle des héros et de leurs alliés ; les ennemis gardent la formule de base)
+    toucher_bonus_attaque_base: 0.02   # une attaque de base est fiable : +2 points
+    toucher_mana_gratuit: 5            # les 5 premiers points de mana d'une compétence ne coûtent rien en précision…
+    toucher_malus_par_mana: 0.01       # …ensuite, 1 point de chance de toucher en moins par point de mana…
+    toucher_malus_max: 0.05            # …dans la limite de 5 points
+    toucher_par_niveau: 0.005          # +0,5 point par niveau d'avance sur la cible (et −0,5 par niveau de retard), 10 niveaux au plus
+
+  # Maîtrise d'une compétence : rang 0 à 5. Elle monte en utilisant la compétence en combat (1 point par utilisation)
+  # et avec l'activité « Entraînement » à l'auberge. Bonus modestes et plafonnés.
+  maitrise:
+    seuils: [5, 15, 30, 50, 80]        # points nécessaires pour les rangs 1 à 5
+    degats_par_rang: 0.02              # +2 % de dégâts et de soins par rang (+10 % au rang 5)
+    toucher_par_rang: 0.01             # +1 point de chance de toucher par rang (+5 au rang 5)
 
   mort_douce:
     perte_or_pourcent: 10

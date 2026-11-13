@@ -18,7 +18,38 @@ interface Vue {
   cleTexture: string;
   anime: boolean;
   zone: Phaser.GameObjects.Zone;
+  /** Icônes d'état avec le nombre de tours restants (☠3 🔥2). */
+  etats: Phaser.GameObjects.Text;
+  /** Bulles vertes qui montent tant que le combattant est empoisonné. */
+  bulles: Phaser.Time.TimerEvent | null;
+  teinte: number | null;
 }
+
+/** Icône de chaque état, affichée au-dessus du combattant avec le nombre de tours restants. */
+const ICONES_ETATS: Record<string, string> = {
+  poison: '☠', brulure: '🔥', gel: '❄', immobilise: '⛓', sommeil: '💤', peur: '😱', silence: '🤐', provoque: '💢', marque: '🎯',
+  furtif: '👁', bonus_degats: '⬆', bonus_defense: '🛡', bonus_initiative: '⬆', bonus_precision: '⬆', malus_defense: '⬇',
+  regeneration: '✚', garde: '🛡', expose: '⬇', affaibli: '⬇',
+};
+
+/** Effet visuel (assets/effets/<id>.png) selon l'élément des dégâts. */
+const EFFET_ELEMENT: Record<string, string> = { physique: 'entaille', feu: 'feu', glace: 'glace', foudre: 'foudre', sacre: 'sacre', ombre: 'ombre', poison: 'poison', arcane: 'rune' };
+/** Effet visuel selon l'état posé. */
+function effetEtat(etat: string | undefined): string {
+  if (etat === 'poison') return 'poison';
+  if (etat === 'brulure') return 'feu';
+  if (etat === 'gel') return 'glace';
+  if (etat === 'furtif') return 'ombre';
+  if (etat === 'garde' || etat === 'bonus_defense') return 'bouclier';
+  if (etat === 'regeneration') return 'soin';
+  if (etat !== undefined && etat.startsWith('bonus')) return 'bonus';
+  return 'malus';
+}
+/** Couleur de l'effet dessiné par le code quand l'image n'est pas encore livrée. */
+const COULEUR_EFFET: Record<string, number> = {
+  entaille: 0xffffff, impact: 0xf2d9a0, feu: 0xff7b2e, glace: 0x8fd3ff, foudre: 0xfff35c, soin: 0x7ee081, poison: 0x6fd36f, rune: 0x9fb7ff,
+  bouclier: 0x7fb3ff, bonus: 0xffd166, malus: 0xb07ad6, critique: 0xffe14d, sacre: 0xffe9a8, ombre: 0x8e5bd6, invocation: 0xc9a7ff,
+};
 
 export interface OptionsCombat {
   echelle: number;
@@ -75,9 +106,14 @@ export class SceneCombat extends Phaser.Scene {
       vue.zone.on('pointerdown', () => opts.surClic(c.id));
       vue.nom.setColor(cliquable ? '#ffd166' : '#f3ead7');
       this.majBarre(vue, c);
+      this.majEtats(vue, c);
       if (c.parti && vue.conteneur.alpha > 0) this.tweens.add({ targets: vue.conteneur, alpha: 0, duration: 500 });
       if (c.ko && !c.parti) { vue.conteneur.setAlpha(0.45); vue.sprite.setAngle(c.camp === 'heros' ? -80 : 80); }
       else if (!c.parti) { vue.conteneur.setAlpha(1); vue.sprite.setAngle(0); }
+      // invisible (Pas d'ombre, se cacher) : le personnage devient semi-transparent
+      const furtif = !c.ko && c.etats.some((e) => e.id === 'furtif');
+      vue.sprite.setAlpha(furtif ? 0.4 : 1);
+      vue.calque?.setAlpha(furtif ? 0.4 : 1);
     }
     // marqueur au-dessus du combattant qui doit jouer
     const actif = opts.actif ? this.vues.get(opts.actif) : null;
@@ -89,7 +125,7 @@ export class SceneCombat extends Phaser.Scene {
   }
 
   private reinitialiser(combat: Combat) {
-    for (const v of this.vues.values()) v.conteneur.destroy();
+    for (const v of this.vues.values()) { v.bulles?.remove(); v.conteneur.destroy(); }
     this.vues.clear();
     this.combatId = combat.id;
     this.nbEvenements = Math.max(0, combat.evenements.length - 12);
@@ -160,12 +196,13 @@ export class SceneCombat extends Phaser.Scene {
     const barre = this.add.graphics();
     const nom = this.add.text(0, 10, c.nom, { fontFamily: 'Source Sans 3', fontSize: '13px', color: '#f3ead7', stroke: '#000', strokeThickness: 3 }).setOrigin(0.5, 0);
     const zone = this.add.zone(0, -taille * echelle / 2, taille * echelle * 0.7, taille * echelle);
+    const etats = this.add.text(0, -taille * echelle - 6, '', { fontFamily: 'Source Sans 3', fontSize: '14px', color: '#f3ead7', stroke: '#000', strokeThickness: 3 }).setOrigin(0.5, 1);
     const items: Phaser.GameObjects.GameObject[] = [sprite];
     if (calque) items.push(calque);
-    items.push(barre, nom, zone);
+    items.push(barre, nom, zone, etats);
     const conteneur = this.add.container(versDroite ? -100 : L + 100, H * 0.7, items);
     conteneur.setDepth(10);
-    const v: Vue = { conteneur, sprite, calque, barre, nom, cleTexture, anime, zone };
+    const v: Vue = { conteneur, sprite, calque, barre, nom, cleTexture, anime, zone, etats, bulles: null, teinte: c.teinte ? Phaser.Display.Color.HexStringToColor(c.teinte).color : null };
     this.vues.set(c.id, v);
     return v;
   }
@@ -179,6 +216,22 @@ export class SceneCombat extends Phaser.Scene {
     if (c.bouclier > 0) v.barre.fillStyle(0x7fb3ff, 1).fillRect(-l / 2, y - 3, Math.min(l, l * c.bouclier / c.pvMax), 2);
   }
 
+  /** États visibles : icônes avec tours restants, teinte verte et bulles pour le poison. */
+  private majEtats(v: Vue, c: Combattant) {
+    const morceaux = c.ko ? [] : c.etats.map((e) => `${ICONES_ETATS[e.id] ?? '•'}${e.duree > 50 ? '' : e.duree}${e.cumul > 1 ? `×${e.cumul}` : ''}`);
+    v.etats.setText(morceaux.join(' '));
+    const empoisonne = !c.ko && c.etats.some((e) => e.id === 'poison');
+    if (empoisonne) v.sprite.setTint(0x9be89b);
+    else if (v.teinte !== null) v.sprite.setTint(v.teinte);
+    else v.sprite.clearTint();
+    if (empoisonne && !v.bulles) {
+      v.bulles = this.time.addEvent({ delay: 420, loop: true, callback: () => {
+        const b = this.add.circle(v.conteneur.x + Phaser.Math.Between(-18, 18), v.conteneur.y - Phaser.Math.Between(20, 60), Phaser.Math.Between(2, 5), 0x6fd36f, 0.85).setDepth(54);
+        this.tweens.add({ targets: b, y: b.y - 38, alpha: 0, duration: 800, onComplete: () => b.destroy() });
+      } });
+    } else if (!empoisonne && v.bulles) { v.bulles.remove(); v.bulles = null; }
+  }
+
   private jouerAnim(v: Vue, nom: string) {
     if (!v.anime) return;
     const k = `${v.cleTexture}:${nom}`;
@@ -189,52 +242,83 @@ export class SceneCombat extends Phaser.Scene {
 
   private animer(evts: EvenementCombat[]) {
     evts.slice(-30).forEach((e, i) => {
-      this.time.delayedCall(i * 180, () => {
+      this.time.delayedCall(i * 140, () => {
         const src = e.source ? this.vues.get(e.source) : undefined;
         const cib = e.cible ? this.vues.get(e.cible) : undefined;
         if (e.type === 'action' && src) {
+          // le personnage joue sa ligne « attaque » (attaque de base) ou « sort » (compétence, objet)
           const dir = src.conteneur.x < L / 2 ? 1 : -1;
-          this.tweens.add({ targets: src.conteneur, x: src.conteneur.x + 26 * dir, yoyo: true, duration: 120 });
-          this.jouerAnim(src, e.competence === 'attaque' ? 'attaque' : 'sort');
+          const attaque = e.competence === 'attaque';
+          this.tweens.add({ targets: src.conteneur, x: src.conteneur.x + (attaque ? 34 : 14) * dir, yoyo: true, duration: attaque ? 130 : 180 });
+          this.jouerAnim(src, attaque ? 'attaque' : 'sort');
+          if (!attaque && e.competence !== undefined) this.effet(src, 'rune', 0.9); // la compétence se « charge » sur le lanceur
         }
         if ((e.type === 'degats' || e.type === 'soin' || e.type === 'bouclier') && cib && e.valeur !== undefined) {
-          const couleurTexte = e.type === 'soin' ? '#7ee081' : e.type === 'bouclier' ? '#7fb3ff' : e.critique ? '#ffd166' : '#ff6b5b';
-          const t = this.add.text(cib.conteneur.x, cib.conteneur.y - 70, `${e.type === 'soin' ? '+' : e.type === 'bouclier' ? '◇' : '−'}${e.valeur}${e.critique ? ' !' : ''}`, {
+          const surLaDuree = e.type === 'degats' && e.etat !== undefined; // poison, brûlure : « −3 poison »
+          const couleurTexte = e.type === 'soin' ? '#7ee081' : e.type === 'bouclier' ? '#7fb3ff' : e.etat === 'poison' ? '#8fe38f' : e.etat === 'brulure' ? '#ff9c4a' : e.critique ? '#ffd166' : '#ff6b5b';
+          const libelle = `${e.type === 'soin' ? '+' : e.type === 'bouclier' ? '◇' : '−'}${e.valeur}${surLaDuree ? (e.etat === 'poison' ? ' poison' : ' brûlure') : ''}${e.critique ? ' !' : ''}`;
+          const t = this.add.text(cib.conteneur.x, cib.conteneur.y - 70, libelle, {
             fontFamily: 'Pixelify Sans', fontSize: e.critique ? '26px' : '20px', color: couleurTexte, stroke: '#000', strokeThickness: 4,
           }).setOrigin(0.5).setDepth(60);
           this.tweens.add({ targets: t, y: t.y - 40, alpha: 0, duration: 900, onComplete: () => t.destroy() });
           if (e.type === 'degats') {
             this.tweens.add({ targets: cib.sprite, x: { from: -4, to: 4 }, yoyo: true, repeat: 2, duration: 40, onComplete: () => cib.sprite.setX(0) });
             this.jouerAnim(cib, 'touche');
-            this.effet(cib, e.element ?? 'physique');
-          }
+            this.effet(cib, e.effet ?? EFFET_ELEMENT[e.element ?? 'physique'] ?? 'impact');
+            if (e.critique) this.time.delayedCall(120, () => this.effet(cib, 'critique', 1.9));
+          } else this.effet(cib, e.type === 'soin' ? 'soin' : 'bouclier');
         }
+        if (e.type === 'etat' && cib) this.effet(cib, effetEtat(e.etat));
+        if (e.type === 'invocation' && cib) this.effet(cib, 'invocation', 1.8);
         if (e.type === 'rate' && cib) {
           const t = this.add.text(cib.conteneur.x, cib.conteneur.y - 70, 'Raté', { fontFamily: 'Pixelify Sans', fontSize: '18px', color: '#c9c3d6', stroke: '#000', strokeThickness: 4 }).setOrigin(0.5).setDepth(60);
           this.tweens.add({ targets: t, y: t.y - 30, alpha: 0, duration: 800, onComplete: () => t.destroy() });
+          // la cible esquive d'un petit pas en arrière
+          const dir = cib.conteneur.x < L / 2 ? -1 : 1;
+          this.tweens.add({ targets: cib.sprite, x: 10 * dir, yoyo: true, duration: 110, onComplete: () => cib.sprite.setX(0) });
         }
         if (e.type === 'ko' && cib) this.jouerAnim(cib, 'ko');
       });
     });
   }
 
-  private effet(cib: Vue, element: string) {
-    const noms: Record<string, string> = { physique: 'entaille', feu: 'feu', glace: 'glace', foudre: 'foudre', sacre: 'sacre', ombre: 'ombre', poison: 'poison', arcane: 'rune' };
-    const cle = `effets/${noms[element] ?? 'impact'}`;
+  /** Joue un effet sur un combattant : l'image assets/effets/<nom>.png si elle est livrée, sinon un effet dessiné par le code. */
+  private effet(cib: Vue, nom: string, echelle = 1.5) {
+    const cle = `effets/${nom}`;
+    const x = cib.conteneur.x, y = cib.conteneur.y - 50;
     if (this.textures.exists(cle)) {
       const k = `${cle}:anim`;
       if (!this.anims.exists(k)) this.anims.create({ key: k, frames: this.anims.generateFrameNumbers(cle, {}), frameRate: 16 });
-      const s = this.add.sprite(cib.conteneur.x, cib.conteneur.y - 50, cle).setDepth(55).setScale(1.5);
+      const s = this.add.sprite(x, y, cle).setDepth(55).setScale(echelle);
       s.play(k);
       s.once('animationcomplete', () => s.destroy());
       return;
     }
-    const couleurs: Record<string, number> = { feu: 0xff7b2e, glace: 0x8fd3ff, foudre: 0xfff35c, sacre: 0xffe9a8, ombre: 0x8e5bd6, poison: 0x6fd36f, arcane: 0x9fb7ff, physique: 0xffffff };
-    const c = this.add.circle(cib.conteneur.x, cib.conteneur.y - 50, 10, couleurs[element] ?? 0xffffff, 0.8).setDepth(55);
-    this.tweens.add({ targets: c, radius: 34, alpha: 0, duration: 300, onComplete: () => c.destroy() });
+    const couleur = COULEUR_EFFET[nom] ?? 0xffffff;
+    if (nom === 'entaille' || nom === 'critique') {
+      // trait(s) en diagonale
+      const g = this.add.graphics().setDepth(55);
+      g.lineStyle(nom === 'critique' ? 6 : 4, couleur, 1).lineBetween(x - 26, y - 22, x + 26, y + 22);
+      if (nom === 'critique') g.lineBetween(x + 26, y - 22, x - 26, y + 22);
+      this.tweens.add({ targets: g, alpha: 0, duration: 320, onComplete: () => g.destroy() });
+    } else if (nom === 'bouclier') {
+      const g = this.add.graphics().setDepth(55);
+      g.lineStyle(4, couleur, 0.9).strokeCircle(x, y, 30);
+      this.tweens.add({ targets: g, alpha: 0, duration: 500, onComplete: () => g.destroy() });
+    } else if (nom === 'soin' || nom === 'bonus' || nom === 'malus' || nom === 'invocation' || nom === 'poison') {
+      // particules qui montent (soin, bonus, invocation, poison) ou qui descendent (malus)
+      const sens = nom === 'malus' ? 1 : -1;
+      for (let n = 0; n < 6; n++) {
+        const p = this.add.circle(x + Phaser.Math.Between(-24, 24), y + Phaser.Math.Between(-10, 20) - sens * 16, Phaser.Math.Between(3, 5), couleur, 0.9).setDepth(55);
+        this.tweens.add({ targets: p, y: p.y + sens * 40, alpha: 0, duration: 500 + n * 40, onComplete: () => p.destroy() });
+      }
+    } else {
+      // impact, feu, glace, foudre, rune, sacré, ombre : un éclat qui s'élargit
+      const c = this.add.circle(x, y, 10, couleur, 0.8).setDepth(55);
+      this.tweens.add({ targets: c, radius: 22 * echelle, alpha: 0, duration: 300, onComplete: () => c.destroy() });
+    }
   }
 }
-
 function cleFondManquant(fond: string) {
   return `combat/fonds/${fond}`;
 }

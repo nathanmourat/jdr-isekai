@@ -6,7 +6,7 @@ classe:
   caracteristiques: { FOR: 11, AGI: 6, INT: 7, VIT: 15, ESP: 12, CHA: 9 }
   attaque: { stat: FOR, element: physique, portee: melee, puissance: 10 }
   rang_prefere: avant
-  armure: 10
+  armure: 8
   passif:
     id: rempart
     nom: Rempart

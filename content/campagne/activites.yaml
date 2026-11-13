@@ -1,7 +1,7 @@
 # Activités de temps libre (2 par joueur et par ellipse). Gains donnés pour 6 mois, proportionnels à la durée.
 activites:
-  - { id: entrainement, nom: "Entraînement", description: "Exercices, duels, sueur : de l'expérience.", gains: { xp_pourcent_niveau: 0.35 } }
-  - { id: entrainement-intensif, nom: "Entraînement intensif", description: "Un maître d'armes exigeant : +1 point de caractéristique.", gains: { carac_plus_un: true } }
+  - { id: entrainement, nom: "Entraînement", description: "Exercices, duels, sueur : de l'expérience, et de la maîtrise pour vos compétences équipées.", gains: { xp_pourcent_niveau: 0.35, maitrise: 6 } }
+  - { id: entrainement-intensif, nom: "Entraînement intensif", description: "Un maître d'armes exigeant : +1 point de caractéristique, et un peu de maîtrise.", gains: { carac_plus_un: true, maitrise: 3 } }
   - { id: artisanat, nom: "Artisanat", description: "Fabriquer des potions de soin (meilleur avec l'Intelligence, l'Alchimiste ou la Main de l'artisan).", gains: { objet_artisanat: true } }
   - { id: commerce, nom: "Commerce", description: "Acheter, revendre, négocier (selon le Charisme).", gains: { or_base: 40, or_par_carac: { carac: CHA, valeur: 4 } } }
   - { id: relation, nom: "Relation", description: "Passer du temps avec un compagnon : une scène et de l'affinité.", choix_compagnon: true, gains: { affinite: 8 } }
