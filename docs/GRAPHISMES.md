@@ -121,6 +121,14 @@ Consigne pour les planches de classe : **ne pas couvrir le haut et les côtés d
 
 Pour les PNJ secondaires, `neutre` suffit, et éventuellement une seconde expression.
 
+### Correspondance des tuiles d'un donjon
+
+Le jeu doit savoir quelle tuile du tileset correspond à « sol », « mur », « porte »… Pour cela, un fichier `assets/tuiles/<nom>.json` accompagne chaque tileset. Exemple : `assets/tuiles/crypte.json`, écrit d'après le fichier `crypte-positions.md` du graphiste. Pour un nouveau tileset, recopiez-le et changez les numéros de tuiles (index = ligne × 8 + colonne).
+
+### Bestiaire et invocations
+
+Les planches de `assets/ennemis/<id>/combat.png` servent aussi aux **invocations** du même nom (loup spectral, golem de pierre, feu follet…). Le jeu les retourne automatiquement quand elles combattent du côté des héros. Le bestiaire complet (28 monstres, du niveau 1 au niveau 40) est décrit dans `assets/ennemis/BESTIAIRE.md`.
+
 ## 5. Liste des images — Version jouable 1 (par priorité)
 
 ### Priorité 1 — indispensable pour tester

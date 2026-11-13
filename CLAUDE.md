@@ -7,8 +7,10 @@ Si une demande est floue ou contradictoire : poser la question plutôt que devin
 ## État d'avancement
 - [x] Étape 0 : questions de cadrage (réponses ci-dessous)
 - [x] Étape 1 : conception **validée le 13/11** (`docs/CONCEPTION.md` v0.2, `docs/GRAPHISMES.md`, `docs/LISTE-TEXTURES.md`). Tailles d'images à confirmer avec le graphiste.
-- [ ] Étape 2 : **en cours**
-  - version jouable 1 (création de personnage, prologue, chapitre 1, combat, Aveline, sauvegarde)
+- [x] Étape 2 : **version jouable 1 livrée** (13/11) — à faire tester par le groupe
+  - moteur pur + 51 tests ; chapitre 1 complet joué de bout en bout par un robot de test (`tests/robot.ts`) ; test navigateur `tests/e2e/parcours.mjs`
+  - interface Svelte + Phaser ; mode local OK ; mode Supabase écrit (`src/sync/supabase.ts`, `supabase/schema.sql`) mais **pas encore testé contre un vrai projet** (le groupe doit créer le projet)
+  - textures du groupe intégrées (V2 : priorité 1 sauf portraits d'Aveline, calques de race, icônes ; bestiaire de 28 monstres)
 - [ ] Étape 3 et suivantes : chapitres 2 à 6, un par itération
 
 ## Décisions validées (étape 0)
@@ -34,8 +36,17 @@ Si une demande est floue ou contradictoire : poser la question plutôt que devin
 - Réglages de temps, de niveau maximum, de paliers d'affinité et de difficulté selon le nombre de joueurs : dans `content/config/campagne.yaml`.
 - Sauvegarde **versionnée** + migrations (`src/sauvegarde/migrations.ts`) pour que les nouvelles saisons ne cassent pas les anciennes parties.
 
+## Textures (livrées par le groupe sur la branche `textures-v2`)
+- Le groupe envoie ses images par GitHub (« Upload files » sur la branche `textures-v2`). Les récupérer avec `git fetch origin textures-v2`, les copier dans `assets/`, puis lancer `npm run assets:manquants -- --cocher`.
+- Toutes les classes partagent la **même trajectoire de corps** image par image : c'est ce qui permet à un seul calque de race de s'adapter aux 10 classes (`assets/personnages/races/NOTE-CALQUES.md`).
+- Tileset : la correspondance est dans `assets/tuiles/<nom>.json`. Le bestiaire est dans `assets/ennemis/BESTIAIRE.md` : 21 monstres prêts pour les chapitres 2 à 6, avec les niveaux conseillés.
+- Les invocations utilisent la planche du monstre du même nom, retournée côté héros.
+- Chemins : compagnons dans `personnages/compagnes/<id>/`, PNJ dans `personnages/pnj/<id>/`, portraits par défaut dans `personnages/races/<race>/portrait-defaut.png`.
+
 ## Règles de conception à respecter
 - **Équilibrage** : 60 points de caractéristiques pour toutes les classes au niveau 1. Simulation de 1 000 combats ou plus par cas. Taux de victoire : **± 10 points de la moyenne** par classe et par race, **± 15 points** par combinaison classe × race (80 combinaisons). Relancer `npm run equilibrage` à chaque ajout de classe, de race, de don ou d'ennemi.
+- Difficulté de groupe (réglée par simulation, de 1 à 6 héros) : PV des ennemis ×1 / 2,7 / 4,3 / 6,0 / 8,0 / 10,0 ; dégâts ×1 / 1,35 / 1,45 / 1,70 / 1,90 / 2,10.
+- Le Charisme a un effet en combat (« présence ») : ±1 % de dégâts infligés et subis par point par rapport à 10.
 - Un don est **unique par partie**.
 - Un joueur qui arrive en cours de route rejoint au **niveau moyen du groupe**.
 - Monde, noms et intrigues **100 % originaux** : aucune reprise d'œuvre existante.
