@@ -14,7 +14,7 @@ import {
 } from './combat';
 import {
   age, ameliorerCompetence, caracsTotales, choisirBranche, competencesConnues, creerHeros, gagnerXp, niveauMoyen, repartirPoint,
-  refusEquipement, xpPourNiveau, type Carac, type Heros, type OptionsCreation,
+  equipementStandard, refusEquipement, xpPourNiveau, type Carac, type Heros, type OptionsCreation,
 } from './personnage';
 import { choisir as choisirAuHasard, creerRng, de, type Rng } from './rng';
 import { cles, copieProfonde, entrees, valeurs, vrai } from './outils';
@@ -926,6 +926,8 @@ export function appliquer(contenu: Contenu, etatAvant: EtatPartie, action: Actio
       try {
         hero = creerHeros(contenu, { ...h, id, joueurId: action.joueur, anneeCampagne: versDate(contenu, Math.max(0, etat.jour)).annee, niveau });
       } catch (e) { return refuser((e as Error).message); }
+      // équipement standard de sa classe (objets communs de son niveau) : le chapitre 1 est réglé pour des héros équipés
+      hero.equipement = equipementStandard(contenu, hero.classe, hero.niveau);
       // un réincarné qui arrive en cours de campagne n'a pas de prologue jouable
       etat.heros[id] = hero;
       j.herosId = id;

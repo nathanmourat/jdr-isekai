@@ -67,20 +67,20 @@ TYPES = {
     # Armes
     "epee": ("arme", "Épée", ["lame-runique", "gardien"], True, [("FOR", .8), ("VIT", .2)]),
     "deux-mains": ("arme", "Arme à deux mains", ["berserker", "lame-runique"], True, [("FOR", 1)]),
-    "masse": ("arme", "Masse / marteau", ["gardien", "berserker"], True, [("FOR", .7), ("VIT", .3)]),
+    "masse": ("arme", "Masse / marteau", ["gardien", "berserker"], True, [("FOR", 1)]),
     "dague": ("arme", "Dague / lame courte", ["ombre", "barde"], True, [("AGI", .8), ("CHA", .2)]),
     "arc": ("arme", "Arc", ["archer"], True, [("AGI", .7), ("ESP", .3)]),
     "arbalete": ("arme", "Arbalète / lance-fioles", ["alchimiste", "archer"], False, [("INT", .6), ("AGI", .4)]),
     "baton": ("arme", "Bâton", ["arcaniste", "invocateur", "guerisseur"], False, [("INT", .5), ("ESP", .5)]),
     "sceptre": ("arme", "Sceptre", ["guerisseur", "gardien"], False, [("ESP", .7), ("VIT", .3)]),
     "orbe": ("arme", "Orbe / grimoire", ["invocateur", "arcaniste"], False, [("INT", .7), ("ESP", .3)]),
-    "instrument": ("arme", "Instrument", ["barde"], False, [("CHA", .7), ("AGI", .3)]),
+    "instrument": ("arme", "Instrument", ["barde"], False, [("CHA", .6), ("ESP", .4)]),
     # Tenues
     "lourde": ("armure", "Tenue lourde", ["gardien", "berserker", "lame-runique"], None, [("armure", .6), ("VIT", .2), ("FOR", .2)]),
     "intermediaire": ("armure", "Tenue intermédiaire", ["ombre", "archer", "alchimiste", "barde"], None, [("armure", .5), ("AGI", .25), ("VIT", .25)]),
     "legere": ("armure", "Tenue légère", ["arcaniste", "invocateur", "guerisseur"], None, [("armure", .3), ("ESP", .35), ("INT", .35)]),
     # Accessoires
-    "bouclier": ("accessoire", "Bouclier", ["gardien", "lame-runique"], None, [("armure", .6), ("VIT", .4)]),
+    "bouclier": ("accessoire", "Bouclier", ["gardien", "lame-runique"], None, [("armure", 1)]),
     "anneau": ("accessoire", "Anneau", TOUTES, None, [("AGI", .5), ("CHA", .5)]),
     "amulette": ("accessoire", "Amulette", TOUTES, None, [("ESP", .5), ("INT", .5)]),
     "talisman": ("accessoire", "Talisman", TOUTES, None, [("VIT", .6), ("FOR", .4)]),
@@ -111,7 +111,7 @@ NOMS = {
     "sacoche": ["Sacoche d'herboriste", "Sacoche du bazar", "Sacoche de feuilles", "Sacoche de forge", "Sacoche d'aube-cuir", "Sacoche de cendre-cuir"],
 }
 
-# Les 7 objets déjà dans le jeu : id, nom, description, prix et stats conservés (armure de cuir : 3 → 4)
+# Les 7 objets déjà dans le jeu : id et nom conservés ; stats et prix recalculés par la règle (équilibrage)
 EXISTANTS = {
     "epee": ("epee-courte", "Épée courte", "+2 de puissance d'attaque.", 40, {"puissance": 2}),
     "dague": ("dague", "Dague fine", "+1 de puissance, +1 AGI.", 35, {"puissance": 1, "AGI": 1}),
@@ -140,6 +140,11 @@ ARMURE_CLASSE = {"lame-runique": 6, "arcaniste": 3, "invocateur": 2, "ombre": 4,
 
 
 # ── Calculs ──────────────────────────────────────────────────────────────
+# 1 point de budget = plusieurs INT ou ESP, surtout aux premiers paliers où les objets n'ont que 2 ou 3 points.
+# Palier I réglé par simulation (npm run equilibrage) ; paliers suivants à recaler quand leurs ennemis existeront.
+VALEUR_MAGIQUE = {1: 3.0, 8: 2.0, 15: 1.5, 22: 1.25, 28: 1.25, 34: 1.25, 40: 1.25}
+
+
 def arrondi(x: float) -> int:
     """Arrondi au plus proche, 0,5 vers le haut."""
     return int(math.floor(x + 0.5))
@@ -169,12 +174,15 @@ def stats(type_id: str, niveau: int, b: int) -> dict:
         puissance = min(plafond, b // 3 if physique else b // 4)
     pts = repartir(b - puissance, poids)
     res = {"puissance": puissance, "armure": 2 * pts.pop("armure", 0)}
-    res.update(pts)
+    # Les caractéristiques magiques (INT, ESP) rapportent moins en combat que FOR, AGI ou VIT :
+    # 1 point de budget en donne davantage (réglé par simulation)
+    for c, v in pts.items():
+        res[c] = arrondi(v * VALEUR_MAGIQUE[niveau]) if c in ("INT", "ESP") else v
     return res
 
 
-def points_utilises(s: dict) -> float:
-    return s.get("puissance", 0) + s.get("armure", 0) / 2 + sum(s.get(c, 0) for c in CARACS)
+def points_utilises(s: dict, niveau: int) -> float:
+    return s.get("puissance", 0) + s.get("armure", 0) / 2 + sum(s.get(c, 0) / (VALEUR_MAGIQUE[niveau] if c in ("INT", "ESP") else 1) for c in CARACS)
 
 
 def prix(b: int, niveau: int) -> int:
@@ -237,9 +245,10 @@ def generiques() -> list:
             for rarete in ("commun", "peu-commun"):
                 b = budget(niveau, rarete)
                 if palier == "I" and rarete == "commun" and type_id in EXISTANTS:
-                    id_, nom_e, desc, px, st = EXISTANTS[type_id]
-                    s = {"puissance": st.get("puissance", 0), "armure": st.get("armure", 0), **{c: st[c] for c in CARACS if c in st}}
-                    res.append(objet(id_, nom_e, desc, type_id, palier, rarete, s, prix_=px, existant=True))
+                    # Objet déjà dans le jeu : même id et même nom, mais stats recalculées par la règle (équilibrage)
+                    id_, nom_e, _, _, _ = EXISTANTS[type_id]
+                    s = stats(type_id, niveau, b)
+                    res.append(objet(id_, nom_e, f"{libelle} du palier {palier}. {description_stats(s)}.", type_id, palier, rarete, s, existant=True))
                     continue
                 s = stats(type_id, niveau, b)
                 base = f"{type_id}-{palier.lower()}"
@@ -283,11 +292,9 @@ def verifier(objets: list) -> list:
     for i in sorted(set(i for i in ids if ids.count(i) > 1)):
         erreurs.append(f"id en double : {i}")
     for o in objets:
-        utilises = points_utilises(o["stats"])
-        if not o["existant"] and utilises != o["budget"]:
+        utilises = points_utilises(o["stats"], o["niveau"])
+        if abs(utilises - o["budget"]) > 1:  # arrondis des points INT et ESP
             erreurs.append(f"{o['id']} : {utilises} points utilisés pour un budget de {o['budget']}")
-        if o["existant"] and utilises > o["budget"]:
-            erreurs.append(f"{o['id']} (existant) dépasse son budget")
         attendu = RARETES[o["rarete"]][2]
         if len(o["effets"]) != attendu:
             erreurs.append(f"{o['id']} : {len(o['effets'])} effet(s), {attendu} attendu(s) pour {o['rarete']}")
@@ -415,7 +422,8 @@ def ecrire_excel(objets: list, chemin: Path):
 
     titre("Formule")
     wr.append(["Points (budget) = (2 + 0,3 × niveau requis) × multiplicateur de rareté, arrondi"])
-    wr.append(["1 point = 1 caractéristique = 1 puissance = 2 d'armure"])
+    wr.append(["1 point = 1 caractéristique (FOR, AGI, VIT, CHA) = 1 puissance = 2 d'armure"])
+    wr.append(["INT et ESP : 1 point en donne 3 au palier I, 2 au palier II, 1,5 au palier III, 1,25 ensuite (réglé par simulation au palier I)"])
     wr.append(["Puissance d'une arme : au plus 1 + niveau ÷ 5 ; armes physiques = 1/3 du budget, armes magiques = 1/4, le reste en caractéristiques"])
     wr.append(["Prix = 20 × points × (1 + niveau ÷ 10), arrondi à 5 (à recaler avec l'économie du jeu)"])
     titre("Raretés")

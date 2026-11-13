@@ -573,6 +573,10 @@ export const zConfig = z.object({
     potions_depart: z.number().int(),
   }),
   mort_douce: z.object({ perte_or_pourcent: z.number(), blessure_pv_pourcent: z.number() }),
+  /** Ennemis renforcés parce que les héros portent de l'équipement (réglé par npm run equilibrage). */
+  renfort_ennemis: z.object({ pv: z.number(), degats: z.number() }).default({ pv: 1, degats: 1 }),
+  /** Équipement « standard » de chaque classe : catégories d'arme, de tenue et d'accessoire (simulation, héros qui rejoint en cours de route). */
+  equipement_standard: z.record(z.string(), z.object({ arme: z.string(), armure: z.string(), accessoire: z.string() })).default({}),
   graphismes: z.record(z.string(), z.number()),
 });
 export type Config = z.infer<typeof zConfig>;

@@ -293,6 +293,22 @@ export function manaMaxHeros(contenu: Contenu, h: Heros): number {
   return manaMax(caracsTotales(contenu, h).ESP, h.niveau) + bonusEquipement(contenu, h).mana;
 }
 
+/** Équipement commun « standard » d'une classe à un niveau donné : le meilleur objet commun autorisé de chaque catégorie. */
+export function equipementStandard(contenu: Contenu, classe: string, niveau: number): Heros['equipement'] {
+  const kit = contenu.config.equipement_standard[classe];
+  const res: Heros['equipement'] = { arme: null, armure: null, accessoire: null };
+  if (!kit) return res;
+  for (const emp of ['arme', 'armure', 'accessoire'] as const) {
+    let meilleur: { id: string; niveau: number } | null = null;
+    for (const o of valeurs(contenu.objets)) {
+      if (o.type !== 'equipement' || o.emplacement !== emp || o.categorie !== kit[emp] || o.rarete !== 'commun' || o.niveau > niveau) continue;
+      if (meilleur === null || o.niveau > meilleur.niveau || (o.niveau === meilleur.niveau && o.id < meilleur.id)) meilleur = { id: o.id, niveau: o.niveau };
+    }
+    res[emp] = meilleur === null ? null : meilleur.id;
+  }
+  return res;
+}
+
 /** Raison pour laquelle le héros ne peut pas porter cet objet, ou null s'il le peut. */
 export function refusEquipement(contenu: Contenu, h: Heros, objetId: string): string | null {
   const o = contenu.objets[objetId];

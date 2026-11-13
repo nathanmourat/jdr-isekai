@@ -4,12 +4,13 @@
 objets:
 - id: epee-courte
   nom: Épée courte
-  description: +2 de puissance d'attaque.
+  description: Épée du palier I. +2 FOR.
   type: equipement
   emplacement: arme
-  prix: 40
+  prix: 45
   bonus:
-    puissance: 2
+    caracs:
+      FOR: 2
   rarete: commun
   palier: I
   niveau: 1
@@ -419,14 +420,13 @@ objets:
   - lame-runique
 - id: masse-i
   nom: Masse de fer
-  description: Masse / marteau du palier I. +1 FOR, +1 VIT.
+  description: Masse / marteau du palier I. +2 FOR.
   type: equipement
   emplacement: arme
   prix: 45
   bonus:
     caracs:
-      FOR: 1
-      VIT: 1
+      FOR: 2
   rarete: commun
   palier: I
   niveau: 1
@@ -436,15 +436,14 @@ objets:
   - berserker
 - id: masse-i-maitre
   nom: Masse de fer de maître
-  description: Version soignée par un maître artisan. +1 de puissance, +1 FOR, +1 VIT.
+  description: Version soignée par un maître artisan. +1 de puissance, +2 FOR.
   type: equipement
   emplacement: arme
   prix: 65
   bonus:
     puissance: 1
     caracs:
-      FOR: 1
-      VIT: 1
+      FOR: 2
   rarete: peu-commun
   palier: I
   niveau: 1
@@ -454,15 +453,14 @@ objets:
   - berserker
 - id: masse-ii
   nom: Marteau des caravaniers
-  description: Masse / marteau du palier II. +1 de puissance, +2 FOR, +1 VIT.
+  description: Masse / marteau du palier II. +1 de puissance, +3 FOR.
   type: equipement
   emplacement: arme
   prix: 145
   bonus:
     puissance: 1
     caracs:
-      FOR: 2
-      VIT: 1
+      FOR: 3
   rarete: commun
   palier: II
   niveau: 8
@@ -472,15 +470,14 @@ objets:
   - berserker
 - id: masse-ii-maitre
   nom: Marteau des caravaniers de maître
-  description: Version soignée par un maître artisan. +1 de puissance, +3 FOR, +1 VIT.
+  description: Version soignée par un maître artisan. +1 de puissance, +4 FOR.
   type: equipement
   emplacement: arme
   prix: 180
   bonus:
     puissance: 1
     caracs:
-      FOR: 3
-      VIT: 1
+      FOR: 4
   rarete: peu-commun
   palier: II
   niveau: 8
@@ -490,15 +487,14 @@ objets:
   - berserker
 - id: masse-iii
   nom: Masse de cœur-de-chêne
-  description: Masse / marteau du palier III. +2 de puissance, +4 FOR, +1 VIT.
+  description: Masse / marteau du palier III. +2 de puissance, +5 FOR.
   type: equipement
   emplacement: arme
   prix: 350
   bonus:
     puissance: 2
     caracs:
-      FOR: 4
-      VIT: 1
+      FOR: 5
   rarete: commun
   palier: III
   niveau: 15
@@ -508,15 +504,14 @@ objets:
   - berserker
 - id: masse-iii-maitre
   nom: Masse de cœur-de-chêne de maître
-  description: Version soignée par un maître artisan. +2 de puissance, +4 FOR, +2 VIT.
+  description: Version soignée par un maître artisan. +2 de puissance, +6 FOR.
   type: equipement
   emplacement: arme
   prix: 400
   bonus:
     puissance: 2
     caracs:
-      FOR: 4
-      VIT: 2
+      FOR: 6
   rarete: peu-commun
   palier: III
   niveau: 15
@@ -526,15 +521,14 @@ objets:
   - berserker
 - id: masse-iv
   nom: Marteau de forge naine
-  description: Masse / marteau du palier IV. +3 de puissance, +4 FOR, +2 VIT.
+  description: Masse / marteau du palier IV. +3 de puissance, +6 FOR.
   type: equipement
   emplacement: arme
   prix: 575
   bonus:
     puissance: 3
     caracs:
-      FOR: 4
-      VIT: 2
+      FOR: 6
   rarete: commun
   palier: IV
   niveau: 22
@@ -544,15 +538,14 @@ objets:
   - berserker
 - id: masse-iv-maitre
   nom: Marteau de forge naine de maître
-  description: Version soignée par un maître artisan. +3 de puissance, +5 FOR, +2 VIT.
+  description: Version soignée par un maître artisan. +3 de puissance, +7 FOR.
   type: equipement
   emplacement: arme
   prix: 640
   bonus:
     puissance: 3
     caracs:
-      FOR: 5
-      VIT: 2
+      FOR: 7
   rarete: peu-commun
   palier: IV
   niveau: 22
@@ -562,15 +555,14 @@ objets:
   - berserker
 - id: masse-v
   nom: Marteau d'aube-acier
-  description: Masse / marteau du palier V. +3 de puissance, +5 FOR, +2 VIT.
+  description: Masse / marteau du palier V. +3 de puissance, +7 FOR.
   type: equipement
   emplacement: arme
   prix: 760
   bonus:
     puissance: 3
     caracs:
-      FOR: 5
-      VIT: 2
+      FOR: 7
   rarete: commun
   palier: V
   niveau: 28
@@ -580,15 +572,14 @@ objets:
   - berserker
 - id: masse-v-maitre
   nom: Marteau d'aube-acier de maître
-  description: Version soignée par un maître artisan. +4 de puissance, +6 FOR, +2 VIT.
+  description: Version soignée par un maître artisan. +4 de puissance, +8 FOR.
   type: equipement
   emplacement: arme
   prix: 910
   bonus:
     puissance: 4
     caracs:
-      FOR: 6
-      VIT: 2
+      FOR: 8
   rarete: peu-commun
   palier: V
   niveau: 28
@@ -598,15 +589,14 @@ objets:
   - berserker
 - id: masse-vi
   nom: Masse de cendracier
-  description: Masse / marteau du palier VI. +4 de puissance, +6 FOR, +2 VIT.
+  description: Masse / marteau du palier VI. +4 de puissance, +8 FOR.
   type: equipement
   emplacement: arme
   prix: 1055
   bonus:
     puissance: 4
     caracs:
-      FOR: 6
-      VIT: 2
+      FOR: 8
   rarete: commun
   palier: VI
   niveau: 34
@@ -616,15 +606,14 @@ objets:
   - berserker
 - id: masse-vi-maitre
   nom: Masse de cendracier de maître
-  description: Version soignée par un maître artisan. +5 de puissance, +7 FOR, +3 VIT.
+  description: Version soignée par un maître artisan. +5 de puissance, +10 FOR.
   type: equipement
   emplacement: arme
   prix: 1320
   bonus:
     puissance: 5
     caracs:
-      FOR: 7
-      VIT: 3
+      FOR: 10
   rarete: peu-commun
   palier: VI
   niveau: 34
@@ -634,14 +623,13 @@ objets:
   - berserker
 - id: dague
   nom: Dague fine
-  description: +1 de puissance, +1 AGI.
+  description: Dague / lame courte du palier I. +2 AGI.
   type: equipement
   emplacement: arme
-  prix: 35
+  prix: 45
   bonus:
-    puissance: 1
     caracs:
-      AGI: 1
+      AGI: 2
   rarete: commun
   palier: I
   niveau: 1
@@ -848,12 +836,14 @@ objets:
   - barde
 - id: arc-court
   nom: Arc court
-  description: +2 de puissance d'attaque.
+  description: Arc du palier I. +1 AGI, +3 ESP.
   type: equipement
   emplacement: arme
-  prix: 40
+  prix: 45
   bonus:
-    puissance: 2
+    caracs:
+      AGI: 1
+      ESP: 3
   rarete: commun
   palier: I
   niveau: 1
@@ -862,7 +852,7 @@ objets:
   - archer
 - id: arc-i-maitre
   nom: Arc court de maître
-  description: Version soignée par un maître artisan. +1 de puissance, +1 AGI, +1 ESP.
+  description: Version soignée par un maître artisan. +1 de puissance, +1 AGI, +3 ESP.
   type: equipement
   emplacement: arme
   prix: 65
@@ -870,7 +860,7 @@ objets:
     puissance: 1
     caracs:
       AGI: 1
-      ESP: 1
+      ESP: 3
   rarete: peu-commun
   palier: I
   niveau: 1
@@ -879,7 +869,7 @@ objets:
   - archer
 - id: arc-ii
   nom: Arc composite du désert
-  description: Arc du palier II. +1 de puissance, +2 AGI, +1 ESP.
+  description: Arc du palier II. +1 de puissance, +2 AGI, +2 ESP.
   type: equipement
   emplacement: arme
   prix: 145
@@ -887,7 +877,7 @@ objets:
     puissance: 1
     caracs:
       AGI: 2
-      ESP: 1
+      ESP: 2
   rarete: commun
   palier: II
   niveau: 8
@@ -896,7 +886,7 @@ objets:
   - archer
 - id: arc-ii-maitre
   nom: Arc composite du désert de maître
-  description: Version soignée par un maître artisan. +1 de puissance, +3 AGI, +1 ESP.
+  description: Version soignée par un maître artisan. +1 de puissance, +3 AGI, +2 ESP.
   type: equipement
   emplacement: arme
   prix: 180
@@ -904,7 +894,7 @@ objets:
     puissance: 1
     caracs:
       AGI: 3
-      ESP: 1
+      ESP: 2
   rarete: peu-commun
   palier: II
   niveau: 8
@@ -913,7 +903,7 @@ objets:
   - archer
 - id: arc-iii
   nom: Arc long sylvain
-  description: Arc du palier III. +2 de puissance, +4 AGI, +1 ESP.
+  description: Arc du palier III. +2 de puissance, +4 AGI, +2 ESP.
   type: equipement
   emplacement: arme
   prix: 350
@@ -921,7 +911,7 @@ objets:
     puissance: 2
     caracs:
       AGI: 4
-      ESP: 1
+      ESP: 2
   rarete: commun
   palier: III
   niveau: 15
@@ -930,7 +920,7 @@ objets:
   - archer
 - id: arc-iii-maitre
   nom: Arc long sylvain de maître
-  description: Version soignée par un maître artisan. +2 de puissance, +4 AGI, +2 ESP.
+  description: Version soignée par un maître artisan. +2 de puissance, +4 AGI, +3 ESP.
   type: equipement
   emplacement: arme
   prix: 400
@@ -938,7 +928,7 @@ objets:
     puissance: 2
     caracs:
       AGI: 4
-      ESP: 2
+      ESP: 3
   rarete: peu-commun
   palier: III
   niveau: 15
@@ -947,7 +937,7 @@ objets:
   - archer
 - id: arc-iv
   nom: Arc de fer-souple
-  description: Arc du palier IV. +3 de puissance, +4 AGI, +2 ESP.
+  description: Arc du palier IV. +3 de puissance, +4 AGI, +3 ESP.
   type: equipement
   emplacement: arme
   prix: 575
@@ -955,7 +945,7 @@ objets:
     puissance: 3
     caracs:
       AGI: 4
-      ESP: 2
+      ESP: 3
   rarete: commun
   palier: IV
   niveau: 22
@@ -964,7 +954,7 @@ objets:
   - archer
 - id: arc-iv-maitre
   nom: Arc de fer-souple de maître
-  description: Version soignée par un maître artisan. +3 de puissance, +5 AGI, +2 ESP.
+  description: Version soignée par un maître artisan. +3 de puissance, +5 AGI, +3 ESP.
   type: equipement
   emplacement: arme
   prix: 640
@@ -972,7 +962,7 @@ objets:
     puissance: 3
     caracs:
       AGI: 5
-      ESP: 2
+      ESP: 3
   rarete: peu-commun
   palier: IV
   niveau: 22
@@ -981,7 +971,7 @@ objets:
   - archer
 - id: arc-v
   nom: Arc d'aube-bois
-  description: Arc du palier V. +3 de puissance, +5 AGI, +2 ESP.
+  description: Arc du palier V. +3 de puissance, +5 AGI, +3 ESP.
   type: equipement
   emplacement: arme
   prix: 760
@@ -989,7 +979,7 @@ objets:
     puissance: 3
     caracs:
       AGI: 5
-      ESP: 2
+      ESP: 3
   rarete: commun
   palier: V
   niveau: 28
@@ -998,7 +988,7 @@ objets:
   - archer
 - id: arc-v-maitre
   nom: Arc d'aube-bois de maître
-  description: Version soignée par un maître artisan. +4 de puissance, +6 AGI, +2 ESP.
+  description: Version soignée par un maître artisan. +4 de puissance, +6 AGI, +3 ESP.
   type: equipement
   emplacement: arme
   prix: 910
@@ -1006,7 +996,7 @@ objets:
     puissance: 4
     caracs:
       AGI: 6
-      ESP: 2
+      ESP: 3
   rarete: peu-commun
   palier: V
   niveau: 28
@@ -1015,7 +1005,7 @@ objets:
   - archer
 - id: arc-vi
   nom: Arc de cendre-if
-  description: Arc du palier VI. +4 de puissance, +6 AGI, +2 ESP.
+  description: Arc du palier VI. +4 de puissance, +6 AGI, +3 ESP.
   type: equipement
   emplacement: arme
   prix: 1055
@@ -1023,7 +1013,7 @@ objets:
     puissance: 4
     caracs:
       AGI: 6
-      ESP: 2
+      ESP: 3
   rarete: commun
   palier: VI
   niveau: 34
@@ -1032,7 +1022,7 @@ objets:
   - archer
 - id: arc-vi-maitre
   nom: Arc de cendre-if de maître
-  description: Version soignée par un maître artisan. +5 de puissance, +7 AGI, +3 ESP.
+  description: Version soignée par un maître artisan. +5 de puissance, +7 AGI, +4 ESP.
   type: equipement
   emplacement: arme
   prix: 1320
@@ -1040,7 +1030,7 @@ objets:
     puissance: 5
     caracs:
       AGI: 7
-      ESP: 3
+      ESP: 4
   rarete: peu-commun
   palier: VI
   niveau: 34
@@ -1049,14 +1039,14 @@ objets:
   - archer
 - id: arbalete-i
   nom: Arbalète de poing
-  description: Arbalète / lance-fioles du palier I. +1 AGI, +1 INT.
+  description: Arbalète / lance-fioles du palier I. +1 AGI, +3 INT.
   type: equipement
   emplacement: arme
   prix: 45
   bonus:
     caracs:
       AGI: 1
-      INT: 1
+      INT: 3
   rarete: commun
   palier: I
   niveau: 1
@@ -1066,14 +1056,14 @@ objets:
   - archer
 - id: arbalete-i-maitre
   nom: Arbalète de poing de maître
-  description: Version soignée par un maître artisan. +1 AGI, +2 INT.
+  description: Version soignée par un maître artisan. +1 AGI, +6 INT.
   type: equipement
   emplacement: arme
   prix: 65
   bonus:
     caracs:
       AGI: 1
-      INT: 2
+      INT: 6
   rarete: peu-commun
   palier: I
   niveau: 1
@@ -1083,7 +1073,7 @@ objets:
   - archer
 - id: arbalete-ii
   nom: Lance-fioles du bazar
-  description: Arbalète / lance-fioles du palier II. +1 de puissance, +1 AGI, +2 INT.
+  description: Arbalète / lance-fioles du palier II. +1 de puissance, +1 AGI, +4 INT.
   type: equipement
   emplacement: arme
   prix: 145
@@ -1091,7 +1081,7 @@ objets:
     puissance: 1
     caracs:
       AGI: 1
-      INT: 2
+      INT: 4
   rarete: commun
   palier: II
   niveau: 8
@@ -1101,7 +1091,7 @@ objets:
   - archer
 - id: arbalete-ii-maitre
   nom: Lance-fioles du bazar de maître
-  description: Version soignée par un maître artisan. +1 de puissance, +2 AGI, +2 INT.
+  description: Version soignée par un maître artisan. +1 de puissance, +2 AGI, +4 INT.
   type: equipement
   emplacement: arme
   prix: 180
@@ -1109,7 +1099,7 @@ objets:
     puissance: 1
     caracs:
       AGI: 2
-      INT: 2
+      INT: 4
   rarete: peu-commun
   palier: II
   niveau: 8
@@ -1119,7 +1109,7 @@ objets:
   - archer
 - id: arbalete-iii
   nom: Arbalète de bois-vif
-  description: Arbalète / lance-fioles du palier III. +1 de puissance, +2 AGI, +4 INT.
+  description: Arbalète / lance-fioles du palier III. +1 de puissance, +2 AGI, +6 INT.
   type: equipement
   emplacement: arme
   prix: 350
@@ -1127,7 +1117,7 @@ objets:
     puissance: 1
     caracs:
       AGI: 2
-      INT: 4
+      INT: 6
   rarete: commun
   palier: III
   niveau: 15
@@ -1137,7 +1127,7 @@ objets:
   - archer
 - id: arbalete-iii-maitre
   nom: Arbalète de bois-vif de maître
-  description: Version soignée par un maître artisan. +2 de puissance, +2 AGI, +4 INT.
+  description: Version soignée par un maître artisan. +2 de puissance, +2 AGI, +6 INT.
   type: equipement
   emplacement: arme
   prix: 400
@@ -1145,7 +1135,7 @@ objets:
     puissance: 2
     caracs:
       AGI: 2
-      INT: 4
+      INT: 6
   rarete: peu-commun
   palier: III
   niveau: 15
@@ -1155,7 +1145,7 @@ objets:
   - archer
 - id: arbalete-iv
   nom: Arbalète à vapeur
-  description: Arbalète / lance-fioles du palier IV. +2 de puissance, +3 AGI, +4 INT.
+  description: Arbalète / lance-fioles du palier IV. +2 de puissance, +3 AGI, +5 INT.
   type: equipement
   emplacement: arme
   prix: 575
@@ -1163,7 +1153,7 @@ objets:
     puissance: 2
     caracs:
       AGI: 3
-      INT: 4
+      INT: 5
   rarete: commun
   palier: IV
   niveau: 22
@@ -1173,7 +1163,7 @@ objets:
   - archer
 - id: arbalete-iv-maitre
   nom: Arbalète à vapeur de maître
-  description: Version soignée par un maître artisan. +2 de puissance, +3 AGI, +5 INT.
+  description: Version soignée par un maître artisan. +2 de puissance, +3 AGI, +6 INT.
   type: equipement
   emplacement: arme
   prix: 640
@@ -1181,7 +1171,7 @@ objets:
     puissance: 2
     caracs:
       AGI: 3
-      INT: 5
+      INT: 6
   rarete: peu-commun
   palier: IV
   niveau: 22
@@ -1191,7 +1181,7 @@ objets:
   - archer
 - id: arbalete-v
   nom: Arbalète d'aube-acier
-  description: Arbalète / lance-fioles du palier V. +2 de puissance, +3 AGI, +5 INT.
+  description: Arbalète / lance-fioles du palier V. +2 de puissance, +3 AGI, +6 INT.
   type: equipement
   emplacement: arme
   prix: 760
@@ -1199,7 +1189,7 @@ objets:
     puissance: 2
     caracs:
       AGI: 3
-      INT: 5
+      INT: 6
   rarete: commun
   palier: V
   niveau: 28
@@ -1209,7 +1199,7 @@ objets:
   - archer
 - id: arbalete-v-maitre
   nom: Arbalète d'aube-acier de maître
-  description: Version soignée par un maître artisan. +3 de puissance, +4 AGI, +5 INT.
+  description: Version soignée par un maître artisan. +3 de puissance, +4 AGI, +6 INT.
   type: equipement
   emplacement: arme
   prix: 910
@@ -1217,7 +1207,7 @@ objets:
     puissance: 3
     caracs:
       AGI: 4
-      INT: 5
+      INT: 6
   rarete: peu-commun
   palier: V
   niveau: 28
@@ -1227,7 +1217,7 @@ objets:
   - archer
 - id: arbalete-vi
   nom: Arbalète de cendracier
-  description: Arbalète / lance-fioles du palier VI. +3 de puissance, +4 AGI, +5 INT.
+  description: Arbalète / lance-fioles du palier VI. +3 de puissance, +4 AGI, +6 INT.
   type: equipement
   emplacement: arme
   prix: 1055
@@ -1235,7 +1225,7 @@ objets:
     puissance: 3
     caracs:
       AGI: 4
-      INT: 5
+      INT: 6
   rarete: commun
   palier: VI
   niveau: 34
@@ -1245,7 +1235,7 @@ objets:
   - archer
 - id: arbalete-vi-maitre
   nom: Arbalète de cendracier de maître
-  description: Version soignée par un maître artisan. +3 de puissance, +5 AGI, +7 INT.
+  description: Version soignée par un maître artisan. +3 de puissance, +5 AGI, +9 INT.
   type: equipement
   emplacement: arme
   prix: 1320
@@ -1253,7 +1243,7 @@ objets:
     puissance: 3
     caracs:
       AGI: 5
-      INT: 7
+      INT: 9
   rarete: peu-commun
   palier: VI
   niveau: 34
@@ -1263,14 +1253,14 @@ objets:
   - archer
 - id: baton-apprenti
   nom: Bâton d'apprenti
-  description: +1 INT, +1 ESP.
+  description: Bâton du palier I. +3 INT, +3 ESP.
   type: equipement
   emplacement: arme
-  prix: 40
+  prix: 45
   bonus:
     caracs:
-      INT: 1
-      ESP: 1
+      INT: 3
+      ESP: 3
   rarete: commun
   palier: I
   niveau: 1
@@ -1281,14 +1271,14 @@ objets:
   - guerisseur
 - id: baton-i-maitre
   nom: Bâton d'apprenti de maître
-  description: Version soignée par un maître artisan. +2 INT, +1 ESP.
+  description: Version soignée par un maître artisan. +6 INT, +3 ESP.
   type: equipement
   emplacement: arme
   prix: 65
   bonus:
     caracs:
-      INT: 2
-      ESP: 1
+      INT: 6
+      ESP: 3
   rarete: peu-commun
   palier: I
   niveau: 1
@@ -1299,15 +1289,15 @@ objets:
   - guerisseur
 - id: baton-ii
   nom: Bâton de mage du désert
-  description: Bâton du palier II. +1 de puissance, +2 INT, +1 ESP.
+  description: Bâton du palier II. +1 de puissance, +4 INT, +2 ESP.
   type: equipement
   emplacement: arme
   prix: 145
   bonus:
     puissance: 1
     caracs:
-      INT: 2
-      ESP: 1
+      INT: 4
+      ESP: 2
   rarete: commun
   palier: II
   niveau: 8
@@ -1318,15 +1308,15 @@ objets:
   - guerisseur
 - id: baton-ii-maitre
   nom: Bâton de mage du désert de maître
-  description: Version soignée par un maître artisan. +1 de puissance, +2 INT, +2 ESP.
+  description: Version soignée par un maître artisan. +1 de puissance, +4 INT, +4 ESP.
   type: equipement
   emplacement: arme
   prix: 180
   bonus:
     puissance: 1
     caracs:
-      INT: 2
-      ESP: 2
+      INT: 4
+      ESP: 4
   rarete: peu-commun
   palier: II
   niveau: 8
@@ -1337,15 +1327,15 @@ objets:
   - guerisseur
 - id: baton-iii
   nom: Bâton de bois-de-lune
-  description: Bâton du palier III. +1 de puissance, +3 INT, +3 ESP.
+  description: Bâton du palier III. +1 de puissance, +5 INT, +5 ESP.
   type: equipement
   emplacement: arme
   prix: 350
   bonus:
     puissance: 1
     caracs:
-      INT: 3
-      ESP: 3
+      INT: 5
+      ESP: 5
   rarete: commun
   palier: III
   niveau: 15
@@ -1356,15 +1346,15 @@ objets:
   - guerisseur
 - id: baton-iii-maitre
   nom: Bâton de bois-de-lune de maître
-  description: Version soignée par un maître artisan. +2 de puissance, +3 INT, +3 ESP.
+  description: Version soignée par un maître artisan. +2 de puissance, +5 INT, +5 ESP.
   type: equipement
   emplacement: arme
   prix: 400
   bonus:
     puissance: 2
     caracs:
-      INT: 3
-      ESP: 3
+      INT: 5
+      ESP: 5
   rarete: peu-commun
   palier: III
   niveau: 15
@@ -1375,15 +1365,15 @@ objets:
   - guerisseur
 - id: baton-iv
   nom: Bâton de basalte
-  description: Bâton du palier IV. +2 de puissance, +4 INT, +3 ESP.
+  description: Bâton du palier IV. +2 de puissance, +5 INT, +4 ESP.
   type: equipement
   emplacement: arme
   prix: 575
   bonus:
     puissance: 2
     caracs:
-      INT: 4
-      ESP: 3
+      INT: 5
+      ESP: 4
   rarete: commun
   palier: IV
   niveau: 22
@@ -1394,15 +1384,15 @@ objets:
   - guerisseur
 - id: baton-iv-maitre
   nom: Bâton de basalte de maître
-  description: Version soignée par un maître artisan. +2 de puissance, +4 INT, +4 ESP.
+  description: Version soignée par un maître artisan. +2 de puissance, +5 INT, +5 ESP.
   type: equipement
   emplacement: arme
   prix: 640
   bonus:
     puissance: 2
     caracs:
-      INT: 4
-      ESP: 4
+      INT: 5
+      ESP: 5
   rarete: peu-commun
   palier: IV
   niveau: 22
@@ -1413,15 +1403,15 @@ objets:
   - guerisseur
 - id: baton-v
   nom: Bâton d'aube-cristal
-  description: Bâton du palier V. +2 de puissance, +4 INT, +4 ESP.
+  description: Bâton du palier V. +2 de puissance, +5 INT, +5 ESP.
   type: equipement
   emplacement: arme
   prix: 760
   bonus:
     puissance: 2
     caracs:
-      INT: 4
-      ESP: 4
+      INT: 5
+      ESP: 5
   rarete: commun
   palier: V
   niveau: 28
@@ -1432,15 +1422,15 @@ objets:
   - guerisseur
 - id: baton-v-maitre
   nom: Bâton d'aube-cristal de maître
-  description: Version soignée par un maître artisan. +3 de puissance, +5 INT, +4 ESP.
+  description: Version soignée par un maître artisan. +3 de puissance, +6 INT, +5 ESP.
   type: equipement
   emplacement: arme
   prix: 910
   bonus:
     puissance: 3
     caracs:
-      INT: 5
-      ESP: 4
+      INT: 6
+      ESP: 5
   rarete: peu-commun
   palier: V
   niveau: 28
@@ -1451,15 +1441,15 @@ objets:
   - guerisseur
 - id: baton-vi
   nom: Bâton de cendre-cristal
-  description: Bâton du palier VI. +3 de puissance, +5 INT, +4 ESP.
+  description: Bâton du palier VI. +3 de puissance, +6 INT, +5 ESP.
   type: equipement
   emplacement: arme
   prix: 1055
   bonus:
     puissance: 3
     caracs:
-      INT: 5
-      ESP: 4
+      INT: 6
+      ESP: 5
   rarete: commun
   palier: VI
   niveau: 34
@@ -1470,15 +1460,15 @@ objets:
   - guerisseur
 - id: baton-vi-maitre
   nom: Bâton de cendre-cristal de maître
-  description: Version soignée par un maître artisan. +3 de puissance, +6 INT, +6 ESP.
+  description: Version soignée par un maître artisan. +3 de puissance, +8 INT, +8 ESP.
   type: equipement
   emplacement: arme
   prix: 1320
   bonus:
     puissance: 3
     caracs:
-      INT: 6
-      ESP: 6
+      INT: 8
+      ESP: 8
   rarete: peu-commun
   palier: VI
   niveau: 34
@@ -1489,14 +1479,14 @@ objets:
   - guerisseur
 - id: sceptre-i
   nom: Sceptre de novice
-  description: Sceptre du palier I. +1 VIT, +1 ESP.
+  description: Sceptre du palier I. +1 VIT, +3 ESP.
   type: equipement
   emplacement: arme
   prix: 45
   bonus:
     caracs:
       VIT: 1
-      ESP: 1
+      ESP: 3
   rarete: commun
   palier: I
   niveau: 1
@@ -1506,14 +1496,14 @@ objets:
   - gardien
 - id: sceptre-i-maitre
   nom: Sceptre de novice de maître
-  description: Version soignée par un maître artisan. +1 VIT, +2 ESP.
+  description: Version soignée par un maître artisan. +1 VIT, +6 ESP.
   type: equipement
   emplacement: arme
   prix: 65
   bonus:
     caracs:
       VIT: 1
-      ESP: 2
+      ESP: 6
   rarete: peu-commun
   palier: I
   niveau: 1
@@ -1523,7 +1513,7 @@ objets:
   - gardien
 - id: sceptre-ii
   nom: Sceptre de l'oasis
-  description: Sceptre du palier II. +1 de puissance, +1 VIT, +2 ESP.
+  description: Sceptre du palier II. +1 de puissance, +1 VIT, +4 ESP.
   type: equipement
   emplacement: arme
   prix: 145
@@ -1531,7 +1521,7 @@ objets:
     puissance: 1
     caracs:
       VIT: 1
-      ESP: 2
+      ESP: 4
   rarete: commun
   palier: II
   niveau: 8
@@ -1541,7 +1531,7 @@ objets:
   - gardien
 - id: sceptre-ii-maitre
   nom: Sceptre de l'oasis de maître
-  description: Version soignée par un maître artisan. +1 de puissance, +1 VIT, +3 ESP.
+  description: Version soignée par un maître artisan. +1 de puissance, +1 VIT, +6 ESP.
   type: equipement
   emplacement: arme
   prix: 180
@@ -1549,7 +1539,7 @@ objets:
     puissance: 1
     caracs:
       VIT: 1
-      ESP: 3
+      ESP: 6
   rarete: peu-commun
   palier: II
   niveau: 8
@@ -1559,7 +1549,7 @@ objets:
   - gardien
 - id: sceptre-iii
   nom: Sceptre de sève
-  description: Sceptre du palier III. +1 de puissance, +2 VIT, +4 ESP.
+  description: Sceptre du palier III. +1 de puissance, +2 VIT, +6 ESP.
   type: equipement
   emplacement: arme
   prix: 350
@@ -1567,7 +1557,7 @@ objets:
     puissance: 1
     caracs:
       VIT: 2
-      ESP: 4
+      ESP: 6
   rarete: commun
   palier: III
   niveau: 15
@@ -1577,7 +1567,7 @@ objets:
   - gardien
 - id: sceptre-iii-maitre
   nom: Sceptre de sève de maître
-  description: Version soignée par un maître artisan. +2 de puissance, +2 VIT, +4 ESP.
+  description: Version soignée par un maître artisan. +2 de puissance, +2 VIT, +6 ESP.
   type: equipement
   emplacement: arme
   prix: 400
@@ -1585,7 +1575,7 @@ objets:
     puissance: 2
     caracs:
       VIT: 2
-      ESP: 4
+      ESP: 6
   rarete: peu-commun
   palier: III
   niveau: 15
@@ -1595,7 +1585,7 @@ objets:
   - gardien
 - id: sceptre-iv
   nom: Sceptre de cristal de mine
-  description: Sceptre du palier IV. +2 de puissance, +2 VIT, +5 ESP.
+  description: Sceptre du palier IV. +2 de puissance, +2 VIT, +6 ESP.
   type: equipement
   emplacement: arme
   prix: 575
@@ -1603,7 +1593,7 @@ objets:
     puissance: 2
     caracs:
       VIT: 2
-      ESP: 5
+      ESP: 6
   rarete: commun
   palier: IV
   niveau: 22
@@ -1613,7 +1603,7 @@ objets:
   - gardien
 - id: sceptre-iv-maitre
   nom: Sceptre de cristal de mine de maître
-  description: Version soignée par un maître artisan. +2 de puissance, +2 VIT, +6 ESP.
+  description: Version soignée par un maître artisan. +2 de puissance, +2 VIT, +8 ESP.
   type: equipement
   emplacement: arme
   prix: 640
@@ -1621,7 +1611,7 @@ objets:
     puissance: 2
     caracs:
       VIT: 2
-      ESP: 6
+      ESP: 8
   rarete: peu-commun
   palier: IV
   niveau: 22
@@ -1631,7 +1621,7 @@ objets:
   - gardien
 - id: sceptre-v
   nom: Sceptre d'aube-cristal
-  description: Sceptre du palier V. +2 de puissance, +2 VIT, +6 ESP.
+  description: Sceptre du palier V. +2 de puissance, +2 VIT, +8 ESP.
   type: equipement
   emplacement: arme
   prix: 760
@@ -1639,7 +1629,7 @@ objets:
     puissance: 2
     caracs:
       VIT: 2
-      ESP: 6
+      ESP: 8
   rarete: commun
   palier: V
   niveau: 28
@@ -1649,7 +1639,7 @@ objets:
   - gardien
 - id: sceptre-v-maitre
   nom: Sceptre d'aube-cristal de maître
-  description: Version soignée par un maître artisan. +3 de puissance, +3 VIT, +6 ESP.
+  description: Version soignée par un maître artisan. +3 de puissance, +3 VIT, +8 ESP.
   type: equipement
   emplacement: arme
   prix: 910
@@ -1657,7 +1647,7 @@ objets:
     puissance: 3
     caracs:
       VIT: 3
-      ESP: 6
+      ESP: 8
   rarete: peu-commun
   palier: V
   niveau: 28
@@ -1667,7 +1657,7 @@ objets:
   - gardien
 - id: sceptre-vi
   nom: Sceptre de cendre-cristal
-  description: Sceptre du palier VI. +3 de puissance, +3 VIT, +6 ESP.
+  description: Sceptre du palier VI. +3 de puissance, +3 VIT, +8 ESP.
   type: equipement
   emplacement: arme
   prix: 1055
@@ -1675,7 +1665,7 @@ objets:
     puissance: 3
     caracs:
       VIT: 3
-      ESP: 6
+      ESP: 8
   rarete: commun
   palier: VI
   niveau: 34
@@ -1685,7 +1675,7 @@ objets:
   - gardien
 - id: sceptre-vi-maitre
   nom: Sceptre de cendre-cristal de maître
-  description: Version soignée par un maître artisan. +3 de puissance, +4 VIT, +8 ESP.
+  description: Version soignée par un maître artisan. +3 de puissance, +4 VIT, +10 ESP.
   type: equipement
   emplacement: arme
   prix: 1320
@@ -1693,7 +1683,7 @@ objets:
     puissance: 3
     caracs:
       VIT: 4
-      ESP: 8
+      ESP: 10
   rarete: peu-commun
   palier: VI
   niveau: 34
@@ -1703,14 +1693,14 @@ objets:
   - gardien
 - id: orbe-i
   nom: Orbe de verre
-  description: Orbe / grimoire du palier I. +1 INT, +1 ESP.
+  description: Orbe / grimoire du palier I. +3 INT, +3 ESP.
   type: equipement
   emplacement: arme
   prix: 45
   bonus:
     caracs:
-      INT: 1
-      ESP: 1
+      INT: 3
+      ESP: 3
   rarete: commun
   palier: I
   niveau: 1
@@ -1720,14 +1710,14 @@ objets:
   - arcaniste
 - id: orbe-i-maitre
   nom: Orbe de verre de maître
-  description: Version soignée par un maître artisan. +2 INT, +1 ESP.
+  description: Version soignée par un maître artisan. +6 INT, +3 ESP.
   type: equipement
   emplacement: arme
   prix: 65
   bonus:
     caracs:
-      INT: 2
-      ESP: 1
+      INT: 6
+      ESP: 3
   rarete: peu-commun
   palier: I
   niveau: 1
@@ -1737,15 +1727,15 @@ objets:
   - arcaniste
 - id: orbe-ii
   nom: Orbe de sable fondu
-  description: Orbe / grimoire du palier II. +1 de puissance, +2 INT, +1 ESP.
+  description: Orbe / grimoire du palier II. +1 de puissance, +4 INT, +2 ESP.
   type: equipement
   emplacement: arme
   prix: 145
   bonus:
     puissance: 1
     caracs:
-      INT: 2
-      ESP: 1
+      INT: 4
+      ESP: 2
   rarete: commun
   palier: II
   niveau: 8
@@ -1755,15 +1745,15 @@ objets:
   - arcaniste
 - id: orbe-ii-maitre
   nom: Orbe de sable fondu de maître
-  description: Version soignée par un maître artisan. +1 de puissance, +3 INT, +1 ESP.
+  description: Version soignée par un maître artisan. +1 de puissance, +6 INT, +2 ESP.
   type: equipement
   emplacement: arme
   prix: 180
   bonus:
     puissance: 1
     caracs:
-      INT: 3
-      ESP: 1
+      INT: 6
+      ESP: 2
   rarete: peu-commun
   palier: II
   niveau: 8
@@ -1773,15 +1763,15 @@ objets:
   - arcaniste
 - id: orbe-iii
   nom: Grimoire de feuilles
-  description: Orbe / grimoire du palier III. +1 de puissance, +4 INT, +2 ESP.
+  description: Orbe / grimoire du palier III. +1 de puissance, +6 INT, +3 ESP.
   type: equipement
   emplacement: arme
   prix: 350
   bonus:
     puissance: 1
     caracs:
-      INT: 4
-      ESP: 2
+      INT: 6
+      ESP: 3
   rarete: commun
   palier: III
   niveau: 15
@@ -1791,15 +1781,15 @@ objets:
   - arcaniste
 - id: orbe-iii-maitre
   nom: Grimoire de feuilles de maître
-  description: Version soignée par un maître artisan. +2 de puissance, +4 INT, +2 ESP.
+  description: Version soignée par un maître artisan. +2 de puissance, +6 INT, +3 ESP.
   type: equipement
   emplacement: arme
   prix: 400
   bonus:
     puissance: 2
     caracs:
-      INT: 4
-      ESP: 2
+      INT: 6
+      ESP: 3
   rarete: peu-commun
   palier: III
   niveau: 15
@@ -1809,15 +1799,15 @@ objets:
   - arcaniste
 - id: orbe-iv
   nom: Orbe de lave figée
-  description: Orbe / grimoire du palier IV. +2 de puissance, +5 INT, +2 ESP.
+  description: Orbe / grimoire du palier IV. +2 de puissance, +6 INT, +3 ESP.
   type: equipement
   emplacement: arme
   prix: 575
   bonus:
     puissance: 2
     caracs:
-      INT: 5
-      ESP: 2
+      INT: 6
+      ESP: 3
   rarete: commun
   palier: IV
   niveau: 22
@@ -1827,15 +1817,15 @@ objets:
   - arcaniste
 - id: orbe-iv-maitre
   nom: Orbe de lave figée de maître
-  description: Version soignée par un maître artisan. +2 de puissance, +6 INT, +2 ESP.
+  description: Version soignée par un maître artisan. +2 de puissance, +8 INT, +3 ESP.
   type: equipement
   emplacement: arme
   prix: 640
   bonus:
     puissance: 2
     caracs:
-      INT: 6
-      ESP: 2
+      INT: 8
+      ESP: 3
   rarete: peu-commun
   palier: IV
   niveau: 22
@@ -1845,15 +1835,15 @@ objets:
   - arcaniste
 - id: orbe-v
   nom: Orbe d'aube-cristal
-  description: Orbe / grimoire du palier V. +2 de puissance, +6 INT, +2 ESP.
+  description: Orbe / grimoire du palier V. +2 de puissance, +8 INT, +3 ESP.
   type: equipement
   emplacement: arme
   prix: 760
   bonus:
     puissance: 2
     caracs:
-      INT: 6
-      ESP: 2
+      INT: 8
+      ESP: 3
   rarete: commun
   palier: V
   niveau: 28
@@ -1863,15 +1853,15 @@ objets:
   - arcaniste
 - id: orbe-v-maitre
   nom: Orbe d'aube-cristal de maître
-  description: Version soignée par un maître artisan. +3 de puissance, +6 INT, +3 ESP.
+  description: Version soignée par un maître artisan. +3 de puissance, +8 INT, +4 ESP.
   type: equipement
   emplacement: arme
   prix: 910
   bonus:
     puissance: 3
     caracs:
-      INT: 6
-      ESP: 3
+      INT: 8
+      ESP: 4
   rarete: peu-commun
   palier: V
   niveau: 28
@@ -1881,15 +1871,15 @@ objets:
   - arcaniste
 - id: orbe-vi
   nom: Grimoire de cendre
-  description: Orbe / grimoire du palier VI. +3 de puissance, +6 INT, +3 ESP.
+  description: Orbe / grimoire du palier VI. +3 de puissance, +8 INT, +4 ESP.
   type: equipement
   emplacement: arme
   prix: 1055
   bonus:
     puissance: 3
     caracs:
-      INT: 6
-      ESP: 3
+      INT: 8
+      ESP: 4
   rarete: commun
   palier: VI
   niveau: 34
@@ -1899,15 +1889,15 @@ objets:
   - arcaniste
 - id: orbe-vi-maitre
   nom: Grimoire de cendre de maître
-  description: Version soignée par un maître artisan. +3 de puissance, +8 INT, +4 ESP.
+  description: Version soignée par un maître artisan. +3 de puissance, +10 INT, +5 ESP.
   type: equipement
   emplacement: arme
   prix: 1320
   bonus:
     puissance: 3
     caracs:
-      INT: 8
-      ESP: 4
+      INT: 10
+      ESP: 5
   rarete: peu-commun
   palier: VI
   niveau: 34
@@ -1917,13 +1907,13 @@ objets:
   - arcaniste
 - id: instrument-i
   nom: Flûte de roseau
-  description: Instrument du palier I. +1 AGI, +1 CHA.
+  description: Instrument du palier I. +3 ESP, +1 CHA.
   type: equipement
   emplacement: arme
   prix: 45
   bonus:
     caracs:
-      AGI: 1
+      ESP: 3
       CHA: 1
   rarete: commun
   palier: I
@@ -1933,13 +1923,13 @@ objets:
   - barde
 - id: instrument-i-maitre
   nom: Flûte de roseau de maître
-  description: Version soignée par un maître artisan. +1 AGI, +2 CHA.
+  description: Version soignée par un maître artisan. +3 ESP, +2 CHA.
   type: equipement
   emplacement: arme
   prix: 65
   bonus:
     caracs:
-      AGI: 1
+      ESP: 3
       CHA: 2
   rarete: peu-commun
   palier: I
@@ -1949,14 +1939,14 @@ objets:
   - barde
 - id: instrument-ii
   nom: Oud du bazar
-  description: Instrument du palier II. +1 de puissance, +1 AGI, +2 CHA.
+  description: Instrument du palier II. +1 de puissance, +2 ESP, +2 CHA.
   type: equipement
   emplacement: arme
   prix: 145
   bonus:
     puissance: 1
     caracs:
-      AGI: 1
+      ESP: 2
       CHA: 2
   rarete: commun
   palier: II
@@ -1966,15 +1956,15 @@ objets:
   - barde
 - id: instrument-ii-maitre
   nom: Oud du bazar de maître
-  description: Version soignée par un maître artisan. +1 de puissance, +1 AGI, +3 CHA.
+  description: Version soignée par un maître artisan. +1 de puissance, +4 ESP, +2 CHA.
   type: equipement
   emplacement: arme
   prix: 180
   bonus:
     puissance: 1
     caracs:
-      AGI: 1
-      CHA: 3
+      ESP: 4
+      CHA: 2
   rarete: peu-commun
   palier: II
   niveau: 8
@@ -1983,14 +1973,14 @@ objets:
   - barde
 - id: instrument-iii
   nom: Harpe sylvaine
-  description: Instrument du palier III. +1 de puissance, +2 AGI, +4 CHA.
+  description: Instrument du palier III. +1 de puissance, +3 ESP, +4 CHA.
   type: equipement
   emplacement: arme
   prix: 350
   bonus:
     puissance: 1
     caracs:
-      AGI: 2
+      ESP: 3
       CHA: 4
   rarete: commun
   palier: III
@@ -2000,14 +1990,14 @@ objets:
   - barde
 - id: instrument-iii-maitre
   nom: Harpe sylvaine de maître
-  description: Version soignée par un maître artisan. +2 de puissance, +2 AGI, +4 CHA.
+  description: Version soignée par un maître artisan. +2 de puissance, +3 ESP, +4 CHA.
   type: equipement
   emplacement: arme
   prix: 400
   bonus:
     puissance: 2
     caracs:
-      AGI: 2
+      ESP: 3
       CHA: 4
   rarete: peu-commun
   palier: III
@@ -2017,15 +2007,15 @@ objets:
   - barde
 - id: instrument-iv
   nom: Cornemuse de Grisfer
-  description: Instrument du palier IV. +2 de puissance, +2 AGI, +5 CHA.
+  description: Instrument du palier IV. +2 de puissance, +4 ESP, +4 CHA.
   type: equipement
   emplacement: arme
   prix: 575
   bonus:
     puissance: 2
     caracs:
-      AGI: 2
-      CHA: 5
+      ESP: 4
+      CHA: 4
   rarete: commun
   palier: IV
   niveau: 22
@@ -2034,15 +2024,15 @@ objets:
   - barde
 - id: instrument-iv-maitre
   nom: Cornemuse de Grisfer de maître
-  description: Version soignée par un maître artisan. +2 de puissance, +2 AGI, +6 CHA.
+  description: Version soignée par un maître artisan. +2 de puissance, +4 ESP, +5 CHA.
   type: equipement
   emplacement: arme
   prix: 640
   bonus:
     puissance: 2
     caracs:
-      AGI: 2
-      CHA: 6
+      ESP: 4
+      CHA: 5
   rarete: peu-commun
   palier: IV
   niveau: 22
@@ -2051,15 +2041,15 @@ objets:
   - barde
 - id: instrument-v
   nom: Luth d'aube-bois
-  description: Instrument du palier V. +2 de puissance, +2 AGI, +6 CHA.
+  description: Instrument du palier V. +2 de puissance, +4 ESP, +5 CHA.
   type: equipement
   emplacement: arme
   prix: 760
   bonus:
     puissance: 2
     caracs:
-      AGI: 2
-      CHA: 6
+      ESP: 4
+      CHA: 5
   rarete: commun
   palier: V
   niveau: 28
@@ -2068,15 +2058,15 @@ objets:
   - barde
 - id: instrument-v-maitre
   nom: Luth d'aube-bois de maître
-  description: Version soignée par un maître artisan. +3 de puissance, +3 AGI, +6 CHA.
+  description: Version soignée par un maître artisan. +3 de puissance, +5 ESP, +5 CHA.
   type: equipement
   emplacement: arme
   prix: 910
   bonus:
     puissance: 3
     caracs:
-      AGI: 3
-      CHA: 6
+      ESP: 5
+      CHA: 5
   rarete: peu-commun
   palier: V
   niveau: 28
@@ -2085,15 +2075,15 @@ objets:
   - barde
 - id: instrument-vi
   nom: Luth de cendre-if
-  description: Instrument du palier VI. +3 de puissance, +3 AGI, +6 CHA.
+  description: Instrument du palier VI. +3 de puissance, +5 ESP, +5 CHA.
   type: equipement
   emplacement: arme
   prix: 1055
   bonus:
     puissance: 3
     caracs:
-      AGI: 3
-      CHA: 6
+      ESP: 5
+      CHA: 5
   rarete: commun
   palier: VI
   niveau: 34
@@ -2102,15 +2092,15 @@ objets:
   - barde
 - id: instrument-vi-maitre
   nom: Luth de cendre-if de maître
-  description: Version soignée par un maître artisan. +3 de puissance, +4 AGI, +8 CHA.
+  description: Version soignée par un maître artisan. +3 de puissance, +6 ESP, +7 CHA.
   type: equipement
   emplacement: arme
   prix: 1320
   bonus:
     puissance: 3
     caracs:
-      AGI: 4
-      CHA: 8
+      ESP: 6
+      CHA: 7
   rarete: peu-commun
   palier: VI
   niveau: 34
@@ -2345,12 +2335,14 @@ objets:
   - lame-runique
 - id: armure-cuir
   nom: Armure de cuir
-  description: +4 d'armure.
+  description: Tenue intermédiaire du palier I. +2 d'armure, +1 AGI.
   type: equipement
   emplacement: armure
   prix: 45
   bonus:
-    armure: 4
+    armure: 2
+    caracs:
+      AGI: 1
   rarete: commun
   palier: I
   niveau: 1
@@ -2582,14 +2574,14 @@ objets:
   - barde
 - id: robe-mage
   nom: Robe de mage
-  description: +1 d'armure, +1 ESP.
+  description: Tenue légère du palier I. +3 INT, +3 ESP.
   type: equipement
   emplacement: armure
-  prix: 40
+  prix: 45
   bonus:
-    armure: 1
     caracs:
-      ESP: 1
+      INT: 3
+      ESP: 3
   rarete: commun
   palier: I
   niveau: 1
@@ -2600,15 +2592,15 @@ objets:
   - guerisseur
 - id: legere-i-maitre
   nom: Robe de mage de maître
-  description: Version soignée par un maître artisan. +2 d'armure, +1 INT, +1 ESP.
+  description: Version soignée par un maître artisan. +2 d'armure, +3 INT, +3 ESP.
   type: equipement
   emplacement: armure
   prix: 65
   bonus:
     armure: 2
     caracs:
-      INT: 1
-      ESP: 1
+      INT: 3
+      ESP: 3
   rarete: peu-commun
   palier: I
   niveau: 1
@@ -2619,15 +2611,15 @@ objets:
   - guerisseur
 - id: legere-ii
   nom: Robe de soie du désert
-  description: Tenue légère du palier II. +2 d'armure, +1 INT, +2 ESP.
+  description: Tenue légère du palier II. +2 d'armure, +2 INT, +4 ESP.
   type: equipement
   emplacement: armure
   prix: 145
   bonus:
     armure: 2
     caracs:
-      INT: 1
-      ESP: 2
+      INT: 2
+      ESP: 4
   rarete: commun
   palier: II
   niveau: 8
@@ -2638,15 +2630,15 @@ objets:
   - guerisseur
 - id: legere-ii-maitre
   nom: Robe de soie du désert de maître
-  description: Version soignée par un maître artisan. +2 d'armure, +2 INT, +2 ESP.
+  description: Version soignée par un maître artisan. +2 d'armure, +4 INT, +4 ESP.
   type: equipement
   emplacement: armure
   prix: 180
   bonus:
     armure: 2
     caracs:
-      INT: 2
-      ESP: 2
+      INT: 4
+      ESP: 4
   rarete: peu-commun
   palier: II
   niveau: 8
@@ -2657,15 +2649,15 @@ objets:
   - guerisseur
 - id: legere-iii
   nom: Robe de brume
-  description: Tenue légère du palier III. +4 d'armure, +2 INT, +3 ESP.
+  description: Tenue légère du palier III. +4 d'armure, +3 INT, +5 ESP.
   type: equipement
   emplacement: armure
   prix: 350
   bonus:
     armure: 4
     caracs:
-      INT: 2
-      ESP: 3
+      INT: 3
+      ESP: 5
   rarete: commun
   palier: III
   niveau: 15
@@ -2676,15 +2668,15 @@ objets:
   - guerisseur
 - id: legere-iii-maitre
   nom: Robe de brume de maître
-  description: Version soignée par un maître artisan. +4 d'armure, +3 INT, +3 ESP.
+  description: Version soignée par un maître artisan. +4 d'armure, +5 INT, +5 ESP.
   type: equipement
   emplacement: armure
   prix: 400
   bonus:
     armure: 4
     caracs:
-      INT: 3
-      ESP: 3
+      INT: 5
+      ESP: 5
   rarete: peu-commun
   palier: III
   niveau: 15
@@ -2695,15 +2687,15 @@ objets:
   - guerisseur
 - id: legere-iv
   nom: Robe de laine de forge
-  description: Tenue légère du palier IV. +6 d'armure, +3 INT, +3 ESP.
+  description: Tenue légère du palier IV. +6 d'armure, +4 INT, +4 ESP.
   type: equipement
   emplacement: armure
   prix: 575
   bonus:
     armure: 6
     caracs:
-      INT: 3
-      ESP: 3
+      INT: 4
+      ESP: 4
   rarete: commun
   palier: IV
   niveau: 22
@@ -2714,15 +2706,15 @@ objets:
   - guerisseur
 - id: legere-iv-maitre
   nom: Robe de laine de forge de maître
-  description: Version soignée par un maître artisan. +6 d'armure, +3 INT, +4 ESP.
+  description: Version soignée par un maître artisan. +6 d'armure, +4 INT, +5 ESP.
   type: equipement
   emplacement: armure
   prix: 640
   bonus:
     armure: 6
     caracs:
-      INT: 3
-      ESP: 4
+      INT: 4
+      ESP: 5
   rarete: peu-commun
   palier: IV
   niveau: 22
@@ -2733,15 +2725,15 @@ objets:
   - guerisseur
 - id: legere-v
   nom: Robe d'aube-soie
-  description: Tenue légère du palier V. +6 d'armure, +3 INT, +4 ESP.
+  description: Tenue légère du palier V. +6 d'armure, +4 INT, +5 ESP.
   type: equipement
   emplacement: armure
   prix: 760
   bonus:
     armure: 6
     caracs:
-      INT: 3
-      ESP: 4
+      INT: 4
+      ESP: 5
   rarete: commun
   palier: V
   niveau: 28
@@ -2752,15 +2744,15 @@ objets:
   - guerisseur
 - id: legere-v-maitre
   nom: Robe d'aube-soie de maître
-  description: Version soignée par un maître artisan. +8 d'armure, +4 INT, +4 ESP.
+  description: Version soignée par un maître artisan. +8 d'armure, +5 INT, +5 ESP.
   type: equipement
   emplacement: armure
   prix: 910
   bonus:
     armure: 8
     caracs:
-      INT: 4
-      ESP: 4
+      INT: 5
+      ESP: 5
   rarete: peu-commun
   palier: V
   niveau: 28
@@ -2771,15 +2763,15 @@ objets:
   - guerisseur
 - id: legere-vi
   nom: Robe de cendre-soie
-  description: Tenue légère du palier VI. +8 d'armure, +4 INT, +4 ESP.
+  description: Tenue légère du palier VI. +8 d'armure, +5 INT, +5 ESP.
   type: equipement
   emplacement: armure
   prix: 1055
   bonus:
     armure: 8
     caracs:
-      INT: 4
-      ESP: 4
+      INT: 5
+      ESP: 5
   rarete: commun
   palier: VI
   niveau: 34
@@ -2790,15 +2782,15 @@ objets:
   - guerisseur
 - id: legere-vi-maitre
   nom: Robe de cendre-soie de maître
-  description: Version soignée par un maître artisan. +10 d'armure, +5 INT, +5 ESP.
+  description: Version soignée par un maître artisan. +10 d'armure, +6 INT, +6 ESP.
   type: equipement
   emplacement: armure
   prix: 1320
   bonus:
     armure: 10
     caracs:
-      INT: 5
-      ESP: 5
+      INT: 6
+      ESP: 6
   rarete: peu-commun
   palier: VI
   niveau: 34
@@ -2809,12 +2801,12 @@ objets:
   - guerisseur
 - id: bouclier-bois
   nom: Bouclier de bois
-  description: +3 d'armure.
+  description: Bouclier du palier I. +4 d'armure.
   type: equipement
   emplacement: accessoire
-  prix: 30
+  prix: 45
   bonus:
-    armure: 3
+    armure: 4
   rarete: commun
   palier: I
   niveau: 1
@@ -2824,14 +2816,12 @@ objets:
   - lame-runique
 - id: bouclier-i-maitre
   nom: Bouclier de bois de maître
-  description: Version soignée par un maître artisan. +4 d'armure, +1 VIT.
+  description: Version soignée par un maître artisan. +6 d'armure.
   type: equipement
   emplacement: accessoire
   prix: 65
   bonus:
-    armure: 4
-    caracs:
-      VIT: 1
+    armure: 6
   rarete: peu-commun
   palier: I
   niveau: 1
@@ -2841,14 +2831,12 @@ objets:
   - lame-runique
 - id: bouclier-ii
   nom: Rondache du désert
-  description: Bouclier du palier II. +4 d'armure, +2 VIT.
+  description: Bouclier du palier II. +8 d'armure.
   type: equipement
   emplacement: accessoire
   prix: 145
   bonus:
-    armure: 4
-    caracs:
-      VIT: 2
+    armure: 8
   rarete: commun
   palier: II
   niveau: 8
@@ -2858,14 +2846,12 @@ objets:
   - lame-runique
 - id: bouclier-ii-maitre
   nom: Rondache du désert de maître
-  description: Version soignée par un maître artisan. +6 d'armure, +2 VIT.
+  description: Version soignée par un maître artisan. +10 d'armure.
   type: equipement
   emplacement: accessoire
   prix: 180
   bonus:
-    armure: 6
-    caracs:
-      VIT: 2
+    armure: 10
   rarete: peu-commun
   palier: II
   niveau: 8
@@ -2875,14 +2861,12 @@ objets:
   - lame-runique
 - id: bouclier-iii
   nom: Bouclier de chêne
-  description: Bouclier du palier III. +8 d'armure, +3 VIT.
+  description: Bouclier du palier III. +14 d'armure.
   type: equipement
   emplacement: accessoire
   prix: 350
   bonus:
-    armure: 8
-    caracs:
-      VIT: 3
+    armure: 14
   rarete: commun
   palier: III
   niveau: 15
@@ -2892,14 +2876,12 @@ objets:
   - lame-runique
 - id: bouclier-iii-maitre
   nom: Bouclier de chêne de maître
-  description: Version soignée par un maître artisan. +10 d'armure, +3 VIT.
+  description: Version soignée par un maître artisan. +16 d'armure.
   type: equipement
   emplacement: accessoire
   prix: 400
   bonus:
-    armure: 10
-    caracs:
-      VIT: 3
+    armure: 16
   rarete: peu-commun
   palier: III
   niveau: 15
@@ -2909,14 +2891,12 @@ objets:
   - lame-runique
 - id: bouclier-iv
   nom: Pavois de Grisfer
-  description: Bouclier du palier IV. +10 d'armure, +4 VIT.
+  description: Bouclier du palier IV. +18 d'armure.
   type: equipement
   emplacement: accessoire
   prix: 575
   bonus:
-    armure: 10
-    caracs:
-      VIT: 4
+    armure: 18
   rarete: commun
   palier: IV
   niveau: 22
@@ -2926,14 +2906,12 @@ objets:
   - lame-runique
 - id: bouclier-iv-maitre
   nom: Pavois de Grisfer de maître
-  description: Version soignée par un maître artisan. +12 d'armure, +4 VIT.
+  description: Version soignée par un maître artisan. +20 d'armure.
   type: equipement
   emplacement: accessoire
   prix: 640
   bonus:
-    armure: 12
-    caracs:
-      VIT: 4
+    armure: 20
   rarete: peu-commun
   palier: IV
   niveau: 22
@@ -2943,14 +2921,12 @@ objets:
   - lame-runique
 - id: bouclier-v
   nom: Bouclier d'aube-acier
-  description: Bouclier du palier V. +12 d'armure, +4 VIT.
+  description: Bouclier du palier V. +20 d'armure.
   type: equipement
   emplacement: accessoire
   prix: 760
   bonus:
-    armure: 12
-    caracs:
-      VIT: 4
+    armure: 20
   rarete: commun
   palier: V
   niveau: 28
@@ -2960,14 +2936,12 @@ objets:
   - lame-runique
 - id: bouclier-v-maitre
   nom: Bouclier d'aube-acier de maître
-  description: Version soignée par un maître artisan. +14 d'armure, +5 VIT.
+  description: Version soignée par un maître artisan. +24 d'armure.
   type: equipement
   emplacement: accessoire
   prix: 910
   bonus:
-    armure: 14
-    caracs:
-      VIT: 5
+    armure: 24
   rarete: peu-commun
   palier: V
   niveau: 28
@@ -2977,14 +2951,12 @@ objets:
   - lame-runique
 - id: bouclier-vi
   nom: Bouclier de cendracier
-  description: Bouclier du palier VI. +14 d'armure, +5 VIT.
+  description: Bouclier du palier VI. +24 d'armure.
   type: equipement
   emplacement: accessoire
   prix: 1055
   bonus:
-    armure: 14
-    caracs:
-      VIT: 5
+    armure: 24
   rarete: commun
   palier: VI
   niveau: 34
@@ -2994,14 +2966,12 @@ objets:
   - lame-runique
 - id: bouclier-vi-maitre
   nom: Bouclier de cendracier de maître
-  description: Version soignée par un maître artisan. +18 d'armure, +6 VIT.
+  description: Version soignée par un maître artisan. +30 d'armure.
   type: equipement
   emplacement: accessoire
   prix: 1320
   bonus:
-    armure: 18
-    caracs:
-      VIT: 6
+    armure: 30
   rarete: peu-commun
   palier: VI
   niveau: 34
@@ -3311,14 +3281,14 @@ objets:
   - barde
 - id: amulette-i
   nom: Amulette de bois
-  description: Amulette du palier I. +1 INT, +1 ESP.
+  description: Amulette du palier I. +3 INT, +3 ESP.
   type: equipement
   emplacement: accessoire
   prix: 45
   bonus:
     caracs:
-      INT: 1
-      ESP: 1
+      INT: 3
+      ESP: 3
   rarete: commun
   palier: I
   niveau: 1
@@ -3336,14 +3306,14 @@ objets:
   - barde
 - id: amulette-i-maitre
   nom: Amulette de bois de maître
-  description: Version soignée par un maître artisan. +1 INT, +2 ESP.
+  description: Version soignée par un maître artisan. +3 INT, +6 ESP.
   type: equipement
   emplacement: accessoire
   prix: 65
   bonus:
     caracs:
-      INT: 1
-      ESP: 2
+      INT: 3
+      ESP: 6
   rarete: peu-commun
   palier: I
   niveau: 1
@@ -3361,14 +3331,14 @@ objets:
   - barde
 - id: amulette-ii
   nom: Amulette de verre-sable
-  description: Amulette du palier II. +2 INT, +2 ESP.
+  description: Amulette du palier II. +4 INT, +4 ESP.
   type: equipement
   emplacement: accessoire
   prix: 145
   bonus:
     caracs:
-      INT: 2
-      ESP: 2
+      INT: 4
+      ESP: 4
   rarete: commun
   palier: II
   niveau: 8
@@ -3386,14 +3356,14 @@ objets:
   - barde
 - id: amulette-ii-maitre
   nom: Amulette de verre-sable de maître
-  description: Version soignée par un maître artisan. +2 INT, +3 ESP.
+  description: Version soignée par un maître artisan. +4 INT, +6 ESP.
   type: equipement
   emplacement: accessoire
   prix: 180
   bonus:
     caracs:
-      INT: 2
-      ESP: 3
+      INT: 4
+      ESP: 6
   rarete: peu-commun
   palier: II
   niveau: 8
@@ -3411,14 +3381,14 @@ objets:
   - barde
 - id: amulette-iii
   nom: Amulette de sève
-  description: Amulette du palier III. +3 INT, +4 ESP.
+  description: Amulette du palier III. +5 INT, +6 ESP.
   type: equipement
   emplacement: accessoire
   prix: 350
   bonus:
     caracs:
-      INT: 3
-      ESP: 4
+      INT: 5
+      ESP: 6
   rarete: commun
   palier: III
   niveau: 15
@@ -3436,14 +3406,14 @@ objets:
   - barde
 - id: amulette-iii-maitre
   nom: Amulette de sève de maître
-  description: Version soignée par un maître artisan. +4 INT, +4 ESP.
+  description: Version soignée par un maître artisan. +6 INT, +6 ESP.
   type: equipement
   emplacement: accessoire
   prix: 400
   bonus:
     caracs:
-      INT: 4
-      ESP: 4
+      INT: 6
+      ESP: 6
   rarete: peu-commun
   palier: III
   niveau: 15
@@ -3461,14 +3431,14 @@ objets:
   - barde
 - id: amulette-iv
   nom: Amulette de basalte
-  description: Amulette du palier IV. +4 INT, +5 ESP.
+  description: Amulette du palier IV. +5 INT, +6 ESP.
   type: equipement
   emplacement: accessoire
   prix: 575
   bonus:
     caracs:
-      INT: 4
-      ESP: 5
+      INT: 5
+      ESP: 6
   rarete: commun
   palier: IV
   niveau: 22
@@ -3486,14 +3456,14 @@ objets:
   - barde
 - id: amulette-iv-maitre
   nom: Amulette de basalte de maître
-  description: Version soignée par un maître artisan. +5 INT, +5 ESP.
+  description: Version soignée par un maître artisan. +6 INT, +6 ESP.
   type: equipement
   emplacement: accessoire
   prix: 640
   bonus:
     caracs:
-      INT: 5
-      ESP: 5
+      INT: 6
+      ESP: 6
   rarete: peu-commun
   palier: IV
   niveau: 22
@@ -3511,14 +3481,14 @@ objets:
   - barde
 - id: amulette-v
   nom: Amulette d'aube-cristal
-  description: Amulette du palier V. +5 INT, +5 ESP.
+  description: Amulette du palier V. +6 INT, +6 ESP.
   type: equipement
   emplacement: accessoire
   prix: 760
   bonus:
     caracs:
-      INT: 5
-      ESP: 5
+      INT: 6
+      ESP: 6
   rarete: commun
   palier: V
   niveau: 28
@@ -3536,14 +3506,14 @@ objets:
   - barde
 - id: amulette-v-maitre
   nom: Amulette d'aube-cristal de maître
-  description: Version soignée par un maître artisan. +6 INT, +6 ESP.
+  description: Version soignée par un maître artisan. +8 INT, +8 ESP.
   type: equipement
   emplacement: accessoire
   prix: 910
   bonus:
     caracs:
-      INT: 6
-      ESP: 6
+      INT: 8
+      ESP: 8
   rarete: peu-commun
   palier: V
   niveau: 28
@@ -3561,14 +3531,14 @@ objets:
   - barde
 - id: amulette-vi
   nom: Amulette de cendre-cristal
-  description: Amulette du palier VI. +6 INT, +6 ESP.
+  description: Amulette du palier VI. +8 INT, +8 ESP.
   type: equipement
   emplacement: accessoire
   prix: 1055
   bonus:
     caracs:
-      INT: 6
-      ESP: 6
+      INT: 8
+      ESP: 8
   rarete: commun
   palier: VI
   niveau: 34
@@ -3586,14 +3556,14 @@ objets:
   - barde
 - id: amulette-vi-maitre
   nom: Amulette de cendre-cristal de maître
-  description: Version soignée par un maître artisan. +7 INT, +8 ESP.
+  description: Version soignée par un maître artisan. +9 INT, +10 ESP.
   type: equipement
   emplacement: accessoire
   prix: 1320
   bonus:
     caracs:
-      INT: 7
-      ESP: 8
+      INT: 9
+      ESP: 10
   rarete: peu-commun
   palier: VI
   niveau: 34
@@ -3911,14 +3881,14 @@ objets:
   - barde
 - id: carquois-i
   nom: Carquois de cuir
-  description: Carquois du palier I. +1 AGI, +1 ESP.
+  description: Carquois du palier I. +1 AGI, +3 ESP.
   type: equipement
   emplacement: accessoire
   prix: 45
   bonus:
     caracs:
       AGI: 1
-      ESP: 1
+      ESP: 3
   rarete: commun
   palier: I
   niveau: 1
@@ -3927,14 +3897,14 @@ objets:
   - archer
 - id: carquois-i-maitre
   nom: Carquois de cuir de maître
-  description: Version soignée par un maître artisan. +2 AGI, +1 ESP.
+  description: Version soignée par un maître artisan. +2 AGI, +3 ESP.
   type: equipement
   emplacement: accessoire
   prix: 65
   bonus:
     caracs:
       AGI: 2
-      ESP: 1
+      ESP: 3
   rarete: peu-commun
   palier: I
   niveau: 1
@@ -3943,14 +3913,14 @@ objets:
   - archer
 - id: carquois-ii
   nom: Carquois du nomade
-  description: Carquois du palier II. +2 AGI, +2 ESP.
+  description: Carquois du palier II. +2 AGI, +4 ESP.
   type: equipement
   emplacement: accessoire
   prix: 145
   bonus:
     caracs:
       AGI: 2
-      ESP: 2
+      ESP: 4
   rarete: commun
   palier: II
   niveau: 8
@@ -3959,14 +3929,14 @@ objets:
   - archer
 - id: carquois-ii-maitre
   nom: Carquois du nomade de maître
-  description: Version soignée par un maître artisan. +3 AGI, +2 ESP.
+  description: Version soignée par un maître artisan. +3 AGI, +4 ESP.
   type: equipement
   emplacement: accessoire
   prix: 180
   bonus:
     caracs:
       AGI: 3
-      ESP: 2
+      ESP: 4
   rarete: peu-commun
   palier: II
   niveau: 8
@@ -3975,14 +3945,14 @@ objets:
   - archer
 - id: carquois-iii
   nom: Carquois sylvain
-  description: Carquois du palier III. +4 AGI, +3 ESP.
+  description: Carquois du palier III. +4 AGI, +5 ESP.
   type: equipement
   emplacement: accessoire
   prix: 350
   bonus:
     caracs:
       AGI: 4
-      ESP: 3
+      ESP: 5
   rarete: commun
   palier: III
   niveau: 15
@@ -3991,14 +3961,14 @@ objets:
   - archer
 - id: carquois-iii-maitre
   nom: Carquois sylvain de maître
-  description: Version soignée par un maître artisan. +5 AGI, +3 ESP.
+  description: Version soignée par un maître artisan. +5 AGI, +5 ESP.
   type: equipement
   emplacement: accessoire
   prix: 400
   bonus:
     caracs:
       AGI: 5
-      ESP: 3
+      ESP: 5
   rarete: peu-commun
   palier: III
   niveau: 15
@@ -4007,14 +3977,14 @@ objets:
   - archer
 - id: carquois-iv
   nom: Carquois de Grisfer
-  description: Carquois du palier IV. +5 AGI, +4 ESP.
+  description: Carquois du palier IV. +5 AGI, +5 ESP.
   type: equipement
   emplacement: accessoire
   prix: 575
   bonus:
     caracs:
       AGI: 5
-      ESP: 4
+      ESP: 5
   rarete: commun
   palier: IV
   niveau: 22
@@ -4023,14 +3993,14 @@ objets:
   - archer
 - id: carquois-iv-maitre
   nom: Carquois de Grisfer de maître
-  description: Version soignée par un maître artisan. +6 AGI, +4 ESP.
+  description: Version soignée par un maître artisan. +6 AGI, +5 ESP.
   type: equipement
   emplacement: accessoire
   prix: 640
   bonus:
     caracs:
       AGI: 6
-      ESP: 4
+      ESP: 5
   rarete: peu-commun
   palier: IV
   niveau: 22
@@ -4039,14 +4009,14 @@ objets:
   - archer
 - id: carquois-v
   nom: Carquois d'aube-cuir
-  description: Carquois du palier V. +6 AGI, +4 ESP.
+  description: Carquois du palier V. +6 AGI, +5 ESP.
   type: equipement
   emplacement: accessoire
   prix: 760
   bonus:
     caracs:
       AGI: 6
-      ESP: 4
+      ESP: 5
   rarete: commun
   palier: V
   niveau: 28
@@ -4055,14 +4025,14 @@ objets:
   - archer
 - id: carquois-v-maitre
   nom: Carquois d'aube-cuir de maître
-  description: Version soignée par un maître artisan. +7 AGI, +5 ESP.
+  description: Version soignée par un maître artisan. +7 AGI, +6 ESP.
   type: equipement
   emplacement: accessoire
   prix: 910
   bonus:
     caracs:
       AGI: 7
-      ESP: 5
+      ESP: 6
   rarete: peu-commun
   palier: V
   niveau: 28
@@ -4071,14 +4041,14 @@ objets:
   - archer
 - id: carquois-vi
   nom: Carquois de cendre-cuir
-  description: Carquois du palier VI. +7 AGI, +5 ESP.
+  description: Carquois du palier VI. +7 AGI, +6 ESP.
   type: equipement
   emplacement: accessoire
   prix: 1055
   bonus:
     caracs:
       AGI: 7
-      ESP: 5
+      ESP: 6
   rarete: commun
   palier: VI
   niveau: 34
@@ -4087,14 +4057,14 @@ objets:
   - archer
 - id: carquois-vi-maitre
   nom: Carquois de cendre-cuir de maître
-  description: Version soignée par un maître artisan. +9 AGI, +6 ESP.
+  description: Version soignée par un maître artisan. +9 AGI, +8 ESP.
   type: equipement
   emplacement: accessoire
   prix: 1320
   bonus:
     caracs:
       AGI: 9
-      ESP: 6
+      ESP: 8
   rarete: peu-commun
   palier: VI
   niveau: 34
@@ -4103,14 +4073,14 @@ objets:
   - archer
 - id: sacoche-i
   nom: Sacoche d'herboriste
-  description: Sacoche du palier I. +1 AGI, +1 INT.
+  description: Sacoche du palier I. +1 AGI, +3 INT.
   type: equipement
   emplacement: accessoire
   prix: 45
   bonus:
     caracs:
       AGI: 1
-      INT: 1
+      INT: 3
   rarete: commun
   palier: I
   niveau: 1
@@ -4119,14 +4089,14 @@ objets:
   - alchimiste
 - id: sacoche-i-maitre
   nom: Sacoche d'herboriste de maître
-  description: Version soignée par un maître artisan. +1 AGI, +2 INT.
+  description: Version soignée par un maître artisan. +1 AGI, +6 INT.
   type: equipement
   emplacement: accessoire
   prix: 65
   bonus:
     caracs:
       AGI: 1
-      INT: 2
+      INT: 6
   rarete: peu-commun
   palier: I
   niveau: 1
@@ -4135,14 +4105,14 @@ objets:
   - alchimiste
 - id: sacoche-ii
   nom: Sacoche du bazar
-  description: Sacoche du palier II. +2 AGI, +2 INT.
+  description: Sacoche du palier II. +2 AGI, +4 INT.
   type: equipement
   emplacement: accessoire
   prix: 145
   bonus:
     caracs:
       AGI: 2
-      INT: 2
+      INT: 4
   rarete: commun
   palier: II
   niveau: 8
@@ -4151,14 +4121,14 @@ objets:
   - alchimiste
 - id: sacoche-ii-maitre
   nom: Sacoche du bazar de maître
-  description: Version soignée par un maître artisan. +2 AGI, +3 INT.
+  description: Version soignée par un maître artisan. +2 AGI, +6 INT.
   type: equipement
   emplacement: accessoire
   prix: 180
   bonus:
     caracs:
       AGI: 2
-      INT: 3
+      INT: 6
   rarete: peu-commun
   palier: II
   niveau: 8
@@ -4167,14 +4137,14 @@ objets:
   - alchimiste
 - id: sacoche-iii
   nom: Sacoche de feuilles
-  description: Sacoche du palier III. +3 AGI, +4 INT.
+  description: Sacoche du palier III. +3 AGI, +6 INT.
   type: equipement
   emplacement: accessoire
   prix: 350
   bonus:
     caracs:
       AGI: 3
-      INT: 4
+      INT: 6
   rarete: commun
   palier: III
   niveau: 15
@@ -4183,14 +4153,14 @@ objets:
   - alchimiste
 - id: sacoche-iii-maitre
   nom: Sacoche de feuilles de maître
-  description: Version soignée par un maître artisan. +3 AGI, +5 INT.
+  description: Version soignée par un maître artisan. +3 AGI, +8 INT.
   type: equipement
   emplacement: accessoire
   prix: 400
   bonus:
     caracs:
       AGI: 3
-      INT: 5
+      INT: 8
   rarete: peu-commun
   palier: III
   niveau: 15
@@ -4199,14 +4169,14 @@ objets:
   - alchimiste
 - id: sacoche-iv
   nom: Sacoche de forge
-  description: Sacoche du palier IV. +4 AGI, +5 INT.
+  description: Sacoche du palier IV. +4 AGI, +6 INT.
   type: equipement
   emplacement: accessoire
   prix: 575
   bonus:
     caracs:
       AGI: 4
-      INT: 5
+      INT: 6
   rarete: commun
   palier: IV
   niveau: 22
@@ -4215,14 +4185,14 @@ objets:
   - alchimiste
 - id: sacoche-iv-maitre
   nom: Sacoche de forge de maître
-  description: Version soignée par un maître artisan. +4 AGI, +6 INT.
+  description: Version soignée par un maître artisan. +4 AGI, +8 INT.
   type: equipement
   emplacement: accessoire
   prix: 640
   bonus:
     caracs:
       AGI: 4
-      INT: 6
+      INT: 8
   rarete: peu-commun
   palier: IV
   niveau: 22
@@ -4231,14 +4201,14 @@ objets:
   - alchimiste
 - id: sacoche-v
   nom: Sacoche d'aube-cuir
-  description: Sacoche du palier V. +4 AGI, +6 INT.
+  description: Sacoche du palier V. +4 AGI, +8 INT.
   type: equipement
   emplacement: accessoire
   prix: 760
   bonus:
     caracs:
       AGI: 4
-      INT: 6
+      INT: 8
   rarete: commun
   palier: V
   niveau: 28
@@ -4247,14 +4217,14 @@ objets:
   - alchimiste
 - id: sacoche-v-maitre
   nom: Sacoche d'aube-cuir de maître
-  description: Version soignée par un maître artisan. +5 AGI, +7 INT.
+  description: Version soignée par un maître artisan. +5 AGI, +9 INT.
   type: equipement
   emplacement: accessoire
   prix: 910
   bonus:
     caracs:
       AGI: 5
-      INT: 7
+      INT: 9
   rarete: peu-commun
   palier: V
   niveau: 28
@@ -4263,14 +4233,14 @@ objets:
   - alchimiste
 - id: sacoche-vi
   nom: Sacoche de cendre-cuir
-  description: Sacoche du palier VI. +5 AGI, +7 INT.
+  description: Sacoche du palier VI. +5 AGI, +9 INT.
   type: equipement
   emplacement: accessoire
   prix: 1055
   bonus:
     caracs:
       AGI: 5
-      INT: 7
+      INT: 9
   rarete: commun
   palier: VI
   niveau: 34
@@ -4279,14 +4249,14 @@ objets:
   - alchimiste
 - id: sacoche-vi-maitre
   nom: Sacoche de cendre-cuir de maître
-  description: Version soignée par un maître artisan. +6 AGI, +9 INT.
+  description: Version soignée par un maître artisan. +6 AGI, +11 INT.
   type: equipement
   emplacement: accessoire
   prix: 1320
   bonus:
     caracs:
       AGI: 6
-      INT: 9
+      INT: 11
   rarete: peu-commun
   palier: VI
   niveau: 34
@@ -4335,9 +4305,7 @@ objets:
   emplacement: accessoire
   prix: 215
   bonus:
-    armure: 8
-    caracs:
-      VIT: 2
+    armure: 12
   rarete: rare
   palier: II
   niveau: 8
@@ -4476,9 +4444,7 @@ objets:
   emplacement: accessoire
   prix: 1140
   bonus:
-    armure: 18
-    caracs:
-      VIT: 6
+    armure: 30
   rarete: rare
   palier: V
   niveau: 28
@@ -4601,8 +4567,8 @@ objets:
   prix: 65
   bonus:
     caracs:
-      INT: 2
-      ESP: 1
+      INT: 6
+      ESP: 3
   rarete: peu-commun
   palier: I
   niveau: 1
@@ -4620,8 +4586,8 @@ objets:
   bonus:
     armure: 2
     caracs:
-      INT: 1
-      ESP: 1
+      INT: 3
+      ESP: 3
   rarete: peu-commun
   palier: I
   niveau: 1
@@ -4638,8 +4604,8 @@ objets:
   prix: 215
   bonus:
     caracs:
-      INT: 3
-      ESP: 3
+      INT: 6
+      ESP: 6
   rarete: rare
   palier: II
   niveau: 8
@@ -4667,8 +4633,8 @@ objets:
   bonus:
     puissance: 1
     caracs:
-      INT: 4
-      ESP: 1
+      INT: 8
+      ESP: 2
   rarete: rare
   palier: II
   niveau: 8
@@ -4688,8 +4654,8 @@ objets:
   bonus:
     armure: 6
     caracs:
-      INT: 3
-      ESP: 3
+      INT: 5
+      ESP: 5
   rarete: rare
   palier: III
   niveau: 15
@@ -4710,8 +4676,8 @@ objets:
   prix: 500
   bonus:
     caracs:
-      INT: 5
-      ESP: 5
+      INT: 8
+      ESP: 8
   rarete: epique
   palier: III
   niveau: 15
@@ -4741,8 +4707,8 @@ objets:
   bonus:
     puissance: 3
     caracs:
-      INT: 5
-      ESP: 4
+      INT: 6
+      ESP: 5
   rarete: rare
   palier: IV
   niveau: 22
@@ -4764,8 +4730,8 @@ objets:
   bonus:
     armure: 8
     caracs:
-      INT: 5
-      ESP: 5
+      INT: 6
+      ESP: 6
   rarete: epique
   palier: IV
   niveau: 22
@@ -4788,8 +4754,8 @@ objets:
   prix: 1140
   bonus:
     caracs:
-      INT: 7
-      ESP: 8
+      INT: 9
+      ESP: 10
   rarete: rare
   palier: V
   niveau: 28
@@ -4818,8 +4784,8 @@ objets:
   bonus:
     puissance: 4
     caracs:
-      INT: 7
-      ESP: 6
+      INT: 9
+      ESP: 8
   rarete: epique
   palier: V
   niveau: 28
@@ -4843,8 +4809,8 @@ objets:
   bonus:
     armure: 10
     caracs:
-      INT: 6
-      ESP: 6
+      INT: 8
+      ESP: 8
   rarete: rare
   palier: VI
   niveau: 34
@@ -4865,8 +4831,8 @@ objets:
   prix: 1760
   bonus:
     caracs:
-      INT: 10
-      ESP: 10
+      INT: 13
+      ESP: 13
   rarete: epique
   palier: VI
   niveau: 34
@@ -4896,8 +4862,8 @@ objets:
   bonus:
     puissance: 4
     caracs:
-      INT: 8
-      ESP: 7
+      INT: 10
+      ESP: 9
   rarete: legendaire
   palier: V
   niveau: 28
@@ -4921,8 +4887,8 @@ objets:
   prix: 65
   bonus:
     caracs:
-      INT: 2
-      ESP: 1
+      INT: 6
+      ESP: 3
   rarete: peu-commun
   palier: I
   niveau: 1
@@ -4939,8 +4905,8 @@ objets:
   bonus:
     armure: 2
     caracs:
-      INT: 1
-      ESP: 1
+      INT: 3
+      ESP: 3
   rarete: peu-commun
   palier: I
   niveau: 1
@@ -4986,8 +4952,8 @@ objets:
   bonus:
     puissance: 1
     caracs:
-      INT: 3
-      ESP: 2
+      INT: 6
+      ESP: 4
   rarete: rare
   palier: II
   niveau: 8
@@ -5008,8 +4974,8 @@ objets:
   bonus:
     armure: 6
     caracs:
-      INT: 3
-      ESP: 3
+      INT: 5
+      ESP: 5
   rarete: rare
   palier: III
   niveau: 15
@@ -5030,8 +4996,8 @@ objets:
   prix: 500
   bonus:
     caracs:
-      INT: 5
-      ESP: 5
+      INT: 8
+      ESP: 8
   rarete: epique
   palier: III
   niveau: 15
@@ -5061,8 +5027,8 @@ objets:
   bonus:
     puissance: 3
     caracs:
-      INT: 6
-      ESP: 3
+      INT: 8
+      ESP: 4
   rarete: rare
   palier: IV
   niveau: 22
@@ -5083,8 +5049,8 @@ objets:
   bonus:
     armure: 8
     caracs:
-      INT: 5
-      ESP: 5
+      INT: 6
+      ESP: 6
   rarete: epique
   palier: IV
   niveau: 22
@@ -5137,8 +5103,8 @@ objets:
   bonus:
     puissance: 4
     caracs:
-      INT: 9
-      ESP: 4
+      INT: 11
+      ESP: 5
   rarete: epique
   palier: V
   niveau: 28
@@ -5161,8 +5127,8 @@ objets:
   bonus:
     armure: 10
     caracs:
-      INT: 6
-      ESP: 6
+      INT: 8
+      ESP: 8
   rarete: rare
   palier: VI
   niveau: 34
@@ -5182,8 +5148,8 @@ objets:
   prix: 1760
   bonus:
     caracs:
-      INT: 10
-      ESP: 10
+      INT: 13
+      ESP: 13
   rarete: epique
   palier: VI
   niveau: 34
@@ -5213,8 +5179,8 @@ objets:
   bonus:
     puissance: 4
     caracs:
-      INT: 11
-      ESP: 4
+      INT: 14
+      ESP: 5
   rarete: legendaire
   palier: V
   niveau: 28
@@ -5555,8 +5521,7 @@ objets:
   bonus:
     puissance: 1
     caracs:
-      FOR: 1
-      VIT: 1
+      FOR: 2
   rarete: peu-commun
   palier: I
   niveau: 1
@@ -5589,9 +5554,7 @@ objets:
   emplacement: accessoire
   prix: 215
   bonus:
-    armure: 8
-    caracs:
-      VIT: 2
+    armure: 12
   rarete: rare
   palier: II
   niveau: 8
@@ -5653,9 +5616,7 @@ objets:
   emplacement: accessoire
   prix: 500
   bonus:
-    armure: 12
-    caracs:
-      VIT: 4
+    armure: 20
   rarete: epique
   palier: III
   niveau: 15
@@ -5678,8 +5639,7 @@ objets:
   bonus:
     puissance: 4
     caracs:
-      FOR: 6
-      VIT: 2
+      FOR: 8
   rarete: rare
   palier: IV
   niveau: 22
@@ -5723,9 +5683,7 @@ objets:
   emplacement: accessoire
   prix: 1140
   bonus:
-    armure: 18
-    caracs:
-      VIT: 6
+    armure: 30
   rarete: rare
   palier: V
   niveau: 28
@@ -5747,7 +5705,7 @@ objets:
     puissance: 4
     caracs:
       VIT: 4
-      ESP: 9
+      ESP: 11
   rarete: epique
   palier: V
   niveau: 28
@@ -5790,9 +5748,7 @@ objets:
   emplacement: accessoire
   prix: 1760
   bonus:
-    armure: 24
-    caracs:
-      VIT: 8
+    armure: 40
   rarete: epique
   palier: VI
   niveau: 34
@@ -5815,8 +5771,7 @@ objets:
   bonus:
     puissance: 6
     caracs:
-      FOR: 9
-      VIT: 4
+      FOR: 13
   rarete: legendaire
   palier: V
   niveau: 28
@@ -5841,7 +5796,7 @@ objets:
   bonus:
     caracs:
       AGI: 1
-      INT: 2
+      INT: 6
   rarete: peu-commun
   palier: I
   niveau: 1
@@ -5878,7 +5833,7 @@ objets:
   bonus:
     caracs:
       AGI: 2
-      INT: 4
+      INT: 8
   rarete: rare
   palier: II
   niveau: 8
@@ -5898,7 +5853,7 @@ objets:
     puissance: 1
     caracs:
       AGI: 2
-      INT: 3
+      INT: 6
   rarete: rare
   palier: II
   niveau: 8
@@ -5942,7 +5897,7 @@ objets:
   bonus:
     caracs:
       AGI: 4
-      INT: 6
+      INT: 9
   rarete: epique
   palier: III
   niveau: 15
@@ -5964,7 +5919,7 @@ objets:
     puissance: 3
     caracs:
       AGI: 4
-      INT: 5
+      INT: 6
   rarete: rare
   palier: IV
   niveau: 22
@@ -6011,7 +5966,7 @@ objets:
   bonus:
     caracs:
       AGI: 6
-      INT: 9
+      INT: 11
   rarete: rare
   palier: V
   niveau: 28
@@ -6031,7 +5986,7 @@ objets:
     puissance: 4
     caracs:
       AGI: 5
-      INT: 8
+      INT: 10
   rarete: epique
   palier: V
   niveau: 28
@@ -6078,7 +6033,7 @@ objets:
   bonus:
     caracs:
       AGI: 8
-      INT: 12
+      INT: 15
   rarete: epique
   palier: VI
   niveau: 34
@@ -6100,7 +6055,7 @@ objets:
     puissance: 4
     caracs:
       AGI: 6
-      INT: 9
+      INT: 11
   rarete: legendaire
   palier: V
   niveau: 28
@@ -6126,7 +6081,7 @@ objets:
     puissance: 1
     caracs:
       AGI: 1
-      ESP: 1
+      ESP: 3
   rarete: peu-commun
   palier: I
   niveau: 1
@@ -6162,7 +6117,7 @@ objets:
   bonus:
     caracs:
       AGI: 4
-      ESP: 2
+      ESP: 4
   rarete: rare
   palier: II
   niveau: 8
@@ -6182,7 +6137,7 @@ objets:
     puissance: 2
     caracs:
       AGI: 3
-      ESP: 1
+      ESP: 2
   rarete: rare
   palier: II
   niveau: 8
@@ -6224,7 +6179,7 @@ objets:
   bonus:
     caracs:
       AGI: 6
-      ESP: 4
+      ESP: 6
   rarete: epique
   palier: III
   niveau: 15
@@ -6246,7 +6201,7 @@ objets:
     puissance: 4
     caracs:
       AGI: 6
-      ESP: 2
+      ESP: 3
   rarete: rare
   palier: IV
   niveau: 22
@@ -6292,7 +6247,7 @@ objets:
   bonus:
     caracs:
       AGI: 9
-      ESP: 6
+      ESP: 8
   rarete: rare
   palier: V
   niveau: 28
@@ -6313,7 +6268,7 @@ objets:
     puissance: 5
     caracs:
       AGI: 8
-      ESP: 4
+      ESP: 5
   rarete: epique
   palier: V
   niveau: 28
@@ -6359,7 +6314,7 @@ objets:
   bonus:
     caracs:
       AGI: 12
-      ESP: 8
+      ESP: 10
   rarete: epique
   palier: VI
   niveau: 34
@@ -6381,7 +6336,7 @@ objets:
     puissance: 6
     caracs:
       AGI: 9
-      ESP: 4
+      ESP: 5
   rarete: legendaire
   palier: V
   niveau: 28
@@ -6403,8 +6358,8 @@ objets:
   prix: 65
   bonus:
     caracs:
-      INT: 2
-      ESP: 1
+      INT: 6
+      ESP: 3
   rarete: peu-commun
   palier: I
   niveau: 1
@@ -6422,8 +6377,8 @@ objets:
   bonus:
     armure: 2
     caracs:
-      INT: 1
-      ESP: 1
+      INT: 3
+      ESP: 3
   rarete: peu-commun
   palier: I
   niveau: 1
@@ -6470,7 +6425,7 @@ objets:
     puissance: 1
     caracs:
       VIT: 1
-      ESP: 4
+      ESP: 8
   rarete: rare
   palier: II
   niveau: 8
@@ -6490,8 +6445,8 @@ objets:
   bonus:
     armure: 6
     caracs:
-      INT: 3
-      ESP: 3
+      INT: 5
+      ESP: 5
   rarete: rare
   palier: III
   niveau: 15
@@ -6511,8 +6466,8 @@ objets:
   prix: 500
   bonus:
     caracs:
-      INT: 5
-      ESP: 5
+      INT: 8
+      ESP: 8
   rarete: epique
   palier: III
   niveau: 15
@@ -6542,8 +6497,8 @@ objets:
   bonus:
     puissance: 3
     caracs:
-      INT: 5
-      ESP: 4
+      INT: 6
+      ESP: 5
   rarete: rare
   palier: IV
   niveau: 22
@@ -6565,8 +6520,8 @@ objets:
   bonus:
     armure: 8
     caracs:
-      INT: 5
-      ESP: 5
+      INT: 6
+      ESP: 6
   rarete: epique
   palier: IV
   niveau: 22
@@ -6589,8 +6544,8 @@ objets:
   prix: 1140
   bonus:
     caracs:
-      INT: 7
-      ESP: 8
+      INT: 9
+      ESP: 10
   rarete: rare
   palier: V
   niveau: 28
@@ -6619,7 +6574,7 @@ objets:
     puissance: 4
     caracs:
       VIT: 4
-      ESP: 9
+      ESP: 11
   rarete: epique
   palier: V
   niveau: 28
@@ -6642,8 +6597,8 @@ objets:
   bonus:
     armure: 10
     caracs:
-      INT: 6
-      ESP: 6
+      INT: 8
+      ESP: 8
   rarete: rare
   palier: VI
   niveau: 34
@@ -6696,7 +6651,7 @@ objets:
     puissance: 4
     caracs:
       VIT: 4
-      ESP: 11
+      ESP: 14
   rarete: legendaire
   palier: V
   niveau: 28
@@ -6855,8 +6810,7 @@ objets:
   bonus:
     puissance: 4
     caracs:
-      FOR: 6
-      VIT: 2
+      FOR: 8
   rarete: rare
   palier: IV
   niveau: 22
@@ -7030,7 +6984,7 @@ objets:
   prix: 65
   bonus:
     caracs:
-      AGI: 1
+      ESP: 3
       CHA: 2
   rarete: peu-commun
   palier: I
@@ -7095,8 +7049,8 @@ objets:
   bonus:
     puissance: 1
     caracs:
-      AGI: 1
-      CHA: 4
+      ESP: 4
+      CHA: 3
   rarete: rare
   palier: II
   niveau: 8
@@ -7245,8 +7199,8 @@ objets:
   bonus:
     puissance: 4
     caracs:
-      AGI: 4
-      CHA: 9
+      ESP: 6
+      CHA: 8
   rarete: epique
   palier: V
   niveau: 28
@@ -7321,8 +7275,8 @@ objets:
   bonus:
     puissance: 4
     caracs:
-      AGI: 4
-      CHA: 11
+      ESP: 8
+      CHA: 9
   rarete: legendaire
   palier: V
   niveau: 28
@@ -7432,7 +7386,7 @@ objets:
     puissance: 9
     caracs:
       AGI: 13
-      ESP: 6
+      ESP: 8
   rarete: mythique
   palier: X
   niveau: 40
@@ -7460,7 +7414,7 @@ objets:
     puissance: 7
     caracs:
       AGI: 8
-      INT: 13
+      INT: 16
   rarete: mythique
   palier: X
   niveau: 40
@@ -7488,8 +7442,8 @@ objets:
   bonus:
     puissance: 7
     caracs:
-      INT: 11
-      ESP: 10
+      INT: 14
+      ESP: 13
   rarete: mythique
   palier: X
   niveau: 40

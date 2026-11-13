@@ -31,11 +31,16 @@ describe('Catalogue d\'équipements', () => {
     }
   });
 
-  it('garde les 7 objets d\'origine avec le même id (sauvegardes compatibles)', () => {
-    for (const id of ['epee-courte', 'dague', 'baton-apprenti', 'arc-court', 'bouclier-bois', 'armure-cuir', 'robe-mage']) {
+  it('garde les 7 objets d\'origine avec le même id et le même nom (sauvegardes compatibles)', () => {
+    const noms: Record<string, string> = {
+      'epee-courte': 'Épée courte', dague: 'Dague fine', 'baton-apprenti': "Bâton d'apprenti", 'arc-court': 'Arc court',
+      'bouclier-bois': 'Bouclier de bois', 'armure-cuir': 'Armure de cuir', 'robe-mage': 'Robe de mage',
+    };
+    for (const [id, nom] of Object.entries(noms)) {
       expect(c.objets[id]?.type, id).toBe('equipement');
+      expect(c.objets[id].nom).toBe(nom);
+      expect(c.objets[id].palier).toBe('I');
     }
-    expect(c.objets['armure-cuir'].bonus?.armure).toBe(4);
   });
 });
 
@@ -56,6 +61,14 @@ describe('Équiper', () => {
     jouer(c, r, { type: 'acheter', joueur: 'j1', objet: 'epee-courte', lieu: 'guilde' });
     jouer(c, r, { type: 'equiper', joueur: 'j1', objet: 'epee-courte' });
     expect(r.etat.heros[r.etat.joueurs.j1.herosId!].equipement.arme).toBe('epee-courte');
+  });
+
+  it('un nouveau héros reçoit l\'équipement standard de sa classe', () => {
+    const r = groupeDeDeux(c);
+    const kael = r.etat.heros[r.etat.joueurs.j1.herosId!]; // Lame runique
+    expect(kael.equipement).toEqual({ arme: 'epee-courte', armure: 'lourde-i', accessoire: 'bouclier-bois' });
+    const ilo = r.etat.heros[r.etat.joueurs.j2.herosId!]; // Guérisseur
+    expect(ilo.equipement).toEqual({ arme: 'sceptre-i', armure: 'robe-mage', accessoire: 'amulette-i' });
   });
 
   it('une arme mythique n\'existe qu\'une fois dans la partie', () => {

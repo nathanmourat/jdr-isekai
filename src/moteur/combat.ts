@@ -356,7 +356,14 @@ export function combattantCompagnon(contenu: Contenu, compagnonId: string, h: He
 
 // ───────────────────────────── Difficulté ─────────────────────────────
 
+/** Multiplicateurs des ennemis : taille du groupe × renfort lié à l'équipement des héros. */
 export function multiplicateursDifficulte(contenu: Contenu, puissance: number) {
+  const m = multiplicateursGroupe(contenu, puissance);
+  const r = contenu.config.renfort_ennemis;
+  return { pv: m.pv * r.pv, degats: m.degats * r.degats, ennemisEnPlus: m.ennemisEnPlus, puissance: m.puissance };
+}
+
+function multiplicateursGroupe(contenu: Contenu, puissance: number) {
   const t = trier([...contenu.config.difficulte], (a, b) => a.puissance - b.puissance);
   if (puissance <= t[0].puissance) return { pv: t[0].pv, degats: t[0].degats, ennemisEnPlus: t[0].ennemis_en_plus, puissance };
   for (let i = 0; i < t.length - 1; i++) {
@@ -1270,7 +1277,8 @@ export function actionsDisponibles(contenu: Contenu, combat: Combat, acteurId: s
 export function recompensesCombat(contenu: Contenu, combat: Combat, rng: Rng) {
   const vaincus = combat.combattants.filter((x) => x.camp === 'ennemis' && x.type === 'ennemi' && (x.ko || x.parti) && x.recompenses);
   const heros = combat.combattants.filter((x) => x.type === 'heros');
-  const facteur = combat.multiplicateurs.pv / Math.max(1, combat.multiplicateurs.puissance);
+  // XP et or suivent la taille du groupe, pas le renfort lié à l'équipement
+  const facteur = combat.multiplicateurs.pv / contenu.config.renfort_ennemis.pv / Math.max(1, combat.multiplicateurs.puissance);
   const xpTotal = vaincus.reduce((a, x) => a + x.recompenses!.xp, 0);
   const orTotal = vaincus.reduce((a, x) => a + x.recompenses!.or, 0);
   const objets: string[] = [];

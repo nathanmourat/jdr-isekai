@@ -3,19 +3,22 @@
  */
 import type { Contenu } from '../contenu/types';
 import { annulerTour, avancer, combattantHeros, demarrerCombat, type Combat } from './combat';
-import { creerHeros } from './personnage';
+import { creerHeros, equipementStandard } from './personnage';
 import { creerRng, entier } from './rng';
 
 export interface Resultat { victoires: number; combats: number; tours: number }
 
-export function simulerCombat(contenu: Contenu, rencontre: string, heros: { classe: string; race: string; don: string; niveau?: number }[], graine: string): Combat {
+/** Les héros simulés portent l'équipement standard de leur niveau, sauf si `equipe` vaut false. */
+export function simulerCombat(contenu: Contenu, rencontre: string, heros: { classe: string; race: string; don: string; niveau?: number; equipe?: boolean }[], graine: string): Combat {
   const rng = creerRng(graine);
-  const allies = heros.map((h, i) =>
-    combattantHeros(contenu, creerHeros(contenu, {
+  const allies = heros.map((h, i) => {
+    const x = creerHeros(contenu, {
       id: `sim${i}`, joueurId: `j${i}`, nom: `${contenu.classes[h.classe].nom} ${i + 1}`, classe: h.classe, race: h.race, don: h.don,
       origine: 'invoque', age: 20, anneeCampagne: 1012, niveau: h.niveau ?? 1,
-    }), false),
-  );
+    });
+    if (h.equipe !== false) x.equipement = equipementStandard(contenu, h.classe, x.niveau);
+    return combattantHeros(contenu, x, false);
+  });
   let combat = demarrerCombat(contenu, rencontre, allies, rng, 'sim');
   // Second départ : rejoue une fois le tour perdu
   if (combat.resultat === 'defaite' && allies.some((a) => a.don?.id === 'second-depart')) {

@@ -199,7 +199,7 @@ describe('Temps libre, compagnons et objets', () => {
     jouer(c, r, { type: 'acheter', joueur: 'j1', objet: 'epee-courte', lieu: 'guilde' });
     jouer(c, r, { type: 'equiper', joueur: 'j1', objet: 'epee-courte' });
     expect(r.etat.heros.h1.equipement.arme).toBe('epee-courte');
-    expect(r.etat.heros.h1.or).toBe(10);
+    expect(r.etat.heros.h1.or).toBe(50 - c.objets['epee-courte'].prix);
     expect(() => appliquer(c, r.etat, { type: 'acheter', joueur: 'j1', objet: 'epee-courte', lieu: 'guilde' })).toThrow(/or/);
   });
 
