@@ -93,6 +93,13 @@ const limiteBas = new Instance("UISizeConstraint");
 limiteBas.MaxSize = new Vector2(980, math.huge);
 limiteBas.Parent = bas;
 
+// calque du combat (plein écran, transparent : on voit le combat en 3D derrière)
+const calqueCombat = new Instance("Frame");
+calqueCombat.Name = "Combat";
+calqueCombat.BackgroundTransparency = 1;
+calqueCombat.Size = UDim2.fromScale(1, 1);
+calqueCombat.Parent = gui;
+
 // bandeau d'erreur ou d'information (cliquer pour fermer)
 const bandeau = new Instance("TextButton");
 bandeau.AutoButtonColor = false;
@@ -158,6 +165,8 @@ function redessiner() {
 	else vue = "monde";
 
 	for (const p of [pagePleine, pageLaterale, pageBas, barre]) vider(p);
+	for (const e of calqueCombat.GetChildren()) e.Destroy();
+	calqueCombat.Visible = vue === "combat";
 	plein.Visible = ["accueil", "creation", "temps-libre", "fin-chapitre"].includes(vue);
 	barre.Visible = vue === "monde" || vue === "scene-groupe" || vue === "scene-moi";
 	bas.Visible = vue === "scene-groupe" || vue === "scene-moi";
@@ -176,9 +185,9 @@ function redessiner() {
 	else {
 		if (barre.Visible) barreHaut(barre, redessiner, allerA);
 		if (vue === "combat") {
-			laterale.Visible = true;
-			vueCombat(pageLaterale, combatCle!, redessiner);
-			afficherArene(etat!.combats[combatCle!].combat);
+			const entree = etat!.combats[combatCle!];
+			afficherArene(entree.combat, entree.contexte.origine === "donjon");
+			vueCombat(calqueCombat, combatCle!, redessiner);
 		} else if (vue === "donjon") {
 			laterale.Visible = true;
 			vueDonjon(pageLaterale);

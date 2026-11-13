@@ -1,38 +1,41 @@
 /**
- * Lysmont et ses environs en 3D, générés par le code à partir des lieux du contenu (content/monde/aubeclaire.yaml).
- * Style simple « blocs » : chaque lieu a sa silhouette (temple, château, guilde…), une porte et une invite « Entrer ».
- * Les positions viennent de la carte du jeu (pixels 1920 × 1080) : 1 pixel = ECHELLE studs autour du centre.
+ * Lysmont et ses environs en 3D, générés par le code à partir des lieux du contenu (content/monde/aubeclaire.yaml) :
+ * terrain Roblox (herbe, collines, rivière, chemins de terre), lumière de fin d'après-midi, maisons à colombages,
+ * lanternes, arbres, villageois. Chaque lieu a sa silhouette et une invite « Entrer ».
  */
-import { Workspace } from "@rbxts/services";
+import { Lighting, Players, Workspace } from "@rbxts/services";
 import { CONTENU } from "shared/donnees";
 import type { LieuDef } from "shared/moteur";
-
-const ECHELLE = 0.6;
-const CENTRE = { x: 960, y: 570 }; // la place de Lysmont
+import { positionLieu } from "shared/geo";
 
 const C = {
-	herbe: Color3.fromRGB(96, 140, 70),
-	chemin: Color3.fromRGB(176, 150, 106),
 	pierre: Color3.fromRGB(150, 146, 140),
+	pierreClaire: Color3.fromRGB(196, 190, 178),
 	pierreSombre: Color3.fromRGB(70, 66, 72),
 	blanc: Color3.fromRGB(235, 230, 218),
-	bois: Color3.fromRGB(120, 84, 52),
-	toitRouge: Color3.fromRGB(150, 60, 48),
+	enduit: Color3.fromRGB(228, 214, 186),
+	bois: Color3.fromRGB(110, 76, 46),
+	boisClair: Color3.fromRGB(150, 110, 70),
+	toitRouge: Color3.fromRGB(140, 62, 48),
 	toitBleu: Color3.fromRGB(58, 84, 150),
-	toitSombre: Color3.fromRGB(60, 50, 46),
+	ardoise: Color3.fromRGB(70, 72, 82),
 	or: Color3.fromRGB(217, 164, 65),
-	sable: Color3.fromRGB(214, 190, 140),
 	feuillage: Color3.fromRGB(62, 110, 54),
+	feuillage2: Color3.fromRGB(86, 130, 60),
 	eau: Color3.fromRGB(80, 140, 200),
+	vitre: Color3.fromRGB(255, 214, 140),
 };
 
 let dossier: Folder;
+const terrain = Workspace.Terrain;
+/** Zones à garder libres (bâtiments, chemins) pour ne pas y planter d'arbres. */
+const zonesLibres: { centre: Vector3; rayon: number }[] = [];
 
 function bloc(
 	taille: Vector3,
 	position: Vector3,
 	couleur: Color3,
-	options: { matiere?: Enum.Material; forme?: "bloc" | "coin" | "cylindre" | "boule"; rotation?: CFrame; parent?: Instance; nom?: string } = {},
+	options: { matiere?: Enum.Material; forme?: "bloc" | "coin" | "cylindre" | "boule"; rotation?: CFrame; parent?: Instance; nom?: string; neon?: boolean } = {},
 ): BasePart {
 	let p: BasePart;
 	if (options.forme === "coin") p = new Instance("WedgePart");
@@ -46,7 +49,7 @@ function bloc(
 	p.Size = taille;
 	p.CFrame = new CFrame(position).mul(options.rotation ?? new CFrame());
 	p.Color = couleur;
-	p.Material = options.matiere ?? Enum.Material.SmoothPlastic;
+	p.Material = options.neon ? Enum.Material.Neon : options.matiere ?? Enum.Material.SmoothPlastic;
 	p.TopSurface = Enum.SurfaceType.Smooth;
 	p.BottomSurface = Enum.SurfaceType.Smooth;
 	if (options.nom !== undefined) p.Name = options.nom;
@@ -54,120 +57,317 @@ function bloc(
 	return p;
 }
 
-/** Toit à deux pans au-dessus d'un bâtiment (largeur x, profondeur z). */
+const VERTICAL = CFrame.Angles(0, 0, math.rad(90));
+
+function lumiere(p: BasePart, couleur = Color3.fromRGB(255, 190, 120), portee = 18) {
+	const l = new Instance("PointLight");
+	l.Color = couleur;
+	l.Range = portee;
+	l.Brightness = 1.6;
+	l.Shadows = true;
+	l.Parent = p;
+}
+
+// ───────────────────────────── Éléments de décor ─────────────────────────────
+
+/** Toit à deux pans (le faîte suit l'axe Z). */
 function toit(centre: Vector3, largeur: number, profondeur: number, hauteur: number, couleur: Color3, parent: Instance) {
 	const demi = largeur / 2;
 	// un coin (WedgePart) est haut du côté +Z local : on tourne chaque pan pour que le côté haut soit au faîte
-	bloc(new Vector3(profondeur, hauteur, demi), centre.add(new Vector3(-demi / 2, hauteur / 2, 0)), couleur, {
-		forme: "coin",
-		rotation: CFrame.Angles(0, math.rad(90), 0),
-		parent,
-	});
-	bloc(new Vector3(profondeur, hauteur, demi), centre.add(new Vector3(demi / 2, hauteur / 2, 0)), couleur, {
-		forme: "coin",
-		rotation: CFrame.Angles(0, math.rad(-90), 0),
-		parent,
-	});
+	bloc(new Vector3(profondeur, hauteur, demi), centre.add(new Vector3(-demi / 2, hauteur / 2, 0)), couleur, { forme: "coin", rotation: CFrame.Angles(0, math.rad(90), 0), matiere: Enum.Material.Slate, parent });
+	bloc(new Vector3(profondeur, hauteur, demi), centre.add(new Vector3(demi / 2, hauteur / 2, 0)), couleur, { forme: "coin", rotation: CFrame.Angles(0, math.rad(-90), 0), matiere: Enum.Material.Slate, parent });
 }
 
-function maison(base: Vector3, l: number, p: number, h: number, mur: Color3, couleurToit: Color3, parent: Instance) {
-	bloc(new Vector3(l, h, p), base.add(new Vector3(0, h / 2, 0)), mur, { matiere: Enum.Material.Brick, parent });
-	toit(base.add(new Vector3(0, h, 0)), l + 2, p + 2, l * 0.35, couleurToit, parent);
+/** Maison à colombages : soubassement de pierre, murs enduits, poutres, fenêtres éclairées, porte, cheminée. */
+function maison(base: Vector3, l: number, p: number, h: number, couleurToit: Color3, parent: Instance, options: { murs?: Color3; cheminee?: boolean } = {}) {
+	const murs = options.murs ?? C.enduit;
+	bloc(new Vector3(l + 0.6, 1.6, p + 0.6), base.add(new Vector3(0, 0.8, 0)), C.pierre, { matiere: Enum.Material.Cobblestone, parent });
+	bloc(new Vector3(l, h - 1.6, p), base.add(new Vector3(0, 1.6 + (h - 1.6) / 2, 0)), murs, { matiere: Enum.Material.Plaster, parent });
+	// colombages : poteaux d'angle et poutres horizontales
+	for (const [x, z] of [[-1, -1], [1, -1], [-1, 1], [1, 1]] as const) bloc(new Vector3(0.7, h, 0.7), base.add(new Vector3((x * l) / 2, h / 2, (z * p) / 2)), C.bois, { matiere: Enum.Material.Wood, parent });
+	for (const y of [1.6, h * 0.55 + 0.8, h]) {
+		bloc(new Vector3(l + 0.2, 0.5, 0.3), base.add(new Vector3(0, y, p / 2 + 0.05)), C.bois, { matiere: Enum.Material.Wood, parent });
+		bloc(new Vector3(l + 0.2, 0.5, 0.3), base.add(new Vector3(0, y, -p / 2 - 0.05)), C.bois, { matiere: Enum.Material.Wood, parent });
+	}
+	// porte et fenêtres (façade +Z)
+	bloc(new Vector3(2.6, 4.2, 0.4), base.add(new Vector3(0, 2.1 + 0.4, p / 2 + 0.2)), C.bois, { matiere: Enum.Material.WoodPlanks, parent });
+	for (const x of [-l / 3, l / 3]) {
+		const f = bloc(new Vector3(1.8, 1.8, 0.3), base.add(new Vector3(x, h * 0.55 + 2.4, p / 2 + 0.2)), C.vitre, { neon: true, parent });
+		if (x > 0) lumiere(f, C.vitre, 10);
+		bloc(new Vector3(2.2, 0.3, 0.5), base.add(new Vector3(x, h * 0.55 + 1.35, p / 2 + 0.3)), C.bois, { matiere: Enum.Material.Wood, parent });
+	}
+	toit(base.add(new Vector3(0, h, 0)), l + 2.4, p + 2.4, l * 0.42, couleurToit, parent);
+	if (options.cheminee !== false) {
+		const ch = bloc(new Vector3(1.6, 5, 1.6), base.add(new Vector3(l / 4, h + l * 0.3, -p / 4)), C.pierreSombre, { matiere: Enum.Material.Brick, parent });
+		const fumee = new Instance("Smoke");
+		fumee.Size = 3;
+		fumee.RiseVelocity = 3;
+		fumee.Opacity = 0.08;
+		fumee.Color = Color3.fromRGB(200, 200, 200);
+		fumee.Parent = ch;
+	}
 }
 
-function arbre(base: Vector3, parent: Instance, taille = 1) {
-	bloc(new Vector3(1.6 * taille, 8 * taille, 1.6 * taille), base.add(new Vector3(0, 4 * taille, 0)), C.bois, { matiere: Enum.Material.Wood, parent });
-	bloc(new Vector3(9, 9, 9).mul(taille), base.add(new Vector3(0, 10 * taille, 0)), C.feuillage, { forme: "boule", matiere: Enum.Material.Grass, parent });
+function arbre(base: Vector3, parent: Instance, taille = 1, couleur = C.feuillage) {
+	bloc(new Vector3(1.4 * taille, 9 * taille, 1.4 * taille), base.add(new Vector3(0, 4.5 * taille, 0)), C.bois, { matiere: Enum.Material.Wood, parent });
+	bloc(new Vector3(9, 8, 9).mul(taille), base.add(new Vector3(0, 10 * taille, 0)), couleur, { forme: "boule", matiere: Enum.Material.Grass, parent });
+	bloc(new Vector3(6, 6, 6).mul(taille), base.add(new Vector3(1.5 * taille, 13 * taille, 1 * taille)), couleur.Lerp(new Color3(1, 1, 1), 0.08), { forme: "boule", matiere: Enum.Material.Grass, parent });
 }
 
-function tour(base: Vector3, rayon: number, hauteur: number, couleur: Color3, parent: Instance) {
-	bloc(new Vector3(hauteur, rayon * 2, rayon * 2), base.add(new Vector3(0, hauteur / 2, 0)), couleur, {
-		forme: "cylindre",
-		rotation: CFrame.Angles(0, 0, math.rad(90)),
-		matiere: Enum.Material.Cobblestone,
-		parent,
-	});
-	bloc(new Vector3(rayon * 2.2, rayon * 1.6, rayon * 2.2), base.add(new Vector3(0, hauteur + rayon * 0.8, 0)), C.toitBleu, { forme: "boule", parent });
+function sapin(base: Vector3, parent: Instance, taille = 1) {
+	bloc(new Vector3(1.2, 4, 1.2).mul(taille), base.add(new Vector3(0, 2 * taille, 0)), C.bois, { matiere: Enum.Material.Wood, parent });
+	for (let i = 0; i < 3; i++) {
+		const r = (6 - i * 1.6) * taille;
+		bloc(new Vector3(3 * taille, r, r), base.add(new Vector3(0, (4 + i * 3) * taille, 0)), Color3.fromRGB(40, 90, 50), { forme: "cylindre", rotation: VERTICAL, matiere: Enum.Material.Grass, parent });
+	}
 }
 
-/** Construit la silhouette d'un lieu ; renvoie la position de sa porte (là où apparaît « Entrer »). */
+function lanterne(base: Vector3, parent: Instance) {
+	bloc(new Vector3(0.5, 9, 0.5), base.add(new Vector3(0, 4.5, 0)), C.pierreSombre, { matiere: Enum.Material.Metal, parent });
+	bloc(new Vector3(2, 0.3, 0.3), base.add(new Vector3(0.8, 8.8, 0)), C.pierreSombre, { matiere: Enum.Material.Metal, parent });
+	const flamme = bloc(new Vector3(1, 1.2, 1), base.add(new Vector3(1.6, 8, 0)), Color3.fromRGB(255, 200, 110), { neon: true, parent });
+	lumiere(flamme, Color3.fromRGB(255, 190, 110), 22);
+}
+
+function tour(base: Vector3, rayon: number, hauteur: number, parent: Instance) {
+	bloc(new Vector3(hauteur, rayon * 2, rayon * 2), base.add(new Vector3(0, hauteur / 2, 0)), C.pierreClaire, { forme: "cylindre", rotation: VERTICAL, matiere: Enum.Material.Cobblestone, parent });
+	for (let i = 0; i < 8; i++) {
+		const a = (i / 8) * 2 * math.pi;
+		bloc(new Vector3(1.2, 1.6, 1.2), base.add(new Vector3(math.cos(a) * (rayon - 0.4), hauteur + 0.8, math.sin(a) * (rayon - 0.4))), C.pierreClaire, { matiere: Enum.Material.Cobblestone, parent });
+	}
+	bloc(new Vector3(rayon * 1.6, rayon * 2.2, rayon * 1.6), base.add(new Vector3(0, hauteur + rayon * 1.2, 0)), C.toitBleu, { forme: "boule", matiere: Enum.Material.Slate, parent });
+}
+
+function tonneau(base: Vector3, parent: Instance) {
+	bloc(new Vector3(2.6, 2, 2), base.add(new Vector3(0, 1.3, 0)), C.boisClair, { forme: "cylindre", rotation: VERTICAL, matiere: Enum.Material.WoodPlanks, parent });
+}
+
+function banniere(base: Vector3, couleur: Color3, parent: Instance) {
+	bloc(new Vector3(0.3, 8, 0.3), base.add(new Vector3(0, 4, 0)), C.bois, { matiere: Enum.Material.Wood, parent });
+	bloc(new Vector3(2.4, 3.6, 0.1), base.add(new Vector3(0, 6, 0.2)), couleur, { matiere: Enum.Material.Fabric, parent });
+}
+
+// ───────────────────────────── Lieux ─────────────────────────────
+
+/** Construit un lieu ; renvoie la position de sa porte (là où apparaît « Entrer »). */
 function construire(l: LieuDef, centre: Vector3, parent: Model): Vector3 {
 	switch (l.id) {
 		case "lysmont-place": {
-			bloc(new Vector3(1, 40, 40), centre.add(new Vector3(0, 0.1, 0)), C.pierre, { forme: "cylindre", rotation: CFrame.Angles(0, 0, math.rad(90)), matiere: Enum.Material.Cobblestone, parent });
-			bloc(new Vector3(2, 10, 10), centre.add(new Vector3(0, 1, 0)), C.pierre, { forme: "cylindre", rotation: CFrame.Angles(0, 0, math.rad(90)), parent });
-			bloc(new Vector3(0.5, 8, 8), centre.add(new Vector3(0, 2, 0)), C.eau, { forme: "cylindre", rotation: CFrame.Angles(0, 0, math.rad(90)), matiere: Enum.Material.Glass, parent });
-			bloc(new Vector3(1.5, 6, 1.5), centre.add(new Vector3(0, 4, 0)), C.pierre, { parent });
-			return centre.add(new Vector3(0, 0, 8));
+			terrain.FillCylinder(new CFrame(centre.add(new Vector3(0, -0.5, 0))), 1, 26, Enum.Material.Cobblestone);
+			bloc(new Vector3(2, 12, 12), centre.add(new Vector3(0, 1, 0)), C.pierreClaire, { forme: "cylindre", rotation: VERTICAL, matiere: Enum.Material.Marble, parent });
+			bloc(new Vector3(0.6, 10.5, 10.5), centre.add(new Vector3(0, 1.9, 0)), C.eau, { forme: "cylindre", rotation: VERTICAL, matiere: Enum.Material.Glass, parent });
+			bloc(new Vector3(1.8, 6, 1.8), centre.add(new Vector3(0, 5, 0)), C.pierreClaire, { matiere: Enum.Material.Marble, parent });
+			bloc(new Vector3(3, 3, 3), centre.add(new Vector3(0, 8.5, 0)), C.or, { forme: "boule", matiere: Enum.Material.Metal, parent });
+			for (let i = 0; i < 6; i++) {
+				const a = (i / 6) * 2 * math.pi + 0.3;
+				lanterne(centre.add(new Vector3(math.cos(a) * 20, 0, math.sin(a) * 20)), parent);
+			}
+			for (const [x, z] of [[-14, -8], [14, -10], [-12, 12]] as const) tonneau(centre.add(new Vector3(x, 0, z)), parent);
+			return centre.add(new Vector3(0, 0, 9));
 		}
 		case "temple-du-seuil": {
-			bloc(new Vector3(30, 2, 22), centre.add(new Vector3(0, 1, 0)), C.blanc, { matiere: Enum.Material.Marble, parent });
-			bloc(new Vector3(24, 14, 16), centre.add(new Vector3(0, 9, -1)), C.blanc, { matiere: Enum.Material.Marble, parent });
-			for (const x of [-10, -5, 5, 10]) bloc(new Vector3(1.6, 14, 1.6), centre.add(new Vector3(x, 9, 8.5)), C.blanc, { forme: "cylindre", rotation: CFrame.Angles(0, 0, math.rad(90)), matiere: Enum.Material.Marble, parent });
-			toit(centre.add(new Vector3(0, 16, 0)), 28, 20, 7, C.or, parent);
-			bloc(new Vector3(2, 10, 2), centre.add(new Vector3(0, 28, 0)), C.or, { matiere: Enum.Material.Metal, parent });
-			return centre.add(new Vector3(0, 0, 12));
+			for (let i = 0; i < 3; i++) bloc(new Vector3(34 - i * 2, 1, 26 - i * 2), centre.add(new Vector3(0, 0.5 + i, 2 - i)), C.blanc, { matiere: Enum.Material.Marble, parent });
+			bloc(new Vector3(24, 16, 16), centre.add(new Vector3(0, 11, -2)), C.blanc, { matiere: Enum.Material.Marble, parent });
+			for (const x of [-10, -5, 0, 5, 10]) bloc(new Vector3(16, 1.8, 1.8), centre.add(new Vector3(x, 11, 8.5)), C.blanc, { forme: "cylindre", rotation: VERTICAL, matiere: Enum.Material.Marble, parent });
+			bloc(new Vector3(26, 1.2, 20), centre.add(new Vector3(0, 19.4, 0)), C.blanc, { matiere: Enum.Material.Marble, parent });
+			toit(centre.add(new Vector3(0, 20, 0)), 28, 22, 7, C.or, parent);
+			bloc(new Vector3(1.4, 12, 1.4), centre.add(new Vector3(0, 32, -2)), C.or, { matiere: Enum.Material.Metal, parent });
+			const vitrail = bloc(new Vector3(6, 6, 0.3), centre.add(new Vector3(0, 13, 6.2)), Color3.fromRGB(150, 120, 255), { neon: true, parent });
+			lumiere(vitrail, Color3.fromRGB(180, 150, 255), 20);
+			for (const x of [-14, 14]) lanterne(centre.add(new Vector3(x, 3, 12)), parent);
+			return centre.add(new Vector3(0, 0, 15));
 		}
 		case "chateau": {
-			bloc(new Vector3(40, 22, 28), centre.add(new Vector3(0, 11, -4)), C.pierre, { matiere: Enum.Material.Cobblestone, parent });
-			for (const [x, z] of [[-20, -18], [20, -18], [-20, 10], [20, 10]] as const) tour(centre.add(new Vector3(x, 0, z)), 4, 30, C.pierre, parent);
-			bloc(new Vector3(8, 10, 1), centre.add(new Vector3(0, 5, 10.2)), C.bois, { matiere: Enum.Material.Wood, parent });
+			bloc(new Vector3(44, 24, 30), centre.add(new Vector3(0, 12, -6)), C.pierreClaire, { matiere: Enum.Material.Cobblestone, parent });
+			for (let x = -20; x <= 20; x += 4) bloc(new Vector3(2, 2.4, 2), centre.add(new Vector3(x, 25.2, 9)), C.pierreClaire, { matiere: Enum.Material.Cobblestone, parent });
+			for (const [x, z] of [[-22, -20], [22, -20], [-22, 9], [22, 9]] as const) tour(centre.add(new Vector3(x, 0, z)), 4.5, 32, parent);
+			bloc(new Vector3(10, 13, 2), centre.add(new Vector3(0, 6.5, 9.4)), C.bois, { matiere: Enum.Material.WoodPlanks, parent });
+			for (const x of [-12, 12]) banniere(centre.add(new Vector3(x, 0, 12)), Color3.fromRGB(150, 30, 40), parent);
 			return centre.add(new Vector3(0, 0, 14));
 		}
 		case "guilde": {
-			maison(centre, 22, 16, 12, C.bois, C.toitBleu, parent);
-			bloc(new Vector3(8, 4, 0.5), centre.add(new Vector3(0, 13, 8.3)), C.or, { parent, nom: "Enseigne" });
-			return centre.add(new Vector3(0, 0, 10));
+			maison(centre, 24, 18, 13, C.toitBleu, parent, { murs: Color3.fromRGB(214, 200, 170) });
+			const enseigne = bloc(new Vector3(6, 3, 0.4), centre.add(new Vector3(0, 9.5, 9.6)), C.or, { matiere: Enum.Material.Metal, parent, nom: "Enseigne" });
+			const surface = new Instance("SurfaceGui");
+			surface.Face = Enum.NormalId.Front;
+			const t = new Instance("TextLabel");
+			t.Size = UDim2.fromScale(1, 1);
+			t.BackgroundTransparency = 1;
+			t.Text = "GUILDE";
+			t.Font = Enum.Font.Fantasy;
+			t.TextScaled = true;
+			t.TextColor3 = Color3.fromRGB(60, 40, 20);
+			t.Parent = surface;
+			surface.Parent = enseigne;
+			for (const x of [-15, 15]) banniere(centre.add(new Vector3(x, 0, 10)), C.toitBleu, parent);
+			return centre.add(new Vector3(0, 0, 11.5));
 		}
 		case "taverne": {
-			maison(centre, 18, 14, 10, C.bois, C.toitRouge, parent);
-			bloc(new Vector3(3, 3, 3), centre.add(new Vector3(7, 1.5, 9)), C.bois, { forme: "cylindre", matiere: Enum.Material.Wood, parent });
-			return centre.add(new Vector3(0, 0, 9));
+			maison(centre, 20, 15, 11, C.toitRouge, parent);
+			for (const [x, z] of [[8, 10], [10, 8], [-9, 10]] as const) tonneau(centre.add(new Vector3(x, 0, z)), parent);
+			lanterne(centre.add(new Vector3(-12, 0, 10)), parent);
+			return centre.add(new Vector3(0, 0, 10));
 		}
 		case "quartier-tanneurs": {
-			maison(centre.add(new Vector3(-8, 0, 0)), 10, 10, 7, C.bois, C.toitSombre, parent);
-			maison(centre.add(new Vector3(6, 0, -4)), 9, 9, 6, C.bois, C.toitSombre, parent);
-			maison(centre.add(new Vector3(4, 0, 10)), 8, 8, 6, C.bois, C.toitSombre, parent);
+			maison(centre.add(new Vector3(-9, 0, 0)), 11, 10, 8, C.ardoise, parent, { murs: Color3.fromRGB(190, 175, 150) });
+			maison(centre.add(new Vector3(7, 0, -5)), 10, 9, 7, C.ardoise, parent, { murs: Color3.fromRGB(180, 165, 140), cheminee: false });
+			maison(centre.add(new Vector3(5, 0, 12)), 9, 8, 7, C.toitRouge, parent, { murs: Color3.fromRGB(185, 170, 145) });
+			for (const [x, z] of [[-2, 7], [-4, 9]] as const) tonneau(centre.add(new Vector3(x, 0, z)), parent);
+			lanterne(centre.add(new Vector3(0, 0, 4)), parent);
 			return centre.add(new Vector3(-2, 0, 6));
 		}
 		case "arene": {
-			bloc(new Vector3(0.6, 34, 34), centre.add(new Vector3(0, 0.3, 0)), C.sable, { forme: "cylindre", rotation: CFrame.Angles(0, 0, math.rad(90)), matiere: Enum.Material.Sand, parent });
-			for (let i = 0; i < 16; i++) {
-				if (i === 4) continue; // l'entrée
-				const a = (i / 16) * 2 * math.pi;
-				const pos = centre.add(new Vector3(math.cos(a) * 18, 4, math.sin(a) * 18));
-				bloc(new Vector3(7, 8, 2), pos, C.pierre, { rotation: CFrame.Angles(0, -a + math.pi / 2, 0), matiere: Enum.Material.Cobblestone, parent });
+			terrain.FillCylinder(new CFrame(centre.add(new Vector3(0, -0.5, 0))), 1, 18, Enum.Material.Sand);
+			for (let i = 0; i < 20; i++) {
+				if (i === 5) continue; // l'entrée
+				const a = (i / 20) * 2 * math.pi;
+				const pos = centre.add(new Vector3(math.cos(a) * 20, 0, math.sin(a) * 20));
+				const rot = CFrame.Angles(0, -a + math.pi / 2, 0);
+				bloc(new Vector3(7, 8, 2.5), pos.add(new Vector3(0, 4, 0)), C.pierre, { rotation: rot, matiere: Enum.Material.Cobblestone, parent });
+				bloc(new Vector3(7, 2, 3), pos.add(new Vector3(0, 9, 0)), C.pierreClaire, { rotation: rot, matiere: Enum.Material.Cobblestone, parent });
 			}
-			return centre.add(new Vector3(0, 0, 18));
+			for (const a of [0.9, 2.2]) banniere(centre.add(new Vector3(math.cos(a) * 22, 0, math.sin(a) * 22)), Color3.fromRGB(150, 30, 40), parent);
+			return centre.add(new Vector3(0, 0, 20));
 		}
 		case "combe-aux-saules": {
-			maison(centre, 12, 10, 7, C.bois, C.toitRouge, parent);
-			for (const [x, z] of [[-18, -10], [-22, 8], [16, -14], [20, 12], [-6, -20], [8, 20]] as const) arbre(centre.add(new Vector3(x, 0, z)), parent, 1.2);
-			for (let i = -3; i <= 3; i++) bloc(new Vector3(4, 2.5, 0.5), centre.add(new Vector3(i * 4, 1.25, 14)), C.bois, { matiere: Enum.Material.Wood, parent });
-			return centre.add(new Vector3(0, 0, 8));
+			maison(centre, 14, 11, 8, C.toitRouge, parent, { murs: Color3.fromRGB(220, 205, 175) });
+			bloc(new Vector3(8, 7, 7), centre.add(new Vector3(-14, 3.5, -2)), C.boisClair, { matiere: Enum.Material.WoodPlanks, parent });
+			toit(centre.add(new Vector3(-14, 7, -2)), 9, 8, 3, C.toitRouge, parent);
+			for (const [x, z] of [[-22, -14], [-26, 8], [18, -16], [22, 14], [-6, -22], [10, 22], [28, -2]] as const) arbre(centre.add(new Vector3(x, 0, z)), parent, 1.1, C.feuillage2);
+			for (let i = -4; i <= 4; i++) bloc(new Vector3(4, 0.4, 0.4), centre.add(new Vector3(i * 4, 2, 15)), C.boisClair, { matiere: Enum.Material.Wood, parent });
+			for (let i = -4; i <= 4; i++) bloc(new Vector3(0.5, 3, 0.5), centre.add(new Vector3(i * 4 - 2, 1.5, 15)), C.bois, { matiere: Enum.Material.Wood, parent });
+			return centre.add(new Vector3(0, 0, 9));
 		}
 		case "crypte-fontaine": {
-			bloc(new Vector3(20, 10, 16), centre.add(new Vector3(0, 5, 0)), C.pierreSombre, { matiere: Enum.Material.Slate, parent });
-			toit(centre.add(new Vector3(0, 10, 0)), 22, 18, 6, C.pierreSombre, parent);
-			bloc(new Vector3(6, 7, 1), centre.add(new Vector3(0, 3.5, 8.2)), Color3.fromRGB(20, 18, 22), { parent });
-			for (const x of [-12, 12]) arbre(centre.add(new Vector3(x, 0, 10)), parent, 0.8);
+			terrain.FillBlock(new CFrame(centre.add(new Vector3(0, -0.5, 4))), new Vector3(30, 1, 30), Enum.Material.Mud);
+			bloc(new Vector3(20, 11, 16), centre.add(new Vector3(0, 5.5, 0)), C.pierreSombre, { matiere: Enum.Material.Slate, parent });
+			toit(centre.add(new Vector3(0, 11, 0)), 22, 18, 6, C.pierreSombre, parent);
+			bloc(new Vector3(6, 8, 1), centre.add(new Vector3(0, 4, 8.2)), Color3.fromRGB(15, 12, 18), { parent });
+			for (const x of [-4, 4]) {
+				const flambeau = bloc(new Vector3(0.6, 1, 0.6), centre.add(new Vector3(x, 7, 8.6)), Color3.fromRGB(255, 140, 60), { neon: true, parent });
+				const feu = new Instance("Fire");
+				feu.Size = 2;
+				feu.Parent = flambeau;
+				lumiere(flambeau, Color3.fromRGB(255, 140, 60), 14);
+			}
+			for (const [x, z] of [[-14, 12], [14, 12], [-16, -8], [16, -6]] as const) bloc(new Vector3(1.6, 3.5, 0.6), centre.add(new Vector3(x, 1.75, z)), C.pierre, { matiere: Enum.Material.Slate, parent });
+			for (const x of [-20, 20]) sapin(centre.add(new Vector3(x, 0, 2)), parent, 1.3);
 			return centre.add(new Vector3(0, 0, 11));
 		}
 	}
-	// lieu ajouté plus tard dans le contenu : une maison générique
-	maison(centre, 14, 12, 8, C.bois, C.toitRouge, parent);
+	maison(centre, 14, 12, 8, C.toitRouge, parent);
 	return centre.add(new Vector3(0, 0, 8));
 }
 
+// ───────────────────────────── Terrain, chemins, végétation ─────────────────────────────
+
 function chemin(de: Vector3, a: Vector3) {
-	const milieu = de.add(a).div(2);
-	const longueur = a.sub(de).Magnitude;
+	const d = a.sub(de);
+	const longueur = d.Magnitude;
 	if (longueur < 1) return;
-	bloc(new Vector3(6, 0.2, longueur), milieu.add(new Vector3(0, 0.1, 0)), C.chemin, { rotation: CFrame.lookAt(milieu, a).sub(milieu), matiere: Enum.Material.Ground });
+	const milieu = de.add(a).div(2);
+	terrain.FillBlock(CFrame.lookAt(milieu, a).add(new Vector3(0, -0.4, 0)), new Vector3(7, 1.2, longueur), Enum.Material.Ground);
+	for (let t = 0; t <= longueur; t += 10) zonesLibres.push({ centre: de.add(d.Unit.mul(t)), rayon: 8 });
 }
 
-export function positionLieu(l: LieuDef): Vector3 {
-	return new Vector3((l.position.x - CENTRE.x) * ECHELLE, 0, (l.position.y - CENTRE.y) * ECHELLE);
+function preparerTerrain() {
+	terrain.Clear();
+	terrain.FillBlock(new CFrame(0, -6, 0), new Vector3(1400, 12, 1200), Enum.Material.Grass);
+	// collines au loin
+	const graine = new Random(1012);
+	for (let i = 0; i < 26; i++) {
+		const a = graine.NextNumber(0, 2 * math.pi);
+		const r = graine.NextNumber(420, 560);
+		terrain.FillBall(new Vector3(math.cos(a) * r, -10, math.sin(a) * r * 0.85), graine.NextNumber(40, 80), i % 4 === 0 ? Enum.Material.Rock : Enum.Material.Grass);
+	}
+	// rivière au nord
+	terrain.FillBlock(new CFrame(0, -2.5, -230), new Vector3(1400, 6, 26), Enum.Material.Air);
+	terrain.FillBlock(new CFrame(0, -3.5, -230), new Vector3(1400, 4, 26), Enum.Material.Water);
+	terrain.FillBlock(new CFrame(0, -2, -244), new Vector3(1400, 2, 4), Enum.Material.Sand);
+	terrain.FillBlock(new CFrame(0, -2, -216), new Vector3(1400, 2, 4), Enum.Material.Sand);
+}
+
+function vegetation() {
+	const graine = new Random(1030);
+	const foret = new Instance("Model");
+	foret.Name = "Vegetation";
+	foret.Parent = dossier;
+	let plantes = 0;
+	for (let essai = 0; essai < 900 && plantes < 170; essai++) {
+		const p = new Vector3(graine.NextNumber(-420, 420), 0, graine.NextNumber(-200, 360));
+		if (zonesLibres.some((z) => z.centre.sub(p).Magnitude < z.rayon + 6)) continue;
+		const densite = p.Magnitude > 140 ? 1 : 0.25; // forêt dense loin du centre, quelques arbres en ville
+		if (graine.NextNumber() > densite) continue;
+		if (graine.NextNumber() < 0.35) sapin(p, foret, graine.NextNumber(0.9, 1.5));
+		else arbre(p, foret, graine.NextNumber(0.8, 1.4), graine.NextNumber() < 0.5 ? C.feuillage : C.feuillage2);
+		plantes++;
+	}
+}
+
+function eclairage() {
+	Lighting.ClockTime = 16.8;
+	Lighting.Brightness = 2.2;
+	Lighting.OutdoorAmbient = Color3.fromRGB(120, 110, 100);
+	Lighting.EnvironmentDiffuseScale = 0.6;
+	Lighting.EnvironmentSpecularScale = 0.6;
+	Lighting.GlobalShadows = true;
+	// La technologie d'éclairage « Future » (plus belles lumières) ne se règle pas par script :
+	// dans Studio, Explorer → Lighting → propriété Technology → Future (voir README-ROBLOX.md).
+	for (const e of Lighting.GetChildren()) e.Destroy();
+	const atmosphere = new Instance("Atmosphere");
+	atmosphere.Density = 0.32;
+	atmosphere.Haze = 1.4;
+	atmosphere.Color = Color3.fromRGB(230, 200, 170);
+	atmosphere.Decay = Color3.fromRGB(110, 90, 120);
+	atmosphere.Glare = 0.3;
+	atmosphere.Parent = Lighting;
+	new Instance("Sky").Parent = Lighting;
+	const flou = new Instance("BloomEffect");
+	flou.Intensity = 0.6;
+	flou.Size = 30;
+	flou.Threshold = 1.4;
+	flou.Parent = Lighting;
+	const rayons = new Instance("SunRaysEffect");
+	rayons.Intensity = 0.06;
+	rayons.Parent = Lighting;
+	const couleurs = new Instance("ColorCorrectionEffect");
+	couleurs.Saturation = 0.12;
+	couleurs.Contrast = 0.06;
+	couleurs.TintColor = Color3.fromRGB(255, 245, 230);
+	couleurs.Parent = Lighting;
+}
+
+/** Villageois immobiles sur la place (personnages Roblox costumés). */
+function villageois(centrePlace: Vector3) {
+	const tenues = [
+		[Color3.fromRGB(120, 60, 50), Color3.fromRGB(70, 60, 50)],
+		[Color3.fromRGB(70, 100, 140), Color3.fromRGB(60, 55, 50)],
+		[Color3.fromRGB(150, 130, 80), Color3.fromRGB(90, 70, 50)],
+		[Color3.fromRGB(90, 120, 80), Color3.fromRGB(70, 60, 45)],
+	];
+	const places = [new Vector3(-10, 0, 14), new Vector3(12, 0, -14), new Vector3(16, 0, 6), new Vector3(-16, 0, -6)];
+	places.forEach((pos, i) => {
+		const [ok] = pcall(() => {
+			const d = new Instance("HumanoidDescription");
+			const [haut, bas] = tenues[i % tenues.size()];
+			d.HeadColor = Color3.fromRGB(230, 190, 150);
+			d.TorsoColor = haut;
+			d.LeftArmColor = haut;
+			d.RightArmColor = haut;
+			d.LeftLegColor = bas;
+			d.RightLegColor = bas;
+			const m = Players.CreateHumanoidModelFromDescriptionAsync(d, Enum.HumanoidRigType.R15);
+			m.Name = "Villageois";
+			const h = m.FindFirstChildOfClass("Humanoid");
+			if (h) h.DisplayDistanceType = Enum.HumanoidDisplayDistanceType.None;
+			const racine = m.FindFirstChild("HumanoidRootPart") as BasePart;
+			racine.Anchored = true;
+			const p = centrePlace.add(pos);
+			m.PivotTo(CFrame.lookAt(p.add(new Vector3(0, 3, 0)), centrePlace.add(new Vector3(0, 3, 0))));
+			m.Parent = dossier;
+		});
+		if (!ok) warn("[Velmaris] Villageois non créé");
+	});
 }
 
 /** Construit le monde (une seule fois, au démarrage du serveur). */
@@ -177,8 +377,9 @@ export function construireMonde() {
 	dossier = new Instance("Folder");
 	dossier.Name = "Velmaris";
 	dossier.Parent = Workspace;
+	eclairage();
+	preparerTerrain();
 
-	bloc(new Vector3(1200, 2, 1000), new Vector3(0, -1, 0), C.herbe, { matiere: Enum.Material.Grass, nom: "Sol" });
 	const apparition = new Instance("SpawnLocation");
 	apparition.Anchored = true;
 	apparition.Size = new Vector3(8, 1, 8);
@@ -197,10 +398,11 @@ export function construireMonde() {
 		modele.Name = l.id;
 		modele.Parent = dossier;
 		const centre = positionLieu(l);
+		zonesLibres.push({ centre, rayon: l.id === "chateau" || l.id === "combe-aux-saules" ? 34 : 26 });
 		const porte = construire(l, centre, modele);
 		if (l.id !== "lysmont-place") chemin(centrePlace, porte);
 
-		// point d'entrée : invite « Entrer » (les marqueurs ⚔ et quête sont ajoutés par chaque joueur)
+		// point d'entrée : invite « Entrer » (les marqueurs ⭐ ● ⚔ sont ajoutés par chaque joueur)
 		const ancre = bloc(new Vector3(4, 6, 4), porte.add(new Vector3(0, 3, 0)), C.or, { parent: modele, nom: "Entree" });
 		ancre.Transparency = 1;
 		ancre.CanCollide = false;
@@ -214,4 +416,6 @@ export function construireMonde() {
 		invite.SetAttribute("Lieu", l.id);
 		invite.Parent = ancre;
 	}
+	vegetation();
+	task.spawn(() => villageois(centrePlace));
 }

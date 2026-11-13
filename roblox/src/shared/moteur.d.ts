@@ -145,7 +145,8 @@ export interface Contenu {
 	races: Record<string, RaceDef>;
 	dons: Record<string, DonDef>;
 	objets: Record<string, ObjetDef>;
-	rencontres: Record<string, { id: string; nom: string }>;
+	rencontres: Record<string, { id: string; nom: string; fond: string }>;
+	ennemis: Record<string, { id: string; nom: string; categorie: string; boss: boolean }>;
 	scenes: Record<string, SceneDef>;
 	quetes: Record<string, { id: string; titre: string; type: string; resume: string; etapes: { id: string; objectif: string; scene?: string; lieu?: string }[] }>;
 	compagnons: Record<string, CompagnonDef>;
@@ -202,6 +203,8 @@ export interface EvenementCombat {
 	cible?: string;
 	valeur?: number;
 	critique?: boolean;
+	element?: string;
+	competence?: string;
 	texte: string;
 }
 
@@ -238,7 +241,10 @@ export interface Combat {
 	id: string;
 	nom: string;
 	fond: string;
+	rencontre: string;
 	tour: number;
+	ordre: string[];
+	index: number;
 	combattants: Combattant[];
 	evenements: EvenementCombat[];
 	resultat?: "victoire" | "defaite" | "fuite";

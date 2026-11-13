@@ -116,6 +116,36 @@ Fais d'abord la liste R1 ci-dessus, puis continue avec la même partie.
 **Version tout public (R5)**
 - [ ] Aucune scène ni aucun texte romantique. Aveline est une amie et une compagne d'armes.
 
+## Graphismes (mise à jour du 13/11)
+
+### Réglage à faire une fois dans Studio : l'éclairage « Future »
+Roblox interdit de le régler par script. Dans Studio : **Explorer → Lighting** → dans **Properties**, **Technology → Future**, puis enregistre la place (Ctrl+S). Le reste (ciel, brume, couleurs, reflets) est réglé automatiquement par le jeu.
+
+### Ce que fait le code
+- **Monde** :
+  - terrain Roblox (herbe, collines, rivière au nord, chemins de terre), lumière de fin d'après-midi ;
+  - maisons à colombages (fenêtres éclairées, cheminées qui fument), lanternes, arbres et sapins, villageois sur la place ;
+  - temple, château à tours, arène en pierre, crypte avec flambeaux.
+- **Personnages** :
+  - héros = **ton avatar Roblox**, avec l'arme de ta classe (épée runique, hache, bâton, arc, dagues…) ;
+  - ennemis humanoïdes en personnages costumés (bandit, cultiste, squelette, gobelin, Vorthak cornu) ;
+  - bêtes et golems construits en pièces (loups, rat, sanglier, araignée, chauve-souris, gelée, feu follet, golems).
+- **Combat** :
+  - il a lieu **sur place**, à l'arène, à la Combe, aux Tanneurs, ou dans une salle de crypte pour le donjon ;
+  - gros menu en bas, ordre des tours en haut, équipe à gauche ;
+  - **clic sur un personnage** pour le viser ;
+  - chiffres de dégâts, éclats de couleur selon l'élément, coups critiques qui secouent la caméra, chutes au K.O.
+
+### Remplacer un modèle par celui du groupe
+1. Construis le modèle dans Studio, ou importe-le depuis Blender. Si tu prends un modèle du Creator Store, il doit être **sans scripts**.
+2. Dans **ServerStorage**, crée un dossier **`ModelesDuGroupe`** et mets-y le modèle. Il doit porter **exactement le nom de l'ennemi** : `loup-gris`, `squelette`, `bandit`, `cultiste`, `gobelin-cendre`, `golem-de-pierre`, `golem-fontaine`, `araignee-geante`, `rat-geant`, `sanglier`, `chauve-souris`, `gelee-verte`, `feu-follet`, `loup-spectral`, `vorthak`, `mannequin-entrainement`, `tourelle`, `colosse`, ou `aveline` pour la compagne.
+3. Le modèle est utilisé automatiquement au lancement suivant :
+   - un personnage avec `Humanoid` (R15) est animé comme les autres ;
+   - sinon, sa **PrimaryPart** sert de point d'appui.
+4. Par sécurité, le jeu **supprime tous les scripts** contenus dans ces modèles.
+
+Les bâtiments se remplacent plus tard sur le même principe, sur demande.
+
 ## Publier sur Roblox (quand tout marche)
 
 1. **Fichier → Publier sur Roblox**, si ce n'est pas déjà fait.

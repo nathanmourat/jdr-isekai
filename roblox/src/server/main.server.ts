@@ -7,8 +7,11 @@ import { idJoueur, reseau, type Commande, type ReponseCommande } from "shared/re
 import { actionDuJoueur, boucleSauvegarde, creerPartie, entrer, messageErreur, ouvrirPartie, partieDe, sortir, toutEnregistrer } from "./parties";
 import { partiesDuJoueur, sauvegardeActive } from "./stockage";
 import { construireMonde } from "./monde";
+import { preparerModeles } from "./modeles";
 
 construireMonde();
+// les modèles 3D sont créés en arrière-plan (cela prend quelques secondes) : le jeu démarre sans attendre
+task.spawn(preparerModeles);
 const r = reseau();
 const INFO_MEMOIRE = "Studio : sauvegarde Roblox désactivée, la partie sera perdue à l'arrêt (voir README-ROBLOX.md).";
 
