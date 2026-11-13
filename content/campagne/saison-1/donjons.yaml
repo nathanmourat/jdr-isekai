@@ -1,0 +1,48 @@
+# Donjons en vue de dessus. Chaque caractère de la carte correspond à une tuile (voir « legende »).
+# Les événements se déclenchent quand le groupe marche sur la case (x = colonne, y = ligne, en partant de 0).
+donjons:
+  - id: crypte-fontaine
+    nom: "Crypte de la Fontaine"
+    tileset: crypte
+    legende:
+      "#": mur
+      ".": sol
+      "S": escalier
+      "D": porte
+      "V": porte-verrouillee
+      "O": sol-os
+      "T": sol-piege
+      "C": sol-coffre
+      "F": colonne-fontaine
+      "X": sol-sceau
+    depart: { x: 1, y: 1 }
+    carte:
+      - "########################"
+      - "#S.....#.......#.......#"
+      - "#......D...O...#...C...#"
+      - "#......#.......D.......#"
+      - "###D####...T...####D####"
+      - "#......#.......#.......#"
+      - "#..C...#########...O...#"
+      - "#......#.......#.......#"
+      - "########...O...D...T...#"
+      - "#......#.......####D####"
+      - "#..O...#..F....#.......#"
+      - "#..X...V.......D...C...#"
+      - "#......#.......#.......#"
+      - "########################"
+    evenements:
+      - { id: entree, x: 2, y: 1, type: texte, texte: "L'air est froid et humide. Quelque part, de l'eau goutte… et quelque chose gratte la pierre." }
+      - { id: squelettes-1, x: 10, y: 3, type: combat, rencontre: crypte-squelettes, texte: "Des gardes squelettes se dressent dans un cliquetis d'os !" }
+      - { id: piege-1, x: 11, y: 4, type: piege, texte: "Une dalle s'enfonce sous vos pieds !", test: { carac: AGI, difficulte: 15 } }
+      - { id: coffre-1, x: 19, y: 2, type: coffre, texte: "Un coffre de garde rongé par l'humidité.", or: 40, objets: [potion-soin-petite] }
+      - { id: araignees, x: 19, y: 6, type: combat, rencontre: crypte-araignees, texte: "Des toiles partout… et des yeux qui brillent dans le noir." }
+      - { id: piege-2, x: 19, y: 8, type: piege, texte: "Un fil tendu déclenche une pluie de fléchettes !", test: { carac: ESP, difficulte: 15 } }
+      - { id: coffre-2, x: 3, y: 6, type: coffre, texte: "Un vieux coffre d'offrandes.", or: 30, objets: [antidote] }
+      - { id: squelettes-2, x: 11, y: 8, type: combat, rencontre: crypte-squelettes, texte: "D'autres gardes se relèvent, plus grands, mieux armés." }
+      - { id: golem, x: 11, y: 10, type: combat, rencontre: crypte-golem, texte: "La fontaine se fend. Une silhouette de pierre ruisselante se détache du mur : le gardien de la crypte !" }
+      - { id: coffre-3, x: 19, y: 11, type: coffre, texte: "Un râtelier oublié.", or: 25, objets: [epee-courte] }
+      - { id: os, x: 3, y: 10, type: texte, texte: "Des ossements de gardes, en cercle autour d'un autel. Tous tournés vers le nord." }
+      - { id: sceau, x: 3, y: 11, type: coffre, texte: "Sur l'autel, une pierre noire marquée d'une rune violette pulse comme un cœur. Le sceau cendré.", objets: [sceau-cendre] }
+      - { id: sortie, x: 1, y: 1, type: sortie, unique: false, si: { objet: sceau-cendre } }
+      - { id: pas-fini, x: 1, y: 1, type: texte, unique: false, texte: "Vous n'avez pas encore trouvé la source des lueurs violettes. Rowena compte sur vous." }

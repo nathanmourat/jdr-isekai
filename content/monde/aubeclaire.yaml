@@ -1,0 +1,68 @@
+# Région du chapitre 1. Les positions sont en pixels sur la carte (1920 × 1080).
+regions:
+  - id: aubeclaire
+    nom: "Royaume d'Aubeclaire"
+    carte: aubeclaire
+    lieux:
+      - id: temple-du-seuil
+        nom: "Temple du Seuil"
+        description: "Le grand temple blanc où l'Ordre accomplit l'Appel."
+        decor: temple-du-seuil
+        position: { x: 900, y: 290 }
+        pnj: [{ id: mathis }, { id: elianne }]
+        boutique: [potion-soin-petite, antidote]
+      - id: lysmont-place
+        nom: "Place de Lysmont"
+        description: "Le cœur de la capitale : fontaine, étals, rumeurs."
+        decor: lysmont-place
+        position: { x: 960, y: 560 }
+        disponible_si: { flag: appel-fait }
+        pnj: [{ id: aveline, si: { flag: aveline-rencontree } }]
+        boutique: [potion-soin-petite, potion-soin, potion-mana, ration, gateau-lysmont, fleur-des-champs, bijou-dore]
+      - id: guilde
+        nom: "Guilde de la Rose des Vents"
+        description: "Le hall des aventuriers : contrats, comptoir et bagarres."
+        decor: guilde
+        position: { x: 1060, y: 610 }
+        disponible_si: { flag: appel-fait }
+        pnj: [{ id: rowena }, { id: kaya, si: { flag: examen-reussi } }]
+        boutique: [potion-soin-petite, antidote, bombe-feu, bombe-fumee, epee-courte, dague, arc-court, baton-apprenti, bouclier-bois, armure-cuir, robe-mage, kit-entretien-armes]
+      - id: taverne
+        nom: "Le Chaudron Fêlé"
+        description: "La taverne de Bram, où l'on mange bien et où l'on parle trop."
+        decor: taverne
+        position: { x: 860, y: 640 }
+        disponible_si: { flag: appel-fait }
+        pnj: [{ id: bram, si: { pas_flag: mort:bram } }]
+        boutique: [ration, gateau-lysmont, livre-ancien]
+      - id: chateau
+        nom: "Château de Lysmont"
+        description: "Le siège de la Couronne, tours blanches et toits bleus."
+        decor: chateau-trone
+        position: { x: 990, y: 440 }
+        disponible_si: { flag: appel-fait }
+        pnj: [{ id: edmund-iv }, { id: seraphine }]
+      - id: quartier-tanneurs
+        nom: "Quartier des Tanneurs"
+        description: "Ruelles pauvres et cuves de teinture. On y disparaît, ces temps-ci."
+        decor: quartier-tanneurs
+        position: { x: 1140, y: 700 }
+        disponible_si: { flag: examen-reussi }
+      - id: arene
+        nom: "Arène de Lysmont"
+        description: "Le sable du tournoi des écuyers."
+        decor: arene
+        position: { x: 1180, y: 500 }
+        disponible_si: { flag: examen-reussi }
+      - id: combe-aux-saules
+        nom: "Combe-aux-Saules"
+        description: "Forêt de saules au sud-ouest, fermes isolées et loups affamés."
+        decor: combe-aux-saules
+        position: { x: 560, y: 770 }
+        disponible_si: { flag: examen-reussi }
+      - id: crypte-fontaine
+        nom: "Crypte de la Fontaine"
+        description: "Des ruines couvertes de lierre, un escalier qui descend dans le noir."
+        decor: crypte-entree
+        position: { x: 1440, y: 520 }
+        disponible_si: { quete_etape: { q-ch1-appel: crypte } }

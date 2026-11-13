@@ -1,0 +1,11 @@
+# Activités de temps libre (2 par joueur et par ellipse). Gains donnés pour 6 mois, proportionnels à la durée.
+activites:
+  - { id: entrainement, nom: "Entraînement", description: "Exercices, duels, sueur : de l'expérience.", gains: { xp_pourcent_niveau: 0.35 } }
+  - { id: entrainement-intensif, nom: "Entraînement intensif", description: "Un maître d'armes exigeant : +1 point de caractéristique.", gains: { carac_plus_un: true } }
+  - { id: artisanat, nom: "Artisanat", description: "Fabriquer des potions de soin (meilleur avec l'Intelligence, l'Alchimiste ou la Main de l'artisan).", gains: { objet_artisanat: true } }
+  - { id: commerce, nom: "Commerce", description: "Acheter, revendre, négocier (selon le Charisme).", gains: { or_base: 40, or_par_carac: { carac: CHA, valeur: 4 } } }
+  - { id: relation, nom: "Relation", description: "Passer du temps avec un compagnon : une scène et de l'affinité.", choix_compagnon: true, gains: { affinite: 8 } }
+  - { id: guilde, nom: "Contrats de guilde", description: "Petites missions : or et points de guilde.", gains: { or_base: 30, points_guilde: 60 } }
+  - { id: etudes, nom: "Études", description: "Bibliothèques et archives : un peu d'expérience et des indices.", gains: { xp_pourcent_niveau: 0.2, affinite_tous: 1 } }
+  - { id: repos, nom: "Repos", description: "Soigne les blessures ; un moment avec tout le monde.", gains: { soigne_blessure: true, affinite_tous: 2 } }
+  - { id: domaine, nom: "Gestion du domaine", description: "Développer sa seigneurie (à partir du chapitre 3).", disponible_si: { flag: domaine-obtenu }, gains: { or_base: 120 } }

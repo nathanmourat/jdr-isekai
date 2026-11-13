@@ -1,0 +1,153 @@
+# Prologue d'enfance — uniquement pour les héros réincarnés (scènes individuelles, jouées chacun de son côté).
+# Pas de romance, pas de combat dangereux. Chaque scène débloque la suivante.
+scenes:
+  - id: prologue-6-ans
+    titre: "Prologue — Les souvenirs d'avant (6 ans, 1000 AV)"
+    type: individuel
+    decor: prologue-campagne
+    disponible_si: { origine: reincarne, pas_flag: prologue-6 }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "Tu as six ans. Ce matin, en regardant ton reflet dans une flaque, une vague d'images te submerge : des rues éclairées la nuit, des écrans, un nom qui n'est pas le tien… une autre vie, terminée trop tôt." }
+          - { dit: "Tu comprends, avec une clarté effrayante, que tu as déjà vécu. Et que ce monde-ci n'est pas le même." }
+          - { dit: "Mais d'abord : où as-tu grandi, dans cette nouvelle vie ?" }
+        choix:
+          - texte: "Dans une ferme près de la Combe-aux-Saules. Des champs de blé à perte de vue."
+            effets: [{ origine_enfance: fermier, flag: heros:prologue-6, journal: "{heros} grandit dans une ferme d'Aubeclaire." }]
+            aller: ferme
+          - texte: "Dans le manoir d'une petite famille noble, entre précepteurs et étiquette."
+            effets: [{ origine_enfance: noble, flag: heros:prologue-6, journal: "{heros} grandit dans un manoir de petite noblesse." }]
+            aller: manoir
+          - texte: "À l'orphelinat de l'Ordre, sous les cloches de la chapelle blanche."
+            effets: [{ origine_enfance: orphelin, flag: heros:prologue-6, journal: "{heros} grandit à l'orphelinat de l'Ordre." }]
+            aller: orphelinat
+          - texte: "Dans l'arrière-boutique encombrée d'un marchand ambulant."
+            effets: [{ origine_enfance: marchand, flag: heros:prologue-6, journal: "{heros} grandit parmi les caisses d'un marchand." }]
+            aller: boutique
+      ferme:
+        decor: prologue-campagne
+        repliques:
+          - { dit: "La ferme sent le foin et le pain chaud. Ta mère d'ici chante faux, ton père d'ici rit fort. Tu décides de garder ton secret… pour l'instant." }
+        suite: fin
+      manoir:
+        decor: prologue-manoir
+        repliques:
+          - { dit: "Les couloirs du manoir résonnent de leçons de maintien. Ton précepteur trouve que tu poses « de bien étranges questions » sur l'électricité." }
+        suite: fin
+      orphelinat:
+        decor: prologue-orphelinat
+        repliques:
+          - { dit: "Les sœurs sont strictes mais justes. Tu apprends vite à lire — trop vite, murmure-t-on. Une prêtresse note ton nom dans un registre." }
+        suite: fin
+      boutique:
+        decor: prologue-boutique
+        repliques:
+          - { dit: "Entre les épices et les tapis roulés, tu apprends à compter plus vite que les adultes. Le marchand jure que tu lui porteras chance." }
+        suite: fin
+      fin:
+        repliques:
+          - { dit: "Les souvenirs de ton ancienne vie s'estompent un peu, comme un rêve au réveil. Mais ils ne partent jamais tout à fait." }
+        fin: true
+
+  - id: prologue-10-ans
+    titre: "Prologue — Le premier secret (10 ans, 1004 AV)"
+    type: individuel
+    decor: prologue-campagne
+    disponible_si: { origine: reincarne, flag: prologue-6, pas_flag: prologue-10 }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "Tu as dix ans. Une nuit d'orage, quelque chose s'éveille en toi : ton don. Il frémit sous ta peau, impatient." }
+          - { dit: "Un adulte entre dans la pièce au moment exact où ton don se manifeste." }
+        choix:
+          - texte: "Cacher ton don à tout prix. Personne ne doit savoir."
+            effets: [{ flag: [heros:prologue-10, heros:enfance-discrete] }]
+            aller: discret
+          - texte: "Lui montrer. Tu as besoin de confier ce secret à quelqu'un."
+            effets: [{ flag: [heros:prologue-10, heros:enfance-confiance] }]
+            aller: confiance
+          - texte: "T'en servir pour aider : le toit de la grange s'effondre sous la pluie."
+            effets: [{ flag: [heros:prologue-10, heros:enfance-heroique] }]
+            aller: heroique
+      discret:
+        repliques:
+          - { dit: "Tu inventes une excuse maladroite. L'adulte hausse les épaules. Tu apprends ce soir-là l'art de te taire — il te servira." }
+        suite: fin
+      confiance:
+        repliques:
+          - { dit: "L'adulte reste longtemps silencieux, puis te serre contre lui. « Ce sera notre secret. » Tu n'as jamais été aussi soulagé." }
+        suite: fin
+      heroique:
+        repliques:
+          - { dit: "Ton don retient la charpente juste assez longtemps pour que les bêtes sortent. On parle de miracle au village. Toi, tu trembles toute la nuit." }
+        suite: fin
+      fin:
+        repliques:
+          - { dit: "Dès lors, chaque jour, tu t'entraînes en cachette. Ton corps d'enfant apprend ce que ton âme sait déjà." }
+        fin: true
+
+  - id: prologue-14-ans
+    titre: "Prologue — La rencontre (14 ans, 1008 AV)"
+    type: individuel
+    decor: prologue-campagne
+    disponible_si: { origine: reincarne, flag: prologue-10, pas_flag: prologue-14 }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "Tu as quatorze ans. Cette année-là, quelqu'un entre dans ta vie et ne la quitte plus vraiment." }
+        choix:
+          - texte: "Maître Orlo, un vieux bibliothécaire bourru, qui devine ce que tu es et t'enseigne les légendes de l'Appel."
+            effets: [{ contact: mentor, flag: heros:prologue-14, journal: "{heros} devient l'élève de Maître Orlo." }]
+            aller: mentor
+          - texte: "Cassian, fils de garde, fier et rapide. Il te bat à la course, tu le bats aux échecs. Rivaux pour la vie."
+            effets: [{ contact: rival, flag: heros:prologue-14, journal: "{heros} se trouve un rival : Cassian." }]
+            aller: rival
+          - texte: "Pipa, rieuse et intrépide, qui t'entraîne dans toutes les bêtises du canton."
+            effets: [{ contact: ami-enfance, flag: heros:prologue-14, journal: "{heros} et Pipa deviennent inséparables." }]
+            aller: amie
+      mentor:
+        repliques:
+          - { qui: mentor, dit: "« Les Appelés d'autrefois… on les dit héros. Moi, je me demande surtout ce qu'ils ont payé pour l'être. »" }
+        suite: fin
+      rival:
+        repliques:
+          - { qui: rival, dit: "« La prochaine fois, je gagne. Et un jour, je serai dans la garde royale. Toi, tu feras quoi ? »" }
+        suite: fin
+      amie:
+        repliques:
+          - { qui: ami-enfance, dit: "« Promets-moi qu'un jour on partira voir la mer. Promets ! »" }
+        suite: fin
+      fin:
+        repliques:
+          - { dit: "Ce lien te suivra jusqu'à Lysmont. Peut-être même au-delà." }
+        fin: true
+
+  - id: prologue-17-ans
+    titre: "Prologue — Le départ (17 ans, 1011 AV)"
+    type: individuel
+    decor: prologue-route-lysmont
+    disponible_si: { origine: reincarne, flag: prologue-14, pas_flag: prologue-17 }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "Tu as dix-sept ans. Depuis des semaines, une vibration te réveille la nuit, venue de la capitale. L'Ordre prépare quelque chose." }
+          - { dit: "Tu prends la route de Lysmont au lever du soleil. Avant de partir, tu reçois un dernier conseil… ou un dernier cadeau." }
+        choix:
+          - texte: "Une lettre de recommandation pour la Guilde (Guilde +10)."
+            effets: [{ atout: lettre-guilde, reputation: { guilde: 10 }, flag: heros:prologue-17 }]
+            aller: fin
+          - texte: "Le sceau d'une famille noble qui te doit service (Couronne +10)."
+            effets: [{ atout: sceau-noble, reputation: { couronne: 10 }, flag: heros:prologue-17 }]
+            aller: fin
+          - texte: "La bénédiction d'une prêtresse de l'orphelinat (Ordre +10)."
+            effets: [{ atout: benediction, reputation: { ordre: 10 }, flag: heros:prologue-17 }]
+            aller: fin
+          - texte: "Une bourse bien remplie, économisée sou après sou (+60 or)."
+            effets: [{ atout: bourse, or: 60, flag: heros:prologue-17 }]
+            aller: fin
+      fin:
+        repliques:
+          - { dit: "Au loin, les tours blanches de Lysmont. Dans quelques mois, au printemps 1012, tu auras dix-huit ans… et le Temple du Seuil s'illuminera." }
+          - { dit: "(Fin du prologue. Ton histoire rejoint celle des autres héros au chapitre 1.)" }
+        fin: true

@@ -1,0 +1,211 @@
+# Chapitre 1 — quêtes secondaires (scènes de groupe, disponibles après l'examen de la Guilde).
+scenes:
+  - id: sq-loups
+    titre: "Les loups de la Combe-aux-Saules"
+    type: groupe
+    lieu: combe-aux-saules
+    decor: combe-aux-saules
+    quete: q-loups
+    disponible_si: { flag: examen-reussi }
+    noeuds:
+      debut:
+        effets: [{ quete: { id: q-loups, etape: aider } }]
+        repliques:
+          - { qui: gareth, dit: "« Trois moutons cette semaine ! Et hier, ma petite Rose a vu des yeux jaunes à la lisière. » Gareth tord son chapeau de paille entre ses mains." }
+          - { dit: "Les traces mènent à une tanière sous les racines d'un vieux saule. Des grognements… et des gémissements plus aigus : des louveteaux." }
+        choix:
+          - texte: "Attaquer la meute."
+            aller: combat
+          - texte: "Utiliser votre don pour parler à la louve. (Langue universelle)"
+            si: { don: langue-universelle }
+            aller: parler
+          - texte: "Effrayer la meute avec du feu et du bruit pour la faire partir. (Force, difficulté 16)"
+            test: { carac: FOR, difficulte: 16, reussite: fuite, echec: combat }
+      parler:
+        repliques:
+          - { dit: "La louve vous écoute, babines retroussées. Puis, lentement, elle comprend : les fermiers, les pièges, les bois plus au sud où le gibier abonde." }
+          - { dit: "À l'aube, la meute est partie. Gareth n'en croit pas ses yeux." }
+        effets: [{ xp: 80, flag: loups-sauves }]
+        suite: fin
+      fuite:
+        repliques:
+          - { dit: "Torches, cris, casseroles : la meute détale vers le sud avec ses petits. Aucun sang versé." }
+        effets: [{ xp: 60, flag: loups-sauves }]
+        suite: fin
+      combat:
+        combat: { rencontre: loups-alpha, victoire: victoire, defaite: defaite }
+      victoire:
+        repliques:
+          - { dit: "La meute est décimée. Les louveteaux s'enfuient dans les fourrés." }
+        suite: fin
+      defaite:
+        repliques:
+          - { dit: "Les loups vous repoussent. Gareth vous traîne jusqu'à sa ferme et vous soigne avec une soupe épaisse. « On réessaiera. »" }
+        suite: fin
+      fin:
+        repliques:
+          - { qui: gareth, dit: "« Merci, du fond du cœur. Tenez, c'est pas grand-chose, mais c'est honnête. »" }
+        effets: [{ or: 25, points_guilde: 30, terminer_quete: q-loups, reputation: { guilde: 3 } }]
+        fin: true
+
+  - id: sq-reliques
+    titre: "Le marchand de reliques"
+    type: groupe
+    lieu: taverne
+    decor: taverne
+    quete: q-reliques
+    disponible_si: { flag: examen-reussi }
+    noeuds:
+      debut:
+        effets: [{ quete: { id: q-reliques, etape: enqueter } }]
+        repliques:
+          - { qui: ferrand, dit: "« Approchez, approchez ! Un os authentique de Saint Aldebrand, le Premier Appelé ! Il guérit les fièvres et porte chance aux aventuriers. Cent pièces seulement ! »" }
+          - { qui: bram, dit: "Bram lève les yeux au ciel derrière son comptoir. « Ça fait trois semaines qu'il vend des os de poulet. »", si: { pas_flag: mort:bram } }
+        choix:
+          - texte: "Examiner la « relique » de près. (Intelligence, difficulté 15)"
+            test: { carac: INT, difficulte: 15, reussite: demasque, echec: rate }
+          - texte: "L'acheter. On ne sait jamais."
+            si: { or_min: 100 }
+            effets: [{ or: -100, objet: relique-douteuse }]
+            aller: achete
+          - texte: "Aller prévenir l'Ordre : vendre de fausses reliques est un crime."
+            aller: ordre
+      demasque:
+        repliques:
+          - { dit: "Un os de poulet, verni et gravé à la hâte. Vous le brandissez sous le nez des clients. Rires, huées : Ferrand s'enfuit sous les quolibets." }
+        effets: [{ xp: 50, reputation: { guilde: 5 }, flag: ferrand-demasque }]
+        suite: fin
+      rate:
+        repliques:
+          - { dit: "L'os a l'air… vrai ? Vous n'en êtes pas sûrs. Ferrand vous adresse un clin d'œil satisfait." }
+        suite: fin
+      achete:
+        repliques:
+          - { dit: "Ferrand empoche l'or avec un sourire radieux. La relique sent vaguement le poulet rôti." }
+        suite: fin
+      ordre:
+        repliques:
+          - { qui: elianne, dit: "Sœur Elianne arrive en personne, le visage grave. « Ces escrocs salissent la mémoire des Appelés. Merci. » Ferrand est emmené par deux gardes." }
+        effets: [{ reputation: { ordre: 8 }, flag: ferrand-arrete, xp: 40 }]
+        suite: fin
+      fin:
+        effets: [{ terminer_quete: q-reliques, points_guilde: 15 }]
+        fin: true
+
+  - id: sq-tanneurs
+    titre: "Les disparus du quartier des Tanneurs"
+    type: groupe
+    lieu: quartier-tanneurs
+    decor: quartier-tanneurs
+    quete: q-tanneurs
+    disponible_si: { flag: examen-reussi }
+    noeuds:
+      debut:
+        effets: [{ quete: { id: q-tanneurs, etape: enqueter } }]
+        repliques:
+          - { dit: "Les ruelles des Tanneurs sentent l'urine et la teinture. Une mère vous agrippe le bras : « Ma fille, Lina. Partie chercher de l'eau il y a trois jours. »" }
+          - { dit: "Des traces de pas, une odeur de soufre… et, gravé sur une porte, un symbole violet que vous commencez à connaître.", si: { flag: sceau-trouve } }
+        choix:
+          - texte: "Suivre la piste de soufre. (Esprit, difficulté 14)"
+            test: { carac: ESP, difficulte: 14, reussite: piste, echec: retard }
+          - texte: "Interroger les ivrognes du coin, avec quelques pièces. (Charisme, difficulté 13)"
+            test: { carac: CHA, difficulte: 13, reussite: piste, echec: retard }
+      piste:
+        repliques:
+          - { dit: "La piste mène à une cave sous une tannerie abandonnée. Des chants étouffés, des cages… Lina est vivante." }
+        combat: { rencontre: tanneurs-cultistes, victoire: sauvee, defaite: echec }
+      retard:
+        repliques:
+          - { dit: "Vous perdez des heures précieuses. Quand vous trouvez enfin la cave, les cultistes vous attendent." }
+        combat: { rencontre: tanneurs-cultistes, victoire: trop-tard, defaite: echec }
+      sauvee:
+        repliques:
+          - { qui: lina, dit: "Lina se jette dans les bras de sa mère en pleurant. Les deux autres disparus sont là aussi, affaiblis mais vivants." }
+        effets: [{ reputation: { couronne: 5, guilde: 5 }, xp: 70, flag: lina-sauvee }]
+        suite: fin
+      trop-tard:
+        repliques:
+          - { dit: "Les cultistes sont vaincus. Deux prisonniers sont sauvés… mais pour Lina, il est trop tard. Sa mère s'effondre." }
+        effets: [{ pnj_mort: lina, xp: 50 }]
+        suite: fin
+      echec:
+        repliques:
+          - { dit: "Vous êtes repoussés. Quand la garde investit la cave le lendemain, elle est vide. On ne retrouvera jamais Lina." }
+        effets: [{ pnj_mort: lina, reputation: { couronne: -5 } }]
+        suite: fin
+      fin:
+        effets: [{ terminer_quete: q-tanneurs, points_guilde: 30, flag: cultistes-lysmont }]
+        fin: true
+
+  - id: sq-apprenti
+    titre: "L'apprenti de l'Ordre"
+    type: groupe
+    lieu: temple-du-seuil
+    decor: temple-du-seuil
+    quete: q-apprenti
+    disponible_si: { flag: examen-reussi }
+    noeuds:
+      debut:
+        effets: [{ quete: { id: q-apprenti, etape: parler } }]
+        repliques:
+          - { qui: elianne, dit: "« Tobin, mon apprenti, passe ses nuits dans les archives interdites. S'il se fait prendre par le Grand Prieur… » Sœur Elianne se mord la lèvre. « Pouvez-vous lui parler ? »" }
+          - { qui: tobin, dit: "Vous trouvez Tobin entre deux rayonnages, une bougie à la main, un vieux registre ouvert. « Regardez ! Les registres de l'Appel. Il manque des pages. Toujours les mêmes : le prix. »" }
+        choix:
+          - texte: "Lire le registre avec lui."
+            effets: [{ flag: indice-prix-appel, xp: 30 }]
+            aller: lire
+          - texte: "Le convaincre de remettre le registre en place avant qu'il ne soit trop tard."
+            effets: [{ reputation: { ordre: 5 } }]
+            aller: raisonner
+          - texte: "Le dénoncer au Grand Prieur Mathis."
+            effets: [{ reputation: { ordre: 10 }, flag: tobin-denonce }]
+            aller: denonce
+      lire:
+        repliques:
+          - { dit: "Une seule ligne a échappé au grattoir : « …et pour chaque Appel, le Voile cède d'un fil, et au nord, les Cendres s'en nourrissent. »" }
+          - { qui: elianne, expression: surprise, dit: "Elianne, derrière vous, a tout entendu. Elle est livide." }
+        suite: fin
+      raisonner:
+        repliques:
+          - { qui: tobin, dit: "Tobin soupire et range le registre. « Vous avez raison. Mais un jour, quelqu'un devra savoir. »" }
+        suite: fin
+      denonce:
+        repliques:
+          - { qui: mathis, dit: "Le Grand Prieur vous remercie chaleureusement. Le lendemain, Tobin a été « envoyé dans un monastère du nord ». Elianne ne vous adresse plus la parole." }
+        suite: fin
+      fin:
+        effets: [{ terminer_quete: q-apprenti, points_guilde: 15 }]
+        fin: true
+
+  - id: sq-tournoi
+    titre: "Le tournoi des écuyers"
+    type: groupe
+    lieu: arene
+    decor: arene
+    quete: q-tournoi
+    disponible_si: { flag: examen-reussi }
+    noeuds:
+      debut:
+        effets: [{ quete: { id: q-tournoi, etape: participer } }]
+        repliques:
+          - { qui: aveline, dit: "Aveline, juge du tournoi, vous accueille. « Un de nos écuyers s'est cassé la jambe. Il me faut un remplaçant. Et un adversaire coriace pour le finaliste : un mercenaire qui triche. »" }
+          - { qui: aveline, expression: gene, dit: "« Si vous gagnez… je vous offre une pâtisserie. » Elle se racle la gorge. « C'est une coutume. »" }
+        choix:
+          - texte: "Affronter le mercenaire tricheur."
+            aller: combat
+      combat:
+        combat: { rencontre: tournoi-ecuyers, victoire: victoire, defaite: defaite }
+      victoire:
+        repliques:
+          - { dit: "La foule rugit. Le mercenaire, désarmé, est escorté hors de l'arène." }
+          - { qui: aveline, expression: joie, dit: "Aveline vous tend un gâteau de Lysmont, les joues roses. « Coutume. C'est la coutume. »" }
+        effets: [{ affinite: { aveline: 6 }, objet: gateau-lysmont, reputation: { couronne: 5 }, or: 40 }]
+        suite: fin
+      defaite:
+        repliques:
+          - { qui: aveline, dit: "« Il trichait, je l'ai vu. » Aveline fait disqualifier le mercenaire. « Vous vous êtes battus honnêtement. C'est ce qui compte. »" }
+        effets: [{ affinite: { aveline: 3 } }]
+        suite: fin
+      fin:
+        effets: [{ terminer_quete: q-tournoi, points_guilde: 25 }]
+        fin: true

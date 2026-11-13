@@ -1,0 +1,131 @@
+# Scènes personnelles avec Aveline (individuelles : chaque héros vit sa propre relation avec elle).
+# Rappel : elle peut refuser un héros (lignes rouges), et rien n'est explicite.
+scenes:
+  - id: av-ronde
+    titre: "Aveline — La ronde de nuit"
+    type: individuel
+    lieu: lysmont-place
+    decor: lysmont-place
+    disponible_si: { flag: examen-reussi }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: aveline, dit: "Vous croisez Aveline pendant sa ronde, une lanterne à la main. « Encore debout ? Les héros ne dorment jamais, c'est ça ? »" }
+        choix:
+          - texte: "« Je pourrais vous accompagner. Deux paires d'yeux valent mieux qu'une. »"
+            effets: [{ affinite: { aveline: 5 } }]
+            aller: accompagne
+          - texte: "« Et vous, capitaine ? Vous ne dormez jamais non plus. »"
+            effets: [{ affinite: { aveline: 3 } }]
+            aller: question
+          - texte: "« Ce n'est pas un peu ennuyeux, de tourner en rond toute la nuit ? »"
+            effets: [{ affinite: { aveline: -2 } }]
+            aller: vexee
+      accompagne:
+        repliques:
+          - { qui: aveline, dit: "Elle hésite, puis hoche la tête. Vous marchez longtemps en silence. C'est un silence étonnamment agréable." }
+          - { qui: aveline, expression: joie, dit: "Au détour d'une rue, elle s'arrête net devant une pâtisserie fermée, le nez presque collé à la vitre. Puis elle se reprend. « Je… vérifiais les serrures. »" }
+        effets: [{ flag: heros:secret-patisserie }]
+        suite: fin
+      question:
+        repliques:
+          - { qui: aveline, expression: tristesse, dit: "« Pas beaucoup, non. » Elle regarde vers le nord. « Quand je ferme les yeux, je vois Valgrane. » Elle n'en dit pas plus." }
+        suite: fin
+      vexee:
+        repliques:
+          - { qui: aveline, expression: colere, dit: "« C'est ce qui permet à la ville de dormir tranquille. » Elle s'éloigne d'un pas raide." }
+        suite: fin
+      fin:
+        fin: true
+
+  - id: av-entrainement
+    titre: "Aveline — Leçon d'escrime"
+    type: individuel
+    lieu: chateau
+    decor: chateau-trone
+    disponible_si: { flag: examen-reussi, affinite_min: { aveline: 10 } }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: aveline, dit: "Dans la cour du château, Aveline vous lance une épée de bois. « Votre garde est catastrophique. Montrez-moi ce que vous savez faire. »" }
+        choix:
+          - texte: "Vous battre sérieusement. (Force, difficulté 16)"
+            test: { carac: FOR, difficulte: 16, reussite: gagne, echec: perd }
+          - texte: "Esquiver et la faire tourner en bourrique. (Agilité, difficulté 16)"
+            test: { carac: AGI, difficulte: 16, reussite: gagne, echec: perd }
+          - texte: "Tricher : lui jeter du sable aux yeux."
+            effets: [{ affinite: { aveline: -6 } }]
+            aller: triche
+      gagne:
+        repliques:
+          - { qui: aveline, expression: surprise, dit: "Votre lame de bois s'arrête à un doigt de sa gorge. Elle vous fixe, sidérée… puis éclate de rire. Un vrai rire." }
+          - { qui: aveline, expression: joie, dit: "« Encore. Demain. Même heure. » Ce n'est pas une question." }
+        effets: [{ affinite: { aveline: 7 }, xp: 40 }]
+        suite: fin
+      perd:
+        repliques:
+          - { qui: aveline, dit: "Vous voilà sur le dos, sa lame de bois sur votre poitrine. « Pas mal. Pour un débutant. » Elle vous tend la main pour vous relever." }
+        effets: [{ affinite: { aveline: 4 }, xp: 25 }]
+        suite: fin
+      triche:
+        repliques:
+          - { qui: aveline, expression: colere, dit: "Elle crache le sable, furieuse. « Sur un champ de bataille, peut-être. Ici, c'est une leçon d'honneur. Recommencez quand vous en aurez. »" }
+        suite: fin
+      fin:
+        fin: true
+
+  - id: av-confidence
+    titre: "Aveline — Ce qu'on ne dit à personne"
+    type: individuel
+    lieu: taverne
+    decor: taverne
+    disponible_si: { affinite_palier: { aveline: proche } }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: aveline, dit: "Aveline vous attend au fond de la taverne, devant deux chopes qu'elle n'a pas touchées. « Asseyez-vous. J'ai… quelque chose à vous dire. »" }
+          - { qui: aveline, expression: tristesse, dit: "« Mon père, Gauvain de Castelroc, commandait Valgrane. On l'a accusé d'avoir ouvert les portes aux Cendres. On l'a exécuté sans procès. »" }
+          - { qui: aveline, dit: "« Je n'ai jamais cru à sa trahison. Mais les archives militaires de Valgrane ont été scellées… par l'Ordre. Pourquoi l'Ordre ? »" }
+        choix:
+          - texte: "« Je vous aiderai à découvrir la vérité. Je vous en fais la promesse. »"
+            effets: [{ affinite: { aveline: 8 }, flag: heros:promesse-aveline, quete: { id: q-aveline, etape: archives } }]
+            aller: promesse
+          - texte: "« Et si la vérité ne vous plaisait pas ? »"
+            effets: [{ affinite: { aveline: 3 }, quete: { id: q-aveline, etape: archives } }]
+            aller: prudent
+      promesse:
+        repliques:
+          - { qui: aveline, expression: gene, dit: "Elle vous regarde longtemps. Puis, très doucement, elle pose sa main sur la vôtre. « Merci. » Elle la retire aussitôt, écarlate." }
+        suite: fin
+      prudent:
+        repliques:
+          - { qui: aveline, dit: "« Alors au moins, je saurai. » Elle lève sa chope. « À la vérité, quelle qu'elle soit. »" }
+        suite: fin
+      fin:
+        repliques:
+          - { dit: "(Quête de compagnon « Le Serment brisé » : la suite au chapitre 2.)" }
+        fin: true
+
+  - id: av-remparts
+    titre: "Aveline — Les remparts au crépuscule"
+    type: individuel
+    lieu: chateau
+    decor: chateau-trone
+    disponible_si: { affinite_palier: { aveline: amoureuse } }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: aveline, dit: "Le soleil se couche sur Lysmont. Aveline est assise sur le parapet, les jambes dans le vide, sans armure." }
+          - { qui: aveline, expression: gene, dit: "« Je ne suis pas douée pour… ça. Les mots. » Elle fixe l'horizon. « Avec une épée, je sais toujours quoi faire. Avec vous, jamais. »" }
+        choix:
+          - texte: "Vous asseoir à côté d'elle et prendre sa main."
+            effets: [{ affinite: { aveline: 5 } }]
+            aller: main
+          - texte: "« Alors ne dites rien. »"
+            effets: [{ affinite: { aveline: 5 } }]
+            aller: main
+      main:
+        repliques:
+          - { qui: aveline, expression: joie, dit: "Elle rit doucement, nerveusement, et pose la tête sur votre épaule. Le soleil disparaît derrière les tours blanches…" }
+          - { dit: "(Fondu au noir.)" }
+        fin: true

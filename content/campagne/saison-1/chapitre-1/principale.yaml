@@ -1,0 +1,287 @@
+# Chapitre 1 — quête principale (scènes de groupe : les choix sont votés, le meneur du jour tranche en cas d'égalité).
+scenes:
+  # ─────────────────────────────────────────────────────────────
+  - id: ch1-appel
+    titre: "L'Appel"
+    type: groupe
+    lieu: temple-du-seuil
+    decor: temple-du-seuil
+    quete: q-ch1-appel
+    disponible_si: { pas_flag: appel-fait }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "Printemps 1012. Un cercle de lumière bleue embrase le sol du Temple du Seuil. Des chants montent, des vitraux vibrent… puis le silence." }
+          - { dit: "Au centre du cercle, des silhouettes se relèvent, hagardes : les invoqués. À la lisière de la lumière, d'autres jeunes gens, attirés ici par une résonance qu'ils ne savent pas nommer : les réincarnés.", si: { origine: reincarne } }
+          - { qui: mathis, dit: "« Bienvenue à Velmaris, Appelés. Je suis Mathis, Grand Prieur de l'Ordre de la Lumière Sereine. N'ayez crainte : la Lumière vous a choisis. »" }
+          - { qui: mathis, dit: "« Le Souverain des Cendres s'est éveillé au nord. Le Mur d'Aube faiblit. Le royaume a besoin de héros. »" }
+          - { qui: aveline, expression: neutre, dit: "Une jeune femme en armure argentée s'avance, la main sur le pommeau. « Capitaine Aveline de Castelroc. Je suis chargée de votre sécurité. » Son regard s'attarde sur vous, méfiant." }
+        choix:
+          - texte: "« Un monde de magie ? Génial. Où est-ce qu'on signe ? » (enthousiaste)"
+            effets: [{ reputation: { ordre: 5 }, affinite: { aveline: 2 } }]
+            aller: enthousiaste
+          - texte: "« Personne ne nous a demandé notre avis. Qui a décidé de nous arracher à nos vies ? » (méfiant)"
+            effets: [{ reputation: { ordre: -5 }, affinite: { aveline: 4 }, flag: mefiance-ordre }]
+            aller: mefiant
+          - texte: "« Excusez-moi, il y a des toilettes dans ce monde ? » (humour)"
+            effets: [{ affinite: { aveline: 3 } }]
+            aller: humour
+      enthousiaste:
+        repliques:
+          - { qui: mathis, dit: "Le Grand Prieur sourit largement. « Voilà l'esprit des héros ! »" }
+          - { qui: aveline, dit: "Aveline soupire. « Les derniers à avoir dit ça sont enterrés sous le Mur d'Aube. »" }
+        suite: suite
+      mefiant:
+        repliques:
+          - { qui: mathis, dit: "Le sourire du Grand Prieur se fige une fraction de seconde. « La Lumière a ses raisons. Vous les comprendrez. »" }
+          - { qui: aveline, dit: "Aveline vous jette un regard nouveau. Presque… approbateur." }
+        suite: suite
+      humour:
+        repliques:
+          - { dit: "Un acolyte s'étrangle. Mathis cligne des yeux." }
+          - { qui: aveline, expression: joie, dit: "Aveline détourne la tête, mais vous l'avez vue : elle a souri. « Par ici. Et oui, il y en a. »" }
+        suite: suite
+      suite:
+        repliques:
+          - { qui: mathis, dit: "« Reposez-vous. Demain, la Couronne vous recevra. En attendant, la Guilde de la Rose des Vents vous ouvrira ses portes : vous y apprendrez à survivre. »" }
+          - { dit: "Ce soir-là, en contemplant les tours blanches de Lysmont depuis la fenêtre du temple, chacun de vous voit flotter devant ses yeux une fenêtre translucide : votre niveau, vos capacités… et votre don." }
+        effets:
+          - { flag: [appel-fait, aveline-rencontree], recruter: aveline, quete: { id: q-ch1-appel, etape: examen }, journal: "L'Appel : {groupe} arrivent au Temple du Seuil. La capitaine Aveline de Castelroc est chargée de leur sécurité." }
+        fin: true
+
+  # ─────────────────────────────────────────────────────────────
+  - id: ch1-examen
+    titre: "L'examen de la Guilde"
+    type: groupe
+    lieu: guilde
+    decor: guilde
+    quete: q-ch1-appel
+    disponible_si: { quete_etape: { q-ch1-appel: examen } }
+    noeuds:
+      debut:
+        effets: [{ aller_date: { annee: 1012, mois: 4, jour: 5 } }]
+        repliques:
+          - { dit: "Solaire 1012. Le hall de la Guilde de la Rose des Vents sent la bière, le cuir et la sueur. Des dizaines de regards se tournent vers vous." }
+          - { qui: rowena, dit: "« Ah. Les Appelés. » Dame Rowena mâchonne sa pipe éteinte. « Ici, votre don ne vaut rien tant que vous n'avez pas prouvé que vous savez tenir debout. »" }
+          - { qui: kaya, dit: "Une jeune femme aux oreilles de loup argentées vous dévisage, adossée à un pilier. « Pff. Ils ont l'air tout mous. Je parie dix pièces qu'ils tombent au premier coup. »" }
+          - { qui: kaya, dit: "Elle vous fixe un instant de plus, puis son regard s'adoucit. « …Un Ourvalis ? Hé. Bonne chance, alors. »", si: { race: ourvalis } }
+          - { qui: rowena, dit: "« L'examen est simple : vous affrontez notre golem d'entraînement. S'il vous met au tapis, revenez dans un an. »" }
+        choix:
+          - texte: "Entrer dans l'arène d'entraînement."
+            aller: combat
+          - texte: "« Kaya, c'est ça ? Je double ta mise : vingt pièces que tu perds. »"
+            effets: [{ flag: pari-kaya }]
+            aller: combat
+      combat:
+        repliques:
+          - { dit: "Le golem d'argile se met en marche dans un grincement." }
+        combat: { rencontre: examen-guilde, victoire: victoire, defaite: defaite }
+      victoire:
+        repliques:
+          - { qui: rowena, dit: "« Pas mal. Pas mal du tout. » Elle tamponne une carte de cuivre. « Rang F. Les contrats sont au tableau. Ne mourez pas bêtement. »" }
+          - { qui: kaya, dit: "Kaya vous tend dix pièces en grommelant. « Ouais, bon. Vous avez de la chance. »", si: { flag: pari-kaya } }
+        effets:
+          - { flag: examen-reussi, points_guilde: 50, quete: { id: q-ch1-appel, etape: crypte }, journal: "{groupe} réussissent l'examen de la Guilde : rang F." }
+        suite: ellipse
+      defaite:
+        repliques:
+          - { qui: rowena, dit: "« Bon. Le golem vous a laminés. » Elle soupire. « Mais vous vous êtes relevés. C'est ce que je cherche. Rang F, à l'essai. »" }
+        effets:
+          - { flag: examen-reussi, points_guilde: 20, quete: { id: q-ch1-appel, etape: crypte }, journal: "{groupe} entrent à la Guilde « à l'essai »." }
+        suite: ellipse
+      ellipse:
+        repliques:
+          - { dit: "Les mois passent. Contrats, entraînements, premières cicatrices. Lysmont devient peu à peu votre ville." }
+          - { qui: aveline, dit: "Aveline passe souvent « par hasard » à la Guilde. Officiellement pour vous surveiller." }
+        effets:
+          - { ellipse: { jusqua: { annee: 1013, mois: 7, jour: 1 }, titre: "Premiers mois à la Guilde" } }
+        fin: true
+
+  # ─────────────────────────────────────────────────────────────
+  - id: ch1-crypte
+    titre: "La Crypte de la Fontaine"
+    type: groupe
+    lieu: crypte-fontaine
+    decor: crypte-entree
+    quete: q-ch1-appel
+    disponible_si: { quete_etape: { q-ch1-appel: crypte } }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "Brumaire 1013. Des paysans ont vu des lueurs violettes sous les ruines de la Crypte de la Fontaine. Rowena vous a confié l'affaire." }
+          - { qui: aveline, dit: "Aveline vous attend à l'entrée, en armure complète. « Ordre du roi : je vous accompagne. Et… je n'allais pas vous laisser descendre seuls. »" }
+          - { dit: "L'escalier s'enfonce dans le noir. Une odeur d'eau croupie et de vieille pierre monte des profondeurs." }
+        choix:
+          - texte: "Descendre dans la crypte."
+            aller: donjon
+      donjon:
+        donjon: { id: crypte-fontaine, sortie: sortie }
+      sortie:
+        repliques:
+          - { dit: "Vous remontez à la surface, couverts de poussière. Dans votre sac, le sceau cendré pulse d'une lumière violette, comme un cœur." }
+          - { qui: aveline, expression: colere, dit: "« Ce symbole… » Aveline pâlit. « On l'a trouvé sur les ruines de Valgrane, il y a dix ans. Le jour où mon père… » Elle se tait." }
+        effets:
+          - { flag: sceau-trouve, xp: 60, quete: { id: q-ch1-appel, etape: lanternes }, journal: "Dans la Crypte de la Fontaine, {groupe} découvrent un sceau cendré." }
+        choix:
+          - texte: "Remettre le sceau à l'Ordre, comme le veut la loi."
+            effets: [{ reputation: { ordre: 10 }, flag: sceau-ordre }]
+            aller: ellipse
+          - texte: "Le confier à la Guilde : Rowena saura quoi en faire."
+            effets: [{ reputation: { guilde: 10 }, flag: sceau-guilde }]
+            aller: ellipse
+          - texte: "Le garder et l'étudier vous-mêmes, en secret."
+            effets: [{ flag: sceau-garde, affinite: { aveline: 2 } }]
+            aller: ellipse
+      ellipse:
+        repliques:
+          - { dit: "L'hiver tombe sur Lysmont. Le sceau ne quitte pas vos pensées." }
+        effets:
+          - { ellipse: { jusqua: { annee: 1014, mois: 2, jour: 15 }, titre: "L'hiver à Lysmont" } }
+        fin: true
+
+  # ─────────────────────────────────────────────────────────────
+  - id: ch1-lanternes
+    titre: "La Nuit des Lanternes"
+    type: groupe
+    lieu: lysmont-place
+    decor: lysmont-lanternes-nuit
+    quete: q-ch1-appel
+    disponible_si: { quete_etape: { q-ch1-appel: lanternes } }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "15 Floréal 1014, Fête des Lanternes. Des milliers de lanternes de papier s'élèvent au-dessus de Lysmont, chacune portant le nom d'un disparu." }
+          - { qui: bram, dit: "Bram, le tavernier, distribue des brochettes en riant. « Ce soir, c'est la maison qui régale ! »", si: { pas_flag: mort:bram } }
+          - { qui: seraphine, dit: "Sur le balcon du château, une jeune femme blonde vous fait un petit signe discret. La princesse Séraphine." }
+          - { qui: aveline, dit: "Aveline est là elle aussi, en civil pour une fois, une lanterne éteinte entre les doigts." }
+          - { qui: aveline, expression: gene, dit: "« C'est… pour mon père. » Elle hésite, sans vous regarder. « Vous voulez bien rester un moment ? »", si: { affinite_min: { aveline: 20 } } }
+        choix:
+          - texte: "Lâcher une lanterne avec Aveline, en silence."
+            si: { affinite_min: { aveline: 20 } }
+            effets: [{ affinite: { aveline: 6 }, flag: heros:lanterne-aveline }]
+            aller: lanterne
+          - texte: "Profiter de la fête : danses, musique, brochettes."
+            effets: [{ affinite: { aveline: 1 } }]
+            aller: attaque
+      lanterne:
+        repliques:
+          - { qui: aveline, expression: tristesse, dit: "Vos lanternes montent côte à côte. Aveline murmure : « Il s'appelait Gauvain. Il n'était pas un traître. » Pour la première fois, sa voix tremble." }
+          - { qui: aveline, expression: gene, dit: "Elle s'essuie les yeux d'un revers de main. « …Merci. N'en parlez à personne. »" }
+        suite: attaque
+      attaque:
+        repliques:
+          - { dit: "Soudain, les lanternes virent au violet. Un cri. Puis une explosion de cendres au centre de la place." }
+          - { dit: "Des gobelins cendrés surgissent des égouts, guidés par des cultistes. La foule panique." }
+          - { qui: aveline, expression: colere, dit: "« Protégez les civils ! » hurle Aveline en dégainant." }
+        choix:
+          - texte: "Couvrir la fuite des civils, même si les cultistes s'échappent."
+            effets: [{ reputation: { couronne: 5 }, affinite: { aveline: 5 }, flag: civils-proteges }]
+            aller: combat1
+          - texte: "Foncer sur le cultiste qui dirige l'attaque, coûte que coûte."
+            effets: [{ flag: [heros:civils-abandonnes, cultiste-poursuivi], reputation: { guilde: 5 } }]
+            aller: combat1
+      combat1:
+        combat: { rencontre: lanternes-cultistes, victoire: vorthak, defaite: defaite1 }
+      defaite1:
+        repliques:
+          - { dit: "Vous tombez sous le nombre. Quand vous rouvrez les yeux, la garde a repoussé les gobelins… mais le Chaudron Fêlé est en flammes." }
+        effets: [{ pnj_mort: bram }]
+        suite: vorthak
+      vorthak:
+        repliques:
+          - { dit: "Les flammes s'ouvrent. Une silhouette en armure noire s'avance, une épée nimbée de feu violet à la main." }
+          - { qui: vorthak, dit: "« Alors c'est vous, les nouveaux jouets de l'Ordre. » Il rit. « Le Souverain m'a demandé de vous saluer. »" }
+          - { qui: vorthak, dit: "« Le sceau. Vous l'avez. Je le sens. Rendez-le-moi, et je laisse vivre cette ville une année de plus. »", si: { flag: sceau-garde } }
+        choix:
+          - texte: "« Viens le chercher. »"
+            aller: combat2
+          - texte: "« Pourquoi vous attaquez Lysmont ? Qu'est-ce que vous voulez vraiment ? » (Esprit, difficulté 17)"
+            test: { carac: ESP, difficulte: 17, reussite: revelation, echec: combat2 }
+      revelation:
+        repliques:
+          - { qui: vorthak, dit: "Il incline la tête, amusé. « Ce que nous voulons ? Demandez à votre Grand Prieur combien coûte un Appel. Demandez-lui qui paie. »" }
+        effets: [{ flag: indice-prix-appel }]
+        suite: combat2
+      combat2:
+        combat: { rencontre: lanternes-vorthak, victoire: victoire, defaite: defaite2 }
+      victoire:
+        repliques:
+          - { qui: vorthak, dit: "Vorthak recule, son armure fendue. « Intéressant… très intéressant. » Il disparaît dans un tourbillon de cendres." }
+          - { qui: aveline, expression: joie, dit: "Aveline s'appuie sur son épée, essoufflée, et vous regarde avec un sourire épuisé. « Vous… vous avez été incroyables. »" }
+        effets: [{ reputation: { couronne: 10, guilde: 5 }, affinite: { aveline: 4 } }]
+        suite: bilan
+      defaite2:
+        repliques:
+          - { dit: "Vorthak vous balaie comme des fétus de paille, puis s'en va, l'air ennuyé. « Revenez quand vous serez dignes de mon temps. »" }
+        effets: [{ reputation: { couronne: -5 } }]
+        suite: bilan
+      bilan:
+        repliques:
+          - { dit: "À l'aube, Lysmont compte ses morts. Les lanternes calcinées jonchent les pavés." }
+          - { qui: bram, dit: "Bram, couvert de suie, vous serre la main à vous broyer les os. « Vous avez sauvé ma taverne. Ici, vous ne paierez plus jamais une bière. »", si: { flag: civils-proteges, pas_flag: mort:bram } }
+          - { dit: "Le Chaudron Fêlé n'est plus que cendres. Bram n'a pas survécu.", si: { flag: mort:bram } }
+        effets:
+          - { flag: lanternes-faites, quete: { id: q-ch1-appel, etape: serment }, journal: "Fête des Lanternes : Vorthak, émissaire des Cendres, attaque Lysmont." }
+          - { aller_date: { annee: 1014, mois: 10, jour: 3 } }
+        fin: true
+
+  # ─────────────────────────────────────────────────────────────
+  - id: ch1-serment
+    titre: "Le Serment"
+    type: groupe
+    lieu: chateau
+    decor: chateau-trone
+    quete: q-ch1-appel
+    disponible_si: { quete_etape: { q-ch1-appel: serment } }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "Nivôse 1014. La salle du trône est glaciale. Le roi Edmund IV vous toise depuis son trône doré." }
+          - { qui: edmund-iv, dit: "« Vous avez défendu ma capitale. Bien. Mais un héros sans maître est une épée sans fourreau : dangereux. »" }
+          - { qui: edmund-iv, dit: "« Agenouillez-vous et jurez fidélité à la Couronne. Vous aurez titres, or, et l'honneur de mourir pour Aubeclaire. »" }
+          - { qui: seraphine, dit: "La princesse Séraphine, debout à côté du trône, serre les poings. Elle croise votre regard et secoue très légèrement la tête." }
+          - { qui: aveline, dit: "Aveline, au garde-à-vous, fixe un point droit devant elle. Mais ses jointures blanchissent sur son épée." }
+        choix:
+          - texte: "Jurer fidélité à la Couronne."
+            effets: [{ reputation: { couronne: 15, guilde: -5 }, flag: serment-couronne, affinite: { aveline: 2 } }]
+            aller: jure
+          - texte: "Refuser poliment : vous resterez des aventuriers libres, fidèles à la Guilde."
+            effets: [{ reputation: { couronne: -10, guilde: 15 }, flag: independants }]
+            aller: refus
+          - texte: "Négocier : une alliance d'égal à égal, pas un serment de vassal. (Charisme, difficulté 18)"
+            test: { carac: CHA, difficulte: 18, reussite: negociation, echec: negociation-ratee }
+          - texte: "Faire semblant de jurer, en croisant les doigts dans votre dos."
+            effets: [{ reputation: { couronne: 10 }, flag: [serment-couronne, heros:parole-trahie] }]
+            aller: faux
+      jure:
+        repliques:
+          - { qui: edmund-iv, dit: "« Relevez-vous, chevaliers d'Aubeclaire. » Le roi sourit enfin. Séraphine détourne les yeux." }
+        suite: epilogue
+      refus:
+        repliques:
+          - { qui: edmund-iv, dit: "Un silence de mort. « …Soit. La Guilde répondra de vous. Ne me décevez pas. »" }
+          - { qui: seraphine, dit: "En sortant, Séraphine vous rattrape dans un couloir. « C'était courageux. Ou stupide. Les deux me plaisent. »" }
+        suite: epilogue
+      negociation:
+        repliques:
+          - { qui: edmund-iv, dit: "Le roi plisse les yeux… puis éclate d'un rire bref. « Vous avez du cran. Une alliance, donc. Mais je m'en souviendrai. »" }
+        effets: [{ reputation: { couronne: 5, guilde: 5 }, flag: allies-libres }]
+        suite: epilogue
+      negociation-ratee:
+        repliques:
+          - { qui: edmund-iv, dit: "« Des conditions ? À MOI ? » Le roi se lève, furieux. « Hors de ma vue ! »" }
+        effets: [{ reputation: { couronne: -15, guilde: 10 }, flag: independants }]
+        suite: epilogue
+      faux:
+        repliques:
+          - { dit: "Vous prononcez les mots du serment. Personne ne remarque vos doigts croisés… sauf Aveline, juste derrière vous. Son visage se ferme." }
+        suite: epilogue
+      epilogue:
+        repliques:
+          - { dit: "Ce soir-là, sur les remparts, vous regardez les étoiles d'un ciel qui n'est pas le vôtre." }
+          - { qui: aveline, dit: "« Le printemps prochain, on m'envoie à la frontière sud. » Aveline hésite. « J'aimerais… que vous veniez. » Elle rougit. « Pour la mission, évidemment. »", si: { affinite_min: { aveline: 35 } } }
+          - { dit: "Deux ans ont passé depuis l'Appel. Velmaris n'est plus un monde étranger : c'est le vôtre, désormais. Et il brûle déjà au nord." }
+        effets:
+          - { terminer_quete: q-ch1-appel, xp: 150 }
+          - { ellipse: { jusqua: { annee: 1015, mois: 1, jour: 1 }, titre: "La fin de l'an 1014" }, fin_chapitre: 1 }
+        fin: true

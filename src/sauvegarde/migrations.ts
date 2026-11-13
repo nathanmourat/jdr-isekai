@@ -1,0 +1,59 @@
+/**
+ * Sauvegarde versionnée.
+ *
+ * Une sauvegarde contient l'état de départ de la partie et la liste des actions jouées.
+ * Quand le format de l'état change (nouvelle saison, nouveau champ…), on augmente VERSION_ETAT
+ * dans src/moteur/partie.ts et on ajoute ici une migration « version n → n+1 ».
+ * Les anciennes parties restent ainsi jouables après une mise à jour.
+ */
+import { VERSION_ETAT, type Action, type EtatPartie } from '../moteur/partie';
+
+export const FORMAT = 'velmaris-sauvegarde';
+
+export interface Sauvegarde {
+  format: typeof FORMAT;
+  version: number;
+  exporteeLe: string;
+  depart: EtatPartie;
+  actions: Action[];
+  /** Instantané facultatif (accélère le chargement des longues parties). */
+  instantane?: { index: number; etat: EtatPartie };
+}
+
+type Migration = (s: Sauvegarde) => Sauvegarde;
+
+/** migrations[n] transforme une sauvegarde de version n en version n+1. */
+export const migrations: Record<number, Migration> = {
+  // Exemple pour la saison 2 :
+  // 1: (s) => { s.depart.nouveauChamp = valeurParDefaut; s.version = 2; return s; },
+};
+
+export class ErreurSauvegarde extends Error {
+  constructor(message: string) { super(message); this.name = 'ErreurSauvegarde'; }
+}
+
+export function creerSauvegarde(depart: EtatPartie, actions: Action[], date: string, instantane?: Sauvegarde['instantane']): Sauvegarde {
+  return { format: FORMAT, version: VERSION_ETAT, exporteeLe: date, depart, actions, instantane };
+}
+
+export function lireSauvegarde(texte: string): Sauvegarde {
+  let brut: unknown;
+  try { brut = JSON.parse(texte); } catch { throw new ErreurSauvegarde('Fichier illisible : ce n\'est pas une sauvegarde (JSON invalide).'); }
+  const s = brut as Partial<Sauvegarde>;
+  if (!s || s.format !== FORMAT) throw new ErreurSauvegarde('Ce fichier n\'est pas une sauvegarde des Appelés de Velmaris.');
+  if (typeof s.version !== 'number' || !s.depart || !Array.isArray(s.actions)) throw new ErreurSauvegarde('Sauvegarde incomplète ou abîmée.');
+  if (s.version > VERSION_ETAT) throw new ErreurSauvegarde(`Cette sauvegarde vient d'une version plus récente du jeu (format ${s.version}). Mettez le jeu à jour.`);
+  return migrer(s as Sauvegarde);
+}
+
+export function migrer(s: Sauvegarde): Sauvegarde {
+  let res = s;
+  while (res.version < VERSION_ETAT) {
+    const m = migrations[res.version];
+    if (!m) throw new ErreurSauvegarde(`Aucune migration pour passer du format ${res.version} au format ${res.version + 1}.`);
+    res = m(structuredClone(res));
+  }
+  // l'instantané n'est valable que pour la version courante
+  if (res !== s) delete res.instantane;
+  return res;
+}

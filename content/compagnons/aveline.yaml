@@ -1,0 +1,46 @@
+# Aveline de Castelroc — compagne de la version jouable 1.
+compagnon:
+  id: aveline
+  nom: "Aveline de Castelroc"
+  titre: "Capitaine de la garde royale"
+  age: 24
+  genre: f
+  personnalite: "Droite, sérieuse, très maladroite dès qu'on parle de sentiments. Gourmande de pâtisseries en secret."
+  passe: "Son père, chevalier, a été accusé de trahison lors de la chute de Valgrane (1003) et exécuté. Elle est devenue capitaine par son seul mérite, sous les regards méfiants."
+  objectif: "Prouver l'innocence de son père."
+  chapitre_arrivee: 1
+  quete: q-aveline
+  lignes_rouges:
+    - { flag: parole-trahie, description: "« Vous avez donné votre parole. Et vous l'avez reprise. »", penalite: -25 }
+    - { flag: civils-abandonnes, description: "« Des gens mouraient, et vous avez tourné le dos. »", penalite: -30 }
+    - { flag: pacte-cendres, description: "« Avec les Cendres ? Jamais. Plus jamais. »", penalite: -60, definitive: true }
+  cadeaux:
+    prefere: [gateau-lysmont, kit-entretien-armes]
+    apprecie: [fleur-des-champs, livre-ancien]
+    deteste: [bijou-dore]
+  combat:
+    caracteristiques: { FOR: 12, AGI: 8, INT: 7, VIT: 14, ESP: 9, CHA: 10 }
+    attaque: { stat: FOR, element: physique, portee: melee, puissance: 8 }
+    armure: 9
+    rang: avant
+    competences:
+      - id: aveline-charge
+        nom: Charge du serment
+        description: "Une charge au bouclier."
+        recharge: 2
+        cible: ennemi
+        portee: melee
+        effets: [{ type: degats, puissance: 11, stat: FOR }]
+        ia: { priorite: 2 }
+      - id: aveline-garde
+        nom: Garde du bouclier
+        description: "Protège l'allié le plus blessé."
+        recharge: 3
+        cible: allie
+        effets: [{ type: bouclier, pourcent_pv: 0.15 }]
+        ia: { priorite: 3, quand: allie_blesse }
+  bonus_paliers:
+    alliee: { id: garde-partagee, nom: "Garde partagée", description: "25 % de chances d'intercepter un coup destiné à son héros.", parametres: { chance: 0.25 } }
+    proche: { id: aura-defense, nom: "Formation serrée", description: "+10 % de défense pour tout le groupe.", parametres: { valeur: 0.1 } }
+    amoureuse: { id: contre-attaque, nom: "Riposte", description: "25 % de chances de contre-attaquer quand elle est frappée.", parametres: { chance: 0.25 } }
+    engagee: { id: attaque-combinee, nom: "Charge des Deux Serments", description: "Attaque combinée avec son héros (à venir).", parametres: {} }
