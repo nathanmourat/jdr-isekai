@@ -112,10 +112,10 @@
 </div>
 
 <style>
-  .jeu { min-height: 100dvh; display: grid; grid-template-rows: auto 1fr; }
+  .jeu { min-height: 100dvh; display: grid; grid-template-rows: auto 1fr; grid-template-columns: minmax(0, 1fr); }
   .barre-haut { display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; flex-wrap: wrap; padding: 0.5rem 1rem; background: var(--fond-2); border-bottom: 1px solid var(--bord); position: sticky; top: 0; z-index: 10; }
   .moi select { width: auto; padding: 0.2em 0.4em; }
-  .centre { max-width: 1200px; width: 100%; margin: 0 auto; padding: 0.8rem; }
+  .centre { max-width: 1200px; width: 100%; min-width: 0; margin: 0 auto; padding: 0.8rem; }
   .onglets { display: flex; gap: 0.3rem; flex-wrap: wrap; margin-bottom: 0.8rem; }
   .onglets button { padding: 0.4em 0.9em; }
   .onglets button.actif { border-color: var(--or); background: #3b2f18; }

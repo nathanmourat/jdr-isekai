@@ -35,5 +35,5 @@
 <div class="cadre" bind:this={cadre}></div>
 
 <style>
-  .cadre { width: 100%; aspect-ratio: 16 / 9; max-height: 70dvh; background: #0d0b12; border-radius: var(--rayon); overflow: hidden; border: 1px solid var(--bord); }
+  .cadre { width: 100%; min-width: 0; aspect-ratio: 16 / 9; max-height: 70dvh; background: #0d0b12; border-radius: var(--rayon); overflow: hidden; border: 1px solid var(--bord); }
 </style>
