@@ -32,6 +32,13 @@ export const migrations: Record<number, Migration> = {
     s.version = 2;
     return s;
   },
+  // v2 → v3 (test 1, lot C) : les mois passent à l'auberge. On ajoute la proposition de repos (vide).
+  // Les anciennes actions sont rejouées telles quelles ; le moteur accepte toujours les anciennes ellipses.
+  2: (s) => {
+    (s.depart as { repos?: unknown }).repos ??= null;
+    s.version = 3;
+    return s;
+  },
 };
 
 export class ErreurSauvegarde extends Error {

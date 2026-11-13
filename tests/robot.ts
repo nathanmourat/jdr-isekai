@@ -9,6 +9,7 @@ import {
   type Action, type EtatPartie,
 } from '../src/moteur/partie';
 import { creerRng } from '../src/moteur/rng';
+import { versJour } from '../src/moteur/temps';
 
 export interface Robot { etat: EtatPartie; actions: Action[] }
 
@@ -143,8 +144,29 @@ export function finirTempsLibre(contenu: Contenu, r: Robot) {
 export function jouerSceneGroupe(contenu: Contenu, r: Robot, id: string, choixPrefere = 0) {
   finirTempsLibre(contenu, r);
   const s = contenu.scenes[id];
+  dormirJusquaLHistoire(contenu, r, id);
   if (!sceneEstDisponible(contenu, r.etat, s, listeHeros(r.etat)[0].id)) throw new Error(`Scène indisponible : ${id}`);
   jouer(contenu, r, { type: 'lancer_scene', joueur: r.etat.ordreJoueurs[0], scene: id });
   finirScene(contenu, r, 'groupe', r.etat.ordreJoueurs, choixPrefere);
   finirTempsLibre(contenu, r);
+}
+
+/** Si la scène attend une date, tout le groupe dort à l'auberge jusqu'à cette date (puis choisit ses activités). */
+export function dormirJusquaLHistoire(contenu: Contenu, r: Robot, sceneId: string) {
+  const d = contenu.scenes[sceneId].disponible_si?.date_min;
+  if (!d || versJour(contenu, d) <= r.etat.jour) return;
+  dormirHistoire(contenu, r);
+}
+
+/** Tout le groupe dort à l'auberge jusqu'à la prochaine date attendue par l'histoire. */
+export function dormirHistoire(contenu: Contenu, r: Robot) {
+  // les scènes terminées restent affichées tant qu'on ne les a pas quittées
+  for (const cle of Object.keys(r.etat.scenes)) {
+    if (r.etat.scenes[cle].noeud === '__fin__') jouer(contenu, r, { type: 'quitter_scene', joueur: cle === 'groupe' ? r.etat.ordreJoueurs[0] : r.etat.heros[cle].joueurId, cle });
+  }
+  const [premier, ...autres] = r.etat.ordreJoueurs;
+  jouer(contenu, r, { type: 'proposer_repos', joueur: premier, histoire: true });
+  for (const j of autres) if (r.etat.repos) jouer(contenu, r, { type: 'repondre_repos', joueur: j, accepte: true });
+  finirTempsLibre(contenu, r);
+  if (r.etat.tempsLibre?.resultats) jouer(contenu, r, { type: 'valider_temps_libre', joueur: premier });
 }

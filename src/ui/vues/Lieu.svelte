@@ -12,6 +12,7 @@
   import { peutApprendre } from '../../moteur/fusions';
   import type { Scene } from '../../contenu/schemas';
   import Boutique from './Boutique.svelte';
+  import Auberge from './Auberge.svelte';
 
   let { id, retour }: { id: string; retour: () => void } = $props();
   const c = jeu.contenu!;
@@ -132,6 +133,7 @@
         {/each}
       </div>
     {/if}
+    {#if lieu.auberge}<Auberge />{/if}
     {#if lieu.boutique.length}<Boutique lieu={id} objets={lieu.boutique} />{/if}
   </div>
   {#if !scenes.length && !contrats.length && !lieu.boutique.length && !pnj.length}

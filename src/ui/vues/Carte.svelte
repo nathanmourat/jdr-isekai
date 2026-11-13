@@ -5,6 +5,7 @@
    */
   import { jeu } from '../jeu.svelte';
   import { conditionScene, listeHeros } from '../../moteur/partie';
+  import { formaterDate } from '../../moteur/temps';
   import { imageCarte, imagePlan, positionsImage } from '../../rendu/assets';
   import { lieuAvecCombat, marqueurLieu, prochaineEtape, type Marqueur } from '../../moteur/guide';
 
@@ -51,6 +52,9 @@
       <span>➤ <strong>Prochaine étape :</strong> {etape.objectif}{#if etape.nomLieu && !etape.objectif.includes(etape.nomLieu)}{' '}<span class="discret">({etape.nomLieu})</span>{/if}</span>
       {#if etape.lieu && etape.disponible && lieux.some((l) => l.id === etape.lieu)}
         <button class="principal petit" onclick={allerEtape}>Y aller</button>
+      {:else if etape.attenteJour !== null}
+        <small class="discret">Pas avant : {formaterDate(c, etape.attenteJour)}. Pour faire passer les mois, dormez au Chaudron Fêlé (Ville de Lysmont).</small>
+        {#if lieux.some((l) => l.auberge)}<button class="petit" onclick={() => choisir(lieux.find((l) => l.auberge)!.id)}>Aller à l'auberge</button>{/if}
       {:else if !etape.disponible}
         <small class="discret">Pas encore possible : suivez les autres pistes en attendant.</small>
       {/if}

@@ -11,7 +11,7 @@
 
 <section class="carte-ui fin">
   <h1>Fin du chapitre {etat.finChapitre}</h1>
-  <p>Printemps {annee}. Voici où en sont les héros.</p>
+  <p>{annee}. Voici où en sont les héros.</p>
   <div class="grille heros">
     {#each listeHeros(etat) as h (h.id)}
       <div class="carte-ui">
@@ -21,6 +21,7 @@
       </div>
     {/each}
   </div>
+  <p><strong>Un long moment va passer.</strong> Quand tout le monde est prêt, retrouvez-vous au Chaudron Fêlé (Ville de Lysmont) et cliquez sur le lit : le groupe dormira jusqu'au début du chapitre suivant.</p>
   <p>Le chapitre 2, « Les Routes du Sud », arrivera dans une prochaine mise à jour. Votre sauvegarde sera reprise telle quelle.</p>
   <button class="principal" onclick={() => jeu.agir({ type: 'chapitre_suivant' })}>Continuer à explorer Aubeclaire</button>
 </section>

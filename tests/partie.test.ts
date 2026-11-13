@@ -3,7 +3,7 @@ import { contenuDisque } from '../src/contenu/node';
 import { appliquer, choixVisibles, ErreurAction, listeHeros, nouvellePartie, palierCompagnon, rejouer, type Action } from '../src/moteur/partie';
 import { creerSauvegarde, ErreurSauvegarde } from '../src/sauvegarde/migrations';
 import { lireSauvegarde } from '../src/sauvegarde/fichier';
-import { groupeDeDeux, jouer, jouerPrologues, jouerSceneGroupe, finirScene, finirTempsLibre, nouvellePartieDeTest } from './robot';
+import { dormirHistoire, groupeDeDeux, jouer, jouerPrologues, jouerSceneGroupe, finirScene, finirTempsLibre, nouvellePartieDeTest } from './robot';
 
 const c = contenuDisque();
 
@@ -101,6 +101,11 @@ describe('Partie : chapitre 1 complet', () => {
     finirTempsLibre(c, r);
     expect(r.etat.quetes['q-ch1-appel'].terminee).toBe(true);
     expect(r.etat.finChapitre).toBe(1);
+    // le saut jusqu'au chapitre suivant passe par l'auberge : rien ne bouge tant que le groupe ne dort pas
+    expect(r.etat.chapitre).toBe(1);
+    expect(r.etat.jour).toBeLessThan(3 * 360);
+    jouer(c, r, { type: 'chapitre_suivant', joueur: 'j1' });
+    dormirHistoire(c, r);
     expect(r.etat.chapitre).toBe(2);
     expect(r.etat.jour).toBeGreaterThanOrEqual(3 * 360);
     for (const h of listeHeros(r.etat)) expect(h.niveau).toBeGreaterThanOrEqual(4);
@@ -134,7 +139,20 @@ describe('Temps libre, compagnons et objets', () => {
     jouerSceneGroupe(c, r, 'ch1-appel');
     jouer(c, r, { type: 'lancer_scene', joueur: 'j1', scene: 'ch1-examen' });
     finirScene(c, r, 'groupe', ['j1', 'j2']);
+    // les mois ne passent plus tout seuls : il faut dormir à l'auberge, et que tout le monde soit d'accord
+    expect(r.etat.tempsLibre).toBeNull();
+    jouer(c, r, { type: 'quitter_scene', joueur: 'j1', cle: 'groupe' });
+    expect(() => appliquer(c, r.etat, { type: 'proposer_repos', joueur: 'j1', mois: 4 })).toThrow(/Durée/);
+    jouer(c, r, { type: 'proposer_repos', joueur: 'j1', mois: 3 });
+    expect(r.etat.repos).toMatchObject({ par: 'j1', mois: 3, accords: ['j1'] });
+    expect(r.etat.tempsLibre).toBeNull();
+    jouer(c, r, { type: 'repondre_repos', joueur: 'j2', accepte: false });
+    expect(r.etat.repos).toBeNull();
+    jouer(c, r, { type: 'proposer_repos', joueur: 'j2', mois: 6 });
+    jouer(c, r, { type: 'repondre_repos', joueur: 'j1', accepte: true });
+    expect(r.etat.repos).toBeNull();
     expect(r.etat.tempsLibre).not.toBeNull();
+    expect(r.etat.tempsLibre!.mois).toBe(6);
     const jourAvant = r.etat.jour;
     jouer(c, r, { type: 'temps_libre', joueur: 'j1', activites: [{ activite: 'commerce' }, { activite: 'relation', compagnon: 'aveline' }] });
     expect(r.etat.jour).toBe(jourAvant);
@@ -143,6 +161,18 @@ describe('Temps libre, compagnons et objets', () => {
     expect(r.etat.jour).toBeGreaterThan(jourAvant);
     expect(r.etat.heros.h1.or).toBeGreaterThan(orAvant);
     expect(r.etat.tempsLibre!.resultats!.h1.length).toBe(2);
+  });
+
+  it('les jours passent un par un, jamais d\'un mois à l\'autre, et sans doublon', () => {
+    const r = groupeDeDeux(c);
+    expect(r.etat.jour).toBe(0);
+    jouer(c, r, { type: 'jour_passe', joueur: 'j1', jour: 0 });
+    expect(r.etat.jour).toBe(1);
+    // deux appareils qui envoient le même jour : le second est refusé
+    expect(() => appliquer(c, r.etat, { type: 'jour_passe', joueur: 'j2', jour: 0 })).toThrow(/déjà passé/);
+    for (let j = 1; j < 29; j++) jouer(c, r, { type: 'jour_passe', joueur: 'j1', jour: j });
+    expect(r.etat.jour).toBe(29); // jour 30 du mois : le minuteur s'arrête là
+    expect(() => appliquer(c, r.etat, { type: 'jour_passe', joueur: 'j1', jour: 29 })).toThrow(/auberge/);
   });
 
   it('cadeaux : réaction selon les goûts, un par semaine', () => {

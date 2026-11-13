@@ -21,7 +21,7 @@ import { cles, copieProfonde, entrees, valeurs, vrai } from './outils';
 import { apprendre, creerTechnique, idFusion, peutApprendre, type Technique } from './fusions';
 import { anneeDepart, chapitreDe, fetesEntre, formaterDate, joursParMois, versDate, versJour } from './temps';
 
-export const VERSION_ETAT = 2;
+export const VERSION_ETAT = 3;
 export const MAX_JOUEURS = 6;
 
 export interface Joueur { id: string; pseudo: string; herosId: string | null; present: boolean }
@@ -68,6 +68,15 @@ export interface TempsLibre {
   resultats: Record<string, string[]> | null;
 }
 
+/** Proposition de repos à l'auberge : le temps ne passe que si tous les joueurs présents sont d'accord. */
+export interface Repos {
+  /** Joueur qui a cliqué sur le lit en premier. */
+  par: string;
+  mois: number;
+  jusqua: number;
+  accords: string[];
+}
+
 export interface EntreeJournal { jour: number; texte: string; chapitre: number }
 
 export interface EtatPartie {
@@ -97,6 +106,7 @@ export interface EtatPartie {
   combats: Record<string, { combat: Combat; contexte: ContexteCombat }>;
   donjon: EtatDonjon | null;
   tempsLibre: TempsLibre | null;
+  repos: Repos | null;
   journal: EntreeJournal[];
   secondDepart: Record<string, number>;
   dernieresNouvelles: string[];
@@ -122,6 +132,11 @@ export type Action =
   | { type: 'donjon_deplacer'; joueur: string; dx: number; dy: number }
   | { type: 'temps_libre'; joueur: string; activites: { activite: string; compagnon?: string }[] }
   | { type: 'valider_temps_libre'; joueur: string }
+  /** Un jour du monde passe (minuteur de jeu actif). `jour` = jour courant vu par l'expéditeur : évite les doublons. */
+  | { type: 'jour_passe'; joueur: string; jour: number }
+  /** Dormir à l'auberge : `mois` choisi, ou `histoire: true` pour aller jusqu'au prochain événement de l'histoire. */
+  | { type: 'proposer_repos'; joueur: string; mois?: number; histoire?: boolean }
+  | { type: 'repondre_repos'; joueur: string; accepte: boolean }
   | { type: 'cadeau'; joueur: string; compagnon: string; objet: string }
   | { type: 'equipe'; joueur: string; compagnon: string | null }
   | { type: 'equiper'; joueur: string; objet: string }
@@ -178,6 +193,7 @@ export function nouvellePartie(contenu: Contenu, id: string, nom: string, graine
     combats: {},
     donjon: null,
     tempsLibre: null,
+    repos: null,
     journal: [{ jour: 0, chapitre: 1, texte: `Printemps ${anneeDepart(contenu)} AV : la partie « ${nom} » commence.` }],
     secondDepart: {},
     dernieresNouvelles: [],
@@ -350,7 +366,11 @@ function appliquerConsequence(contenu: Contenu, etat: EtatPartie, eff: Consequen
     }
   }
   if (eff.soigner_groupe) for (const h of hs) h.blessure = false;
-  if (vrai(eff.fin_chapitre)) { etat.finChapitre = eff.fin_chapitre; journal(contenu, etat, `Fin du chapitre ${eff.fin_chapitre}.`); }
+  if (vrai(eff.fin_chapitre)) {
+    etat.finChapitre = eff.fin_chapitre;
+    etat.flags[`chapitre-${eff.fin_chapitre}-fini`] = true;
+    journal(contenu, etat, `Fin du chapitre ${eff.fin_chapitre}. Un long moment va passer : rendez-vous à l'auberge quand tout le monde est prêt.`);
+  }
   // Lignes rouges des compagnons
   for (const h of hs) for (const co of cles(contenu.compagnons)) {
     const lignes = verifierLignesRouges(contenu, co, affinite(etat, h.id, co), (f) => aFlag(etat, f, h.id));
@@ -364,6 +384,61 @@ function avancerTemps(contenu: Contenu, etat: EtatPartie, jours: number) {
   etat.jour += jours;
   for (const f of fetesEntre(contenu, avant, etat.jour)) etat.journal.push({ jour: f.jour, chapitre: etat.chapitre, texte: `${formaterDate(contenu, f.jour)} — ${f.nom}.` });
   etat.chapitre = Math.max(etat.chapitre, chapitreDe(contenu, etat.jour));
+}
+
+// ───────────────────────────── Temps choisi par les joueurs ─────────────────────────────
+
+/** Vrai si le minuteur de jeu actif peut encore faire passer un jour (il ne change jamais de mois). */
+export function jourPeutPasser(contenu: Contenu, etat: EtatPartie): boolean {
+  if (etat.tempsLibre !== null) return false;
+  return versDate(contenu, etat.jour).jour < joursParMois(contenu);
+}
+
+/**
+ * Prochaine date que l'histoire attend : la scène principale en cours si elle exige une date,
+ * sinon le début du chapitre suivant quand le chapitre est terminé. Null s'il n'y a rien à attendre.
+ */
+export function prochaineDateHistoire(contenu: Contenu, etat: EtatPartie): { jour: number; raison: string } | null {
+  for (const [id, q] of entrees(etat.quetes)) {
+    const def = contenu.quetes[id];
+    if (!def || def.type !== 'principale' || q.terminee) continue;
+    const e = def.etapes.find((x) => x.id === q.etape);
+    const scene = e && vrai(e.scene) ? contenu.scenes[e.scene] : null;
+    const d = scene?.disponible_si?.date_min;
+    if (d) {
+      const jour = versJour(contenu, d);
+      if (jour > etat.jour) return { jour, raison: e!.objectif };
+    }
+  }
+  if (aFlag(etat, `chapitre-${etat.chapitre}-fini`)) {
+    const s = contenu.config.saisons[0];
+    const jour = versJour(contenu, { annee: s.annee_debut + etat.chapitre * s.annees_par_chapitre });
+    if (jour > etat.jour) return { jour, raison: `Début du chapitre ${etat.chapitre + 1}` };
+  }
+  return null;
+}
+
+/** Joueurs dont on attend encore l'accord pour dormir (présents, avec un héros). */
+export function attenteRepos(etat: EtatPartie): string[] {
+  if (!etat.repos) return [];
+  const r = etat.repos;
+  return etat.ordreJoueurs.filter((j) => etat.joueurs[j].present && vrai(etat.joueurs[j].herosId) && !r.accords.includes(j));
+}
+
+function reposImpossible(etat: EtatPartie): string | null {
+  if (etat.tempsLibre !== null) return 'Un temps libre est déjà en cours';
+  if (etat.donjon) return 'Le groupe est dans un donjon';
+  if (cles(etat.combats).length > 0) return 'Un combat est en cours';
+  for (const es of valeurs(etat.scenes)) if (es.noeud !== '__fin__') return 'Une scène est en cours : terminez-la d\'abord';
+  return null;
+}
+
+/** Tous les joueurs présents sont d'accord : le temps libre commence (les mois passeront à sa résolution). */
+function commencerRepos(contenu: Contenu, etat: EtatPartie) {
+  const r = etat.repos!;
+  etat.repos = null;
+  etat.tempsLibre = { titre: `Repos au Chaudron Fêlé (${r.mois} mois)`, jusqua: r.jusqua, mois: r.mois, choix: {}, resultats: null };
+  etat.dernieresNouvelles.push(`Tout le monde est d'accord : ${r.mois} mois vont passer. Chacun choisit ses activités.`);
 }
 
 export function nomFaction(f: string): string {
@@ -694,6 +769,7 @@ export function appliquer(contenu: Contenu, etatAvant: EtatPartie, action: Actio
   const etat = copieProfonde(etatAvant);
   etat.dernieresNouvelles = [];
   etat.grimoire ??= {}; // parties créées avant le combat libre
+  if (etat.repos === undefined) etat.repos = null; // parties créées avant le repos à l'auberge
   const j = etat.joueurs[action.joueur];
   if (action.type !== 'rejoindre' && !j) refuser('Joueur inconnu : rejoignez la partie d\'abord');
 
@@ -859,6 +935,44 @@ export function appliquer(contenu: Contenu, etatAvant: EtatPartie, action: Actio
       if (etat.meneur !== action.joueur) refuser('Seul le meneur du jour peut valider pour les absents');
       for (const h of listeHeros(etat)) if (!tl.choix[h.id]) tl.choix[h.id] = [{ activite: 'repos' }, { activite: 'guilde' }];
       resoudreTempsLibre(contenu, etat);
+      break;
+    }
+    case 'jour_passe': {
+      if (action.jour !== etat.jour) refuser('Ce jour est déjà passé');
+      if (!jourPeutPasser(contenu, etat)) refuser('Dernier jour du mois : pour changer de mois, dormez à l\'auberge');
+      avancerTemps(contenu, etat, 1);
+      const fete = fetesEntre(contenu, etat.jour - 1, etat.jour)[0];
+      etat.dernieresNouvelles.push(fete ? `Un nouveau jour se lève : ${fete.nom} !` : `Un nouveau jour se lève : ${formaterDate(contenu, etat.jour)}.`);
+      break;
+    }
+    case 'proposer_repos': {
+      herosDuJoueur(etat, action.joueur);
+      const pb = reposImpossible(etat);
+      if (vrai(pb)) refuser(pb);
+      let mois = action.mois ?? 0;
+      let jusqua = etat.jour + mois * joursParMois(contenu);
+      if (action.histoire === true) {
+        const d = prochaineDateHistoire(contenu, etat) ?? refuser('L\'histoire n\'attend aucune date pour le moment');
+        jusqua = d.jour;
+        mois = Math.max(1, Math.round((d.jour - etat.jour) / joursParMois(contenu)));
+      } else if (!contenu.config.ellipses.durees_auberge_mois.includes(mois)) refuser('Durée de repos non proposée');
+      etat.repos = { par: action.joueur, mois, jusqua, accords: [action.joueur] };
+      if (attenteRepos(etat).length === 0) commencerRepos(contenu, etat);
+      else etat.dernieresNouvelles.push(`${j.pseudo} propose de dormir ${mois} mois à l'auberge. En attente de : ${attenteRepos(etat).map((x) => etat.joueurs[x].pseudo).join(', ')}.`);
+      break;
+    }
+    case 'repondre_repos': {
+      const r = etat.repos ?? refuser('Personne ne propose de dormir pour le moment');
+      herosDuJoueur(etat, action.joueur);
+      if (!action.accepte) {
+        etat.repos = null;
+        etat.dernieresNouvelles.push(`${j.pseudo} préfère ne pas dormir ${r.mois} mois. Proposez une autre durée.`);
+        break;
+      }
+      const pb = reposImpossible(etat);
+      if (vrai(pb)) refuser(pb);
+      if (!r.accords.includes(action.joueur)) r.accords.push(action.joueur);
+      if (attenteRepos(etat).length === 0) commencerRepos(contenu, etat);
       break;
     }
     case 'cadeau': {

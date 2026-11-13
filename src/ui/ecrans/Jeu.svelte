@@ -1,7 +1,7 @@
 <script lang="ts">
   import { jeu } from '../jeu.svelte';
   import { aideDate, formaterDate, saisonDe } from '../../moteur/temps';
-  import { noeudCourant, rangGuilde } from '../../moteur/partie';
+  import { attenteRepos, noeudCourant, rangGuilde } from '../../moteur/partie';
   import Carte from '../vues/Carte.svelte';
   import Lieu from '../vues/Lieu.svelte';
   import Dialogue from '../vues/Dialogue.svelte';
@@ -109,6 +109,12 @@
           </button>
         {/each}
       </nav>
+      {#if etat.repos}
+        <div class="repos carte-ui">
+          <span>🛏 <strong>{etat.joueurs[etat.repos.par]?.pseudo}</strong> propose de dormir {etat.repos.mois} mois à l'auberge.{#if attenteRepos(etat).length} En attente de : {attenteRepos(etat).map((j) => etat.joueurs[j]?.pseudo).join(', ')}.{/if}</span>
+          <button class="principal petit" onclick={() => { panneau = 'carte'; ouvrirLieu('taverne'); }}>Aller à l'auberge</button>
+        </div>
+      {/if}
       {#if panneau === 'carte'}
         {#if lieu}<Lieu id={lieu} retour={() => (lieu = null)} />{:else}<Carte choisir={ouvrirLieu} bind:ville />{/if}
       {:else if panneau === 'histoire'}<Histoire />
@@ -137,5 +143,6 @@
   .date { background: none; border: none; padding: 0; text-decoration: underline dotted; text-underline-offset: 3px; }
   .aide-date { position: absolute; top: 100%; left: 0; margin-top: 0.3rem; width: min(360px, calc(100vw - 2rem)); padding: 0.6rem 0.8rem; z-index: 30; font-size: 0.9rem; border-color: var(--or); }
   .aide-date p { margin: 0.2em 0; }
+  .repos { display: flex; justify-content: space-between; align-items: center; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 0.6rem; border-color: var(--or); padding: 0.6rem 0.9rem; }
   .barre-heros { cursor: pointer; font-size: 0.85rem; padding: 0.3em 0.8em; }
 </style>

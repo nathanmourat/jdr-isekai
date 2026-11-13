@@ -6,6 +6,7 @@ import type { Contenu } from '../contenu/types';
 import type { Scene } from '../contenu/schemas';
 import { conditionHeros, scenesDisponibles, sceneEstDisponible, type EtatPartie } from './partie';
 import { entrees, valeurs, vrai } from './outils';
+import { versJour } from './temps';
 
 /** Vrai si un des nœuds de la scène lance un combat ou un donjon. */
 export function sceneAvecCombat(s: Scene): boolean {
@@ -29,6 +30,8 @@ export interface ProchaineEtape {
   nomLieu: string | null;
   /** Vrai si la scène de l'étape peut être lancée maintenant. */
   disponible: boolean;
+  /** Jour (absolu) à partir duquel l'étape sera possible, si elle attend une date ; sinon null. */
+  attenteJour: number | null;
 }
 
 function nomDuLieu(contenu: Contenu, lieu: string | null): string | null {
@@ -49,14 +52,19 @@ export function prochaineEtape(contenu: Contenu, etat: EtatPartie, herosId: stri
     if (!e) continue;
     const scene = vrai(e.scene) ? contenu.scenes[e.scene] : null;
     const lieu = e.lieu ?? scene?.lieu ?? null;
-    return { objectif: e.objectif, lieu, nomLieu: nomDuLieu(contenu, lieu), disponible: !!scene && sceneEstDisponible(contenu, etat, scene, herosId) };
+    const dateMin = scene?.disponible_si?.date_min;
+    const jourMin = dateMin ? versJour(contenu, dateMin) : null;
+    return {
+      objectif: e.objectif, lieu, nomLieu: nomDuLieu(contenu, lieu), disponible: !!scene && sceneEstDisponible(contenu, etat, scene, herosId),
+      attenteJour: jourMin !== null && jourMin > etat.jour ? jourMin : null,
+    };
   }
   const debut = valeurs(contenu.scenes).find((s) => vrai(s.quete) && contenu.quetes[s.quete]?.type === 'principale' && sceneEstDisponible(contenu, etat, s, herosId));
   if (!debut) return null;
   const def = contenu.quetes[debut.quete!];
   const e = def.etapes.find((x) => x.scene === debut.id);
   const lieu = debut.lieu ?? null;
-  return { objectif: e?.objectif ?? debut.titre, lieu, nomLieu: nomDuLieu(contenu, lieu), disponible: true };
+  return { objectif: e?.objectif ?? debut.titre, lieu, nomLieu: nomDuLieu(contenu, lieu), disponible: true, attenteJour: null };
 }
 
 // ───────────────────────────── PNJ et symboles (« ! » et « ? ») ─────────────────────────────

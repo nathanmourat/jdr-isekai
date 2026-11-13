@@ -117,11 +117,14 @@ describe('Fusions (variantes)', () => {
 });
 
 describe('Sauvegardes de la version précédente', () => {
-  it('une sauvegarde v1 est migrée en v2 (grimoire ajouté)', () => {
+  it('une sauvegarde v1 est migrée jusqu\'au format courant (grimoire et repos ajoutés)', () => {
     const depart = nouvellePartie(c, 'p', 'P', 'g') as unknown as Record<string, unknown>;
     delete depart.grimoire;
+    delete depart.repos;
     const s = lireSauvegarde(JSON.stringify({ format: 'velmaris-sauvegarde', version: 1, exporteeLe: 'x', depart, actions: [] }));
-    expect(s.version).toBe(2);
+    expect(s.version).toBe(s.depart.version);
+    expect(s.version).toBeGreaterThanOrEqual(3);
     expect((s.depart as unknown as { grimoire: object }).grimoire).toEqual({});
+    expect(s.depart.repos).toBeNull();
   });
 });

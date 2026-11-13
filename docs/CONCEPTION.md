@@ -606,6 +606,13 @@ Les drapeaux conditionnent les dialogues, les quêtes et les fins.
 - **Pendant une quête**, le temps avance en heures et en jours (voyages, repos, nuits).
 - **Entre deux quêtes ou deux chapitres**, une **ellipse** fait passer des mois ou des années. Les héros vieillissent automatiquement, et le calendrier déclenche les fêtes et les événements datés.
 
+### 9.1 bis Le temps choisi par les joueurs (changement du test 1)
+
+Cette règle **remplace les ellipses imposées** décrites ci-dessus :
+- **Les jours** avancent en jouant : 1 jour toutes les 10 minutes de jeu actif (`jours_temps_reel` dans `campagne.yaml`). Un seul appareil envoie l'action « un jour passe » (celui du premier joueur présent), les autres la rejouent. Sans action depuis 10 minutes, le temps s'arrête. **Ce minuteur ne change jamais de mois** : il s'arrête au jour 30.
+- **Les mois** ne passent que si les joueurs le décident, **à l'auberge du Chaudron Fêlé** : un clic sur le lit, puis 1, 3 ou 6 mois, ou « jusqu'à la suite de l'histoire ». **Tous les joueurs présents doivent accepter la même durée** ; ensuite chacun choisit ses activités de temps libre (§ 9.2).
+- Les scènes de l'histoire qui ont une date (Crypte en Brumaire 1013, Fête des Lanternes le 15 Floréal 1014, convocation du roi en Nivôse 1014) **attendent** que les joueurs aient fait passer le temps.
+- Le **saut entre deux chapitres** reste obligatoire, mais il passe aussi par le lit de l'auberge.
 ### 9.2 Phase de temps libre (à chaque ellipse, en asynchrone)
 
 Chaque joueur choisit **2 activités** :

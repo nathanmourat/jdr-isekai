@@ -43,6 +43,13 @@ config:
     entre_quetes_mois: [1, 4]     # durée typique d'une ellipse entre deux quêtes
     activites_temps_libre: 2      # nombre d'activités par joueur et par ellipse
     duree_reference_mois: 6       # les gains de temps libre sont donnés pour 6 mois
+    # Les mois ne passent que si les joueurs le décident, en dormant à l'auberge (le Chaudron Fêlé).
+    durees_auberge_mois: [1, 3, 6]  # durées proposées quand on clique sur le lit
+
+  # Les jours avancent tout seuls pendant qu'on joue (jamais les mois : le minuteur s'arrête au dernier jour du mois).
+  jours_temps_reel:
+    minutes_par_jour: 10          # 1 jour du monde toutes les 10 minutes de jeu actif
+    inactivite_minutes: 10        # sans action depuis ce délai, le temps ne passe plus
 
   personnage:
     total_caracteristiques: 60

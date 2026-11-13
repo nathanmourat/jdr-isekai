@@ -467,7 +467,11 @@ export const zConfig = z.object({
     mois: z.array(z.object({ nom: z.string(), saison: z.string() })).length(12),
     fetes: z.array(z.object({ nom: z.string(), mois: z.number().int(), jour: z.number().int() })),
   }),
-  ellipses: z.object({ entre_quetes_mois: z.array(z.number()).length(2), activites_temps_libre: z.number().int(), duree_reference_mois: z.number() }),
+  ellipses: z.object({
+    entre_quetes_mois: z.array(z.number()).length(2), activites_temps_libre: z.number().int(), duree_reference_mois: z.number(),
+    durees_auberge_mois: z.array(z.number().int().min(1)).default([1, 3, 6]),
+  }),
+  jours_temps_reel: z.object({ minutes_par_jour: z.number().default(10), inactivite_minutes: z.number().default(10) }).default({ minutes_par_jour: 10, inactivite_minutes: 10 }),
   personnage: z.object({
     total_caracteristiques: z.number().int(), carac_min: z.number().int(), carac_max: z.number().int(), points_carac_par_niveau: z.number().int(),
     age_invoque_min: z.number().int(), age_invoque_max: z.number().int(), annee_naissance_reincarne: z.number().int(),

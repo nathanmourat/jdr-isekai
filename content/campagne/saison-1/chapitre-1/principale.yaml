@@ -61,9 +61,8 @@ scenes:
     disponible_si: { quete_etape: { q-ch1-appel: examen } }
     noeuds:
       debut:
-        effets: [{ aller_date: { annee: 1012, mois: 4, jour: 5 } }]
         repliques:
-          - { dit: "Solaire 1012. Le hall de la Guilde de la Rose des Vents sent la bière, le cuir et la sueur. Des dizaines de regards se tournent vers vous." }
+          - { dit: "Le hall de la Guilde de la Rose des Vents sent la bière, le cuir et la sueur. Des dizaines de regards se tournent vers vous." }
           - { qui: rowena, dit: "« Ah. Les Appelés. » Dame Rowena mâchonne sa pipe éteinte. « Ici, votre don ne vaut rien tant que vous n'avez pas prouvé que vous savez tenir debout. »" }
           - { qui: kaya, dit: "Une jeune femme aux oreilles de loup argentées vous dévisage, adossée à un pilier. « Pff. Ils ont l'air tout mous. Je parie dix pièces qu'ils tombent au premier coup. »" }
           - { qui: kaya, dit: "Elle vous fixe un instant de plus, puis son regard s'adoucit. « …Un Ourvalis ? Hé. Bonne chance, alors. »", si: { race: ourvalis } }
@@ -93,10 +92,9 @@ scenes:
         suite: ellipse
       ellipse:
         repliques:
-          - { dit: "Les mois passent. Contrats, entraînements, premières cicatrices. Lysmont devient peu à peu votre ville." }
-          - { qui: aveline, dit: "Aveline passe souvent « par hasard » à la Guilde. Officiellement pour vous surveiller." }
-        effets:
-          - { ellipse: { jusqua: { annee: 1013, mois: 7, jour: 1 }, titre: "Premiers mois à la Guilde" } }
+          - { qui: rowena, dit: "« Maintenant, au travail : contrats, entraînement, premières cicatrices. Et quand vous voudrez que les mois passent, prenez une chambre au Chaudron Fêlé. Le temps ne file que si vous le décidez. »" }
+          - { qui: aveline, dit: "Aveline passera souvent « par hasard » à la Guilde. Officiellement pour vous surveiller." }
+          - { dit: "On raconte que des lueurs étranges apparaissent parfois sous les ruines de la Crypte de la Fontaine, à l'automne. La Guilde vous y enverra en Brumaire 1013." }
         fin: true
 
   # ─────────────────────────────────────────────────────────────
@@ -106,11 +104,11 @@ scenes:
     lieu: crypte-fontaine
     decor: crypte-entree
     quete: q-ch1-appel
-    disponible_si: { quete_etape: { q-ch1-appel: crypte } }
+    disponible_si: { quete_etape: { q-ch1-appel: crypte }, date_min: { annee: 1013, mois: 7, jour: 1 } }
     noeuds:
       debut:
         repliques:
-          - { dit: "Brumaire 1013. Des paysans ont vu des lueurs violettes sous les ruines de la Crypte de la Fontaine. Rowena vous a confié l'affaire." }
+          - { dit: "L'automne est là. Des paysans ont vu des lueurs violettes sous les ruines de la Crypte de la Fontaine. Rowena vous a confié l'affaire." }
           - { qui: aveline, dit: "Aveline vous attend à l'entrée, en armure complète. « Ordre du roi : je vous accompagne. Et… je n'allais pas vous laisser descendre seuls. »" }
           - { dit: "L'escalier s'enfonce dans le noir. Une odeur d'eau croupie et de vieille pierre monte des profondeurs." }
         choix:
@@ -136,9 +134,7 @@ scenes:
             aller: ellipse
       ellipse:
         repliques:
-          - { dit: "L'hiver tombe sur Lysmont. Le sceau ne quitte pas vos pensées." }
-        effets:
-          - { ellipse: { jusqua: { annee: 1014, mois: 2, jour: 15 }, titre: "L'hiver à Lysmont" } }
+          - { dit: "L'hiver approche. Le sceau ne quitte pas vos pensées. Toute la ville parle déjà de la prochaine Fête des Lanternes, le 15 Floréal 1014." }
         fin: true
 
   # ─────────────────────────────────────────────────────────────
@@ -148,7 +144,7 @@ scenes:
     lieu: lysmont-place
     decor: lysmont-lanternes-nuit
     quete: q-ch1-appel
-    disponible_si: { quete_etape: { q-ch1-appel: lanternes } }
+    disponible_si: { quete_etape: { q-ch1-appel: lanternes }, date_min: { annee: 1014, mois: 2, jour: 15 } }
     noeuds:
       debut:
         repliques:
@@ -224,7 +220,6 @@ scenes:
           - { dit: "Le Chaudron Fêlé n'est plus que cendres. Bram n'a pas survécu.", si: { flag: mort:bram } }
         effets:
           - { flag: lanternes-faites, quete: { id: q-ch1-appel, etape: serment }, journal: "Fête des Lanternes : Vorthak, émissaire des Cendres, attaque Lysmont." }
-          - { aller_date: { annee: 1014, mois: 10, jour: 3 } }
         fin: true
 
   # ─────────────────────────────────────────────────────────────
@@ -235,7 +230,7 @@ scenes:
     lieu: chateau
     decor: chateau-trone
     quete: q-ch1-appel
-    disponible_si: { quete_etape: { q-ch1-appel: serment } }
+    disponible_si: { quete_etape: { q-ch1-appel: serment }, date_min: { annee: 1014, mois: 10, jour: 3 } }
     noeuds:
       debut:
         repliques:
@@ -286,5 +281,5 @@ scenes:
           - { dit: "Deux ans ont passé depuis l'Appel. Velmaris n'est plus un monde étranger : c'est le vôtre, désormais. Et il brûle déjà au nord." }
         effets:
           - { terminer_quete: q-ch1-appel, xp: 150 }
-          - { ellipse: { jusqua: { annee: 1015, mois: 1, jour: 1 }, titre: "La fin de l'an 1014" }, fin_chapitre: 1 }
+          - { fin_chapitre: 1 }
         fin: true
