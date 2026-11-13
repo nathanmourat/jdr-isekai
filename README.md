@@ -55,13 +55,14 @@ GitHub Pages n'héberge que des pages fixes. Pour que plusieurs joueurs partagen
 1. Créez un compte sur [supabase.com](https://supabase.com), puis un **nouveau projet** (offre gratuite).
 2. Dans **Authentication → Sign In / Providers**, activez **« Allow anonymous sign-ins »**. Les joueurs n'ont ainsi besoin ni d'e-mail ni de mot de passe : un pseudo suffit.
 3. Dans **SQL Editor → New query**, collez tout le contenu de [`supabase/schema.sql`](supabase/schema.sql), puis cliquez sur **Run**. Cela crée les tables et les règles de sécurité : seuls les membres d'une partie peuvent la lire et y jouer.
-4. Dans **Project Settings → API**, copiez :
-   - l'**URL du projet** ;
-   - la clé **anon / public**. Elle est publique par conception, car la sécurité repose sur les règles de l'étape 3.
+4. Récupérez **deux valeurs** :
+   - **L'URL du projet** : cliquez sur le bouton vert **Connect** en haut du tableau de bord. Vous pouvez aussi la construire vous-même : c'est `https://<identifiant>.supabase.co`, où l'identifiant est le code qui suit `/project/` dans l'adresse du tableau de bord (exemple : `https://prvpxypywdhuizdlhbeh.supabase.co`).
+   - **La clé publique** : allez dans **Project Settings → API Keys**, rubrique **Publishable key**, et copiez la clé `default` (elle commence par `sb_publishable_…`). Elle est publique par conception, car la sécurité repose sur les règles de l'étape 3. L'ancienne clé « anon » (bouton « View legacy API keys ») fonctionne aussi, mais Supabase la retirera en 2027.
+   - ⚠️ **N'utilisez jamais la « Secret key »** (`sb_secret_…`). Ne la mettez ni dans le jeu, ni dans GitHub, ni dans un message : elle donne un accès total à la base.
 5. Pour jouer en ligne **depuis votre ordinateur** : copiez `.env.example` en `.env.local`, collez-y les deux valeurs, puis relancez `npm run dev`.
 6. Pour **publier le jeu** et l'ouvrir avec un simple lien :
    - sur GitHub, **Settings → Pages → Source : « GitHub Actions »** ;
-   - **Settings → Secrets and variables → Actions → onglet Variables** : créez `VITE_SUPABASE_URL` et `VITE_SUPABASE_ANON_KEY` ;
+   - **Settings → Secrets and variables → Actions → onglet Variables** : créez `VITE_SUPABASE_URL` (l'URL du projet) et `VITE_SUPABASE_ANON_KEY` (la Publishable key) ;
    - lancez le workflow « Publier le jeu » depuis l'onglet **Actions** (bouton « Run workflow »). Il se relance ensuite tout seul à chaque mise à jour du jeu. Le site sera à l'adresse `https://<votre-compte>.github.io/jdr-isekai/`.
    - GitHub Pages est gratuit pour un dépôt **public**. Pour un dépôt privé, il faut un abonnement GitHub payant.
 

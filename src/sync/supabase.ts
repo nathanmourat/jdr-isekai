@@ -17,6 +17,8 @@ let client: SupabaseClient | null = null;
 
 export async function connexion(): Promise<{ client: SupabaseClient; userId: string }> {
   if (!enLigneConfigure()) throw new Error('Le mode en ligne n\'est pas configuré (voir le README : Supabase).');
+  if (CLE_SUPABASE!.startsWith('sb_secret_')) throw new Error('La clé configurée est la « Secret key » de Supabase : elle ne doit jamais être mise dans le jeu. Remplacez-la par la « Publishable key » (sb_publishable_…) dans les variables GitHub, puis supprimez cette clé secrète dans Supabase (Project Settings → API Keys) et créez-en une nouvelle.');
+  if (!/^https:\/\/[a-z0-9-]+\.supabase\.co\/?$/.test(URL_SUPABASE!)) throw new Error(`L'URL Supabase semble incorrecte (« ${URL_SUPABASE} ») : elle doit ressembler à https://identifiant.supabase.co`);
   client ??= createClient(URL_SUPABASE!, CLE_SUPABASE!);
   const { data } = await client.auth.getSession();
   if (data.session) return { client, userId: data.session.user.id };
