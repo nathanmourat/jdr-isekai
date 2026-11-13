@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { contenuDisque } from '../src/contenu/node';
 import { affiniteVide, modifierAffinite, palier, peutOffrir, verifierLignesRouges } from '../src/moteur/affinite';
 import { caracsTotales, creerHeros, gagnerXp, niveauMax, niveauMoyen, repartirPoint, xpPourNiveau } from '../src/moteur/personnage';
-import { formaterDate, versDate, versJour } from '../src/moteur/temps';
+import { aideDate, formaterDate, versDate, versJour } from '../src/moteur/temps';
 
 const c = contenuDisque();
 const nouveau = (o: Partial<Parameters<typeof creerHeros>[1]> = {}) =>
@@ -106,8 +106,12 @@ describe('Affinité', () => {
 });
 
 describe('Calendrier', () => {
-  it('le jour 0 est le 1er Germinal 1012 AV', () => {
-    expect(formaterDate(c, 0)).toBe('1er Germinal 1012 AV');
+  it('le jour 0 est le jour 1 de Germinal, an 1012', () => {
+    expect(formaterDate(c, 0)).toBe('Jour 1 · Germinal (mois 1/12) · An 1012');
+    const aide = aideDate(c, 0);
+    expect(aide[0]).toBe('Germinal : 1er mois du printemps.');
+    expect(aide[1]).toContain('Après le Voile');
+    expect(aide[2]).toBe('Prochaine fête : Fête des Lanternes, dans 44 jours.');
     expect(versDate(c, 360)).toEqual({ annee: 1013, mois: 1, jour: 1 });
     expect(versJour(c, { annee: 1014, mois: 2, jour: 15 })).toBe(2 * 360 + 30 + 14);
   });

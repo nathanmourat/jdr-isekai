@@ -5,7 +5,9 @@
   import { CARACS } from '../../contenu/schemas';
   import { versDate } from '../../moteur/temps';
   import { urlAsset } from '../../rendu/assets';
-  import { NOMS_CARACS, portraitHeros, redimensionnerPortrait } from '../outils';
+  import { portraitHeros, redimensionnerPortrait } from '../outils';
+  import { AIDE_CARACS } from '../../moteur/fiche';
+  import CompetenceInfo from '../CompetenceInfo.svelte';
 
   const c = jeu.contenu!;
   const etat = $derived(jeu.etat!);
@@ -51,10 +53,14 @@
     <h3>Caractéristiques {#if h.pointsCaracDispo}<span class="badge or">{h.pointsCaracDispo} point(s) à répartir</span>{/if}</h3>
     <div class="stats">
       {#each CARACS as x (x)}
-        <div><span class="discret">{NOMS_CARACS[x]}</span><strong>{k[x]}</strong>
+        <div title={`${AIDE_CARACS[x].nom} : ${AIDE_CARACS[x].effet}`}><span class="discret">{AIDE_CARACS[x].nom} ({x})</span><strong>{k[x]}</strong>
           {#if h.pointsCaracDispo}<button class="petit" onclick={() => jeu.agir({ type: 'repartir', carac: x })}>+1</button>{/if}</div>
       {/each}
     </div>
+    <details class="aide-caracs">
+      <summary>À quoi servent les caractéristiques ?</summary>
+      {#each CARACS as x (x)}<p><strong>{AIDE_CARACS[x].nom} ({x})</strong> : {AIDE_CARACS[x].effet}</p>{/each}
+    </details>
   </div>
 
   <div class="carte-ui">
@@ -72,7 +78,7 @@
       <div class="item">
         <div class="ligne">
           <label class="equipe" title="Équipée pour le combat"><input type="checkbox" checked={equipees.includes(id)} disabled={!equipees.includes(id) && equipees.length >= maxEquipees} onchange={() => basculerEquipee(id)} /></label>
-          <span><strong>{c.competences[id].nom}</strong> (rang {h.rangsCompetences[id] ?? 1}/{c.config.personnage.rang_competence_max}) <small class="discret">{c.competences[id].description}</small></span>
+          <span class="detail"><CompetenceInfo comp={c.competences[id]} rang={h.rangsCompetences[id] ?? 1} heros={h} /> <small class="discret">(rang {h.rangsCompetences[id] ?? 1}/{c.config.personnage.rang_competence_max})</small></span>
           {#if h.pointsCompetenceDispo && (h.rangsCompetences[id] ?? 1) < c.config.personnage.rang_competence_max}
             <button class="petit" onclick={() => jeu.agir({ type: 'ameliorer', competence: id })}>Améliorer (+10 %)</button>
           {/if}
@@ -128,6 +134,10 @@
   .stats strong { font-size: 1.3rem; color: var(--or-2); }
   .item { justify-content: space-between; border-bottom: 1px solid var(--bord); padding: 0.3rem 0; }
   .icone { width: 24px; height: 24px; }
+  .detail { flex: 1 1 220px; }
+  .aide-caracs { margin-top: 0.6rem; font-size: 0.9rem; }
+  .aide-caracs summary { cursor: pointer; color: var(--or-2); }
+  .aide-caracs p { margin: 0.3em 0; }
   .equipe input { width: auto; }
   .variantes { display: flex; flex-wrap: wrap; gap: 0.3rem 0.8rem; align-items: center; padding: 0.3rem 0 0.2rem 2rem; font-size: 0.9rem; }
   .variantes input { width: auto; }

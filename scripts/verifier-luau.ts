@@ -14,7 +14,7 @@ import { join } from 'node:path';
 const DOSSIERS = ['src/moteur', 'src/sauvegarde', 'src/ia'];
 const IGNORES = new Set(['simulation.ts', 'fichier.ts', 'corpus.ts', 'phrases-test.ts']); // outils propres au web, jamais compilés pour Roblox
 
-const fichiers = DOSSIERS.flatMap((d) => readdirSync(d).filter((f) => f.endsWith('.ts') && !IGNORES.has(f)).map((f) => join(d, f)));
+const fichiers = DOSSIERS.flatMap((d) => readdirSync(d).filter((f) => f.endsWith('.ts') && !IGNORES.has(f)).map((f) => join(d, f).replaceAll('\\', '/'))); // chemins en « / » aussi sous Windows
 const programme = ts.createProgram(fichiers, { strict: true, target: ts.ScriptTarget.ESNext, module: ts.ModuleKind.ESNext, moduleResolution: ts.ModuleResolutionKind.Bundler, resolveJsonModule: true, skipLibCheck: true });
 const types = programme.getTypeChecker();
 const problemes: string[] = [];

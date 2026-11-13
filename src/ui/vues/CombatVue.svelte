@@ -3,7 +3,8 @@
   import PhaserHote from '../PhaserHote.svelte';
   import ActionsLibres from './ActionsLibres.svelte';
   import type { SceneCombat } from '../../rendu/SceneCombat';
-  import { actionsDisponibles, NOMS_ETATS, type ActionCombat, type Combattant } from '../../moteur/combat';
+  import { actionsDisponibles, estimerAction, NOMS_ETATS, type ActionCombat, type Combattant } from '../../moteur/combat';
+  import CompetenceInfo from '../CompetenceInfo.svelte';
   import type { Competence } from '../../contenu/schemas';
 
   let { cle }: { cle: string } = $props();
@@ -58,6 +59,14 @@
     else if (selection.type === 'pacifier') envoyer({ type: 'pacifier', acteur: acteur.id, cible: id });
     else envoyer({ type: 'competence', acteur: acteur.id, competence: selection.comp.id, cible: id });
   }
+  /** Chiffres réels d'une compétence contre la première cible possible (calculés par le moteur). */
+  function reel(k: Competence) {
+    if (!acteur || !dispo) return null;
+    const cible = k.cible === 'ennemi' ? (k.portee === 'melee' ? dispo.ciblesMelee : dispo.ciblesDistance)[0] : undefined;
+    const e = estimerAction(c, combat, { type: 'competence', acteur: acteur.id, competence: k.id, cible });
+    return e.possible ? { degats: e.degats, reussite: e.reussite } : null;
+  }
+  const herosActeur = $derived(acteur?.herosId ? etat.heros[acteur.herosId] ?? null : null);
   const nom = (id: string) => combat.combattants.find((x) => x.id === id)?.nom ?? id;
   const etatsDe = (x: Combattant) => x.etats.map((e) => NOMS_ETATS[e.id]).join(', ');
   const journal = $derived(combat.evenements.filter((e) => e.type !== 'action' || true).slice(-8).reverse());
@@ -87,6 +96,12 @@
           </div>
         {:else}
           {#key acteur.id}<ActionsLibres {cle} acteur={acteur} />{/key}
+          <details class="manuel" open>
+            <summary>Ce que font mes compétences</summary>
+            {#each dispo.competences as k (k.comp.id)}
+              <p class="explication" class:indispo={!k.utilisable}><CompetenceInfo comp={k.comp} rang={k.rang} heros={herosActeur} sujet={acteur} reel={reel(k.comp)} />{#if k.raison} <span class="badge">{k.raison}</span>{/if}</p>
+            {/each}
+          </details>
           <details class="manuel">
           <summary>Toutes les actions (mode manuel)</summary>
           <div class="actions">
@@ -138,6 +153,8 @@
   .actions small { display: block; color: var(--texte-2); font-size: 0.75rem; }
   .consigne { color: var(--or-2); }
   .manuel { margin-top: 0.6rem; }
+  .explication { margin: 0.35em 0; }
+  .explication.indispo { opacity: 0.6; }
   .manuel summary { cursor: pointer; color: var(--texte-2); margin-bottom: 0.4rem; }
   .combattant { display: grid; grid-template-columns: 1fr 90px; gap: 0.1rem 0.5rem; align-items: center; margin-bottom: 0.35rem; font-size: 0.9rem; }
   .combattant small { grid-column: 1 / -1; }

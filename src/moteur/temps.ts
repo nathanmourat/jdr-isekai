@@ -31,7 +31,33 @@ export function versJour(contenu: Contenu, d: { annee: number; mois?: number; jo
 export function formaterDate(contenu: Contenu, jourAbsolu: number): string {
   const d = versDate(contenu, jourAbsolu);
   const m = contenu.config.calendrier.mois[d.mois - 1];
-  return `${d.jour === 1 ? '1er' : d.jour} ${m.nom} ${d.annee} AV`;
+  return `Jour ${d.jour} · ${m.nom} (mois ${d.mois}/${contenu.config.calendrier.mois.length}) · An ${d.annee}`;
+}
+
+/** Aide affichée au survol de la date : saison, calendrier « AV », fête la plus proche. */
+export function aideDate(contenu: Contenu, jourAbsolu: number): string[] {
+  const { jpa } = cal(contenu);
+  const d = versDate(contenu, jourAbsolu);
+  const mois = contenu.config.calendrier.mois;
+  const m = mois[d.mois - 1];
+  let rangSaison = 0;
+  for (let i = 0; i < d.mois; i++) if (mois[i].saison === m.saison) rangSaison++;
+  const article = m.saison === 'printemps' ? 'du printemps' : m.saison === 'hiver' ? "de l'hiver" : `de l'${m.saison}`;
+  const res = [
+    `${m.nom} : ${rangSaison === 1 ? '1er' : `${rangSaison}e`} mois ${article}.`,
+    `« AV » veut dire « Après le Voile » : c'est le calendrier de Velmaris. Nous sommes en ${d.annee} AV.`,
+  ];
+  // fête la plus proche à venir (dans l'année qui suit)
+  let meilleure: { nom: string; dans: number } | null = null;
+  for (const f of contenu.config.calendrier.fetes) {
+    let dans = versJour(contenu, { annee: d.annee, mois: f.mois, jour: f.jour }) - jourAbsolu;
+    if (dans < 0) dans += jpa;
+    if (meilleure === null || dans < meilleure.dans) meilleure = { nom: f.nom, dans };
+  }
+  if (meilleure !== null) {
+    res.push(meilleure.dans === 0 ? `Aujourd'hui : ${meilleure.nom} !` : `Prochaine fête : ${meilleure.nom}, dans ${meilleure.dans} jour${meilleure.dans > 1 ? 's' : ''}.`);
+  }
+  return res;
 }
 
 export function saisonDe(contenu: Contenu, jourAbsolu: number): string {

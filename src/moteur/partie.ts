@@ -732,7 +732,7 @@ export function appliquer(contenu: Contenu, etatAvant: EtatPartie, action: Actio
       etat.pointsGuilde[id] = enCours ? Math.round(existants.reduce((a, x) => a + (etat.pointsGuilde[x.id] ?? 0), 0) / Math.max(1, existants.length)) : 0;
       etat.equipe[id] = null;
       if (vrai(contenu.dons[hero.don].parametres.affinite_depart)) for (const co of cles(contenu.compagnons)) affinite(etat, id, co).points = contenu.dons[hero.don].parametres.affinite_depart;
-      journal(contenu, etat, `${hero.nom}, ${contenu.races[hero.race].nom.toLowerCase()} ${contenu.classes[hero.classe].nom.toLowerCase()}, ${hero.origine === 'invoque' ? 'invoqué' : 'réincarné'}, rejoint l'histoire${niveau > 1 ? ` au niveau ${niveau}` : ''}.`);
+      journal(contenu, etat, `${hero.nom} (${contenu.races[hero.race].nom.toLowerCase()}, ${contenu.classes[hero.classe].nom}, ${hero.origine === 'invoque' ? 'invoqué' : 'réincarné'}) rejoint l'histoire${niveau > 1 ? ` au niveau ${niveau}` : ''}.`);
       break;
     }
     case 'portrait': {

@@ -100,6 +100,7 @@ La **réputation** auprès de chaque faction va de −100 à +100, avec 6 palier
   - Été : Solaire, Moisson, Ardent ;
   - Automne : Brumaire, Cendral, Givral ;
   - Hiver : Nivôse, Nuitlongue, Aurore.
+- **Affichage de la date** (changement du test 1) : « Jour 1 · Germinal (mois 1/12) · An 1012 ». Un clic ou un survol de la date explique la saison, le sens de « AV » (« Après le Voile ») et la fête la plus proche.
 - **Fêtes annuelles** (scènes et quêtes spéciales) :
   - **Fête des Lanternes** (Floréal 15) : on rend hommage aux morts. Événement idéal pour un rendez-vous romantique.
   - **Tournoi de la Couronne** (Solaire 10) : arène et classement.

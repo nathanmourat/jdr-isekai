@@ -4,7 +4,8 @@
   import { listeHeros } from '../../moteur/partie';
   import { CARACS } from '../../contenu/schemas';
   import { imagePortrait, urlAsset } from '../../rendu/assets';
-  import { NOMS_CARACS, redimensionnerPortrait, signe } from '../outils';
+  import { redimensionnerPortrait, signe } from '../outils';
+  import { AIDE_CARACS } from '../../moteur/fiche';
 
   const c = jeu.contenu!;
   let pseudo = $state('');
@@ -48,6 +49,33 @@
     if (!f) return;
     try { portrait = await redimensionnerPortrait(f); } catch (err) { erreurLocale = (err as Error).message; }
   }
+  // ── Tirages au hasard : ils ne font que remplir le formulaire, le joueur peut tout retoucher ensuite.
+  function auHasard<T>(liste: T[]): T { return liste[Math.floor(Math.random() * liste.length)]; }
+  const donsLibres = $derived(Object.keys(c.dons).filter((d) => !donsPris[d]));
+  function tirerClasse() { classe = auHasard(Object.keys(c.classes)); }
+  function tirerDon() { if (donsLibres.length) don = auHasard(donsLibres); }
+  function tirerRace() {
+    // on retire jusqu'à trouver une combinaison autorisée (caractéristiques dans les limites)
+    for (let essai = 0; essai < 50; essai++) {
+      race = auHasard(Object.keys(c.races));
+      if (c.races[race].modificateurs_libres) {
+        const melange = [...CARACS].sort(() => Math.random() - 0.5);
+        plus = melange.slice(0, 2);
+        moins = melange.slice(2, 4);
+      }
+      try {
+        caracsDeDepart(c, classe, race, c.races[race].modificateurs_libres ? { plus: Object.fromEntries(plus.map((k) => [k, 1])), moins: Object.fromEntries(moins.map((k) => [k, 1])) } : undefined);
+        return;
+      } catch { /* combinaison hors limites : on retire */ }
+    }
+  }
+  function toutAuHasard() {
+    tirerClasse();
+    tirerRace();
+    tirerDon();
+    const p = c.config.personnage;
+    if (origine === 'invoque') age = p.age_invoque_min + Math.floor(Math.random() * (p.age_invoque_max - p.age_invoque_min + 1));
+  }
   function basculer(liste: Carac[], k: Carac): Carac[] {
     if (liste.includes(k)) return liste.filter((x) => x !== k);
     return [...liste, k].slice(-2);
@@ -85,6 +113,7 @@
       </div>
     </section>
   {:else}
+    <p class="ligne"><button onclick={toutAuHasard}>🎲 Tout au hasard</button> <span class="discret">Tire la race, la classe, le don{origine === 'invoque' ? " et l'âge" : ''}. Vous pouvez ensuite tout retoucher.</span></p>
     {#if enCours}<p class="succes">La campagne a déjà commencé : votre héros arrivera au niveau moyen du groupe, avec ses points répartis automatiquement (modifiables ensuite).</p>{/if}
     <div class="formulaire">
       <section class="carte-ui">
@@ -105,7 +134,7 @@
       </section>
 
       <section class="carte-ui">
-        <h2>2. Race</h2>
+        <h2>2. Race <button class="petit" onclick={tirerRace}>🎲 Au hasard</button></h2>
         <div class="cartes">
           {#each Object.values(c.races) as r (r.id)}
             <button class="option" class:choisi={race === r.id} onclick={() => (race = r.id)}>
@@ -125,7 +154,7 @@
       </section>
 
       <section class="carte-ui large">
-        <h2>3. Classe</h2>
+        <h2>3. Classe <button class="petit" onclick={tirerClasse}>🎲 Au hasard</button></h2>
         <div class="cartes">
           {#each Object.values(c.classes) as cl (cl.id)}
             <button class="option" class:choisi={classe === cl.id} onclick={() => (classe = cl.id)}>
@@ -139,8 +168,8 @@
       </section>
 
       <section class="carte-ui large">
-        <h2>4. Don d'invoqué</h2>
-        <p class="discret">Chaque don est unique dans la partie.</p>
+        <h2>4. Don <button class="petit" disabled={!donsLibres.length} onclick={tirerDon}>🎲 Au hasard</button></h2>
+        <p class="discret">Chaque don est unique dans la partie : le tirage ne choisit que parmi les dons encore libres ({donsLibres.length} sur {Object.keys(c.dons).length}).</p>
         <div class="cartes dons">
           {#each Object.values(c.dons) as d (d.id)}
             <button class="option" class:choisi={don === d.id} disabled={!!donsPris[d.id]} onclick={() => (don = d.id)}>
@@ -156,8 +185,11 @@
         <h2>Récapitulatif</h2>
         {#if apercu.caracs}
           <div class="stats">
-            {#each CARACS as k (k)}<div><span class="discret">{NOMS_CARACS[k]}</span><strong>{apercu.caracs[k]}</strong></div>{/each}
+            {#each CARACS as k (k)}<div><span class="discret">{AIDE_CARACS[k].nom}</span><strong>{apercu.caracs[k]}</strong></div>{/each}
           </div>
+          <ul class="aide-caracs">
+            {#each CARACS as k (k)}<li><strong>{AIDE_CARACS[k].nom} ({k})</strong> : {AIDE_CARACS[k].effet}</li>{/each}
+          </ul>
           <p class="discret">Total : {Object.values(apercu.caracs).reduce((a, b) => a + b, 0)} points (identique pour toutes les combinaisons).</p>
         {:else}<p class="erreur">{apercu.erreur}</p>{/if}
         <button class="principal" disabled={!apercu.caracs || !don || !nom.trim()} onclick={creer}>Créer mon héros</button>
@@ -190,5 +222,8 @@
   .stats { display: grid; grid-template-columns: repeat(6, 1fr); gap: 0.4rem; margin-bottom: 0.5rem; }
   .stats div { display: grid; text-align: center; background: var(--fond); border-radius: 8px; padding: 0.4rem; }
   .stats strong { font-size: 1.4rem; color: var(--or-2); }
+  .aide-caracs { margin: 0 0 0.6rem; padding-left: 1.1rem; font-size: 0.9rem; color: var(--texte-2); }
+  .aide-caracs strong { color: var(--texte); }
+  h2 button { font-family: 'Source Sans 3', system-ui, sans-serif; margin-left: 0.4rem; }
   @media (max-width: 640px) { .stats { grid-template-columns: repeat(3, 1fr); } }
 </style>
