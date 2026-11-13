@@ -51,3 +51,16 @@ input:focus, select:focus, textarea:focus, button:focus-visible { outline: 2px s
 .barre > div { height: 100%; background: var(--vert); transition: width 0.3s; }
 .conteneur { max-width: 1200px; margin: 0 auto; padding: 1rem; }
 @media (max-width: 640px) { .conteneur { padding: 0.6rem; } body { font-size: 15px; } }
+
+/* Raretés de l'équipement */
+.rarete-commun { color: #d6d6d6; }
+.rarete-peu-commun { color: #81c784; }
+.rarete-rare { color: #64b5f6; }
+.rarete-epique { color: #ba68c8; }
+.rarete-legendaire { color: #ffd54f; }
+.rarete-mythique { color: #ff5a4f; }
+.badge.rarete-peu-commun, .rarete-bord-peu-commun { border-color: #81c784 !important; }
+.badge.rarete-rare, .rarete-bord-rare { border-color: #64b5f6 !important; }
+.badge.rarete-epique, .rarete-bord-epique { border-color: #ba68c8 !important; }
+.badge.rarete-legendaire, .rarete-bord-legendaire { border-color: #ffd54f !important; }
+.badge.rarete-mythique, .rarete-bord-mythique { border-color: #ff5a4f !important; box-shadow: 0 0 6px rgba(255, 90, 79, 0.6); }

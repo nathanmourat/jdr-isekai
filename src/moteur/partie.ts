@@ -14,7 +14,7 @@ import {
 } from './combat';
 import {
   age, ameliorerCompetence, caracsTotales, choisirBranche, competencesConnues, creerHeros, gagnerXp, niveauMoyen, repartirPoint,
-  xpPourNiveau, type Carac, type Heros, type OptionsCreation,
+  refusEquipement, xpPourNiveau, type Carac, type Heros, type OptionsCreation,
 } from './personnage';
 import { choisir as choisirAuHasard, creerRng, de, type Rng } from './rng';
 import { cles, copieProfonde, entrees, valeurs, vrai } from './outils';
@@ -230,6 +230,18 @@ export function herosDuJoueur(etat: EtatPartie, joueur: string): Heros {
   return etat.heros[j.herosId ?? ''] ?? refuser("Ce joueur n'a pas encore de héros");
 }
 
+/** Un objet « unique dans la partie » (arme mythique) est-il déjà possédé ou porté par un héros ? */
+export function objetDejaPossede(etat: EtatPartie, objetId: string): boolean {
+  return listeHeros(etat).some((h) => (h.inventaire[objetId] ?? 0) > 0 || valeurs(h.equipement).some((x) => x === objetId));
+}
+
+/** Donne un objet à un héros. Renvoie false si c'est un objet unique déjà présent dans la partie. */
+export function donnerObjet(contenu: Contenu, etat: EtatPartie, h: Heros, objetId: string): boolean {
+  if (contenu.objets[objetId]?.unique_par_partie && objetDejaPossede(etat, objetId)) return false;
+  h.inventaire[objetId] = (h.inventaire[objetId] ?? 0) + 1;
+  return true;
+}
+
 export function listeHeros(etat: EtatPartie): Heros[] {
   const res: Heros[] = [];
   for (const j of etat.ordreJoueurs) {
@@ -337,7 +349,7 @@ function appliquerConsequence(contenu: Contenu, etat: EtatPartie, eff: Consequen
   if (vrai(eff.or)) for (const h of hs) { h.or = Math.max(0, h.or + eff.or); messages.push(`${h.nom} ${eff.or > 0 ? 'gagne' : 'perd'} ${Math.abs(eff.or)} pièces d'or`); }
   for (const o of liste(eff.objet)) {
     const h = hs[0];
-    if (h !== undefined) { h.inventaire[o] = (h.inventaire[o] ?? 0) + 1; messages.push(`${h.nom} obtient : ${contenu.objets[o].nom}`); }
+    if (h !== undefined && donnerObjet(contenu, etat, h, o)) messages.push(`${h.nom} obtient : ${contenu.objets[o].nom}`);
   }
   if (vrai(eff.retirer_objet)) for (const h of hs) if (vrai(h.inventaire[eff.retirer_objet])) { h.inventaire[eff.retirer_objet]--; break; }
   if (vrai(eff.points_guilde)) for (const h of hs) {
@@ -702,8 +714,7 @@ function terminerCombat(contenu: Contenu, etat: EtatPartie, cle: string) {
     }
     r.objets.forEach((o, i) => {
       const h = heros[i % heros.length];
-      h.inventaire[o] = (h.inventaire[o] ?? 0) + 1;
-      bilan.push(`${h.nom} récupère : ${contenu.objets[o].nom}`);
+      if (donnerObjet(contenu, etat, h, o)) bilan.push(`${h.nom} récupère : ${contenu.objets[o].nom}`);
     });
   } else if (combat.resultat === 'defaite') {
     for (const h of heros) {
@@ -1126,7 +1137,8 @@ export function appliquer(contenu: Contenu, etatAvant: EtatPartie, action: Actio
     case 'equiper': {
       const h = herosDuJoueur(etat, action.joueur);
       const o = contenu.objets[action.objet] ?? refuser('Objet inconnu');
-      if (o.type !== 'equipement' || !o.emplacement) refuser('Cet objet ne s\'équipe pas');
+      const refus = refusEquipement(contenu, h, o.id);
+      if (vrai(refus)) refuser(refus);
       if (!(h.inventaire[o.id] > 0)) refuser('Vous n\'avez pas cet objet');
       const emplacement = o.emplacement!;
       const ancien = h.equipement[emplacement];

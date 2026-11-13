@@ -1,6 +1,6 @@
-# Catalogue d'équipements — généré par generer.py, ne pas modifier à la main.
-# Champs nouveaux (le moteur ne les connaît pas encore) : rarete, niveau, categorie, classes,
-# palier, effets_equipement, pouvoir_unique, unique_par_partie. Voir CONCEPTION-EQUIPEMENTS.md § 12.
+# Catalogue d'équipements — généré par equipements/generer.py : modifier les règles ou objets-nommes.yaml, puis relancer le script.
+# Champs propres à l'équipement : rarete, niveau, categorie, classes,
+# palier, effets_equipement, pouvoir_unique, pouvoir_id, unique_par_partie (voir equipements/CONCEPTION-EQUIPEMENTS.md).
 objets:
 - id: epee-courte
   nom: Épée courte
@@ -4592,6 +4592,7 @@ objets:
     element: arcane
     puissance: 6
   pouvoir_unique: Commence chaque combat avec 1 charge de rune.
+  pouvoir_id: rune-initiale
 - id: baton-de-l-apprenti-prodige
   nom: Bâton de l'apprenti prodige
   description: Le bâton d'un élève du Temple qui a fait exploser trois salles d'étude.
@@ -4856,7 +4857,7 @@ objets:
   - effet: resistance
     element: feu
     valeur: 0.2
-- id: cur-d-ether-pur
+- id: coeur-d-ether-pur
   nom: Cœur d'éther pur
   description: Un cristal d'éther intact, rare depuis que la Concorde les exploite.
   type: equipement
@@ -4911,6 +4912,7 @@ objets:
   - effet: mana
     valeur: 25
   pouvoir_unique: Les sorts de zone coûtent 15 % de mana en moins.
+  pouvoir_id: zone-economique
 - id: orbe-du-familier-timide
   nom: Orbe du familier timide
   description: Une petite sphère où vit un esprit qui sort seulement quand on a peur.
@@ -5225,7 +5227,8 @@ objets:
     valeur: 25
   - effet: vigueur
     valeur: 0.08
-  pouvoir_unique: Les invocations commencent le combat avec 20 % de PV en plus.
+  pouvoir_unique: Les créatures invoquées ont 20 % de PV en plus.
+  pouvoir_id: invocations-robustes
 - id: surin-des-ruelles
   nom: Surin des ruelles
   description: Une lame fine retrouvée dans une ruelle de Lysmont, sans propriétaire connu.
@@ -5542,6 +5545,7 @@ objets:
   - effet: precision
     valeur: 0.07
   pouvoir_unique: La première attaque du combat est toujours un coup critique.
+  pouvoir_id: premier-critique
 - id: masse-du-sacristain
   nom: Masse du sacristain
   description: La masse d'un sacristain du Temple, bénite plus souvent que nécessaire.
@@ -5826,7 +5830,8 @@ objets:
   - effet: touche
     element: sacre
     puissance: 6
-  pouvoir_unique: 'Rempart protège aussi le héros : il subit 10 % de dégâts en moins.'
+  pouvoir_unique: 'Rempart protège aussi le porteur : il subit 10 % de dégâts en moins.'
+  pouvoir_id: rempart-personnel
 - id: lance-fioles-bricole
   nom: Lance-fioles bricolé
   description: Un mécanisme de récupération qui projette les fioles plus loin qu'un bras.
@@ -6109,7 +6114,8 @@ objets:
   - effet: touche
     element: poison
     puissance: 6
-  pouvoir_unique: Les objets de soin et les bombes utilisés par le héros sont 25 % plus efficaces.
+  pouvoir_unique: Les potions et les bombes utilisées par le porteur sont 25 % plus efficaces.
+  pouvoir_id: objets-renforces
 - id: arc-du-chasseur-de-la-plaine
   nom: Arc du chasseur de la plaine
   description: Un arc de frêne tendu par un chasseur des plaines d'Aubeclaire.
@@ -6387,7 +6393,8 @@ objets:
     valeur: 0.06
   - effet: precision
     valeur: 0.07
-  pouvoir_unique: Œil du faucon touche toujours, même un ennemi caché.
+  pouvoir_unique: Œil du faucon marque la cible à chaque attaque réussie (au lieu d'une fois sur trois).
+  pouvoir_id: marque-certaine
 - id: baton-du-dispensaire
   nom: Bâton du dispensaire
   description: Le bâton de marche des soigneurs du dispensaire de Lysmont.
@@ -6574,7 +6581,7 @@ objets:
   - effet: resistance
     element: poison
     valeur: 0.14
-- id: medaillon-de-la-sur-de-garde
+- id: medaillon-de-la-soeur-de-garde
   nom: Médaillon de la sœur de garde
   description: Porté par les soigneuses qui suivent les sentinelles au combat.
   type: equipement
@@ -6649,7 +6656,7 @@ objets:
   - effet: resistance
     element: ombre
     valeur: 0.2
-- id: cur-de-l-aube
+- id: coeur-de-l-aube
   nom: Cœur de l'Aube
   description: Un talisman qui bat doucement, comme un cœur, quand un allié est en danger.
   type: equipement
@@ -6702,7 +6709,8 @@ objets:
     valeur: 25
   - effet: vigueur
     valeur: 0.08
-  pouvoir_unique: Les soins du héros rendent 15 % de PV en plus.
+  pouvoir_unique: Les soins du porteur rendent 15 % de PV en plus.
+  pouvoir_id: soins-renforces
 - id: hache-du-bucheron-colerique
   nom: Hache du bûcheron colérique
   description: Une hache de bûcheron si lourde que son propriétaire l'a lâchée de rage.
@@ -7012,7 +7020,8 @@ objets:
   - effet: touche
     element: feu
     puissance: 6
-  pouvoir_unique: Sang de dragon se déclenche dès 50 % de PV au lieu du seuil habituel.
+  pouvoir_unique: Sang de dragon monte jusqu'à +60 % de dégâts au lieu de +40 %.
+  pouvoir_id: sang-ardent
 - id: luth-du-chaudron-fele
   nom: Luth du Chaudron Fêlé
   description: Le luth que Bram garde derrière son comptoir, pour les soirs de fête.
@@ -7325,7 +7334,8 @@ objets:
     valeur: 25
   - effet: critique
     valeur: 0.06
-  pouvoir_unique: Refrain dure 1 tour de plus.
+  pouvoir_unique: Les chants de groupe (Refrain) sont 25 % plus puissants.
+  pouvoir_id: refrain-puissant
 - id: aube-premiere
   nom: Aube-Première, l'Épée du Premier Serment
   description: La lame sur laquelle fut prêté le premier serment de protéger le monde, bien avant le Voile.
@@ -7353,6 +7363,7 @@ objets:
   - effet: vigueur
     valeur: 0.12
   pouvoir_unique: Une fois par combat, quand un allié tombe K.O., le porteur le relève avec 30 % de ses PV.
+  pouvoir_id: premier-serment
   unique_par_partie: true
 - id: brise-monde
   nom: Brise-Monde, la Hache du Premier Pacte
@@ -7380,6 +7391,7 @@ objets:
     element: feu
     puissance: 8
   pouvoir_unique: Chaque ennemi vaincu par le porteur lui rend 10 % de ses PV max.
+  pouvoir_id: premier-pacte
   unique_par_partie: true
 - id: nuit-premiere
   nom: Nuit-Première, le Croc d'avant le Voile
@@ -7408,6 +7420,7 @@ objets:
     element: ombre
     puissance: 8
   pouvoir_unique: Les coups critiques du porteur infligent × 2 au lieu de × 1,5.
+  pouvoir_id: critique-double
   unique_par_partie: true
 - id: lointain
   nom: Lointain, l'Arc de l'Horizon Perdu
@@ -7434,9 +7447,10 @@ objets:
   - effet: touche
     element: foudre
     puissance: 8
-  pouvoir_unique: Chaque attaque a 25 % de chances de tirer une seconde flèche sur un autre ennemi.
+  pouvoir_unique: Chaque attaque simple a 25 % de chances de tirer une seconde flèche sur un autre ennemi.
+  pouvoir_id: seconde-fleche
   unique_par_partie: true
-- id: il-du-voile
+- id: oeil-du-voile
   nom: Œil-du-Voile, l'Arbalète des Étoiles fixes
   description: Un mécanisme d'avant le Voile, que personne n'a jamais su démonter ni reproduire.
   type: equipement
@@ -7462,7 +7476,8 @@ objets:
   - effet: touche
     element: glace
     puissance: 8
-  pouvoir_unique: Les tirs du porteur ignorent 30 % de la défense et des résistances de la cible.
+  pouvoir_unique: Les coups du porteur ignorent 30 % de la défense et des résistances de la cible.
+  pouvoir_id: perce-defense
   unique_par_partie: true
 - id: ylvarae
   nom: Ylvarae, le Bâton des Premières Racines
@@ -7492,4 +7507,5 @@ objets:
     element: arcane
     puissance: 8
   pouvoir_unique: Les compétences du porteur coûtent 20 % de mana en moins.
+  pouvoir_id: mana-economique
   unique_par_partie: true

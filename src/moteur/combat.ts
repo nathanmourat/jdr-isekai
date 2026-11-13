@@ -11,7 +11,7 @@ import type { Contenu } from '../contenu/types';
 import type { Competence, Effet, Ennemi } from '../contenu/schemas';
 import { aleatoire, chance, choisir, de, type Rng } from './rng';
 import { cles, copieProfonde, entrees, trier, valeurs, vrai } from './outils';
-import { caracsTotales, competencesEquipees, manaMax, pvMax, type Caracs, type Carac, type Heros } from './personnage';
+import { bonusEquipement, caracsTotales, competencesEquipees, manaMax, pvMax, type BonusEquipement, type Caracs, type Carac, type Heros } from './personnage';
 
 export type Element = 'physique' | 'feu' | 'glace' | 'foudre' | 'sacre' | 'ombre' | 'poison' | 'arcane';
 export type EtatId =
@@ -79,6 +79,8 @@ export interface Combattant {
   echelle: number;
   teinte: string | null;
   race: string | null;
+  /** Effets spéciaux et pouvoirs uniques de l'équipement (héros seulement). */
+  equipement?: BonusEquipement;
 }
 
 export type ActionCombat =
@@ -160,7 +162,9 @@ export function combattantHeros(contenu: Contenu, h: Heros, controle: boolean, t
     armure += o?.bonus?.armure ?? 0;
     puissance += o?.bonus?.puissance ?? 0;
   }
-  const pmax = Math.round(pvMax(contenu, caracs.VIT, h.niveau) * (h.blessure ? 1 - contenu.config.mort_douce.blessure_pv_pourcent / 100 : 1));
+  const eq = bonusEquipement(contenu, h);
+  const pmax = Math.round(pvMax(contenu, caracs.VIT, h.niveau) * (1 + eq.vigueur) * (h.blessure ? 1 - contenu.config.mort_douce.blessure_pv_pourcent / 100 : 1));
+  const mmax = manaMax(caracs.ESP, h.niveau) + eq.mana;
   const propres: Competence[] = [];
   const rangsVariantes: Record<string, number> = {};
   const competences: { id: string; rang: number }[] = [];
@@ -186,6 +190,7 @@ export function combattantHeros(contenu: Contenu, h: Heros, controle: boolean, t
   if (vrai(tp.faiblesse_sacre)) res.sacre = -tp.faiblesse_sacre;
   if (vrai(tp.faiblesse_glace)) res.glace = -tp.faiblesse_glace;
   if (vrai(tp.resistance_poison)) res.poison = tp.resistance_poison;
+  for (const [el, v] of entrees(eq.resistances)) res[el as Element] = (res[el as Element] ?? 0) + v;
   return {
     id: `h:${h.id}`,
     nom: h.nom,
@@ -201,8 +206,8 @@ export function combattantHeros(contenu: Contenu, h: Heros, controle: boolean, t
     caracs,
     pvMax: pmax,
     pv: pmax,
-    manaMax: manaMax(caracs.ESP, h.niveau),
-    mana: manaMax(caracs.ESP, h.niveau),
+    manaMax: mmax,
+    mana: mmax,
     armure,
     rang: cl.rang_prefere,
     attaque: { ...cl.attaque, puissance },
@@ -229,6 +234,9 @@ export function combattantHeros(contenu: Contenu, h: Heros, controle: boolean, t
       relances: don.parametres.relances ?? 0,
       determination: race.trait.id === 'determination' ? 1 : 0,
       objetGratuit: don.id === 'reserve-du-neant' ? 1 : 0,
+      runes: eq.pouvoirs.includes('rune-initiale') ? 1 : 0,
+      premierCritique: eq.pouvoirs.includes('premier-critique') ? 1 : 0,
+      serment: eq.pouvoirs.includes('premier-serment') ? 1 : 0,
       ...Object.fromEntries(entrees(rangsVariantes).map(([k, v]) => [`rang:${k}`, v])),
     },
     derniereCible: null,
@@ -239,6 +247,7 @@ export function combattantHeros(contenu: Contenu, h: Heros, controle: boolean, t
     echelle: race.echelle,
     teinte: race.teinte ?? null,
     race: h.race,
+    equipement: eq,
   };
 }
 
@@ -480,10 +489,23 @@ function toutesCompetences(contenu: Contenu, x: Combattant) {
   ];
 }
 
+/** Le combattant porte-t-il un objet avec ce pouvoir unique ? */
+export function aPouvoir(x: Combattant, id: string): boolean {
+  return (x.equipement?.pouvoirs ?? []).includes(id);
+}
+
+/** Coût en mana réel d'une compétence (réductions des pouvoirs d'équipement). */
+export function coutMana(x: Combattant, comp: Competence): number {
+  let m = 1;
+  if (aPouvoir(x, 'mana-economique')) m *= 0.8;
+  if (aPouvoir(x, 'zone-economique') && comp.cible === 'tous_ennemis') m *= 0.85;
+  return Math.round(comp.cout * m);
+}
+
 export function competenceUtilisable(contenu: Contenu, x: Combattant, comp: Competence): boolean {
   if (aEtat(x, 'silence')) return false;
   if ((x.recharges[comp.id] ?? 0) > 0) return false;
-  if (x.mana < comp.cout) return false;
+  if (x.mana < coutMana(x, comp)) return false;
   if (comp.id === 'souffle-draconique' && (x.compteurs.souffle ?? 0) > 0) return false;
   return true;
 }
@@ -519,7 +541,7 @@ function multiplicateurDegatsSource(combat: Combat, s: Combattant, cible: Combat
   if (s.camp === 'ennemis') m *= s.compteurs.multDegats ?? 1;
   if (s.passif?.id === 'sang-de-dragon') {
     const manque = 1 - s.pv / s.pvMax;
-    m *= 1 + Math.min(s.passif.parametres.max ?? 0.4, manque / 2);
+    m *= 1 + Math.min((s.passif.parametres.max ?? 0.4) + (aPouvoir(s, 'sang-ardent') ? 0.2 : 0), manque / 2);
   }
   if (s.don?.id === 'oeil-du-seuil') {
     m *= 1 + (s.don.parametres.degats ?? 0);
@@ -534,18 +556,22 @@ function multiplicateurDegatsSource(combat: Combat, s: Combattant, cible: Combat
   return m;
 }
 
-function reductionCible(combat: Combat, cible: Combattant, element: Element): number {
+function reductionCible(combat: Combat, cible: Combattant, element: Element, source?: Combattant): number {
   const cfg = { def: 2, res: 2 };
+  // Perce-défense (arme mythique) : ignore 30 % de la défense et des résistances
+  const perce = source !== undefined && aPouvoir(source, 'perce-defense') ? 0.7 : 1;
   let m = 1;
   if (element === 'physique' || element === 'poison') {
-    const defense = cible.caracs.VIT * cfg.def + cible.armure;
+    const defense = (cible.caracs.VIT * cfg.def + cible.armure) * perce;
     m *= 100 / (100 + defense);
   } else {
-    const res = cible.caracs.ESP * cfg.res;
+    const res = cible.caracs.ESP * cfg.res * perce;
     m *= 100 / (100 + res);
-    m *= 1 - cible.resistanceMagique;
+    m *= 1 - cible.resistanceMagique * (cible.resistanceMagique > 0 ? perce : 1);
   }
-  m *= 1 - (cible.resistances[element] ?? 0);
+  const resElement = cible.resistances[element] ?? 0;
+  m *= 1 - resElement * (resElement > 0 ? perce : 1);
+  if (aPouvoir(cible, 'rempart-personnel')) m *= 0.9;
   let def = valeurEtat(cible, 'bonus_defense') - valeurEtat(cible, 'malus_defense');
   if (cible.trait?.id === 'robuste') def += cible.trait.parametres.defense ?? 0;
   m *= Math.max(0.3, 1 - def);
@@ -563,6 +589,7 @@ function chanceToucher(contenu: Contenu, s: Combattant, cible: Combattant): numb
   p += valeurEtat(s, 'bonus_precision');
   p += s.compteurs.modToucher ?? 0;
   if (s.trait?.id === 'entre-deux-mondes') p += s.trait.parametres.precision ?? 0;
+  p += s.equipement?.precision ?? 0;
   if (cible.trait?.id === 'ruse') p -= cible.trait.parametres.esquive ?? 0;
   return Math.min(k.toucher_max, Math.max(k.toucher_min, p));
 }
@@ -570,6 +597,7 @@ function chanceToucher(contenu: Contenu, s: Combattant, cible: Combattant): numb
 function chanceCritique(contenu: Contenu, s: Combattant, cible: Combattant): number {
   const k = contenu.config.combat;
   let p = k.critique_base + k.critique_par_agi * s.caracs.AGI;
+  p += s.equipement?.critique ?? 0;
   if (s.passif?.id === 'dans-le-dos') {
     const affaiblie = cible.etats.some((e) => ETATS_NEGATIFS.includes(e.id));
     if (affaiblie || cible.derniereCible !== s.id) p += s.passif.parametres.critique ?? 0.25;
@@ -597,7 +625,7 @@ function infliger(contenu: Contenu, combat: Combat, rng: Rng, s: Combattant, cib
       }
     }
   }
-  let degats = Math.max(1, Math.round(brut * reductionCible(combat, cible, element)));
+  let degats = Math.max(1, Math.round(brut * reductionCible(combat, cible, element, s)));
   if (cible.bouclier > 0) {
     const abs = Math.min(cible.bouclier, degats);
     cible.bouclier -= abs;
@@ -617,8 +645,14 @@ function infliger(contenu: Contenu, combat: Combat, rng: Rng, s: Combattant, cib
     cible.compteurs.determination = 0;
     log(combat, { type: 'soin', cible: cible.id, valeur: v, texte: `${cible.nom} serre les dents et regagne ${v} PV ! (Détermination)` });
   }
-  if (cible.pv <= 0) mettreKo(combat, cible);
-  else if (vrai(cible.fuitSous) && cible.pv / cible.pvMax <= cible.fuitSous) {
+  if (cible.pv <= 0) {
+    mettreKo(combat, cible);
+    // Premier Pacte (arme mythique) : vaincre un ennemi rend 10 % des PV max
+    if (cible.ko && s.camp !== cible.camp && actif(s) && aPouvoir(s, 'premier-pacte')) {
+      const v = Math.min(s.pvMax - s.pv, Math.round(s.pvMax * 0.1));
+      if (v > 0) { s.pv += v; log(combat, { type: 'soin', cible: s.id, valeur: v, texte: `${s.nom} puise ${v} PV dans sa victoire.` }); }
+    }
+  } else if (vrai(cible.fuitSous) && cible.pv / cible.pvMax <= cible.fuitSous) {
     cible.parti = true;
     log(combat, { type: 'fuite', cible: cible.id, texte: `${cible.nom} bat en retraite dans un nuage de cendres !` });
   }
@@ -642,6 +676,17 @@ function mettreKo(combat: Combat, x: Combattant) {
   x.bouclier = 0;
   log(combat, { type: 'ko', cible: x.id, texte: x.camp === 'heros' ? `${x.nom} est K.O. !` : `${x.nom} est vaincu.` });
   if (x.type === 'invocation') x.parti = x.dureeInvocation !== null; // les invocations temporaires disparaissent
+  // Premier Serment (arme mythique) : une fois par combat, le porteur relève un allié tombé
+  if (x.type === 'heros' || x.type === 'compagnon') {
+    const p = combat.combattants.find((y) => y.id !== x.id && y.camp === x.camp && actif(y) && (y.compteurs.serment ?? 0) > 0);
+    if (p) {
+      p.compteurs.serment = 0;
+      x.ko = false;
+      x.pv = Math.max(1, Math.round(x.pvMax * 0.3));
+      log(combat, { type: 'soin', source: p.id, cible: x.id, valeur: x.pv, texte: `${p.nom} tient son serment : ${x.nom} se relève !` });
+      return;
+    }
+  }
   // le familier reviendra plus tard
   if (x.refId === 'loup-spectral' && vrai(x.maitreId)) {
     const m = combat.combattants.find((y) => y.id === x.maitreId);
@@ -653,6 +698,7 @@ function soigner(contenu: Contenu, combat: Combat, s: Combattant, cible: Combatt
   if (cible.ko) return;
   let m = montant;
   if (cible.trait?.id === 'sang-cendre' && s.id !== cible.id && (s.refId === 'guerisseur' || s.refId === 'gardien')) m *= 1 + (cible.trait.parametres.soins_sacres ?? 0);
+  if (aPouvoir(s, 'soins-renforces')) m *= 1.15;
   m = Math.round(m);
   const manque = cible.pvMax - cible.pv;
   const reel = Math.min(manque, m);
@@ -679,7 +725,7 @@ function invoquer(contenu: Contenu, combat: Combat, maitre: Combattant, creature
   inv.herosId = maitre.herosId;
   inv.dureeInvocation = duree;
   inv.niveau = maitre.niveau;
-  inv.pvMax = Math.round(inv.pvMax * f);
+  inv.pvMax = Math.round(inv.pvMax * f * (aPouvoir(maitre, 'invocations-robustes') ? 1.2 : 1));
   inv.pv = inv.pvMax;
   inv.compteurs = { multDegats: f };
   inv.recompenses = null;
@@ -726,7 +772,8 @@ function appliquerEffets(contenu: Contenu, combat: Combat, rng: Rng, s: Combatta
     bonusRunes = 1 + charges * (s.passif.parametres.bonus_par_charge ?? 0.2);
     if (charges > 0) consommeRunes = true;
   }
-  const multObjet = depuisObjet && s.passif?.id === 'fioles-optimisees' ? 1 + (s.passif.parametres.efficacite ?? 0.4) : 1;
+  let multObjet = depuisObjet && s.passif?.id === 'fioles-optimisees' ? 1 + (s.passif.parametres.efficacite ?? 0.4) : 1;
+  if (depuisObjet && aPouvoir(s, 'objets-renforces')) multObjet *= 1.25;
 
   for (const ef of comp.effets) {
     const typeCible = ('cible' in ef && ef.cible) ? ef.cible : comp.cible;
@@ -755,12 +802,13 @@ function appliquerEffets(contenu: Contenu, combat: Combat, rng: Rng, s: Combatta
           if (!touche) { log(combat, { type: 'rate', source: s.id, cible: cible.id, texte: `${s.nom} rate ${cible.nom}.` }); continue; }
           const furtif = aEtat(s, 'furtif');
           let critique = ef.critique_garanti || furtif || chance(rng, chanceCritique(contenu, s, cible));
+          if ((s.compteurs.premierCritique ?? 0) > 0 && !depuisObjet) { critique = true; s.compteurs.premierCritique = 0; }
           if (!critique && (s.compteurs.relancesCrit ?? 0) > 0) { s.compteurs.relancesCrit--; critique = chance(rng, chanceCritique(contenu, s, cible)); }
           const statVal = depuisObjet ? 10 : s.caracs[ef.stat];
           const variance = 1 + (aleatoire(rng) * 2 - 1) * contenu.config.combat.variance_degats;
           let brut = ef.puissance * facteurRang * (1 + statVal / 20) * variance * multObjet;
           brut *= multiplicateurDegatsSource(combat, s, cible, ef.element as Element) * bonusResonance * bonusRunes;
-          if (critique) brut *= contenu.config.combat.multiplicateur_critique;
+          if (critique) brut *= aPouvoir(s, 'critique-double') ? 2 : contenu.config.combat.multiplicateur_critique;
           if (vrai(ef.executer_sous_pourcent) && cible.pv / cible.pvMax <= ef.executer_sous_pourcent) brut *= 2;
           if (vrai(ef.cout_pv_pourcent)) { s.pv = Math.max(1, s.pv - Math.round(s.pvMax * ef.cout_pv_pourcent)); }
           infliger(contenu, combat, rng, s, cible, brut, ef.element as Element, critique, monoCible, comp.id);
@@ -787,7 +835,8 @@ function appliquerEffets(contenu: Contenu, combat: Combat, rng: Rng, s: Combatta
         if (ef.etat === 'poison' && cible.trait?.id === 'robuste') { if (chance(rng, cible.trait.parametres.resistance_poison ?? 0.5)) { log(combat, { type: 'info', cible: cible.id, texte: `${cible.nom} résiste au poison.` }); continue; } }
         // Refrain : les chants de groupe durent tant que le barde tient debout
         if (s.passif?.id === 'refrain' && typeCible === 'tous_allies') duree = 99;
-        const valeur = ef.etat === 'poison' || ef.etat === 'brulure' ? ef.valeur * facteurRang * (1 + s.caracs[s.attaque.stat] / 40) : ef.valeur;
+        let valeur = ef.etat === 'poison' || ef.etat === 'brulure' ? ef.valeur * facteurRang * (1 + s.caracs[s.attaque.stat] / 40) : ef.valeur;
+        if (s.passif?.id === 'refrain' && typeCible === 'tous_allies' && aPouvoir(s, 'refrain-puissant')) valeur *= 1.25;
         ajouterEtat(combat, cible, { id: ef.etat as EtatId, duree: duree + (cible.id === s.id ? 1 : 0), valeur, source: s.id, cumul: 1 }, ef.cumul_max);
         log(combat, { type: 'etat', source: s.id, cible: cible.id, texte: `${cible.nom} : ${NOMS_ETATS[ef.etat as EtatId]}.` });
       }
@@ -829,15 +878,28 @@ function attaqueSimple(contenu: Contenu, combat: Combat, rng: Rng, s: Combattant
     effets: [{ type: 'degats', puissance: s.attaque.puissance, stat: s.attaque.stat, element: s.attaque.element, coups: 1, critique_garanti: false, cout_pv_pourcent: 0 }],
     ia: { priorite: 1, quand: 'toujours' },
   };
+  // Touche élémentaire de l'équipement : un petit coup de l'élément en plus
+  for (const t of s.equipement?.touches ?? []) {
+    comp.effets.push({ type: 'degats', puissance: t.puissance, stat: s.attaque.stat, element: t.element as Element, coups: 1, critique_garanti: false, cout_pv_pourcent: 0 });
+  }
   const avantPv = cible?.pv ?? 0;
   appliquerEffets(contenu, combat, rng, s, comp, 1, cible);
   const c = vrai(s.derniereCible) ? combat.combattants.find((x) => x.id === s.derniereCible) : null;
   // Runes gravées : chaque attaque réussie charge une rune
   if (s.passif?.id === 'runes-gravees' && c && c.pv < avantPv) s.compteurs.runes = Math.min(s.passif.parametres.max ?? 3, (s.compteurs.runes ?? 0) + 1);
   // Œil du faucon : chance de marquer
-  if (s.passif?.id === 'oeil-du-faucon' && c && actif(c) && chance(rng, s.passif.parametres.chance_marque ?? 0.3)) {
+  if (s.passif?.id === 'oeil-du-faucon' && c && actif(c) && (aPouvoir(s, 'marque-certaine') ? c.pv < avantPv : chance(rng, s.passif.parametres.chance_marque ?? 0.3))) {
     ajouterEtat(combat, c, { id: 'marque', duree: 2, valeur: 0.15, source: s.id, cumul: 1 });
     log(combat, { type: 'etat', source: s.id, cible: c.id, texte: `${c.nom} est marqué.` });
+  }
+  // Seconde flèche (arme mythique) : 25 % de chances de frapper un autre ennemi
+  if (aPouvoir(s, 'seconde-fleche') && actif(s) && chance(rng, 0.25)) {
+    const autres = adversaires(combat, s).filter((y) => !c || y.id !== c.id);
+    if (autres.length > 0) {
+      const autre = choisir(rng, autres);
+      log(combat, { type: 'info', source: s.id, cible: autre.id, texte: `${s.nom} décoche une seconde flèche !` });
+      appliquerEffets(contenu, combat, rng, s, comp, 1, autre);
+    }
   }
 }
 
@@ -1016,7 +1078,7 @@ function executer(contenu: Contenu, combat: Combat, rng: Rng, x: Combattant, a: 
     }
     case 'competence': {
       const k = competenceCombattant(contenu, x, a.competence)!;
-      x.mana -= k.comp.cout;
+      x.mana -= coutMana(x, k.comp);
       if (vrai(k.comp.recharge)) x.recharges[k.comp.id] = k.comp.recharge + 1;
       if (k.comp.id === 'souffle-draconique') x.compteurs.souffle = 1;
       log(combat, { type: 'action', source: x.id, cible: a.cible, competence: k.comp.id, texte: `${x.nom} utilise ${k.comp.nom} !` });
@@ -1189,7 +1251,7 @@ export function actionsDisponibles(contenu: Contenu, combat: Combat, acteurId: s
   const comps = toutesCompetences(contenu, x).map(({ comp, rang }) => ({
     comp, rang,
     utilisable: competenceUtilisable(contenu, x, comp),
-    raison: aEtat(x, 'silence') ? 'Réduit au silence' : (x.recharges[comp.id] ?? 0) > 0 ? `Recharge : ${x.recharges[comp.id]} tour(s)` : x.mana < comp.cout ? 'Mana insuffisant' : comp.id === 'souffle-draconique' && vrai(x.compteurs.souffle) ? 'Déjà utilisé' : '',
+    raison: aEtat(x, 'silence') ? 'Réduit au silence' : (x.recharges[comp.id] ?? 0) > 0 ? `Recharge : ${x.recharges[comp.id]} tour(s)` : x.mana < coutMana(x, comp) ? 'Mana insuffisant' : comp.id === 'souffle-draconique' && vrai(x.compteurs.souffle) ? 'Déjà utilisé' : '',
   }));
   return {
     competences: comps,
@@ -1286,7 +1348,7 @@ export function estimerAction(contenu: Contenu, combat: Combat, a: ActionCombat)
     }
     case 'competence': {
       const k = competenceCombattant(contenu, x, a.competence)!;
-      res.mana = k.comp.cout;
+      res.mana = coutMana(x, k.comp);
       let principale: Combattant | null = null;
       if (k.comp.cible === 'ennemi') {
         const c = verifierCible(a.cible, k.comp.portee);

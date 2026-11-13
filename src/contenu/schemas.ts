@@ -177,6 +177,28 @@ export const zRencontre = z.object({
 });
 export type Rencontre = z.infer<typeof zRencontre>;
 
+// ─── Équipement (raretés, effets spéciaux, pouvoirs uniques) ──
+export const RARETES = ['commun', 'peu-commun', 'rare', 'epique', 'legendaire', 'mythique'] as const;
+export const zRarete = z.enum(RARETES);
+export type Rarete = z.infer<typeof zRarete>;
+
+/** Pouvoirs uniques des objets légendaires et mythiques : chacun est codé dans le moteur de combat. */
+export const POUVOIRS_EQUIPEMENT = [
+  'rune-initiale', 'zone-economique', 'invocations-robustes', 'premier-critique', 'rempart-personnel', 'objets-renforces',
+  'marque-certaine', 'soins-renforces', 'sang-ardent', 'refrain-puissant',
+  'premier-serment', 'premier-pacte', 'critique-double', 'seconde-fleche', 'perce-defense', 'mana-economique',
+] as const;
+
+export const zEffetEquipement = z.discriminatedUnion('effet', [
+  z.object({ effet: z.literal('critique'), valeur: z.number() }),
+  z.object({ effet: z.literal('precision'), valeur: z.number() }),
+  z.object({ effet: z.literal('resistance'), element: zElement, valeur: z.number() }),
+  z.object({ effet: z.literal('touche'), element: zElement, puissance: z.number() }),
+  z.object({ effet: z.literal('mana'), valeur: z.number() }),
+  z.object({ effet: z.literal('vigueur'), valeur: z.number() }),
+]);
+export type EffetEquipement = z.infer<typeof zEffetEquipement>;
+
 export const zObjet = z.object({
   id: z.string(),
   nom: z.string(),
@@ -187,6 +209,19 @@ export const zObjet = z.object({
   cible: zCible.default('soi'),
   emplacement: z.enum(['arme', 'armure', 'accessoire']).optional(),
   bonus: z.object({ armure: z.number().default(0), puissance: z.number().default(0), caracs: zCaracsPartielles.default({}) }).optional(),
+  // Équipement
+  rarete: zRarete.default('commun'),
+  palier: z.string().optional(),
+  /** Niveau minimum pour équiper l'objet. */
+  niveau: z.number().int().min(1).default(1),
+  categorie: z.string().optional(),
+  /** Classes autorisées ; liste vide = toutes les classes. */
+  classes: z.array(z.string()).default([]),
+  effets_equipement: z.array(zEffetEquipement).default([]),
+  pouvoir_unique: z.string().optional(),
+  pouvoir_id: z.enum(POUVOIRS_EQUIPEMENT).optional(),
+  /** Un seul exemplaire dans toute la partie (armes mythiques). */
+  unique_par_partie: z.boolean().default(false),
 });
 export type Objet = z.infer<typeof zObjet>;
 

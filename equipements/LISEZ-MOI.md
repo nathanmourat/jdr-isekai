@@ -2,7 +2,7 @@
 
 Ce dossier contient tout le travail sur l'équipement : la conception, le catalogue de **364 objets** et leurs **364 icônes**. Il a été validé par le groupe.
 
-**Rien n'est encore branché dans le jeu.** Les fichiers sont rangés à part pour ne rien casser : `npm test` passe comme avant. L'intégration dans le moteur reste à faire (voir plus bas).
+**L'équipement est branché dans le jeu** (sur la branche `equipements`) : catalogue, icônes, règles pour équiper, effets en combat, pouvoirs uniques, interface et boutiques de Lysmont. `npm test` passe (110 tests, dont 10 sur l'équipement). Un seul point reste à trancher : l'**équilibrage** (voir plus bas).
 
 ## Le contenu en bref
 
@@ -21,14 +21,12 @@ Les détails et les raisons de chaque choix sont dans [`CONCEPTION-EQUIPEMENTS.m
 |---|---|
 | `CONCEPTION-EQUIPEMENTS.md` | Règles et choix, validés par le groupe |
 | `equipements.xlsx` | Tableur à relire : catalogue filtrable, règles, comparaison des dégâts, objets nommés |
-| `equipements.yaml` | **Catalogue au format du jeu** (même format que `content/objets/objets.yaml`, avec des champs en plus) |
-| `objets-nommes.yaml` | Noms, histoires et effets des objets nommés, écrits à la main |
-| `generer.py` | Recalcule toutes les stats et réécrit le YAML et le tableur |
-| `icones/objets/<id>.png` | Les 364 icônes 32 × 32, nommées selon l'id de l'objet |
-| `icones/dessiner.py` | Redessine les icônes (même style que `outils/textures/`) |
+| `objets-nommes.yaml` | Noms, histoires, effets et pouvoirs des objets nommés, écrits à la main |
+| `generer.py` | Recalcule toutes les stats, écrit **`content/objets/equipements.yaml`** (le catalogue du jeu) et le tableur |
+| `icones/dessiner.py` | Dessine les icônes dans **`assets/icones/objets/<id>.png`** (même style que `outils/textures/`) |
 | `icones/apercu.png`, `icones/apercu-nommes.png` | Planches d'aperçu agrandies |
 
-Pour modifier un nom ou un effet : éditer `objets-nommes.yaml`, puis relancer les deux scripts. Il faut Python 3 avec `pip install pyyaml openpyxl pillow numpy`. Les commandes se lancent depuis le dossier `equipements/` :
+Pour modifier un nom, un effet ou une règle : éditer `objets-nommes.yaml` ou `generer.py`, puis relancer les deux scripts. Il faut Python 3 avec `pip install pyyaml openpyxl pillow numpy`. Les commandes se lancent depuis le dossier `equipements/` :
 
 ```bash
 python3 generer.py
@@ -38,18 +36,37 @@ python3 generer.py
 cd icones && python3 dessiner.py
 ```
 
-`generer.py` vérifie tout seul : budget de chaque objet, ids uniques, raretés autorisées par palier, chaque classe équipée à chaque palier, 6 mythiques.
+`generer.py` vérifie tout seul : budget de chaque objet, ids uniques, raretés autorisées par palier, chaque classe équipée à chaque palier, 6 mythiques. Relancer ensuite `npm test`.
 
-## Intégrer dans le jeu (pour le responsable du projet)
+## Ce qui a été branché dans le jeu
 
-1. **Contenu** : remplacer les 7 objets d'équipement de `content/objets/objets.yaml` par `equipements.yaml`. Les 7 objets existants y sont repris avec le **même id**, donc les sauvegardes et les boutiques restent valides. Seule l'armure de cuir passe de +3 à +4 d'armure.
-2. **Icônes** : copier `icones/objets/*.png` dans `assets/icones/objets/`.
-3. **Format des objets** (`src/contenu/schemas.ts`) : ajouter les champs `rarete`, `palier`, `niveau`, `categorie`, `classes`, `effets_equipement`, `pouvoir_unique` et `unique_par_partie`.
-4. **Équiper** (`src/moteur/partie.ts`, action « équiper ») : refuser si le niveau est trop bas ou si la classe n'est pas dans `classes`. Une arme `unique_par_partie` ne peut exister qu'une fois dans la partie (même principe que les dons).
-5. **Combat** (`src/moteur/combat.ts`) : appliquer les 6 effets (`critique`, `precision`, `resistance`, `touche`, `mana`, `vigueur`). Les 16 pouvoirs uniques (10 légendaires et 6 mythiques) sont décrits en texte et sont à coder un par un.
-6. **Interface** : afficher la couleur de rareté (gris, vert, bleu, violet, or, rouge), le niveau requis et les classes autorisées.
-7. **Boutiques** (`content/monde/aubeclaire.yaml`) : ajouter les communs et peu communs du palier I. Les boutiques des chapitres suivants viendront avec leurs régions.
-8. **Vérifier** : `npm test`, `npm run equilibrage` (les stats n'ont été testées que par le calcul, pas encore en combat simulé) et `npm run roblox:verifier`.
+| Partie | Fichiers | Ce qui a changé |
+|---|---|---|
+| Contenu | `content/objets/equipements.yaml`, `content/objets/objets.yaml` | Les 364 objets. Les 7 anciens gardent leur id (sauvegardes compatibles) ; l'armure de cuir passe à +4 d'armure. |
+| Format des objets | `src/contenu/schemas.ts`, `src/contenu/charger.ts` | Champs `rarete`, `palier`, `niveau`, `categorie`, `classes`, `effets_equipement`, `pouvoir_unique`, `pouvoir_id`, `unique_par_partie`, avec vérifications. |
+| Équiper | `src/moteur/personnage.ts` (`refusEquipement`), `src/moteur/partie.ts` | Refus si niveau trop bas ou classe non autorisée. Une arme mythique n'existe qu'une fois par partie (`donnerObjet`). |
+| Combat | `src/moteur/combat.ts` | Les 6 effets (critique, précision, résistance, touche élémentaire, mana, PV max) et les 16 pouvoirs uniques (`aPouvoir`, `coutMana`). |
+| Interface | `src/ui/NomObjet.svelte`, fiche, fiche rapide, boutique | Icône, couleur de rareté, niveau, classes, effets et pouvoir ; bouton « Équiper » grisé avec la raison du refus ; PV et mana max comptent l'équipement. |
+| Boutiques | `content/monde/aubeclaire.yaml` | Guilde : les 19 communs du palier I. Comptoir de Halvine : les 19 « de maître » du palier I. |
+| Tests | `tests/equipement.test.ts` | Catalogue, raretés par palier, règles d'équipement, unicité des mythiques, effets et pouvoirs en combat. |
+
+Le moteur reste compatible Roblox (`npm run roblox:verifier`). La version Roblox n'affiche pas encore les icônes ni les raretés : c'est à faire côté `roblox/`.
+
+## ⚠️ À trancher : l'équilibrage du chapitre 1
+
+`npm run equilibrage` ne change pas (la simulation fait combattre des héros sans équipement). La nouvelle commande `npm run equilibrage:equipement` mesure l'effet de l'équipement du palier I (héros seul, niveau 1, rencontres de référence) :
+
+| | Sans équipement | Commun | De maître |
+|---|---|---|---|
+| Moyenne des victoires | 75,6 % | 86,8 % | 92,4 % |
+| Classe la plus basse | Lame runique 71,7 % | Invocateur 76,7 % (−10,1) | Invocateur 78,7 % (−13,7) |
+| Classe la plus haute | Ombre 80,7 % | Barde 95,9 % | Barde 99,6 % |
+
+Deux conséquences :
+1. **Le chapitre 1 devient plus facile** quand les héros sont équipés. Les ennemis ont été réglés pour des héros sans équipement.
+2. **L'Invocateur profite moins de l'équipement** : ses créatures ne profitent pas de ses objets. Avec l'équipement « de maître », il sort de la règle des ± 10 points.
+
+Pistes (à décider avec le groupe) : régler les ennemis du chapitre 1 en supposant un équipement commun ; faire profiter les invocations d'une partie des stats du maître ; ou baisser les points du palier I.
 
 ## Points laissés ouverts
 

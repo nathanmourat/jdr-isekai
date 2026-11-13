@@ -2,6 +2,7 @@
   /** Boutique d'un lieu : acheter et vendre, avec quantité et confirmation. */
   import { jeu } from '../jeu.svelte';
   import { prixAchat, prixVente } from '../../moteur/partie';
+  import NomObjet from '../NomObjet.svelte';
 
   let { lieu, objets }: { lieu: string; objets: string[] } = $props();
   const c = jeu.contenu!;
@@ -65,14 +66,14 @@
     {#each objets as o (o)}
       {@const prix = prixAchat(c, h, o)}
       <div class="ligne item">
-        <span class="nom"><strong>{c.objets[o].nom}</strong> <span class="badge">{types[c.objets[o].type]}</span>{#if h.inventaire[o]} <span class="badge">vous en avez {h.inventaire[o]}</span>{/if}<br /><small class="discret">{c.objets[o].description}</small></span>
+        <span class="nom"><NomObjet id={o} /> <span class="badge">{types[c.objets[o].type]}</span>{#if h.inventaire[o]} <span class="badge">vous en avez {h.inventaire[o]}</span>{/if}</span>
         <button disabled={h.or < prix} title={h.or < prix ? "Pas assez d'or" : ''} onclick={() => ouvrir(o, 'acheter')}>Acheter · {prix} or</button>
       </div>
     {/each}
   {:else}
     {#each aVendre as x (x.o)}
       <div class="ligne item">
-        <span class="nom"><strong>{c.objets[x.o].nom}</strong> × {x.n}<br /><small class="discret">{c.objets[x.o].description}</small></span>
+        <span class="nom"><NomObjet id={x.o} quantite={x.n} /></span>
         <button onclick={() => ouvrir(x.o, 'vendre')}>Vendre · {prixVente(c, h, x.o)} or</button>
       </div>
     {:else}<p class="discret">Votre sac est vide : rien à vendre.</p>{/each}

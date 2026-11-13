@@ -165,6 +165,8 @@ Dans le dossier `equipements/` (en dehors du dépôt) :
 
 ## 12. Ce qui restera à faire avec le collègue (plus tard)
 
+> **Fait** sur la branche `equipements` (voir `LISEZ-MOI.md`, « Ce qui a été branché dans le jeu »). Reste à trancher : l'équilibrage du chapitre 1 avec équipement.
+
 1. Ajouter les nouveaux champs au format des objets (`src/contenu/schemas.ts`).
 2. Bloquer l'équipement selon le niveau et la classe (`src/moteur/partie.ts`, action « équiper ») ; empêcher qu'une arme mythique existe deux fois dans la partie (`unique_par_partie`).
 3. Gérer les 6 effets spéciaux en combat (`src/moteur/combat.ts`).

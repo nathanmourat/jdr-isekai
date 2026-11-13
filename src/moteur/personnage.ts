@@ -253,6 +253,55 @@ export function manaMax(esp: number, niveau: number): number {
   return Math.round(10 + 3 * esp + 2 * (niveau - 1));
 }
 
+/** Total des effets spéciaux de l'équipement porté (raretés Rare et plus). */
+export interface BonusEquipement {
+  critique: number;
+  precision: number;
+  mana: number;
+  /** Fraction de PV max en plus (0,05 = +5 %). */
+  vigueur: number;
+  resistances: Record<string, number>;
+  touches: { element: string; puissance: number }[];
+  pouvoirs: string[];
+}
+
+export function bonusEquipement(contenu: Contenu, h: Heros): BonusEquipement {
+  const b: BonusEquipement = { critique: 0, precision: 0, mana: 0, vigueur: 0, resistances: {}, touches: [], pouvoirs: [] };
+  for (const slot of valeurs(h.equipement)) {
+    const o = vrai(slot) ? contenu.objets[slot] : null;
+    if (!o) continue;
+    for (const e of o.effets_equipement) {
+      if (e.effet === 'critique') b.critique += e.valeur;
+      else if (e.effet === 'precision') b.precision += e.valeur;
+      else if (e.effet === 'mana') b.mana += e.valeur;
+      else if (e.effet === 'vigueur') b.vigueur += e.valeur;
+      else if (e.effet === 'resistance') b.resistances[e.element] = (b.resistances[e.element] ?? 0) + e.valeur;
+      else if (e.effet === 'touche') b.touches.push({ element: e.element, puissance: e.puissance });
+    }
+    if (vrai(o.pouvoir_id)) b.pouvoirs.push(o.pouvoir_id);
+  }
+  return b;
+}
+
+/** PV max du héros, équipement compris (sans la blessure). */
+export function pvMaxHeros(contenu: Contenu, h: Heros): number {
+  return Math.round(pvMax(contenu, caracsTotales(contenu, h).VIT, h.niveau) * (1 + bonusEquipement(contenu, h).vigueur));
+}
+
+/** Mana max du héros, équipement compris. */
+export function manaMaxHeros(contenu: Contenu, h: Heros): number {
+  return manaMax(caracsTotales(contenu, h).ESP, h.niveau) + bonusEquipement(contenu, h).mana;
+}
+
+/** Raison pour laquelle le héros ne peut pas porter cet objet, ou null s'il le peut. */
+export function refusEquipement(contenu: Contenu, h: Heros, objetId: string): string | null {
+  const o = contenu.objets[objetId];
+  if (!o || o.type !== 'equipement' || !o.emplacement) return 'Cet objet ne s\'équipe pas';
+  if (h.niveau < o.niveau) return `Niveau ${o.niveau} requis (vous êtes niveau ${h.niveau})`;
+  if (o.classes.length > 0 && !o.classes.includes(h.classe)) return `Réservé à : ${o.classes.map((c) => contenu.classes[c]?.nom ?? c).join(', ')}`;
+  return null;
+}
+
 export function age(h: Heros, annee: number): number {
   return annee - h.anneeNaissance;
 }

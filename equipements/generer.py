@@ -218,13 +218,13 @@ def description_stats(s: dict) -> str:
     return ", ".join(morceaux)
 
 
-def objet(id_, nom, description, type_id, palier, rarete, s, effets=(), pouvoir=None, pense_pour=None, prix_=None, existant=False):
+def objet(id_, nom, description, type_id, palier, rarete, s, effets=(), pouvoir=None, pense_pour=None, prix_=None, existant=False, pouvoir_id=None):
     niveau = NIVEAU[palier]
     b = budget(niveau, rarete)
     return {
         "id": id_, "nom": nom, "description": description, "categorie": type_id, "palier": palier,
         "niveau": niveau, "rarete": rarete, "budget": b, "stats": s, "effets": list(effets),
-        "pouvoir": pouvoir, "pense_pour": pense_pour, "prix": prix_ if prix_ is not None else prix(b, niveau),
+        "pouvoir": pouvoir, "pouvoir_id": pouvoir_id, "pense_pour": pense_pour, "prix": prix_ if prix_ is not None else prix(b, niveau),
         "existant": existant, "unique": rarete == "mythique",
     }
 
@@ -252,7 +252,8 @@ def generiques() -> list:
 
 def slug(nom: str) -> str:
     import unicodedata
-    s = unicodedata.normalize("NFKD", nom.split(",")[0]).encode("ascii", "ignore").decode().lower()
+    base = nom.split(",")[0].replace("œ", "oe").replace("Œ", "Oe").replace("æ", "ae").replace("Æ", "Ae")
+    s = unicodedata.normalize("NFKD", base).encode("ascii", "ignore").decode().lower()
     s = "".join(ch if ch.isalnum() else "-" for ch in s)
     while "--" in s:
         s = s.replace("--", "-")
@@ -271,7 +272,7 @@ def nommes() -> list:
             s = stats(o["type"], niveau, b)
             effets = [effet(code, o["palier"]) for code in o.get("effets", [])]
             res.append(objet(slug(o["nom"]), o["nom"], o["description"], o["type"], o["palier"], o["rarete"], s,
-                             effets, o.get("pouvoir"), None if classe == "mythiques" else classe))
+                             effets, o.get("pouvoir"), None if classe == "mythiques" else classe, pouvoir_id=o.get("pouvoir_id")))
     return res
 
 
@@ -290,8 +291,8 @@ def verifier(objets: list) -> list:
         attendu = RARETES[o["rarete"]][2]
         if len(o["effets"]) != attendu:
             erreurs.append(f"{o['id']} : {len(o['effets'])} effet(s), {attendu} attendu(s) pour {o['rarete']}")
-        if o["rarete"] == "legendaire" and not o["pouvoir"]:
-            erreurs.append(f"{o['id']} : légendaire sans pouvoir unique")
+        if o["rarete"] in ("legendaire", "mythique") and not (o["pouvoir"] and o["pouvoir_id"]):
+            erreurs.append(f"{o['id']} : pouvoir unique ou pouvoir_id manquant")
         if TYPES[o["categorie"]][0] == "arme" and o["stats"]["puissance"] > 1 + o["niveau"] // 5 and not o["existant"]:
             erreurs.append(f"{o['id']} : puissance au-dessus du plafond")
         if o["pense_pour"] and o["pense_pour"] not in TYPES[o["categorie"]][2]:
@@ -352,12 +353,13 @@ def vers_yaml(objets: list) -> str:
             e["effets_equipement"] = o["effets"]
         if o["pouvoir"]:
             e["pouvoir_unique"] = o["pouvoir"]
+            e["pouvoir_id"] = o["pouvoir_id"]
         if o["unique"]:
             e["unique_par_partie"] = True
         sortie.append(e)
-    entete = ("# Catalogue d'équipements — généré par generer.py, ne pas modifier à la main.\n"
-              "# Champs nouveaux (le moteur ne les connaît pas encore) : rarete, niveau, categorie, classes,\n"
-              "# palier, effets_equipement, pouvoir_unique, unique_par_partie. Voir CONCEPTION-EQUIPEMENTS.md § 12.\n")
+    entete = ("# Catalogue d'équipements — généré par equipements/generer.py : modifier les règles ou objets-nommes.yaml, puis relancer le script.\n"
+              "# Champs propres à l'équipement : rarete, niveau, categorie, classes,\n"
+              "# palier, effets_equipement, pouvoir_unique, pouvoir_id, unique_par_partie (voir equipements/CONCEPTION-EQUIPEMENTS.md).\n")
     class SansAlias(yaml.SafeDumper):
         def ignore_aliases(self, data):
             return True
@@ -502,7 +504,7 @@ def main():
         for e in erreurs:
             print(" -", e)
         sys.exit(1)
-    (ICI / "equipements.yaml").write_text(vers_yaml(objets), encoding="utf-8")
+    (ICI.parent / "content" / "objets" / "equipements.yaml").write_text(vers_yaml(objets), encoding="utf-8")
     ecrire_excel(objets, ICI / "equipements.xlsx")
     par_rarete = {r: sum(1 for o in objets if o["rarete"] == r) for r in RARETES}
     print(f"{len(objets)} objets générés :", ", ".join(f"{RARETES[r][0]} {n}" for r, n in par_rarete.items()))
