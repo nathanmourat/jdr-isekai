@@ -7,7 +7,7 @@
   import PhaserHote from '../PhaserHote.svelte';
   import ActionsLibres from './ActionsLibres.svelte';
   import CompetenceInfo from '../CompetenceInfo.svelte';
-  import type { SceneCombat } from '../../rendu/SceneCombat';
+  import { utiliseMana, type SceneCombat } from '../../rendu/SceneCombat';
   import { actionsDisponibles, estimerAction, NOMS_ETATS, type ActionCombat, type Combat, type Combattant, type EvenementCombat } from '../../moteur/combat';
   import type { Competence } from '../../contenu/schemas';
 
@@ -203,7 +203,7 @@
         {#if combat.resultat === 'defaite'}<p class="discret">Mort douce : personne ne meurt pour de bon. L'histoire continue.</p>{/if}
         <button class="principal" onclick={() => jeu.agir({ type: 'fin_combat', cle })}>Continuer</button>
       {:else if acteur && monTour && dispo}
-        <h3>À vous : {acteur.nom} <span class="discret">({acteur.pv}/{acteur.pvMax} PV · {acteur.mana} mana)</span></h3>
+        <h3>À vous : {acteur.nom} <span class="discret">({acteur.pv}/{acteur.pvMax} PV · {acteur.mana}/{acteur.manaMax} mana)</span></h3>
         {#if selection}
           <p class="consigne">Choisissez une cible{cibles.length ? ' (cliquez sur le personnage ou ci-dessous)' : ' — aucune cible possible'} :</p>
           <div class="ligne">
@@ -226,7 +226,7 @@
             {#each dispo.competences as k (k.comp.id)}
               {@const r = reel(k.comp)}
               <button disabled={!k.utilisable} title={`${k.comp.description}${k.raison ? ' — ' + k.raison : ''}`} onclick={() => choisir({ type: 'competence', comp: k.comp })}>
-                {k.comp.nom}{k.rang > 1 ? ` ${k.rang}` : ''} <small>{k.comp.cout ? `${k.comp.cout} mana` : ''}{r?.reussite !== null && r?.reussite !== undefined ? ` · ${pourcent(r.reussite)}` : ''}{k.raison ? ` · ${k.raison}` : ''}</small>
+                {k.comp.nom}{k.rang > 1 ? ` ${k.rang}` : ''} <small class:trop-cher={k.raison === 'Mana insuffisant'}>{k.comp.cout ? `${k.comp.cout} mana` : ''}{r?.reussite !== null && r?.reussite !== undefined ? ` · ${pourcent(r.reussite)}` : ''}{k.raison ? ` · ${k.raison}` : ''}</small>
               </button>
             {/each}
             <button disabled={dispo.potions <= 0} onclick={() => choisir({ type: 'potion' })}>Potion ({dispo.potions})</button>
@@ -248,9 +248,12 @@
       <h3>Combattants</h3>
       {#each [...herosCamp, ...ennemis] as x (x.id)}
         <div class="combattant" class:ko={x.ko} class:ennemi={x.camp === 'ennemis'}>
-          <span>{x.nom}</span>
-          <div class="barre" title={`${x.pv}/${x.pvMax} PV`}><div style={`width:${(x.pv / x.pvMax) * 100}%`}></div></div>
-          <small class="discret">{x.pv}/{x.pvMax}{x.bouclier ? ` +${x.bouclier}` : ''}{x.etats.length ? ` · ${etatsDe(x)}` : ''}</small>
+          <span>{x.nom}{#if x.camp === 'ennemis'} <small class="niveau">Niv. {x.niveau}</small>{/if}</span>
+          <div class="barres">
+            <div class="barre" title={`${x.pv}/${x.pvMax} PV`}><div style={`width:${(x.pv / x.pvMax) * 100}%`}></div></div>
+            {#if utiliseMana(x)}<div class="barre mana" title={`${x.mana}/${x.manaMax} mana`}><div style={`width:${(x.mana / x.manaMax) * 100}%`}></div></div>{/if}
+          </div>
+          <small class="discret">{x.pv}/{x.pvMax} PV{#if utiliseMana(x)} · <span class="mana-txt">{x.mana}/{x.manaMax} mana</span>{/if}{x.bouclier ? ` +${x.bouclier}` : ''}{x.etats.length ? ` · ${etatsDe(x)}` : ''}</small>
         </div>
       {/each}
     </div>
@@ -296,6 +299,12 @@
   .combattant { display: grid; grid-template-columns: 1fr 90px; gap: 0.1rem 0.5rem; align-items: center; margin-bottom: 0.35rem; font-size: 0.9rem; }
   .combattant small { grid-column: 1 / -1; }
   .combattant.ko { opacity: 0.45; }
+  .barres { display: grid; gap: 2px; }
+  .barre.mana { height: 5px; }
+  .combattant .barre.mana > div { background: #4f8dff; }
+  .mana-txt { color: var(--bleu); }
+  .niveau { color: var(--or-2); }
+  .actions small.trop-cher { color: var(--rouge); font-weight: 600; }
   .combattant.ennemi .barre > div { background: var(--rouge); }
   .journal p { margin: 0.15em 0; font-size: 0.88rem; }
   .journal .fort { color: var(--or-2); font-weight: 600; }

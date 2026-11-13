@@ -194,7 +194,9 @@ export class SceneCombat extends Phaser.Scene {
       }
     }
     const barre = this.add.graphics();
-    const nom = this.add.text(0, 10, c.nom, { fontFamily: 'Source Sans 3', fontSize: '13px', color: '#f3ead7', stroke: '#000', strokeThickness: 3 }).setOrigin(0.5, 0);
+    // les ennemis affichent leur niveau à côté de leur nom
+    const libelleNom = c.camp === 'ennemis' ? `${c.nom} · Niv. ${c.niveau}` : c.nom;
+    const nom = this.add.text(0, 10, libelleNom, { fontFamily: 'Source Sans 3', fontSize: '13px', color: '#f3ead7', stroke: '#000', strokeThickness: 3 }).setOrigin(0.5, 0);
     const zone = this.add.zone(0, -taille * echelle / 2, taille * echelle * 0.7, taille * echelle);
     const etats = this.add.text(0, -taille * echelle - 6, '', { fontFamily: 'Source Sans 3', fontSize: '14px', color: '#f3ead7', stroke: '#000', strokeThickness: 3 }).setOrigin(0.5, 1);
     const items: Phaser.GameObjects.GameObject[] = [sprite];
@@ -214,6 +216,14 @@ export class SceneCombat extends Phaser.Scene {
     const ratio = Math.max(0, c.pv / c.pvMax);
     v.barre.fillStyle(ratio > 0.5 ? 0x4caf50 : ratio > 0.25 ? 0xf2a33a : 0xd9473b, 1).fillRect(-l / 2, y, l * ratio, 5);
     if (c.bouclier > 0) v.barre.fillStyle(0x7fb3ff, 1).fillRect(-l / 2, y - 3, Math.min(l, l * c.bouclier / c.pvMax), 2);
+    // barre de mana bleue sous la barre de vie (les ennemis ont un mana illimité : pas de barre)
+    const aMana = utiliseMana(c);
+    if (aMana) {
+      const ym = y + 7;
+      v.barre.fillStyle(0x000000, 0.7).fillRect(-l / 2 - 1, ym - 1, l + 2, 6);
+      v.barre.fillStyle(0x4f8dff, 1).fillRect(-l / 2, ym, l * Math.max(0, Math.min(1, c.mana / c.manaMax)), 4);
+    }
+    v.nom.setY(aMana ? 17 : 10);
   }
 
   /** États visibles : icônes avec tours restants, teinte verte et bulles pour le poison. */
@@ -318,6 +328,10 @@ export class SceneCombat extends Phaser.Scene {
       this.tweens.add({ targets: c, radius: 22 * echelle, alpha: 0, duration: 300, onComplete: () => c.destroy() });
     }
   }
+}
+/** Vrai si le combattant dépense du mana (héros, compagnons) ; les ennemis ont une réserve illimitée. */
+export function utiliseMana(c: Combattant): boolean {
+  return c.manaMax > 0 && c.manaMax < 999;
 }
 function cleFondManquant(fond: string) {
   return `combat/fonds/${fond}`;
