@@ -9,7 +9,8 @@
   import { absentsDuGroupe, marqueurPnj, type Marqueur } from '../../moteur/guide';
   import { imageDecor } from '../../rendu/assets';
   import { portraitPersonnage } from '../outils';
-  import { peutApprendre } from '../../moteur/fusions';
+  import { fusionsPossibles } from '../../moteur/fusions';
+  import CompetenceInfo from '../CompetenceInfo.svelte';
   import type { Scene } from '../../contenu/schemas';
   import Boutique from './Boutique.svelte';
   import Auberge from './Auberge.svelte';
@@ -28,7 +29,7 @@
   const rang = $derived(rangGuilde(c, etat.pointsGuilde[h.id] ?? 0));
   const ordre = ['F', 'E', 'D', 'C', 'B', 'A', 'S'];
   const nomPnj = (p: string) => c.compagnons[p]?.nom ?? c.pnj[p]?.nom ?? p;
-  const grimoire = $derived(id === 'guilde' ? Object.values(etat.grimoire ?? {}) : []);
+  const fusions = $derived(id === 'guilde' ? fusionsPossibles(c, h) : []);
   const absents = $derived(absentsDuGroupe(etat));
 
   let pnjChoisi = $state<string | null>(null);
@@ -119,17 +120,16 @@
     {/if}
     {#if id === 'guilde'}
       <div class="carte-ui">
-        <h3>📖 Grimoire de la partie</h3>
-        {#each grimoire as t (t.id)}
-          {@const pb = peutApprendre(c, h, t)}
+        <h3>📖 Fusions que la Guilde peut vous enseigner</h3>
+        <p class="discret">Uniquement les fusions de votre classe et de vos compétences. Ce que vous apprenez va dans votre grimoire personnel : les autres joueurs ne le voient pas.</p>
+        {#each fusions as f (f.technique.id)}
           <div class="item">
-            <div class="ligne"><strong>{t.nom}</strong><span class="badge">inventée par {t.creePar}</span></div>
-            <p class="discret">{t.description} {t.cout} mana, recharge {t.recharge} tour(s).</p>
-            {#if (h.variantes[t.parent] ?? []).includes(t.id)}<span class="badge or">connue</span>
-            {:else}<button class="petit" disabled={!!pb} title={pb ?? ''} onclick={() => jeu.agir({ type: 'apprendre_technique', technique: t.id })}>Apprendre</button>{#if pb}<small class="discret"> {pb}</small>{/if}{/if}
+            <p><CompetenceInfo comp={f.technique} rang={h.rangsCompetences[f.technique.parent] ?? 1} sujet={null} heros={h} /></p>
+            <button class="petit" disabled={!!f.probleme} onclick={() => jeu.agir({ type: 'apprendre_technique', technique: f.technique.id })}>Apprendre</button>
+            {#if f.probleme}<small class="discret"> {f.probleme}</small>{/if}
           </div>
         {:else}
-          <p class="discret">Encore vide. En combat, combinez deux de vos compétences (« je combine X et Y ») pour inventer une technique : elle sera ajoutée ici pour tout le groupe.</p>
+          <p class="discret">Aucune fusion à apprendre pour l'instant : il faut deux compétences d'éléments différents.</p>
         {/each}
       </div>
     {/if}

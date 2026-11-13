@@ -17,6 +17,7 @@
   import Histoire from '../panneaux/Histoire.svelte';
   import FicheRapide from '../panneaux/FicheRapide.svelte';
   import Notifications from '../Notifications.svelte';
+  import PiecesAnimees from '../PiecesAnimees.svelte';
 
   const c = jeu.contenu!;
   type Panneau = 'carte' | 'histoire' | 'fiche' | 'compagnons' | 'quetes' | 'journal' | 'partie';
@@ -127,6 +128,7 @@
   </main>
 
   <Notifications />
+  <PiecesAnimees />
 </div>
 
 <style>

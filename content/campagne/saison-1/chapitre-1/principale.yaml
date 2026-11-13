@@ -14,14 +14,14 @@ scenes:
         repliques:
           - { dit: "Printemps 1012. Un cercle de lumière bleue embrase le sol du Temple du Seuil. Des chants montent, des vitraux vibrent… puis le silence." }
           - { dit: "Au centre du cercle, des silhouettes se relèvent, hagardes : les invoqués. À la lisière de la lumière, d'autres jeunes gens, attirés ici par une résonance qu'ils ne savent pas nommer : les réincarnés.", si: { origine: reincarne } }
-          - { qui: aureliath, dit: "« Bienvenue à Velmaris, Appelés. Je suis Auréliath, Grand Prieur de l'Ordre de la Lumière Sereine. N'ayez crainte : la Lumière vous a choisis. »" }
+          - { qui: aureliath, dit: "« Bienvenue à Velmaris, [[Appelé||Appelés]]. Je suis Auréliath, Grand Prieur de l'Ordre de la Lumière Sereine. [[N'aie||N'ayez]] crainte : la Lumière [[t'a choisi||vous a choisis]]. »" }
           - { qui: aureliath, dit: "« Le Souverain des Cendres s'est éveillé au nord. Le Mur d'Aube faiblit. Le royaume a besoin de héros. »" }
-          - { qui: aveline, expression: neutre, dit: "Une jeune femme en armure argentée s'avance, la main sur le pommeau. « Capitaine Aveline de Castelroc. Je suis chargée de votre sécurité. » Son regard s'attarde sur vous, méfiant." }
+          - { qui: aveline, expression: neutre, dit: "Une jeune femme en armure argentée s'avance, la main sur le pommeau. « Capitaine Aveline de Castelroc. Je suis chargée de [[ta||votre]] sécurité. » Son regard s'attarde sur [[toi||vous]], méfiant." }
         choix:
           - texte: "« Un monde de magie ? Génial. Où est-ce qu'on signe ? » (enthousiaste)"
             effets: [{ reputation: { ordre: 5 }, affinite: { aveline: 2 } }]
             aller: enthousiaste
-          - texte: "« Personne ne nous a demandé notre avis. Qui a décidé de nous arracher à nos vies ? » (méfiant)"
+          - texte: "« Personne ne [[m'a demandé mon||nous a demandé notre]] avis. Qui a décidé de [[m'arracher à ma vie||nous arracher à nos vies]] ? » (méfiant)"
             effets: [{ reputation: { ordre: -5 }, affinite: { aveline: 4 }, flag: mefiance-ordre }]
             aller: mefiant
           - texte: "« Excusez-moi, il y a des toilettes dans ce monde ? » (humour)"
@@ -31,21 +31,39 @@ scenes:
         repliques:
           - { qui: aureliath, dit: "Le Grand Prieur sourit largement. « Voilà l'esprit des héros ! »" }
           - { qui: aveline, dit: "Aveline soupire. « Les derniers à avoir dit ça sont enterrés sous le Mur d'Aube. »" }
-        suite: suite
+        suite: question
       mefiant:
         repliques:
-          - { qui: aureliath, dit: "Le sourire du Grand Prieur se fige une fraction de seconde. « La Lumière a ses raisons. Vous les comprendrez. »" }
-          - { qui: aveline, dit: "Aveline vous jette un regard nouveau. Presque… approbateur." }
-        suite: suite
+          - { qui: aureliath, dit: "Le sourire du Grand Prieur se fige une fraction de seconde. « La Lumière a ses raisons. [[Tu les comprendras||Vous les comprendrez]]. »" }
+          - { qui: aveline, dit: "Aveline [[te||vous]] jette un regard nouveau. Presque… approbateur." }
+        suite: question
       humour:
         repliques:
           - { dit: "Un acolyte s'étrangle. Auréliath cligne des yeux." }
-          - { qui: aveline, expression: joie, dit: "Aveline détourne la tête, mais vous l'avez vue : elle a souri. « Par ici. Et oui, il y en a. »" }
-        suite: suite
+          - { qui: aveline, expression: joie, dit: "Aveline détourne la tête, mais [[tu l'as||vous l'avez]] vue : elle a souri. « Par ici. Et oui, il y en a. »" }
+        suite: question
+      # Le Grand Prieur s'adresse à UN joueur, par son pseudo : lui seul répond (3 réponses selon sa classe ou sa race).
+      question:
+        repliques:
+          - { qui: aureliath, dit: "Le Grand Prieur lève une main. Son regard [[te détaille longuement||parcourt vos visages un à un, puis s'arrête]]." }
+        parole_a:
+          regle: { classe: [arcaniste, invocateur, guerisseur, barde, alchimiste] }
+          question: { qui: aureliath, dit: "« {pseudo}. Je sens quelque chose s'éveiller en toi. Dis-moi : que sais-tu de la magie de ce monde ? »" }
+          reponses:
+            - { texte: "« Je la sens crépiter au bout de mes doigts. Le feu, le givre… ils me répondent déjà. »", si: { classe: arcaniste }, effets: [{ reputation: { ordre: 3 } }], aller: suite }
+            - { texte: "« Quelque chose m'accompagne depuis mon arrivée. Une présence, à mes côtés. »", si: { classe: invocateur }, effets: [{ reputation: { ordre: 2 } }], aller: suite }
+            - { texte: "« Je sais seulement que mes mains apaisent la douleur. Le reste, je l'apprendrai. »", si: { classe: guerisseur }, effets: [{ reputation: { ordre: 4 } }], aller: suite }
+            - { texte: "« La magie ? Chez moi, ça s'appelle une bonne chanson au bon moment. »", si: { classe: barde }, effets: [{ affinite: { aveline: 1 } }], aller: suite }
+            - { texte: "« De la magie ? Montrez-moi vos fioles, je vous dirai ce que j'en pense. »", si: { classe: alchimiste }, effets: [{ reputation: { ordre: 1 } }], aller: suite }
+            - { texte: "« Je préfère l'acier. La magie, je la laisse à ceux qui ont le temps de réciter. »", si: { classe: [lame-runique, gardien, berserker, ombre, archer] }, effets: [{ affinite: { aveline: 2 } }], aller: suite }
+            - { texte: "« Les anciens parlent du Voile et de ses dangers. Je sais qu'on ne joue pas avec. »", si: { race: [elfe, demi-elfe] }, effets: [{ flag: mefiance-ordre }], aller: suite }
+            - { texte: "« Rien du tout. Mais j'apprends vite. »", effets: [{ reputation: { ordre: 1 } }], aller: suite }
+            - { texte: "« Assez pour me méfier de ceux qui s'en servent sur les autres sans demander. »", effets: [{ reputation: { ordre: -3 }, affinite: { aveline: 2 } }], aller: suite }
+            - { texte: "« Ça dépend. Elle fait aussi le café ? »", effets: [{ affinite: { aveline: 1 } }], aller: suite }
       suite:
         repliques:
-          - { qui: aureliath, dit: "« Reposez-vous. Demain, la Couronne vous recevra. En attendant, la Guilde de la Rose des Vents vous ouvrira ses portes : vous y apprendrez à survivre. »" }
-          - { dit: "Ce soir-là, en contemplant les tours blanches de Lysmont depuis la fenêtre du temple, chacun de vous voit flotter devant ses yeux une fenêtre translucide : votre niveau, vos capacités… et votre don." }
+          - { qui: aureliath, dit: "« [[Repose-toi||Reposez-vous]]. Demain, la Couronne [[te||vous]] recevra. En attendant, la Guilde de la Rose des Vents [[t'ouvrira ses portes : tu y apprendras||vous ouvrira ses portes : vous y apprendrez]] à survivre. »" }
+          - { dit: "Ce soir-là, en contemplant les tours blanches de Lysmont depuis la fenêtre du temple, [[tu vois flotter devant tes yeux une fenêtre translucide : ton niveau, tes capacités… et ton don.||chacun de vous voit flotter devant ses yeux une fenêtre translucide : votre niveau, vos capacités… et votre don.]]" }
         effets:
           - { flag: [appel-fait, aveline-rencontree], recruter: aveline, quete: { id: q-ch1-appel, etape: examen }, journal: "L'Appel : {groupe} arrivent au Temple du Seuil. La capitaine Aveline de Castelroc est chargée de leur sécurité." }
         fin: true
@@ -63,16 +81,30 @@ scenes:
       debut:
         repliques:
           - { dit: "Le hall de la Guilde de la Rose des Vents sent la bière, le cuir et la sueur. Des dizaines de regards se tournent vers vous." }
-          - { qui: rowena, dit: "« Ah. Les Appelés. » Dame Rowena mâchonne sa pipe éteinte. « Ici, votre don ne vaut rien tant que vous n'avez pas prouvé que vous savez tenir debout. »" }
-          - { qui: kaya, dit: "Une jeune femme aux oreilles de loup argentées vous dévisage, adossée à un pilier. « Pff. Ils ont l'air tout mous. Je parie dix pièces qu'ils tombent au premier coup. »" }
+          - { qui: rowena, dit: "« Ah. [[Un Appelé||Les Appelés]]. » Dame Rowena mâchonne sa pipe éteinte. « Ici, [[ton don ne vaut rien tant que tu n'as pas prouvé que tu sais||votre don ne vaut rien tant que vous n'avez pas prouvé que vous savez]] tenir debout. »" }
+          - { qui: kaya, dit: "Une jeune femme aux oreilles de loup argentées [[te||vous]] dévisage, adossée à un pilier. « Pff. [[Il a l'air tout mou||Ils ont l'air tout mous]]. Je parie dix pièces [[qu'il tombe||qu'ils tombent]] au premier coup. »" }
           - { qui: kaya, dit: "Elle vous fixe un instant de plus, puis son regard s'adoucit. « …Un Ourvalis ? Hé. Bonne chance, alors. »", si: { race: ourvalis } }
-          - { qui: rowena, dit: "« L'examen est simple : vous affrontez notre golem d'entraînement. S'il vous met au tapis, revenez dans un an. »" }
+          - { qui: rowena, dit: "« L'examen est simple : [[tu affrontes||vous affrontez]] notre golem d'entraînement. S'il [[te||vous]] met au tapis, [[reviens||revenez]] dans un an. »" }
         choix:
           - texte: "Entrer dans l'arène d'entraînement."
-            aller: combat
+            aller: conseil
+          # Pari : la mise sort vraiment du porte-monnaie de ceux qui choisissent cette réponse (voir `miser`).
           - texte: "« Kaya, c'est ça ? Je double ta mise : vingt pièces que tu perds. »"
-            effets: [{ flag: pari-kaya }]
-            aller: combat
+            effets: [{ flag: pari-kaya, miser: 20 }]
+            aller: conseil
+      conseil:
+        parole_a:
+          regle: { classe: [lame-runique, gardien, berserker, ombre, archer] }
+          question: { qui: rowena, dit: "Rowena pointe sa pipe vers {nom}. « Toi, {pseudo}. Ce golem fait deux fois ta taille. Tu comptes t'y prendre comment ? »" }
+          reponses:
+            - { texte: "« Je me mets devant et j'encaisse. [[Je frapperai quand il fatiguera.||Les autres frapperont pendant ce temps.]] »", si: { classe: gardien }, effets: [{ reputation: { guilde: 3 } }], aller: combat }
+            - { texte: "« Je cogne fort. Et s'il tient encore debout, je recommence. »", si: { classe: [berserker, lame-runique] }, effets: [{ reputation: { guilde: 2 } }], aller: combat }
+            - { texte: "« Je cherche le point faible. Tout le monde en a un, même l'argile. »", si: { classe: [ombre, archer] }, effets: [{ reputation: { guilde: 3 } }], aller: combat }
+            - { texte: "« De loin. Très loin. Avec quelque chose qui explose. »", si: { classe: [arcaniste, invocateur, alchimiste] }, effets: [{ reputation: { guilde: 2 } }], aller: combat }
+            - { texte: "« Je tiens debout plus longtemps que lui.[[|| Et je garde les autres debout.]] »", si: { classe: [guerisseur, barde] }, effets: [{ reputation: { guilde: 2 } }], aller: combat }
+            - { texte: "« Avec prudence. Je regarde d'abord comment il bouge. »", effets: [{ reputation: { guilde: 2 } }], aller: combat }
+            - { texte: "« On verra bien une fois dedans. »", effets: [{ reputation: { guilde: 1 } }], aller: combat }
+            - { texte: "« Vous n'auriez pas un golem plus petit ? »", effets: [{ reputation: { guilde: 1 } }], aller: combat }
       combat:
         repliques:
           - { dit: "Le golem d'argile se met en marche dans un grincement." }
@@ -80,14 +112,17 @@ scenes:
       victoire:
         repliques:
           - { qui: rowena, dit: "« Pas mal. Pas mal du tout. » Elle tamponne une carte de cuivre. « Rang F. Les contrats sont au tableau. Ne mourez pas bêtement. »" }
-          - { qui: kaya, dit: "Kaya vous tend dix pièces en grommelant. « Ouais, bon. Vous avez de la chance. »", si: { flag: pari-kaya } }
+          - { qui: kaya, dit: "Kaya rend la mise et y ajoute vingt pièces de sa poche, en grommelant. « Ouais, bon. [[Tu as||Vous avez]] de la chance. »", si: { flag: pari-kaya } }
         effets:
+          - { gain_pari: 2 }
           - { flag: examen-reussi, points_guilde: 50, quete: { id: q-ch1-appel, etape: crypte }, journal: "{groupe} réussissent l'examen de la Guilde : rang F." }
         suite: ellipse
       defaite:
         repliques:
-          - { qui: rowena, dit: "« Bon. Le golem vous a laminés. » Elle soupire. « Mais vous vous êtes relevés. C'est ce que je cherche. Rang F, à l'essai. »" }
+          - { qui: rowena, dit: "« Bon. Le golem [[t'a laminé||vous a laminés]]. » Elle soupire. « Mais [[tu t'es relevé||vous vous êtes relevés]]. C'est ce que je cherche. Rang F, à l'essai. »" }
+          - { qui: kaya, dit: "Kaya empoche les vingt pièces avec un grand sourire. « Sans rancune. »", si: { flag: pari-kaya } }
         effets:
+          - { perte_pari: true }
           - { flag: examen-reussi, points_guilde: 20, quete: { id: q-ch1-appel, etape: crypte }, journal: "{groupe} entrent à la Guilde « à l'essai »." }
         suite: ellipse
       ellipse:
@@ -108,12 +143,25 @@ scenes:
     noeuds:
       debut:
         repliques:
-          - { dit: "L'automne est là. Des paysans ont vu des lueurs violettes sous les ruines de la Crypte de la Fontaine. Rowena vous a confié l'affaire." }
-          - { qui: aveline, dit: "Aveline vous attend à l'entrée, en armure complète. « Ordre du roi : je vous accompagne. Et… je n'allais pas vous laisser descendre seuls. »" }
+          - { dit: "L'automne est là. Des paysans ont vu des lueurs violettes sous les ruines de la Crypte de la Fontaine. Rowena [[t'a||vous a]] confié l'affaire." }
+          - { qui: aveline, dit: "Aveline [[t'attend||vous attend]] à l'entrée, en armure complète. « Ordre du roi : je [[t'accompagne||vous accompagne]]. Et… je n'allais pas [[te laisser descendre seul||vous laisser descendre seuls]]. »" }
           - { dit: "L'escalier s'enfonce dans le noir. Une odeur d'eau croupie et de vieille pierre monte des profondeurs." }
         choix:
           - texte: "Descendre dans la crypte."
-            aller: donjon
+            aller: avant-descente
+      avant-descente:
+        parole_a:
+          regle: { classe: [ombre, archer, gardien] }
+          question: { qui: aveline, dit: "Aveline s'arrête sur la première marche et se tourne vers {nom}. « {pseudo}, c'est toi qui ouvres la marche, ou c'est moi ? »" }
+          reponses:
+            - { texte: "« Moi. Je passe devant, sans bruit. Si quelque chose bouge, je le verrai avant qu'il nous voie. »", si: { classe: ombre }, effets: [{ affinite: { aveline: 2 } }], aller: donjon }
+            - { texte: "« Moi. Mon bouclier d'abord, tout le monde derrière. »", si: { classe: gardien }, effets: [{ affinite: { aveline: 3 } }], aller: donjon }
+            - { texte: "« Passe devant. Je couvre depuis l'arrière, une flèche encochée. »", si: { classe: archer }, effets: [{ affinite: { aveline: 1 } }], aller: donjon }
+            - { texte: "« Un escalier sous terre ? Laisse faire un nain. »", si: { race: nain }, effets: [{ affinite: { aveline: 2 } }], aller: donjon }
+            - { texte: "« Je vois dans le noir. Je guide, tu me suis. »", si: { race: elfe }, effets: [{ affinite: { aveline: 2 } }], aller: donjon }
+            - { texte: "« Ensemble, côte à côte. »", effets: [{ affinite: { aveline: 2 } }], aller: donjon }
+            - { texte: "« Après toi, capitaine. C'est toi qui as l'armure. »", effets: [{ affinite: { aveline: 1 } }], aller: donjon }
+            - { texte: "« On tire à pile ou face ? »", effets: [{ affinite: { aveline: 1 } }], aller: donjon }
       donjon:
         donjon: { id: crypte-fontaine, sortie: sortie }
       sortie:

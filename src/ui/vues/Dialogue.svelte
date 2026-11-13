@@ -1,7 +1,7 @@
 <script lang="ts">
   /** Scène de dialogue : décor, portrait, répliques une par une, choix (votés en groupe), tests de caractéristique. */
   import { jeu } from '../jeu.svelte';
-  import { choixVisibles, conditionScene, noeudCourant, remplacerVariables } from '../../moteur/partie';
+  import { choixVisibles, conditionScene, miseDuChoix, noeudCourant, remplacerVariables } from '../../moteur/partie';
   import { imageDecor } from '../../rendu/assets';
   import { NOMS_CARACS, nomPersonnage, portraitHeros, portraitPersonnage } from '../outils';
 
@@ -29,6 +29,18 @@
   const combatEnAttente = $derived(!!etat.combats[cle === 'groupe' ? 'groupe' : cle]);
 
   function texte(t: string) { return remplacerVariables(c, etat, t, es.heros); }
+  // Un personnage s'adresse à un joueur précis : lui seul répond
+  const parole = $derived(noeud?.parole_a && es.parole ? { def: noeud.parole_a, heros: etat.heros[es.parole.heros], reponses: es.parole.reponses } : null);
+  const joueurInterroge = $derived(parole ? etat.joueurs[parole.heros.joueurId] : null);
+  const cEstAMoi = $derived(!!joueurInterroge && jeu.joueursLocaux.includes(joueurInterroge.id));
+  function texteParole(t: string) { return remplacerVariables(c, etat, t, es.heros, parole?.heros.id); }
+  /** Pari : pourquoi ce joueur ne peut pas choisir cette réponse (pas assez d'or), ou ''. */
+  function blocageMise(j: string, ch: (typeof choix)[number]): string {
+    const mise = miseDuChoix(ch.choix);
+    const hj = etat.heros[etat.joueurs[j]?.herosId ?? ''];
+    if (!mise || !hj || hj.or >= mise) return '';
+    return `Pas assez d'or : il faut ${mise} pièces pour miser, ${hj.nom} n'en a que ${hj.or}.`;
+  }
   function votants(index: number) { return Object.entries(es.votes).filter(([, v]) => v === index).map(([j]) => etat.joueurs[j]?.pseudo); }
   function aVote(j: string) { return es.votes[j] !== undefined; }
   function suivant() { if (!toutVu) vues++; }
@@ -69,15 +81,37 @@
         <button class="principal" onclick={() => jeu.agir({ type: 'quitter_scene', cle })}>Terminer la scène</button>
       {:else if combatEnAttente}
         <button class="principal" onclick={() => (jeu.combatsVus = [...jeu.combatsVus, etat.combats[cle === 'groupe' ? 'groupe' : cle].combat.id])}>⚔ Au combat !</button>
+      {:else if parole}
+        <div class="parole">
+          <div class="question">
+            {#if portraitPersonnage(c, parole.def.question.qui, parole.def.question.expression)}<img class="portrait pixel" src={portraitPersonnage(c, parole.def.question.qui, parole.def.question.expression)} alt="" />{/if}
+            <div>
+              <p class="qui">{nomPersonnage(c, etat, parole.def.question.qui, es.heros)} <span class="badge or">s'adresse à {joueurInterroge?.pseudo}</span></p>
+              <p class="dit">{texteParole(parole.def.question.dit)}</p>
+            </div>
+          </div>
+          {#if cEstAMoi}
+            <p class="consigne">{joueurInterroge?.pseudo}, c'est à toi de répondre ({parole.heros.nom}) :</p>
+            <div class="choix">
+              {#each parole.reponses as i (i)}
+                <button class="reponse" onclick={() => jeu.agir({ type: 'repondre', joueur: joueurInterroge!.id, cle, index: i })}>{texteParole(parole.def.reponses[i].texte)}</button>
+              {/each}
+            </div>
+          {:else}
+            <p class="discret">Seul {joueurInterroge?.pseudo} peut répondre. En attente de sa réponse…</p>
+            <ul class="discret">{#each parole.reponses as i (i)}<li>{texteParole(parole.def.reponses[i].texte)}</li>{/each}</ul>
+          {/if}
+        </div>
       {:else if choix.length}
         <div class="choix">
           {#each choix as ch (ch.index)}
             <div class="option">
-              <span class="libelle">{texte(ch.choix.texte)}{#if !ch.possible} <span class="badge">indisponible</span>{/if}</span>
+              <span class="libelle">{texte(ch.choix.texte)}{#if !ch.possible} <span class="badge">indisponible</span>{/if}{#if miseDuChoix(ch.choix)} <span class="badge or">mise : {miseDuChoix(ch.choix)} or</span>{/if}
+                {#each mesJoueurs.filter((j) => blocageMise(j, ch)) as j (j)}<br /><small class="aide-mise">{blocageMise(j, ch)}</small>{/each}</span>
               <div class="ligne">
                 {#if groupe && votants(ch.index).length}<span class="discret">Votes : {votants(ch.index).join(', ')}</span>{/if}
                 {#each mesJoueurs as j (j)}
-                  <button class="petit" disabled={!ch.possible} class:vote={es.votes[j] === ch.index} onclick={() => jeu.agir({ type: 'choisir', joueur: j, cle, index: ch.index })}>
+                  <button class="petit" disabled={!ch.possible || !!blocageMise(j, ch)} title={blocageMise(j, ch)} class:vote={es.votes[j] === ch.index} onclick={() => jeu.agir({ type: 'choisir', joueur: j, cle, index: ch.index })}>
                     {groupe ? (mesJoueurs.length > 1 ? `Vote de ${etat.joueurs[j].pseudo}` : 'Voter') : 'Choisir'}
                   </button>
                 {/each}
@@ -112,6 +146,11 @@
   .narration { font-style: italic; color: #e9e1f3; }
   .suite { margin: 0.4em 0 0; }
   .choix { display: grid; gap: 0.5rem; margin-top: 0.8rem; }
+  .parole { margin-top: 0.6rem; }
+  .question { display: flex; gap: 0.9rem; align-items: flex-start; }
+  .consigne { color: var(--or-2); margin: 0.6em 0 0; }
+  .reponse { text-align: left; }
+  .aide-mise { color: #ffb4a8; }
   .option { display: flex; justify-content: space-between; gap: 0.6rem; align-items: center; flex-wrap: wrap; padding: 0.5rem 0.7rem; border: 1px solid var(--bord); border-radius: 8px; background: var(--fond); }
   .libelle { flex: 1 1 260px; }
   .vote { border-color: var(--or); background: #3b2f18; }

@@ -563,7 +563,7 @@ On ne vise ni la tête ni les membres d'une gelée, d'un feu follet ou d'une tou
   - **6 compétences équipées** en combat.
 
   Ces limites se règlent dans `content/config/campagne.yaml`.
-- **Grimoire de la partie** : chaque technique inventée y est ajoutée. Les autres joueurs de la campagne, y compris ceux qui arrivent plus tard, peuvent l'apprendre à la Guilde s'ils remplissent les conditions.
+- **Grimoire personnel** (décision du groupe après le test 1, remplace le grimoire partagé) : chaque héros a **son grimoire, privé**. Une fusion apprise appartient au héros qui l'a apprise ; les autres joueurs ne la voient ni dans leur fiche, ni à la Guilde, ni dans les propositions de combat. À la Guilde, chacun ne peut apprendre que les fusions de **sa classe et de ses compétences** (deux compétences connues, rang 2, éléments différents). Rien n'est écrit dans le journal commun.
 
 ## 8. Quêtes
 
@@ -574,6 +574,10 @@ On ne vise ni la tête ni les membres d'une gelée, d'un feu follet ou d'une tou
 | **Quêtes de classe** | 1 chaîne de 3 étapes par classe (chapitres 2, 4 et 5) | Débloque l'**ultime** |
 | **Quêtes de compagne** | 1 chaîne par compagne (3 étapes) | Paliers « Proche » puis « Engagée » |
 | **Contrats de guilde** | Générés à partir de modèles (chasse, escorte, cueillette, exploration de donjon) | Or, XP, **points de guilde** ; répétables ; jouables en solo et en asynchrone |
+
+**Parole adressée à un joueur** (test 1) : dans les moments importants, un personnage s'adresse à **un joueur précis, par son pseudo** (bloc `parole_a` d'un nœud de scène). Le joueur est choisi par une règle (classe, race…), puis au hasard à graine. **Lui seul répond**, parmi **3 réponses** adaptées à sa classe ou à sa race ; les autres voient la question et la réponse. Si ce joueur est absent, son héros répond seul. Les textes s'accordent au nombre de joueurs avec `[[tu…||vous…]]`.
+
+**Paris** (test 1) : `miser: 20` retire vraiment l'or du héros qui choisit la réponse (impossible sans assez d'or) ; `gain_pari: 2` rend la mise et autant en gain ; `perte_pari: true` la fait perdre.
 
 **Décisions de groupe** : pour un choix de la quête principale, chaque joueur présent vote. En cas d'égalité, c'est le « meneur du jour » qui tranche (il tourne à chaque session). Les choix personnels (romance, temps libre, dialogues individuels) n'engagent que le joueur.
 

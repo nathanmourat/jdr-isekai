@@ -15,7 +15,7 @@
   const etat = $derived(jeu.etat!);
   const combat = $derived(etat.combats[cle].combat);
   const heros = $derived(acteur.herosId ? etat.heros[acteur.herosId] ?? null : null);
-  const ctx = $derived<ContexteIA>({ contenu: c, combat, acteur: acteur.id, heros, grimoire: etat.grimoire ?? {} });
+  const ctx = $derived<ContexteIA>({ contenu: c, combat, acteur: acteur.id, heros, grimoire: heros?.grimoire ?? {} });
   const cleEssais = $derived(`${combat.id}:${combat.tour}:${acteur.id}`);
   const essais = $derived(jeu.essais[cleEssais] ?? 0);
   const bloque = $derived(essais >= ESSAIS_MAX);

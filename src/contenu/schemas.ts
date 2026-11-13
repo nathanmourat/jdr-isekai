@@ -235,6 +235,9 @@ export const zCondition: z.ZodType<Condition> = z.lazy(() =>
     quete_terminee: z.string().optional(),
     date_min: z.object({ annee: z.number(), mois: z.number().default(1), jour: z.number().default(1) }).optional(),
     rang_guilde_min: z.string().optional(),
+    /** Nombre de héros dans la scène (pour adapter une réplique à un joueur seul ou à un groupe). */
+    groupe_min: z.number().optional(),
+    groupe_max: z.number().optional(),
     ou: z.array(zCondition).optional(),
   }),
 );
@@ -245,7 +248,7 @@ export interface Condition {
   reputation_min?: Record<string, number>; carac_min?: Partial<Record<(typeof CARACS)[number], number>>;
   niveau_min?: number; or_min?: number; objet?: string;
   quete_etape?: Record<string, string>; quete_terminee?: string;
-  date_min?: { annee: number; mois: number; jour: number }; rang_guilde_min?: string; ou?: Condition[];
+  date_min?: { annee: number; mois: number; jour: number }; rang_guilde_min?: string; groupe_min?: number; groupe_max?: number; ou?: Condition[];
 }
 
 export const zConsequence = z.object({
@@ -271,6 +274,12 @@ export const zConsequence = z.object({
   ellipse: z.object({ jusqua: z.object({ annee: z.number(), mois: z.number(), jour: z.number().default(1) }), titre: z.string() }).optional(),
   fin_chapitre: z.number().optional(),
   soigner_groupe: z.boolean().optional(),
+  /** Pari : retire cette somme au héros qui choisit (elle est mise de côté). */
+  miser: z.number().int().min(1).optional(),
+  /** Pari gagné : rend la mise multipliée (2 = la mise et autant en gain). */
+  gain_pari: z.number().min(0).optional(),
+  /** Pari perdu : la mise est définitivement perdue. */
+  perte_pari: z.boolean().optional(),
 });
 export type Consequence = z.infer<typeof zConsequence>;
 
@@ -292,8 +301,22 @@ export const zChoix = z.object({
 });
 export type Choix = z.infer<typeof zChoix>;
 
+/**
+ * Un personnage s'adresse à UN joueur précis, par son pseudo. Seul ce joueur répond, parmi 3 réponses au plus.
+ *  - `regle` : quel héros est interrogé (ex. { classe: arcaniste }) ; si plusieurs conviennent, ou aucun, tirage à graine ;
+ *  - `question` : dans le texte, {pseudo} = pseudo du joueur, {nom} = nom de son héros ;
+ *  - `reponses` : celles dont le `si` correspond au héros passent d'abord, puis celles sans `si`.
+ */
+export const zParoleA = z.object({
+  regle: zCondition.optional(),
+  question: zReplique,
+  reponses: z.array(z.object({ texte: z.string(), si: zCondition.optional(), effets: z.array(zConsequence).default([]), aller: z.string() })).min(1),
+});
+export type ParoleA = z.infer<typeof zParoleA>;
+
 export const zNoeud = z.object({
   decor: z.string().optional(),
+  parole_a: zParoleA.optional(),
   repliques: z.array(zReplique).default([]),
   effets: z.array(zConsequence).default([]),
   choix: z.array(zChoix).default([]),

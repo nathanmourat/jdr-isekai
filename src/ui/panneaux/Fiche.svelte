@@ -87,7 +87,7 @@
           <div class="variantes">
             <label><input type="radio" name={`var-${id}`} checked={!h.varianteActive[id]} onchange={() => jeu.agir({ type: 'variante_active', competence: id, technique: null })} /> version de base</label>
             {#each h.variantes[id] as v (v)}
-              {@const t = etat.grimoire?.[v]}
+              {@const t = h.grimoire?.[v]}
               <label><input type="radio" name={`var-${id}`} checked={h.varianteActive[id] === v} onchange={() => jeu.agir({ type: 'variante_active', competence: id, technique: v })} /> {t?.nom ?? v} <small class="discret">({t ? `${t.cout} mana, recharge ${t.recharge}` : ''})</small></label>
               <button class="petit danger" onclick={() => confirm(`Oublier la variante « ${t?.nom ?? v} » ?`) && jeu.agir({ type: 'oublier_variante', technique: v })}>Oublier</button>
             {/each}
@@ -106,6 +106,16 @@
       <p class="discret">Au niveau {c.config.personnage.niveau_branche}, vous choisirez une branche : {cl.branches.map((b) => b.nom).join(' ou ')}.</p>
     {/if}
     <p class="discret">Ultime ({c.config.saisons[0].niveau_ultime}+, après la quête de classe) : {cl.ultime.nom} — {cl.ultime.description}</p>
+  </div>
+
+  <div class="carte-ui">
+    <h3>📖 Mon grimoire</h3>
+    <p class="discret">Vos fusions apprises. Ce grimoire est personnel et privé : les autres joueurs ne le voient pas.</p>
+    {#each Object.values(h.grimoire ?? {}) as t (t.id)}
+      <p><CompetenceInfo comp={t} rang={h.rangsCompetences[t.parent] ?? 1} heros={h} />{#if h.varianteActive[t.parent] === t.id} <span class="badge or">active</span>{/if}</p>
+    {:else}
+      <p class="discret">Encore vide. Pour apprendre une fusion : à la Guilde (liste des fusions de votre classe), ou en combat avec « Proposer mon action » (« je combine X et Y »).</p>
+    {/each}
   </div>
 
   <div class="carte-ui">

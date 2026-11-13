@@ -3,6 +3,7 @@
  */
 import type { Contenu } from '../contenu/types';
 import type { Competence } from '../contenu/schemas';
+import type { Technique } from './fusions';
 import { CARACS } from '../contenu/constantes';
 import { valeurs, vrai } from './outils';
 
@@ -44,6 +45,8 @@ export interface Heros {
   varianteActive: Record<string, string | null>;
   /** Compétences équipées pour le combat (null = les premières, dans la limite `competences_equipees_max`). */
   equipees: string[] | null;
+  /** Grimoire personnel et privé : les fusions que CE héros a apprises (les autres joueurs ne les voient pas). */
+  grimoire: Record<string, Technique>;
 }
 
 export interface OptionsCreation {
@@ -132,6 +135,7 @@ export function creerHeros(contenu: Contenu, o: OptionsCreation): Heros {
     variantes: {},
     varianteActive: {},
     equipees: null,
+    grimoire: {},
   };
   if (vrai(o.niveau) && o.niveau > 1) monterJusquA(contenu, h, o.niveau, true);
   return h;

@@ -62,9 +62,9 @@
       {#each competencesEquipees(c, h) as id (id)}<p><CompetenceInfo comp={c.competences[id]} rang={h.rangsCompetences[id] ?? 1} heros={h} /></p>{/each}
       <h4>Mon grimoire</h4>
       {#each fusions as v (v)}
-        {@const t = etat.grimoire?.[v]}
+        {@const t = h.grimoire?.[v]}
         {#if t}<p><CompetenceInfo comp={t} rang={h.rangsCompetences[t.parent] ?? 1} heros={h} /></p>{/if}
-      {:else}<p class="discret">Aucune fusion apprise pour l'instant.</p>{/each}
+      {:else}<p class="discret">Aucune fusion apprise pour l'instant. Votre grimoire est personnel : les autres joueurs ne le voient pas.</p>{/each}
       <h4>Trait et passif</h4>
       <p><strong>{ra.trait.nom}</strong> (race) : {ra.trait.avantage} <em>Défaut :</em> {ra.trait.defaut}</p>
       <p><strong>{cl.passif.nom}</strong> (classe) : {cl.passif.description}</p>

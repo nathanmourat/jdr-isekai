@@ -79,7 +79,7 @@ describe('Fusions (variantes)', () => {
     expect(r.ok).toBe(false);
   });
 
-  it('dans une partie : rang 2 requis, 2 variantes au maximum, grimoire partagé', () => {
+  it('dans une partie : rang 2 requis, 2 variantes au maximum, grimoire personnel et privé', () => {
     const r = nouvellePartieDeTest(c, 'fusion');
     jouer(c, r, { type: 'rejoindre', joueur: 'j1', pseudo: 'A' });
     jouer(c, r, { type: 'rejoindre', joueur: 'j2', pseudo: 'B' });
@@ -88,12 +88,23 @@ describe('Fusions (variantes)', () => {
     expect(() => appliquer(c, r.etat, { type: 'fusionner', joueur: 'j1', parent: 'javelot-de-flamme', secondaire: 'onde-de-givre' })).toThrow(/rang 2/);
     for (const h of ['h1', 'h2']) { r.etat.heros[h].rangsCompetences['javelot-de-flamme'] = 2; r.etat.heros[h].rangsCompetences['onde-de-givre'] = 2; }
     jouer(c, r, { type: 'fusionner', joueur: 'j1', parent: 'javelot-de-flamme', secondaire: 'onde-de-givre' });
-    expect(Object.keys(r.etat.grimoire)).toEqual(['fusion:javelot-de-flamme+onde-de-givre']);
+    // la fusion va dans le grimoire de Pyra seulement : rien dans celui de Glacia, rien dans le journal commun
+    expect(Object.keys(r.etat.heros.h1.grimoire)).toEqual(['fusion:javelot-de-flamme+onde-de-givre']);
+    expect(r.etat.heros.h2.grimoire).toEqual({});
+    expect(r.etat.grimoire).toBeUndefined();
     expect(r.etat.heros.h1.varianteActive['javelot-de-flamme']).toBe('fusion:javelot-de-flamme+onde-de-givre');
-    expect(r.etat.journal.at(-1)!.texte).toMatch(/invente une technique/);
-    // l'autre joueur l'apprend depuis le grimoire
+    expect(r.etat.journal.at(-1)!.texte).not.toMatch(/technique/);
+    // l'autre joueur peut l'apprendre à la Guilde, parce que SA classe et SES rangs le permettent
     jouer(c, r, { type: 'apprendre_technique', joueur: 'j2', technique: 'fusion:javelot-de-flamme+onde-de-givre' });
     expect(r.etat.heros.h2.variantes['javelot-de-flamme']).toHaveLength(1);
+    expect(Object.keys(r.etat.heros.h2.grimoire)).toEqual(['fusion:javelot-de-flamme+onde-de-givre']);
+    // une autre classe ne peut pas l'apprendre
+    jouer(c, r, { type: 'rejoindre', joueur: 'j3', pseudo: 'C' });
+    jouer(c, r, { type: 'creer_heros', joueur: 'j3', heros: { nom: 'Roc', classe: 'gardien', race: 'nain', don: 'coeur-inepuisable', origine: 'invoque', age: 30 } });
+    expect(() => appliquer(c, r.etat, { type: 'apprendre_technique', joueur: 'j3', technique: 'fusion:javelot-de-flamme+onde-de-givre' })).toThrow(/classe/);
+    // oublier une variante la retire du grimoire
+    jouer(c, r, { type: 'oublier_variante', joueur: 'j2', technique: 'fusion:javelot-de-flamme+onde-de-givre' });
+    expect(r.etat.heros.h2.grimoire).toEqual({});
     // limite de 2 variantes par compétence
     r.etat.heros.h1.variantes['javelot-de-flamme'].push('fusion:fictive');
     r.etat.heros.h1.rangsCompetences['eclair-en-chaine'] = 2;
@@ -124,7 +135,7 @@ describe('Sauvegardes de la version précédente', () => {
     const s = lireSauvegarde(JSON.stringify({ format: 'velmaris-sauvegarde', version: 1, exporteeLe: 'x', depart, actions: [] }));
     expect(s.version).toBe(s.depart.version);
     expect(s.version).toBeGreaterThanOrEqual(3);
-    expect((s.depart as unknown as { grimoire: object }).grimoire).toEqual({});
+    expect(s.depart.grimoire).toBeUndefined(); // le grimoire partagé n'existe plus : chaque héros a le sien
     expect(s.depart.repos).toBeNull();
   });
 });

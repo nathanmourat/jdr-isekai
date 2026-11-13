@@ -98,3 +98,20 @@ export function apprendre(h: Heros, t: Technique) {
   h.variantes[t.parent] = [...(h.variantes[t.parent] ?? []), t.id];
   h.varianteActive[t.parent] = t.id;
 }
+
+/**
+ * Fusions que ce héros pourrait apprendre à la Guilde : toutes les combinaisons de SES compétences
+ * (sa classe, sa branche) que les règles de fusion autorisent. `probleme` dit ce qui manque encore (rang…), ou null.
+ */
+export function fusionsPossibles(contenu: Contenu, h: Heros): { technique: Technique; probleme: string | null }[] {
+  const connues = competencesConnues(contenu, h);
+  const res: { technique: Technique; probleme: string | null }[] = [];
+  for (const a of connues) for (const b of connues) {
+    if (a === b) continue;
+    const r = creerTechnique(contenu, a, b, h.nom);
+    if (!r.ok) continue;
+    if ((h.variantes[a] ?? []).includes(r.technique.id)) continue;
+    res.push({ technique: r.technique, probleme: peutApprendre(contenu, h, r.technique) });
+  }
+  return res;
+}

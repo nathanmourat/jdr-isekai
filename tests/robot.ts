@@ -56,6 +56,9 @@ export function finirScene(contenu: Contenu, r: Robot, cle: string, joueurs: str
     if (r.etat.donjon && cle === 'groupe') { explorerDonjon(contenu, r); continue; }
     const n = noeudCourant(contenu, r.etat, cle);
     if (!n) return;
+    // un personnage interroge un héros : seul son joueur répond (première réponse proposée)
+    const parole = r.etat.scenes[cle]?.parole;
+    if (parole) { jouer(contenu, r, { type: 'repondre', joueur: r.etat.heros[parole.heros].joueurId, cle, index: parole.reponses[0] }); continue; }
     const visibles = choixVisibles(contenu, r.etat, cle).filter((c) => c.possible);
     if (visibles.length) {
       const c = visibles[Math.min(choixPrefere, visibles.length - 1)];

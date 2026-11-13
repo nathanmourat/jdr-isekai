@@ -164,7 +164,12 @@ function verifierReferences(c: Contenu): string[] {
       lien(n.suite, 'suite');
       if (n.combat) { lien(n.combat.victoire, 'victoire'); lien(n.combat.defaite, 'défaite'); if (!c.rencontres[n.combat.rencontre]) e.push(`${ou} › nœud ${nid} › rencontre « ${n.combat.rencontre} » introuvable`); }
       if (n.donjon) { lien(n.donjon.sortie, 'sortie de donjon'); if (!c.donjons[n.donjon.id]) e.push(`${ou} › nœud ${nid} › donjon « ${n.donjon.id} » introuvable`); }
-      if (!n.fin && !n.suite && !n.combat && !n.donjon && n.choix.length === 0) e.push(`${ou} › nœud ${nid} › impasse : ni choix, ni suite, ni combat, ni « fin: true »`);
+      if (n.parole_a) {
+        if (!n.parole_a.reponses.some((r) => !r.si)) e.push(`${ou} › nœud ${nid} › parole_a : il faut au moins une réponse sans « si » (pour tous les héros)`);
+        if (n.parole_a.question.qui !== 'narrateur' && !c.pnj[n.parole_a.question.qui] && !c.compagnons[n.parole_a.question.qui]) e.push(`${ou} › nœud ${nid} › parole_a : personnage « ${n.parole_a.question.qui} » introuvable`);
+        for (const r of n.parole_a.reponses) { lien(r.aller, 'réponse'); if (r.si) verifierCondition(c, ou, r.si, e); for (const eff of r.effets) verifierConsequence(c, `${ou} › nœud ${nid}`, eff, e); }
+      }
+      if (!n.fin && !n.suite && !n.combat && !n.donjon && !n.parole_a && n.choix.length === 0) e.push(`${ou} › nœud ${nid} › impasse : ni choix, ni suite, ni combat, ni « fin: true »`);
       for (const r of n.repliques) {
         if (r.qui !== 'narrateur' && r.qui !== 'heros' && r.qui !== 'meneur' && !c.pnj[r.qui] && !c.compagnons[r.qui]) e.push(`${ou} › nœud ${nid} › personnage « ${r.qui} » introuvable`);
         if (r.si) verifierCondition(c, ou, r.si, e);

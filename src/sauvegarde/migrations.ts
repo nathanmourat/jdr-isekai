@@ -7,7 +7,7 @@
  * Les anciennes parties restent ainsi jouables après une mise à jour.
  */
 import { VERSION_ETAT, type Action, type EtatPartie } from '../moteur/partie';
-import { copieProfonde } from '../moteur/outils';
+import { cles, copieProfonde } from '../moteur/outils';
 
 export const FORMAT = 'velmaris-sauvegarde';
 
@@ -37,6 +37,18 @@ export const migrations: Record<number, Migration> = {
   2: (s) => {
     (s.depart as { repos?: unknown }).repos ??= null;
     s.version = 3;
+    return s;
+  },
+  // v3 → v4 (test 1, lot D) : grimoire personnel, paris. Les héros sont recréés en rejouant les actions :
+  // chaque fusion retombe donc dans le grimoire du héros qui l'a inventée ou apprise.
+  // Si l'état de départ contient encore un grimoire partagé, le moteur le répartit à la première action
+  // (au héros qui a appris chaque fusion, sinon à tous ceux qui peuvent l'utiliser).
+  3: (s) => {
+    const d = s.depart as { grimoire?: Record<string, unknown>; mises?: unknown; mouvementsOr?: unknown };
+    if (d.grimoire && cles(d.grimoire).length === 0) delete d.grimoire;
+    d.mises ??= {};
+    d.mouvementsOr ??= [];
+    s.version = 4;
     return s;
   },
 };

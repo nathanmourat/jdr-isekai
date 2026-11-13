@@ -16,12 +16,13 @@ import {
   age, ameliorerCompetence, caracsTotales, choisirBranche, competencesConnues, creerHeros, gagnerXp, niveauMoyen, repartirPoint,
   xpPourNiveau, type Carac, type Heros, type OptionsCreation,
 } from './personnage';
-import { creerRng, de, type Rng } from './rng';
+import { choisir as choisirAuHasard, creerRng, de, type Rng } from './rng';
 import { cles, copieProfonde, entrees, valeurs, vrai } from './outils';
 import { apprendre, creerTechnique, idFusion, peutApprendre, type Technique } from './fusions';
+import { competencesConnues as connuesDe } from './personnage';
 import { anneeDepart, chapitreDe, fetesEntre, formaterDate, joursParMois, versDate, versJour } from './temps';
 
-export const VERSION_ETAT = 3;
+export const VERSION_ETAT = 4;
 export const MAX_JOUEURS = 6;
 
 export interface Joueur { id: string; pseudo: string; herosId: string | null; present: boolean }
@@ -36,7 +37,12 @@ export interface EtatScene {
   dernierTest: { carac: Carac; jet: number; total: number; difficulte: number; reussi: boolean; heros: string } | null;
   /** Ce qui s'est passé à l'entrée du nœud (gains, pertes), affiché au joueur. */
   messages: string[];
+  /** Un personnage interroge ce héros : lui seul répond, parmi ces réponses (index dans `parole_a.reponses`). */
+  parole?: { heros: string; reponses: number[] } | null;
 }
+
+/** Pièces qui sortent du porte-monnaie d'un héros ou y rentrent pendant la dernière action (pour l'animation). */
+export interface MouvementOr { heros: string; montant: number; raison: string }
 
 export interface ContexteCombat {
   cle: string;               // 'groupe' ou id du héros (combat individuel)
@@ -111,8 +117,11 @@ export interface EtatPartie {
   secondDepart: Record<string, number>;
   dernieresNouvelles: string[];
   finChapitre: number | null;
-  /** Grimoire de la partie : techniques (fusions) inventées par les joueurs, que les autres peuvent apprendre. */
-  grimoire: Record<string, Technique>;
+  /** Ancien grimoire partagé (avant le format 4). Le moteur le répartit entre les héros puis le supprime. */
+  grimoire?: Record<string, Technique>;
+  /** Paris en cours : somme mise de côté par héros. */
+  mises: Record<string, number>;
+  mouvementsOr: MouvementOr[];
 }
 
 export type Action =
@@ -123,6 +132,8 @@ export type Action =
   | { type: 'si_absent'; joueur: string; mode: 'ia' | 'camp' }
   | { type: 'lancer_scene'; joueur: string; scene: string }
   | { type: 'choisir'; joueur: string; cle: string; index: number }
+  /** Réponse du joueur à qui un personnage s'adresse (index dans la liste des réponses proposées). */
+  | { type: 'repondre'; joueur: string; cle: string; index: number }
   | { type: 'trancher'; joueur: string; cle: string }
   | { type: 'continuer'; joueur: string; cle: string }
   | { type: 'quitter_scene'; joueur: string; cle: string }
@@ -198,7 +209,8 @@ export function nouvellePartie(contenu: Contenu, id: string, nom: string, graine
     secondDepart: {},
     dernieresNouvelles: [],
     finChapitre: null,
-    grimoire: {},
+    mises: {},
+    mouvementsOr: [],
   };
 }
 
@@ -285,6 +297,8 @@ export function conditionHeros(contenu: Contenu, etat: EtatPartie, c: Condition 
 /** Une condition dans une scène : vraie si au moins un héros participant la remplit. */
 export function conditionScene(contenu: Contenu, etat: EtatPartie, c: Condition | undefined, heros: string[]): boolean {
   if (!c) return true;
+  if (c.groupe_min !== undefined && heros.length < c.groupe_min) return false;
+  if (c.groupe_max !== undefined && heros.length > c.groupe_max) return false;
   if (heros.length === 0) return conditionHeros(contenu, etat, c, null);
   return heros.some((h) => conditionHeros(contenu, etat, c, etat.heros[h]));
 }
@@ -366,6 +380,29 @@ function appliquerConsequence(contenu: Contenu, etat: EtatPartie, eff: Consequen
     }
   }
   if (eff.soigner_groupe) for (const h of hs) h.blessure = false;
+  // Paris : la mise sort vraiment du porte-monnaie ; elle revient (multipliée) si le pari est gagné
+  if (eff.miser !== undefined) for (const h of hs) {
+    if (h.or < eff.miser) continue;
+    h.or -= eff.miser;
+    etat.mises[h.id] = (etat.mises[h.id] ?? 0) + eff.miser;
+    etat.mouvementsOr.push({ heros: h.id, montant: -eff.miser, raison: 'mise' });
+    messages.push(`${h.nom} mise ${eff.miser} pièces d'or.`);
+  }
+  if (eff.gain_pari !== undefined) for (const h of hs) {
+    const mise = etat.mises[h.id] ?? 0;
+    if (mise <= 0) continue;
+    const gain = Math.round(mise * eff.gain_pari);
+    h.or += gain;
+    delete etat.mises[h.id];
+    etat.mouvementsOr.push({ heros: h.id, montant: gain, raison: 'pari gagné' });
+    messages.push(`${h.nom} gagne son pari : +${gain} pièces d'or (mise comprise).`);
+  }
+  if (eff.perte_pari === true) for (const h of hs) {
+    const mise = etat.mises[h.id] ?? 0;
+    if (mise <= 0) continue;
+    delete etat.mises[h.id];
+    messages.push(`${h.nom} perd sa mise de ${mise} pièces d'or.`);
+  }
   if (vrai(eff.fin_chapitre)) {
     etat.finChapitre = eff.fin_chapitre;
     etat.flags[`chapitre-${eff.fin_chapitre}-fini`] = true;
@@ -445,7 +482,29 @@ export function nomFaction(f: string): string {
   return ({ couronne: 'Couronne', guilde: 'Guilde', concorde: 'Concorde', ordre: 'Ordre' } as Record<string, string>)[f] ?? f;
 }
 
-export function remplacerVariables(contenu: Contenu, etat: EtatPartie, texte: string, heros: string[]): string {
+/** « [[tu…||vous…]] » : la première forme pour un héros seul, la seconde pour un groupe. */
+function accorder(texte: string, seul: boolean): string {
+  let res = '';
+  let reste = texte;
+  for (let garde = 0; garde < 100; garde++) {
+    const i = reste.indexOf('[[');
+    if (i < 0) break;
+    const j = reste.indexOf(']]', i);
+    if (j < 0) break;
+    const morceaux = reste.slice(i + 2, j).split('||');
+    res += reste.slice(0, i) + (seul ? morceaux[0] : (morceaux[1] ?? morceaux[0]));
+    reste = reste.slice(j + 2);
+  }
+  return res + reste;
+}
+
+/**
+ * @param interroge héros à qui un personnage s'adresse : {pseudo} = pseudo de son joueur, {nom} = son nom
+ */
+export function remplacerVariables(contenu: Contenu, etat: EtatPartie, texteBrut: string, heros: string[], interroge?: string): string {
+  let texte = accorder(texteBrut, heros.length <= 1);
+  const hi = vrai(interroge) ? etat.heros[interroge] : null;
+  if (hi) texte = texte.replaceAll('{pseudo}', etat.joueurs[hi.joueurId]?.pseudo ?? hi.nom).replaceAll('{nom}', hi.nom);
   const noms = heros.map((h) => etat.heros[h]?.nom).filter((n): n is string => vrai(n));
   const listeNoms = noms.length <= 1 ? noms[0] ?? 'le héros' : `${noms.slice(0, -1).join(', ')} et ${noms[noms.length - 1]}`;
   const meneur = vrai(etat.meneur) && vrai(etat.joueurs[etat.meneur]?.herosId) ? etat.heros[etat.joueurs[etat.meneur].herosId!].nom : noms[0] ?? '';
@@ -488,7 +547,26 @@ function entrerNoeud(contenu: Contenu, etat: EtatPartie, cle: string, noeudId: s
   es.noeud = noeudId;
   es.votes = {};
   es.messages = [];
+  es.parole = null;
   for (const eff of n.effets) appliquerConsequence(contenu, etat, eff, es.heros, es.messages);
+  if (n.parole_a) {
+    // Un personnage s'adresse à un joueur précis : on choisit lequel (règle, puis hasard à graine)
+    const pa = n.parole_a;
+    let candidats = es.heros.filter((h) => conditionHeros(contenu, etat, pa.regle, etat.heros[h]));
+    if (candidats.length === 0) candidats = es.heros;
+    const elu = choisirAuHasard(etat.rng, candidats);
+    const h = etat.heros[elu];
+    const specifiques: number[] = [];
+    const generiques: number[] = [];
+    pa.reponses.forEach((r, i) => {
+      if (!r.si) generiques.push(i);
+      else if (conditionHeros(contenu, etat, r.si, h)) specifiques.push(i);
+    });
+    es.parole = { heros: elu, reponses: [...specifiques, ...generiques].slice(0, 3) };
+    // joueur absent : son héros répond tout seul (première réponse)
+    if (!(etat.joueurs[h.joueurId]?.present ?? false)) repondreParole(contenu, etat, cle, es.parole.reponses[0]);
+    return;
+  }
   if (n.combat) {
     lancerCombat(contenu, etat, n.combat.rencontre, cle === 'groupe' ? 'groupe' : cle, { cle: cle === 'groupe' ? 'groupe' : cle, origine: 'scene', sceneCle: cle, victoire: n.combat.victoire, defaite: n.combat.defaite, evenementDonjon: null, contrat: null, bilan: null });
   } else if (n.donjon) {
@@ -498,6 +576,24 @@ function entrerNoeud(contenu: Contenu, etat: EtatPartie, cle: string, noeudId: s
   } else if (n.fin) {
     terminerScene(contenu, etat, cle);
   }
+}
+
+function repondreParole(contenu: Contenu, etat: EtatPartie, cle: string, index: number) {
+  const es = etat.scenes[cle];
+  const n = noeudCourant(contenu, etat, cle)!;
+  const p = es.parole!;
+  const rep = n.parole_a!.reponses[index];
+  const msgs: string[] = [`${etat.heros[p.heros].nom} répond : ${remplacerVariables(contenu, etat, rep.texte, es.heros, p.heros)}`];
+  for (const eff of rep.effets) appliquerConsequence(contenu, etat, eff, [p.heros], msgs);
+  entrerNoeud(contenu, etat, cle, rep.aller);
+  etat.scenes[cle].messages.unshift(...msgs);
+}
+
+/** Somme qu'un choix fait miser (0 si ce n'est pas un pari). */
+export function miseDuChoix(ch: Choix): number {
+  let total = 0;
+  for (const eff of ch.effets) total += eff.miser ?? 0;
+  return total;
 }
 
 function terminerScene(contenu: Contenu, etat: EtatPartie, cle: string) {
@@ -536,12 +632,12 @@ function resoudreChoix(contenu: Contenu, etat: EtatPartie, cle: string, index: n
   const msgs: string[] = [];
   for (const eff of ch.effets) {
     // affinité et drapeaux personnels (« heros:… ») : seulement pour ceux qui ont voté ce choix
-    const { affinite: aff, flag, ...reste } = eff;
+    const { affinite: aff, flag, miser, ...reste } = eff;
     const flags = flag === undefined ? [] : Array.isArray(flag) ? flag : [flag];
     const perso = flags.filter((f) => f.startsWith('heros:'));
     const communs = flags.filter((f) => !f.startsWith('heros:'));
     appliquerConsequence(contenu, etat, { ...reste, flag: communs }, es.heros, msgs);
-    if (aff || perso.length > 0) appliquerConsequence(contenu, etat, { affinite: aff, flag: perso }, herosVotants.length > 0 ? herosVotants : es.heros, msgs);
+    if (aff || perso.length > 0 || miser !== undefined) appliquerConsequence(contenu, etat, { affinite: aff, flag: perso, miser }, herosVotants.length > 0 ? herosVotants : es.heros, msgs);
   }
   let suite = ch.aller;
   es.dernierTest = null;
@@ -567,7 +663,7 @@ function lancerCombat(contenu: Contenu, etat: EtatPartie, rencontre: string, cle
   for (const id of herosIds) {
     const h = etat.heros[id];
     const present = etat.joueurs[h.joueurId]?.present ?? false;
-    allies.push(combattantHeros(contenu, h, present, etat.grimoire));
+    allies.push(combattantHeros(contenu, h, present, h.grimoire));
     const co = etat.equipe[id];
     if (vrai(co) && etat.compagnonsRencontres.includes(co)) {
       const p = paliersAtteints(contenu, affinite(etat, id, co), queteTerminee(etat, contenu.compagnons[co].quete));
@@ -768,7 +864,10 @@ function resoudreTempsLibre(contenu: Contenu, etat: EtatPartie) {
 export function appliquer(contenu: Contenu, etatAvant: EtatPartie, action: Action): EtatPartie {
   const etat = copieProfonde(etatAvant);
   etat.dernieresNouvelles = [];
-  etat.grimoire ??= {}; // parties créées avant le combat libre
+  etat.mouvementsOr = [];
+  etat.mises ??= {};
+  for (const h of valeurs(etat.heros)) h.grimoire ??= {};
+  if (etat.grimoire) repartirAncienGrimoire(contenu, etat); // parties d'avant le grimoire personnel
   if (etat.repos === undefined) etat.repos = null; // parties créées avant le repos à l'auberge
   const j = etat.joueurs[action.joueur];
   if (action.type !== 'rejoindre' && !j) refuser('Joueur inconnu : rejoignez la partie d\'abord');
@@ -828,13 +927,13 @@ export function appliquer(contenu: Contenu, etatAvant: EtatPartie, action: Actio
         if (etat.scenes.groupe && etat.scenes.groupe.noeud !== '__fin__') refuser('Une scène de groupe est déjà en cours');
         if (etat.donjon) refuser('Le groupe est dans un donjon');
         if (!sceneEstDisponible(contenu, etat, s, h.id)) refuser('Cette scène n\'est pas disponible');
-        etat.scenes.groupe = { sceneId: s.id, noeud: s.debut, heros: participantsGroupe(etat), votes: {}, dernierTest: null, messages: [] };
+        etat.scenes.groupe = { sceneId: s.id, noeud: s.debut, heros: participantsGroupe(etat), votes: {}, dernierTest: null, messages: [], parole: null };
         if (etat.tempsLibre?.resultats) etat.tempsLibre = null;
         entrerNoeud(contenu, etat, 'groupe', s.debut);
       } else {
         if (etat.scenes[h.id] && etat.scenes[h.id].noeud !== '__fin__') refuser('Vous êtes déjà dans une scène');
         if (!sceneEstDisponible(contenu, etat, s, h.id)) refuser('Cette scène n\'est pas disponible');
-        etat.scenes[h.id] = { sceneId: s.id, noeud: s.debut, heros: [h.id], votes: {}, dernierTest: null, messages: [] };
+        etat.scenes[h.id] = { sceneId: s.id, noeud: s.debut, heros: [h.id], votes: {}, dernierTest: null, messages: [], parole: null };
         entrerNoeud(contenu, etat, h.id, s.debut);
       }
       break;
@@ -847,11 +946,21 @@ export function appliquer(contenu: Contenu, etatAvant: EtatPartie, action: Actio
       const visibles = choixVisibles(contenu, etat, action.cle);
       const c = visibles.find((x) => x.index === action.index);
       if (!c || !c.possible) refuser('Choix impossible');
+      const mise = miseDuChoix(c!.choix);
+      if (mise > 0 && vrai(j.herosId) && etat.heros[j.herosId].or < mise) refuser(`Pas assez d'or pour miser ${mise} pièces (vous en avez ${etat.heros[j.herosId].or})`);
       if (action.cle !== 'groupe') { resoudreChoix(contenu, etat, action.cle, action.index, [action.joueur]); break; }
       es.votes[action.joueur] = action.index;
       // tous les joueurs présents ont voté → résolution
       const presents = etat.ordreJoueurs.filter((x) => etat.joueurs[x].present && vrai(etat.joueurs[x].herosId));
       if (presents.every((p) => es.votes[p] !== undefined)) resoudreVote(contenu, etat);
+      break;
+    }
+    case 'repondre': {
+      const es = etat.scenes[action.cle] ?? refuser('Aucune scène');
+      const p = es.parole ?? refuser('Personne ne vous pose de question');
+      if (j.herosId !== p.heros) refuser(`C'est à ${etat.heros[p.heros].nom} de répondre`);
+      if (!p.reponses.includes(action.index)) refuser('Réponse impossible');
+      repondreParole(contenu, etat, action.cle, action.index);
       break;
     }
     case 'trancher': {
@@ -1103,7 +1212,7 @@ export function appliquer(contenu: Contenu, etatAvant: EtatPartie, action: Actio
     case 'fusionner': {
       const h = herosDuJoueur(etat, action.joueur);
       const id = idFusion(action.parent, action.secondaire);
-      let t = etat.grimoire[id];
+      let t = h.grimoire[id];
       if (!t) {
         const r = creerTechnique(contenu, action.parent, action.secondaire, h.nom);
         if (!r.ok) refuser(r.raison);
@@ -1118,10 +1227,8 @@ export function appliquer(contenu: Contenu, etatAvant: EtatPartie, action: Actio
       const entree = vrai(action.cle) ? etat.combats[action.cle] : undefined;
       const acteur = entree?.combat.combattants.find((c) => c.herosId === h.id && c.type === 'heros');
       if (vrai(action.cle) && (!entree || !acteur || entree.combat.enAttente !== acteur.id)) refuser('Ce n\'est pas votre tour');
-      if (!etat.grimoire[id]) {
-        etat.grimoire[id] = t;
-        journal(contenu, etat, `${h.nom} invente une technique : ${t.nom}. Elle rejoint le grimoire de la partie.`);
-      }
+      // grimoire personnel et privé : rien n'est écrit dans le journal commun
+      if (!h.grimoire[id]) h.grimoire[id] = t;
       if (!connue) apprendre(h, t); else h.varianteActive[t.parent] = t.id;
       if (entree && acteur) {
         // la variante remplace la compétence de base pour la suite du combat
@@ -1136,18 +1243,29 @@ export function appliquer(contenu: Contenu, etatAvant: EtatPartie, action: Actio
     }
     case 'apprendre_technique': {
       const h = herosDuJoueur(etat, action.joueur);
-      const t = etat.grimoire[action.technique] ?? refuser('Technique absente du grimoire');
+      // À la Guilde, on n'apprend que les fusions de SES compétences (sa classe, ses rangs)
+      let t: Technique | null = null;
+      const connues = connuesDe(contenu, h);
+      for (const a of connues) for (const b of connues) {
+        if (t === null && a !== b && idFusion(a, b) === action.technique) {
+          const r = creerTechnique(contenu, a, b, h.nom);
+          if (!r.ok) refuser(r.raison);
+          t = (r as { ok: true; technique: Technique }).technique;
+        }
+      }
+      if (t === null) return refuser('Votre classe ne peut pas apprendre cette fusion');
       const pb = peutApprendre(contenu, h, t);
       if (vrai(pb)) refuser(pb);
       apprendre(h, t);
-      journal(contenu, etat, `${h.nom} apprend la technique ${t.nom}.`);
+      h.grimoire[t.id] = t;
       break;
     }
     case 'oublier_variante': {
       const h = herosDuJoueur(etat, action.joueur);
-      const t = etat.grimoire[action.technique] ?? refuser('Technique inconnue');
+      const t = h.grimoire[action.technique] ?? refuser('Technique inconnue');
       h.variantes[t.parent] = (h.variantes[t.parent] ?? []).filter((x) => x !== t.id);
       if (h.varianteActive[t.parent] === t.id) h.varianteActive[t.parent] = null;
+      delete h.grimoire[t.id];
       break;
     }
     case 'variante_active': {
@@ -1172,6 +1290,20 @@ export function appliquer(contenu: Contenu, etatAvant: EtatPartie, action: Actio
   }
   etat.numeroAction++;
   return etat;
+}
+
+/**
+ * Ancienne partie (grimoire partagé) : chaque fusion va au héros qui l'a apprise ;
+ * si personne ne l'a apprise, à tous les héros qui pourraient l'utiliser.
+ */
+function repartirAncienGrimoire(contenu: Contenu, etat: EtatPartie) {
+  for (const t of valeurs(etat.grimoire ?? {})) {
+    const heros = valeurs(etat.heros);
+    const appris = heros.filter((h) => (h.variantes[t.parent] ?? []).includes(t.id));
+    const cibles = appris.length > 0 ? appris : heros.filter((h) => peutApprendre(contenu, h, t) === null);
+    for (const h of cibles) h.grimoire[t.id] = t;
+  }
+  delete etat.grimoire;
 }
 
 function quantiteValide(q: number | undefined): number {
