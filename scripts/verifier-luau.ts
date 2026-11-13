@@ -11,8 +11,8 @@ import ts from 'typescript';
 import { readdirSync } from 'node:fs';
 import { join } from 'node:path';
 
-const DOSSIERS = ['src/moteur', 'src/sauvegarde'];
-const IGNORES = new Set(['simulation.ts', 'fichier.ts']); // outils propres au web, jamais compilés pour Roblox
+const DOSSIERS = ['src/moteur', 'src/sauvegarde', 'src/ia'];
+const IGNORES = new Set(['simulation.ts', 'fichier.ts', 'corpus.ts', 'phrases-test.ts']); // outils propres au web, jamais compilés pour Roblox
 
 const fichiers = DOSSIERS.flatMap((d) => readdirSync(d).filter((f) => f.endsWith('.ts') && !IGNORES.has(f)).map((f) => join(d, f)));
 const programme = ts.createProgram(fichiers, { strict: true, target: ts.ScriptTarget.ESNext, module: ts.ModuleKind.ESNext, moduleResolution: ts.ModuleResolutionKind.Bundler, resolveJsonModule: true, skipLibCheck: true });
@@ -30,6 +30,15 @@ function risque(t: ts.Type): boolean {
     return true;
   }
   return false;
+}
+
+/** Liste dont les éléments peuvent être undefined/null (« trous » en Luau). */
+function avecTrous(t: ts.Type): boolean {
+  if (!types.isArrayType(t)) return false;
+  const el = types.getTypeArguments(t as ts.TypeReference)[0];
+  if (!el) return false;
+  const parts = el.isUnion() ? el.types : [el];
+  return parts.some((p) => (p.flags & (ts.TypeFlags.Undefined | ts.TypeFlags.Null | ts.TypeFlags.Void)) !== 0);
 }
 
 function signaler(n: ts.Node, quoi: string) {
@@ -62,7 +71,11 @@ function visiter(n: ts.Node) {
     const o = n.expression.text, p = n.name.text;
     if (o === 'Object' && ['keys', 'values', 'entries'].includes(p)) signaler(n, 'ordre non garanti en Luau (utiliser cles/valeurs/entrees de outils.ts)');
     if (o === 'JSON' || o === 'Math' && p === 'imul') signaler(n, 'non disponible en Luau');
-  } else if (ts.isIdentifier(n) && n.text === 'structuredClone') signaler(n, 'non disponible en Luau (utiliser copieProfonde)');
+  } else if (ts.isIdentifier(n) && /^(Float|Int|Uint)(8|16|32|64)(Clamped)?Array$/.test(n.text)) signaler(n, 'tableau typé absent en Luau (utiliser une liste ordinaire)');
+  else if (ts.isIdentifier(n) && n.text === 'structuredClone') signaler(n, 'non disponible en Luau (utiliser copieProfonde)');
+  else if (ts.isCallExpression(n) && n.arguments.some((a) => ts.isIdentifier(a) && ['Boolean', 'Number', 'String'].includes(a.text))) signaler(n, 'Boolean/Number/String passés en fonction : absents en Luau (écrire une fonction fléchée)');
+  else if (ts.isCallExpression(n) && ts.isPropertyAccessExpression(n.expression) && ['map', 'flatMap'].includes(n.expression.name.text) && avecTrous(types.getTypeAtLocation(n))) signaler(n, 'liste pouvant contenir undefined : en Luau, une liste à trous n\'a pas de longueur fiable');
+  else if (ts.isBinaryExpression(n) && n.operatorToken.kind === ts.SyntaxKind.CommaToken) signaler(n, 'opérateur virgule : mal traduit en Luau dans une condition (écrire des instructions séparées)');
   else if (n.kind === ts.SyntaxKind.RegularExpressionLiteral) signaler(n, 'expression régulière non disponible en Luau');
   else if (ts.isCallExpression(n) && ts.isPropertyAccessExpression(n.expression) && n.expression.name.text === 'sort') signaler(n, 'tri non stable en Luau (utiliser trier de outils.ts)');
   ts.forEachChild(n, visiter);

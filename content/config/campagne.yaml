@@ -5,6 +5,8 @@
 
 config:
   saison_actuelle: 1
+  # Romance entre adultes (version web). La version Roblox (tout public) l'exporte à false.
+  romance: true
 
   saisons:
     - numero: 1

@@ -313,6 +313,8 @@ export const zScene = z.object({
   debut: z.string().default('debut'),
   disponible_si: zCondition.optional(),
   repetable: z.boolean().default(false),
+  /** Scène romantique : masquée dans la version tout public (config.romance = false). */
+  romance: z.boolean().default(false),
   quete: z.string().optional(),
   noeuds: z.record(z.string(), zNoeud),
 });
@@ -418,6 +420,8 @@ export const zDifficulte = z.object({ puissance: z.number(), pv: z.number(), deg
 
 export const zConfig = z.object({
   saison_actuelle: z.number().int(),
+  /** false = version tout public (Roblox) : scènes « romance » masquées, paliers renommés. */
+  romance: z.boolean().default(true),
   saisons: z.array(z.object({
     numero: z.number().int(), titre: z.string(), annee_debut: z.number().int(), annees_par_chapitre: z.number().int(),
     chapitres: z.number().int(), sessions_par_chapitre: z.number().int(), niveau_max: z.number().int(), niveau_ultime: z.number().int(),

@@ -112,6 +112,7 @@ scenes:
     lieu: chateau
     decor: chateau-trone
     disponible_si: { affinite_palier: { aveline: amoureuse } }
+    romance: true
     noeuds:
       debut:
         repliques:

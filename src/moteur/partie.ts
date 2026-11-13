@@ -194,7 +194,12 @@ export function herosDuJoueur(etat: EtatPartie, joueur: string): Heros {
 }
 
 export function listeHeros(etat: EtatPartie): Heros[] {
-  return etat.ordreJoueurs.map((j) => etat.joueurs[j].herosId).filter((x): x is string => vrai(x)).map((h) => etat.heros[h]);
+  const res: Heros[] = [];
+  for (const j of etat.ordreJoueurs) {
+    const id = etat.joueurs[j].herosId;
+    if (vrai(id)) res.push(etat.heros[id]);
+  }
+  return res;
 }
 
 function journal(contenu: Contenu, etat: EtatPartie, texte: string) {
@@ -382,6 +387,7 @@ export function remplacerVariables(contenu: Contenu, etat: EtatPartie, texte: st
 // ───────────────────────────── Scènes ─────────────────────────────
 
 export function sceneEstDisponible(contenu: Contenu, etat: EtatPartie, s: Scene, herosId: string | null): boolean {
+  if (s.romance && contenu.config.romance === false) return false;
   if (!s.repetable && etat.scenesVues.includes(s.id)) return false;
   if (s.type === 'individuel') {
     if (!vrai(herosId)) return false;
@@ -447,7 +453,11 @@ function resoudreChoix(contenu: Contenu, etat: EtatPartie, cle: string, index: n
   const n = noeudCourant(contenu, etat, cle)!;
   const ch = n.choix[index];
   // Les conséquences de type affinité ne touchent que les héros qui ont voté ce choix
-  const herosVotants = votants.map((j) => etat.joueurs[j]?.herosId).filter((h): h is string => vrai(h) && es.heros.includes(h));
+  const herosVotants: string[] = [];
+  for (const j of votants) {
+    const h = etat.joueurs[j]?.herosId;
+    if (vrai(h) && es.heros.includes(h)) herosVotants.push(h);
+  }
   const msgs: string[] = [];
   for (const eff of ch.effets) {
     // affinité et drapeaux personnels (« heros:… ») : seulement pour ceux qui ont voté ce choix

@@ -5,6 +5,7 @@
  * Le modèle est stocké « creux » (seulement les comptes non nuls) pour rester léger.
  */
 import { traits } from './texte';
+import { trier } from '../moteur/outils';
 
 export interface ModeleIA {
   version: number;
@@ -36,10 +37,10 @@ export function entrainer(exemples: { texte: string; classe: string }[], classes
       comptes[c].set(i, (comptes[c].get(i) ?? 0) + 1);
     }
   }
-  return { version: 2, classes, alpha, docs, vocab, comptes: comptes.map((m) => [...m.entries()].sort((a, b) => a[0] - b[0]).flat()) };
+  return { version: 2, classes, alpha, docs, vocab, comptes: comptes.map((m) => trier([...m.entries()], (a, b) => a[0] - b[0]).flat()) };
 }
 
-interface Prepare { index: Map<string, number>; logP: Float64Array[]; inconnu: number[]; priors: number[] }
+interface Prepare { index: Map<string, number>; logP: number[][]; inconnu: number[]; priors: number[] }
 const caches = new WeakMap<ModeleIA, Prepare>();
 
 function preparer(m: ModeleIA): Prepare {
@@ -48,10 +49,12 @@ function preparer(m: ModeleIA): Prepare {
   const V = m.vocab.length;
   const index = new Map(m.vocab.map((t, i) => [t, i]));
   const totalDocs = m.docs.reduce((a, b) => a + b, 0);
-  const logP: Float64Array[] = [];
+  const logP: number[][] = [];
   const inconnu: number[] = [];
   m.classes.forEach((_, c) => {
-    const brut = new Float64Array(V);
+    // liste ordinaire (pas de Float64Array : absent en Luau)
+    const brut: number[] = [];
+    for (let k = 0; k < V; k++) brut.push(0);
     let total = 0;
     for (let k = 0; k < m.comptes[c].length; k += 2) { brut[m.comptes[c][k]] = m.comptes[c][k + 1]; total += m.comptes[c][k + 1]; }
     const denom = total + m.alpha * V;
@@ -68,12 +71,17 @@ export interface Prediction { classe: string; confiance: number; classement: { c
 
 export function predire(m: ModeleIA, texte: string): Prediction {
   const { index, logP, priors } = preparer(m);
-  const t = [...new Set(traits(texte))].map((x) => index.get(x)).filter((x): x is number => x !== undefined);
+  // (pas de .map() qui donnerait des cases vides : en Luau, une liste à trous n'a pas de longueur fiable)
+  const t: number[] = [];
+  for (const x of new Set(traits(texte))) {
+    const i = index.get(x);
+    if (i !== undefined) t.push(i);
+  }
   const scores = m.classes.map((_, c) => priors[c] + t.reduce((s, i) => s + logP[c][i], 0));
   const max = Math.max(...scores);
   const exp = scores.map((s) => Math.exp(s - max));
   const somme = exp.reduce((a, b) => a + b, 0);
-  const classement = m.classes.map((classe, c) => ({ classe, p: exp[c] / somme })).sort((a, b) => b.p - a.p);
+  const classement = trier(m.classes.map((classe, c) => ({ classe, p: exp[c] / somme })), (a, b) => b.p - a.p);
   if (t.length === 0) return { classe: 'inconnu', confiance: 0, classement };
   return { classe: classement[0].classe, confiance: classement[0].p, classement };
 }

@@ -8,19 +8,31 @@ import { execFileSync } from 'node:child_process';
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { contenuDisque } from '../src/contenu/node';
 import { appliquer, nouvellePartie } from '../src/moteur/partie';
-import { finirTempsLibre, groupeDeDeux, jouerPrologues, jouerSceneGroupe } from '../tests/robot';
+import { finirTempsLibre, groupeDeDeux, jouer, jouerPrologues, jouerSceneGroupe, nouvellePartieDeTest } from '../tests/robot';
 
 const lune = process.env.LUNE ?? 'lune';
+
+function groupeDesordre() {
+  const r = nouvellePartieDeTest(c, 'desordre');
+  jouer(c, r, { type: 'rejoindre', joueur: 'j1', pseudo: 'Alpha' });
+  jouer(c, r, { type: 'rejoindre', joueur: 'j2', pseudo: 'Bravo' });
+  jouer(c, r, { type: 'rejoindre', joueur: 'j3', pseudo: 'Charlie' });
+  jouer(c, r, { type: 'creer_heros', joueur: 'j3', heros: { nom: 'Mira', classe: 'arcaniste', race: 'vulpin', don: 'mimetisme', origine: 'invoque', age: 30 } });
+  jouer(c, r, { type: 'creer_heros', joueur: 'j2', heros: { nom: 'Ilo', classe: 'guerisseur', race: 'elfe', don: 'aura-de-l-elu', origine: 'reincarne' } });
+  jouer(c, r, { type: 'creer_heros', joueur: 'j1', heros: { nom: 'Kael', classe: 'lame-runique', race: 'humain', don: 'oeil-du-seuil', origine: 'invoque', age: 22 } });
+  return r;
+}
 const c = contenuDisque();
 const graine = process.argv[2] ?? 'chapitre';
-const r = groupeDeDeux(c, graine);
+// graine « desordre » : 3 joueurs, héros créés dans le désordre (le 1er joueur crée le sien en dernier)
+const r = graine === 'desordre' ? groupeDesordre() : groupeDeDeux(c, graine);
 jouerPrologues(c, r);
 for (const s of ['ch1-appel', 'ch1-examen', 'sq-tournoi', 'sq-loups', 'ch1-crypte', 'sq-tanneurs', 'ch1-lanternes', 'ch1-serment']) jouerSceneGroupe(c, r, s);
 finirTempsLibre(c, r);
 
 mkdirSync('roblox/parite/tmp', { recursive: true });
 writeFileSync('roblox/parite/tmp/contenu.json', JSON.stringify(c));
-const depart = nouvellePartie(c, 'p1', 'Partie de test', graine);
+const depart = nouvellePartie(c, 'p1', 'Partie de test', graine === 'desordre' ? 'desordre' : graine);
 // états intermédiaires à comparer (pour trouver la première action qui diverge)
 const points = (process.env.POINTS ?? '').split(',').filter(Boolean).map(Number);
 writeFileSync('roblox/parite/tmp/entree.json', JSON.stringify({ depart, actions: r.actions, points }));
