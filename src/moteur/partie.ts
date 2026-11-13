@@ -527,13 +527,12 @@ function apresCombat(contenu: Contenu, etat: EtatPartie, cle: string) {
     if (victoire && contexte.evenementDonjon) etat.donjon.faits.push(contexte.evenementDonjon);
     etat.donjon.messages = [...(contexte.bilan ?? [])];
     if (!victoire) {
-      // défaite ou fuite : on ressort du donjon
+      // défaite ou fuite : le groupe se retrouve à l'entrée (mort douce) ; les combats déjà gagnés restent gagnés
       const d = etat.donjon;
-      etat.donjon = null;
-      if (combat.resultat === 'defaite' && etat.scenes[d.sceneCle]) entrerNoeud(contenu, etat, d.sceneCle, d.sortie);
-      else if (combat.resultat === 'fuite') {
-        etat.donjon = { ...d, x: contenu.donjons[d.id].depart.x, y: contenu.donjons[d.id].depart.y, messages: ['Le groupe se replie vers l\'entrée.'] };
-      }
+      const msg = combat.resultat === 'defaite'
+        ? [...(contexte.bilan ?? []), 'Vous reprenez connaissance près de l\'escalier d\'entrée. Les ennemis vaincus ne se relèveront pas.']
+        : ['Le groupe se replie vers l\'entrée.'];
+      etat.donjon = { ...d, x: contenu.donjons[d.id].depart.x, y: contenu.donjons[d.id].depart.y, messages: msg };
     }
   } else if (contexte.origine === 'contrat' && contexte.contrat) {
     const h = etat.heros[cle];

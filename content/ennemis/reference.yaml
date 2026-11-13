@@ -93,8 +93,8 @@ ennemis:
     recompenses: { xp: 80, or: 40 }
 
 rencontres:
-  - { id: ref-brute, nom: "Référence : brute", ennemis: [{ id: ref-brute }] }
-  - { id: ref-rapide, nom: "Référence : rapide", ennemis: [{ id: ref-rapide }] }
-  - { id: ref-mage, nom: "Référence : mage", ennemis: [{ id: ref-mage }] }
-  - { id: ref-meute, nom: "Référence : groupe de faibles", ennemis: [{ id: ref-faible }, { id: ref-faible }, { id: ref-faible }] }
-  - { id: ref-chef, nom: "Référence : mini-boss", ennemis: [{ id: ref-chef }] }
+  - { id: ref-brute, nom: "Référence : brute", ennemis: [{ id: ref-brute }], renforts: [ref-faible] }
+  - { id: ref-rapide, nom: "Référence : rapide", ennemis: [{ id: ref-rapide }], renforts: [ref-faible] }
+  - { id: ref-mage, nom: "Référence : mage", ennemis: [{ id: ref-mage }], renforts: [ref-faible] }
+  - { id: ref-meute, nom: "Référence : groupe de faibles", ennemis: [{ id: ref-faible }, { id: ref-faible }, { id: ref-faible }], renforts: [ref-faible] }
+  - { id: ref-chef, nom: "Référence : mini-boss", ennemis: [{ id: ref-chef }], renforts: [ref-faible] }
