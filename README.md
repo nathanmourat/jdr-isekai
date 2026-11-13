@@ -62,7 +62,8 @@ GitHub Pages n'héberge que des pages fixes. Pour que plusieurs joueurs partagen
 6. Pour **publier le jeu** et l'ouvrir avec un simple lien :
    - sur GitHub, **Settings → Pages → Source : « GitHub Actions »** ;
    - **Settings → Secrets and variables → Actions → onglet Variables** : créez `VITE_SUPABASE_URL` et `VITE_SUPABASE_ANON_KEY` ;
-   - fusionnez le travail sur la branche `main` (ou lancez le workflow « Publier le jeu » depuis l'onglet **Actions**). Le site sera à l'adresse `https://<votre-compte>.github.io/jdr-isekai/`.
+   - lancez le workflow « Publier le jeu » depuis l'onglet **Actions** (bouton « Run workflow »). Il se relance ensuite tout seul à chaque mise à jour du jeu. Le site sera à l'adresse `https://<votre-compte>.github.io/jdr-isekai/`.
+   - GitHub Pages est gratuit pour un dépôt **public**. Pour un dépôt privé, il faut un abonnement GitHub payant.
 
 > **Limite de l'offre gratuite** : un projet Supabase inutilisé pendant environ une semaine est mis en pause. Il se relance en un clic depuis le tableau de bord Supabase. Les conditions exactes peuvent changer : vérifiez-les sur supabase.com.
 

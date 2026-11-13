@@ -1,10 +1,10 @@
 # Publication automatique du jeu sur GitHub Pages.
-# Se lance à chaque envoi sur la branche principale (main), ou à la main depuis l'onglet « Actions ».
+# Se lance à chaque envoi sur la branche principale du dépôt, ou à la main depuis l'onglet « Actions ».
 name: Publier le jeu
 
 on:
   push:
-    branches: [main]
+    branches: [main, claude/festive-mccarthy-ahagx5]
   workflow_dispatch:
 
 permissions:
