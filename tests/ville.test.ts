@@ -18,7 +18,7 @@ describe('Ville de Lysmont, PNJ et boutique', () => {
   it('Lysmont regroupe ses lieux ; le Temple et la Combe restent sur la carte du monde', () => {
     const lieux = c.regions.aubeclaire.lieux;
     const enVille = lieux.filter((l) => l.ville === 'lysmont').map((l) => l.id).sort();
-    expect(enVille).toEqual(['arene', 'boutique', 'chateau', 'guilde', 'lysmont-place', 'quartier-tanneurs', 'taverne']);
+    expect(enVille).toEqual(['arene', 'boutique', 'chateau', 'egouts', 'guilde', 'lysmont-place', 'marche', 'quartier-tanneurs', 'tannerie-abandonnee', 'taverne']);
     for (const id of ['temple-du-seuil', 'combe-aux-saules', 'crypte-fontaine']) expect(lieux.find((l) => l.id === id)!.ville).toBeUndefined();
     expect(lieux.find((l) => l.id === 'taverne')!.auberge).toBe(true);
     for (const l of lieux.filter((x) => x.ville)) expect(l.position_plan).toBeDefined();

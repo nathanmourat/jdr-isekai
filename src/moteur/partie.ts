@@ -22,7 +22,7 @@ import { apprendre, creerTechnique, idFusion, peutApprendre, type Technique } fr
 import { competencesConnues as connuesDe } from './personnage';
 import { anneeDepart, chapitreDe, fetesEntre, formaterDate, joursParMois, versDate, versJour } from './temps';
 
-export const VERSION_ETAT = 4;
+export const VERSION_ETAT = 5;
 export const MAX_JOUEURS = 6;
 
 export interface Joueur { id: string; pseudo: string; herosId: string | null; present: boolean }
@@ -40,6 +40,9 @@ export interface EtatScene {
   /** Un personnage interroge ce héros : lui seul répond, parmi ces réponses (index dans `parole_a.reponses`). */
   parole?: { heros: string; reponses: number[] } | null;
 }
+
+/** Contrat en cours d'un héros : numéro de l'étape à jouer, et ce qui vient de se passer. */
+export interface ContratEnCours { id: string; etape: number; notes: string[] }
 
 /** Pièces qui sortent du porte-monnaie d'un héros ou y rentrent pendant la dernière action (pour l'animation). */
 export interface MouvementOr { heros: string; montant: number; raison: string }
@@ -122,6 +125,8 @@ export interface EtatPartie {
   /** Paris en cours : somme mise de côté par héros. */
   mises: Record<string, number>;
   mouvementsOr: MouvementOr[];
+  /** Contrats à étapes en cours, par héros (un seul à la fois). */
+  contrats: Record<string, ContratEnCours>;
 }
 
 export type Action =
@@ -159,6 +164,9 @@ export type Action =
   | { type: 'ameliorer'; joueur: string; competence: string }
   | { type: 'branche'; joueur: string; branche: string }
   | { type: 'contrat'; joueur: string; contrat: string }
+  /** Joue l'étape en cours de son contrat (choix : index de la réponse quand l'étape en propose). */
+  | { type: 'etape_contrat'; joueur: string; choix?: number }
+  | { type: 'abandonner_contrat'; joueur: string }
   | { type: 'meneur'; joueur: string; nouveau: string }
   | { type: 'nouvelle_session'; joueur: string }
   | { type: 'chapitre_suivant'; joueur: string }
@@ -211,6 +219,7 @@ export function nouvellePartie(contenu: Contenu, id: string, nom: string, graine
     finChapitre: null,
     mises: {},
     mouvementsOr: [],
+    contrats: {},
   };
 }
 
@@ -726,6 +735,11 @@ function apresCombat(contenu: Contenu, etat: EtatPartie, cle: string) {
         : ['Le groupe se replie vers l\'entrée.'];
       etat.donjon = { ...d, x: contenu.donjons[d.id].depart.x, y: contenu.donjons[d.id].depart.y, messages: msg };
     }
+  } else if (contexte.origine === 'contrat' && vrai(contexte.contrat) && etat.contrats[cle]?.id === contexte.contrat) {
+    // contrat à étapes : la victoire fait passer à l'étape suivante ; sinon on pourra réessayer
+    const st = etat.contrats[cle];
+    if (victoire) { st.notes = [...(contexte.bilan ?? [])]; avancerContrat(contenu, etat, etat.heros[cle]); }
+    else st.notes = [...(contexte.bilan ?? []), combat.resultat === 'defaite' ? 'Vous êtes repoussé. Reprenez des forces, puis revenez : le contrat tient toujours.' : 'Vous vous repliez. Le contrat tient toujours : revenez quand vous êtes prêt.'];
   } else if (contexte.origine === 'contrat' && vrai(contexte.contrat)) {
     const h = etat.heros[cle];
     const ct = contenu.contrats[contexte.contrat];
@@ -866,6 +880,7 @@ export function appliquer(contenu: Contenu, etatAvant: EtatPartie, action: Actio
   etat.dernieresNouvelles = [];
   etat.mouvementsOr = [];
   etat.mises ??= {};
+  etat.contrats ??= {};
   for (const h of valeurs(etat.heros)) h.grimoire ??= {};
   if (etat.grimoire) repartirAncienGrimoire(contenu, etat); // parties d'avant le grimoire personnel
   if (etat.repos === undefined) etat.repos = null; // parties créées avant le repos à l'auberge
@@ -1181,7 +1196,12 @@ export function appliquer(contenu: Contenu, etatAvant: EtatPartie, action: Actio
       if (etat.combats[h.id]) refuser('Vous êtes déjà en combat');
       if (ordreRangs.indexOf(rangGuilde(contenu, etat.pointsGuilde[h.id] ?? 0)) < ordreRangs.indexOf(ct.rang_min)) refuser(`Contrat réservé au rang ${ct.rang_min}`);
       if (!conditionHeros(contenu, etat, ct.disponible_si, h)) refuser('Contrat indisponible');
-      if (vrai(ct.rencontre)) {
+      if (ct.etapes.length > 0) {
+        // contrat à étapes : on l'accepte à la Guilde, puis on le joue sur la carte, lieu après lieu
+        if (etat.contrats[h.id]) refuser(`Terminez d'abord votre contrat en cours : ${contenu.contrats[etat.contrats[h.id].id]?.titre ?? ''}`);
+        etat.contrats[h.id] = { id: ct.id, etape: 0, notes: [] };
+        etat.dernieresNouvelles.push(`Contrat accepté : ${ct.titre}. ${ct.etapes[0].objectif}`);
+      } else if (vrai(ct.rencontre)) {
         lancerCombat(contenu, etat, ct.rencontre, h.id, { cle: h.id, origine: 'contrat', sceneCle: null, victoire: null, defaite: null, evenementDonjon: null, contrat: ct.id, bilan: null });
       } else if (ct.test) {
         const jet = de(etat.rng, 20);
@@ -1196,6 +1216,51 @@ export function appliquer(contenu: Contenu, etatAvant: EtatPartie, action: Actio
           etat.dernieresNouvelles.push(`Contrat raté (${ct.test.carac} : ${total} < ${ct.test.difficulte}). Vous en tirez quand même une leçon.`, ...msgs);
         }
       }
+      break;
+    }
+    case 'etape_contrat': {
+      const h = herosDuJoueur(etat, action.joueur);
+      const x = etapeContrat(contenu, etat, h.id) ?? refuser('Vous n\'avez pas de contrat en cours');
+      const st = etat.contrats[h.id];
+      const e = x.etape;
+      if (etat.combats[h.id]) refuser('Vous êtes déjà en combat');
+      if (vrai(e.combat)) {
+        st.notes = [];
+        lancerCombat(contenu, etat, e.combat, h.id, { cle: h.id, origine: 'contrat', sceneCle: null, victoire: null, defaite: null, evenementDonjon: null, contrat: x.contrat.id, bilan: null });
+        break;
+      }
+      if (e.test) {
+        const jet = de(etat.rng, 20);
+        const total = jet + caracsTotales(contenu, h)[e.test.carac];
+        const detail = `${e.test.carac} : dé ${jet} + ${total - jet} = ${total} contre ${e.test.difficulte}`;
+        if (jet === 20 || (jet !== 1 && total >= e.test.difficulte)) {
+          st.notes = [`Réussi (${detail}). ${e.test.reussite}`];
+          avancerContrat(contenu, etat, h);
+        } else {
+          const msgs: string[] = [];
+          appliquerConsequence(contenu, etat, { xp: Math.round(x.contrat.recompenses.xp / 3) }, [h.id], msgs);
+          delete etat.contrats[h.id];
+          etat.dernieresNouvelles.push(`Contrat raté (${detail}). ${e.test.echec} Vous en tirez quand même une leçon.`, ...msgs);
+        }
+        break;
+      }
+      if (e.choix.length > 0) {
+        const ch = e.choix[action.choix ?? -1] ?? refuser('Choisissez une des réponses proposées');
+        const msgs: string[] = [];
+        for (const eff of ch.effets) appliquerConsequence(contenu, etat, eff, [h.id], msgs);
+        st.notes = vrai(ch.resultat) ? [ch.resultat, ...msgs] : msgs;
+        avancerContrat(contenu, etat, h);
+        break;
+      }
+      st.notes = [];
+      avancerContrat(contenu, etat, h);
+      break;
+    }
+    case 'abandonner_contrat': {
+      const h = herosDuJoueur(etat, action.joueur);
+      if (!etat.contrats[h.id]) refuser('Vous n\'avez pas de contrat en cours');
+      if (etat.combats[h.id]) refuser('Terminez d\'abord le combat');
+      delete etat.contrats[h.id];
       break;
     }
     case 'meneur':
@@ -1304,6 +1369,31 @@ function repartirAncienGrimoire(contenu: Contenu, etat: EtatPartie) {
     for (const h of cibles) h.grimoire[t.id] = t;
   }
   delete etat.grimoire;
+}
+
+/** Étape en cours du contrat d'un héros (null s'il n'a pas de contrat). */
+export function etapeContrat(contenu: Contenu, etat: EtatPartie, herosId: string) {
+  const st = etat.contrats?.[herosId];
+  if (!st) return null;
+  const ct = contenu.contrats[st.id];
+  if (!ct || st.etape >= ct.etapes.length) return null;
+  return { contrat: ct, etape: ct.etapes[st.etape], numero: st.etape + 1, total: ct.etapes.length, notes: st.notes, derniere: st.etape === ct.etapes.length - 1 };
+}
+
+/** Passe à l'étape suivante ; après la dernière (retour à la Guilde), donne la récompense. */
+function avancerContrat(contenu: Contenu, etat: EtatPartie, h: Heros) {
+  const st = etat.contrats[h.id];
+  const ct = contenu.contrats[st.id];
+  st.etape++;
+  if (st.etape < ct.etapes.length) {
+    etat.dernieresNouvelles.push(`Contrat « ${ct.titre} » : ${ct.etapes[st.etape].objectif}`);
+    return;
+  }
+  const msgs: string[] = [];
+  appliquerConsequence(contenu, etat, { or: ct.recompenses.or, xp: ct.recompenses.xp, points_guilde: ct.recompenses.points_guilde, objet: ct.recompenses.objets }, [h.id], msgs);
+  delete etat.contrats[h.id];
+  etat.dernieresNouvelles.push(`Contrat rempli : ${ct.titre}.`, ...msgs);
+  journal(contenu, etat, `${h.nom} remplit le contrat « ${ct.titre} ».`);
 }
 
 function quantiteValide(q: number | undefined): number {

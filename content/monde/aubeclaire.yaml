@@ -100,3 +100,16 @@ regions:
         decor: crypte-entree
         position: { x: 1488, y: 500 }
         disponible_si: { quete_etape: { q-ch1-appel: crypte } }
+      # ── Lieux d'étape : ils n'apparaissent sur la carte que pendant l'étape de quête ou de contrat qui y mène.
+      - { id: combe-lisiere, nom: "Lisière de la Combe", description: "Ronces, souches et empreintes dans la terre meuble.", decor: combe-aux-saules, position: { x: 540, y: 730 }, etape_seulement: true }
+      - { id: combe-ruisseau, nom: "Ruisseau aux Saules", description: "Une eau froide et claire sous les branches tombantes.", decor: combe-aux-saules, position: { x: 400, y: 880 }, etape_seulement: true }
+      - { id: combe-taniere, nom: "Vieux saule creux", description: "Un saule énorme, aux racines creusées comme une grotte.", decor: combe-aux-saules, position: { x: 300, y: 760 }, etape_seulement: true }
+      - { id: route-du-nord, nom: "Route du nord", description: "Une route pavée qui file vers le Mur d'Aube, bordée de fossés.", decor: route-du-nord, position: { x: 1040, y: 210 }, etape_seulement: true }
+      - { id: gue-de-valmont, nom: "Gué de Valmont", description: "La rivière s'élargit ; les chariots passent à gué, lentement.", decor: gue-de-valmont, position: { x: 1300, y: 780 }, etape_seulement: true }
+      - { id: champs-du-nord, nom: "Champs de blé du nord", description: "Des champs dorés, retournés par endroits comme par une charrue folle.", decor: champs-du-nord, position: { x: 800, y: 440 }, etape_seulement: true }
+      - { id: grotte-des-mineurs, nom: "Grotte des mineurs", description: "Une entrée de mine étayée de poutres, d'où sort un air froid.", decor: grotte-des-mineurs, position: { x: 1600, y: 330 }, etape_seulement: true }
+      - { id: collines-lune-sauge, nom: "Collines à lune-sauge", description: "Des collines pelées où pousse une herbe argentée, visible surtout au crépuscule.", decor: collines-lune-sauge, position: { x: 640, y: 290 }, etape_seulement: true }
+      - { id: crypte-nid, nom: "Nid sous la crypte", description: "Un boyau latéral tapissé de toiles épaisses.", decor: crypte-entree, position: { x: 1560, y: 590 }, etape_seulement: true }
+      - { id: egouts, nom: "Égouts de Lysmont", description: "Une grille soulevée derrière la fontaine, un escalier glissant, une odeur tenace.", decor: egouts, ville: lysmont, position: { x: 960, y: 600 }, position_plan: { x: 740, y: 480 }, etape_seulement: true }
+      - { id: marche, nom: "Marché de Lysmont", description: "Des étals serrés, des cris, et deux marchands qui en viennent presque aux mains.", decor: lysmont-place, ville: lysmont, position: { x: 940, y: 560 }, position_plan: { x: 500, y: 330 }, etape_seulement: true }
+      - { id: tannerie-abandonnee, nom: "Tannerie abandonnée", description: "Volets cloués, cuves à sec… et une trappe de cave qui a servi récemment.", decor: quartier-tanneurs, ville: lysmont, position: { x: 1080, y: 700 }, position_plan: { x: 1090, y: 540 }, etape_seulement: true }

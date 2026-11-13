@@ -1,11 +1,165 @@
 # Contrats de guilde : missions courtes et répétables, jouables en solo et en asynchrone.
+# Un contrat se joue par ÉTAPES sur la carte : on l'accepte à la Guilde, on se rend à chaque lieu (le point clignote),
+# on lit le texte, on fait un petit choix, un test ou un combat, puis on REVIENT À LA GUILDE toucher la récompense.
+# Une étape : lieu, objectif (affiché dans le panneau Quêtes), texte, puis au plus UN de : choix / test / combat.
 contrats:
-  - { id: c-loups, titre: "Chasse aux loups", description: "Des loups rôdent près des bergeries de la Combe.", rang_min: F, rencontre: loups-combe, duree_jours: 3, recompenses: { or: 30, xp: 45, points_guilde: 20 } }
-  - { id: c-herbes, titre: "Cueillette de lune-sauge", description: "Trouver de la lune-sauge pour l'apothicaire (test d'Esprit).", rang_min: F, test: { carac: ESP, difficulte: 18 }, duree_jours: 2, recompenses: { or: 25, xp: 30, points_guilde: 15, objets: [antidote] } }
-  - { id: c-gobelins, titre: "Gobelins sur la route du nord", description: "Des gobelins cendrés attaquent les charrettes.", rang_min: F, rencontre: gobelins-route, duree_jours: 4, recompenses: { or: 40, xp: 60, points_guilde: 25 } }
-  - { id: c-negociation, titre: "Médiation au marché", description: "Calmer une dispute entre deux marchands (test de Charisme).", rang_min: E, test: { carac: CHA, difficulte: 19 }, duree_jours: 1, recompenses: { or: 50, xp: 35, points_guilde: 25 } }
-  - { id: c-bandits, titre: "Bandits de grand chemin", description: "Escorter une caravane jusqu'au gué de Valmont.", rang_min: E, rencontre: bandits-route, duree_jours: 5, recompenses: { or: 65, xp: 80, points_guilde: 35, objets: [potion-soin-petite] } }
-  - { id: c-araignees, titre: "Le nid sous la crypte", description: "Nettoyer un nid d'araignées géantes.", rang_min: D, rencontre: crypte-araignees, duree_jours: 3, recompenses: { or: 80, xp: 110, points_guilde: 45 } }
-  - { id: c-egouts, titre: "Rats dans les égouts", description: "Les égouts sous la place de Lysmont grouillent de rats géants et de gelées.", rang_min: F, rencontre: egouts-lysmont, duree_jours: 2, recompenses: { or: 25, xp: 40, points_guilde: 20 } }
-  - { id: c-sangliers, titre: "Les sangliers des champs", description: "Deux sangliers ravagent les champs de blé au nord de la capitale.", rang_min: F, rencontre: sangliers-champs, duree_jours: 3, recompenses: { or: 35, xp: 60, points_guilde: 25, objets: [ration] } }
-  - { id: c-chauves-souris, titre: "La grotte aux chauves-souris", description: "Des mineurs refusent de retourner au travail : la grotte est infestée.", rang_min: E, rencontre: grotte-chauves-souris, duree_jours: 3, recompenses: { or: 50, xp: 70, points_guilde: 30 } }
+  - id: c-loups
+    titre: "Chasse aux loups"
+    description: "Des loups rôdent près des bergeries de la Combe."
+    rang_min: F
+    rencontre: loups-combe
+    duree_jours: 3
+    recompenses: { or: 30, xp: 45, points_guilde: 20 }
+    etapes:
+      - { lieu: combe-aux-saules, objectif: "Aller à la Combe-aux-Saules.", texte: "Un berger vous montre une brebis égorgée près de l'enclos. Des traces larges comme une main partent vers la lisière.", bouton: "Examiner les traces" }
+      - lieu: combe-lisiere
+        objectif: "Suivre les traces jusqu'à la lisière."
+        texte: "À la lisière, les empreintes se séparent : une piste longe les ronces, l'autre descend vers l'eau."
+        choix:
+          - { texte: "Suivre la piste des ronces.", resultat: "Des touffes de poils gris sont accrochées aux épines : la meute est passée par ici il y a peu.", effets: [{ xp: 5 }] }
+          - { texte: "Descendre vers l'eau.", resultat: "Des empreintes fraîches dans la boue : la meute vient boire ici chaque soir.", effets: [{ xp: 5 }] }
+      - lieu: combe-ruisseau
+        objectif: "Remonter le ruisseau aux Saules."
+        texte: "Sur l'autre rive, une carcasse de lièvre à moitié dévorée. Le vent tourne."
+        choix:
+          - { texte: "Avancer sous le vent, sans bruit.", resultat: "Les loups ne vous sentiront pas venir." }
+          - { texte: "Laisser un morceau de viande séchée comme appât.", resultat: "Un hurlement répond au loin, vers le vieux saule : vous savez où aller." }
+      - { lieu: combe-taniere, objectif: "Trouver la meute au vieux saule creux.", texte: "Sous les racines du vieux saule, des yeux jaunes s'allument un à un.", combat: loups-combe }
+      - { lieu: guilde, objectif: "Revenir à la Guilde toucher la récompense.", texte: "Rowena compte les crocs que vous posez sur le comptoir et hoche la tête. « Propre. »", bouton: "Toucher la récompense" }
+
+  - id: c-herbes
+    titre: "Cueillette de lune-sauge"
+    description: "Trouver de la lune-sauge pour l'apothicaire (test d'Esprit)."
+    rang_min: F
+    test: { carac: ESP, difficulte: 18 }
+    duree_jours: 2
+    recompenses: { or: 25, xp: 30, points_guilde: 15, objets: [antidote] }
+    etapes:
+      - lieu: collines-lune-sauge
+        objectif: "Monter aux collines à lune-sauge."
+        texte: "Les collines sont couvertes d'herbes qui se ressemblent toutes. Où chercher ?"
+        choix:
+          - { texte: "À l'ombre des rochers.", resultat: "L'herbe y est plus haute, et certaines tiges ont un reflet d'argent." }
+          - { texte: "Près des sources.", resultat: "Entre les joncs, quelques feuilles argentées tremblent." }
+      - { lieu: collines-lune-sauge, objectif: "Reconnaître la vraie lune-sauge.", texte: "Deux plantes presque jumelles poussent côte à côte. L'une soigne, l'autre rend malade.", bouton: "Cueillir avec soin", test: { carac: ESP, difficulte: 18, reussite: "Vous reconnaissez l'odeur poivrée de la lune-sauge.", echec: "Vous rapportez un plein sac de fausse sauge : l'apothicaire soupire." } }
+      - { lieu: guilde, objectif: "Rapporter la lune-sauge à la Guilde.", texte: "L'apothicaire vous attend au comptoir, sa balance déjà prête.", bouton: "Toucher la récompense" }
+
+  - id: c-gobelins
+    titre: "Gobelins sur la route du nord"
+    description: "Des gobelins cendrés attaquent les charrettes."
+    rang_min: F
+    rencontre: gobelins-route
+    duree_jours: 4
+    recompenses: { or: 40, xp: 60, points_guilde: 25 }
+    etapes:
+      - lieu: route-du-nord
+        objectif: "Aller sur la route du nord."
+        texte: "Une charrette renversée, des sacs éventrés, des traces de petits pieds griffus dans le fossé."
+        choix:
+          - { texte: "Suivre les traces dans le fossé.", resultat: "Elles mènent à un bosquet d'où monte une fumée maigre." }
+          - { texte: "Se cacher et attendre la prochaine attaque.", resultat: "Au crépuscule, des ricanements montent du bosquet voisin." }
+      - { lieu: route-du-nord, objectif: "Débusquer les gobelins du bosquet.", texte: "Ils vous ont vu. Les lances se dressent.", combat: gobelins-route }
+      - { lieu: guilde, objectif: "Revenir à la Guilde toucher la récompense.", texte: "« La route est de nouveau sûre ? Bien. » Rowena pousse une bourse vers vous.", bouton: "Toucher la récompense" }
+
+  - id: c-negociation
+    titre: "Médiation au marché"
+    description: "Calmer une dispute entre deux marchands (test de Charisme)."
+    rang_min: E
+    test: { carac: CHA, difficulte: 19 }
+    duree_jours: 1
+    recompenses: { or: 50, xp: 35, points_guilde: 25 }
+    etapes:
+      - lieu: marche
+        objectif: "Aller au marché de Lysmont."
+        texte: "Un drapier et un épicier se disputent le même emplacement. Chacun jure qu'il était là le premier."
+        choix:
+          - { texte: "Écouter d'abord le drapier.", resultat: "Il a un reçu… daté de l'an dernier." }
+          - { texte: "Écouter d'abord l'épicier.", resultat: "Il a des témoins… qui sont tous ses cousins." }
+      - { lieu: marche, objectif: "Trouver un accord entre les deux marchands.", texte: "La foule s'amasse. Il faut une solution que les deux puissent accepter sans perdre la face.", bouton: "Proposer un accord", test: { carac: CHA, difficulte: 19, reussite: "Un jour sur deux chacun : ils se serrent la main en bougonnant.", echec: "Le ton monte, un étal se renverse : la garde disperse tout le monde." } }
+      - { lieu: guilde, objectif: "Revenir à la Guilde toucher la récompense.", texte: "Les deux marchands ont déjà fait porter leur paiement à la Guilde.", bouton: "Toucher la récompense" }
+
+  - id: c-bandits
+    titre: "Bandits de grand chemin"
+    description: "Escorter une caravane jusqu'au gué de Valmont."
+    rang_min: E
+    rencontre: bandits-route
+    duree_jours: 5
+    recompenses: { or: 65, xp: 80, points_guilde: 35, objets: [potion-soin-petite] }
+    etapes:
+      - { lieu: lysmont-place, objectif: "Rejoindre la caravane sur la place de Lysmont.", texte: "Trois chariots bâchés, des mules nerveuses, un caravanier qui regarde sans cesse par-dessus son épaule.", bouton: "Prendre la route" }
+      - lieu: gue-de-valmont
+        objectif: "Escorter la caravane jusqu'au gué de Valmont."
+        texte: "Le gué est en vue. Les berges sont hautes : l'endroit rêvé pour une embuscade."
+        choix:
+          - { texte: "Partir en éclaireur.", resultat: "Vous repérez des silhouettes couchées dans les roseaux." }
+          - { texte: "Rester près des chariots.", resultat: "Vous gardez les mules calmes. Un sifflement part des roseaux." }
+      - { lieu: gue-de-valmont, objectif: "Repousser les bandits au gué.", texte: "« La bourse ou la vie ! » Ils sortent des roseaux, l'eau jusqu'aux genoux.", combat: bandits-route }
+      - { lieu: guilde, objectif: "Revenir à la Guilde toucher la récompense.", texte: "Le caravanier a laissé une lettre de remerciement et la prime convenue.", bouton: "Toucher la récompense" }
+
+  - id: c-araignees
+    titre: "Le nid sous la crypte"
+    description: "Nettoyer un nid d'araignées géantes."
+    rang_min: D
+    rencontre: crypte-araignees
+    duree_jours: 3
+    recompenses: { or: 80, xp: 110, points_guilde: 45 }
+    etapes:
+      - lieu: crypte-nid
+        objectif: "Descendre au nid, sous la Crypte de la Fontaine."
+        texte: "Le boyau est tapissé de toiles épaisses comme des draps. Quelque chose remue au fond."
+        choix:
+          - { texte: "Brûler les toiles pour dégager le passage.", resultat: "Les toiles se consument en crépitant. Le fond du boyau s'agite." }
+          - { texte: "Avancer en les écartant à la lame.", resultat: "Vous progressez lentement. Des fils vibrent sous vos pas." }
+      - { lieu: crypte-nid, objectif: "Détruire le nid.", texte: "Huit yeux, puis seize, puis davantage.", combat: crypte-araignees }
+      - { lieu: guilde, objectif: "Revenir à la Guilde toucher la récompense.", texte: "Rowena fronce le nez. « Lavez-vous. Ensuite, la prime. »", bouton: "Toucher la récompense" }
+
+  - id: c-egouts
+    titre: "Rats dans les égouts"
+    description: "Les égouts sous la place de Lysmont grouillent de rats géants et de gelées."
+    rang_min: F
+    rencontre: egouts-lysmont
+    duree_jours: 2
+    recompenses: { or: 25, xp: 40, points_guilde: 20 }
+    etapes:
+      - lieu: egouts
+        objectif: "Descendre dans les égouts de Lysmont."
+        texte: "Deux galeries partent de l'escalier. À gauche, des couinements. À droite, un clapotis gluant."
+        choix:
+          - { texte: "Prendre à gauche.", resultat: "Des dizaines de petits yeux rouges reculent devant votre torche… puis s'arrêtent." }
+          - { texte: "Prendre à droite.", resultat: "Une masse translucide glisse le long du mur, et les rats la suivent." }
+      - { lieu: egouts, objectif: "Nettoyer la galerie.", texte: "Ils sont plus gros que des chats. Et ils ont faim.", combat: egouts-lysmont }
+      - { lieu: guilde, objectif: "Revenir à la Guilde toucher la récompense.", texte: "« Les égouts ? Déjà ? » Rowena a presque l'air impressionnée.", bouton: "Toucher la récompense" }
+
+  - id: c-sangliers
+    titre: "Les sangliers des champs"
+    description: "Deux sangliers ravagent les champs de blé au nord de la capitale."
+    rang_min: F
+    rencontre: sangliers-champs
+    duree_jours: 3
+    recompenses: { or: 35, xp: 60, points_guilde: 25, objets: [ration] }
+    etapes:
+      - lieu: champs-du-nord
+        objectif: "Aller aux champs de blé du nord."
+        texte: "Le blé est couché en larges sillons. Le fermier vous montre une haie défoncée."
+        choix:
+          - { texte: "Se poster près de la haie.", resultat: "Vers le soir, la haie tremble." }
+          - { texte: "Suivre les sillons jusqu'à la mare.", resultat: "Deux masses sombres se vautrent dans la boue." }
+      - { lieu: champs-du-nord, objectif: "Chasser les sangliers.", texte: "Ils grattent le sol, tête basse. Ils vont charger.", combat: sangliers-champs }
+      - { lieu: guilde, objectif: "Revenir à la Guilde toucher la récompense.", texte: "Le fermier a fait porter des provisions en plus de la prime.", bouton: "Toucher la récompense" }
+
+  - id: c-chauves-souris
+    titre: "La grotte aux chauves-souris"
+    description: "Des mineurs refusent de retourner au travail : la grotte est infestée."
+    rang_min: E
+    rencontre: grotte-chauves-souris
+    duree_jours: 3
+    recompenses: { or: 50, xp: 70, points_guilde: 30 }
+    etapes:
+      - lieu: grotte-des-mineurs
+        objectif: "Aller à la grotte des mineurs."
+        texte: "Les mineurs attendent dehors, pioches posées. Du plafond de la galerie pendent des grappes sombres."
+        choix:
+          - { texte: "Entrer avec une torche.", resultat: "La lumière les réveille d'un coup : un nuage d'ailes." }
+          - { texte: "Entrer dans le noir, sans un bruit.", resultat: "Vous arrivez sous la colonie avant qu'elle ne s'éveille." }
+      - { lieu: grotte-des-mineurs, objectif: "Chasser la colonie.", texte: "Des cris stridents résonnent sous la voûte.", combat: grotte-chauves-souris }
+      - { lieu: guilde, objectif: "Revenir à la Guilde toucher la récompense.", texte: "Les mineurs sont retournés au travail. La prime est prête.", bouton: "Toucher la récompense" }

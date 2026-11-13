@@ -1,19 +1,80 @@
 # Chapitre 1 — quêtes secondaires (scènes de groupe, disponibles après l'examen de la Guilde).
+# Une quête secondaire se joue par étapes : chaque étape est une courte scène dans un lieu de la carte
+# (voir `etapes` dans quetes.yaml). On ne tombe plus directement sur un combat.
 scenes:
-  - id: sq-loups
+  - id: sq-loups-guilde
+    pnj: rowena
+    titre: "Les loups de la Combe : l'affaire"
+    type: groupe
+    lieu: guilde
+    decor: guilde
+    quete: q-loups
+    disponible_si: { flag: examen-reussi, pas_flag: loups-acceptes }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: rowena, dit: "« Un fermier de la Combe-aux-Saules, Gareth, perd ses moutons. Il n'a pas de quoi payer un vrai contrat, alors personne n'y va. » Rowena [[te||vous]] regarde par-dessus sa pipe. « Sauf si ça [[t'intéresse||vous intéresse]]. »" }
+        choix:
+          - texte: "« [[J'y vais||On y va]]. »"
+            effets: [{ flag: loups-acceptes, quete: { id: q-loups, etape: ferme } }]
+            aller: accepte
+      accepte:
+        repliques:
+          - { qui: rowena, dit: "« La ferme est au sud-ouest, à l'entrée de la Combe. Et [[reviens||revenez]] me dire comment ça s'est fini. »" }
+        fin: true
+  - id: sq-loups-ferme
     pnj: gareth
-    titre: "Les loups de la Combe-aux-Saules"
+    titre: "Les loups de la Combe : la ferme de Gareth"
     type: groupe
     lieu: combe-aux-saules
     decor: combe-aux-saules
     quete: q-loups
-    disponible_si: { flag: examen-reussi }
+    disponible_si: { quete_etape: { q-loups: ferme } }
     noeuds:
       debut:
-        effets: [{ quete: { id: q-loups, etape: aider } }]
         repliques:
           - { qui: gareth, dit: "« Trois moutons cette semaine ! Et hier, ma petite Rose a vu des yeux jaunes à la lisière. » Gareth tord son chapeau de paille entre ses mains." }
-          - { dit: "Les traces mènent à une tanière sous les racines d'un vieux saule. Des grognements… et des gémissements plus aigus : des louveteaux." }
+          - { qui: gareth, dit: "« Les traces partent de l'enclos vers les ronces, là-bas. Moi, je n'ose plus y aller. »" }
+        effets: [{ quete: { id: q-loups, etape: traces } }]
+        fin: true
+  - id: sq-loups-traces
+    titre: "Les loups de la Combe : les traces"
+    type: groupe
+    lieu: combe-lisiere
+    decor: combe-aux-saules
+    quete: q-loups
+    disponible_si: { quete_etape: { q-loups: traces } }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "À la lisière, la terre est retournée. Des empreintes larges comme une main… et d'autres, toutes petites, à côté." }
+        choix:
+          - texte: "Suivre les grandes empreintes."
+            aller: grandes
+          - texte: "Regarder de plus près les petites."
+            effets: [{ flag: louveteaux-vus }]
+            aller: petites
+      grandes:
+        repliques:
+          - { dit: "La piste est franche : elle file droit vers un énorme saule, au fond de la Combe." }
+        effets: [{ quete: { id: q-loups, etape: taniere } }]
+        fin: true
+      petites:
+        repliques:
+          - { dit: "Des louveteaux. La meute ne chasse pas par plaisir : elle nourrit ses petits. La piste mène à un énorme saule, au fond de la Combe." }
+        effets: [{ quete: { id: q-loups, etape: taniere }, xp: 10 }]
+        fin: true
+  - id: sq-loups
+    titre: "Les loups de la Combe : le vieux saule"
+    type: groupe
+    lieu: combe-taniere
+    decor: combe-aux-saules
+    quete: q-loups
+    disponible_si: { quete_etape: { q-loups: taniere } }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "Une tanière s'ouvre sous les racines du vieux saule. Des grognements… et des gémissements plus aigus : des louveteaux." }
         choix:
           - texte: "Attaquer la meute."
             aller: combat
@@ -45,7 +106,24 @@ scenes:
         suite: fin
       fin:
         repliques:
-          - { qui: gareth, dit: "« Merci, du fond du cœur. Tenez, c'est pas grand-chose, mais c'est honnête. »" }
+          - { dit: "Le calme revient sur la Combe. Il reste à prévenir Gareth… et Rowena, à la Guilde." }
+        effets: [{ quete: { id: q-loups, etape: retour } }]
+        fin: true
+  - id: sq-loups-retour
+    pnj: rowena
+    rend_quete: true
+    titre: "Les loups de la Combe : le compte rendu"
+    type: groupe
+    lieu: guilde
+    decor: guilde
+    quete: q-loups
+    disponible_si: { quete_etape: { q-loups: retour } }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: rowena, dit: "« Alors, ces loups ? »" }
+          - { qui: rowena, dit: "« Partis sans une goutte de sang ? » Elle hausse un sourcil. « C'est rare, ça. Et ça me plaît. »", si: { flag: loups-sauves } }
+          - { qui: gareth, dit: "Gareth a fait le chemin jusqu'à la Guilde, son chapeau à la main. « Merci, du fond du cœur. Tenez, c'est pas grand-chose, mais c'est honnête. »" }
         effets: [{ or: 25, points_guilde: 30, terminer_quete: q-loups, reputation: { guilde: 3 } }]
         fin: true
 
@@ -94,19 +172,32 @@ scenes:
         effets: [{ terminer_quete: q-reliques, points_guilde: 15 }]
         fin: true
 
-  - id: sq-tanneurs
-    titre: "Les disparus du quartier des Tanneurs"
+  - id: sq-tanneurs-plainte
+    titre: "Les disparus des Tanneurs : la plainte"
     type: groupe
     lieu: quartier-tanneurs
     decor: quartier-tanneurs
     quete: q-tanneurs
-    disponible_si: { flag: examen-reussi }
+    disponible_si: { flag: examen-reussi, pas_flag: tanneurs-commence }
     noeuds:
       debut:
-        effets: [{ quete: { id: q-tanneurs, etape: enqueter } }]
         repliques:
-          - { dit: "Les ruelles des Tanneurs sentent l'urine et la teinture. Une mère vous agrippe le bras : « Ma fille, Lina. Partie chercher de l'eau il y a trois jours. »" }
-          - { dit: "Des traces de pas, une odeur de soufre… et, gravé sur une porte, un symbole violet que vous commencez à connaître.", si: { flag: sceau-trouve } }
+          - { dit: "Les ruelles des Tanneurs sentent l'urine et la teinture. Une mère [[t'agrippe||vous agrippe]] le bras : « Ma fille, Lina. Partie chercher de l'eau il y a trois jours. »" }
+          - { dit: "« La garde ne vient plus ici. Je n'ai que [[toi||vous]]. »" }
+        effets: [{ flag: tanneurs-commence, quete: { id: q-tanneurs, etape: piste } }]
+        fin: true
+  - id: sq-tanneurs-piste
+    titre: "Les disparus des Tanneurs : la piste"
+    type: groupe
+    lieu: quartier-tanneurs
+    decor: quartier-tanneurs
+    quete: q-tanneurs
+    disponible_si: { quete_etape: { q-tanneurs: piste } }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "Près du puits, un seau renversé. Des traces de pas, une odeur de soufre." }
+          - { dit: "Et, gravé sur une porte, un symbole violet que [[tu commences||vous commencez]] à connaître.", si: { flag: sceau-trouve } }
         choix:
           - texte: "Suivre la piste de soufre. (Esprit, difficulté 14)"
             test: { carac: ESP, difficulte: 14, reussite: piste, echec: retard }
@@ -114,11 +205,39 @@ scenes:
             test: { carac: CHA, difficulte: 13, reussite: piste, echec: retard }
       piste:
         repliques:
-          - { dit: "La piste mène à une cave sous une tannerie abandonnée. Des chants étouffés, des cages… Lina est vivante." }
+          - { dit: "La piste mène à une tannerie abandonnée, au bout de la ruelle. Sous la trappe de la cave : des chants étouffés." }
+        effets: [{ flag: tanneurs-piste-fraiche, quete: { id: q-tanneurs, etape: cave } }]
+        fin: true
+      retard:
+        repliques:
+          - { dit: "Des heures précieuses sont perdues. À la nuit tombée seulement, quelqu'un parle enfin d'une tannerie abandonnée, au bout de la ruelle." }
+        effets: [{ quete: { id: q-tanneurs, etape: cave } }]
+        fin: true
+  - id: sq-tanneurs
+    titre: "Les disparus des Tanneurs : la cave"
+    type: groupe
+    lieu: tannerie-abandonnee
+    decor: quartier-tanneurs
+    quete: q-tanneurs
+    disponible_si: { quete_etape: { q-tanneurs: cave } }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "La trappe est lourde, mais ses gonds sont graissés de frais. En bas : des cages, des bougies violettes." }
+        choix:
+          - texte: "Descendre dans la cave."
+            si: { flag: tanneurs-piste-fraiche }
+            aller: piste
+          - texte: "Descendre dans la cave."
+            si: { pas_flag: tanneurs-piste-fraiche }
+            aller: retard
+      piste:
+        repliques:
+          - { dit: "Les cultistes sont en plein rituel et ne [[t'ont pas entendu||vous ont pas entendus]]. Lina est vivante, dans la cage du fond." }
         combat: { rencontre: tanneurs-cultistes, victoire: sauvee, defaite: echec }
       retard:
         repliques:
-          - { dit: "Vous perdez des heures précieuses. Quand vous trouvez enfin la cave, les cultistes vous attendent." }
+          - { dit: "Trop de temps a passé : les cultistes [[t'attendent||vous attendent]] au pied de l'échelle." }
         combat: { rencontre: tanneurs-cultistes, victoire: trop-tard, defaite: echec }
       sauvee:
         repliques:
@@ -136,7 +255,25 @@ scenes:
         effets: [{ pnj_mort: lina, reputation: { couronne: -5 } }]
         suite: fin
       fin:
-        effets: [{ terminer_quete: q-tanneurs, points_guilde: 30, flag: cultistes-lysmont }]
+        repliques:
+          - { dit: "Il faut que la Guilde sache ce qui se cachait sous cette tannerie." }
+        effets: [{ quete: { id: q-tanneurs, etape: retour }, flag: cultistes-lysmont }]
+        fin: true
+  - id: sq-tanneurs-retour
+    pnj: rowena
+    rend_quete: true
+    titre: "Les disparus des Tanneurs : le rapport"
+    type: groupe
+    lieu: guilde
+    decor: guilde
+    quete: q-tanneurs
+    disponible_si: { quete_etape: { q-tanneurs: retour } }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: rowena, dit: "Rowena écoute sans un mot, puis repose sa pipe. « Des cultistes des Cendres. Dans MA ville. » Elle griffonne un ordre pour la garde." }
+          - { qui: rowena, dit: "« La petite Lina est rentrée chez elle. C'est grâce à [[toi||vous]]. »", si: { flag: lina-sauvee } }
+        effets: [{ terminer_quete: q-tanneurs, points_guilde: 30 }]
         fin: true
 
   - id: sq-apprenti
@@ -180,22 +317,62 @@ scenes:
         effets: [{ terminer_quete: q-apprenti, points_guilde: 15 }]
         fin: true
 
-  - id: sq-tournoi
+  - id: sq-tournoi-inscription
     pnj: aveline
-    titre: "Le tournoi des écuyers"
+    titre: "Le tournoi des écuyers : l'inscription"
     type: groupe
     lieu: arene
     decor: arene
     quete: q-tournoi
-    disponible_si: { flag: examen-reussi }
+    disponible_si: { flag: examen-reussi, pas_flag: tournoi-inscrit }
     noeuds:
       debut:
-        effets: [{ quete: { id: q-tournoi, etape: participer } }]
         repliques:
-          - { qui: aveline, dit: "Aveline, juge du tournoi, vous accueille. « Un de nos écuyers s'est cassé la jambe. Il me faut un remplaçant. Et un adversaire coriace pour le finaliste : un mercenaire qui triche. »" }
-          - { qui: aveline, expression: gene, dit: "« Si vous gagnez… je vous offre une pâtisserie. » Elle se racle la gorge. « C'est une coutume. »" }
+          - { qui: aveline, dit: "Aveline, juge du tournoi, [[t'accueille||vous accueille]]. « Un de nos écuyers s'est cassé la jambe. Il me faut un remplaçant. Et un adversaire coriace pour le finaliste : un mercenaire qui triche. »" }
+          - { qui: aveline, expression: gene, dit: "« Si [[tu gagnes… je t'offre||vous gagnez… je vous offre]] une pâtisserie. » Elle se racle la gorge. « C'est une coutume. »" }
+          - { qui: aveline, dit: "« Il traîne sur la place avant chaque combat. [[Va||Allez]] voir comment il s'y prend, puis [[reviens||revenez]] ici. »" }
+        effets: [{ flag: tournoi-inscrit, quete: { id: q-tournoi, etape: reperer } }]
+        fin: true
+  - id: sq-tournoi-reperage
+    titre: "Le tournoi des écuyers : le tricheur"
+    type: groupe
+    lieu: lysmont-place
+    decor: lysmont-place
+    quete: q-tournoi
+    disponible_si: { quete_etape: { q-tournoi: reperer } }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "Le mercenaire est là, près de la fontaine, entouré de parieurs. Un grand gaillard au sourire trop sûr de lui." }
         choix:
-          - texte: "Affronter le mercenaire tricheur."
+          - texte: "L'observer de loin pendant qu'il s'échauffe."
+            aller: observe
+          - texte: "Payer un verre à l'un de ses anciens adversaires."
+            aller: verre
+      observe:
+        repliques:
+          - { dit: "Il glisse quelque chose dans son gant gauche avant chaque passe : une poignée de sable. Maintenant, [[tu sais||vous savez]] d'où viendra le coup bas." }
+        effets: [{ quete: { id: q-tournoi, etape: duel }, xp: 10 }]
+        fin: true
+      verre:
+        repliques:
+          - { dit: "« Il vise les yeux. Du sable, toujours de la main gauche. » L'écuyer vide sa chope. « Et il frappe quand on recule. »" }
+        effets: [{ quete: { id: q-tournoi, etape: duel }, xp: 10 }]
+        fin: true
+  - id: sq-tournoi
+    pnj: aveline
+    titre: "Le tournoi des écuyers : le duel"
+    type: groupe
+    lieu: arene
+    decor: arene
+    quete: q-tournoi
+    disponible_si: { quete_etape: { q-tournoi: duel } }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: aveline, dit: "« [[Te||Vous]] voilà. Le finaliste est prêt. » Aveline baisse la voix. « Méfie-toi de sa main gauche. »" }
+        choix:
+          - texte: "Entrer en lice."
             aller: combat
       combat:
         combat: { rencontre: tournoi-ecuyers, victoire: victoire, defaite: defaite }

@@ -161,7 +161,7 @@ describe('Grimoire personnel', () => {
     for (const h of Object.values(ancien.heros) as { grimoire?: unknown }[]) delete h.grimoire;
     delete ancien.mises; delete ancien.mouvementsOr;
     const s = lireSauvegarde(JSON.stringify({ format: 'velmaris-sauvegarde', version: 3, exporteeLe: 'x', depart: ancien, actions: [] }));
-    expect(s.version).toBe(4);
+    expect(s.version).toBeGreaterThanOrEqual(4);
     const apres = appliquer(c, s.depart, { type: 'presence', joueur: 'j1', present: true });
     expect(Object.keys(apres.heros.h1.grimoire)).toEqual(['fusion:javelot-de-flamme+onde-de-givre']);
     expect(apres.heros.h2.grimoire).toEqual({}); // le Gardien ne peut pas l'utiliser

@@ -26,7 +26,11 @@ quetes:
     chapitre: 1
     resume: "Gareth le fermier perd ses moutons, et sa fille n'ose plus sortir."
     etapes:
-      - { id: aider, objectif: "Rendre visite à Gareth dans la Combe-aux-Saules.", scene: sq-loups, lieu: combe-aux-saules }
+      - { id: contrat, objectif: "Prendre l'affaire auprès de Dame Rowena, à la Guilde.", scene: sq-loups-guilde, lieu: guilde }
+      - { id: ferme, objectif: "Aller voir Gareth à la Combe-aux-Saules.", scene: sq-loups-ferme, lieu: combe-aux-saules }
+      - { id: traces, objectif: "Suivre les traces à la lisière de la Combe.", scene: sq-loups-traces, lieu: combe-lisiere }
+      - { id: taniere, objectif: "Trouver la meute au vieux saule creux.", scene: sq-loups, lieu: combe-taniere }
+      - { id: retour, objectif: "Revenir à la Guilde raconter la fin de l'affaire.", scene: sq-loups-retour, lieu: guilde }
   - id: q-reliques
     titre: "Le marchand de reliques"
     type: secondaire
@@ -40,7 +44,10 @@ quetes:
     chapitre: 1
     resume: "Trois personnes ont disparu en un mois dans les ruelles des Tanneurs."
     etapes:
-      - { id: enqueter, objectif: "Enquêter dans le quartier des Tanneurs.", scene: sq-tanneurs, lieu: quartier-tanneurs }
+      - { id: enqueter, objectif: "Écouter les habitants du quartier des Tanneurs.", scene: sq-tanneurs-plainte, lieu: quartier-tanneurs }
+      - { id: piste, objectif: "Chercher une piste près du puits des Tanneurs.", scene: sq-tanneurs-piste, lieu: quartier-tanneurs }
+      - { id: cave, objectif: "Fouiller la tannerie abandonnée.", scene: sq-tanneurs, lieu: tannerie-abandonnee }
+      - { id: retour, objectif: "Faire son rapport à Dame Rowena, à la Guilde.", scene: sq-tanneurs-retour, lieu: guilde }
   - id: q-apprenti
     titre: "L'apprenti de l'Ordre"
     type: secondaire
@@ -54,7 +61,9 @@ quetes:
     chapitre: 1
     resume: "Aveline arbitre le tournoi des écuyers ; il manque un participant… ou un adversaire."
     etapes:
-      - { id: participer, objectif: "Se présenter à l'arène.", scene: sq-tournoi, lieu: arene }
+      - { id: participer, objectif: "Se présenter à l'arène.", scene: sq-tournoi-inscription, lieu: arene }
+      - { id: reperer, objectif: "Observer le mercenaire tricheur sur la place de Lysmont.", scene: sq-tournoi-reperage, lieu: lysmont-place }
+      - { id: duel, objectif: "Retourner à l'arène pour le duel.", scene: sq-tournoi, lieu: arene }
   - id: q-aveline
     titre: "Le Serment brisé"
     type: compagnon

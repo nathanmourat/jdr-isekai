@@ -148,9 +148,18 @@ export function jouerSceneGroupe(contenu: Contenu, r: Robot, id: string, choixPr
   finirTempsLibre(contenu, r);
   const s = contenu.scenes[id];
   dormirJusquaLHistoire(contenu, r, id);
-  if (!sceneEstDisponible(contenu, r.etat, s, listeHeros(r.etat)[0].id)) throw new Error(`Scène indisponible : ${id}`);
-  jouer(contenu, r, { type: 'lancer_scene', joueur: r.etat.ordreJoueurs[0], scene: id });
-  finirScene(contenu, r, 'groupe', r.etat.ordreJoueurs, choixPrefere);
+  const dispo = (x: string) => sceneEstDisponible(contenu, r.etat, contenu.scenes[x], listeHeros(r.etat)[0].id);
+  const lancer = (x: string) => {
+    jouer(contenu, r, { type: 'lancer_scene', joueur: r.etat.ordreJoueurs[0], scene: x });
+    finirScene(contenu, r, 'groupe', r.etat.ordreJoueurs, choixPrefere);
+  };
+  // Quête à étapes : on joue d'abord les étapes qui précèdent cette scène, puis celles qui la suivent (retour à la Guilde…)
+  const etapes = (s.quete ? contenu.quetes[s.quete].etapes : []).map((e) => e.scene).filter((x): x is string => !!x && contenu.scenes[x]?.type === 'groupe');
+  const rang = etapes.indexOf(id);
+  if (!dispo(id)) for (const x of etapes.slice(0, Math.max(0, rang))) if (dispo(x)) lancer(x);
+  if (!dispo(id)) throw new Error(`Scène indisponible : ${id}`);
+  lancer(id);
+  if (rang >= 0 && contenu.quetes[s.quete!].type !== 'principale') for (const x of etapes.slice(rang + 1)) if (dispo(x)) lancer(x);
   finirTempsLibre(contenu, r);
 }
 

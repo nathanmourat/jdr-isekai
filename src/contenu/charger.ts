@@ -204,6 +204,14 @@ function verifierReferences(c: Contenu): string[] {
   for (const ct of Object.values(c.contrats)) {
     if (ct.rencontre && !c.rencontres[ct.rencontre]) e.push(`Contrat ${ct.id} › rencontre « ${ct.rencontre} » introuvable`);
     for (const o of ct.recompenses.objets) if (!c.objets[o]) e.push(`Contrat ${ct.id} › objet « ${o} » introuvable`);
+    ct.etapes.forEach((et, i) => {
+      const ou = `Contrat ${ct.id} › étape ${i + 1}`;
+      if (!lieux.has(et.lieu)) e.push(`${ou} › lieu « ${et.lieu} » introuvable`);
+      if (et.combat && !c.rencontres[et.combat]) e.push(`${ou} › rencontre « ${et.combat} » introuvable`);
+      if ([et.combat ? 1 : 0, et.test ? 1 : 0, et.choix.length ? 1 : 0].reduce((a, b) => a + b, 0) > 1) e.push(`${ou} › une étape ne peut avoir qu'une seule chose : un choix, un test ou un combat`);
+      for (const ch of et.choix) for (const eff of ch.effets) verifierConsequence(c, ou, eff, e);
+    });
+    if (ct.etapes.length && ct.etapes[ct.etapes.length - 1].lieu !== 'guilde') e.push(`Contrat ${ct.id} › la dernière étape doit se passer à la Guilde (retour pour la récompense)`);
   }
   return e;
 }

@@ -581,6 +581,8 @@ On ne vise ni la tête ni les membres d'une gelée, d'un feu follet ou d'une tou
 
 **Décisions de groupe** : pour un choix de la quête principale, chaque joueur présent vote. En cas d'égalité, c'est le « meneur du jour » qui tranche (il tourne à chaque session). Les choix personnels (romance, temps libre, dialogues individuels) n'engagent que le joueur.
 
+**Quêtes et contrats par étapes** (test 1) : une quête secondaire ou un contrat ne mène plus directement à un combat. C'est une **suite d'étapes sur la carte** : accepter à la Guilde, se rendre au lieu (le point **clignote**), suivre la piste en 2 ou 3 points (un court texte ou un petit choix à chaque fois), trouver l'adversaire, puis **revenir à la Guilde** pour la récompense. Les contrats décrivent leurs étapes dans `etapes:` (`lieu`, `objectif`, `texte`, puis au plus un de `choix` / `test` / `combat`) ; les quêtes secondaires enchaînent de courtes scènes, une par étape (`etapes` de `quetes.yaml`). Un héros n'a qu'**un contrat en cours** à la fois. Le panneau Quêtes affiche l'étape en cours et le prochain lieu.
+
 **Rangs de guilde** : F (0 point), E (100), D (300), C (700), B (1 500), A (3 000), S (6 000 + **épreuve du rang S** au chapitre 5).
 
 **Conséquences durables**, enregistrées dans des **drapeaux** (« flags ») :

@@ -117,7 +117,12 @@ describe('Fusions (variantes)', () => {
     jouer(c, r, { type: 'creer_heros', joueur: 'j1', heros: { nom: 'Pyra', classe: 'arcaniste', race: 'elfe', don: 'oeil-du-seuil', origine: 'invoque', age: 21 } });
     r.etat.heros.h1.rangsCompetences['javelot-de-flamme'] = 2;
     r.etat.heros.h1.rangsCompetences['onde-de-givre'] = 2;
+    // contrat à étapes : accepté à la Guilde, puis les traces, le ruisseau, et enfin la meute
     jouer(c, r, { type: 'contrat', joueur: 'j1', contrat: 'c-loups' });
+    jouer(c, r, { type: 'etape_contrat', joueur: 'j1' });
+    jouer(c, r, { type: 'etape_contrat', joueur: 'j1', choix: 0 });
+    jouer(c, r, { type: 'etape_contrat', joueur: 'j1', choix: 1 });
+    jouer(c, r, { type: 'etape_contrat', joueur: 'j1' });
     const cb = r.etat.combats.h1.combat;
     expect(cb.enAttente).toBe('h:h1');
     const cible = cb.combattants.find((x) => x.camp === 'ennemis')!.id;

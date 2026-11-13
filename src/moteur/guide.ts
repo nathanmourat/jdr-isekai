@@ -4,7 +4,7 @@
  */
 import type { Contenu } from '../contenu/types';
 import type { Scene } from '../contenu/schemas';
-import { conditionHeros, scenesDisponibles, sceneEstDisponible, type EtatPartie } from './partie';
+import { conditionHeros, etapeContrat, scenesDisponibles, sceneEstDisponible, type EtatPartie } from './partie';
 import { entrees, valeurs, vrai } from './outils';
 import { versJour } from './temps';
 
@@ -16,6 +16,8 @@ export function sceneAvecCombat(s: Scene): boolean {
 /** Vrai si le lieu propose un combat au héros : scène de combat disponible, ou contrats à la Guilde. */
 export function lieuAvecCombat(contenu: Contenu, etat: EtatPartie, lieu: string, herosId: string | null): boolean {
   if (scenesDisponibles(contenu, etat, lieu, herosId).some((s) => sceneAvecCombat(s))) return true;
+  const ec = vrai(herosId) ? etapeContrat(contenu, etat, herosId) : null;
+  if (ec && ec.etape.lieu === lieu && vrai(ec.etape.combat)) return true;
   if (lieu === 'guilde' && vrai(herosId)) {
     const h = etat.heros[herosId];
     return !!h && valeurs(contenu.contrats).some((ct) => conditionHeros(contenu, etat, ct.disponible_si, h));
@@ -112,5 +114,23 @@ export function absentsDuGroupe(etat: EtatPartie): string[] {
     if (!h) res.push(`${joueur.pseudo} (pas encore de héros)`);
     else if (!joueur.present) res.push(`${joueur.pseudo} (absent : ${h.siAbsent === 'ia' ? "son héros sera joué par l'ordinateur" : 'son héros reste au camp'})`);
   }
+  return res;
+}
+
+/**
+ * Lieux où mène une étape en cours (quêtes de la partie, contrat du héros) : ils clignotent sur la carte.
+ * Les lieux « etape_seulement » ne sont visibles que s'ils sont dans cette liste.
+ */
+export function lieuxDesEtapes(contenu: Contenu, etat: EtatPartie, herosId: string | null): string[] {
+  const res: string[] = [];
+  for (const [id, q] of entrees(etat.quetes)) {
+    const def = contenu.quetes[id];
+    if (!def || q.terminee) continue;
+    const e = def.etapes.find((x) => x.id === q.etape);
+    const lieu = e ? e.lieu ?? (vrai(e.scene) ? contenu.scenes[e.scene]?.lieu : undefined) : undefined;
+    if (vrai(lieu) && !res.includes(lieu)) res.push(lieu);
+  }
+  const ec = vrai(herosId) ? etapeContrat(contenu, etat, herosId) : null;
+  if (ec && !res.includes(ec.etape.lieu)) res.push(ec.etape.lieu);
   return res;
 }

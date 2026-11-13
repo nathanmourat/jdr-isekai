@@ -7,7 +7,7 @@
   import { conditionScene, listeHeros } from '../../moteur/partie';
   import { formaterDate } from '../../moteur/temps';
   import { imageCarte, imagePlan, positionsImage } from '../../rendu/assets';
-  import { lieuAvecCombat, marqueurLieu, prochaineEtape, type Marqueur } from '../../moteur/guide';
+  import { lieuAvecCombat, lieuxDesEtapes, marqueurLieu, prochaineEtape, type Marqueur } from '../../moteur/guide';
 
   let { choisir, ville = $bindable(null) }: { choisir: (id: string) => void; ville?: string | null } = $props();
   const c = jeu.contenu!;
@@ -15,7 +15,9 @@
   const region = c.regions.aubeclaire;
   const tous = $derived(listeHeros(etat).map((h) => h.id));
   const moi = $derived(jeu.monHeros?.id ?? null);
-  const lieux = $derived(region.lieux.filter((l) => conditionScene(c, etat, l.disponible_si, tous)));
+  /** Lieux où mène une étape en cours (quête ou contrat) : ils clignotent. */
+  const etapes = $derived(lieuxDesEtapes(c, etat, moi));
+  const lieux = $derived(region.lieux.filter((l) => conditionScene(c, etat, l.disponible_si, tous) && (!l.etape_seulement || etapes.includes(l.id))));
   const horsVille = $derived(lieux.filter((l) => !l.ville));
   const villes = $derived(region.villes.filter((v) => lieux.some((l) => l.ville === v.id)));
   const villeOuverte = $derived(ville ? region.villes.find((v) => v.id === ville) ?? null : null);
@@ -67,7 +69,7 @@
       <img class="pixel" src={imagePlan(villeOuverte.plan, villeOuverte.nom)} alt={`Plan : ${villeOuverte.nom}`} />
       {#each lieuxVille as l, i (l.id)}
         {@const m = marqueurLieu(c, etat, l.id, moi)}
-        <button class={`lieu ${m ?? ''}`} style={positionPlan(l, i)} onclick={() => choisir(l.id)}>
+        <button class={`lieu ${m ?? ''}`} class:etape={etapes.includes(l.id)} style={positionPlan(l, i)} onclick={() => choisir(l.id)}>
           {#if m}<span class="symbole">{symbole(m)}</span>{/if}
           <span class="point"></span>
           <span class="nom">{#if lieuAvecCombat(c, etat, l.id, moi)}<span class="epee" title="Combat possible ici">⚔ </span>{/if}{l.nom}</span>
@@ -79,7 +81,7 @@
       <img class="pixel" src={imageCarte(region.carte)} alt={`Carte : ${region.nom}`} />
       {#each villes as v (v.id)}
         {@const m = marqueurVille(v.id)}
-        <button class={`lieu ville ${m ?? ''}`} style={`left:${(v.position.x / 1920) * 100}%; top:${(v.position.y / 1080) * 100}%`} onclick={() => (ville = v.id)}>
+        <button class={`lieu ville ${m ?? ''}`} class:etape={lieux.some((l) => l.ville === v.id && etapes.includes(l.id))} style={`left:${(v.position.x / 1920) * 100}%; top:${(v.position.y / 1080) * 100}%`} onclick={() => (ville = v.id)}>
           {#if m}<span class="symbole">{symbole(m)}</span>{/if}
           <span class="point"></span>
           <span class="nom">{#if combatVille(v.id)}<span class="epee" title="Combat possible dans la ville">⚔ </span>{/if}{v.nom}</span>
@@ -87,7 +89,7 @@
       {/each}
       {#each horsVille as l (l.id)}
         {@const m = marqueurLieu(c, etat, l.id, moi)}
-        <button class={`lieu ${m ?? ''}`} style={`left:${(l.position.x / 1920) * 100}%; top:${(l.position.y / 1080) * 100}%`} onclick={() => choisir(l.id)}>
+        <button class={`lieu ${m ?? ''}`} class:etape={etapes.includes(l.id)} style={`left:${(l.position.x / 1920) * 100}%; top:${(l.position.y / 1080) * 100}%`} onclick={() => choisir(l.id)}>
           {#if m}<span class="symbole">{symbole(m)}</span>{/if}
           <span class="point"></span>
           <span class="nom">{#if lieuAvecCombat(c, etat, l.id, moi)}<span class="epee" title="Combat possible ici">⚔ </span>{/if}{l.nom}</span>
@@ -95,7 +97,7 @@
       {/each}
     </div>
   {/if}
-  <p class="discret">Cliquez sur un lieu. <span class="leg principale">!</span> quête principale · <span class="leg secondaire">!</span> quête secondaire · <span class="leg rendre">?</span> quête à rendre · ⚔ combat possible.</p>
+  <p class="discret">Cliquez sur un lieu. <span class="leg principale">!</span> quête principale · <span class="leg secondaire">!</span> quête secondaire · <span class="leg rendre">?</span> quête à rendre · ⚔ combat possible · un point qui clignote = prochaine étape d'une quête ou d'un contrat.</p>
 </section>
 
 <style>
@@ -116,6 +118,9 @@
   .principale .point { background: var(--or-2); animation: pulse 1.4s infinite; }
   .secondaire .point { background: #d5dbe6; }
   .rendre .point { background: #9fd3ff; }
+  .etape .point { animation: clignote 0.9s infinite; border-color: #fff; }
+  .etape .nom { outline: 1px solid var(--or-2); }
+  @keyframes clignote { 50% { box-shadow: 0 0 0 9px #ffffff55; transform: scale(1.25); } }
   @keyframes pulse { 50% { box-shadow: 0 0 0 8px #ffd16633; } }
   @keyframes saut { 50% { transform: translateY(-3px); } }
   @media (prefers-reduced-motion: reduce) { .symbole, .principale .point { animation: none; } }

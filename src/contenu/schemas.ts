@@ -376,6 +376,8 @@ export const zLieu = z.object({
   /** `position` : endroit du décor (1280 × 720) où se tient le PNJ, pour pouvoir cliquer sur sa silhouette. */
   pnj: z.array(z.object({ id: z.string(), si: zCondition.optional(), position: z.object({ x: z.number(), y: z.number() }).optional() })).default([]),
   boutique: z.array(z.string()).default([]),
+  /** true : le lieu n'apparaît sur la carte que pendant l'étape de quête ou de contrat qui y mène. */
+  etape_seulement: z.boolean().default(false),
   /** true : on peut y dormir (le lit de l'auberge fait passer les mois). */
   auberge: z.boolean().default(false),
 });
@@ -442,11 +444,30 @@ export const zAmbiance = z.object({
 });
 export type Ambiance = z.infer<typeof zAmbiance>;
 
+/**
+ * Étape d'un contrat, jouée sur la carte : on se rend au `lieu`, on lit le `texte`, puis
+ *  - `choix` : un petit choix (chaque réponse a son `resultat` et ses `effets`) ;
+ *  - `test` : un jet de caractéristique (raté : le contrat échoue, avec le texte `echec`) ;
+ *  - `combat` : une rencontre à gagner pour passer à la suite ;
+ *  - rien : on continue simplement. La dernière étape se joue à la Guilde et donne la récompense.
+ */
+export const zEtapeContrat = z.object({
+  lieu: z.string(),
+  objectif: z.string(),
+  texte: z.string(),
+  bouton: z.string().optional(),
+  choix: z.array(z.object({ texte: z.string(), resultat: z.string().default(''), effets: z.array(zConsequence).default([]) })).default([]),
+  test: z.object({ carac: zCarac, difficulte: z.number(), reussite: z.string().default(''), echec: z.string().default('') }).optional(),
+  combat: z.string().optional(),
+});
+export type EtapeContrat = z.infer<typeof zEtapeContrat>;
+
 export const zContrat = z.object({
   id: z.string(),
   titre: z.string(),
   description: z.string(),
   rang_min: z.string().default('F'),
+  etapes: z.array(zEtapeContrat).default([]),
   rencontre: z.string().optional(),
   test: z.object({ carac: zCarac, difficulte: z.number() }).optional(),
   duree_jours: z.number().int(),

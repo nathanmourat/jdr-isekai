@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { contenuDisque } from '../src/contenu/node';
-import { appliquer, choixVisibles, ErreurAction, listeHeros, nouvellePartie, palierCompagnon, rejouer, type Action } from '../src/moteur/partie';
+import { appliquer, choixVisibles, ErreurAction, etapeContrat, listeHeros, nouvellePartie, palierCompagnon, rejouer, type Action } from '../src/moteur/partie';
+import { lieuxDesEtapes } from '../src/moteur/guide';
 import { creerSauvegarde, ErreurSauvegarde } from '../src/sauvegarde/migrations';
 import { lireSauvegarde } from '../src/sauvegarde/fichier';
 import { dormirHistoire, groupeDeDeux, jouer, jouerPrologues, jouerSceneGroupe, finirScene, finirTempsLibre, nouvellePartieDeTest } from './robot';
@@ -87,6 +88,13 @@ describe('Partie : scènes, votes et prologue', () => {
     jouer(c, r, { type: 'lancer_scene', joueur: 'j1', scene: 'ch1-appel' });
     finirScene(c, r, 'groupe', ['j1', 'j2']);
     jouerSceneGroupe(c, r, 'ch1-examen');
+    // la quête des loups se joue par étapes : Guilde, ferme, traces… avant d'arriver au vieux saule
+    expect(() => appliquer(c, r.etat, { type: 'lancer_scene', joueur: 'j1', scene: 'sq-loups' })).toThrow(/pas disponible/);
+    for (const s of ['sq-loups-guilde', 'sq-loups-ferme', 'sq-loups-traces']) {
+      jouer(c, r, { type: 'lancer_scene', joueur: 'j1', scene: s });
+      finirScene(c, r, 'groupe', ['j1', 'j2']);
+    }
+    expect(r.etat.quetes['q-loups'].etape).toBe('taniere');
     jouer(c, r, { type: 'lancer_scene', joueur: 'j1', scene: 'sq-loups' });
     const textes = choixVisibles(c, r.etat, 'groupe').map((x) => x.choix.texte);
     expect(textes.some((t) => t.includes('Langue universelle'))).toBe(false);
@@ -207,9 +215,54 @@ describe('Temps libre, compagnons et objets', () => {
   it('contrat de guilde en solo', () => {
     const r = groupeDeDeux(c);
     jouerSceneGroupe(c, r, 'ch1-appel');
-    jouer(c, r, { type: 'contrat', joueur: 'j1', contrat: 'c-herbes' });
-    expect(r.etat.dernieresNouvelles[0]).toMatch(/Contrat (réussi|raté)/);
     expect(() => appliquer(c, r.etat, { type: 'contrat', joueur: 'j1', contrat: 'c-bandits' })).toThrow(/rang E/);
+    expect(() => appliquer(c, r.etat, { type: 'etape_contrat', joueur: 'j1' })).toThrow(/pas de contrat/);
+    jouer(c, r, { type: 'contrat', joueur: 'j1', contrat: 'c-herbes' });
+    expect(etapeContrat(c, r.etat, 'h1')).toMatchObject({ numero: 1, total: 3 });
+    expect(lieuxDesEtapes(c, r.etat, 'h1')).toContain('collines-lune-sauge');
+    expect(lieuxDesEtapes(c, r.etat, 'h2')).not.toContain('collines-lune-sauge'); // le contrat est celui de h1 seulement
+    // un seul contrat à la fois
+    expect(() => appliquer(c, r.etat, { type: 'contrat', joueur: 'j1', contrat: 'c-loups' })).toThrow(/Terminez d'abord/);
+    // étape 1 : il faut choisir une des réponses
+    expect(() => appliquer(c, r.etat, { type: 'etape_contrat', joueur: 'j1' })).toThrow(/Choisissez/);
+    jouer(c, r, { type: 'etape_contrat', joueur: 'j1', choix: 0 });
+    expect(etapeContrat(c, r.etat, 'h1')!.numero).toBe(2);
+    // étape 2 : test d'Esprit. Réussi : on passe au retour à la Guilde ; raté : le contrat s'arrête avec un lot de consolation.
+    jouer(c, r, { type: 'etape_contrat', joueur: 'j1' });
+    const suite = etapeContrat(c, r.etat, 'h1');
+    if (suite) {
+      expect(suite).toMatchObject({ numero: 3, derniere: true });
+      expect(suite.etape.lieu).toBe('guilde');
+      const orAvant = r.etat.heros.h1.or;
+      jouer(c, r, { type: 'etape_contrat', joueur: 'j1' });
+      expect(r.etat.heros.h1.or).toBe(orAvant + 25);
+      expect(r.etat.journal.at(-1)!.texte).toMatch(/remplit le contrat/);
+    } else expect(r.etat.dernieresNouvelles[0]).toMatch(/Contrat raté/);
+    expect(r.etat.contrats.h1).toBeUndefined();
+  });
+
+  it('contrat de chasse : un combat à une étape, la récompense seulement au retour à la Guilde', () => {
+    const r = groupeDeDeux(c, 'chasse');
+    jouerSceneGroupe(c, r, 'ch1-appel');
+    jouer(c, r, { type: 'contrat', joueur: 'j1', contrat: 'c-loups' });
+    const lieux: string[] = [];
+    for (let garde = 0; garde < 20 && r.etat.contrats.h1; garde++) {
+      const x = etapeContrat(c, r.etat, 'h1')!;
+      lieux.push(x.etape.lieu);
+      if (x.etape.combat) {
+        jouer(c, r, { type: 'etape_contrat', joueur: 'j1' });
+        // on force la victoire pour ne tester que l'enchaînement des étapes
+        const e = r.etat.combats.h1;
+        for (const y of e.combat.combattants) if (y.camp === 'ennemis') { y.pv = 0; y.ko = true; }
+        e.combat.resultat = 'victoire';
+        e.contexte.bilan = [];
+        expect(r.etat.contrats.h1.etape).toBe(3); // pas encore avancé : il faut finir le combat
+        jouer(c, r, { type: 'fin_combat', joueur: 'j1', cle: 'h1' });
+      } else jouer(c, r, { type: 'etape_contrat', joueur: 'j1', choix: x.etape.choix.length ? 0 : undefined });
+    }
+    expect(lieux).toEqual(['combe-aux-saules', 'combe-lisiere', 'combe-ruisseau', 'combe-taniere', 'guilde']);
+    expect(r.etat.contrats.h1).toBeUndefined();
+    expect(r.etat.pointsGuilde.h1).toBeGreaterThanOrEqual(20);
   });
 });
 

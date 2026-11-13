@@ -5,7 +5,7 @@
    * « ! » doré = quête principale, « ! » argenté = quête secondaire, « ? » = quête à rendre.
    */
   import { jeu } from '../jeu.svelte';
-  import { conditionHeros, conditionScene, listeHeros, palierCompagnon, rangGuilde, scenesDisponibles } from '../../moteur/partie';
+  import { conditionHeros, conditionScene, etapeContrat, listeHeros, palierCompagnon, rangGuilde, scenesDisponibles } from '../../moteur/partie';
   import { absentsDuGroupe, marqueurPnj, type Marqueur } from '../../moteur/guide';
   import { imageDecor } from '../../rendu/assets';
   import { portraitPersonnage } from '../outils';
@@ -31,6 +31,10 @@
   const nomPnj = (p: string) => c.compagnons[p]?.nom ?? c.pnj[p]?.nom ?? p;
   const fusions = $derived(id === 'guilde' ? fusionsPossibles(c, h) : []);
   const absents = $derived(absentsDuGroupe(etat));
+  /** Contrat en cours du héros, et son étape si elle se joue ici. */
+  const contratEnCours = $derived(etapeContrat(c, etat, h.id));
+  const etapeIci = $derived(contratEnCours && contratEnCours.etape.lieu === id ? contratEnCours : null);
+  const nomLieu = (l: string) => c.regions.aubeclaire.lieux.find((x) => x.id === l)?.nom ?? l;
 
   let pnjChoisi = $state<string | null>(null);
   $effect(() => { void id; pnjChoisi = null; });
@@ -99,6 +103,25 @@
     </div>
   {/if}
 
+  {#if etapeIci}
+    <div class="carte-ui contrat-etape">
+      <h3>📜 Contrat : {etapeIci.contrat.titre} <span class="badge or">étape {etapeIci.numero}/{etapeIci.total}</span></h3>
+      {#each etapeIci.notes as n, i (i)}<p class="discret">{n}</p>{/each}
+      <p>{etapeIci.etape.texte}</p>
+      {#if etapeIci.etape.choix.length}
+        <div class="reponses">
+          {#each etapeIci.etape.choix as ch, i (i)}<button onclick={() => jeu.agir({ type: 'etape_contrat', choix: i })}>{ch.texte}</button>{/each}
+        </div>
+      {:else if etapeIci.etape.combat}
+        <button class="principal" onclick={() => jeu.agir({ type: 'etape_contrat' })}>⚔ {etapeIci.etape.bouton ?? 'Engager le combat'}</button>
+      {:else if etapeIci.etape.test}
+        <button class="principal" onclick={() => jeu.agir({ type: 'etape_contrat' })}>{etapeIci.etape.bouton ?? 'Tenter'} ({etapeIci.etape.test.carac}, difficulté {etapeIci.etape.test.difficulte})</button>
+      {:else}
+        <button class="principal" onclick={() => jeu.agir({ type: 'etape_contrat' })}>{etapeIci.etape.bouton ?? 'Continuer'}</button>
+      {/if}
+    </div>
+  {/if}
+
   <div class="grille colonnes">
     {#if scenesSurPlace.length}
       <div class="carte-ui">
@@ -109,11 +132,19 @@
     {#if contrats.length}
       <div class="carte-ui">
         <h3>Tableau des contrats <span class="badge">votre rang : {rang}</span></h3>
+        {#if contratEnCours}
+          <div class="item en-cours">
+            <p><strong>En cours : {contratEnCours.contrat.titre}</strong> <span class="badge or">étape {contratEnCours.numero}/{contratEnCours.total}</span></p>
+            <p>➤ {contratEnCours.etape.objectif} <span class="badge">📍 {nomLieu(contratEnCours.etape.lieu)}</span></p>
+            <button class="petit danger" onclick={() => confirm('Abandonner ce contrat ? Il faudra le reprendre depuis le début.') && jeu.agir({ type: 'abandonner_contrat' })}>Abandonner</button>
+          </div>
+        {/if}
+        <p class="discret">Un contrat se joue en plusieurs étapes sur la carte : le prochain lieu clignote. On revient ici toucher la récompense. Un seul contrat à la fois.</p>
         {#each contrats as ct (ct.id)}
           <div class="item">
-            <div class="ligne"><strong>{ct.titre}</strong><span class="badge">rang {ct.rang_min}</span></div>
+            <div class="ligne"><strong>{ct.titre}</strong><span class="badge">rang {ct.rang_min}</span>{#if ct.etapes.length}<span class="badge">{ct.etapes.length} étapes</span>{/if}</div>
             <p class="discret">{ct.description} Récompense : {ct.recompenses.or} or, {ct.recompenses.xp} XP, {ct.recompenses.points_guilde} pts de guilde.</p>
-            <button disabled={ordre.indexOf(rang) < ordre.indexOf(ct.rang_min)} onclick={() => jeu.agir({ type: 'contrat', contrat: ct.id })}>Accepter (en solo)</button>
+            <button disabled={ordre.indexOf(rang) < ordre.indexOf(ct.rang_min) || !!contratEnCours} title={contratEnCours ? "Terminez d'abord votre contrat en cours" : ''} onclick={() => jeu.agir({ type: 'contrat', contrat: ct.id })}>Accepter (en solo)</button>
           </div>
         {/each}
       </div>
@@ -136,7 +167,7 @@
     {#if lieu.auberge}<Auberge />{/if}
     {#if lieu.boutique.length}<Boutique lieu={id} objets={lieu.boutique} />{/if}
   </div>
-  {#if !scenes.length && !contrats.length && !lieu.boutique.length && !pnj.length}
+  {#if !scenes.length && !contrats.length && !lieu.boutique.length && !pnj.length && !etapeIci}
     <p class="discret">Rien de particulier à faire ici pour le moment.</p>
   {/if}
 </section>
@@ -159,6 +190,10 @@
   .secondaire .symbole { color: #d5dbe6; }
   .rendre .symbole { color: #9fd3ff; }
   .discussion { border-color: var(--or); margin-bottom: 0.8rem; }
+  .contrat-etape { border-color: var(--or); margin-bottom: 0.8rem; }
+  .reponses { display: grid; gap: 0.4rem; }
+  .reponses button { text-align: left; }
+  .en-cours { border: 1px solid var(--or); border-radius: 8px; padding: 0.5rem 0.7rem; margin-bottom: 0.5rem; }
   .discussion h3 { margin: 0; }
   .entre { justify-content: space-between; }
   .alerte { color: #ffb4a8; }

@@ -51,6 +51,12 @@ export const migrations: Record<number, Migration> = {
     s.version = 4;
     return s;
   },
+  // v4 → v5 (test 1, lot E) : contrats à étapes (un contrat en cours par héros).
+  4: (s) => {
+    (s.depart as { contrats?: unknown }).contrats ??= {};
+    s.version = 5;
+    return s;
+  },
 };
 
 export class ErreurSauvegarde extends Error {
