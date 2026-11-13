@@ -1,0 +1,24 @@
+{
+  "_explication": "Correspondance entre les cases de la carte du donjon et les tuiles de crypte.png (index = ligne × 8 + colonne). Voir crypte-positions.md.",
+  "taille": 32,
+  "colonnes": 8,
+  "sol": [0, 0, 0, 1, 2, 45, 3],
+  "mur_face": [4, 4, 5],
+  "mur_haut": 6,
+  "porte": 19,
+  "porte-verrouillee": 38,
+  "porte-deverrouillee": 39,
+  "escalier": 21,
+  "piege": 28,
+  "piege-declenche": 29,
+  "objets": {
+    "coffre": 22,
+    "coffre-ouvert": 23,
+    "os": 30,
+    "gravats": 31,
+    "torche": [24, 25, 26, 27],
+    "fontaine": { "index": 32, "largeur": 2, "hauteur": 2 },
+    "sceau": [43, 44],
+    "toile": 35
+  }
+}
