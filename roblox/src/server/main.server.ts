@@ -1,12 +1,14 @@
 /**
- * Serveur Roblox des Appelés de Velmaris (étape R1) :
+ * Serveur Roblox des Appelés de Velmaris :
  * parties avec code à 6 caractères, actions vérifiées par le moteur, sauvegarde DataStore.
  */
 import { Players } from "@rbxts/services";
 import { idJoueur, reseau, type Commande, type ReponseCommande } from "shared/reseau";
 import { actionDuJoueur, boucleSauvegarde, creerPartie, entrer, messageErreur, ouvrirPartie, partieDe, sortir, toutEnregistrer } from "./parties";
 import { partiesDuJoueur, sauvegardeActive } from "./stockage";
+import { construireMonde } from "./monde";
 
+construireMonde();
 const r = reseau();
 const INFO_MEMOIRE = "Studio : sauvegarde Roblox désactivée, la partie sera perdue à l'arrêt (voir README-ROBLOX.md).";
 

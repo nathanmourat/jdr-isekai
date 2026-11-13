@@ -14,6 +14,8 @@ export const COULEURS = {
 	rouge: Color3.fromRGB(196, 72, 60),
 	vert: Color3.fromRGB(96, 170, 90),
 	choisi: Color3.fromRGB(78, 60, 28),
+	bleu: Color3.fromRGB(110, 170, 230),
+	violet: Color3.fromRGB(160, 110, 210),
 };
 
 const POLICE = Enum.Font.Gotham;
@@ -183,6 +185,22 @@ export function champ(parent: Instance, indication: string, valeur: string, surC
 	t.GetPropertyChangedSignal("Text").Connect(() => surChangement(t.Text));
 	placer(t, parent);
 	return t;
+}
+
+/** Barre de progression (PV, mana, affinité). */
+export function barre(parent: Instance, valeur: number, max: number, couleur: Color3, largeur = new UDim(1, 0), hauteur = 10): Frame {
+	const fond = new Instance("Frame");
+	fond.BackgroundColor3 = COULEURS.fond;
+	fond.Size = new UDim2(largeur, new UDim(0, hauteur));
+	arrondir(fond, 4);
+	const plein = new Instance("Frame");
+	plein.BackgroundColor3 = couleur;
+	plein.BorderSizePixel = 0;
+	plein.Size = UDim2.fromScale(math.clamp(max > 0 ? valeur / max : 0, 0, 1), 1);
+	arrondir(plein, 4);
+	plein.Parent = fond;
+	placer(fond, parent);
+	return fond;
 }
 
 /** Protège un texte écrit par un joueur (nom, pseudo) avant de l'afficher en texte enrichi. */

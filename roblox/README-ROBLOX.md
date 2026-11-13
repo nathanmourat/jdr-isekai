@@ -85,6 +85,47 @@ Sans ces réglages, le jeu marche quand même, mais les parties sont **perdues �
 - [ ] Avec la sauvegarde activée : arrête le test, relance-le → « Mes parties » → la partie revient avec les héros.
 - [ ] Aucune ligne rouge dans Output (fenêtres du serveur et des joueurs).
 
+## Liste de contrôle — étapes R2 à R5 (tout le chapitre 1 sur Roblox)
+
+Fais d'abord la liste R1 ci-dessus, puis continue avec la même partie.
+
+**Lysmont en 3D (R2)**
+- [ ] Après la création du héros, on voit Lysmont : place avec fontaine, temple blanc, château, Guilde (toit bleu), taverne, arène, quartier des Tanneurs, ferme de la Combe-aux-Saules, crypte, reliés par des chemins.
+- [ ] Au-dessus du Temple du Seuil : ⭐ (quête principale). Le bandeau du haut indique « ➤ Prochaine étape : Écouter le Grand Prieur… », avec un bouton **Y aller**.
+- [ ] « Y aller » te place devant le temple. Approche-toi de la porte, appuie sur **E** (« Entrer ») : le panneau du lieu s'ouvre à droite.
+- [ ] Menu du haut : **Carte**, **Personnage**, **Compagnons**, **Quêtes**, **Journal**, **Partie** ouvrent chacun leur panneau.
+
+**Dialogues et votes (R2)**
+- [ ] Au temple : « Lancer » la scène de l'Appel → la boîte de dialogue s'affiche en bas, et « Continuer ▸ » fait défiler les répliques.
+- [ ] À deux joueurs : chacun vote, les votes s'affichent (« Votes : … »), la scène avance quand tout le monde a voté. Le meneur peut aussi « Trancher ».
+
+**Combats (R3)**
+- [ ] Guilde → examen d'entrée → « ⚔ Au combat ! » → la caméra montre l'arène : héros à gauche, golem à droite, barres de PV.
+- [ ] À ton tour : « 📜 Suivre le script » propose 3 actions. « ✍️ Proposer mon action » : écris « je vise la tête du golem » puis « Proposer » → l'IA comprend et propose « Valider ».
+- [ ] Écris 3 fois n'importe quoi → au 3ᵉ essai, le jeu t'oblige à choisir parmi ses propositions.
+- [ ] « ▸ Toutes les actions » : Attaque, compétences, potion, se défendre, fuir…
+- [ ] Les pions avancent quand ils attaquent, clignotent en rouge quand ils sont touchés, et tombent quand ils sont K.O.
+- [ ] Victoire → bilan → « Continuer » → retour à Lysmont.
+
+**Donjon, temps libre, fin de chapitre (R4)**
+- [ ] Crypte de la Fontaine : vue de dessus, brouillard, boule dorée = le groupe. Le meneur se déplace avec les flèches à l'écran ou ZQSD.
+- [ ] Temps libre (après certaines scènes) : chacun choisit ses activités, puis « Ce qui s'est passé », puis « Reprendre l'aventure ».
+- [ ] Panneau Personnage : « +1 » sur une caractéristique et « Améliorer » une compétence quand on a des points ; équiper ou vendre un objet.
+- [ ] Panneau Compagnons : Aveline, son palier (Inconnue → … → Amie fidèle → Lien indéfectible), cadeaux, « L'emmener en combat ».
+
+**Version tout public (R5)**
+- [ ] Aucune scène ni aucun texte romantique. Aveline est une amie et une compagne d'armes.
+
+## Publier sur Roblox (quand tout marche)
+
+1. **Fichier → Publier sur Roblox**, si ce n'est pas déjà fait.
+2. Sur le site Roblox (*Creator Dashboard*), ouvre ton expérience :
+   - remplis le **questionnaire de maturité et de conformité** (*Maturity & Compliance*). Le jeu contient des combats fantastiques sans sang réaliste et aucune romance, mais réponds honnêtement à chaque question ;
+   - laisse l'expérience **privée**, ou ouvre-la seulement à tes amis, tant que vous testez.
+3. Relis les règles actuelles de Roblox (*Community Standards* et la page *Content Maturity* de la documentation Create) au moment de publier : elles changent régulièrement.
+
+Une expérience qui n'a pas rempli le questionnaire n'est visible que par toi et ton équipe.
+
 ## Pour les développeurs (commandes depuis la racine du dépôt)
 
 | Commande | Rôle |
@@ -92,7 +133,9 @@ Sans ces réglages, le jeu marche quand même, mais les parties sont **perdues �
 | `npm run roblox:contenu` | Régénère `contenu.lua` après une modification de `content/` |
 | `npm run roblox:moteur` | Retraduit le moteur en Luau après une modification de `src/moteur/` (nécessite `npm install` à la racine et dans `roblox/`) |
 | `npm run roblox:verifier` | Vérifie que le moteur reste compatible Luau (aussi lancé par `npm test`) |
-| `LUNE=chemin/vers/lune npm run roblox:parite [graine]` | Test de parité web / Roblox avec [Lune](https://github.com/lune-org/lune) |
+| `LUNE=chemin/vers/lune npm run roblox:parite [graine]` | Test de parité web / Roblox avec [Lune](https://github.com/lune-org/lune) (graines : chapitre, alpha, bravo, desordre…) |
+| `LUNE=… npx tsx scripts/roblox-parite-ia.ts` | Parité de l'IA maison (69 phrases + script) |
+| `POINTS=0,3,6,… LUNE=… npm run roblox:parite` puis `lune run parite/interface.luau` (dans roblox/) | Appelle sous Lune toutes les fonctions du moteur utilisées par l'interface, sur des états réels |
 
 ### Règles d'écriture du moteur (pour qu'il reste identique en Luau)
 
@@ -112,10 +155,7 @@ En Luau, `0` et `""` sont « vrais », l'ordre des clés d'une table n'est pas g
 - `debug.getinfo` n'est plus utilisé ;
 - `_G.pcall` et les fonctions de ce type sont remplacés par les fonctions de base.
 
-## Étapes suivantes
+## Où en est le portage
 
-- **R1** : vraie partie multijoueur (code à 6 caractères), sauvegarde DataStore, création du héros à l'écran.
-- **R2** : Lysmont en 3D, carte, dialogues et votes.
-- **R3** : combats en 3D, IA maison.
-- **R4** : crypte, temps libre, fin du chapitre 1.
-- **R5** : version tout public et publication.
+- **R0 à R5 écrits** (13/11) : tout le chapitre 1 est jouable sur Roblox, à vérifier dans Studio avec les listes ci-dessus.
+- Plus tard : vrais modèles 3D et animations (le groupe peut remplacer les blocs), images des portraits dans les dialogues, sons, chapitres 2 à 6 (ils arriveront en même temps sur le web et sur Roblox, grâce au moteur commun).

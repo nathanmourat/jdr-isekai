@@ -13,7 +13,7 @@ Si une demande est floue ou contradictoire : poser la question plutôt que devin
   - textures du groupe intégrées (V2 : priorité 1 sauf portraits d'Aveline, calques de race, icônes ; bestiaire de 28 monstres)
 - [x] Combat libre + IA maison (13/11) : voir CONCEPTION § 7.5
 - [ ] Étape 3 et suivantes : chapitres 2 à 6, un par itération (**en pause** : portage Roblox d'abord)
-- [ ] **Portage Roblox (décidé le 13/11)** : voir `roblox/README-ROBLOX.md`. R0 validé dans Studio le 13/11 ; R1 écrit (parties à code, DataStore, création du héros), à tester par Nathan ; R2 à R5 à venir
+- [ ] **Portage Roblox (décidé le 13/11)** : voir `roblox/README-ROBLOX.md`. R0 validé dans Studio le 13/11 ; R1 à R5 écrits le 13/11 (parties à code, DataStore, Lysmont 3D, dialogues/votes, combats 3D + IA, donjon, temps libre, tout public), **à tester par Nathan** avec les listes de `roblox/README-ROBLOX.md`
 
 ## Décisions validées (étape 0)
 - **Support** : jeu web **2D** (navigateur, PC et mobile).
@@ -35,7 +35,8 @@ Si une demande est floue ou contradictoire : poser la question plutôt que devin
 - **Portage complet** sur Roblox, en **3D simple** (style Roblox, décors générés par le code). Code dans `roblox/` (roblox-ts + Rojo).
 - **Compagnes = amitié seulement** sur Roblox (expérience tout public). La version web garde la romance. Règles Roblox : romance seulement en 17+ avec pièce d'identité.
 - **Un seul moteur** : `src/moteur` est traduit en Luau par TypeScriptToLua (`roblox/src/shared/moteur.lua`, généré). Le moteur doit rester compatible Luau : `npm run roblox:verifier` (dans `npm test`). Utiliser `vrai`, `cles/valeurs/entrees`, `trier`, `copieProfonde` (`src/moteur/outils.ts`).
-- Test de parité web/Roblox sous Lune : `npm run roblox:parite`.
+- Tests sous Lune : parité moteur (`npm run roblox:parite`, graines chapitre/alpha/bravo/desordre), parité IA (`scripts/roblox-parite-ia.ts`), fonctions de l'interface (`roblox/parite/interface.luau`). Pièges Luau corrigés : listes à trous, opérateur virgule, `filter(Boolean)`, `?:` sans parenthèses, `_G`, bitwise.
+- Contenu Roblox : `npm run roblox:contenu` (romance désactivée, paliers renommés « Amie fidèle » / « Lien indéfectible », contrôle des textes). Scène romantique = `romance: true` dans le YAML.
 - Nathan teste dans Studio (je n'ai pas Studio) : chaque étape a une liste de contrôle dans `roblox/README-ROBLOX.md`.
 
 ## Choix techniques

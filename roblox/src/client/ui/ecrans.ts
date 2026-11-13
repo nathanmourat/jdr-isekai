@@ -1,23 +1,10 @@
 /**
- * Écrans de l'étape R1 : accueil (créer / rejoindre une partie), création du héros, fiche de la partie.
+ * Écrans plein écran : accueil (créer / rejoindre une partie) et création du héros.
  */
 import { CONTENU } from "shared/donnees";
-import {
-	caracsDeDepart,
-	caracsTotales,
-	formaterDate,
-	listeHeros,
-	manaMax,
-	prochaineEtape,
-	pvMax,
-	rangGuilde,
-	xpPourNiveau,
-	type Carac,
-	type Caracs,
-	type OptionsHeros,
-} from "shared/moteur";
+import { caracsDeDepart, listeHeros, type Carac, type Caracs, type OptionsHeros } from "shared/moteur";
 import type { ResumePartie } from "shared/reseau";
-import { agir, commander, jeu, monHeros, montrerErreur } from "../partie";
+import { agir, commander, jeu, montrerErreur } from "../partie";
 import { bouton, carte, champ, choix, colonne, COULEURS, esc, ligne, texte } from "./kit";
 
 const CARACS: Carac[] = ["FOR", "AGI", "INT", "VIT", "ESP", "CHA"];
@@ -194,56 +181,4 @@ export function ecranCreation(racine: Frame, redessiner: () => void) {
 
 function agirErreur(m: string) {
 	montrerErreur(m);
-}
-
-// ───────────────────────────── Fiche de la partie ─────────────────────────────
-
-export function ecranFiche(racine: Frame, redessiner: () => void) {
-	const etat = jeu.etat!;
-	const h = monHeros()!;
-	const c = colonne(racine, 12);
-	const entete = ligne(c, 10);
-	texte(entete, `<b>${formaterDate(CONTENU, etat.jour)}</b> · Chapitre ${etat.chapitre}`, 18, { largeur: new UDim(0.6, 0) });
-	bouton(entete, "Quitter la partie", () => {
-		oublierListeParties();
-		commander({ type: "quitter" });
-	});
-	texte(c, `Partie « ${esc(jeu.nom)} » — code à donner à tes amis : <b><font color="#d9a441">${jeu.code}</font></b>`, 17);
-
-	const etape = prochaineEtape(CONTENU, etat, h.id);
-	if (etape) {
-		const e = carte(c, "➤ Prochaine étape");
-		texte(e, `${etape.objectif}${etape.nomLieu !== undefined ? ` (${etape.nomLieu})` : ""}`, 16);
-		texte(e, "Le monde en 3D (Lysmont, la Guilde, les dialogues) arrive à l'étape suivante (R2).", 13, { couleur: COULEURS.texte2 });
-	}
-
-	// Mon héros
-	const caracs = caracsTotales(CONTENU, h);
-	const fh = carte(c, `${esc(h.nom)} — ${CONTENU.races[h.race].nom}, ${CONTENU.classes[h.classe].nom}`);
-	texte(
-		fh,
-		`Niveau <b>${h.niveau}</b> (${h.xp} / ${xpPourNiveau(CONTENU, h.niveau + 1)} XP) · PV <b>${pvMax(CONTENU, caracs.VIT, h.niveau)}</b> · Mana <b>${manaMax(caracs.ESP, h.niveau)}</b> · ${h.or} or · Guilde : rang ${rangGuilde(CONTENU, etat.pointsGuilde[h.id] ?? 0)}`,
-		15,
-	);
-	texte(fh, `Don : <b>${CONTENU.dons[h.don].nom}</b> · Origine : ${h.origine === "invoque" ? "invoqué" : "réincarné"}`, 15);
-	const lc = ligne(fh, 10);
-	for (const k of CARACS) texte(lc, `${NOMS_CARACS[k]}\n<b>${caracs[k]}</b>`, 15, { largeur: new UDim(0, 105), centre: true });
-
-	// Joueurs
-	const fj = carte(c, "Joueurs");
-	for (const j of etat.ordreJoueurs) {
-		const jj = etat.joueurs[j];
-		const hj = jj.herosId !== undefined ? etat.heros[jj.herosId] : undefined;
-		const meneur = etat.meneur === j ? " · meneur du jour" : "";
-		texte(fj, `${jj.present ? "🟢" : "⚪"} <b>${esc(jj.pseudo)}</b> — ${hj ? `${esc(hj.nom)} (${CONTENU.classes[hj.classe].nom}, niv. ${hj.niveau})` : "crée son héros…"}${meneur}`, 15);
-	}
-
-	// Journal
-	const fjo = carte(c, "Journal de la partie");
-	const n = etat.journal.size();
-	for (let i = n - 1; i >= math.max(0, n - 10); i--) {
-		const e = etat.journal[i];
-		texte(fjo, `<font color="#beaf96">${formaterDate(CONTENU, e.jour)}</font> — ${esc(e.texte)}`, 14);
-	}
-	void redessiner;
 }
