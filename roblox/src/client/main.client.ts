@@ -8,7 +8,8 @@ import { CONTENU } from "shared/donnees";
 import { noeudCourant } from "shared/moteur";
 import { affichage } from "./local";
 import { effacerMessages, jeu, monHeros, surChangement } from "./partie";
-import { afficherArene, cacherArene } from "./rendu/arene";
+import { afficherArene, cacherArene, definirEquipements } from "./rendu/arene";
+import type { EquipementPorte } from "shared/equipement3d";
 import { afficherDonjon, cacherDonjon } from "./rendu/donjon3d";
 import { allerAuLieu, entrerDans, majMarqueurs, majPnj, sortirDe, surInteraction } from "./rendu/marqueurs";
 import { vueCombat } from "./ui/combat";
@@ -19,6 +20,7 @@ import { COULEURS, vider } from "./ui/kit";
 import { barreHaut, panneauLateral } from "./ui/monde";
 import { vueFinChapitre, vueTempsLibre } from "./ui/temps";
 import { majSons } from "./sons";
+import { surveillerButin } from "./ui/objets";
 
 const joueur = Players.LocalPlayer;
 const gui = new Instance("ScreenGui");
@@ -188,6 +190,9 @@ function redessiner() {
 		if (barre.Visible) barreHaut(barre, redessiner, allerA);
 		if (vue === "combat") {
 			const entree = etat!.combats[combatCle!];
+			const equipements: Record<string, EquipementPorte> = {};
+			for (const [hid, h] of pairs(etat!.heros)) equipements[hid as string] = h.equipement;
+			definirEquipements(equipements);
 			afficherArene(entree.combat, entree.contexte.origine === "donjon");
 			vueCombat(calqueCombat, combatCle!, redessiner);
 		} else if (vue === "donjon") {
@@ -254,6 +259,7 @@ surInteraction((lieu, action, pnj) => {
 	redessiner();
 });
 surChangement(redessiner);
+surveillerButin();
 redessiner();
 // l'ambiance sonore suit aussi le jour et la nuit, même sans action dans la partie
 task.spawn(() => {

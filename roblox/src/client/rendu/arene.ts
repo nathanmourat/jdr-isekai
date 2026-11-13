@@ -1,11 +1,11 @@
 /**
  * Combat en 3D « sur place », dessiné par chaque joueur pour lui-même (rien n'est envoyé au serveur) :
  *  - le combat a lieu dans le monde, au lieu qui correspond au décor (arène, Combe-aux-Saules, Tanneurs…) ;
- *  - héros = avatar Roblox du joueur + arme de sa classe ; ennemis = modèles 3D préparés par le serveur ;
+ *  - héros = avatar Roblox du joueur, habillé de son équipement en 3D (arme de sa classe s'il n'en a pas) ; ennemis = modèles 3D préparés par le serveur ;
  *  - les événements du combat sont joués un par un : élan, coup, chiffres de dégâts, effets d'élément, K.O.
  */
 import { Players, ReplicatedStorage, TweenService, UserInputService, Workspace } from "@rbxts/services";
-import { arme } from "shared/construction";
+import { equiperPersonnage, type EquipementPorte } from "shared/equipement3d";
 import { CONTENU } from "shared/donnees";
 import { LIEU_DU_DECOR, positionLieu } from "shared/geo";
 import type { Combat, Combattant, EvenementCombat } from "shared/moteur";
@@ -120,6 +120,12 @@ function construireSalleCrypte(o: Vector3) {
 
 // ───────────────────────────── Pions ─────────────────────────────
 
+/** Équipement porté par chaque héros (id du héros → objets), mis à jour avant d'afficher l'arène. */
+let equipementsDesHeros: Record<string, EquipementPorte> = {};
+export function definirEquipements(e: Record<string, EquipementPorte>) {
+	equipementsDesHeros = e;
+}
+
 function gabarit(x: Combattant): Model | undefined {
 	const modeles = ReplicatedStorage.FindFirstChild("VelmarisModeles");
 	if (!modeles) return undefined;
@@ -154,7 +160,7 @@ function creerPion(combat: Combat, x: Combattant): Pion {
 	const g = gabarit(x);
 	const modele = g ? g.Clone() : secours(x);
 	modele.Name = x.id;
-	if (x.type === "heros" && g?.Name.sub(1, 7) === "joueur-") arme(modele, x.refId);
+	if (x.type === "heros" && modele.FindFirstChild("UpperTorso")) equiperPersonnage(modele, CONTENU, equipementsDesHeros[x.herosId ?? ""], x.refId);
 	if (x.boss && modele.GetAttribute("Humanoide") !== true) pcall(() => modele.ScaleTo(1.4));
 	const racine = (modele.PrimaryPart ?? modele.FindFirstChildWhichIsA("BasePart"))!;
 	modele.Parent = dossier;

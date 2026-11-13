@@ -145,7 +145,7 @@ describe('Équipement : effets en combat', () => {
     b.pv = 1;
     b.caracs.VIT = 0;
     for (let i = 0; i < 80 && !cb.resultat && !cb.evenements.some((e) => e.texte.includes('Aube-Première')); i++) {
-      if (cb.enAttente !== undefined) jouerAction(c, cb, rng, { type: 'defendre', acteur: cb.enAttente });
+      if (cb.enAttente) jouerAction(c, cb, rng, { type: 'defendre', acteur: cb.enAttente });
     }
     const releve = cb.evenements.find((e) => e.texte.includes('Aube-Première'));
     expect(releve).toBeDefined();

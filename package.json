@@ -12,6 +12,7 @@
     "test:watch": "vitest",
     "verifier": "svelte-check --tsconfig ./tsconfig.json",
     "equilibrage": "tsx scripts/equilibrage.ts",
+    "equilibrage:equipements": "tsx scripts/equilibrage-equipements.ts",
     "assets:manquants": "tsx scripts/assets-manquants.ts",
     "contenu:verifier": "tsx scripts/verifier-contenu.ts",
     "e2e": "node tests/e2e/parcours.mjs",

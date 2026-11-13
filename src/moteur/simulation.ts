@@ -8,14 +8,19 @@ import { creerRng, entier } from './rng';
 
 export interface Resultat { victoires: number; combats: number; tours: number }
 
-export function simulerCombat(contenu: Contenu, rencontre: string, heros: { classe: string; race: string; don: string; niveau?: number }[], graine: string): Combat {
+/** Héros simulé : l'équipement est facultatif (ids d'objets par emplacement). */
+export interface HerosSimule { classe: string; race: string; don: string; niveau?: number; equipement?: { arme?: string; armure?: string; accessoire?: string } }
+
+export function simulerCombat(contenu: Contenu, rencontre: string, heros: HerosSimule[], graine: string): Combat {
   const rng = creerRng(graine);
-  const allies = heros.map((h, i) =>
-    combattantHeros(contenu, creerHeros(contenu, {
+  const allies = heros.map((h, i) => {
+    const x = creerHeros(contenu, {
       id: `sim${i}`, joueurId: `j${i}`, nom: `${contenu.classes[h.classe].nom} ${i + 1}`, classe: h.classe, race: h.race, don: h.don,
       origine: 'invoque', age: 20, anneeCampagne: 1012, niveau: h.niveau ?? 1,
-    }), false),
-  );
+    });
+    if (h.equipement !== undefined) x.equipement = { arme: h.equipement.arme ?? null, armure: h.equipement.armure ?? null, accessoire: h.equipement.accessoire ?? null };
+    return combattantHeros(contenu, x, false);
+  });
   let combat = demarrerCombat(contenu, rencontre, allies, rng, 'sim');
   // Second départ : rejoue une fois le tour perdu
   if (combat.resultat === 'defaite' && allies.some((a) => a.don?.id === 'second-depart')) {
@@ -26,7 +31,7 @@ export function simulerCombat(contenu: Contenu, rencontre: string, heros: { clas
   return combat;
 }
 
-export function tauxVictoire(contenu: Contenu, rencontre: string, heros: { classe: string; race: string; don: string; niveau?: number }[], n: number, graine: string): Resultat {
+export function tauxVictoire(contenu: Contenu, rencontre: string, heros: HerosSimule[], n: number, graine: string): Resultat {
   let v = 0, t = 0;
   for (let i = 0; i < n; i++) {
     const c = simulerCombat(contenu, rencontre, heros, `${graine}:${i}`);

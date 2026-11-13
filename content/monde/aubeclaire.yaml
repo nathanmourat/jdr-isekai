@@ -39,7 +39,15 @@ regions:
         position_plan: { x: 900, y: 430 }
         disponible_si: { flag: appel-fait }
         pnj: [{ id: rowena }, { id: kaya, si: { flag: examen-reussi } }]
-        boutique: [potion-soin-petite, antidote, bombe-feu, bombe-fumee, epee-courte, dague, arc-court, baton-apprenti, bouclier-bois, armure-cuir, robe-mage, kit-entretien-armes]
+        # équipements nommés du palier I (peu communs) en plus des armes de base ; tout le palier I commun est chez Halvine
+        boutique: [
+          potion-soin-petite, antidote, bombe-feu, bombe-fumee, epee-courte, dague, arc-court, baton-apprenti, bouclier-bois,
+          armure-cuir, robe-mage, kit-entretien-armes, lame-du-guet-de-lysmont, haubert-du-temple-du-seuil,
+          baton-de-l-apprenti-prodige, robe-des-etincelles, orbe-du-familier-timide, tunique-des-liens, surin-des-ruelles,
+          pourpoint-du-voleur-de-minuit, masse-du-sacristain, cuirasse-de-la-lumiere-sereine, lance-fioles-bricole,
+          tablier-ignifuge-de-halvine, arc-du-chasseur-de-la-plaine, cape-du-guetteur, baton-du-dispensaire, aube-de-la-novice,
+          hache-du-bucheron-colerique, cuir-cloute-de-la-fosse, luth-du-chaudron-fele, pourpoint-du-menestrel,
+        ]
       - id: taverne
         nom: "Le Chaudron Fêlé"
         description: "La taverne et l'auberge de Bram : on y mange bien, on y parle trop, et on y dort à l'étage."
@@ -60,7 +68,16 @@ regions:
         position_plan: { x: 560, y: 560 }
         disponible_si: { flag: appel-fait }
         pnj: [{ id: halvine }]
-        boutique: [potion-soin-petite, potion-soin, potion-mana, antidote, bombe-feu, bombe-fumee, ration, fleur-des-champs, gateau-lysmont, bijou-dore, epee-courte, dague, arc-court, baton-apprenti, bouclier-bois, armure-cuir, robe-mage]
+        # équipements du palier I : communs et versions « de maître » (peu communs)
+        boutique: [
+          potion-soin-petite, potion-soin, potion-mana, antidote, bombe-feu, bombe-fumee, ration, fleur-des-champs,
+          gateau-lysmont, bijou-dore, epee-courte, deux-mains-i, masse-i, dague, arc-court, arbalete-i, baton-apprenti,
+          sceptre-i, orbe-i, instrument-i, lourde-i, armure-cuir, robe-mage, bouclier-bois, anneau-i, amulette-i,
+          talisman-i, carquois-i, sacoche-i, epee-i-maitre, deux-mains-i-maitre, masse-i-maitre, dague-i-maitre,
+          arc-i-maitre, arbalete-i-maitre, baton-i-maitre, sceptre-i-maitre, orbe-i-maitre, instrument-i-maitre,
+          lourde-i-maitre, intermediaire-i-maitre, legere-i-maitre, bouclier-i-maitre, anneau-i-maitre, amulette-i-maitre,
+          talisman-i-maitre, carquois-i-maitre, sacoche-i-maitre,
+        ]
       - id: chateau
         nom: "Château de Lysmont"
         description: "Le siège de la Couronne, tours blanches et toits bleus."

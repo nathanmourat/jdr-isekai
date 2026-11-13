@@ -1,6 +1,6 @@
 # Rapport d'équilibrage
 
-- Combats par cas : **1000** (218 s de calcul)
+- Combats par cas : **1000** (244 s de calcul)
 - Taux de victoire moyen (toutes classes et races, niveau 1, en solo) : **72,6 %**
 - Fourchettes : classe et race ± 10 points, combinaison ± 15 points, don ± 10 points (autour de la moyenne des dons)
 

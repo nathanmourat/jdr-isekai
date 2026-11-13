@@ -35,6 +35,16 @@ for _, etat in sortie.points do
 		end
 		for _, co in etat.compagnonsRencontres do essai("palier", function() moteur.palierCompagnon(contenu, etat, h.id, co) end) end
 		for o, _ in h.inventaire do essai("prixVente", function() moteur.prixVente(contenu, h, o) end) end
+		essai("bonusEquipement", function() moteur.bonusEquipement(contenu, h) end)
+		for id, o in contenu.objets do
+			if o.type == "equipement" then
+				essai("objet " .. id, function()
+					moteur.problemeEquipement(contenu, h, o)
+					moteur.texteEffets(o)
+					moteur.exemplaires(moteur.listeHeros(etat), id)
+				end)
+			end
+		end
 		for _, ct in contenu.contrats do essai("contrat", function() moteur.conditionHeros(contenu, etat, ct.disponible_si, h) end) end
 		for _, a in contenu.activites do essai("activite", function() moteur.conditionHeros(contenu, etat, a.disponible_si, h) end) end
 	end

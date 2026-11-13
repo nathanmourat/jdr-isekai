@@ -79,6 +79,8 @@ export interface Combattant {
   sprite: string;
   /** Effets de l'équipement porté (héros) : critique, précision, touches élémentaires, pouvoirs uniques. */
   objets?: BonusEquipement;
+  /** Puissance d'arme : multiplie aussi les compétences (dégâts et soins), en proportion de l'attaque de base de la classe. */
+  facteurArme?: number;
   echelle: number;
   teinte: string | null;
   race: string | null;
@@ -248,6 +250,7 @@ export function combattantHeros(contenu: Contenu, h: Heros, controle: boolean, t
     recompenses: null,
     sprite: `heros/${h.classe}`,
     objets: be,
+    facteurArme: puissance / Math.max(1, cl.attaque.puissance),
     echelle: race.echelle,
     teinte: race.teinte ?? null,
     race: h.race,
@@ -541,7 +544,8 @@ function multiplicateurDegatsSource(combat: Combat, s: Combattant, cible: Combat
   m *= 1 - valeurEtat(s, 'affaibli');
   // Présence (Charisme) : ±1 % de dégâts par point au-dessus ou en dessous de 10
   if (s.type === 'heros' || s.type === 'compagnon') m *= 1 + 0.01 * (s.caracs.CHA - 10);
-  if (s.camp === 'ennemis') m *= s.compteurs.multDegats ?? 1;
+  // ennemis : difficulté du groupe ; invocations des héros : niveau du maître et puissance de son arme
+  if (s.camp === 'ennemis' || s.type === 'invocation') m *= s.compteurs.multDegats ?? 1;
   if (s.passif?.id === 'sang-de-dragon') {
     const manque = 1 - s.pv / s.pvMax;
     const max = s.passif.parametres.max ?? 0.4;
@@ -735,7 +739,8 @@ function invoquer(contenu: Contenu, combat: Combat, maitre: Combattant, creature
   inv.niveau = maitre.niveau;
   inv.pvMax = Math.round(inv.pvMax * f * (aPouvoir(maitre, 'nyxaliel') ? 1.2 : 1));
   inv.pv = inv.pvMax;
-  inv.compteurs = { multDegats: f };
+  // la puissance de l'arme du maître renforce aussi ses créatures
+  inv.compteurs = { multDegats: f * (maitre.facteurArme ?? 1) };
   inv.recompenses = null;
   inv.sprite = `invocations/${creature}`;
   combat.combattants.push(inv);
@@ -819,6 +824,7 @@ function appliquerEffets(contenu: Contenu, combat: Combat, rng: Rng, s: Combatta
           const statVal = depuisObjet ? 10 : s.caracs[ef.stat];
           const variance = 1 + (aleatoire(rng) * 2 - 1) * contenu.config.combat.variance_degats;
           let brut = ef.puissance * facteurRang * (1 + statVal / 20) * variance * multObjet;
+          if (comp.id !== 'attaque' && !depuisObjet) brut *= s.facteurArme ?? 1;
           brut *= multiplicateurDegatsSource(combat, s, cible, ef.element as Element) * bonusResonance * bonusRunes;
           if (critique) brut *= aPouvoir(s, 'nuit-premiere') ? 2 : contenu.config.combat.multiplicateur_critique;
           if (vrai(ef.executer_sous_pourcent) && cible.pv / cible.pvMax <= ef.executer_sous_pourcent) brut *= 2;
@@ -830,7 +836,7 @@ function appliquerEffets(contenu: Contenu, combat: Combat, rng: Rng, s: Combatta
     } else if (ef.type === 'soin') {
       const cibles = resoudreCibles(combat, rng, s, typeCible, cibleChoisie, 'distance');
       const statVal = depuisObjet ? 10 : s.caracs[ef.stat];
-      for (const cible of cibles) soigner(contenu, combat, s, cible, ef.puissance * facteurRang * (1 + statVal / 20) * multObjet);
+      for (const cible of cibles) soigner(contenu, combat, s, cible, ef.puissance * facteurRang * (1 + statVal / 20) * multObjet * (depuisObjet ? 1 : s.facteurArme ?? 1));
     } else if (ef.type === 'etat') {
       const cibles = typeCible === 'ennemi' && premiereCibleOffensive ? [premiereCibleOffensive] : resoudreCibles(combat, rng, s, typeCible, cibleChoisie, comp.portee);
       for (const cible of cibles) {

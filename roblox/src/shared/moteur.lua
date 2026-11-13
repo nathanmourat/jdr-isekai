@@ -5054,7 +5054,7 @@ function multiplicateurDegatsSource(combat, s, cible, element)
     if s.type == "heros" or s.type == "compagnon" then
         m = m * (1 + 0.01 * (s.caracs.CHA - 10))
     end
-    if s.camp == "ennemis" then
+    if s.camp == "ennemis" or s.type == "invocation" then
         m = m * (s.compteurs.multDegats or 1)
     end
     local ____opt_23 = s.passif
@@ -5411,7 +5411,7 @@ function invoquer(contenu, combat, maitre, creature, duree)
     inv.niveau = maitre.niveau
     inv.pvMax = math.floor(inv.pvMax * f * (if ____exports.aPouvoir(maitre, "nyxaliel") then 1.2 else 1) + 0.5)
     inv.pv = inv.pvMax
-    inv.compteurs = {multDegats = f}
+    inv.compteurs = {multDegats = f * (maitre.facteurArme or 1)}
     inv.recompenses = nil
     inv.sprite = "invocations/" .. creature
     local ____combat_combattants_60 = combat.combattants
@@ -5582,6 +5582,9 @@ function appliquerEffets(contenu, combat, rng, s, comp, rang, cibleChoisie, depu
                         local statVal = (if depuisObjet then 10 else s.caracs[ef.stat])
                         local variance = 1 + (aleatoire(rng) * 2 - 1) * contenu.config.combat.variance_degats
                         local brut = ef.puissance * facteurRang * (1 + statVal / 20) * variance * multObjet
+                        if comp.id ~= "attaque" and not depuisObjet then
+                            brut = brut * (s.facteurArme or 1)
+                        end
                         brut = brut * (multiplicateurDegatsSource(combat, s, cible, ef.element) * bonusResonance * bonusRunes)
                         if critique then
                             brut = brut * (if ____exports.aPouvoir(s, "nuit-premiere") then 2 else contenu.config.combat.multiplicateur_critique)
@@ -5633,7 +5636,7 @@ function appliquerEffets(contenu, combat, rng, s, comp, rang, cibleChoisie, depu
                     combat,
                     s,
                     cible,
-                    ef.puissance * facteurRang * (1 + statVal / 20) * multObjet
+                    ef.puissance * facteurRang * (1 + statVal / 20) * multObjet * (if depuisObjet then 1 else s.facteurArme or 1)
                 )
             end
         elseif ef.type == "etat" then
@@ -6260,9 +6263,9 @@ function pacifiable(x, c)
 end
 function executer(contenu, combat, rng, x, a)
     repeat
-        local ____switch335 = a.type
-        local ____cond335 = ____switch335 == "attaque"
-        if ____cond335 then
+        local ____switch336 = a.type
+        local ____cond336 = ____switch336 == "attaque"
+        if ____cond336 then
             do
                 log(combat, {
                     type = "action",
@@ -6284,8 +6287,8 @@ function executer(contenu, combat, rng, x, a)
                 return false
             end
         end
-        ____cond335 = ____cond335 or ____switch335 == "competence"
-        if ____cond335 then
+        ____cond336 = ____cond336 or ____switch336 == "competence"
+        if ____cond336 then
             do
                 local k = ____exports.competenceCombattant(contenu, x, a.competence)
                 x.mana = x.mana - ____exports.coutMana(x, k.comp)
@@ -6331,8 +6334,8 @@ function executer(contenu, combat, rng, x, a)
                 return false
             end
         end
-        ____cond335 = ____cond335 or ____switch335 == "objet"
-        if ____cond335 then
+        ____cond336 = ____cond336 or ____switch336 == "objet"
+        if ____cond336 then
             do
                 local cible = (if vrai(a.cible) then __TS__ArrayFind(
                     combat.combattants,
@@ -6389,8 +6392,8 @@ function executer(contenu, combat, rng, x, a)
                 return false
             end
         end
-        ____cond335 = ____cond335 or ____switch335 == "defendre"
-        if ____cond335 then
+        ____cond336 = ____cond336 or ____switch336 == "defendre"
+        if ____cond336 then
             ajouterEtat(combat, x, {
                 id = "garde",
                 duree = 2,
@@ -6405,14 +6408,14 @@ function executer(contenu, combat, rng, x, a)
             log(combat, {type = "action", source = x.id, texte = x.nom .. " se met en garde."})
             return false
         end
-        ____cond335 = ____cond335 or ____switch335 == "changer_rang"
-        if ____cond335 then
+        ____cond336 = ____cond336 or ____switch336 == "changer_rang"
+        if ____cond336 then
             x.rang = (if x.rang == "avant" then "arriere" else "avant")
             log(combat, {type = "action", source = x.id, texte = ((x.nom .. " passe au rang ") .. (if x.rang == "avant" then "avant" else "arrière")) .. "."})
             return false
         end
-        ____cond335 = ____cond335 or ____switch335 == "pacifier"
-        if ____cond335 then
+        ____cond336 = ____cond336 or ____switch336 == "pacifier"
+        if ____cond336 then
             do
                 local c = ____exports.trouver(combat, a.cible)
                 c.parti = true
@@ -6420,8 +6423,8 @@ function executer(contenu, combat, rng, x, a)
                 return false
             end
         end
-        ____cond335 = ____cond335 or ____switch335 == "viser"
-        if ____cond335 then
+        ____cond336 = ____cond336 or ____switch336 == "viser"
+        if ____cond336 then
             do
                 local v = ____exports.VISEES[a.partie]
                 local c = ____exports.trouver(combat, a.cible)
@@ -6480,8 +6483,8 @@ function executer(contenu, combat, rng, x, a)
                 return false
             end
         end
-        ____cond335 = ____cond335 or ____switch335 == "se_cacher"
-        if ____cond335 then
+        ____cond336 = ____cond336 or ____switch336 == "se_cacher"
+        if ____cond336 then
             do
                 if chance(
                     rng,
@@ -6501,8 +6504,8 @@ function executer(contenu, combat, rng, x, a)
                 return false
             end
         end
-        ____cond335 = ____cond335 or ____switch335 == "fuir"
-        if ____cond335 then
+        ____cond336 = ____cond336 or ____switch336 == "fuir"
+        if ____cond336 then
             do
                 local p = 0.5 + 0.03 * (x.caracs.AGI - math.max(table.unpack(__TS__ArrayMap(
                     ____exports.adversaires(combat, x),
@@ -6530,35 +6533,35 @@ function conditionIA(combat, x, comp)
     local q = comp.ia.quand
     local amis = ____exports.allies(combat, x)
     repeat
-        local ____switch365 = q
-        local ____cond365 = ____switch365 == "allie_blesse"
-        if ____cond365 then
+        local ____switch366 = q
+        local ____cond366 = ____switch366 == "allie_blesse"
+        if ____cond366 then
             return __TS__ArraySome(
                 amis,
                 function(____, a) return a.pv / a.pvMax < 0.6 and a.type ~= "invocation" end
             )
         end
-        ____cond365 = ____cond365 or ____switch365 == "soi_blesse"
-        if ____cond365 then
+        ____cond366 = ____cond366 or ____switch366 == "soi_blesse"
+        if ____cond366 then
             return x.pv / x.pvMax < 0.5
         end
-        ____cond365 = ____cond365 or ____switch365 == "plusieurs_ennemis"
-        if ____cond365 then
+        ____cond366 = ____cond366 or ____switch366 == "plusieurs_ennemis"
+        if ____cond366 then
             return #____exports.adversaires(combat, x) >= 2
         end
-        ____cond365 = ____cond365 or ____switch365 == "debut_combat"
-        if ____cond365 then
+        ____cond366 = ____cond366 or ____switch366 == "debut_combat"
+        if ____cond366 then
             return combat.tour <= 2
         end
-        ____cond365 = ____cond365 or ____switch365 == "cible_faible"
-        if ____cond365 then
+        ____cond366 = ____cond366 or ____switch366 == "cible_faible"
+        if ____cond366 then
             return __TS__ArraySome(
                 ____exports.adversaires(combat, x),
                 function(____, a) return a.pv / a.pvMax < 0.4 end
             )
         end
-        ____cond365 = ____cond365 or ____switch365 == "allie_ko"
-        if ____cond365 then
+        ____cond366 = ____cond366 or ____switch366 == "allie_ko"
+        if ____cond366 then
             return __TS__ArraySome(
                 combat.combattants,
                 function(____, a) return a.camp == x.camp and a.ko and a.type ~= "invocation" end
@@ -6904,6 +6907,7 @@ function ____exports.combattantHeros(contenu, h, controle, techniques)
         recompenses = nil,
         sprite = "heros/" .. h.classe,
         objets = be,
+        facteurArme = puissance / math.max(1, cl.attaque.puissance),
         echelle = race.echelle,
         teinte = race.teinte or nil,
         race = h.race
@@ -7396,9 +7400,9 @@ function ____exports.estimerAction(contenu, combat, a)
         return c
     end
     repeat
-        local ____switch446 = a.type
-        local ____cond446 = ____switch446 == "attaque" or ____switch446 == "viser"
-        if ____cond446 then
+        local ____switch447 = a.type
+        local ____cond447 = ____switch447 == "attaque" or ____switch447 == "viser"
+        if ____cond447 then
             do
                 local c = verifierCible(a.cible, x.attaque.portee)
                 if type(c) == "string" then
@@ -7424,8 +7428,8 @@ function ____exports.estimerAction(contenu, combat, a)
                 return res
             end
         end
-        ____cond446 = ____cond446 or ____switch446 == "competence"
-        if ____cond446 then
+        ____cond447 = ____cond447 or ____switch447 == "competence"
+        if ____cond447 then
             do
                 local k = ____exports.competenceCombattant(contenu, x, a.competence)
                 res.mana = ____exports.coutMana(x, k.comp)
@@ -7487,15 +7491,15 @@ function ____exports.estimerAction(contenu, combat, a)
                 return res
             end
         end
-        ____cond446 = ____cond446 or ____switch446 == "se_cacher"
-        if ____cond446 then
+        ____cond447 = ____cond447 or ____switch447 == "se_cacher"
+        if ____cond447 then
             res.reussite = ____exports.chanceSeCacher(combat, x)
             local ____res_effets_147 = res.effets
             ____res_effets_147[#____res_effets_147 + 1] = "furtif : impossible à cibler, prochaine attaque critique"
             return res
         end
-        ____cond446 = ____cond446 or ____switch446 == "fuir"
-        if ____cond446 then
+        ____cond447 = ____cond447 or ____switch447 == "fuir"
+        if ____cond447 then
             res.reussite = math.min(
                 0.9,
                 math.max(
@@ -7508,8 +7512,8 @@ function ____exports.estimerAction(contenu, combat, a)
             )
             return res
         end
-        ____cond446 = ____cond446 or ____switch446 == "objet"
-        if ____cond446 then
+        ____cond447 = ____cond447 or ____switch447 == "objet"
+        if ____cond447 then
             if a.objet == "potion" then
                 local ____temp_150 = 16 * 1.5
                 local ____opt_148 = x.passif
@@ -7521,8 +7525,8 @@ function ____exports.estimerAction(contenu, combat, a)
             end
             return res
         end
-        ____cond446 = ____cond446 or ____switch446 == "defendre"
-        if ____cond446 then
+        ____cond447 = ____cond447 or ____switch447 == "defendre"
+        if ____cond447 then
             local ____res_effets_151 = res.effets
             ____res_effets_151[#____res_effets_151 + 1] = "−50 % de dégâts reçus jusqu'au prochain tour, +10 % de mana"
             return res

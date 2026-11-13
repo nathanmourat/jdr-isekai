@@ -56,6 +56,25 @@ export interface ObjetDef {
 	type: "consommable" | "cadeau" | "equipement" | "quete" | "materiau";
 	prix: number;
 	emplacement?: "arme" | "armure" | "accessoire";
+	bonus?: { puissance: number; armure: number; caracs: Partial<Caracs> };
+	rarete?: "commun" | "peu-commun" | "rare" | "epique" | "legendaire" | "mythique";
+	palier?: string;
+	niveau?: number;
+	categorie?: string;
+	classes?: string[];
+	effets_equipement?: { effet: string; valeur?: number; puissance?: number; element?: string }[];
+	pouvoir_unique?: string;
+	unique_par_partie?: boolean;
+}
+
+export interface BonusEquipement {
+	critique: number;
+	precision: number;
+	mana: number;
+	vigueur: number;
+	resistances: Record<string, number>;
+	touches: { element: string; puissance: number }[];
+	pouvoirs: string[];
 }
 
 export interface CompagnonDef {
@@ -416,6 +435,13 @@ export function lieuAvecCombat(contenu: Contenu, etat: EtatPartie, lieu: string,
 export function palierCompagnon(contenu: Contenu, etat: EtatPartie, herosId: string, compagnon: string): { id: string; nom: string; index: number };
 export function prixAchat(contenu: Contenu, h: Heros, objet: string): number;
 export function prixVente(contenu: Contenu, h: Heros, objet: string): number;
+export const COULEURS_RARETE: Record<string, string>;
+export const NOMS_RARETE: Record<string, string>;
+export const POUVOIRS: Record<string, string>;
+export function bonusEquipement(contenu: Contenu, h: Heros): BonusEquipement;
+export function problemeEquipement(contenu: Contenu, h: Heros, o: ObjetDef): string | undefined;
+export function exemplaires(heros: Heros[], objet: string): number;
+export function texteEffets(o: ObjetDef): string[];
 export function caseDonjon(contenu: Contenu, id: string, x: number, y: number): string;
 export function versDate(contenu: Contenu, jour: number): { annee: number; mois: number; jour: number };
 export function age(h: Heros, annee: number): number;

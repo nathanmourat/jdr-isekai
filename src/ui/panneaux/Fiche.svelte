@@ -8,6 +8,8 @@
   import { portraitHeros, redimensionnerPortrait } from '../outils';
   import { AIDE_CARACS } from '../../moteur/fiche';
   import CompetenceInfo from '../CompetenceInfo.svelte';
+  import ObjetInfo from '../ObjetInfo.svelte';
+  import { problemeEquipement } from '../../moteur/equipement';
 
   const c = jeu.contenu!;
   const etat = $derived(jeu.etat!);
@@ -121,13 +123,13 @@
   <div class="carte-ui">
     <h3>Équipement et inventaire</h3>
     {#each ['arme', 'armure', 'accessoire'] as const as emp (emp)}
-      <p class="ligne">{emp} : <strong>{h.equipement[emp] ? c.objets[h.equipement[emp]!].nom : '—'}</strong>
+      <p class="ligne">{emp} : {#if h.equipement[emp]}<ObjetInfo id={h.equipement[emp]!} />{:else}<strong>—</strong>{/if}
         {#if h.equipement[emp]}<button class="petit" onclick={() => jeu.agir({ type: 'desequiper', emplacement: emp })}>Retirer</button>{/if}</p>
     {/each}
     {#each inventaire as [o, n] (o)}
       <div class="ligne item">
-        <span>{c.objets[o].nom} × {n} <small class="discret">{c.objets[o].description}</small></span>
-        {#if c.objets[o].type === 'equipement'}<button class="petit" onclick={() => jeu.agir({ type: 'equiper', objet: o })}>Équiper</button>{/if}
+        <ObjetInfo id={o} nombre={n} />
+        {#if c.objets[o].type === 'equipement'}{@const refus = problemeEquipement(c, h, c.objets[o])}<button class="petit" disabled={refus !== undefined} title={refus ?? ''} onclick={() => jeu.agir({ type: 'equiper', objet: o })}>Équiper</button>{/if}
         {#if c.objets[o].type !== 'quete'}<button class="petit" onclick={() => jeu.agir({ type: 'vendre', objet: o })}>Vendre ({prixVente(c, h, o)} or)</button>{/if}
       </div>
     {:else}<p class="discret">Inventaire vide.</p>{/each}

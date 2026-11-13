@@ -160,13 +160,20 @@ def repartir(points: int, poids: list) -> dict:
     return res
 
 
-def stats(type_id: str, niveau: int, b: int) -> dict:
-    """Bonus d'un objet : {'puissance', 'armure', FOR…} à partir de son budget."""
+def stats(type_id: str, niveau: int, b: int, principal: str | None = None) -> dict:
+    """Bonus d'un objet : {'puissance', 'armure', FOR…} à partir de son budget.
+    principal : caractéristique principale de la classe pour laquelle un objet nommé est pensé ;
+    si le type la propose sans la favoriser (ex. bâton INT/ESP pour le guérisseur), elle reçoit la plus grosse part."""
     emplacement, _, _, physique, poids = TYPES[type_id]
+    if principal is not None and any(c == principal for c, _ in poids):
+        haut = max(p for c, p in poids if c != "armure")
+        if dict(poids)[principal] <= haut and any(c != principal and c != "armure" and p >= dict(poids)[principal] for c, p in poids):
+            poids = [(c, haut + 0.01 if c == principal else p) for c, p in poids]
     puissance = 0
     if emplacement == "arme":
         plafond = 1 + niveau // 5
-        puissance = min(plafond, b // 3 if physique else b // 4)
+        # toutes les armes ont de la puissance : elle renforce l'attaque et, en proportion, les compétences
+        puissance = min(plafond, arrondi(b / 3))
     pts = repartir(b - puissance, poids)
     res = {"puissance": puissance, "armure": 2 * pts.pop("armure", 0)}
     res.update(pts)
@@ -268,7 +275,7 @@ def nommes() -> list:
         for o in liste:
             niveau = NIVEAU[o["palier"]]
             b = budget(niveau, o["rarete"])
-            s = stats(o["type"], niveau, b)
+            s = stats(o["type"], niveau, b, None if classe == "mythiques" else PROFILS[classe][0])
             effets = [effet(code, o["palier"]) for code in o.get("effets", [])]
             res.append(objet(slug(o["nom"]), o["nom"], o["description"], o["type"], o["palier"], o["rarete"], s,
                              effets, o.get("pouvoir"), None if classe == "mythiques" else classe))
@@ -356,7 +363,7 @@ def vers_yaml(objets: list) -> str:
             e["unique_par_partie"] = True
         sortie.append(e)
     entete = ("# Catalogue d'équipements — généré par generer.py, ne pas modifier à la main.\n"
-              "# Champs nouveaux (le moteur ne les connaît pas encore) : rarete, niveau, categorie, classes,\n"
+              "# Champs propres à l'équipement (lus par src/moteur/equipement.ts) : rarete, niveau, categorie, classes,\n"
               "# palier, effets_equipement, pouvoir_unique, unique_par_partie. Voir CONCEPTION-EQUIPEMENTS.md § 12.\n")
     class SansAlias(yaml.SafeDumper):
         def ignore_aliases(self, data):

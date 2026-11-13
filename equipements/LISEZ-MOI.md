@@ -51,6 +51,18 @@ cd icones && python3 dessiner.py
 7. **Boutiques** (`content/monde/aubeclaire.yaml`) : ajouter les communs et peu communs du palier I. Les boutiques des chapitres suivants viendront avec leurs régions.
 8. **Vérifier** : `npm test`, `npm run equilibrage` (les stats n'ont été testées que par le calcul, pas encore en combat simulé) et `npm run roblox:verifier`.
 
+## Intégration faite (13/11)
+
+Les 8 étapes ci-dessus sont faites (web et Roblox). Ce qui a changé par rapport au catalogue de départ, après simulation de combats (`npm run equilibrage:equipements`, rapport dans `rapports/equilibrage-equipements.md`) :
+
+- **Toutes les armes ont de la puissance** (avant : seules les armes physiques). Formule : budget ÷ 3, arrondi au plus proche. Les armes communes génériques passent donc de 0 à 1 de puissance.
+- **La puissance de l'arme renforce aussi les compétences** (dégâts et soins) et les créatures invoquées, en proportion de l'attaque de base de la classe. Sans cela, les lanceurs de sorts ne gagnaient presque rien à s'équiper (Guérisseur : +4 points de victoires, contre +20 pour les guerriers).
+- **Objets nommés** : la caractéristique principale de la classe pour laquelle l'objet est pensé reçoit la plus grosse part des points (ex. Bâton du dispensaire : ESP 2 / INT 1 au lieu de INT 2 / ESP 1).
+- 108 objets ont une répartition de points différente. **Aucun budget ni aucun prix ne change.**
+- Résultat au palier I : chaque classe reste à ± 10 points de la moyenne, avec les objets communs, « de maître » et nommés.
+- Les paliers II à X seront simulés quand les ennemis des chapitres 2 à 6 existeront (aujourd'hui, aucun ennemi ne dépasse le niveau 7).
+- Les **16 pouvoirs uniques** sont codés dans `src/moteur/combat.ts` (liste dans `src/moteur/equipement.ts`).
+
 ## Points laissés ouverts
 
 - Les **prix** suivent une formule provisoire : 20 × points × (1 + niveau ÷ 10). Ils sont à recaler quand l'économie des chapitres 2 à 6 existera.

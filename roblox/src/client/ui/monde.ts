@@ -4,6 +4,7 @@
  * Même contenu que la version web (src/ui/panneaux et src/ui/vues/Lieu.svelte).
  */
 import { CONTENU } from "shared/donnees";
+import { ficheObjet, type ActionObjet } from "./objets";
 import {
 	affinite,
 	age,
@@ -24,6 +25,8 @@ import {
 	palierCompagnon,
 	prixAchat,
 	prixVente,
+	problemeEquipement,
+	exemplaires,
 	prochaineEtape,
 	pvMax,
 	rangGuilde,
@@ -263,11 +266,29 @@ function vueLieu(parent: Frame, id: string, fermer: () => void, redessiner: () =
 	if (lieu.auberge === true && (voir("parler") || section === "auberge")) vueAuberge(parent);
 	if (lieu.boutique.size() > 0 && voir("boutique")) {
 		const c = carte(parent, `Boutique (${h.or} or)`);
-		for (const o of lieu.boutique) {
-			const l = ligne(c);
+		// d'abord ce que le héros peut porter, puis le reste ; les objets à usage unique en premier
+		const tri = (o: string) => {
+			const d = CONTENU.objets[o];
+			if (d.type !== "equipement") return 0;
+			return problemeEquipement(CONTENU, h, d) === undefined ? 1 : 2;
+		};
+		const liste = [...lieu.boutique];
+		liste.sort((a, b) => tri(a) < tri(b));
+		let separe = false;
+		for (const o of liste) {
+			if (!separe && tri(o) === 2) {
+				separe = true;
+				texte(c, "Pour d'autres classes ou plus tard :", 13, { couleur: COULEURS.texte2 });
+			}
 			const prix = prixAchat(CONTENU, h, o);
-			texte(l, `<b>${CONTENU.objets[o].nom}</b> <font color="#beaf96">${CONTENU.objets[o].description}</font>`, 14, { largeur: new UDim(1, -100) });
-			bouton(l, `${prix} or`, () => agir({ type: "acheter", objet: o, lieu: id }), { actif: h.or >= prix, hauteur: 32, taille: 14 });
+			const d = CONTENU.objets[o];
+			const unique = d.unique_par_partie === true && exemplaires(listeHeros(jeu.etat!), o) > 0;
+			ficheObjet(c, o, {
+				nombre: h.inventaire[o],
+				comparer: true,
+				taille: 64,
+				actions: [{ libelle: unique ? "Déjà possédé dans la partie" : `Acheter · ${prix} or`, surClic: () => agir({ type: "acheter", objet: o, lieu: id }), actif: h.or >= prix && !unique, principal: tri(o) === 1 }],
+			});
 		}
 	}
 	if (section === "tout" && groupe.size() === 0 && perso.size() === 0 && id !== "guilde" && lieu.boutique.size() === 0) {
@@ -400,21 +421,38 @@ function vueFiche(parent: Frame) {
 	}
 	texte(co, `Ultime : ${cl.ultime.nom} — ${cl.ultime.description}`, 13, { couleur: COULEURS.texte2 });
 
-	const inv = carte(parent, "Équipement et inventaire");
+	const inv = carte(parent, "Équipement porté");
+	const NOMS_EMP = { arme: "Arme", armure: "Tenue", accessoire: "Accessoire" };
 	for (const emp of ["arme", "armure", "accessoire"] as const) {
 		const o = h.equipement[emp];
-		const l = ligne(inv);
-		texte(l, `${emp} : <b>${o !== undefined ? CONTENU.objets[o].nom : "—"}</b>`, 14, { largeur: new UDim(1, -100) });
-		if (o !== undefined) bouton(l, "Retirer", () => agir({ type: "desequiper", emplacement: emp }), { hauteur: 28, taille: 13 });
+		if (o === undefined) {
+			texte(inv, `${NOMS_EMP[emp]} : <font color="#beaf96">rien (${emp === "arme" ? "arme de base de la classe" : "aucun bonus"})</font>`, 14);
+			continue;
+		}
+		texte(inv, NOMS_EMP[emp], 13, { couleur: COULEURS.texte2 });
+		ficheObjet(inv, o, { actions: [{ libelle: "Retirer", surClic: () => agir({ type: "desequiper", emplacement: emp }) }] });
 	}
-	for (const [o, n] of pairs(h.inventaire)) {
-		if (n <= 0) continue;
+	const sac = carte(parent, `Sac (${h.or} or)`);
+	const objets: string[] = [];
+	for (const [o, n] of pairs(h.inventaire)) if (n > 0 && CONTENU.objets[o] !== undefined) objets.push(o);
+	// équipements d'abord (rareté décroissante), puis le reste
+	const RANG: Record<string, number> = { mythique: 0, legendaire: 1, epique: 2, rare: 3, "peu-commun": 4, commun: 5 };
+	const rang = (o: string) => {
+		const d = CONTENU.objets[o];
+		return d.type === "equipement" ? RANG[d.rarete ?? "commun"] ?? 5 : 10;
+	};
+	objets.sort((a, b) => rang(a) < rang(b) || (rang(a) === rang(b) && a < b));
+	for (const o of objets) {
 		const def = CONTENU.objets[o];
-		const l = ligne(inv);
-		texte(l, `${def.nom} ×${n} <font color="#beaf96">${def.description}</font>`, 14, { largeur: new UDim(1, -200) });
-		if (def.type === "equipement") bouton(l, "Équiper", () => agir({ type: "equiper", objet: o }), { hauteur: 28, taille: 13 });
-		if (def.prix > 0 && def.type !== "quete") bouton(l, `Vendre ${prixVente(CONTENU, h, o)} or`, () => agir({ type: "vendre", objet: o }), { hauteur: 28, taille: 13 });
+		const actions: ActionObjet[] = [];
+		if (def.type === "equipement") {
+			const refus = problemeEquipement(CONTENU, h, def);
+			actions.push({ libelle: refus ?? "Équiper", surClic: () => agir({ type: "equiper", objet: o }), actif: refus === undefined, principal: refus === undefined });
+		}
+		if (def.prix > 0 && def.type !== "quete") actions.push({ libelle: `Vendre ${prixVente(CONTENU, h, o)} or`, surClic: () => agir({ type: "vendre", objet: o }) });
+		ficheObjet(sac, o, { nombre: h.inventaire[o], comparer: true, actions });
 	}
+	if (objets.size() === 0) texte(sac, "Ton sac est vide.", 14, { couleur: COULEURS.texte2 });
 }
 
 // ───────────────────────────── Quêtes et journal ─────────────────────────────

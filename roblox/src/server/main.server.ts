@@ -10,12 +10,14 @@ import { construireMonde } from "./monde";
 import { preparerModeles } from "./modeles";
 import { construireInterieurs } from "./interieurs";
 import { animerVille } from "./vie";
+import { habillerLesHeros } from "./tenues";
 
 construireMonde();
 // les modèles 3D sont créés en arrière-plan (cela prend quelques secondes) : le jeu démarre sans attendre
 task.spawn(preparerModeles);
 task.spawn(construireInterieurs);
 task.spawn(animerVille);
+task.spawn(habillerLesHeros);
 const r = reseau();
 const INFO_MEMOIRE = "Studio : sauvegarde Roblox désactivée, la partie sera perdue à l'arrêt (voir README-ROBLOX.md).";
 
