@@ -51,7 +51,8 @@ assets/
   decors/<lieu>.png                  # 1280×720
   combat/fonds/<lieu>.png            # 1280×720
   cartes/monde.png, cartes/aubeclaire.png
-  personnages/heros/<classe>/exploration.png | combat.png | portrait-defaut.png
+  personnages/heros/<classe>/exploration.png | combat.png
+  personnages/races/<race>/calque-combat.png | calque-exploration.png | portrait-defaut.png
   personnages/compagnes/<id>/portrait-<expression>.png | combat.png | exploration.png
   personnages/pnj/<id>/portrait-<expression>.png
   ennemis/<id>/combat.png
@@ -86,7 +87,25 @@ Vous pouvez aussi simplement m'envoyer les images avec leur nom : je les range a
 
 **Ennemis** : une planche de **4 lignes**, dans cet ordre : attente, attaque, touché, K.O. Elle mesure donc 512 × 256 px, ou 1024 × 512 px pour un boss en 128 × 128.
 
-**Héros** : une planche par classe. Le genre du personnage est libre. Une **variante facultative** (`combat-2.png`, `exploration-2.png`, `portrait-defaut-2.png`) peut proposer l'autre genre, par exemple un Gardien et une Gardienne.
+**Héros** : une planche par classe. Le genre du personnage est libre. Une **variante facultative** (`combat-2.png`, `exploration-2.png`) peut proposer l'autre genre, par exemple un Gardien et une Gardienne.
+
+**Calques de race** (`personnages/races/<race>/calque-combat.png` et `calque-exploration.png`) :
+- ils ont **exactement le même gabarit** que les planches de classe : 512 × 384 en combat, 128 × 128 en exploration, mêmes lignes, mêmes images ;
+- ils ne contiennent **que les éléments propres à la race**, sur fond transparent : oreilles, queue, cornes, barbe, écailles. Ces éléments sont placés image par image à l'endroit où se trouvent la tête et le corps dans les planches de classe. Le jeu superpose automatiquement le calque au sprite de classe ;
+- le jeu applique lui-même la **teinte de peau** (gris-violet pour le demi-démon) et la **taille réduite à 90 %** pour le nain : rien à dessiner pour ça ;
+- l'**humain n'a pas de calque**.
+
+Consigne pour les planches de classe : **ne pas couvrir le haut et les côtés de la tête** avec un casque ou une capuche trop large, pour que les oreilles et les cornes restent visibles. Ou alors, prévoir une capuche que les oreilles « traversent ».
+
+| Race | Ce que contient le calque |
+|---|---|
+| `elfe` | Longues oreilles pointues |
+| `demi-elfe` | Oreilles légèrement pointues |
+| `nain` | Barbe fournie, tressée |
+| `ourvalis` | Oreilles de loup gris argent et queue de loup |
+| `vulpin` | Oreilles de renard roux à pointe blanche et queue touffue |
+| `demi-demon` | Petites cornes recourbées noires, fine queue terminée en pointe |
+| `sang-dragon` | Deux petites cornes, écailles rouges sur les joues et les avant-bras |
 
 > **La liste complète, fichier par fichier, est dans [`LISTE-TEXTURES.md`](LISTE-TEXTURES.md).**
 
@@ -129,7 +148,8 @@ Pour les PNJ secondaires, `neutre` suffit, et éventuellement une seconde expres
 | `ennemis/` : `araignee-geante`, `bandit`, `cultiste`, `golem-fontaine` (mini-boss, 128 × 128), `vorthak` (boss, 128 × 128) | Ennemis |
 | `personnages/compagnes/aveline/combat.png` et `exploration.png` | Aveline en combat et en exploration |
 | `personnages/pnj/` : `seraphine`, `elianne`, `kaya` (2 ou 3 expressions chacune, car ce sont de futures compagnes), `mathis`, `rowena`, `edmund-iv`, `vorthak` (neutre) | PNJ |
-| `personnages/heros/<classe>/portrait-defaut.png` × 10 | Portrait par défaut. **Chaque joueur peut aussi importer son propre portrait** (512 × 512). |
+| `personnages/races/<race>/calque-combat.png` et `calque-exploration.png` × 7 | Calques de race (§ 4) |
+| `personnages/races/<race>/portrait-defaut.png` × 8 | Un portrait par défaut **par race**. **Chaque joueur peut aussi importer son propre portrait** (512 × 512). |
 | `effets/` : `entaille`, `feu`, `glace`, `soin`, `poison`, `rune`, `bouclier`, `bonus`, `malus`, `critique` | Effets |
 
 ### Priorité 3 — finitions

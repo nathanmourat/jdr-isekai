@@ -22,6 +22,7 @@ Si une demande est floue ou contradictoire : poser la question plutôt que devin
 - **Ton** : mélange humour et sérieux. **Mort douce** : K.O. + pénalité, jamais de perte définitive du héros ; les PNJ peuvent mourir.
 - **Romance** : **harem libre** (plusieurs compagnes engagées par héros, et une compagne peut aimer plusieurs héros), mais **chaque compagne peut refuser** (affinité, lignes rouges). Uniquement entre adultes, rien d'explicite (fondu au noir).
 - **Joueurs** : identifiés par **pseudo**, aucun prénom codé en dur.
+- **Races (révision du 13/11)** : **8 races** (humain, elfe, demi-elfe, nain, Ourvalis, Vulpin, demi-démon, sang-dragon). Chacune a des **modificateurs de caractéristiques à somme nulle** (le total reste de 60 ; chaque caractéristique reste entre 3 et 17) et un **trait racial** (un avantage et un défaut). Détails dans `docs/CONCEPTION.md` § 3.6. En graphisme : un **calque par race** superposé au sprite de classe (l'humain n'en a pas), une teinte de peau et une taille gérées par le code, et un portrait par défaut par race.
 
 ## Choix techniques
 - TypeScript + Vite + **Phaser 3** (rendu 2D) + Svelte (menus et dialogues par-dessus) ; tests avec Vitest ; Playwright pour le test de bout en bout.
@@ -33,7 +34,7 @@ Si une demande est floue ou contradictoire : poser la question plutôt que devin
 - Sauvegarde **versionnée** + migrations (`src/sauvegarde/migrations.ts`) pour que les nouvelles saisons ne cassent pas les anciennes parties.
 
 ## Règles de conception à respecter
-- **Équilibrage** : 60 points de caractéristiques pour toutes les classes au niveau 1. Simulation de 1 000 combats ou plus par cas. Taux de victoire à **± 10 points de la moyenne**. Relancer `npm run equilibrage` à chaque ajout de classe, de don ou d'ennemi.
+- **Équilibrage** : 60 points de caractéristiques pour toutes les classes au niveau 1. Simulation de 1 000 combats ou plus par cas. Taux de victoire : **± 10 points de la moyenne** par classe et par race, **± 15 points** par combinaison classe × race (80 combinaisons). Relancer `npm run equilibrage` à chaque ajout de classe, de race, de don ou d'ennemi.
 - Un don est **unique par partie**.
 - Un joueur qui arrive en cours de route rejoint au **niveau moyen du groupe**.
 - Monde, noms et intrigues **100 % originaux** : aucune reprise d'œuvre existante.

@@ -1,6 +1,6 @@
 # Document de conception — « Les Appelés de Velmaris »
 
-> Version 0.1, à valider par le groupe avant d'écrire le code.
+> Version 0.2 (races avec bonus et malus), à valider par le groupe avant d'écrire le code.
 > Les chiffres (statistiques, dégâts, seuils) sont des **valeurs de départ**. La simulation d'équilibrage de l'étape 2 les ajustera, puis ce document sera mis à jour.
 
 ---
@@ -58,9 +58,9 @@ Les héros (et eux seuls) voient une **fenêtre d'état** : niveau, caractérist
 | 1 | **Royaume d'Aubeclaire** | Plaines, rivières, châteaux | Humains, quelques demi-elfes | **Lysmont** (capitale), **Temple du Seuil** (lieu des invocations), siège de la Guilde, Crypte de la Fontaine (donjon) | 1–10 |
 | 2 | **Sylvenoire** | Forêt primaire, arbres géants, brume bleue | Elfes sylvains, dryades | **Ithrael** (cité dans un arbre), Bibliothèque des Racines, Clairière de la Déchirure | 15–22 |
 | 3 | **Monts Grisfer** | Montagnes, mines, forges volcaniques | Nains, gnomes | **Karak-Dûm** (cité-forge), donjon **les Mille Marches** (une marche = un étage) | 20–28 |
-| 4 | **Marche des Sables** | Désert, cités-oasis, canyons | Humains du désert, **Ourvalis** (peuple-loup), peuple-renard | **Qarzim** (cité marchande), Grand Bazar, Ruines de Sel | 8–16 |
-| 5 | **Archipel des Brumes** | Îles volcaniques, récifs, brouillard permanent | Pirates, sirènes, **derniers dragons** | **Port-Vérane**, Nid des Wyrms, Phare noyé | 22–30 |
-| 6 | **Terres Cendrées** | Plaine de cendres, ciel rouge, forteresses noires | Démons, morts-vivants, humains corrompus | **Mur d'Aube** (frontière), Citadelle d'Obsidienne (boss final) | 28–40 |
+| 4 | **Marche des Sables** | Désert, cités-oasis, canyons | Humains du désert, **Ourvalis** (peuple-loup), **Vulpins** (peuple-renard) | **Qarzim** (cité marchande), Grand Bazar, Ruines de Sel | 8–16 |
+| 5 | **Archipel des Brumes** | Îles volcaniques, récifs, brouillard permanent | Pirates, sirènes, **derniers dragons**, **sang-dragons** | **Port-Vérane**, Nid des Wyrms, Phare noyé | 22–30 |
+| 6 | **Terres Cendrées** | Plaine de cendres, ciel rouge, forteresses noires | Démons, morts-vivants, humains corrompus ; **demi-démons** le long du Mur d'Aube | **Mur d'Aube** (frontière), Citadelle d'Obsidienne (boss final) | 28–40 |
 
 ### 2.3 Factions (4 + l'ennemi)
 
@@ -116,7 +116,7 @@ La **réputation** auprès de chaque faction va de −100 à +100, avec 6 palier
 2. **Origine** :
    - **Invoqué** : le héros arrive adulte (le joueur choisit son âge, de 18 à 35 ans) et garde un **souvenir de son monde**, un objet à l'effet mineur (téléphone sans réseau, carnet, briquet…) ;
    - **Réincarné** : le héros est né en 994 AV et joue d'abord le **prologue d'enfance** (§ 3.5). Il a 18 ans au début de la campagne.
-3. **Race** : humain, elfe, demi-elfe, nain, Ourvalis (peuple-loup) ou peuple-renard. Le choix est **purement cosmétique et narratif** (dialogues, réactions des PNJ), sans bonus de caractéristiques, pour préserver l'équilibrage.
+3. **Race** : 8 au choix (§ 3.6). Chaque race donne des **bonus et des malus de caractéristiques dont la somme fait zéro**, plus un **trait racial** (un avantage et un défaut). Elle change aussi les dialogues et les réactions des PNJ.
 4. **Classe** : 10 au choix (§ 4).
 5. **Don** : 12 au choix (§ 5). **Deux joueurs d'une même partie ne peuvent pas avoir le même.**
 6. **Atout de départ** :
@@ -172,6 +172,31 @@ C'est une session courte, d'environ 45 min à 1 h, jouée **en asynchrone** avan
 | 17 ans | « Le départ » : l'adolescent quitte son foyer pour Lysmont | L'**atout de départ** et +10 de réputation auprès d'une faction |
 
 Ce prologue ne contient **ni romance ni combat dangereux**, seulement des épreuves narratives. Au printemps 1012, le réincarné a 18 ans. Il est attiré au Temple du Seuil par la « résonance » de l'Appel et y rencontre les invoqués : c'est l'introduction commune du chapitre 1.
+
+### 3.6 Les 8 races
+
+Chaque race modifie les caractéristiques de classe. **La somme des modificateurs fait toujours zéro** : le total reste de 60 points, et la règle d'équilibrage est respectée. Après modification, chaque caractéristique reste comprise entre **3 et 17**. Ce sont des valeurs de départ, que la simulation ajustera.
+
+| Race | Modificateurs (FOR, AGI, INT, VIT, ESP, CHA) | Trait : avantage | Trait : défaut |
+|---|---|---|---|
+| **Humain** | +2 et −2 **répartis librement** (polyvalence) | *Détermination* : une fois par combat, survit à un coup fatal avec 1 PV | −10 % de résistance magique |
+| **Elfe** | INT +2, ESP +1, VIT −2, FOR −1 | *Sang ancien* : +15 % de résistance magique ; voit dans le noir (donjons) | Poisons et saignements durent 1 tour de plus |
+| **Demi-elfe** | CHA +2, AGI +1, FOR −2, VIT −1 | *Entre deux mondes* : +10 % d'affinité en dialogue ; +5 % de précision | −10 de réputation de départ auprès de la Couronne (les nobles s'en méfient) |
+| **Nain** | VIT +2, FOR +1, AGI −2, CHA −1 | *Robuste* : résiste au poison à 50 % ; +10 % de défense | *Lourd* : −3 d'initiative ; ne sait pas nager (certains passages de l'Archipel) |
+| **Ourvalis** (peuple-loup) | FOR +2, AGI +1, INT −2, ESP −1 | *Instinct de meute* : +10 % de dégâts sur une cible déjà frappée par un allié ce tour ; flair (détecte les embuscades) | *Sang chaud* : −15 % de résistance à la peur et à la provocation |
+| **Vulpin** (peuple-renard) | AGI +2, CHA +1, FOR −2, VIT −1 | *Ruse* : +5 % d'esquive ; −10 % sur les prix | *Réputation de filou* : −5 d'affinité de départ avec les marchands humains et −5 de réputation auprès de la Couronne |
+| **Demi-démon** | INT +2, FOR +1, CHA −2, ESP −1 | *Sang cendré* : 25 % de résistance au feu et à l'ombre ; sous 50 % de PV, régénère 2 % de ses PV par tour | +25 % de dégâts sacrés subis ; −20 % de soins sacrés reçus ; −15 de réputation de départ auprès de l'Ordre |
+| **Sang-dragon** | FOR +1, VIT +1, ESP +1, AGI −2, CHA −1 | *Écailles et souffle* : un souffle de feu mineur par combat ; −10 % de dégâts de feu reçus | +25 % de dégâts de glace reçus ; −2 d'initiative |
+
+**Place dans le monde et effets narratifs** :
+- Les **humains** dominent Aubeclaire et la Marche des Sables.
+- Les **elfes** vivent à Sylvenoire et se méfient des demi-elfes. Les **nains** vivent dans les Monts Grisfer.
+- Les **Ourvalis** et les **Vulpins** sont des peuples nomades de la Marche des Sables. Les Ourvalis sont chassés de leurs terres par la Concorde (lien avec Kaya).
+- Les **demi-démons** descendent de lignées touchées par les Cendres, le long du Mur d'Aube. L'Ordre les craint ; Morra les reconnaît.
+- Les **sang-dragons** descendent des anciens pactes avec les dragons-rois et vivent surtout dans l'Archipel des Brumes. Ysoria les considère comme sa « famille lointaine ».
+- Chaque race débloque des **répliques et des options de quête** propres, et les compagnes réagissent à la race du héros. Cela ne change jamais les seuils d'affinité : une compagne ne refuse pas un héros à cause de sa race.
+
+**Graphismes** : chaque race (sauf l'humain) a un **calque** superposé au sprite de classe (oreilles, queue, cornes, barbe, écailles) et un portrait par défaut. Voir [`GRAPHISMES.md`](GRAPHISMES.md).
 
 ---
 
@@ -678,16 +703,20 @@ Chaque fin comprend un **épilogue par héros** (son âge en 1030, son domaine, 
 
 - Un script (`npm run equilibrage`) fait combattre **chaque classe** contre des **ennemis de référence** (un costaud, un rapide, un mage, un groupe de faibles, un mini-boss), au niveau 1 puis à quelques niveaux repères. Il fait **au moins 1 000 combats par cas**.
 - On teste aussi chaque **don**, et des **groupes de 2 à 4 héros** pour vérifier l'adaptation de la difficulté.
-- **Critère** : le taux de victoire de chaque classe doit rester à **± 10 points de pourcentage de la moyenne** des classes. Par exemple, si la moyenne vaut 60 %, chaque classe doit être entre 50 % et 70 %.
-- Le script affiche un **tableau** et l'enregistre aussi en **CSV** (lisible dans Google Colab). Il **échoue** si une classe sort de la fourchette : on corrige alors les chiffres et on relance.
-- Le script est relancé à chaque ajout de classe, de don ou d'ennemi.
+- Les **80 combinaisons classe × race** (10 × 8) sont testées, avec au moins 1 000 combats chacune.
+- **Critères** (en points de pourcentage autour de la moyenne générale) :
+  - chaque **classe**, en moyenne sur les races : **± 10 points**. Par exemple, si la moyenne vaut 60 %, chaque classe doit être entre 50 % et 70 % ;
+  - chaque **race**, en moyenne sur les classes : **± 10 points** ;
+  - chaque **combinaison** : **± 15 points**, pour qu'aucun combo ne devienne un choix évident (par exemple Nain Gardien ou Sang-dragon Berserker).
+- Le script affiche un **tableau** et l'enregistre aussi en **CSV** (lisible dans Google Colab). Il **échoue** si une classe, une race ou une combinaison sort de sa fourchette : on corrige alors les chiffres et on relance.
+- Le script est relancé à chaque ajout de classe, de race, de don ou d'ennemi.
 
 ---
 
 ## 13. Ce que contiendra la version jouable 1
 
 - Créer ou rejoindre une partie (code + pseudo), en mode local et en ligne.
-- Créer son personnage : les 10 classes, les 12 dons, invoqué ou réincarné, avec import d'un portrait personnel.
+- Créer son personnage : les 8 races, les 10 classes, les 12 dons, invoqué ou réincarné, avec import d'un portrait personnel.
 - La carte d'Aubeclaire cliquable, les décors de ville, **le donjon de la Crypte de la Fontaine en vue de dessus**, et les combats 2D animés (avec les textures livrées ou les provisoires).
 - **Le prologue d'enfance** pour les réincarnés.
 - **Le chapitre 1 complet** : quête principale, 4 quêtes secondaires et plus, contrats de guilde.
@@ -707,6 +736,6 @@ Chaque fin comprend un **épilogue par héros** (son âge en 1030, son domaine, 
 4. Le **niveau maximum de 40** pour la saison 1, et l'ultime au niveau 30 ?
 5. Les **votes** pour les décisions de groupe, avec un « meneur du jour » en cas d'égalité ?
 6. Les **4 fins** et leurs conditions ?
-7. La **race** sans effet sur les caractéristiques (choix seulement narratif) ?
+7. ~~La race sans effet sur les caractéristiques ?~~ **Tranché** : 8 races, avec des bonus et malus à somme nulle et un trait racial (§ 3.6).
 8. Dans les donjons, le groupe se déplace **ensemble**, dirigé par le meneur du jour, plutôt que chacun séparément ?
 9. Le cahier des charges graphique (tuiles de **32 × 32**, sprites de combat de **64 × 64**, portraits de **512 × 512**) convient-il aux packs ou à l'outil que vous comptez utiliser ?
