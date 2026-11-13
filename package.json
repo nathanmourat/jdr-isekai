@@ -1,0 +1,34 @@
+{
+  "name": "les-appeles-de-velmaris",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "JDR isekai multijoueur en 2D, en français",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "verifier": "svelte-check --tsconfig ./tsconfig.json",
+    "equilibrage": "tsx scripts/equilibrage.ts",
+    "assets:manquants": "tsx scripts/assets-manquants.ts",
+    "contenu:verifier": "tsx scripts/verifier-contenu.ts"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.119.0",
+    "phaser": "^3.90.0",
+    "yaml": "^2.9.1",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@sveltejs/vite-plugin-svelte": "^7.3.1",
+    "@types/node": "^22.20.5",
+    "svelte": "^5.57.3",
+    "svelte-check": "^4.7.8",
+    "tsx": "^4.23.15",
+    "typescript": "^5.9.3",
+    "vite": "^8.3.8",
+    "vitest": "^5.1.0"
+  }
+}

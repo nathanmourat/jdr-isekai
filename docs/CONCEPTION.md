@@ -1,6 +1,6 @@
 # Document de conception — « Les Appelés de Velmaris »
 
-> Version 0.2 (races avec bonus et malus), à valider par le groupe avant d'écrire le code.
+> Version 0.2 — **validée par le groupe le 13/11** (le point 9 reste à confirmer avec le graphiste).
 > Les chiffres (statistiques, dégâts, seuils) sont des **valeurs de départ**. La simulation d'équilibrage de l'étape 2 les ajustera, puis ce document sera mis à jour.
 
 ---
@@ -134,7 +134,7 @@ La **réputation** auprès de chaque faction va de −100 à +100, avec 6 palier
 | Intelligence | INT | Dégâts magiques | Savoir, artisanat, énigmes |
 | Vitalité | VIT | Points de vie (PV), défense | Endurance, résistance aux poisons |
 | Esprit | ESP | Mana, soins, résistance magique | Perception, volonté, rituels |
-| Charisme | CHA | Puissance des **bonus de compagne** et des effets de soutien, résistance à la peur | Dialogues, prix, affinité |
+| Charisme | CHA | **Présence** : ±1 % de dégâts infligés et subis par point au-dessus ou en dessous de 10 ; puissance des bonus de compagne | Dialogues, prix, affinité |
 
 **Règle d'équilibrage** : **toutes les classes ont 60 points** de caractéristiques au niveau 1, chaque caractéristique étant comprise entre 5 et 15. Seule la répartition change.
 
@@ -179,14 +179,14 @@ Chaque race modifie les caractéristiques de classe. **La somme des modificateur
 
 | Race | Modificateurs (FOR, AGI, INT, VIT, ESP, CHA) | Trait : avantage | Trait : défaut |
 |---|---|---|---|
-| **Humain** | +2 et −2 **répartis librement** (polyvalence) | *Détermination* : une fois par combat, survit à un coup fatal avec 1 PV | −10 % de résistance magique |
-| **Elfe** | INT +2, ESP +1, VIT −2, FOR −1 | *Sang ancien* : +15 % de résistance magique ; voit dans le noir (donjons) | Poisons et saignements durent 1 tour de plus |
-| **Demi-elfe** | CHA +2, AGI +1, FOR −2, VIT −1 | *Entre deux mondes* : +10 % d'affinité en dialogue ; +5 % de précision | −10 de réputation de départ auprès de la Couronne (les nobles s'en méfient) |
-| **Nain** | VIT +2, FOR +1, AGI −2, CHA −1 | *Robuste* : résiste au poison à 50 % ; +10 % de défense | *Lourd* : −3 d'initiative ; ne sait pas nager (certains passages de l'Archipel) |
-| **Ourvalis** (peuple-loup) | FOR +2, AGI +1, INT −2, ESP −1 | *Instinct de meute* : +10 % de dégâts sur une cible déjà frappée par un allié ce tour ; flair (détecte les embuscades) | *Sang chaud* : −15 % de résistance à la peur et à la provocation |
+| **Humain** | +1 dans deux caractéristiques et −1 dans deux autres, **au choix** (polyvalence) | *Détermination* : une fois par combat, sous 25 % de PV, regagne 10 % de ses PV | −10 % de résistance magique |
+| **Elfe** | INT +1, ESP +1, AGI +1, FOR −2, CHA −1 | *Sang ancien* : +15 % de résistance magique ; voit dans le noir (donjons) | Poisons et saignements durent 1 tour de plus |
+| **Demi-elfe** | CHA +2, AGI +1, FOR −1, VIT −1, INT −1 | *Entre deux mondes* : +10 % d'affinité en dialogue ; +5 % de précision | −10 de réputation de départ auprès de la Couronne (les nobles s'en méfient) |
+| **Nain** | VIT +2, FOR +1, AGI −1, INT −1, CHA −1 | *Robuste* : résiste au poison à 50 % ; +2 % de défense | *Lourd* : −3 d'initiative ; ne sait pas nager (certains passages de l'Archipel) |
+| **Ourvalis** (peuple-loup) | FOR +2, AGI +1, INT −1, ESP −1, CHA −1 | *Instinct de meute* : +10 % de dégâts sur une cible déjà frappée par un allié ce tour ; flair (détecte les embuscades) | *Sang chaud* : −15 % de résistance à la peur et à la provocation |
 | **Vulpin** (peuple-renard) | AGI +2, CHA +1, FOR −2, VIT −1 | *Ruse* : +5 % d'esquive ; −10 % sur les prix | *Réputation de filou* : −5 d'affinité de départ avec les marchands humains et −5 de réputation auprès de la Couronne |
-| **Demi-démon** | INT +2, FOR +1, CHA −2, ESP −1 | *Sang cendré* : 25 % de résistance au feu et à l'ombre ; sous 50 % de PV, régénère 2 % de ses PV par tour | +25 % de dégâts sacrés subis ; −20 % de soins sacrés reçus ; −15 de réputation de départ auprès de l'Ordre |
-| **Sang-dragon** | FOR +1, VIT +1, ESP +1, AGI −2, CHA −1 | *Écailles et souffle* : un souffle de feu mineur par combat ; −10 % de dégâts de feu reçus | +25 % de dégâts de glace reçus ; −2 d'initiative |
+| **Demi-démon** | INT +2, FOR +1, CHA −2, ESP −1 | *Sang cendré* : 25 % de résistance au feu et à l'ombre ; sous 50 % de PV, régénère 2 % de ses PV par tour | +25 % de dégâts sacrés subis ; −20 % de soins sacrés reçus des autres ; −15 de réputation de départ auprès de l'Ordre |
+| **Sang-dragon** | FOR +1, VIT +1, ESP +1, AGI −1, CHA −2 | *Écailles et souffle* : un souffle de feu mineur par combat ; −10 % de dégâts de feu reçus | +25 % de dégâts de glace reçus ; −1 d'initiative |
 
 **Place dans le monde et effets narratifs** :
 - Les **humains** dominent Aubeclaire et la Marche des Sables.
@@ -213,7 +213,7 @@ Chaque classe possède :
 | 1 | Lame runique | Dégâts (hybride) | 12 | 10 | 11 | 10 | 9 | 8 | 60 |
 | 2 | Arcaniste élémentaire | Dégâts (zone) | 5 | 9 | 15 | 8 | 14 | 9 | 60 |
 | 3 | Invocateur | Contrôle / dégâts indirects | 5 | 8 | 14 | 9 | 14 | 10 | 60 |
-| 4 | Ombre | Dégâts (cible unique) | 9 | 15 | 9 | 8 | 8 | 11 | 60 |
+| 4 | Ombre | Dégâts (cible unique) | 9 | 15 | 8 | 9 | 8 | 11 | 60 |
 | 5 | Gardien sacré | Protection | 11 | 6 | 7 | 15 | 12 | 9 | 60 |
 | 6 | Alchimiste-artificier | Soutien / contrôle | 7 | 11 | 14 | 9 | 8 | 11 | 60 |
 | 7 | Archer spirituel | Dégâts (distance) | 8 | 14 | 8 | 9 | 12 | 9 | 60 |
@@ -728,14 +728,14 @@ Chaque fin comprend un **épilogue par héros** (son âge en 1030, son domaine, 
 
 ---
 
-## 14. Points à valider par le groupe
+## 14. Points de validation (validés le 13/11)
 
-1. Le **nom du monde** (Velmaris) et le titre « Les Appelés de Velmaris » vous conviennent-ils ?
-2. Les **10 classes** et les **12 dons** : faut-il en retirer ou en remplacer certains ?
-3. Les **8 compagnes** : vous conviennent-elles ? Voulez-vous **Aveline** comme compagne de la version 1 ?
-4. Le **niveau maximum de 40** pour la saison 1, et l'ultime au niveau 30 ?
-5. Les **votes** pour les décisions de groupe, avec un « meneur du jour » en cas d'égalité ?
-6. Les **4 fins** et leurs conditions ?
+1. Le **nom du monde** (Velmaris) et le titre « Les Appelés de Velmaris » vous conviennent-ils ? **→ Validé.**
+2. Les **10 classes** et les **12 dons** : faut-il en retirer ou en remplacer certains ? **→ Validé.**
+3. Les **8 compagnes** : vous conviennent-elles ? Voulez-vous **Aveline** comme compagne de la version 1 ? **→ Validé.**
+4. Le **niveau maximum de 40** pour la saison 1, et l'ultime au niveau 30 ? **→ Validé.**
+5. Les **votes** pour les décisions de groupe, avec un « meneur du jour » en cas d'égalité ? **→ Validé.**
+6. Les **4 fins** et leurs conditions ? **→ Validé.**
 7. ~~La race sans effet sur les caractéristiques ?~~ **Tranché** : 8 races, avec des bonus et malus à somme nulle et un trait racial (§ 3.6).
-8. Dans les donjons, le groupe se déplace **ensemble**, dirigé par le meneur du jour, plutôt que chacun séparément ?
-9. Le cahier des charges graphique (tuiles de **32 × 32**, sprites de combat de **64 × 64**, portraits de **512 × 512**) convient-il aux packs ou à l'outil que vous comptez utiliser ?
+8. Dans les donjons, le groupe se déplace **ensemble**, dirigé par le meneur du jour, plutôt que chacun séparément ? **→ Validé.**
+9. Le cahier des charges graphique (tuiles de **32 × 32**, sprites de combat de **64 × 64**, portraits de **512 × 512**) convient-il aux packs ou à l'outil que vous comptez utiliser ? **→ À confirmer avec le graphiste** (les tailles restent réglables dans la configuration).

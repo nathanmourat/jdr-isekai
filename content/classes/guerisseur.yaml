@@ -1,0 +1,62 @@
+classe:
+  id: guerisseur
+  nom: Guérisseur
+  role: Soin
+  description: "La lumière qui ramène ses compagnons du bord du gouffre."
+  caracteristiques: { FOR: 5, AGI: 8, INT: 11, VIT: 10, ESP: 15, CHA: 11 }
+  attaque: { stat: ESP, element: sacre, portee: distance, puissance: 7 }
+  rang_prefere: arriere
+  armure: 3
+  passif:
+    id: main-bienveillante
+    nom: Main bienveillante
+    description: "Les soins qui dépassent les PV max deviennent un bouclier (50 % du surplus)."
+    parametres: { bouclier_surplus: 0.5 }
+  competences: [lumiere-apaisante, purification]
+  branches:
+    - id: sanctuaire
+      nom: Sanctuaire
+      description: "Soins de groupe."
+      competences: [{ niveau: 5, competence: priere-de-groupe }]
+    - id: jugement
+      nom: Jugement
+      description: "Dégâts sacrés, soin en frappant."
+      competences: [{ niveau: 5, competence: chatiment }]
+  ultime: { nom: "Second Souffle", description: "Relève tous les alliés K.O. à 40 % de leurs PV." }
+  point_fort: "Rend le groupe presque increvable."
+  point_faible: "Dégâts très faibles ; seul, il gagne en tenant, pas en tuant."
+  competences_detail:
+    - id: lumiere-apaisante
+      nom: Lumière apaisante
+      description: "Soigne un allié."
+      cout: 5
+      cible: allie
+      effets: [{ type: soin, puissance: 11, stat: ESP }]
+      ia: { priorite: 4, quand: allie_blesse }
+    - id: purification
+      nom: Purification
+      description: "Retire les effets négatifs du groupe et le soigne un peu."
+      cout: 6
+      recharge: 2
+      cible: tous_allies
+      effets:
+        - { type: purifier }
+        - { type: soin, puissance: 5, stat: ESP }
+      ia: { priorite: 2, quand: allie_blesse }
+    - id: priere-de-groupe
+      nom: Prière de groupe
+      description: "Soigne tout le groupe."
+      cout: 9
+      recharge: 2
+      cible: tous_allies
+      effets: [{ type: soin, puissance: 11, stat: ESP }]
+      ia: { priorite: 3, quand: allie_blesse }
+    - id: chatiment
+      nom: Châtiment
+      description: "Dégâts sacrés ; le guérisseur récupère des PV."
+      cout: 6
+      cible: ennemi
+      effets:
+        - { type: degats, puissance: 13, stat: ESP, element: sacre }
+        - { type: soin, puissance: 6, stat: ESP, cible: soi }
+      ia: { priorite: 2 }

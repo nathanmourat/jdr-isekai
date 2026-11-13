@@ -1,0 +1,67 @@
+classe:
+  id: lame-runique
+  nom: Lame runique
+  role: Dégâts (hybride)
+  description: "Un guerrier qui grave des runes sur sa lame en plein combat."
+  caracteristiques: { FOR: 12, AGI: 10, INT: 11, VIT: 10, ESP: 9, CHA: 8 }
+  attaque: { stat: FOR, element: physique, portee: melee, puissance: 8 }
+  rang_prefere: avant
+  armure: 6
+  passif:
+    id: runes-gravees
+    nom: Runes gravées
+    description: "Chaque attaque réussie ajoute une charge de rune (3 au maximum). La compétence suivante consomme les charges : +20 % de dégâts par charge."
+    parametres: { max: 3, bonus_par_charge: 0.2 }
+  competences: [entaille-runique, rune-de-garde]
+  branches:
+    - id: runes-de-guerre
+      nom: Runes de guerre
+      description: "Dégâts et enchaînements."
+      competences: [{ niveau: 5, competence: frappe-ecarlate }]
+    - id: runes-de-sceau
+      nom: Runes de sceau
+      description: "Affaiblissements et silence."
+      competences: [{ niveau: 5, competence: sceau-de-silence }]
+  ultime: { nom: "Lame des Mille Sceaux", description: "Consomme toutes les charges et frappe tous les ennemis ; chaque charge ajoute un effet." }
+  point_fort: "Polyvalent, efficace contre les ennemis physiques comme magiques."
+  point_faible: "Lent à démarrer : il doit accumuler ses charges."
+  competences_detail:
+    - id: entaille-runique
+      nom: Entaille runique
+      description: "Une entaille qui libère l'énergie des runes : dégâts physiques et arcaniques."
+      cout: 5
+      cible: ennemi
+      portee: melee
+      effets:
+        - { type: degats, puissance: 10, stat: FOR, element: physique }
+        - { type: degats, puissance: 6, stat: INT, element: arcane }
+      ia: { priorite: 2 }
+    - id: rune-de-garde
+      nom: Rune de garde
+      description: "Grave une rune protectrice : bouclier de 20 % des PV et +1 charge."
+      cout: 4
+      recharge: 3
+      cible: soi
+      effets:
+        - { type: bouclier, pourcent_pv: 0.2 }
+        - { type: charge_rune, nombre: 1 }
+      ia: { priorite: 3, quand: soi_blesse }
+    - id: frappe-ecarlate
+      nom: Frappe écarlate
+      description: "Un coup puissant porté par les runes de guerre."
+      cout: 7
+      recharge: 1
+      cible: ennemi
+      portee: melee
+      effets: [{ type: degats, puissance: 17, stat: FOR, element: physique }]
+      ia: { priorite: 3 }
+    - id: sceau-de-silence
+      nom: Sceau de silence
+      description: "Appose un sceau qui peut réduire l'ennemi au silence pendant 2 tours."
+      cout: 6
+      recharge: 3
+      cible: ennemi
+      effets:
+        - { type: degats, puissance: 9, stat: INT, element: arcane }
+        - { type: etat, etat: silence, duree: 2, chance: 0.7 }
+      ia: { priorite: 3 }

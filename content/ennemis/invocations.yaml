@@ -1,0 +1,69 @@
+# Créatures invoquées par les héros. Leur puissance augmente avec le niveau de l'invocateur.
+ennemis:
+  - id: loup-spectral
+    nom: Loup spectral
+    niveau: 1
+    categorie: esprit
+    invocation: true
+    caracteristiques: { FOR: 8, AGI: 11, INT: 3, VIT: 6, ESP: 5, CHA: 3 }
+    pv: 18
+    armure: 1
+    attaque: { stat: FOR, element: arcane, portee: melee, puissance: 4 }
+    recompenses: { xp: 0 }
+  - id: golem-de-pierre
+    nom: Golem de pierre
+    niveau: 1
+    categorie: construction
+    invocation: true
+    caracteristiques: { FOR: 9, AGI: 3, INT: 3, VIT: 14, ESP: 4, CHA: 3 }
+    pv: 34
+    armure: 8
+    attaque: { stat: FOR, portee: melee, puissance: 6 }
+    competences:
+      - id: grondement
+        nom: Grondement
+        description: "Provoque tous les ennemis."
+        recharge: 3
+        cible: tous_ennemis
+        effets: [{ type: etat, etat: provoque, duree: 2 }]
+        ia: { priorite: 5 }
+    recompenses: { xp: 0 }
+  - id: feu-follet
+    nom: Feu follet
+    niveau: 1
+    categorie: esprit
+    invocation: true
+    caracteristiques: { FOR: 3, AGI: 12, INT: 9, VIT: 3, ESP: 5, CHA: 3 }
+    pv: 14
+    attaque: { stat: INT, element: feu, portee: distance, puissance: 6 }
+    rang: arriere
+    recompenses: { xp: 0 }
+  - id: colosse
+    nom: Colosse de pierre
+    niveau: 1
+    categorie: construction
+    invocation: true
+    caracteristiques: { FOR: 13, AGI: 4, INT: 3, VIT: 14, ESP: 4, CHA: 3 }
+    pv: 60
+    armure: 10
+    attaque: { stat: FOR, portee: melee, puissance: 10 }
+    competences:
+      - id: grondement-colosse
+        nom: Grondement
+        description: "Provoque tous les ennemis."
+        recharge: 3
+        cible: tous_ennemis
+        effets: [{ type: etat, etat: provoque, duree: 2 }]
+        ia: { priorite: 5 }
+    recompenses: { xp: 0 }
+  - id: tourelle
+    nom: Tourelle mécanique
+    niveau: 1
+    categorie: construction
+    invocation: true
+    caracteristiques: { FOR: 3, AGI: 10, INT: 10, VIT: 8, ESP: 3, CHA: 3 }
+    pv: 18
+    armure: 4
+    rang: arriere
+    attaque: { stat: INT, portee: distance, puissance: 5 }
+    recompenses: { xp: 0 }

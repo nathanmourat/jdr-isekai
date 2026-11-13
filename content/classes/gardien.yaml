@@ -1,0 +1,63 @@
+classe:
+  id: gardien
+  nom: Gardien sacré
+  role: Protection
+  description: "Un rempart vivant, béni par la lumière."
+  caracteristiques: { FOR: 11, AGI: 6, INT: 7, VIT: 15, ESP: 12, CHA: 9 }
+  attaque: { stat: FOR, element: physique, portee: melee, puissance: 10 }
+  rang_prefere: avant
+  armure: 10
+  passif:
+    id: rempart
+    nom: Rempart
+    description: "30 % de chances d'intercepter une attaque visant un allié, en subissant 20 % de dégâts en moins."
+    parametres: { chance: 0.3, reduction: 0.2 }
+  competences: [provocation-sainte, bouclier-d-aube]
+  branches:
+    - id: bastion
+      nom: Bastion
+      description: "Défense pure."
+      competences: [{ niveau: 5, competence: mur-de-foi }]
+    - id: croise
+      nom: Croisé
+      description: "Riposte et dégâts sacrés."
+      competences: [{ niveau: 5, competence: jugement-sacre }]
+  ultime: { nom: "Bastion éternel", description: "Pendant 2 tours, aucun allié ne peut tomber sous 1 PV." }
+  point_fort: "Rend le groupe très solide ; seul, il gagne en tenant longtemps."
+  point_faible: "Dégâts faibles, combats longs, peu mobile."
+  competences_detail:
+    - id: provocation-sainte
+      nom: Provocation sainte
+      description: "Une onde sacrée frappe tous les ennemis et les force à le cibler pendant 2 tours ; sa défense augmente."
+      cout: 4
+      recharge: 3
+      cible: tous_ennemis
+      effets:
+        - { type: degats, puissance: 5, stat: FOR, element: sacre }
+        - { type: etat, etat: provoque, duree: 2 }
+        - { type: etat, etat: bonus_defense, duree: 2, valeur: 0.2, cible: soi }
+      ia: { priorite: 3 }
+    - id: bouclier-d-aube
+      nom: Bouclier d'aube
+      description: "Donne à un allié un bouclier qui absorbe 20 % de ses PV."
+      cout: 5
+      recharge: 1
+      cible: allie
+      effets: [{ type: bouclier, pourcent_pv: 0.2 }]
+      ia: { priorite: 3, quand: allie_blesse }
+    - id: mur-de-foi
+      nom: Mur de foi
+      description: "+30 % de défense pour tout le groupe pendant 2 tours."
+      cout: 7
+      recharge: 3
+      cible: tous_allies
+      effets: [{ type: etat, etat: bonus_defense, duree: 2, valeur: 0.3 }]
+      ia: { priorite: 2 }
+    - id: jugement-sacre
+      nom: Jugement sacré
+      description: "Un coup de masse chargé de lumière."
+      cout: 6
+      cible: ennemi
+      portee: melee
+      effets: [{ type: degats, puissance: 14, stat: FOR, element: sacre }]
+      ia: { priorite: 2 }

@@ -1,0 +1,124 @@
+# ─────────────────────────────────────────────────────────────
+#  Réglages de la campagne — modifiables sans toucher au code.
+#  Après une modification : lancer `npm test` pour vérifier.
+# ─────────────────────────────────────────────────────────────
+
+config:
+  saison_actuelle: 1
+
+  saisons:
+    - numero: 1
+      titre: "Saison 1 — Le Souverain des Cendres"
+      annee_debut: 1012          # an 0 de la campagne (printemps 1012 AV)
+      annees_par_chapitre: 3
+      chapitres: 6
+      sessions_par_chapitre: 3   # environ 2 h chacune
+      niveau_max: 40
+      niveau_ultime: 30          # niveau requis (en plus de la quête de classe) pour l'ultime
+
+  calendrier:
+    jours_par_mois: 30
+    mois:                        # 12 mois, 3 par saison
+      - { nom: Germinal,  saison: printemps }
+      - { nom: Floréal,   saison: printemps }
+      - { nom: Pluvial,   saison: printemps }
+      - { nom: Solaire,   saison: été }
+      - { nom: Moisson,   saison: été }
+      - { nom: Ardent,    saison: été }
+      - { nom: Brumaire,  saison: automne }
+      - { nom: Cendral,   saison: automne }
+      - { nom: Givral,    saison: automne }
+      - { nom: Nivôse,    saison: hiver }
+      - { nom: Nuitlongue, saison: hiver }
+      - { nom: Aurore,    saison: hiver }
+    fetes:
+      - { nom: "Fête des Lanternes",   mois: 2,  jour: 15 }
+      - { nom: "Tournoi de la Couronne", mois: 4, jour: 10 }
+      - { nom: "Grand Bazar de Qarzim", mois: 7,  jour: 1 }
+      - { nom: "Nuitlongue",           mois: 11, jour: 30 }
+
+  ellipses:
+    entre_quetes_mois: [1, 4]     # durée typique d'une ellipse entre deux quêtes
+    activites_temps_libre: 2      # nombre d'activités par joueur et par ellipse
+    duree_reference_mois: 6       # les gains de temps libre sont donnés pour 6 mois
+
+  personnage:
+    total_caracteristiques: 60
+    carac_min: 3
+    carac_max: 17
+    points_carac_par_niveau: 3
+    age_invoque_min: 18
+    age_invoque_max: 35
+    annee_naissance_reincarne: 994
+    niveau_branche: 5             # niveau où l'on choisit sa première compétence de branche
+    rang_competence_max: 5        # chaque point de compétence : +10 % de puissance
+
+  # XP pour passer du niveau n à n+1 = base × n^exposant
+  experience:
+    base: 100
+    exposant: 1.5
+
+  affinite:
+    paliers:
+      - { id: inconnue,  nom: "Inconnue",  seuil: 0 }
+      - { id: alliee,    nom: "Alliée",    seuil: 20 }
+      - { id: proche,    nom: "Proche",    seuil: 45 }
+      - { id: amoureuse, nom: "Amoureuse", seuil: 70 }
+      - { id: engagee,   nom: "Engagée",   seuil: 90 }
+    cadeau: { prefere: 5, apprecie: 2, neutre: 0, deteste: -3 }
+    jours_entre_cadeaux: 7
+
+  reputation:
+    paliers:
+      - { nom: "Hostile", seuil: -100 }
+      - { nom: "Méfiant", seuil: -40 }
+      - { nom: "Neutre",  seuil: -10 }
+      - { nom: "Ami",     seuil: 15 }
+      - { nom: "Allié",   seuil: 45 }
+      - { nom: "Honoré",  seuil: 80 }
+
+  guilde:
+    rangs:
+      - { rang: F, points: 0 }
+      - { rang: E, points: 100 }
+      - { rang: D, points: 300 }
+      - { rang: C, points: 700 }
+      - { rang: B, points: 1500 }
+      - { rang: A, points: 3000 }
+      - { rang: S, points: 6000 }
+
+  # Difficulté selon la puissance du groupe P = héros + 0,5 × compagnons présents.
+  # Interpolation linéaire entre deux colonnes pour un P non entier.
+  difficulte:
+    - { puissance: 1, pv: 1.0, degats: 1.00, ennemis_en_plus: 0 }
+    - { puissance: 2, pv: 2.7, degats: 1.35, ennemis_en_plus: 0 }
+    - { puissance: 3, pv: 4.6, degats: 1.65, ennemis_en_plus: 1 }
+    - { puissance: 4, pv: 6.6, degats: 1.95, ennemis_en_plus: 1 }
+    - { puissance: 5, pv: 8.8, degats: 2.20, ennemis_en_plus: 2 }
+    - { puissance: 6, pv: 11.0, degats: 2.45, ennemis_en_plus: 2 }
+
+  combat:
+    minuteur_tour_secondes: 60
+    regen_mana_base: 2
+    defense_par_vit: 2
+    resistance_par_esp: 2
+    toucher_base: 0.85
+    toucher_par_agi: 0.02
+    toucher_min: 0.5
+    toucher_max: 0.95
+    critique_base: 0.05
+    critique_par_agi: 0.005
+    multiplicateur_critique: 1.5
+    variance_degats: 0.1
+    potions_depart: 2
+
+  mort_douce:
+    perte_or_pourcent: 10
+    blessure_pv_pourcent: 10
+
+  graphismes:
+    taille_tuile: 32
+    taille_sprite_combat: 64
+    taille_sprite_boss: 128
+    taille_sprite_exploration: 32
+    echelle_pixel_art: 2

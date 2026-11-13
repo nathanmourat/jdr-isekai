@@ -1,0 +1,97 @@
+# Les 8 races jouables. La somme des modificateurs doit valoir 0 (vérifié automatiquement).
+# Les paramètres des traits sont utilisés par le moteur (src/moteur/traits.ts).
+races:
+  - id: humain
+    nom: Humain
+    description: "Le peuple le plus nombreux de Velmaris, présent partout. Polyvalent et obstiné."
+    modificateurs: {}
+    modificateurs_libres: { plus: 2, moins: 2 }   # +1 dans deux caractéristiques différentes, −1 dans deux autres
+    calque: false
+    trait:
+      id: determination
+      nom: Détermination
+      avantage: "Une fois par combat, quand il passe sous 25 % de PV, il se ressaisit et regagne 10 % de ses PV."
+      defaut: "−10 % de résistance magique."
+      parametres: { resistance_magique: -0.10 }
+
+  - id: elfe
+    nom: Elfe
+    description: "Peuple ancien de Sylvenoire, lié à la magie et aux forêts."
+    modificateurs: { INT: 1, ESP: 1, AGI: 1, FOR: -2, CHA: -1 }
+    trait:
+      id: sang-ancien
+      nom: Sang ancien
+      avantage: "+15 % de résistance magique ; voit dans le noir."
+      defaut: "Poisons et saignements durent 1 tour de plus."
+      parametres: { resistance_magique: 0.15, duree_poison_bonus: 1 }
+
+  - id: demi-elfe
+    nom: Demi-elfe
+    description: "Ni tout à fait humain, ni tout à fait elfe : à l'aise partout, chez soi nulle part."
+    modificateurs: { CHA: 2, AGI: 1, FOR: -1, VIT: -1, INT: -1 }
+    reputation_depart: { couronne: -10 }
+    trait:
+      id: entre-deux-mondes
+      nom: Entre deux mondes
+      avantage: "+10 % d'affinité en dialogue ; +5 % de précision."
+      defaut: "−10 de réputation de départ auprès de la Couronne."
+      parametres: { affinite_dialogue: 0.10, precision: 0.05 }
+
+  - id: nain
+    nom: Nain
+    description: "Forgerons et mineurs des Monts Grisfer, solides comme la roche."
+    modificateurs: { VIT: 2, FOR: 1, AGI: -1, INT: -1, CHA: -1 }
+    echelle: 0.9
+    trait:
+      id: robuste
+      nom: Robuste
+      avantage: "Résiste au poison à 50 % ; +2 % de défense."
+      defaut: "−3 d'initiative ; ne sait pas nager."
+      parametres: { resistance_poison: 0.5, defense: 0.02, initiative: -3 }
+
+  - id: ourvalis
+    nom: Ourvalis
+    description: "Peuple-loup nomade de la Marche des Sables, chassé de ses terres par la Concorde."
+    modificateurs: { FOR: 2, AGI: 1, INT: -1, ESP: -1, CHA: -1 }
+    trait:
+      id: instinct-de-meute
+      nom: Instinct de meute
+      avantage: "+10 % de dégâts sur une cible déjà frappée par un allié ce tour ; flair."
+      defaut: "−15 % de résistance à la peur et à la provocation."
+      parametres: { degats_meute: 0.10, resistance_controle: -0.15 }
+
+  - id: vulpin
+    nom: Vulpin
+    description: "Peuple-renard rusé, commerçant et voyageur."
+    modificateurs: { AGI: 2, CHA: 1, FOR: -2, VIT: -1 }
+    reputation_depart: { couronne: -5 }
+    trait:
+      id: ruse
+      nom: Ruse
+      avantage: "+5 % d'esquive ; −10 % sur les prix."
+      defaut: "Réputation de filou : marchands humains et Couronne méfiants."
+      parametres: { esquive: 0.05, prix: -0.10 }
+
+  - id: demi-demon
+    nom: Demi-démon
+    description: "Descendants de lignées touchées par les Cendres, le long du Mur d'Aube. L'Ordre les craint."
+    modificateurs: { INT: 2, FOR: 1, CHA: -2, ESP: -1 }
+    reputation_depart: { ordre: -15 }
+    teinte: "#a08cb4"
+    trait:
+      id: sang-cendre
+      nom: Sang cendré
+      avantage: "25 % de résistance au feu et à l'ombre ; sous 50 % de PV, régénère 2 % de ses PV par tour."
+      defaut: "+25 % de dégâts sacrés subis ; −20 % de soins sacrés reçus des autres."
+      parametres: { resistance_feu: 0.25, resistance_ombre: 0.25, regeneration: 0.02, faiblesse_sacre: 0.25, soins_sacres: -0.20 }
+
+  - id: sang-dragon
+    nom: Sang-dragon
+    description: "Descendants des anciens pactes avec les dragons-rois, surtout dans l'Archipel des Brumes."
+    modificateurs: { FOR: 1, VIT: 1, ESP: 1, AGI: -1, CHA: -2 }
+    trait:
+      id: ecailles-et-souffle
+      nom: Écailles et souffle
+      avantage: "Un souffle de feu mineur par combat ; −10 % de dégâts de feu reçus."
+      defaut: "+25 % de dégâts de glace reçus ; −1 d'initiative."
+      parametres: { souffle_puissance: 18, resistance_feu: 0.10, faiblesse_glace: 0.25, initiative: -1 }

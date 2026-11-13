@@ -1,0 +1,62 @@
+# Les 12 dons d'invoqué ou de réincarné. Un don ne peut être pris que par un seul joueur par partie.
+dons:
+  - id: oeil-du-seuil
+    nom: Œil du Seuil
+    combat: "Voit les PV et faiblesses des ennemis ; +10 % de dégâts sur une faiblesse."
+    hors_combat: "Révèle les pièges, secrets et statistiques des objets."
+    parametres: { degats_faiblesse: 0.10, degats: 0.04 }
+  - id: reserve-du-neant
+    nom: Réserve du Néant
+    combat: "Une fois par combat, utiliser un objet ne coûte pas d'action."
+    hors_combat: "Inventaire illimité ; +10 % sur les ventes."
+    parametres: { potions_bonus: 1 }
+  - id: langue-universelle
+    nom: Langue universelle
+    combat: "Peut pacifier une bête ou un démon mineur affaibli (sous 30 % de PV)."
+    hors_combat: "Comprend toutes les langues ; +20 % d'affinité en dialogue."
+    parametres: { seuil_pacifier: 0.30, affinite_dialogue: 0.20 }
+  - id: second-depart
+    nom: Second départ
+    combat: "Une fois par session, annule et rejoue le dernier tour du groupe."
+    hors_combat: "Une fois par chapitre, refaire un choix de dialogue."
+    parametres: { relance_combat: 1 }
+  - id: croissance-acceleree
+    nom: Croissance accélérée
+    combat: "—"
+    hors_combat: "+15 % d'XP pour soi ; une activité « Entraînement » bonus par chapitre."
+    parametres: { xp: 0.15, caracs_bonus: 1 }
+  - id: benediction-de-fortune
+    nom: Bénédiction de fortune
+    combat: "Une fois par combat, relance un jet raté (toucher, critique, résistance)."
+    hors_combat: "Meilleur butin (+1 objet rare par donjon)."
+    parametres: { relances: 1 }
+  - id: mimetisme
+    nom: Mimétisme
+    combat: "Copie une compétence active d'un ennemi vue pendant le combat, jusqu'à la fin du combat."
+    hors_combat: "Apprend les recettes d'artisanat en les voyant une fois."
+    parametres: {}
+  - id: coeur-inepuisable
+    nom: Cœur inépuisable
+    combat: "Régénère 2 % de ses PV max par tour."
+    hors_combat: "Ignore la fatigue ; voyages 20 % plus rapides."
+    parametres: { regeneration: 0.02 }
+  - id: lien-des-betes
+    nom: Lien des bêtes
+    combat: "Peut recruter une bête vaincue comme compagnon faible (un à la fois)."
+    hors_combat: "Monture gratuite ; bonus contre les bêtes en exploration."
+    parametres: { degats_betes: 0.10 }
+  - id: main-de-l-artisan
+    nom: Main de l'artisan
+    combat: "Une fois par combat, fabrique un objet improvisé (potion ou bombe)."
+    hors_combat: "Artisanat de qualité supérieure ; répare les reliques."
+    parametres: { objets_improvises: 1 }
+  - id: aura-de-l-elu
+    nom: Aura de l'Élu
+    combat: "Les alliés gagnent +5 % de dégâts et +5 % de résistance."
+    hors_combat: "Première impression +5 d'affinité ; prestige auprès des PNJ."
+    parametres: { degats_allies: 0.05, resistance_allies: 0.05, affinite_depart: 5 }
+  - id: pas-de-l-ombre
+    nom: Pas de l'ombre
+    combat: "Une fois par combat, esquive garantie puis le coup suivant est critique."
+    hors_combat: "Se faufile n'importe où, une fois par quête."
+    parametres: { esquives: 1 }

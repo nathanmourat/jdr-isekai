@@ -1,0 +1,63 @@
+classe:
+  id: arcaniste
+  nom: Arcaniste élémentaire
+  role: Dégâts (zone)
+  description: "Un mage qui plie le feu, la glace et la foudre à sa volonté."
+  caracteristiques: { FOR: 5, AGI: 9, INT: 15, VIT: 8, ESP: 14, CHA: 9 }
+  attaque: { stat: INT, element: arcane, portee: distance, puissance: 7 }
+  rang_prefere: arriere
+  armure: 3
+  passif:
+    id: resonance
+    nom: Résonance
+    description: "Enchaîner deux éléments différents donne +25 % de dégâts au second."
+    parametres: { bonus: 0.25 }
+  competences: [javelot-de-flamme, onde-de-givre]
+  branches:
+    - id: pyro-foudre
+      nom: Pyromancie et foudre
+      description: "Dégâts purs."
+      competences: [{ niveau: 5, competence: eclair-en-chaine }]
+    - id: cryo-terre
+      nom: Cryo et terre
+      description: "Contrôle et protection."
+      competences: [{ niveau: 5, competence: mur-de-glace }]
+  ultime: { nom: "Convergence des Quatre", description: "Dégâts massifs sur tous les ennemis, exposés aux 4 éléments." }
+  point_fort: "Le meilleur pour nettoyer les groupes d'ennemis."
+  point_faible: "Très fragile ; s'épuise en mana dans les longs combats."
+  competences_detail:
+    - id: javelot-de-flamme
+      nom: Javelot de flamme
+      description: "Un javelot de feu qui peut enflammer la cible."
+      cout: 6
+      cible: ennemi
+      effets:
+        - { type: degats, puissance: 16, stat: INT, element: feu }
+        - { type: etat, etat: brulure, duree: 2, valeur: 3, chance: 0.6 }
+      ia: { priorite: 2 }
+    - id: onde-de-givre
+      nom: Onde de givre
+      description: "Une vague de froid qui touche tous les ennemis et les ralentit."
+      cout: 8
+      recharge: 2
+      cible: tous_ennemis
+      effets:
+        - { type: degats, puissance: 9, stat: INT, element: glace }
+        - { type: etat, etat: gel, duree: 2, chance: 0.6 }
+      ia: { priorite: 3, quand: plusieurs_ennemis }
+    - id: eclair-en-chaine
+      nom: Éclair en chaîne
+      description: "La foudre rebondit sur tous les ennemis."
+      cout: 9
+      recharge: 1
+      cible: tous_ennemis
+      effets: [{ type: degats, puissance: 11, stat: INT, element: foudre }]
+      ia: { priorite: 3, quand: plusieurs_ennemis }
+    - id: mur-de-glace
+      nom: Mur de glace
+      description: "Un mur de glace protège tout le groupe (+25 % de défense pendant 2 tours)."
+      cout: 7
+      recharge: 3
+      cible: tous_allies
+      effets: [{ type: etat, etat: bonus_defense, duree: 2, valeur: 0.25 }]
+      ia: { priorite: 2, quand: debut_combat }

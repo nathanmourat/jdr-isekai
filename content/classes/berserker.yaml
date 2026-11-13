@@ -1,0 +1,63 @@
+classe:
+  id: berserker
+  nom: Berserker draconique
+  role: Dégâts (mêlée) / tank offensif
+  description: "Le sang du dragon bout dans ses veines : plus il saigne, plus il frappe fort."
+  caracteristiques: { FOR: 15, AGI: 9, INT: 5, VIT: 13, ESP: 8, CHA: 10 }
+  attaque: { stat: FOR, element: physique, portee: melee, puissance: 8 }
+  rang_prefere: avant
+  armure: 6
+  passif:
+    id: sang-de-dragon
+    nom: Sang de dragon
+    description: "+1 % de dégâts par tranche de 2 % de PV manquants (+40 % au maximum)."
+    parametres: { max: 0.4 }
+  competences: [fendoir-furieux, rugissement]
+  branches:
+    - id: furie
+      nom: Furie
+      description: "Dégâts et vol de vie."
+      competences: [{ niveau: 5, competence: frenesie }]
+    - id: ecailles
+      nom: Écailles
+      description: "Réduction de dégâts quand il est blessé."
+      competences: [{ niveau: 5, competence: peau-d-ecailles }]
+  ultime: { nom: "Forme du Wyrm", description: "Se transforme pendant 3 tours : souffle de feu et carapace d'écailles." }
+  point_fort: "Les plus gros dégâts en mêlée ; dangereux quand il est blessé."
+  point_faible: "Se met en danger lui-même ; faible face à la magie et au contrôle."
+  competences_detail:
+    - id: fendoir-furieux
+      nom: Fendoir furieux
+      description: "Une frappe énorme qui coûte 5 % de ses propres PV."
+      cout: 5
+      cible: ennemi
+      portee: melee
+      effets: [{ type: degats, puissance: 16, stat: FOR, element: physique, cout_pv_pourcent: 0.05 }]
+      ia: { priorite: 2 }
+    - id: rugissement
+      nom: Rugissement
+      description: "Peut effrayer tous les ennemis : 50 % de chances de perdre leur tour."
+      cout: 5
+      recharge: 3
+      cible: tous_ennemis
+      effets: [{ type: etat, etat: peur, duree: 1, chance: 0.5 }]
+      ia: { priorite: 3, quand: plusieurs_ennemis }
+    - id: frenesie
+      nom: Frénésie
+      description: "Deux coups rapides."
+      cout: 7
+      recharge: 1
+      cible: ennemi
+      portee: melee
+      effets: [{ type: degats, puissance: 9, stat: FOR, element: physique, coups: 2 }]
+      ia: { priorite: 3 }
+    - id: peau-d-ecailles
+      nom: Peau d'écailles
+      description: "+40 % de défense et régénération pendant 3 tours."
+      cout: 6
+      recharge: 4
+      cible: soi
+      effets:
+        - { type: etat, etat: bonus_defense, duree: 3, valeur: 0.4 }
+        - { type: etat, etat: regeneration, duree: 3, valeur: 0.04 }
+      ia: { priorite: 3, quand: soi_blesse }

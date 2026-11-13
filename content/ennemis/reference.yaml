@@ -1,0 +1,100 @@
+# Ennemis de référence, utilisés UNIQUEMENT par la simulation d'équilibrage (niveau 1).
+ennemis:
+  - id: ref-brute
+    nom: Brute de référence
+    niveau: 1
+    categorie: humanoide
+    caracteristiques: { FOR: 12, AGI: 6, INT: 4, VIT: 12, ESP: 5, CHA: 4 }
+    pv: 135
+    armure: 6
+    attaque: { stat: FOR, portee: melee, puissance: 11 }
+    competences:
+      - id: ref-coup-ecrasant
+        nom: Coup écrasant
+        description: "Un coup lourd."
+        recharge: 2
+        cible: ennemi
+        portee: melee
+        effets: [{ type: degats, puissance: 17, stat: FOR }]
+        ia: { priorite: 2 }
+    recompenses: { xp: 30, or: 10 }
+  - id: ref-rapide
+    nom: Rapide de référence
+    niveau: 1
+    categorie: bete
+    caracteristiques: { FOR: 9, AGI: 15, INT: 4, VIT: 8, ESP: 5, CHA: 4 }
+    pv: 95
+    armure: 2
+    attaque: { stat: AGI, portee: melee, puissance: 10 }
+    competences:
+      - id: ref-double-morsure
+        nom: Double morsure
+        description: "Deux morsures rapides."
+        recharge: 2
+        cible: ennemi
+        portee: melee
+        effets: [{ type: degats, puissance: 8, stat: AGI, coups: 2 }]
+        ia: { priorite: 2 }
+    recompenses: { xp: 30, or: 5 }
+  - id: ref-mage
+    nom: Mage de référence
+    niveau: 1
+    categorie: humanoide
+    caracteristiques: { FOR: 4, AGI: 9, INT: 13, VIT: 7, ESP: 12, CHA: 5 }
+    pv: 85
+    armure: 1
+    rang: arriere
+    attaque: { stat: INT, element: arcane, portee: distance, puissance: 10 }
+    competences:
+      - id: ref-boule-de-feu
+        nom: Boule de feu
+        description: "Une boule de feu."
+        recharge: 2
+        cible: ennemi
+        effets:
+          - { type: degats, puissance: 16, stat: INT, element: feu }
+          - { type: etat, etat: brulure, duree: 2, valeur: 3, chance: 0.5 }
+        ia: { priorite: 2 }
+    recompenses: { xp: 30, or: 15 }
+  - id: ref-faible
+    nom: Sbire de référence
+    niveau: 1
+    categorie: humanoide
+    caracteristiques: { FOR: 8, AGI: 9, INT: 4, VIT: 6, ESP: 4, CHA: 4 }
+    pv: 42
+    armure: 1
+    attaque: { stat: FOR, portee: melee, puissance: 8 }
+    recompenses: { xp: 10, or: 3 }
+  - id: ref-chef
+    nom: Chef de référence (mini-boss)
+    niveau: 2
+    categorie: humanoide
+    boss: true
+    caracteristiques: { FOR: 13, AGI: 8, INT: 6, VIT: 13, ESP: 8, CHA: 6 }
+    pv: 210
+    armure: 7
+    attaque: { stat: FOR, portee: melee, puissance: 11 }
+    competences:
+      - id: ref-balayage
+        nom: Balayage
+        description: "Frappe tous les adversaires."
+        recharge: 3
+        cible: tous_ennemis
+        portee: melee
+        effets: [{ type: degats, puissance: 11, stat: FOR }]
+        ia: { priorite: 3 }
+      - id: ref-cri-de-guerre
+        nom: Cri de guerre
+        description: "Augmente ses dégâts."
+        recharge: 4
+        cible: soi
+        effets: [{ type: etat, etat: bonus_degats, duree: 2, valeur: 0.25 }]
+        ia: { priorite: 2, quand: debut_combat }
+    recompenses: { xp: 80, or: 40 }
+
+rencontres:
+  - { id: ref-brute, nom: "Référence : brute", ennemis: [{ id: ref-brute }] }
+  - { id: ref-rapide, nom: "Référence : rapide", ennemis: [{ id: ref-rapide }] }
+  - { id: ref-mage, nom: "Référence : mage", ennemis: [{ id: ref-mage }] }
+  - { id: ref-meute, nom: "Référence : groupe de faibles", ennemis: [{ id: ref-faible }, { id: ref-faible }, { id: ref-faible }] }
+  - { id: ref-chef, nom: "Référence : mini-boss", ennemis: [{ id: ref-chef }] }

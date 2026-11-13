@@ -6,8 +6,9 @@ Si une demande est floue ou contradictoire : poser la question plutôt que devin
 
 ## État d'avancement
 - [x] Étape 0 : questions de cadrage (réponses ci-dessous)
-- [ ] Étape 1 : `docs/CONCEPTION.md`, `docs/GRAPHISMES.md` et `docs/LISTE-TEXTURES.md` rédigés, **en attente de validation**
-- [ ] Étape 2 : version jouable 1 (création de personnage, prologue, chapitre 1, combat, Aveline, sauvegarde)
+- [x] Étape 1 : conception **validée le 13/11** (`docs/CONCEPTION.md` v0.2, `docs/GRAPHISMES.md`, `docs/LISTE-TEXTURES.md`). Tailles d'images à confirmer avec le graphiste.
+- [ ] Étape 2 : **en cours**
+  - version jouable 1 (création de personnage, prologue, chapitre 1, combat, Aveline, sauvegarde)
 - [ ] Étape 3 et suivantes : chapitres 2 à 6, un par itération
 
 ## Décisions validées (étape 0)

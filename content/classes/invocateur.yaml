@@ -1,0 +1,64 @@
+classe:
+  id: invocateur
+  nom: Invocateur
+  role: Contrôle / dégâts indirects
+  description: "Il combat entouré de créatures liées à son âme."
+  caracteristiques: { FOR: 5, AGI: 8, INT: 14, VIT: 9, ESP: 14, CHA: 10 }
+  attaque: { stat: INT, element: arcane, portee: distance, puissance: 6 }
+  rang_prefere: arriere
+  armure: 2
+  passif:
+    id: lien-d-ame
+    nom: Lien d'âme
+    description: "Un loup spectral combat à ses côtés en permanence. S'il tombe, il revient au bout de 4 tours."
+    parametres: { retour: 4 }
+  competences: [gardien-de-pierre, echange-d-ame]
+  branches:
+    - id: meute
+      nom: Meute
+      description: "Plusieurs petites invocations."
+      competences: [{ niveau: 5, competence: feux-follets }]
+    - id: colosse
+      nom: Colosse
+      description: "Une grosse invocation."
+      competences: [{ niveau: 5, competence: eveil-du-colosse }]
+  ultime: { nom: "Porte du Bestiaire", description: "Invoque une créature légendaire pendant 3 tours." }
+  point_fort: "Agit plusieurs fois par tour grâce à ses invocations, qui encaissent à sa place."
+  point_faible: "Très faible si ses invocations sont détruites ; vulnérable au silence."
+  competences_detail:
+    - id: gardien-de-pierre
+      nom: Appel du gardien de pierre
+      description: "Invoque un golem de pierre qui provoque les ennemis pendant 2 tours."
+      cout: 10
+      recharge: 5
+      cible: soi
+      effets: [{ type: invocation, creature: golem-de-pierre, duree: 2 }]
+      ia: { priorite: 4 }
+    - id: echange-d-ame
+      nom: Échange d'âme
+      description: "Soigne ses invocations de 40 % et se protège d'un bouclier."
+      cout: 4
+      recharge: 2
+      cible: soi
+      effets:
+        - { type: soigner_invocations, pourcent: 0.4 }
+        - { type: bouclier, pourcent_pv: 0.08 }
+      ia: { priorite: 3, quand: soi_blesse }
+    - id: feux-follets
+      nom: Feux follets
+      description: "Invoque deux feux follets qui brûlent les ennemis pendant 3 tours."
+      cout: 9
+      recharge: 4
+      cible: soi
+      effets:
+        - { type: invocation, creature: feu-follet, duree: 3 }
+        - { type: invocation, creature: feu-follet, duree: 3 }
+      ia: { priorite: 3 }
+    - id: eveil-du-colosse
+      nom: Éveil du colosse
+      description: "Invoque un colosse de pierre pendant 4 tours."
+      cout: 12
+      recharge: 6
+      cible: soi
+      effets: [{ type: invocation, creature: colosse, duree: 4 }]
+      ia: { priorite: 4 }

@@ -1,0 +1,210 @@
+# Ennemis du chapitre 1 (royaume d'Aubeclaire, niveaux 1 à 8).
+ennemis:
+  - id: mannequin-entrainement
+    nom: Golem d'entraînement
+    description: "Le golem d'argile de l'examen de la Guilde. Il ne frappe pas fort, mais il encaisse."
+    niveau: 1
+    categorie: construction
+    caracteristiques: { FOR: 8, AGI: 5, INT: 3, VIT: 10, ESP: 3, CHA: 3 }
+    pv: 60
+    armure: 4
+    attaque: { stat: FOR, portee: melee, puissance: 6 }
+    recompenses: { xp: 25 }
+
+  - id: loup-gris
+    nom: Loup gris
+    description: "Grand loup aux yeux jaunes, chasse en meute."
+    niveau: 1
+    categorie: bete
+    caracteristiques: { FOR: 9, AGI: 12, INT: 2, VIT: 7, ESP: 4, CHA: 2 }
+    pv: 34
+    armure: 1
+    attaque: { stat: AGI, portee: melee, puissance: 7 }
+    competences:
+      - id: morsure-sauvage
+        nom: Morsure sauvage
+        description: "Une morsure qui fait saigner."
+        recharge: 3
+        cible: ennemi
+        portee: melee
+        effets:
+          - { type: degats, puissance: 8, stat: AGI }
+          - { type: etat, etat: poison, duree: 2, valeur: 2, chance: 0.5 }
+        ia: { priorite: 2 }
+    recompenses: { xp: 18, or: 2, objets: [{ id: croc-de-loup, chance: 0.4 }] }
+
+  - id: gobelin-cendre
+    nom: Gobelin cendré
+    description: "Gobelin à la peau grise, corrompu par les Cendres."
+    niveau: 2
+    categorie: humanoide
+    caracteristiques: { FOR: 9, AGI: 10, INT: 4, VIT: 8, ESP: 4, CHA: 3 }
+    pv: 38
+    armure: 3
+    attaque: { stat: FOR, portee: melee, puissance: 7 }
+    resistances: { ombre: 0.25, sacre: -0.25 }
+    recompenses: { xp: 22, or: 6, objets: [{ id: potion-soin-petite, chance: 0.15 }] }
+
+  - id: squelette
+    nom: Squelette de crypte
+    description: "Un ancien garde, relevé par un sceau cendré."
+    niveau: 3
+    categorie: mort-vivant
+    caracteristiques: { FOR: 10, AGI: 7, INT: 3, VIT: 9, ESP: 3, CHA: 2 }
+    pv: 44
+    armure: 6
+    attaque: { stat: FOR, portee: melee, puissance: 8 }
+    resistances: { poison: 1.0, glace: 0.25, sacre: -0.5 }
+    recompenses: { xp: 26, or: 8 }
+
+  - id: araignee-geante
+    nom: Araignée géante
+    description: "Grande comme un chien, venimeuse."
+    niveau: 3
+    categorie: bete
+    caracteristiques: { FOR: 8, AGI: 13, INT: 3, VIT: 8, ESP: 5, CHA: 2 }
+    pv: 40
+    armure: 3
+    attaque: { stat: AGI, element: poison, portee: melee, puissance: 7 }
+    competences:
+      - id: toile-collante
+        nom: Toile collante
+        description: "Immobilise une cible."
+        recharge: 3
+        cible: ennemi
+        effets: [{ type: etat, etat: immobilise, duree: 1, chance: 0.6 }]
+        ia: { priorite: 2 }
+    recompenses: { xp: 26, or: 0, objets: [{ id: soie-d-araignee, chance: 0.5 }] }
+
+  - id: bandit
+    nom: Bandit
+    description: "Un détrousseur de grand chemin."
+    niveau: 2
+    categorie: humanoide
+    caracteristiques: { FOR: 10, AGI: 10, INT: 5, VIT: 9, ESP: 5, CHA: 6 }
+    pv: 42
+    armure: 4
+    attaque: { stat: FOR, portee: melee, puissance: 7 }
+    competences:
+      - id: coup-sournois
+        nom: Coup sournois
+        description: "Frappe une cible affaiblie."
+        recharge: 2
+        cible: ennemi
+        portee: melee
+        effets: [{ type: degats, puissance: 11, stat: AGI }]
+        ia: { priorite: 2, quand: cible_faible }
+    recompenses: { xp: 24, or: 15, objets: [{ id: potion-soin-petite, chance: 0.25 }] }
+
+  - id: cultiste
+    nom: Cultiste des Cendres
+    description: "Un fanatique qui porte un sceau violet sur la main."
+    niveau: 4
+    categorie: humanoide
+    rang: arriere
+    caracteristiques: { FOR: 5, AGI: 9, INT: 12, VIT: 8, ESP: 11, CHA: 6 }
+    pv: 46
+    armure: 2
+    attaque: { stat: INT, element: ombre, portee: distance, puissance: 8 }
+    resistances: { ombre: 0.5, sacre: -0.25 }
+    competences:
+      - id: trait-cendre
+        nom: Trait de cendre
+        description: "Un trait d'énergie sombre."
+        recharge: 1
+        cible: ennemi
+        effets:
+          - { type: degats, puissance: 12, stat: INT, element: ombre }
+          - { type: etat, etat: malus_defense, duree: 2, valeur: 0.15, chance: 0.5 }
+        ia: { priorite: 2 }
+      - id: soin-impie
+        nom: Soin impie
+        description: "Soigne un allié."
+        recharge: 3
+        cible: allie
+        effets: [{ type: soin, puissance: 12, stat: INT }]
+        ia: { priorite: 3, quand: allie_blesse }
+    recompenses: { xp: 34, or: 12, objets: [{ id: sceau-cendre, chance: 0.1 }] }
+
+  - id: golem-fontaine
+    nom: Golem de la Fontaine
+    description: "Le gardien de pierre de la crypte, une fontaine dans le dos. Mini-boss."
+    niveau: 5
+    categorie: construction
+    boss: true
+    caracteristiques: { FOR: 14, AGI: 5, INT: 8, VIT: 15, ESP: 8, CHA: 3 }
+    pv: 170
+    armure: 10
+    attaque: { stat: FOR, portee: melee, puissance: 9 }
+    resistances: { poison: 1.0, foudre: -0.25 }
+    competences:
+      - id: deferlante
+        nom: Déferlante
+        description: "Un torrent d'eau qui frappe tous les adversaires."
+        recharge: 3
+        cible: tous_ennemis
+        effets:
+          - { type: degats, puissance: 9, stat: INT, element: glace }
+          - { type: etat, etat: gel, duree: 1, chance: 0.4 }
+        ia: { priorite: 3 }
+      - id: source-vive
+        nom: Source vive
+        description: "La fontaine le soigne."
+        recharge: 4
+        cible: soi
+        effets: [{ type: soin, puissance: 14, stat: INT }]
+        ia: { priorite: 4, quand: soi_blesse }
+    recompenses: { xp: 120, or: 60, objets: [{ id: cle-crypte, chance: 1 }] }
+
+  - id: vorthak
+    nom: Vorthak, émissaire des Cendres
+    description: "Démon en armure noire, épée entourée de flammes violettes. Il s'enfuit s'il est trop blessé."
+    niveau: 7
+    categorie: demon
+    boss: true
+    fuit_sous_pourcent: 0.25
+    caracteristiques: { FOR: 16, AGI: 11, INT: 12, VIT: 14, ESP: 10, CHA: 10 }
+    pv: 230
+    armure: 9
+    attaque: { stat: FOR, element: ombre, portee: melee, puissance: 10 }
+    resistances: { feu: 0.5, ombre: 0.5, sacre: -0.25 }
+    competences:
+      - id: lame-violette
+        nom: Lame violette
+        description: "Une taille enflammée de feu violet."
+        recharge: 1
+        cible: ennemi
+        portee: melee
+        effets:
+          - { type: degats, puissance: 14, stat: FOR, element: ombre }
+          - { type: etat, etat: brulure, duree: 2, valeur: 4, chance: 0.5 }
+        ia: { priorite: 2 }
+      - id: vague-de-cendres
+        nom: Vague de cendres
+        description: "Une vague de cendres brûlantes sur tout le groupe."
+        recharge: 3
+        cible: tous_ennemis
+        effets: [{ type: degats, puissance: 10, stat: INT, element: feu }]
+        ia: { priorite: 3 }
+      - id: regard-terrifiant
+        nom: Regard terrifiant
+        description: "Peut terrifier tout le groupe."
+        recharge: 4
+        cible: tous_ennemis
+        effets: [{ type: etat, etat: peur, duree: 1, chance: 0.35 }]
+        ia: { priorite: 2, quand: debut_combat }
+    recompenses: { xp: 220, or: 100, objets: [{ id: sceau-cendre, chance: 1 }] }
+
+rencontres:
+  - { id: examen-guilde, nom: "Examen de la Guilde", fond: arene, fuite_possible: false, ennemis: [{ id: mannequin-entrainement }], renforts: [mannequin-entrainement] }
+  - { id: loups-combe, nom: "Les loups de la Combe-aux-Saules", fond: foret, ennemis: [{ id: loup-gris }, { id: loup-gris }], renforts: [loup-gris] }
+  - { id: loups-alpha, nom: "La louve noire", fond: foret, ennemis: [{ id: loup-gris }, { id: loup-gris }, { id: loup-gris }], renforts: [loup-gris] }
+  - { id: gobelins-route, nom: "Embuscade de gobelins", fond: plaine, ennemis: [{ id: gobelin-cendre }, { id: gobelin-cendre }], renforts: [gobelin-cendre] }
+  - { id: bandits-route, nom: "Bandits de grand chemin", fond: plaine, ennemis: [{ id: bandit }, { id: bandit }], renforts: [bandit] }
+  - { id: crypte-squelettes, nom: "Gardes de la crypte", fond: crypte, ennemis: [{ id: squelette }, { id: squelette }], renforts: [squelette] }
+  - { id: crypte-araignees, nom: "Nid d'araignées", fond: crypte, ennemis: [{ id: araignee-geante }, { id: araignee-geante }], renforts: [araignee-geante] }
+  - { id: crypte-golem, nom: "Le Golem de la Fontaine", fond: crypte, fuite_possible: false, ennemis: [{ id: golem-fontaine }], renforts: [squelette] }
+  - { id: tanneurs-cultistes, nom: "Les cultistes des Tanneurs", fond: rues-nuit, ennemis: [{ id: bandit }, { id: cultiste, rang: arriere }], renforts: [bandit] }
+  - { id: lanternes-cultistes, nom: "Attaque de la Fête des Lanternes", fond: rues-nuit, fuite_possible: false, ennemis: [{ id: gobelin-cendre }, { id: gobelin-cendre }, { id: cultiste, rang: arriere }], renforts: [gobelin-cendre] }
+  - { id: lanternes-vorthak, nom: "Vorthak", fond: rues-nuit, fuite_possible: false, ennemis: [{ id: vorthak }], renforts: [cultiste] }
+  - { id: tournoi-ecuyers, nom: "Tournoi des écuyers", fond: arene, fuite_possible: false, ennemis: [{ id: bandit }], renforts: [bandit] }

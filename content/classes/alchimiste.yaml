@@ -1,0 +1,66 @@
+classe:
+  id: alchimiste
+  nom: Alchimiste-artificier
+  role: Soutien / contrôle
+  description: "Bombes, fioles et machines : la science au service de l'aventure."
+  caracteristiques: { FOR: 7, AGI: 11, INT: 14, VIT: 9, ESP: 8, CHA: 11 }
+  attaque: { stat: INT, element: physique, portee: distance, puissance: 7 }
+  rang_prefere: arriere
+  armure: 4
+  passif:
+    id: fioles-optimisees
+    nom: Fioles optimisées
+    description: "Ses objets sont 40 % plus efficaces, avec 25 % de chances de ne pas être consommés. "
+    parametres: { efficacite: 0.4, economie: 0.25 }
+  competences: [bombe-collante, tourelle-mecanique]
+  branches:
+    - id: grenadier
+      nom: Grenadier
+      description: "Bombes et dégâts de zone."
+      competences: [{ niveau: 5, competence: grenade-incendiaire }]
+    - id: mecaniste
+      nom: Mécaniste
+      description: "Tourelles et élixirs."
+      competences: [{ niveau: 5, competence: elixir-de-combat }]
+  ultime: { nom: "Golem d'airain", description: "Se protège dans une armure-golem pendant 3 tours, avec des compétences améliorées." }
+  point_fort: "Très polyvalent ; le meilleur artisan hors combat."
+  point_faible: "Dépend de ses ressources, qu'il doit fabriquer entre les quêtes."
+  competences_detail:
+    - id: bombe-collante
+      nom: Bombe collante
+      description: "Dégâts de feu et immobilisation (l'ennemi peut perdre son prochain tour)."
+      cout: 6
+      recharge: 2
+      cible: ennemi
+      effets:
+        - { type: degats, puissance: 12, stat: INT, element: feu }
+        - { type: etat, etat: immobilise, duree: 1, chance: 0.35 }
+      ia: { priorite: 3 }
+    - id: tourelle-mecanique
+      nom: Tourelle mécanique
+      description: "Pose une tourelle qui tire pendant 3 tours."
+      cout: 8
+      recharge: 4
+      cible: soi
+      effets: [{ type: invocation, creature: tourelle, duree: 3 }]
+      ia: { priorite: 4 }
+    - id: grenade-incendiaire
+      nom: Grenade incendiaire
+      description: "Dégâts de feu sur tous les ennemis, avec brûlure."
+      cout: 8
+      recharge: 2
+      cible: tous_ennemis
+      effets:
+        - { type: degats, puissance: 8, stat: INT, element: feu }
+        - { type: etat, etat: brulure, duree: 2, valeur: 3, chance: 0.5 }
+      ia: { priorite: 3, quand: plusieurs_ennemis }
+    - id: elixir-de-combat
+      nom: Élixir de combat
+      description: "+30 % de dégâts pendant 3 tours et un petit soin."
+      cout: 6
+      recharge: 4
+      cible: soi
+      effets:
+        - { type: etat, etat: bonus_degats, duree: 3, valeur: 0.3 }
+        - { type: soin, puissance: 8, stat: INT }
+      ia: { priorite: 3, quand: debut_combat }

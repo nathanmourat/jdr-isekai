@@ -1,0 +1,65 @@
+classe:
+  id: barde
+  nom: Barde enchanteur
+  role: Soutien / contrôle
+  description: "Sa musique galvanise ses amis et endort ses ennemis."
+  caracteristiques: { FOR: 6, AGI: 11, INT: 10, VIT: 9, ESP: 10, CHA: 14 }
+  attaque: { stat: CHA, element: arcane, portee: distance, puissance: 11 }
+  rang_prefere: arriere
+  armure: 3
+  passif:
+    id: refrain
+    nom: Refrain
+    description: "Ses chants de groupe durent tant que le Barde n'est pas K.O."
+    parametres: {}
+  competences: [ballade-du-courage, berceuse]
+  branches:
+    - id: virtuose
+      nom: Virtuose
+      description: "Bonus de groupe."
+      competences: [{ niveau: 5, competence: hymne-de-guerison }]
+    - id: dissonance
+      nom: Dissonance
+      description: "Dégâts sonores et contrôle."
+      competences: [{ niveau: 5, competence: accord-dissonant }]
+  ultime: { nom: "Symphonie du dernier acte", description: "Tout le groupe rejoue immédiatement un tour complet." }
+  point_fort: "Rend tout le groupe meilleur ; le meilleur en dialogue."
+  point_faible: "Peu de dégâts personnels ; le soutien le plus fragile."
+  competences_detail:
+    - id: ballade-du-courage
+      nom: Ballade du courage
+      description: "+25 % de dégâts, +15 % d'initiative et une légère régénération pour le groupe."
+      cout: 5
+      recharge: 3
+      cible: tous_allies
+      effets:
+        - { type: etat, etat: bonus_degats, duree: 3, valeur: 0.25 }
+        - { type: etat, etat: bonus_initiative, duree: 3, valeur: 0.15 }
+        - { type: etat, etat: regeneration, duree: 3, valeur: 0.03 }
+      ia: { priorite: 4, quand: debut_combat }
+    - id: berceuse
+      nom: Berceuse
+      description: "Peut endormir chaque ennemi (60 %) ; un ennemi frappé se réveille."
+      cout: 6
+      recharge: 3
+      cible: tous_ennemis
+      effets: [{ type: etat, etat: sommeil, duree: 2, chance: 0.6 }]
+      ia: { priorite: 3, quand: plusieurs_ennemis }
+    - id: hymne-de-guerison
+      nom: Hymne de guérison
+      description: "Soigne tout le groupe."
+      cout: 8
+      recharge: 2
+      cible: tous_allies
+      effets: [{ type: soin, puissance: 10, stat: CHA }]
+      ia: { priorite: 3, quand: allie_blesse }
+    - id: accord-dissonant
+      nom: Accord dissonant
+      description: "Dégâts sur tous les ennemis et défense réduite."
+      cout: 7
+      recharge: 2
+      cible: tous_ennemis
+      effets:
+        - { type: degats, puissance: 8, stat: CHA, element: arcane }
+        - { type: etat, etat: malus_defense, duree: 2, valeur: 0.2 }
+      ia: { priorite: 3, quand: plusieurs_ennemis }

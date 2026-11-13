@@ -1,0 +1,31 @@
+# Objets : consommables, cadeaux, équipement, objets de quête, matériaux.
+objets:
+  # ── Consommables ──
+  - { id: potion-soin-petite, nom: "Petite potion de soin", description: "Rend un peu de PV.", type: consommable, prix: 15, cible: allie, effets: [{ type: soin, puissance: 16, stat: VIT }] }
+  - { id: potion-soin, nom: "Potion de soin", description: "Rend beaucoup de PV.", type: consommable, prix: 40, cible: allie, effets: [{ type: soin, puissance: 30, stat: VIT }] }
+  - { id: potion-mana, nom: "Potion de mana", description: "Rend 20 points de mana.", type: consommable, prix: 30, cible: soi, effets: [{ type: mana, valeur: 20 }] }
+  - { id: antidote, nom: "Antidote", description: "Retire poisons et effets négatifs.", type: consommable, prix: 12, cible: allie, effets: [{ type: purifier }] }
+  - { id: bombe-feu, nom: "Bombe incendiaire", description: "Dégâts de feu sur tous les ennemis.", type: consommable, prix: 35, cible: tous_ennemis, effets: [{ type: degats, puissance: 10, stat: INT, element: feu }] }
+  - { id: bombe-fumee, nom: "Bombe fumigène", description: "Le groupe devient plus difficile à toucher.", type: consommable, prix: 25, cible: tous_allies, effets: [{ type: etat, etat: bonus_defense, duree: 2, valeur: 0.2 }] }
+  - { id: parchemin-retour, nom: "Parchemin de retour", description: "Ramène le groupe en ville (hors combat).", type: consommable, prix: 50 }
+  - { id: ration, nom: "Ration de voyage", description: "Pain, fromage et viande séchée.", type: consommable, prix: 3 }
+  # ── Cadeaux ──
+  - { id: gateau-lysmont, nom: "Gâteau de Lysmont", description: "Une pâtisserie à la crème, spécialité de la capitale.", type: cadeau, prix: 8 }
+  - { id: kit-entretien-armes, nom: "Kit d'entretien d'armes", description: "Pierre à aiguiser, huile et chiffon.", type: cadeau, prix: 20 }
+  - { id: bijou-dore, nom: "Collier doré", description: "Clinquant et cher.", type: cadeau, prix: 60 }
+  - { id: fleur-des-champs, nom: "Bouquet de fleurs des champs", description: "Simple et joli.", type: cadeau, prix: 4 }
+  - { id: livre-ancien, nom: "Livre ancien", description: "Chroniques de chevalerie.", type: cadeau, prix: 25 }
+  # ── Équipement ──
+  - { id: epee-courte, nom: "Épée courte", description: "+2 de puissance d'attaque.", type: equipement, emplacement: arme, prix: 40, bonus: { puissance: 2 } }
+  - { id: dague, nom: "Dague fine", description: "+1 de puissance, +1 AGI.", type: equipement, emplacement: arme, prix: 35, bonus: { puissance: 1, caracs: { AGI: 1 } } }
+  - { id: baton-apprenti, nom: "Bâton d'apprenti", description: "+1 INT, +1 ESP.", type: equipement, emplacement: arme, prix: 40, bonus: { caracs: { INT: 1, ESP: 1 } } }
+  - { id: arc-court, nom: "Arc court", description: "+2 de puissance d'attaque.", type: equipement, emplacement: arme, prix: 40, bonus: { puissance: 2 } }
+  - { id: bouclier-bois, nom: "Bouclier de bois", description: "+3 d'armure.", type: equipement, emplacement: accessoire, prix: 30, bonus: { armure: 3 } }
+  - { id: armure-cuir, nom: "Armure de cuir", description: "+3 d'armure.", type: equipement, emplacement: armure, prix: 45, bonus: { armure: 3 } }
+  - { id: robe-mage, nom: "Robe de mage", description: "+1 d'armure, +1 ESP.", type: equipement, emplacement: armure, prix: 40, bonus: { armure: 1, caracs: { ESP: 1 } } }
+  # ── Quête et matériaux ──
+  - { id: sceau-cendre, nom: "Sceau cendré", description: "Fragment de pierre noire marqué d'une rune violette.", type: quete }
+  - { id: cle-crypte, nom: "Clé de bronze de la crypte", description: "Ouvre la salle du fond de la Crypte de la Fontaine.", type: quete }
+  - { id: croc-de-loup, nom: "Croc de loup", description: "Matériau d'artisanat.", type: materiau, prix: 4 }
+  - { id: soie-d-araignee, nom: "Soie d'araignée", description: "Matériau d'artisanat.", type: materiau, prix: 6 }
+  - { id: relique-douteuse, nom: "Relique douteuse", description: "Un « os de saint » vendu sous le manteau.", type: quete, prix: 0 }

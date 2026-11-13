@@ -1,0 +1,64 @@
+classe:
+  id: ombre
+  nom: Ombre
+  role: Dégâts (cible unique)
+  description: "Un assassin qui frappe là où l'ennemi ne regarde pas."
+  caracteristiques: { FOR: 9, AGI: 15, INT: 8, VIT: 9, ESP: 8, CHA: 11 }
+  attaque: { stat: AGI, element: physique, portee: melee, puissance: 10 }
+  rang_prefere: avant
+  armure: 4
+  passif:
+    id: dans-le-dos
+    nom: Dans le dos
+    description: "+35 % de chances de critique contre une cible affaiblie ou qui ne l'attaque pas."
+    parametres: { critique: 0.35 }
+  competences: [pas-d-ombre, lame-empoisonnee]
+  branches:
+    - id: assassinat
+      nom: Assassinat
+      description: "Critiques et exécutions."
+      competences: [{ niveau: 5, competence: coup-de-grace }]
+    - id: toxines
+      nom: Toxines
+      description: "Poisons et affaiblissements."
+      competences: [{ niveau: 5, competence: nuage-toxique }]
+  ultime: { nom: "Mille Coupures", description: "6 frappes réparties sur les ennemis, chacune avec une chance de critique." }
+  point_fort: "Élimine une cible prioritaire en un ou deux tours."
+  point_faible: "Peu de PV ; faible contre les groupes nombreux."
+  competences_detail:
+    - id: pas-d-ombre
+      nom: Pas d'ombre
+      description: "Devient invisible pendant 1 tour ; la prochaine attaque est un critique garanti."
+      cout: 5
+      recharge: 2
+      cible: soi
+      effets: [{ type: etat, etat: furtif, duree: 2 }]
+      ia: { priorite: 3 }
+    - id: lame-empoisonnee
+      nom: Lame empoisonnée
+      description: "Une entaille qui empoisonne (cumulable 3 fois)."
+      cout: 4
+      cible: ennemi
+      portee: melee
+      effets:
+        - { type: degats, puissance: 10, stat: AGI, element: physique }
+        - { type: etat, etat: poison, duree: 3, valeur: 4, cumul_max: 3 }
+      ia: { priorite: 2 }
+    - id: coup-de-grace
+      nom: Coup de grâce
+      description: "Double dégâts contre une cible sous 25 % de PV."
+      cout: 6
+      cible: ennemi
+      portee: melee
+      effets: [{ type: degats, puissance: 13, stat: AGI, element: physique, executer_sous_pourcent: 0.25 }]
+      ia: { priorite: 3 }
+    - id: nuage-toxique
+      nom: Nuage toxique
+      description: "Empoisonne tous les ennemis."
+      cout: 7
+      recharge: 2
+      cible: tous_ennemis
+      effets:
+        - { type: degats, puissance: 4, stat: AGI, element: poison }
+        - { type: etat, etat: poison, duree: 3, valeur: 3, cumul_max: 3 }
+      ia: { priorite: 3, quand: plusieurs_ennemis }
