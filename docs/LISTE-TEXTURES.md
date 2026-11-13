@@ -350,6 +350,25 @@ Une ligne de 6 à 8 cases de 64 × 64, soit au plus 512 × 64.
 
 ---
 
+## Nouvelles images demandées après le test 1 (branche `textures-v3`)
+
+Ces images sont déjà branchées dans le jeu : tant qu'elles ne sont pas livrées, un provisoire s'affiche. Déposez-les sur la branche `textures-v3` avec exactement ces noms.
+
+| Fait | N° | Fichier | Taille | Description |
+|---|---|---|---|---|
+| [ ] | T1 | `decors/temple-du-seuil.png` (nouvelle version) | 1280 × 720 | Version plus détaillée du Temple du Seuil. Le Grand Prieur Auréliath doit être dessiné **au centre** (vers x = 640, y = 330) : c'est là que se trouve sa zone cliquable. S'il est ailleurs, indiquez sa position. |
+| [ ] | T2 | `cartes/lysmont-plan.png` | 1280 × 720 | Plan de la Ville de Lysmont vu de dessus : place, Guilde, Chaudron Fêlé (auberge), boutique, château, quartier des Tanneurs, arène. |
+| [ ] | T3 | `cartes/lysmont-plan.json` | — | Position de chaque lieu sur le plan, en pixels : `{ "lysmont-place": { "x": 640, "y": 380 }, "guilde": {…}, "taverne": {…}, "boutique": {…}, "chateau": {…}, "quartier-tanneurs": {…}, "arene": {…}, "egouts": {…}, "marche": {…}, "tannerie-abandonnee": {…} }`. Sans ce fichier, le jeu utilise les positions de `content/monde/aubeclaire.yaml`. |
+| [ ] | T4 | `decors/boutique.png` | 1280 × 720 | Intérieur du Comptoir de Halvine : étagères pleines, comptoir, balance. |
+| [ ] | T5 | `decors/auberge-chambre.png` | 1280 × 720 | Chambre de l'auberge du Chaudron Fêlé, avec un lit bien visible. |
+| [ ] | T6 | `decors/auberge-chambre.json` | — | Position du lit : `{ "lit": { "x": 900, "y": 470 } }`. Sans ce fichier, le bouton du lit est placé à cet endroit. |
+| [ ] | T7 | `personnages/pnj/halvine/portrait-neutre.png` | 512 × 512 | Dame Halvine Corbelet, marchande : petite femme vive, lunettes rondes, tablier plein de poches. |
+| [ ] | T8 | `effets/impact.png`, `effets/foudre.png`, `effets/sacre.png`, `effets/ombre.png`, `effets/invocation.png` | 512 × 64 | Effets de combat utilisés par les nouvelles animations, en plus de ceux des n° 96 à 110 (bandes de 8 images de 64 × 64). |
+
+Le dossier du Grand Prieur a changé de nom avec le personnage : `personnages/pnj/aureliath/` (anciennement `mathis`), n° 68 et 69.
+
+Décors encore provisoires utilisés par les nouvelles étapes de contrat (facultatifs) : `decors/route-du-nord.png`, `gue-de-valmont.png`, `champs-du-nord.png`, `grotte-des-mineurs.png`, `collines-lune-sauge.png`, `egouts.png`.
+
 ## Récapitulatif
 
 - **211 lignes** dans la liste ci-dessus (une ligne = un fichier, sauf la dernière section où une ligne regroupe 2 variantes).

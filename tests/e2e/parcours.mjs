@@ -58,6 +58,9 @@ for (let s = 0; s < 4; s++) {
   await page.getByRole('button', { name: 'Jouer' }).first().click();
   for (let k = 0; k < 20; k++) {
     if (await page.getByRole('button', { name: 'Terminer la scène' }).isVisible()) break;
+    // un personnage interroge un joueur : on choisit la première réponse proposée
+    const reponse = page.locator('button.reponse').first();
+    if (await reponse.isVisible()) { await reponse.click(); continue; }
     const suite = page.getByText(/Cliquer pour continuer/);
     if (await suite.isVisible()) { await page.locator('.replique').click(); continue; }
     const choix = page.getByRole('button', { name: 'Choisir' }).first();
@@ -76,10 +79,15 @@ etape('prologue joué (4 scènes)');
 await page.getByRole('button', { name: 'Carte', exact: true }).click();
 await capture('carte');
 await page.getByRole('button', { name: /Temple du Seuil/ }).click();
-await page.getByRole('button', { name: 'Lancer' }).first().click();
+// on clique sur le Grand Prieur (silhouette sur le décor), puis on lui parle
+await page.getByRole('button', { name: /Parler à Grand Prieur/ }).click();
+await page.getByRole('button', { name: 'Lui parler' }).first().click();
 async function jouerScene(captureNom) {
   for (let k = 0; k < 120; k++) {
     if (await page.getByRole('button', { name: 'Terminer la scène' }).isVisible()) break;
+    // un personnage interroge un joueur : on choisit la première réponse proposée
+    const reponse = page.locator('button.reponse').first();
+    if (await reponse.isVisible()) { await reponse.click(); continue; }
     if (await page.getByRole('button', { name: /Au combat/ }).isVisible()) { await page.getByRole('button', { name: /Au combat/ }).click(); continue; }
     if (await page.locator('.combat').isVisible()) { await combattre(captureNom); continue; }
     const suite = page.getByText(/Cliquer pour continuer/);
@@ -141,12 +149,26 @@ await page.getByRole('button', { name: 'Terminer la scène' }).click();
 etape('scène de l\'Appel jouée (votes des 2 joueurs)');
 
 await page.getByRole('button', { name: 'Carte', exact: true }).click();
+// un seul point « Ville de Lysmont » sur la carte, puis le plan de la ville
+await page.getByRole('button', { name: /Ville de Lysmont/ }).click();
+await capture('plan-lysmont');
 await page.getByRole('button', { name: /Guilde de la Rose des Vents/ }).click();
 await capture('guilde');
-await page.getByRole('button', { name: 'Lancer' }).first().click();
+await page.getByRole('button', { name: /Dame Rowena/ }).first().click();
+await page.getByRole('button', { name: 'Lui parler' }).first().click();
 await jouerScene('examen-combat');
 await page.getByRole('button', { name: 'Terminer la scène' }).click();
 etape('examen de la Guilde avec combat');
+
+// Les mois ne passent qu'à l'auberge : on clique sur le lit, on propose 6 mois, l'autre joueur accepte
+await page.getByRole('button', { name: 'Carte', exact: true }).click();
+await page.getByRole('button', { name: /Ville de Lysmont/ }).click();
+await page.getByRole('button', { name: /Le Chaudron Fêlé/ }).click();
+await page.getByRole('button', { name: /Le lit/ }).click();
+await page.getByRole('button', { name: '6 mois', exact: true }).click();
+const accepter = page.getByRole('button', { name: /^Accepter/ }).first();
+if (await accepter.isVisible()) await accepter.click();
+etape('repos à l\'auberge accepté par tous');
 
 await page.getByRole('heading', { name: /Temps libre/ }).waitFor();
 await capture('temps-libre');

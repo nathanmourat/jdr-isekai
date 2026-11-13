@@ -18,8 +18,9 @@
   const lit = positionsImage('decors/auberge-chambre')?.lit ?? { x: 900, y: 470 };
   let ouvert = $state(false);
   const pseudo = (j: string) => etat.joueurs[j]?.pseudo ?? '?';
-  /** Sur un même appareil, chaque joueur local doit donner son accord : on répond pour le joueur actif. */
-  const jaiAccepte = $derived(!!repos && repos.accords.includes(moi));
+  /** Sur un même appareil, chaque joueur local donne son accord : un bouton par joueur qui n'a pas encore répondu. */
+  const mesJoueursEnAttente = $derived(attente.filter((j) => jeu.joueursLocaux.includes(j)));
+  const jaiAccepte = $derived(!!repos && mesJoueursEnAttente.length === 0);
 </script>
 
 <div class="carte-ui auberge">
@@ -35,8 +36,10 @@
       {#if attente.length}<p>En attente de : <strong>{attente.map(pseudo).join(', ')}</strong></p>{/if}
       {#if !jaiAccepte}
         <div class="ligne">
-          <button class="principal" onclick={() => jeu.agir({ type: 'repondre_repos', accepte: true })}>Accepter ({pseudo(moi)})</button>
-          <button onclick={() => jeu.agir({ type: 'repondre_repos', accepte: false })}>Refuser et proposer autre chose</button>
+          {#each mesJoueursEnAttente as j (j)}
+            <button class="principal" onclick={() => jeu.agir({ type: 'repondre_repos', joueur: j, accepte: true })}>Accepter ({pseudo(j)})</button>
+          {/each}
+          <button onclick={() => jeu.agir({ type: 'repondre_repos', joueur: mesJoueursEnAttente[0] ?? moi, accepte: false })}>Refuser et proposer autre chose</button>
         </div>
       {:else}
         <p class="succes">Vous êtes d'accord. Le temps passera quand tout le monde aura accepté.</p>
