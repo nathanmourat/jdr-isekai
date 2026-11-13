@@ -6,7 +6,7 @@
  *  - bulles de phrases d'ambiance (content/monde/ambiance.yaml), selon l'avancée de la partie ;
  *  - marché sur la place (étals, marchands), poules, chats et chevaux.
  */
-import { Lighting, TweenService, Workspace } from "@rbxts/services";
+import { CollectionService, Lighting, TweenService, Workspace } from "@rbxts/services";
 import { piece, souder } from "shared/construction";
 import { CONTENU } from "shared/donnees";
 import { positionLieu } from "shared/geo";
@@ -31,15 +31,18 @@ const portes: { lieu: string; position: Vector3 }[] = [];
 
 function appliquerNuit(estNuit: boolean) {
 	nuit = estNuit;
-	const monde = Workspace.FindFirstChild("Velmaris");
-	if (monde) {
-		for (const e of monde.GetDescendants()) {
-			if (e.IsA("BasePart") && e.GetAttribute("Nuit") === true) {
-				e.Material = estNuit ? Enum.Material.Neon : Enum.Material.Glass;
-				for (const l of e.GetChildren()) if (l.IsA("PointLight")) l.Enabled = estNuit;
-			}
+	// pièces marquées « Nuit » (fenêtres, flammes) : liste tenue à jour par CollectionService, sans tout parcourir
+	for (const e of CollectionService.GetTagged("Nuit")) {
+		if (e.IsA("BasePart")) {
+			e.Material = estNuit ? Enum.Material.Neon : Enum.Material.Glass;
+			for (const l of e.GetChildren()) if (l.IsA("PointLight")) l.Enabled = estNuit;
 		}
 	}
+	// nuit : teinte bleutée, nuages gris ; jour : lumière chaude
+	const couleurs = Lighting.FindFirstChild("Couleurs") as ColorCorrectionEffect | undefined;
+	if (couleurs) TweenService.Create(couleurs, new TweenInfo(8), { TintColor: estNuit ? rgb(200, 210, 255) : rgb(255, 245, 230), Saturation: estNuit ? -0.05 : 0.15 }).Play();
+	const nuages = Workspace.Terrain.FindFirstChildOfClass("Clouds");
+	if (nuages) TweenService.Create(nuages, new TweenInfo(8), { Color: estNuit ? rgb(90, 95, 120) : rgb(255, 246, 236) }).Play();
 	const atmo = Lighting.FindFirstChildOfClass("Atmosphere");
 	if (atmo) {
 		TweenService.Create(atmo, new TweenInfo(8), {

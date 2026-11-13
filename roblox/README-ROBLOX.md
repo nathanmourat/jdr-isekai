@@ -205,6 +205,68 @@ Je n'ai mis aucun numéro moi-même : je ne peux pas vérifier qu'un son existe 
 - [ ] Guilde → tableau → accepter « Les loups… » → une balise dorée apparaît (Y aller) → Examiner → étape suivante… → retour à la Guilde pour la récompense.
 - [ ] Pupitre du grimoire : seules les fusions de ta classe sont proposées.
 
+## Équipement en 3D (mise à jour du 13/11)
+
+Les 364 objets du catalogue du groupe (`equipements/`) sont dans le jeu, sur le web et sur Roblox.
+
+### Ce que fait le code
+- **Chaque objet a un modèle 3D** construit par le code (`src/shared/equipement3d.ts`) :
+  - la forme dépend de la **catégorie** (épée, hache, masse, dague, arc, arbalète, bâton, sceptre, orbe, luth ou flûte, bouclier, anneau, amulette, talisman, carquois, sacoche, tenues lourde, intermédiaire et légère) ;
+  - le **métal** dépend du palier : fer, acier, argent, acier noir, or pâle, obsidienne, cristal ;
+  - la **rareté** ajoute un liseré lumineux (rare), une lueur (épique), des étincelles (légendaire et mythique) ;
+  - une **touche élémentaire** colore la lame (feu orange, glace bleue, foudre jaune…).
+- **Ton avatar porte ton équipement** dans le monde et en combat : arme en main (arc et luth à gauche), armure ajustée à ton corps (plastron, épaulières, robe et cape pour les tenues légères), bouclier au bras, anneau, amulette, carquois dans le dos, sacoche à la ceinture. Sans arme équipée, tu gardes l'arme de ta classe.
+- **Fiche du personnage → Sac** : chaque objet a un **aperçu 3D qui tourne**, son nom en couleur de rareté, le niveau et les classes requis (en rouge si tu ne peux pas), ses effets, son pouvoir unique, et la **comparaison** avec l'objet porté. Boutons Équiper, Retirer, Vendre.
+- **Boutiques** (Halvine, Guilde) : même présentation, objets triés (ce que tu peux porter d'abord). Une arme mythique déjà présente dans la partie ne peut pas être rachetée.
+- **Butin** : un nouvel équipement s'annonce en haut de l'écran avec son aperçu 3D.
+- Les ennemis humanoïdes (bandit, cultiste, squelette, Vorthak…) et Aveline portent aussi des objets du catalogue. C'est seulement de l'apparence : les règles de combat ne changent pas pour eux.
+
+### Remplacer un objet par un modèle du groupe
+Dans **ReplicatedStorage**, crée un dossier **`ObjetsDuGroupe`** et mets-y un Model nommé comme l'objet (ex. `velgraive`). Sa **PrimaryPart** doit s'appeler `Poignee` : c'est le point tenu en main, avec la lame vers l'avant (axe -Z). **Il ne doit contenir aucun script.**
+
+### Liste de contrôle
+- [ ] Halvine : les objets ont un aperçu 3D qui tourne ; les objets d'une autre classe sont en bas, avec « Pour : … » en rouge.
+- [ ] Acheter une arme → l'annonce « Nouvel objet ! » apparaît → Fiche → Sac → Équiper : l'arme apparaît dans la main de ton avatar (en ville) et en combat.
+- [ ] Équiper une tenue légère (robe) : robe et cape sur ton avatar ; une tenue lourde : épaulières, brassards, jambières.
+- [ ] Retirer l'arme : l'arme de ta classe revient.
+- [ ] Objet de niveau trop élevé : le bouton affiche « Niveau N requis » et reste grisé.
+- [ ] Le Vorthak, le cultiste et Aveline portent leurs armes et armures.
+
+## Graphismes et optimisation (mise à jour du 13/11, suite)
+
+### Ce qui a changé
+- **Lumière** : reflets du ciel sur le métal, le verre et l'eau, ombres plus douces, soleil et lune plus grands, étoiles, **nuages animés**, légère profondeur de champ au loin. La nuit, l'image devient bleutée et les nuages gris.
+- **Terrain** : couleurs plus chaudes (herbe, terre, pavés, sable), **brins d'herbe animés**, rivière plus claire avec des vagues, collines douces, chemins pavés au centre, rochers et roseaux au bord de l'eau.
+- **Végétation** : arbres avec racines, branches et feuillage en volume (terrain « herbe feuillue »), sapins à quatre étages, buissons, rochers, fleurs des champs.
+- **Bâtiments** :
+  - toits en tuiles d'argile avec faîtière ;
+  - colombages en croix, fenêtres à croisillons, volets et jardinières fleuries ;
+  - portes encadrées de pierre avec une marche ;
+  - château : fenêtres à meneaux et porche ; temple : chapiteaux dorés ; fontaine avec des jets d'eau ;
+  - tours à toit conique et fanion, lanternes vitrées.
+- **Monstres** :
+  - loups, sanglier et rat refaits : poitrail, cou, gueule et crocs, pattes articulées, queue courbée. Le sanglier a des soies et des défenses, le loup spectral une âme qui brille ;
+  - araignée aux pattes coudées, chauve-souris aux ailes en membrane, gelée brillante avec des bulles ;
+  - golems avec mousse, fissures et runes lumineuses, tourelle runique ;
+  - gobelins aux oreilles pointues, capes pour le cultiste, le Vorthak, le chef et Aveline.
+- **Optimisation** :
+  - les petites pièces ne projettent plus d'ombre et le décor ne déclenche plus de contacts ;
+  - les lumières de la ville n'ont plus d'ombres (les intérieurs les gardent) ;
+  - le feuillage est en terrain : beaucoup moins de pièces qu'avant ;
+  - les fenêtres et les flammes qui s'allument la nuit sont retrouvées par étiquette (CollectionService), sans parcourir tout le monde ;
+  - une seule boucle fait tourner tous les aperçus 3D ;
+  - l'équipement d'un avatar n'est reconstruit que s'il a changé.
+
+### Liste de contrôle
+- [ ] Au lancement : nuages qui bougent, herbe animée, reflets sur la fontaine et la rivière.
+- [ ] Les maisons ont des volets, des jardinières et des toits en tuiles ; le château a des fenêtres et un porche.
+- [ ] La nuit : fenêtres et lanternes allumées, ciel étoilé, image bleutée.
+- [ ] Combat contre les loups : nouveaux modèles (gueule, pattes, queue).
+- [ ] Sur téléphone (ou avec le réglage de qualité graphique bas) : le jeu reste fluide.
+
+### Si le jeu rame
+Dans **Studio → Workspace → StreamingEnabled**, le streaming peut alléger les téléphones. **Je ne l'ai pas activé** : les marqueurs et les intérieurs ont besoin que tous les bâtiments soient chargés chez chaque joueur. Si vous l'activez, testez bien l'entrée dans les bâtiments éloignés.
+
 ## Publier sur Roblox (quand tout marche)
 
 1. **Fichier → Publier sur Roblox**, si ce n'est pas déjà fait.
@@ -222,7 +284,7 @@ Une expérience qui n'a pas rempli le questionnaire n'est visible que par toi et
 | `npm run roblox:contenu` | Régénère `contenu.lua` après une modification de `content/` |
 | `npm run roblox:moteur` | Retraduit le moteur en Luau après une modification de `src/moteur/` (nécessite `npm install` à la racine et dans `roblox/`) |
 | `npm run roblox:verifier` | Vérifie que le moteur reste compatible Luau (aussi lancé par `npm test`) |
-| `LUNE=chemin/vers/lune npm run roblox:parite [graine]` | Test de parité web / Roblox avec [Lune](https://github.com/lune-org/lune) (graines : chapitre, alpha, bravo, desordre…) |
+| `LUNE=chemin/vers/lune npm run roblox:parite [graine]` | Test de parité web / Roblox avec [Lune](https://github.com/lune-org/lune) (graines : chapitre, alpha, bravo, desordre, contrats, equipement) |
 | `LUNE=… npx tsx scripts/roblox-parite-ia.ts` | Parité de l'IA maison (69 phrases + script) |
 | `POINTS=0,3,6,… LUNE=… npm run roblox:parite` puis `lune run parite/interface.luau` (dans roblox/) | Appelle sous Lune toutes les fonctions du moteur utilisées par l'interface, sur des états réels |
 
@@ -247,4 +309,5 @@ En Luau, `0` et `""` sont « vrais », l'ordre des clés d'une table n'est pas g
 ## Où en est le portage
 
 - **R0 à R5 écrits** (13/11) : tout le chapitre 1 est jouable sur Roblox, à vérifier dans Studio avec les listes ci-dessus.
-- Plus tard : vrais modèles 3D et animations (le groupe peut remplacer les blocs), images des portraits dans les dialogues, sons, chapitres 2 à 6 (ils arriveront en même temps sur le web et sur Roblox, grâce au moteur commun).
+- **Équipement en 3D** et **grande passe graphique** (13/11) : listes de contrôle ci-dessus.
+- Plus tard : vrais modèles 3D et animations (le groupe peut remplacer les blocs et les objets), images des portraits dans les dialogues, sons, chapitres 2 à 6 (ils arriveront en même temps sur le web et sur Roblox, grâce au moteur commun).

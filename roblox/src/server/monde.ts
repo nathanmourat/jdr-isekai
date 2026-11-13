@@ -7,7 +7,7 @@ import { Lighting, Players, Workspace } from "@rbxts/services";
 import { CONTENU } from "shared/donnees";
 import type { LieuDef } from "shared/moteur";
 import { positionLieu } from "shared/geo";
-import { arbre, banniere, bloc, C, dossierParDefaut, lanterne, lumiere, maison, sapin, toit, tonneau, tour, VERTICAL } from "./decor";
+import { arbre, banniere, bloc, buisson, C, dossierParDefaut, fleurs, lanterne, lumiere, maison, nuit, rocher, sapin, toit, tonneau, tour, VERTICAL } from "./decor";
 
 let dossier: Folder;
 const terrain = Workspace.Terrain;
@@ -24,7 +24,20 @@ function construire(l: LieuDef, centre: Vector3, parent: Model): Vector3 {
 			bloc(new Vector3(2, 12, 12), centre.add(new Vector3(0, 1, 0)), C.pierreClaire, { forme: "cylindre", rotation: VERTICAL, matiere: Enum.Material.Marble, parent });
 			bloc(new Vector3(0.6, 10.5, 10.5), centre.add(new Vector3(0, 1.9, 0)), C.eau, { forme: "cylindre", rotation: VERTICAL, matiere: Enum.Material.Glass, parent });
 			bloc(new Vector3(1.8, 6, 1.8), centre.add(new Vector3(0, 5, 0)), C.pierreClaire, { matiere: Enum.Material.Marble, parent });
-			bloc(new Vector3(3, 3, 3), centre.add(new Vector3(0, 8.5, 0)), C.or, { forme: "boule", matiere: Enum.Material.Metal, parent });
+			const sommet = bloc(new Vector3(3, 3, 3), centre.add(new Vector3(0, 8.5, 0)), C.or, { forme: "boule", matiere: Enum.Material.Metal, parent });
+			// margelle et jets d'eau (particules : texture par défaut de Roblox)
+			bloc(new Vector3(0.6, 4.5, 4.5), centre.add(new Vector3(0, 5.6, 0)), C.pierreClaire, { forme: "cylindre", rotation: VERTICAL, matiere: Enum.Material.Marble, parent });
+			const jet = new Instance("ParticleEmitter");
+			jet.Color = new ColorSequence(Color3.fromRGB(210, 235, 255));
+			jet.Transparency = new NumberSequence(0.35, 1);
+			jet.Size = new NumberSequence([new NumberSequenceKeypoint(0, 0.35), new NumberSequenceKeypoint(1, 0.6)]);
+			jet.Lifetime = new NumberRange(1, 1.4);
+			jet.Rate = 40;
+			jet.Speed = new NumberRange(7, 9);
+			jet.SpreadAngle = new Vector2(14, 14);
+			jet.Acceleration = new Vector3(0, -14, 0);
+			jet.EmissionDirection = Enum.NormalId.Top;
+			jet.Parent = sommet;
 			for (let i = 0; i < 6; i++) {
 				const a = (i / 6) * 2 * math.pi + 0.3;
 				lanterne(centre.add(new Vector3(math.cos(a) * 20, 0, math.sin(a) * 20)), parent);
@@ -35,7 +48,11 @@ function construire(l: LieuDef, centre: Vector3, parent: Model): Vector3 {
 		case "temple-du-seuil": {
 			for (let i = 0; i < 3; i++) bloc(new Vector3(34 - i * 2, 1, 26 - i * 2), centre.add(new Vector3(0, 0.5 + i, 2 - i)), C.blanc, { matiere: Enum.Material.Marble, parent });
 			bloc(new Vector3(24, 16, 16), centre.add(new Vector3(0, 11, -2)), C.blanc, { matiere: Enum.Material.Marble, parent });
-			for (const x of [-10, -5, 0, 5, 10]) bloc(new Vector3(16, 1.8, 1.8), centre.add(new Vector3(x, 11, 8.5)), C.blanc, { forme: "cylindre", rotation: VERTICAL, matiere: Enum.Material.Marble, parent });
+			for (const x of [-10, -5, 0, 5, 10]) {
+				bloc(new Vector3(16, 1.8, 1.8), centre.add(new Vector3(x, 11, 8.5)), C.blanc, { forme: "cylindre", rotation: VERTICAL, matiere: Enum.Material.Marble, parent });
+				bloc(new Vector3(2.6, 0.8, 2.6), centre.add(new Vector3(x, 3.4, 8.5)), C.pierreClaire, { matiere: Enum.Material.Marble, parent });
+				bloc(new Vector3(2.6, 0.9, 2.6), centre.add(new Vector3(x, 18.6, 8.5)), C.or, { matiere: Enum.Material.Metal, parent });
+			}
 			bloc(new Vector3(26, 1.2, 20), centre.add(new Vector3(0, 19.4, 0)), C.blanc, { matiere: Enum.Material.Marble, parent });
 			toit(centre.add(new Vector3(0, 20, 0)), 28, 22, 7, C.or, parent);
 			bloc(new Vector3(1.4, 12, 1.4), centre.add(new Vector3(0, 32, -2)), C.or, { matiere: Enum.Material.Metal, parent });
@@ -46,6 +63,22 @@ function construire(l: LieuDef, centre: Vector3, parent: Model): Vector3 {
 		}
 		case "chateau": {
 			bloc(new Vector3(44, 24, 30), centre.add(new Vector3(0, 12, -6)), C.pierreClaire, { matiere: Enum.Material.Cobblestone, parent });
+			// soubassement, cordon de pierre, fenêtres à meneaux sur deux étages, porche voûté
+			bloc(new Vector3(45, 3, 31), centre.add(new Vector3(0, 1.5, -6)), C.pierre, { matiere: Enum.Material.Granite, parent });
+			bloc(new Vector3(45, 0.8, 31), centre.add(new Vector3(0, 13, -6)), C.pierre, { matiere: Enum.Material.Limestone, parent });
+			for (const y of [8, 18]) {
+				for (const x of [-16, -9, 9, 16]) {
+					const f = bloc(new Vector3(2.6, 4.4, 0.3), centre.add(new Vector3(x, y, 9.1)), C.vitre, { neon: true, parent });
+					nuit(f);
+					bloc(new Vector3(3.4, 0.5, 0.8), centre.add(new Vector3(x, y - 2.4, 9.2)), C.pierre, { matiere: Enum.Material.Limestone, parent });
+					bloc(new Vector3(3.4, 0.7, 0.6), centre.add(new Vector3(x, y + 2.5, 9.2)), C.pierre, { matiere: Enum.Material.Limestone, parent });
+					bloc(new Vector3(0.3, 4.4, 0.5), centre.add(new Vector3(x, y, 9.25)), C.pierreSombre, { matiere: Enum.Material.Metal, parent });
+				}
+			}
+			// porche : deux piliers et un linteau autour de la porte
+			for (const x of [-6.2, 6.2]) bloc(new Vector3(2.4, 16, 3), centre.add(new Vector3(x, 8, 10)), C.pierre, { matiere: Enum.Material.Granite, parent });
+			bloc(new Vector3(14.8, 3, 3), centre.add(new Vector3(0, 14.5, 10)), C.pierre, { matiere: Enum.Material.Granite, parent });
+			bloc(new Vector3(12, 1, 6), centre.add(new Vector3(0, 0.5, 13)), C.pierre, { matiere: Enum.Material.Cobblestone, parent });
 			for (let x = -20; x <= 20; x += 4) bloc(new Vector3(2, 2.4, 2), centre.add(new Vector3(x, 25.2, 9)), C.pierreClaire, { matiere: Enum.Material.Cobblestone, parent });
 			for (const [x, z] of [[-22, -20], [22, -20], [-22, 9], [22, 9]] as const) tour(centre.add(new Vector3(x, 0, z)), 4.5, 32, parent);
 			bloc(new Vector3(10, 13, 2), centre.add(new Vector3(0, 6.5, 9.4)), C.bois, { matiere: Enum.Material.WoodPlanks, parent });
@@ -150,12 +183,48 @@ function chemin(de: Vector3, a: Vector3) {
 	const longueur = d.Magnitude;
 	if (longueur < 1) return;
 	const milieu = de.add(a).div(2);
-	terrain.FillBlock(CFrame.lookAt(milieu, a).add(new Vector3(0, -0.4, 0)), new Vector3(7, 1.2, longueur), Enum.Material.Ground);
+	terrain.FillBlock(CFrame.lookAt(milieu, a).add(new Vector3(0, -0.4, 0)), new Vector3(9, 1.2, longueur), Enum.Material.Ground);
+	// pavés au milieu du chemin (en ville)
+	terrain.FillBlock(CFrame.lookAt(milieu, a).add(new Vector3(0, -0.35, 0)), new Vector3(4.5, 1.2, longueur), Enum.Material.Pavement);
 	for (let t = 0; t <= longueur; t += 10) zonesLibres.push({ centre: de.add(d.Unit.mul(t)), rayon: 8 });
+}
+
+/** Couleurs des matériaux du terrain : une palette chaude et peinte, plus douce que celle par défaut. */
+function couleursTerrain() {
+	const couleurs: [Enum.Material, Color3][] = [
+		[Enum.Material.Grass, Color3.fromRGB(96, 142, 64)],
+		[Enum.Material.LeafyGrass, Color3.fromRGB(70, 120, 58)],
+		[Enum.Material.Ground, Color3.fromRGB(122, 98, 72)],
+		[Enum.Material.Mud, Color3.fromRGB(88, 72, 58)],
+		[Enum.Material.Sand, Color3.fromRGB(214, 194, 150)],
+		[Enum.Material.Cobblestone, Color3.fromRGB(150, 144, 134)],
+		[Enum.Material.Rock, Color3.fromRGB(122, 116, 110)],
+		[Enum.Material.Slate, Color3.fromRGB(96, 94, 100)],
+		[Enum.Material.Pavement, Color3.fromRGB(160, 150, 136)],
+	];
+	for (const [m, c] of couleurs) pcall(() => terrain.SetMaterialColor(m, c));
+	// eau de rivière, claire et un peu agitée
+	terrain.WaterColor = Color3.fromRGB(46, 104, 120);
+	terrain.WaterTransparency = 0.65;
+	terrain.WaterReflectance = 0.55;
+	terrain.WaterWaveSize = 0.12;
+	terrain.WaterWaveSpeed = 9;
+	// brins d'herbe animés sur l'herbe (rendu par Roblox, désactivé automatiquement sur les petits appareils)
+	pcall(() => {
+		terrain.Decoration = true;
+	});
+	// nuages animés
+	terrain.FindFirstChildOfClass("Clouds")?.Destroy();
+	const nuages = new Instance("Clouds");
+	nuages.Cover = 0.55;
+	nuages.Density = 0.55;
+	nuages.Color = Color3.fromRGB(255, 246, 236);
+	nuages.Parent = terrain;
 }
 
 function preparerTerrain() {
 	terrain.Clear();
+	couleursTerrain();
 	terrain.FillBlock(new CFrame(0, -6, 0), new Vector3(1400, 12, 1200), Enum.Material.Grass);
 	// collines au loin
 	const graine = new Random(1012);
@@ -163,6 +232,12 @@ function preparerTerrain() {
 		const a = graine.NextNumber(0, 2 * math.pi);
 		const r = graine.NextNumber(420, 560);
 		terrain.FillBall(new Vector3(math.cos(a) * r, -10, math.sin(a) * r * 0.85), graine.NextNumber(40, 80), i % 4 === 0 ? Enum.Material.Rock : Enum.Material.Grass);
+	}
+	// douces ondulations dans la campagne (loin de la ville)
+	for (let i = 0; i < 40; i++) {
+		const p = new Vector3(graine.NextNumber(-600, 600), -14, graine.NextNumber(-180, 520));
+		if (p.Magnitude < 220) continue;
+		terrain.FillBall(p, graine.NextNumber(16, 26), Enum.Material.Grass);
 	}
 	// rivière au nord
 	terrain.FillBlock(new CFrame(0, -2.5, -230), new Vector3(1400, 6, 26), Enum.Material.Air);
@@ -186,15 +261,41 @@ function vegetation() {
 		else arbre(p, foret, graine.NextNumber(0.8, 1.4), graine.NextNumber() < 0.5 ? C.feuillage : C.feuillage2);
 		plantes++;
 	}
+	// sous-bois et campagne : buissons, rochers, fleurs des champs, taches de terre et d'herbe feuillue
+	const libre = (p: Vector3, marge: number) => !zonesLibres.some((z) => z.centre.sub(p).Magnitude < z.rayon + marge);
+	let n = 0;
+	for (let essai = 0; essai < 1200 && n < 260; essai++) {
+		const p = new Vector3(graine.NextNumber(-430, 430), 0, graine.NextNumber(-205, 380));
+		if (!libre(p, 2)) continue;
+		const r = graine.NextNumber();
+		if (r < 0.45) buisson(p, graine.NextNumber(1.4, 2.8));
+		else if (r < 0.6) rocher(p, graine.NextNumber(1.2, 3.2));
+		else if (r < 0.85) fleurs(p, foret);
+		else terrain.FillCylinder(new CFrame(p.add(new Vector3(0, -0.45, 0))), 1, graine.NextNumber(4, 9), graine.NextNumber() < 0.5 ? Enum.Material.LeafyGrass : Enum.Material.Ground);
+		n++;
+	}
+	// roseaux et pierres le long de la rivière
+	for (let x = -420; x <= 420; x += graine.NextNumber(14, 30)) {
+		const z = graine.NextNumber() < 0.5 ? -216.5 : -243.5;
+		rocher(new Vector3(x, -1.4, z), graine.NextNumber(0.8, 1.6));
+		for (let k = 0; k < 3; k++) {
+			bloc(new Vector3(0.2, graine.NextNumber(2.5, 4), 0.2), new Vector3(x + k * 0.6 + 2, -0.2, z + (z > -230 ? -1.2 : 1.2)), Color3.fromRGB(110, 130, 70), { matiere: Enum.Material.Grass, parent: foret, collision: false });
+		}
+	}
 }
 
 function eclairage() {
 	Lighting.ClockTime = 16.8;
-	Lighting.Brightness = 2.2;
+	Lighting.Brightness = 2.6;
+	Lighting.ExposureCompensation = 0.1;
 	Lighting.OutdoorAmbient = Color3.fromRGB(120, 110, 100);
-	Lighting.EnvironmentDiffuseScale = 0.6;
-	Lighting.EnvironmentSpecularScale = 0.6;
+	Lighting.Ambient = Color3.fromRGB(40, 36, 44);
+	// reflets du ciel sur le métal, le verre et l'eau (rendu physique des matériaux)
+	Lighting.EnvironmentDiffuseScale = 1;
+	Lighting.EnvironmentSpecularScale = 1;
 	Lighting.GlobalShadows = true;
+	Lighting.ShadowSoftness = 0.3;
+	Lighting.GeographicLatitude = 41;
 	// La technologie d'éclairage « Future » (plus belles lumières) ne se règle pas par script :
 	// dans Studio, Explorer → Lighting → propriété Technology → Future (voir README-ROBLOX.md).
 	for (const e of Lighting.GetChildren()) e.Destroy();
@@ -205,20 +306,33 @@ function eclairage() {
 	atmosphere.Decay = Color3.fromRGB(110, 90, 120);
 	atmosphere.Glare = 0.3;
 	atmosphere.Parent = Lighting;
-	new Instance("Sky").Parent = Lighting;
+	const ciel = new Instance("Sky");
+	ciel.SunAngularSize = 14;
+	ciel.MoonAngularSize = 9;
+	ciel.StarCount = 4000;
+	ciel.Parent = Lighting;
 	const flou = new Instance("BloomEffect");
-	flou.Intensity = 0.6;
-	flou.Size = 30;
-	flou.Threshold = 1.4;
+	flou.Intensity = 0.5;
+	flou.Size = 26;
+	flou.Threshold = 1.6;
 	flou.Parent = Lighting;
 	const rayons = new Instance("SunRaysEffect");
-	rayons.Intensity = 0.06;
+	rayons.Intensity = 0.08;
+	rayons.Spread = 0.6;
 	rayons.Parent = Lighting;
 	const couleurs = new Instance("ColorCorrectionEffect");
-	couleurs.Saturation = 0.12;
-	couleurs.Contrast = 0.06;
+	couleurs.Name = "Couleurs";
+	couleurs.Saturation = 0.15;
+	couleurs.Contrast = 0.08;
 	couleurs.TintColor = Color3.fromRGB(255, 245, 230);
 	couleurs.Parent = Lighting;
+	// profondeur de champ légère : le lointain se fond doucement (style peint)
+	const profondeur = new Instance("DepthOfFieldEffect");
+	profondeur.FarIntensity = 0.22;
+	profondeur.FocusDistance = 70;
+	profondeur.InFocusRadius = 90;
+	profondeur.NearIntensity = 0;
+	profondeur.Parent = Lighting;
 }
 
 /** Villageois immobiles sur la place (personnages Roblox costumés). */
