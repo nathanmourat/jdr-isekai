@@ -23,7 +23,7 @@ lame-runique:
   - { palier: V, rarete: epique, type: epee, nom: "Sceau-lame des Sentinelles", description: "Chaque rune gravée sur cette lame scelle un démon tombé sur le Mur.", effets: [critique, touche:sacre] }
   - { palier: VI, rarete: rare, type: lourde, nom: "Armure de cendre trempée", description: "Une armure récupérée dans les forteresses noires et purifiée par les runes.", effets: [resistance:ombre] }
   - { palier: VI, rarete: epique, type: anneau, nom: "Anneau du Premier Sceau", description: "On dit qu'il a fermé la première brèche du Voile.", effets: [critique, mana] }
-  - { palier: V, rarete: legendaire, type: epee, nom: "Velgraive, la Lame-Grimoire", description: "Une épée dont la lame est un livre de runes ; elle se réécrit à chaque combat.", effets: [critique, touche:arcane], pouvoir: "Commence chaque combat avec 1 charge de rune." }
+  - { palier: V, rarete: legendaire, type: epee, nom: "Velgraive, la Lame-Grimoire", description: "Une épée dont la lame est un livre de runes ; elle se réécrit à chaque combat.", effets: [critique, touche:arcane], pouvoir: "Commence chaque combat avec 1 charge de rune.", pouvoir_id: rune-initiale }
 
 arcaniste:
   - { palier: I, rarete: peu-commun, type: baton, nom: "Bâton de l'apprenti prodige", description: "Le bâton d'un élève du Temple qui a fait exploser trois salles d'étude.", effets: [] }
@@ -38,7 +38,7 @@ arcaniste:
   - { palier: V, rarete: epique, type: baton, nom: "Bâton des trois tempêtes", description: "Feu, glace et foudre tournent autour de sa pointe sans jamais se mélanger.", effets: [critique, touche:glace] }
   - { palier: VI, rarete: rare, type: legere, nom: "Robe tissée de cendre", description: "Une robe que les flammes des Terres Cendrées n'arrivent pas à consumer.", effets: [resistance:feu] }
   - { palier: VI, rarete: epique, type: amulette, nom: "Cœur d'éther pur", description: "Un cristal d'éther intact, rare depuis que la Concorde les exploite.", effets: [mana, critique] }
-  - { palier: V, rarete: legendaire, type: baton, nom: "Ysgarde, Bâton des Quatre Vents", description: "Un bâton qui a appartenu à la fondatrice de l'école élémentaire du Temple.", effets: [critique, mana], pouvoir: "Les sorts de zone coûtent 15 % de mana en moins." }
+  - { palier: V, rarete: legendaire, type: baton, nom: "Ysgarde, Bâton des Quatre Vents", description: "Un bâton qui a appartenu à la fondatrice de l'école élémentaire du Temple.", effets: [critique, mana], pouvoir: "Les sorts de zone coûtent 15 % de mana en moins.", pouvoir_id: zone-economique }
 
 invocateur:
   - { palier: I, rarete: peu-commun, type: orbe, nom: "Orbe du familier timide", description: "Une petite sphère où vit un esprit qui sort seulement quand on a peur.", effets: [] }
@@ -53,7 +53,7 @@ invocateur:
   - { palier: V, rarete: epique, type: orbe, nom: "Orbe du Pacte brisé", description: "Une sphère fêlée qui contient un esprit libéré d'un pacte démoniaque.", effets: [mana, touche:arcane] }
   - { palier: VI, rarete: rare, type: legere, nom: "Robe du Lien éternel", description: "Les cercles brodés de cette robe ne s'éteignent jamais.", effets: [vigueur] }
   - { palier: VI, rarete: epique, type: amulette, nom: "Sceau des mille esprits", description: "Un sceau de pierre où chaque invocateur du Temple a laissé une trace.", effets: [mana, precision] }
-  - { palier: V, rarete: legendaire, type: orbe, nom: "Nyxaliel, l'Orbe-Portail", description: "Une sphère qui ouvre une porte vers un monde d'esprits encore inconnu.", effets: [mana, vigueur], pouvoir: "Les invocations commencent le combat avec 20 % de PV en plus." }
+  - { palier: V, rarete: legendaire, type: orbe, nom: "Nyxaliel, l'Orbe-Portail", description: "Une sphère qui ouvre une porte vers un monde d'esprits encore inconnu.", effets: [mana, vigueur], pouvoir: "Les créatures invoquées ont 20 % de PV en plus.", pouvoir_id: invocations-robustes }
 
 ombre:
   - { palier: I, rarete: peu-commun, type: dague, nom: "Surin des ruelles", description: "Une lame fine retrouvée dans une ruelle de Lysmont, sans propriétaire connu.", effets: [] }
@@ -68,7 +68,7 @@ ombre:
   - { palier: V, rarete: epique, type: dague, nom: "Lame-sans-reflet", description: "Une dague noire qui n'apparaît pas dans les miroirs.", effets: [critique, touche:ombre] }
   - { palier: VI, rarete: rare, type: intermediaire, nom: "Tenue de l'infiltré cendré", description: "Un cuir teint à la cendre pour se fondre dans les plaines du nord.", effets: [precision] }
   - { palier: VI, rarete: epique, type: anneau, nom: "Anneau du Prince disparu", description: "Une chevalière aux armes d'Aubeclaire, trouvée là où personne ne l'attendait.", effets: [critique, vigueur] }
-  - { palier: V, rarete: legendaire, type: dague, nom: "Murmure, la Dague du Silence", description: "Personne n'a jamais entendu le bruit qu'elle fait en frappant.", effets: [critique, precision], pouvoir: "La première attaque du combat est toujours un coup critique." }
+  - { palier: V, rarete: legendaire, type: dague, nom: "Murmure, la Dague du Silence", description: "Personne n'a jamais entendu le bruit qu'elle fait en frappant.", effets: [critique, precision], pouvoir: "La première attaque du combat est toujours un coup critique.", pouvoir_id: premier-critique }
 
 gardien:
   - { palier: I, rarete: peu-commun, type: masse, nom: "Masse du sacristain", description: "La masse d'un sacristain du Temple, bénite plus souvent que nécessaire.", effets: [] }
@@ -83,7 +83,7 @@ gardien:
   - { palier: V, rarete: epique, type: sceptre, nom: "Sceptre de la sainte garde", description: "Le sceptre des capitaines de l'Ordre sur le Mur d'Aube.", effets: [vigueur, touche:sacre] }
   - { palier: VI, rarete: rare, type: lourde, nom: "Armure du dernier rempart", description: "Portée par celui qui reste debout quand tous les autres ont reculé.", effets: [vigueur] }
   - { palier: VI, rarete: epique, type: bouclier, nom: "Égide d'Obsidienne", description: "Un bouclier taillé dans un éclat de la Citadelle d'Obsidienne, purifié.", effets: [vigueur, resistance:ombre] }
-  - { palier: V, rarete: legendaire, type: masse, nom: "Solenne, le Marteau de l'Aube", description: "Le marteau du premier gardien du Mur, qui a tenu seul une nuit entière.", effets: [vigueur, touche:sacre], pouvoir: "Rempart protège aussi le héros : il subit 10 % de dégâts en moins." }
+  - { palier: V, rarete: legendaire, type: masse, nom: "Solenne, le Marteau de l'Aube", description: "Le marteau du premier gardien du Mur, qui a tenu seul une nuit entière.", effets: [vigueur, touche:sacre], pouvoir: "Rempart protège aussi le porteur : il subit 10 % de dégâts en moins.", pouvoir_id: rempart-personnel }
 
 alchimiste:
   - { palier: I, rarete: peu-commun, type: arbalete, nom: "Lance-fioles bricolé", description: "Un mécanisme de récupération qui projette les fioles plus loin qu'un bras.", effets: [] }
@@ -98,7 +98,7 @@ alchimiste:
   - { palier: V, rarete: epique, type: arbalete, nom: "Canon de poing à cristal", description: "Plus une arbalète, plus tout à fait un canon : une invention interdite à Lysmont.", effets: [critique, touche:feu] }
   - { palier: VI, rarete: rare, type: intermediaire, nom: "Tenue anti-cendre", description: "Masque à filtre et cuir doublé, pour respirer dans les Terres Cendrées.", effets: [resistance:poison] }
   - { palier: VI, rarete: epique, type: sacoche, nom: "Laboratoire portatif", description: "Une sacoche qui se déplie en petit atelier complet.", effets: [mana, critique] }
-  - { palier: V, rarete: legendaire, type: arbalete, nom: "Prisme, l'Arbalète-Alambic", description: "Elle distille ses propres fioles pendant qu'on la recharge.", effets: [precision, touche:poison], pouvoir: "Les objets de soin et les bombes utilisés par le héros sont 25 % plus efficaces." }
+  - { palier: V, rarete: legendaire, type: arbalete, nom: "Prisme, l'Arbalète-Alambic", description: "Elle distille ses propres fioles pendant qu'on la recharge.", effets: [precision, touche:poison], pouvoir: "Les potions et les bombes utilisées par le porteur sont 25 % plus efficaces.", pouvoir_id: objets-renforces }
 
 archer:
   - { palier: I, rarete: peu-commun, type: arc, nom: "Arc du chasseur de la plaine", description: "Un arc de frêne tendu par un chasseur des plaines d'Aubeclaire.", effets: [] }
@@ -113,7 +113,7 @@ archer:
   - { palier: V, rarete: epique, type: arc, nom: "Arc de l'Étoile du Mur", description: "On dit qu'une de ses flèches a touché un démon à une lieue de distance.", effets: [critique, touche:sacre] }
   - { palier: VI, rarete: rare, type: intermediaire, nom: "Cuirasse de cuir cendré", description: "Un cuir noir, durci au feu des plaines du nord.", effets: [resistance:feu] }
   - { palier: VI, rarete: epique, type: carquois, nom: "Carquois sans fond", description: "Personne n'a jamais vu le fond de ce carquois.", effets: [critique, precision] }
-  - { palier: V, rarete: legendaire, type: arc, nom: "Kestrévane, l'Arc du Faucon d'Âme", description: "L'arc d'un esprit faucon, qui guide la flèche jusqu'au cœur de la cible.", effets: [critique, precision], pouvoir: "Œil du faucon touche toujours, même un ennemi caché." }
+  - { palier: V, rarete: legendaire, type: arc, nom: "Kestrévane, l'Arc du Faucon d'Âme", description: "L'arc d'un esprit faucon, qui guide la flèche jusqu'au cœur de la cible.", effets: [critique, precision], pouvoir: "Œil du faucon marque la cible à chaque attaque réussie (au lieu d'une fois sur trois).", pouvoir_id: marque-certaine }
 
 guerisseur:
   - { palier: I, rarete: peu-commun, type: baton, nom: "Bâton du dispensaire", description: "Le bâton de marche des soigneurs du dispensaire de Lysmont.", effets: [] }
@@ -128,7 +128,7 @@ guerisseur:
   - { palier: V, rarete: epique, type: sceptre, nom: "Sceptre de la lumière première", description: "Une relique de l'Ordre, d'avant que l'Ordre ait des secrets.", effets: [vigueur, touche:sacre] }
   - { palier: VI, rarete: rare, type: legere, nom: "Robe de l'espérance", description: "Une robe simple, que les flammes et la cendre ne salissent jamais.", effets: [resistance:ombre] }
   - { palier: VI, rarete: epique, type: talisman, nom: "Cœur de l'Aube", description: "Un talisman qui bat doucement, comme un cœur, quand un allié est en danger.", effets: [vigueur, mana] }
-  - { palier: V, rarete: legendaire, type: sceptre, nom: "Lumenaë, le Sceptre de Miséricorde", description: "Le sceptre d'une sainte oubliée, qui soignait amis et ennemis.", effets: [mana, vigueur], pouvoir: "Les soins du héros rendent 15 % de PV en plus." }
+  - { palier: V, rarete: legendaire, type: sceptre, nom: "Lumenaë, le Sceptre de Miséricorde", description: "Le sceptre d'une sainte oubliée, qui soignait amis et ennemis.", effets: [mana, vigueur], pouvoir: "Les soins du porteur rendent 15 % de PV en plus.", pouvoir_id: soins-renforces }
 
 berserker:
   - { palier: I, rarete: peu-commun, type: deux-mains, nom: "Hache du bûcheron colérique", description: "Une hache de bûcheron si lourde que son propriétaire l'a lâchée de rage.", effets: [] }
@@ -143,7 +143,7 @@ berserker:
   - { palier: V, rarete: epique, type: deux-mains, nom: "Fléau des Cendres", description: "Une grande hache forgée pour fendre les démons les plus massifs.", effets: [critique, touche:sacre] }
   - { palier: VI, rarete: rare, type: lourde, nom: "Armure de l'enragé", description: "Elle a été réparée tant de fois qu'il ne reste presque rien de l'originale.", effets: [vigueur] }
   - { palier: VI, rarete: epique, type: anneau, nom: "Anneau du feu intérieur", description: "Un anneau d'écaille qui brûle quand le porteur est blessé.", effets: [critique, vigueur] }
-  - { palier: V, rarete: legendaire, type: deux-mains, nom: "Drakhaar, la Hache des Dragons-Rois", description: "La hache d'un ancien pacte entre les dragons-rois et les hommes.", effets: [critique, touche:feu], pouvoir: "Sang de dragon se déclenche dès 50 % de PV au lieu du seuil habituel." }
+  - { palier: V, rarete: legendaire, type: deux-mains, nom: "Drakhaar, la Hache des Dragons-Rois", description: "La hache d'un ancien pacte entre les dragons-rois et les hommes.", effets: [critique, touche:feu], pouvoir: "Sang de dragon monte jusqu'à +60 % de dégâts au lieu de +40 %.", pouvoir_id: sang-ardent }
 
 barde:
   - { palier: I, rarete: peu-commun, type: instrument, nom: "Luth du Chaudron Fêlé", description: "Le luth que Bram garde derrière son comptoir, pour les soirs de fête.", effets: [] }
@@ -158,14 +158,14 @@ barde:
   - { palier: V, rarete: epique, type: instrument, nom: "Harpe de l'Aube", description: "Ses cordes en fil d'or donnent du courage à tout un bataillon.", effets: [mana, touche:sacre] }
   - { palier: VI, rarete: rare, type: intermediaire, nom: "Manteau du dernier refrain", description: "Le manteau d'un barde qui a chanté jusqu'aux portes de la Citadelle.", effets: [vigueur] }
   - { palier: VI, rarete: epique, type: anneau, nom: "Anneau des voix perdues", description: "Il garde les voix des héros tombés, qui chantent encore pour les vivants.", effets: [mana, critique] }
-  - { palier: V, rarete: legendaire, type: instrument, nom: "Mélisande, le Luth des Âges", description: "Un luth qui joue les chansons de toutes les époques, même celles à venir.", effets: [mana, critique], pouvoir: "Refrain dure 1 tour de plus." }
+  - { palier: V, rarete: legendaire, type: instrument, nom: "Mélisande, le Luth des Âges", description: "Un luth qui joue les chansons de toutes les époques, même celles à venir.", effets: [mana, critique], pouvoir: "Les chants de groupe (Refrain) sont 25 % plus puissants.", pouvoir_id: refrain-puissant }
 
 # ── Palier X : les 6 armes mythiques, « Reliques du Voile » ──
 # Forgées avant le Voile et cachées par l'Ordre. Fin de saison (niveau 40), un seul exemplaire par partie.
 mythiques:
-  - { palier: X, rarete: mythique, type: epee, nom: "Aube-Première, l'Épée du Premier Serment", description: "La lame sur laquelle fut prêté le premier serment de protéger le monde, bien avant le Voile.", effets: [critique, touche:sacre, vigueur], pouvoir: "Une fois par combat, quand un allié tombe K.O., le porteur le relève avec 30 % de ses PV." }
-  - { palier: X, rarete: mythique, type: deux-mains, nom: "Brise-Monde, la Hache du Premier Pacte", description: "Forgée dans le souffle du premier dragon-roi, pour sceller l'alliance entre les dragons et les hommes.", effets: [critique, vigueur, touche:feu], pouvoir: "Chaque ennemi vaincu par le porteur lui rend 10 % de ses PV max." }
-  - { palier: X, rarete: mythique, type: dague, nom: "Nuit-Première, le Croc d'avant le Voile", description: "Une lame taillée dans la première ombre du monde, quand la nuit n'avait pas encore de nom.", effets: [critique, precision, touche:ombre], pouvoir: "Les coups critiques du porteur infligent × 2 au lieu de × 1,5." }
-  - { palier: X, rarete: mythique, type: arc, nom: "Lointain, l'Arc de l'Horizon Perdu", description: "Un arc dont les flèches atteignaient, dit-on, des terres que le Voile a effacées des cartes.", effets: [critique, precision, touche:foudre], pouvoir: "Chaque attaque a 25 % de chances de tirer une seconde flèche sur un autre ennemi." }
-  - { palier: X, rarete: mythique, type: arbalete, nom: "Œil-du-Voile, l'Arbalète des Étoiles fixes", description: "Un mécanisme d'avant le Voile, que personne n'a jamais su démonter ni reproduire.", effets: [precision, mana, touche:glace], pouvoir: "Les tirs du porteur ignorent 30 % de la défense et des résistances de la cible." }
-  - { palier: X, rarete: mythique, type: baton, nom: "Ylvarae, le Bâton des Premières Racines", description: "Une branche de l'arbre-monde dont toutes les forêts descendent, Sylvenoire comprise.", effets: [mana, vigueur, touche:arcane], pouvoir: "Les compétences du porteur coûtent 20 % de mana en moins." }
+  - { palier: X, rarete: mythique, type: epee, nom: "Aube-Première, l'Épée du Premier Serment", description: "La lame sur laquelle fut prêté le premier serment de protéger le monde, bien avant le Voile.", effets: [critique, touche:sacre, vigueur], pouvoir: "Une fois par combat, quand un allié tombe K.O., le porteur le relève avec 30 % de ses PV.", pouvoir_id: premier-serment }
+  - { palier: X, rarete: mythique, type: deux-mains, nom: "Brise-Monde, la Hache du Premier Pacte", description: "Forgée dans le souffle du premier dragon-roi, pour sceller l'alliance entre les dragons et les hommes.", effets: [critique, vigueur, touche:feu], pouvoir: "Chaque ennemi vaincu par le porteur lui rend 10 % de ses PV max.", pouvoir_id: premier-pacte }
+  - { palier: X, rarete: mythique, type: dague, nom: "Nuit-Première, le Croc d'avant le Voile", description: "Une lame taillée dans la première ombre du monde, quand la nuit n'avait pas encore de nom.", effets: [critique, precision, touche:ombre], pouvoir: "Les coups critiques du porteur infligent × 2 au lieu de × 1,5.", pouvoir_id: critique-double }
+  - { palier: X, rarete: mythique, type: arc, nom: "Lointain, l'Arc de l'Horizon Perdu", description: "Un arc dont les flèches atteignaient, dit-on, des terres que le Voile a effacées des cartes.", effets: [critique, precision, touche:foudre], pouvoir: "Chaque attaque simple a 25 % de chances de tirer une seconde flèche sur un autre ennemi.", pouvoir_id: seconde-fleche }
+  - { palier: X, rarete: mythique, type: arbalete, nom: "Œil-du-Voile, l'Arbalète des Étoiles fixes", description: "Un mécanisme d'avant le Voile, que personne n'a jamais su démonter ni reproduire.", effets: [precision, mana, touche:glace], pouvoir: "Les coups du porteur ignorent 30 % de la défense et des résistances de la cible.", pouvoir_id: perce-defense }
+  - { palier: X, rarete: mythique, type: baton, nom: "Ylvarae, le Bâton des Premières Racines", description: "Une branche de l'arbre-monde dont toutes les forêts descendent, Sylvenoire comprise.", effets: [mana, vigueur, touche:arcane], pouvoir: "Les compétences du porteur coûtent 20 % de mana en moins.", pouvoir_id: mana-economique }

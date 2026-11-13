@@ -6,7 +6,7 @@
 import type { Contenu } from '../contenu/types';
 import type { Competence } from '../contenu/schemas';
 import { caracsTotales, type Carac, type Caracs, type Heros } from './personnage';
-import { valeurs, vrai } from './outils';
+import { cles, valeurs, vrai } from './outils';
 
 /** Nom complet et effet réel de chaque caractéristique (voir CONCEPTION § 3.2 et 3.3). */
 export const AIDE_CARACS: Record<Carac, { nom: string; effet: string }> = {
@@ -142,4 +142,41 @@ export function resumeChiffres(k: ChiffresCompetence): string {
   if (k.toucher !== null) morceaux.push(`${Math.round(k.toucher * 100)} % de chance de toucher`);
   if (k.soin !== null) morceaux.push(`soigne environ ${k.soin} PV`);
   return morceaux.join(' · ');
+}
+
+// ───────────────────────────── Équipement ─────────────────────────────
+
+export const NOMS_RARETES: Record<string, string> = {
+  commun: 'Commun', 'peu-commun': 'Peu commun', rare: 'Rare', epique: 'Épique', legendaire: 'Légendaire', mythique: 'Mythique',
+};
+const NOMS_ELEMENTS_OBJET: Record<string, string> = {
+  physique: 'physique', feu: 'feu', glace: 'glace', foudre: 'foudre', sacre: 'sacré', ombre: 'ombre', poison: 'poison', arcane: 'arcane',
+};
+const NOMS_EMPLACEMENTS: Record<string, string> = { arme: 'Arme', armure: 'Tenue', accessoire: 'Accessoire' };
+
+/** Lignes d'information d'un objet d'équipement : emplacement, niveau, classes, stats, effets, pouvoir. */
+export function detailsObjet(contenu: Contenu, objetId: string): string[] {
+  const o = contenu.objets[objetId];
+  if (!o || o.type !== 'equipement') return [];
+  const lignes: string[] = [];
+  const classes = o.classes.length === 0 || o.classes.length === cles(contenu.classes).length
+    ? 'toutes les classes'
+    : o.classes.map((c) => contenu.classes[c]?.nom ?? c).join(', ');
+  lignes.push(`${NOMS_EMPLACEMENTS[o.emplacement ?? ''] ?? ''} · ${NOMS_RARETES[o.rarete]} · niveau ${o.niveau} · ${classes}`);
+  const stats: string[] = [];
+  if (vrai(o.bonus?.puissance)) stats.push(`+${o.bonus!.puissance} puissance`);
+  if (vrai(o.bonus?.armure)) stats.push(`+${o.bonus!.armure} armure`);
+  for (const c of ['FOR', 'AGI', 'INT', 'VIT', 'ESP', 'CHA'] as const) if (vrai(o.bonus?.caracs?.[c])) stats.push(`+${o.bonus!.caracs![c]} ${c}`);
+  if (stats.length > 0) lignes.push(stats.join(', '));
+  for (const e of o.effets_equipement) {
+    if (e.effet === 'critique') lignes.push(`Critique +${Math.round(e.valeur * 100)} %`);
+    else if (e.effet === 'precision') lignes.push(`Précision +${Math.round(e.valeur * 100)} %`);
+    else if (e.effet === 'resistance') lignes.push(`Résistance (${NOMS_ELEMENTS_OBJET[e.element]}) +${Math.round(e.valeur * 100)} %`);
+    else if (e.effet === 'touche') lignes.push(`Attaque : +${e.puissance} de dégâts de ${NOMS_ELEMENTS_OBJET[e.element]}`);
+    else if (e.effet === 'mana') lignes.push(`Mana max +${e.valeur}`);
+    else if (e.effet === 'vigueur') lignes.push(`PV max +${Math.round(e.valeur * 100)} %`);
+  }
+  if (vrai(o.pouvoir_unique)) lignes.push(`Pouvoir : ${o.pouvoir_unique}`);
+  if (o.unique_par_partie) lignes.push('Un seul exemplaire dans la partie');
+  return lignes;
 }

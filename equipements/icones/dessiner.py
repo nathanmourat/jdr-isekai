@@ -12,7 +12,7 @@ from PIL import Image, ImageDraw, ImageFont
 from px import P, hexc, new, outline, shade, up
 
 ICI = Path(__file__).resolve().parent
-SORTIE = ICI / "objets"
+SORTIE = ICI.parent.parent / "assets" / "icones" / "objets"  # dossier des icônes du jeu
 
 PALIERS = ["I", "II", "III", "IV", "V", "VI"]
 PALETTES = {

@@ -39,7 +39,7 @@ regions:
         position_plan: { x: 900, y: 430 }
         disponible_si: { flag: appel-fait }
         pnj: [{ id: rowena }, { id: kaya, si: { flag: examen-reussi } }]
-        boutique: [potion-soin-petite, antidote, bombe-feu, bombe-fumee, epee-courte, dague, arc-court, baton-apprenti, bouclier-bois, armure-cuir, robe-mage, kit-entretien-armes]
+        boutique: [potion-soin-petite, antidote, bombe-feu, bombe-fumee, epee-courte, deux-mains-i, masse-i, dague, arc-court, arbalete-i, baton-apprenti, sceptre-i, orbe-i, instrument-i, lourde-i, armure-cuir, robe-mage, bouclier-bois, anneau-i, amulette-i, talisman-i, carquois-i, sacoche-i, kit-entretien-armes]
       - id: taverne
         nom: "Le Chaudron Fêlé"
         description: "La taverne et l'auberge de Bram : on y mange bien, on y parle trop, et on y dort à l'étage."
@@ -60,7 +60,7 @@ regions:
         position_plan: { x: 560, y: 560 }
         disponible_si: { flag: appel-fait }
         pnj: [{ id: halvine }]
-        boutique: [potion-soin-petite, potion-soin, potion-mana, antidote, bombe-feu, bombe-fumee, ration, fleur-des-champs, gateau-lysmont, bijou-dore, epee-courte, dague, arc-court, baton-apprenti, bouclier-bois, armure-cuir, robe-mage]
+        boutique: [potion-soin-petite, potion-soin, potion-mana, antidote, bombe-feu, bombe-fumee, ration, fleur-des-champs, gateau-lysmont, bijou-dore, epee-i-maitre, deux-mains-i-maitre, masse-i-maitre, dague-i-maitre, arc-i-maitre, arbalete-i-maitre, baton-i-maitre, sceptre-i-maitre, orbe-i-maitre, instrument-i-maitre, lourde-i-maitre, intermediaire-i-maitre, legere-i-maitre, bouclier-i-maitre, anneau-i-maitre, amulette-i-maitre, talisman-i-maitre, carquois-i-maitre, sacoche-i-maitre]
       - id: chateau
         nom: "Château de Lysmont"
         description: "Le siège de la Couronne, tours blanches et toits bleus."

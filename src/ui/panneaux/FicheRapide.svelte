@@ -1,7 +1,7 @@
 <script lang="ts">
   /** Fiche résumée, dépliée depuis la barre du héros (un clic l'ouvre, un autre la referme). */
   import { jeu } from '../jeu.svelte';
-  import { age, caracsTotales, competencesEquipees, manaMax, pvMax, xpPourNiveau } from '../../moteur/personnage';
+  import { age, caracsTotales, competencesEquipees, manaMaxHeros, pvMaxHeros, xpPourNiveau } from '../../moteur/personnage';
   import { rangGuilde } from '../../moteur/partie';
   import { aideDate, formaterDate, versDate } from '../../moteur/temps';
   import { AIDE_CARACS } from '../../moteur/fiche';
@@ -42,7 +42,7 @@
       <p>{age(h, versDate(c, etat.jour).annee)} ans · {ra.nom} · {cl.nom}</p>
       <p>{h.origine === 'invoque' ? `Invoqué — don : ${c.dons[h.don].nom}` : `Réincarné${h.origineEnfance ? ` — enfance : ${h.origineEnfance}` : ''} — don : ${c.dons[h.don].nom}`}</p>
       <h4>État</h4>
-      <p>PV {enCombat ? `${enCombat.pv} / ${enCombat.pvMax}` : pvMax(c, k.VIT, h.niveau)} · Mana {enCombat ? `${enCombat.mana} / ${enCombat.manaMax}` : manaMax(k.ESP, h.niveau)}</p>
+      <p>PV {enCombat ? `${enCombat.pv} / ${enCombat.pvMax}` : pvMaxHeros(c, h)} · Mana {enCombat ? `${enCombat.mana} / ${enCombat.manaMax}` : manaMaxHeros(c, h)}</p>
       <p>Niveau {h.niveau} · XP {h.xp} / {xpPourNiveau(c, h.niveau)} (niveau {h.niveau + 1})</p>
       <p>Rang à la Guilde : {rangGuilde(c, etat.pointsGuilde[h.id] ?? 0)} ({etat.pointsGuilde[h.id] ?? 0} points) · {h.or} or</p>
       <h4>Effets en cours</h4>

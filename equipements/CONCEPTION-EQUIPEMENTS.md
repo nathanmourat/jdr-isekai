@@ -76,7 +76,7 @@ Chaque objet reçoit un **budget de points** :
 
 > **budget = (2 + 0,3 × niveau requis) × multiplicateur de rareté**, arrondi
 
-Conversion du budget : **1 point = 1 caractéristique = 1 puissance = 2 d'armure**. (Cohérent avec l'existant : l'épée courte donne +2 puissance pour 40 or.)
+Conversion du budget : **1 point = 1 caractéristique (FOR, AGI, VIT, CHA) = 1 puissance = 2 d'armure**. Les points d'**INT et d'ESP valent plus** : ×3 au palier I, ×2 au II, ×1,5 au III, ×1,25 ensuite. Ces caractéristiques rapportent moins en combat que les autres ; le palier I a été réglé par simulation, les suivants seront à recaler quand leurs ennemis existeront.
 
 | Palier (niveau) | Commun | Peu commun | Rare | Épique | Légendaire | Mythique |
 |---|---|---|---|---|---|---|
@@ -126,7 +126,7 @@ Chaque classe a 1 à 3 types : la cohérence est gardée, sans tout verrouiller.
 
 | Accessoire | Classes | Stats |
 |---|---|---|
-| Bouclier | Gardien, Lame runique | armure 60 %, VIT 40 % |
+| Bouclier | Gardien, Lame runique | armure 100 % |
 | Anneau | toutes | AGI 50 %, CHA 50 % |
 | Amulette | toutes | ESP 50 %, INT 50 % |
 | Talisman | toutes | VIT 60 %, FOR 40 % |
@@ -154,7 +154,7 @@ Liste courte, chaque effet avec une valeur qui monte par palier :
 - **Objets nommés**, par classe : 2 peu communs nommés au palier I (arme + tenue, sans effet), 2 rares au palier II, puis 1 rare + 1 épique aux paliers III à VI, en alternant arme, tenue et accessoire. Soit 20 peu communs, 60 rares et 40 épiques nommés, plus **10 légendaires** (1 par classe, palier V).
 - **6 armes mythiques** (palier X), les « Reliques du Voile » : épée, arme à deux mains, dague, arc, arbalète et bâton. Chaque classe peut en utiliser au moins une.
 - **Total : 364 objets.**
-- Les **7 objets existants** sont gardés : ils deviennent les « communs du palier I ». Seule l'armure de cuir passe de +3 à +4 d'armure, pour respecter la règle.
+- Les **7 objets existants** gardent leur id et leur nom : ils deviennent les « communs du palier I », avec des stats et un prix recalculés par la règle.
 
 ## 11. Ce qui sera livré
 
@@ -164,6 +164,8 @@ Dans le dossier `equipements/` (en dehors du dépôt) :
 - une page de résumé des règles avec des comparaisons de dégâts calculées avec les formules du jeu.
 
 ## 12. Ce qui restera à faire avec le collègue (plus tard)
+
+> **Fait** sur la branche `equipements` (voir `LISEZ-MOI.md`), y compris l'équilibrage : héros équipés dès la création, ennemis renforcés (+10 % PV, +8 % dégâts), répartitions retouchées (masse, bouclier, instrument, INT/ESP).
 
 1. Ajouter les nouveaux champs au format des objets (`src/contenu/schemas.ts`).
 2. Bloquer l'équipement selon le niveau et la classe (`src/moteur/partie.ts`, action « équiper ») ; empêcher qu'une arme mythique existe deux fois dans la partie (`unique_par_partie`).

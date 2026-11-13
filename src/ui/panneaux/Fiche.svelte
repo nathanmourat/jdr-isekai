@@ -1,6 +1,6 @@
 <script lang="ts">
   import { jeu } from '../jeu.svelte';
-  import { caracsTotales, competencesConnues, competencesEquipees, manaMax, pvMax, xpPourNiveau, age } from '../../moteur/personnage';
+  import { caracsTotales, competencesConnues, competencesEquipees, manaMaxHeros, pvMaxHeros, refusEquipement, xpPourNiveau, age } from '../../moteur/personnage';
   import { prixVente, rangGuilde } from '../../moteur/partie';
   import { CARACS } from '../../contenu/schemas';
   import { versDate } from '../../moteur/temps';
@@ -8,6 +8,7 @@
   import { portraitHeros, redimensionnerPortrait } from '../outils';
   import { AIDE_CARACS } from '../../moteur/fiche';
   import CompetenceInfo from '../CompetenceInfo.svelte';
+  import NomObjet from '../NomObjet.svelte';
 
   const c = jeu.contenu!;
   const etat = $derived(jeu.etat!);
@@ -38,7 +39,7 @@
       <h2>{h.nom}</h2>
       <p>{ra.nom} · {cl.nom} · {h.origine === 'invoque' ? 'Invoqué' : 'Réincarné'} · {age(h, versDate(c, etat.jour).annee)} ans</p>
       <p class="discret">Niveau {h.niveau} — XP {h.xp} / {xpPourNiveau(c, h.niveau)} · Rang de guilde {rangGuilde(c, etat.pointsGuilde[h.id] ?? 0)} · {h.or} or{h.blessure ? ' · blessé' : ''}</p>
-      <p class="discret">PV max {pvMax(c, k.VIT, h.niveau)} · Mana {manaMax(k.ESP, h.niveau)}</p>
+      <p class="discret">PV max {pvMaxHeros(c, h)} · Mana {manaMaxHeros(c, h)}</p>
       <label class="discret">Changer de portrait <input type="file" accept="image/*" onchange={portrait} /></label>
       <label class="discret ligne">Si je suis absent, mon héros
         <select value={h.siAbsent} onchange={(e) => jeu.agir({ type: 'si_absent', mode: (e.target as HTMLSelectElement).value as 'ia' | 'camp' })} style="width:auto">
@@ -120,14 +121,17 @@
 
   <div class="carte-ui">
     <h3>Équipement et inventaire</h3>
-    {#each ['arme', 'armure', 'accessoire'] as const as emp (emp)}
-      <p class="ligne">{emp} : <strong>{h.equipement[emp] ? c.objets[h.equipement[emp]!].nom : '—'}</strong>
-        {#if h.equipement[emp]}<button class="petit" onclick={() => jeu.agir({ type: 'desequiper', emplacement: emp })}>Retirer</button>{/if}</p>
+    {#each [['arme', 'Arme'], ['armure', 'Tenue'], ['accessoire', 'Accessoire']] as const as [emp, libelle] (emp)}
+      <div class="ligne item">
+        <span><span class="discret">{libelle} :</span> {#if h.equipement[emp]}<NomObjet id={h.equipement[emp]!} />{:else}—{/if}</span>
+        {#if h.equipement[emp]}<button class="petit" onclick={() => jeu.agir({ type: 'desequiper', emplacement: emp })}>Retirer</button>{/if}
+      </div>
     {/each}
     {#each inventaire as [o, n] (o)}
+      {@const refus = c.objets[o].type === 'equipement' ? refusEquipement(c, h, o) : null}
       <div class="ligne item">
-        <span>{c.objets[o].nom} × {n} <small class="discret">{c.objets[o].description}</small></span>
-        {#if c.objets[o].type === 'equipement'}<button class="petit" onclick={() => jeu.agir({ type: 'equiper', objet: o })}>Équiper</button>{/if}
+        <NomObjet id={o} quantite={n} />
+        {#if c.objets[o].type === 'equipement'}<button class="petit" disabled={!!refus} title={refus ?? ''} onclick={() => jeu.agir({ type: 'equiper', objet: o })}>Équiper</button>{/if}
         {#if c.objets[o].type !== 'quete'}<button class="petit" onclick={() => jeu.agir({ type: 'vendre', objet: o })}>Vendre ({prixVente(c, h, o)} or)</button>{/if}
       </div>
     {:else}<p class="discret">Inventaire vide.</p>{/each}

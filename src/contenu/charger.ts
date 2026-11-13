@@ -140,6 +140,12 @@ function verifierReferences(c: Contenu): string[] {
     for (const en of r.ennemis) if (!c.ennemis[en.id]) e.push(`Rencontre ${r.id} › ennemi « ${en.id} » introuvable`);
     for (const id of r.renforts) if (!c.ennemis[id]) e.push(`Rencontre ${r.id} › renfort « ${id} » introuvable`);
   }
+  for (const o of Object.values(c.objets)) {
+    if (o.type === 'equipement' && !o.emplacement) e.push(`Objet ${o.id} › un équipement doit avoir un emplacement (arme, armure ou accessoire)`);
+    for (const cl of o.classes) if (!c.classes[cl]) e.push(`Objet ${o.id} › classe « ${cl} » introuvable`);
+    if ((o.rarete === 'legendaire' || o.rarete === 'mythique') && !o.pouvoir_id) e.push(`Objet ${o.id} › un objet ${o.rarete} doit avoir un pouvoir_id`);
+    if (o.unique_par_partie && o.type !== 'equipement') e.push(`Objet ${o.id} › seul un équipement peut être unique dans la partie`);
+  }
   for (const en of Object.values(c.ennemis)) for (const o of en.recompenses.objets) if (!c.objets[o.id]) e.push(`Ennemi ${en.id} › objet « ${o.id} » introuvable`);
   for (const co of Object.values(c.compagnons)) {
     for (const liste of Object.values(co.cadeaux)) for (const o of liste) if (!c.objets[o]) e.push(`Compagnon ${co.id} › cadeau « ${o} » introuvable dans les objets`);

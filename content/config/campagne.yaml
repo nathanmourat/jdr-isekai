@@ -128,6 +128,24 @@ config:
     perte_or_pourcent: 10
     blessure_pv_pourcent: 10
 
+  # Les héros portent de l'équipement (voir equipements/) : les ennemis sont renforcés d'autant.
+  # Réglé par simulation : npm run equilibrage (les héros simulés portent l'équipement standard ci-dessous).
+  renfort_ennemis: { pv: 1.10, degats: 1.08 }
+
+  # Équipement standard de chaque classe (catégories du catalogue) : on prend l'objet commun
+  # du palier le plus haut autorisé par le niveau du héros.
+  equipement_standard:
+    lame-runique: { arme: epee, armure: lourde, accessoire: bouclier }
+    arcaniste: { arme: baton, armure: legere, accessoire: amulette }
+    invocateur: { arme: orbe, armure: legere, accessoire: amulette }
+    ombre: { arme: dague, armure: intermediaire, accessoire: anneau }
+    gardien: { arme: masse, armure: lourde, accessoire: bouclier }
+    alchimiste: { arme: arbalete, armure: intermediaire, accessoire: sacoche }
+    archer: { arme: arc, armure: intermediaire, accessoire: carquois }
+    guerisseur: { arme: sceptre, armure: legere, accessoire: amulette }
+    berserker: { arme: deux-mains, armure: lourde, accessoire: talisman }
+    barde: { arme: instrument, armure: intermediaire, accessoire: anneau }
+
   graphismes:
     taille_tuile: 32
     taille_sprite_combat: 64
