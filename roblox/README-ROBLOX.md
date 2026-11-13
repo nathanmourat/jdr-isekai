@@ -60,6 +60,31 @@ Dans Output, tu dois voir, dans l'ordre :
 
 S'il y a une ligne rouge, envoie une capture de la fenêtre Output.
 
+## Liste de contrôle — étape R1 (parties multijoueur, création du héros)
+
+### Activer la sauvegarde (une seule fois, facultatif pour tester)
+
+Sans ces réglages, le jeu marche quand même, mais les parties sont **perdues à l'arrêt** : un bandeau le signale en bas de l'écran.
+
+1. **Fichier → Publier sur Roblox** (*File → Publish to Roblox*) → crée une nouvelle expérience « Les Appelés de Velmaris ». Elle reste **privée**.
+2. **Accueil → Paramètres du jeu** (*Home → Game Settings*) → **Sécurité** (*Security*) → active **« Autoriser l'accès de Studio aux services API »** (*Enable Studio Access to API Services*) → **Enregistrer**.
+
+### Tester à deux joueurs dans Studio
+
+1. Onglet **Test** → **Clients et serveurs** (*Clients and Servers*) → choisis **2 joueurs** → **Démarrer** (*Start*). Trois fenêtres s'ouvrent : le serveur, Player1 et Player2.
+2. Fais les vérifications ci-dessous dans les fenêtres Player1 et Player2.
+
+- [ ] L'écran d'accueil « Les Appelés de Velmaris » s'affiche.
+- [ ] **Player1** : crée une partie → l'écran « Création de ton héros » s'affiche avec un **code à 6 caractères**.
+- [ ] **Player1** : clique sur « Créer mon héros » sans nom → bandeau rouge « Donne un nom à ton héros. » (un clic dessus le ferme).
+- [ ] **Player1** : crée un héros (nom, race, classe, don) → la **fiche** s'affiche (date, prochaine étape, caractéristiques, joueurs, journal).
+- [ ] **Player2** : entre le code → « Rejoindre » → dans la liste des dons, celui de Player1 est **grisé**, avec « pris par … ».
+- [ ] **Player2** : crée son héros → chez **Player1**, la liste « Joueurs » montre Player2 🟢 **sans recharger**.
+- [ ] **Player2** : « Quitter la partie » → chez Player1, Player2 passe en ⚪ (absent).
+- [ ] **Player2** : « Mes parties » → la partie est listée → un clic la reprend, et Player2 repasse en 🟢.
+- [ ] Avec la sauvegarde activée : arrête le test, relance-le → « Mes parties » → la partie revient avec les héros.
+- [ ] Aucune ligne rouge dans Output (fenêtres du serveur et des joueurs).
+
 ## Pour les développeurs (commandes depuis la racine du dépôt)
 
 | Commande | Rôle |

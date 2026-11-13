@@ -13,7 +13,7 @@ Si une demande est floue ou contradictoire : poser la question plutôt que devin
   - textures du groupe intégrées (V2 : priorité 1 sauf portraits d'Aveline, calques de race, icônes ; bestiaire de 28 monstres)
 - [x] Combat libre + IA maison (13/11) : voir CONCEPTION § 7.5
 - [ ] Étape 3 et suivantes : chapitres 2 à 6, un par itération (**en pause** : portage Roblox d'abord)
-- [ ] **Portage Roblox (décidé le 13/11)** : voir `roblox/README-ROBLOX.md`. R0 fait (moteur traduit en Luau, parité web/Roblox vérifiée) ; R1 à R5 à venir
+- [ ] **Portage Roblox (décidé le 13/11)** : voir `roblox/README-ROBLOX.md`. R0 validé dans Studio le 13/11 ; R1 écrit (parties à code, DataStore, création du héros), à tester par Nathan ; R2 à R5 à venir
 
 ## Décisions validées (étape 0)
 - **Support** : jeu web **2D** (navigateur, PC et mobile).
