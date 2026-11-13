@@ -1,0 +1,21 @@
+{
+  "name": "velmaris-roblox",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Les Appelés de Velmaris — version Roblox",
+  "scripts": {
+    "build": "rbxtsc",
+    "watch": "rbxtsc -w",
+    "moteur": "tstl -p tsconfig.moteur.json && node outils/apres-compilation.cjs"
+  },
+  "devDependencies": {
+    "@rbxts/compiler-types": "^3.0.0-types.0",
+    "@rbxts/types": "^1.0.962",
+    "roblox-ts": "^3.0.0",
+    "typescript": "^6.0.2",
+    "typescript-to-lua": "^1.37.1"
+  },
+  "dependencies": {
+    "@rbxts/services": "^1.6.0"
+  }
+}

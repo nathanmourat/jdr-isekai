@@ -1,7 +1,7 @@
 /**
  * Simulation d'équilibrage : fait combattre des héros contrôlés par l'IA contre des rencontres de référence.
  */
-import type { Contenu } from '../contenu/charger';
+import type { Contenu } from '../contenu/types';
 import { annulerTour, avancer, combattantHeros, demarrerCombat, type Combat } from './combat';
 import { creerHeros } from './personnage';
 import { creerRng, entier } from './rng';

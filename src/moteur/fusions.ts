@@ -11,9 +11,10 @@
  *    Une fusion fait donc moins que les deux compétences jouées en deux tours, mais en un seul tour
  *    et avec deux éléments (utile contre les faiblesses).
  */
-import type { Contenu } from '../contenu/charger';
+import type { Contenu } from '../contenu/types';
 import type { Competence, Effet } from '../contenu/schemas';
 import { competencesConnues, type Heros } from './personnage';
+import { vrai } from './outils';
 
 export interface Technique extends Competence {
   parent: string;
@@ -50,7 +51,7 @@ export function creerTechnique(contenu: Contenu, parentId: string, secondaireId:
   if (!dp) return { ok: false, raison: `« ${p.nom} » n'inflige pas de dégâts : elle ne peut pas servir de base à une fusion. Essayez dans l'autre sens.` };
   const e1 = dp.element;
   const e2 = elementDe(q);
-  if (!e2) return { ok: false, raison: `« ${q.nom} » n'a pas d'élément à transmettre.` };
+  if (!vrai(e2)) return { ok: false, raison: `« ${q.nom} » n'a pas d'élément à transmettre.` };
   if (e1 === e2) return { ok: false, raison: `« ${p.nom} » et « ${q.nom} » sont du même élément (${NOM_ELEMENT[e1]}) : rien à fusionner.` };
   const dq = q.effets.find((e): e is Extract<Effet, { type: 'degats' }> => e.type === 'degats');
   const etatsQ = q.effets.filter((e): e is Extract<Effet, { type: 'etat' }> => e.type === 'etat' && e.cible !== 'soi' && e.cible !== 'tous_allies');

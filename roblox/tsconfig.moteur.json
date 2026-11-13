@@ -1,0 +1,33 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "lib": [
+      "ESNext"
+    ],
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "strict": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "types": [],
+    "rootDir": ".."
+  },
+  "files": [
+    "../src/moteur/roblox.ts"
+  ],
+  "tstl": {
+    "luaTarget": "Luau",
+    "luaBundle": "src/shared/moteur.lua",
+    "luaBundleEntry": "../src/moteur/roblox.ts",
+    "noImplicitSelf": true,
+    "noHeader": false,
+    "noResolvePaths": [
+      "zod"
+    ],
+    "luaPlugins": [
+      {
+        "name": "./outils/plugin-luau.cjs"
+      }
+    ]
+  }
+}

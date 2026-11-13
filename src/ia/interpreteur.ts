@@ -5,7 +5,7 @@
  * Elle ne décide JAMAIS des chiffres : toutes les chances et tous les dégâts viennent du moteur
  * (`estimerAction`), ce qui garde l'équilibrage intact.
  */
-import type { Contenu } from '../contenu/charger';
+import type { Contenu } from '../contenu/types';
 import type { Competence } from '../contenu/schemas';
 import {
   actionsDisponibles, adversaires, allies, estimerAction, NOMS_ETATS, VISEES,

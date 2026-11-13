@@ -15,7 +15,11 @@
     "assets:manquants": "tsx scripts/assets-manquants.ts",
     "contenu:verifier": "tsx scripts/verifier-contenu.ts",
     "e2e": "node tests/e2e/parcours.mjs",
-    "ia:entrainer": "tsx scripts/entrainer-ia.ts"
+    "ia:entrainer": "tsx scripts/entrainer-ia.ts",
+    "roblox:contenu": "tsx scripts/roblox-contenu.ts",
+    "roblox:verifier": "tsx scripts/verifier-luau.ts",
+    "roblox:moteur": "npm run moteur --prefix roblox",
+    "roblox:parite": "tsx scripts/roblox-parite.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.119.0",

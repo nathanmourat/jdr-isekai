@@ -16,24 +16,8 @@ import {
   type Rencontre, type Scene,
 } from './schemas';
 
-export interface Contenu {
-  config: Config;
-  classes: Record<string, Classe>;
-  competences: Record<string, Competence>;
-  races: Record<string, Race>;
-  dons: Record<string, Don>;
-  ennemis: Record<string, Ennemi>;
-  rencontres: Record<string, Rencontre>;
-  objets: Record<string, Objet>;
-  compagnons: Record<string, Compagnon>;
-  regions: Record<string, Region>;
-  pnj: Record<string, Pnj>;
-  scenes: Record<string, Scene>;
-  quetes: Record<string, Quete>;
-  donjons: Record<string, Donjon>;
-  contrats: Record<string, Contrat>;
-  activites: Record<string, Activite>;
-}
+export type { Contenu } from './types';
+import type { Contenu } from './types';
 
 export class ErreurContenu extends Error {
   constructor(public erreurs: string[]) {

@@ -7,9 +7,10 @@
  *  - tous les personnages non contrôlés (ennemis, invocations, compagnons, héros d'absents) jouent via l'IA.
  * Tout le hasard passe par un Rng à graine : même graine + mêmes actions = même combat.
  */
-import type { Contenu } from '../contenu/charger';
+import type { Contenu } from '../contenu/types';
 import type { Competence, Effet, Ennemi } from '../contenu/schemas';
 import { aleatoire, chance, choisir, de, type Rng } from './rng';
+import { cles, copieProfonde, entrees, trier, valeurs, vrai } from './outils';
 import { caracsTotales, competencesEquipees, manaMax, pvMax, type Caracs, type Carac, type Heros } from './personnage';
 
 export type Element = 'physique' | 'feu' | 'glace' | 'foudre' | 'sacre' | 'ombre' | 'poison' | 'arcane';
@@ -102,7 +103,7 @@ export const VISEES: Record<PartieVisee, { nom: string; toucher: number; degats:
 
 /** Créatures sans tête ni membres (gelées, esprits, constructions simples). */
 export function sansMembres(x: { refId: string; categorie: string }): boolean {
-  return /^(gelee|feu-follet|tourelle|champignon)/.test(x.refId);
+  return ['gelee', 'feu-follet', 'tourelle', 'champignon'].some((p) => x.refId.startsWith(p));
 }
 
 export interface EvenementCombat {
@@ -133,7 +134,8 @@ export interface Combat {
   fuitePossible: boolean;
   multiplicateurs: { pv: number; degats: number; ennemisEnPlus: number; puissance: number };
   /** Copie de l'état en début de tour, pour le don « Second départ ». */
-  instantane: string | null;
+  /** Copie du combat au début du tour (pour « Second départ »). */
+  instantane: Combat | null;
   compteurInvocations: number;
 }
 
@@ -153,8 +155,8 @@ export function combattantHeros(contenu: Contenu, h: Heros, controle: boolean, t
   const caracs = caracsTotales(contenu, h);
   let armure = cl.armure;
   let puissance = cl.attaque.puissance;
-  for (const slot of Object.values(h.equipement)) {
-    const o = slot ? contenu.objets[slot] : null;
+  for (const slot of valeurs(h.equipement)) {
+    const o = vrai(slot) ? contenu.objets[slot] : null;
     armure += o?.bonus?.armure ?? 0;
     puissance += o?.bonus?.puissance ?? 0;
   }
@@ -164,7 +166,7 @@ export function combattantHeros(contenu: Contenu, h: Heros, controle: boolean, t
   const competences: { id: string; rang: number }[] = [];
   for (const id of competencesEquipees(contenu, h)) {
     const v = h.varianteActive?.[id];
-    if (v && techniques[v]) { propres.push({ ...techniques[v] }); rangsVariantes[v] = h.rangsCompetences[id] ?? 1; } // la variante remplace la compétence de base, au rang de celle-ci
+    if (vrai(v) && techniques[v]) { propres.push({ ...techniques[v] }); rangsVariantes[v] = h.rangsCompetences[id] ?? 1; } // la variante remplace la compétence de base, au rang de celle-ci
     else competences.push({ id, rang: h.rangsCompetences[id] ?? 1 });
   }
   if (race.trait.id === 'ecailles-et-souffle') {
@@ -179,11 +181,11 @@ export function combattantHeros(contenu: Contenu, h: Heros, controle: boolean, t
   const potions = potionsInventaire + (cl.passif.parametres.potions_bonus ?? 0) + (don.parametres.potions_bonus ?? 0) + (don.parametres.objets_improvises ?? 0);
   const res: Partial<Record<Element, number>> = {};
   const tp = race.trait.parametres;
-  if (tp.resistance_feu) res.feu = tp.resistance_feu;
-  if (tp.resistance_ombre) res.ombre = tp.resistance_ombre;
-  if (tp.faiblesse_sacre) res.sacre = -tp.faiblesse_sacre;
-  if (tp.faiblesse_glace) res.glace = -tp.faiblesse_glace;
-  if (tp.resistance_poison) res.poison = tp.resistance_poison;
+  if (vrai(tp.resistance_feu)) res.feu = tp.resistance_feu;
+  if (vrai(tp.resistance_ombre)) res.ombre = tp.resistance_ombre;
+  if (vrai(tp.faiblesse_sacre)) res.sacre = -tp.faiblesse_sacre;
+  if (vrai(tp.faiblesse_glace)) res.glace = -tp.faiblesse_glace;
+  if (vrai(tp.resistance_poison)) res.poison = tp.resistance_poison;
   return {
     id: `h:${h.id}`,
     nom: h.nom,
@@ -227,7 +229,7 @@ export function combattantHeros(contenu: Contenu, h: Heros, controle: boolean, t
       relances: don.parametres.relances ?? 0,
       determination: race.trait.id === 'determination' ? 1 : 0,
       objetGratuit: don.id === 'reserve-du-neant' ? 1 : 0,
-      ...Object.fromEntries(Object.entries(rangsVariantes).map(([k, v]) => [`rang:${k}`, v])),
+      ...Object.fromEntries(entrees(rangsVariantes).map(([k, v]) => [`rang:${k}`, v])),
     },
     derniereCible: null,
     potions,
@@ -296,7 +298,7 @@ export function combattantCompagnon(contenu: Contenu, compagnonId: string, h: He
   caracs[def.combat.attaque.stat] += Math.ceil(gain / 2);
   caracs.VIT += Math.floor(gain / 2);
   const pmax = pvMax(contenu, caracs.VIT, h.niveau);
-  const bonus = paliersAtteints.map((p) => def.bonus_paliers[p]).filter(Boolean).map((b) => ({ id: b.id, parametres: b.parametres }));
+  const bonus = paliersAtteints.map((p) => def.bonus_paliers[p]).filter((b) => b !== undefined).map((b) => ({ id: b.id, parametres: b.parametres }));
   return {
     id: `c:${compagnonId}:${h.id}`,
     nom: def.nom,
@@ -346,7 +348,7 @@ export function combattantCompagnon(contenu: Contenu, compagnonId: string, h: He
 // ───────────────────────────── Difficulté ─────────────────────────────
 
 export function multiplicateursDifficulte(contenu: Contenu, puissance: number) {
-  const t = [...contenu.config.difficulte].sort((a, b) => a.puissance - b.puissance);
+  const t = trier([...contenu.config.difficulte], (a, b) => a.puissance - b.puissance);
   if (puissance <= t[0].puissance) return { pv: t[0].pv, degats: t[0].degats, ennemisEnPlus: t[0].ennemis_en_plus, puissance };
   for (let i = 0; i < t.length - 1; i++) {
     const a = t[i], b = t[i + 1];
@@ -381,7 +383,7 @@ export function demarrerCombat(
   const m = multiplicateursDifficulte(contenu, puissance);
   // Les ennemis « en plus » prennent une part des PV : le multiplicateur de PV est réparti.
   const listeEnnemis = r.ennemis.map((e) => ({ ...e }));
-  for (let i = 0; i < m.ennemisEnPlus && r.renforts.length; i++) listeEnnemis.push({ id: r.renforts[i % r.renforts.length], rang: undefined });
+  for (let i = 0; i < m.ennemisEnPlus && r.renforts.length > 0; i++) listeEnnemis.push({ id: r.renforts[i % r.renforts.length], rang: undefined });
   const pvBase = r.ennemis.reduce((a, e) => a + (contenu.ennemis[e.id].pv ?? 40), 0);
   const pvAjoute = listeEnnemis.slice(r.ennemis.length).reduce((a, e) => a + (contenu.ennemis[e.id].pv ?? 40), 0);
   const multPv = Math.max(0.5, (m.pv * pvBase - pvAjoute) / pvBase);
@@ -492,7 +494,7 @@ export function ciblesValides(c: Combat, x: Combattant, type: 'ennemi' | 'allie'
   if (type === 'allie_ko') return c.combattants.filter((y) => y.camp === x.camp && y.ko && !y.parti && y.type !== 'invocation');
   let liste = adversaires(c, x);
   const visibles = liste.filter((y) => !aEtat(y, 'furtif'));
-  if (visibles.length) liste = visibles;
+  if (visibles.length > 0) liste = visibles;
   const prov = x.etats.find((e) => e.id === 'provoque');
   if (prov) {
     const src = liste.find((y) => y.id === prov.source);
@@ -500,7 +502,7 @@ export function ciblesValides(c: Combat, x: Combattant, type: 'ennemi' | 'allie'
   }
   if (portee === 'melee') {
     const avant = liste.filter((y) => y.rang === 'avant');
-    if (avant.length) return avant;
+    if (avant.length > 0) return avant;
   }
   return liste;
 }
@@ -616,7 +618,7 @@ function infliger(contenu: Contenu, combat: Combat, rng: Rng, s: Combattant, cib
     log(combat, { type: 'soin', cible: cible.id, valeur: v, texte: `${cible.nom} serre les dents et regagne ${v} PV ! (Détermination)` });
   }
   if (cible.pv <= 0) mettreKo(combat, cible);
-  else if (cible.fuitSous && cible.pv / cible.pvMax <= cible.fuitSous) {
+  else if (vrai(cible.fuitSous) && cible.pv / cible.pvMax <= cible.fuitSous) {
     cible.parti = true;
     log(combat, { type: 'fuite', cible: cible.id, texte: `${cible.nom} bat en retraite dans un nuage de cendres !` });
   }
@@ -641,7 +643,7 @@ function mettreKo(combat: Combat, x: Combattant) {
   log(combat, { type: 'ko', cible: x.id, texte: x.camp === 'heros' ? `${x.nom} est K.O. !` : `${x.nom} est vaincu.` });
   if (x.type === 'invocation') x.parti = x.dureeInvocation !== null; // les invocations temporaires disparaissent
   // le familier reviendra plus tard
-  if (x.refId === 'loup-spectral' && x.maitreId) {
+  if (x.refId === 'loup-spectral' && vrai(x.maitreId)) {
     const m = combat.combattants.find((y) => y.id === x.maitreId);
     if (m) m.compteurs.retourFamilier = (m.passif?.parametres.retour ?? 3);
   }
@@ -700,7 +702,7 @@ function resoudreCibles(combat: Combat, rng: Rng, s: Combattant, type: string, c
     default: {
       const valides = ciblesValides(combat, s, 'ennemi', portee);
       if (cibleChoisie && valides.some((v) => v.id === cibleChoisie.id)) return [cibleChoisie];
-      return valides.length ? [choisir(rng, valides)] : [];
+      return valides.length > 0 ? [choisir(rng, valides)] : [];
     }
   }
 }
@@ -712,14 +714,14 @@ function appliquerEffets(contenu: Contenu, combat: Combat, rng: Rng, s: Combatta
   // éléments utilisés par cette compétence (Résonance)
   const elementsComp = comp.effets.filter((e): e is Extract<Effet, { type: 'degats' }> => e.type === 'degats').map((e) => e.element as Element);
   let bonusResonance = 1;
-  if (s.passif?.id === 'resonance' && elementsComp.length) {
+  if (s.passif?.id === 'resonance' && elementsComp.length > 0) {
     const dernier = s.compteurs.dernierElement;
     const code = ELEMENTS_MAGIQUES.indexOf(elementsComp[0]) + 1;
-    if (dernier && code && dernier !== code) bonusResonance = 1 + (s.passif.parametres.bonus ?? 0.25);
-    if (code) s.compteurs.dernierElement = code;
+    if (vrai(dernier) && vrai(code) && dernier !== code) bonusResonance = 1 + (s.passif.parametres.bonus ?? 0.25);
+    if (vrai(code)) s.compteurs.dernierElement = code;
   }
   let bonusRunes = 1;
-  if (s.passif?.id === 'runes-gravees' && !depuisObjet && elementsComp.length) {
+  if (s.passif?.id === 'runes-gravees' && !depuisObjet && elementsComp.length > 0) {
     const charges = s.compteurs.runes ?? 0;
     bonusRunes = 1 + charges * (s.passif.parametres.bonus_par_charge ?? 0.2);
     if (charges > 0) consommeRunes = true;
@@ -734,7 +736,7 @@ function appliquerEffets(contenu: Contenu, combat: Combat, rng: Rng, s: Combatta
         let cibles: Combattant[];
         if (typeCible === 'ennemi_aleatoire') {
           const v = ciblesValides(combat, s, 'ennemi', 'distance');
-          cibles = v.length ? [choisir(rng, v)] : [];
+          cibles = v.length > 0 ? [choisir(rng, v)] : [];
         } else cibles = resoudreCibles(combat, rng, s, typeCible, premiereCibleOffensive ?? cibleChoisie, comp.portee);
         for (const cible of cibles) {
           if (!actif(cible)) continue;
@@ -759,8 +761,8 @@ function appliquerEffets(contenu: Contenu, combat: Combat, rng: Rng, s: Combatta
           let brut = ef.puissance * facteurRang * (1 + statVal / 20) * variance * multObjet;
           brut *= multiplicateurDegatsSource(combat, s, cible, ef.element as Element) * bonusResonance * bonusRunes;
           if (critique) brut *= contenu.config.combat.multiplicateur_critique;
-          if (ef.executer_sous_pourcent && cible.pv / cible.pvMax <= ef.executer_sous_pourcent) brut *= 2;
-          if (ef.cout_pv_pourcent) { s.pv = Math.max(1, s.pv - Math.round(s.pvMax * ef.cout_pv_pourcent)); }
+          if (vrai(ef.executer_sous_pourcent) && cible.pv / cible.pvMax <= ef.executer_sous_pourcent) brut *= 2;
+          if (vrai(ef.cout_pv_pourcent)) { s.pv = Math.max(1, s.pv - Math.round(s.pvMax * ef.cout_pv_pourcent)); }
           infliger(contenu, combat, rng, s, cible, brut, ef.element as Element, critique, monoCible, comp.id);
           if (furtif) s.etats = s.etats.filter((e) => e.id !== 'furtif');
         }
@@ -829,7 +831,7 @@ function attaqueSimple(contenu: Contenu, combat: Combat, rng: Rng, s: Combattant
   };
   const avantPv = cible?.pv ?? 0;
   appliquerEffets(contenu, combat, rng, s, comp, 1, cible);
-  const c = s.derniereCible ? combat.combattants.find((x) => x.id === s.derniereCible) : null;
+  const c = vrai(s.derniereCible) ? combat.combattants.find((x) => x.id === s.derniereCible) : null;
   // Runes gravées : chaque attaque réussie charge une rune
   if (s.passif?.id === 'runes-gravees' && c && c.pv < avantPv) s.compteurs.runes = Math.min(s.passif.parametres.max ?? 3, (s.compteurs.runes ?? 0) + 1);
   // Œil du faucon : chance de marquer
@@ -842,7 +844,7 @@ function attaqueSimple(contenu: Contenu, combat: Combat, rng: Rng, s: Combattant
 // ───────────────────────────── Tours ─────────────────────────────
 
 function calculerOrdre(contenu: Contenu, combat: Combat, rng: Rng) {
-  const vivants = combat.combattants.filter(actif);
+  const vivants = combat.combattants.filter((x) => actif(x));
   const init = new Map<string, number>();
   for (const x of vivants) {
     let v = x.caracs.AGI + de(rng, 10);
@@ -851,7 +853,7 @@ function calculerOrdre(contenu: Contenu, combat: Combat, rng: Rng) {
     if (x.trait) v += x.trait.parametres.initiative ?? 0;
     init.set(x.id, v + aleatoire(rng) * 0.01);
   }
-  combat.ordre = vivants.map((x) => x.id).sort((a, b) => init.get(b)! - init.get(a)!);
+  combat.ordre = trier(vivants.map((x) => x.id), (a, b) => init.get(b)! - init.get(a)!);
   combat.index = 0;
 }
 
@@ -902,7 +904,7 @@ function finTour(combat: Combat, x: Combattant) {
   for (const e of x.etats) e.duree--;
   // le Refrain s'arrête si le barde est K.O.
   x.etats = x.etats.filter((e) => e.duree > 0);
-  for (const k of Object.keys(x.recharges)) if (x.recharges[k] > 0) x.recharges[k]--;
+  for (const k of cles(x.recharges)) if (x.recharges[k] > 0) x.recharges[k]--;
   if (x.type === 'invocation' && x.dureeInvocation !== null) {
     x.dureeInvocation--;
     if (x.dureeInvocation <= 0 && !x.ko) {
@@ -932,7 +934,7 @@ function debutRound(contenu: Contenu, combat: Combat, rng: Rng) {
   }
   calculerOrdre(contenu, combat, rng);
   combat.instantane = null;
-  combat.instantane = JSON.stringify({ ...combat, evenements: [] });
+  combat.instantane = copieProfonde({ ...combat, evenements: [] });
 }
 
 /** Fait jouer l'IA jusqu'au prochain tour d'un joueur, ou jusqu'à la fin du combat. */
@@ -1015,13 +1017,13 @@ function executer(contenu: Contenu, combat: Combat, rng: Rng, x: Combattant, a: 
     case 'competence': {
       const k = competenceCombattant(contenu, x, a.competence)!;
       x.mana -= k.comp.cout;
-      if (k.comp.recharge) x.recharges[k.comp.id] = k.comp.recharge + 1;
+      if (vrai(k.comp.recharge)) x.recharges[k.comp.id] = k.comp.recharge + 1;
       if (k.comp.id === 'souffle-draconique') x.compteurs.souffle = 1;
       log(combat, { type: 'action', source: x.id, cible: a.cible, competence: k.comp.id, texte: `${x.nom} utilise ${k.comp.nom} !` });
-      appliquerEffets(contenu, combat, rng, x, k.comp, k.rang, a.cible ? combat.combattants.find((y) => y.id === a.cible) ?? null : null);
+      appliquerEffets(contenu, combat, rng, x, k.comp, k.rang, vrai(a.cible) ? combat.combattants.find((y) => y.id === a.cible) ?? null : null);
       // Mimétisme : copier une compétence d'ennemi
       if (x.camp === 'ennemis' && x.type === 'ennemi') {
-        for (const m of adversaires(combat, x).filter((y) => y.don?.id === 'mimetisme' && !y.compteurs.copie)) {
+        for (const m of adversaires(combat, x).filter((y) => y.don?.id === 'mimetisme' && !vrai(y.compteurs.copie))) {
           m.competencesPropres.push({ ...k.comp, id: `copie:${k.comp.id}`, nom: `${k.comp.nom} (copiée)`, cout: 4, ia: { priorite: 2, quand: 'toujours' } });
           m.compteurs.copie = 1;
           log(combat, { type: 'info', cible: m.id, texte: `${m.nom} copie la technique « ${k.comp.nom} » ! (Mimétisme)` });
@@ -1030,7 +1032,7 @@ function executer(contenu: Contenu, combat: Combat, rng: Rng, x: Combattant, a: 
       return false;
     }
     case 'objet': {
-      const cible = a.cible ? combat.combattants.find((y) => y.id === a.cible) ?? x : x;
+      const cible = vrai(a.cible) ? combat.combattants.find((y) => y.id === a.cible) ?? x : x;
       const objetId = a.objet === 'potion' ? 'potion-soin-petite' : 'bombe-feu';
       const obj = contenu.objets[objetId];
       const economise = x.passif?.id === 'fioles-optimisees' && chance(rng, x.passif.parametres.economie ?? 0.25);
@@ -1144,7 +1146,7 @@ export function choisirActionIA(contenu: Contenu, combat: Combat, rng: Rng, x: C
   if (meilleure) {
     let cible: string | undefined;
     if (meilleure.cible === 'allie') {
-      const blesse = [...amis].sort((a, b) => a.pv / a.pvMax - b.pv / b.pvMax)[0];
+      const blesse = trier([...amis], (a, b) => a.pv / a.pvMax - b.pv / b.pvMax)[0];
       cible = blesse?.id ?? x.id;
     } else if (meilleure.cible === 'allie_ko') {
       cible = combat.combattants.find((a) => a.camp === x.camp && a.ko && a.type !== 'invocation')?.id;
@@ -1159,10 +1161,10 @@ export function choisirActionIA(contenu: Contenu, combat: Combat, rng: Rng, x: C
 
 function choisirCibleEnnemie(combat: Combat, rng: Rng, x: Combattant, portee: 'melee' | 'distance'): Combattant | undefined {
   const v = ciblesValides(combat, x, 'ennemi', portee);
-  if (!v.length) return undefined;
+  if (v.length === 0) return undefined;
   if (x.camp === 'heros') {
     // les héros concentrent leurs coups sur la cible la plus affaiblie
-    return [...v].sort((a, b) => a.pv - b.pv)[0];
+    return trier([...v], (a, b) => a.pv - b.pv)[0];
   }
   // les ennemis frappent plutôt le rang avant et les cibles visibles
   const poids = v.map((y) => (y.rang === 'avant' ? 2 : 1) * (y.type === 'invocation' ? 0.7 : 1));
@@ -1174,7 +1176,7 @@ function choisirCibleEnnemie(combat: Combat, rng: Rng, x: Combattant, portee: 'm
 /** Second départ : rejoue le tour en cours depuis son début (une fois par session, géré par la partie). */
 export function annulerTour(combat: Combat): Combat {
   if (!combat.instantane) throw new Error('Aucun tour à annuler');
-  const restaure = JSON.parse(combat.instantane) as Combat;
+  const restaure = copieProfonde(combat.instantane);
   restaure.evenements = [...combat.evenements.filter((e) => e.tour < combat.tour), { tour: combat.tour, type: 'info', texte: 'Le temps se replie… le tour recommence ! (Second départ)' }];
   restaure.instantane = combat.instantane;
   restaure.resultat = null;
@@ -1187,7 +1189,7 @@ export function actionsDisponibles(contenu: Contenu, combat: Combat, acteurId: s
   const comps = toutesCompetences(contenu, x).map(({ comp, rang }) => ({
     comp, rang,
     utilisable: competenceUtilisable(contenu, x, comp),
-    raison: aEtat(x, 'silence') ? 'Réduit au silence' : (x.recharges[comp.id] ?? 0) > 0 ? `Recharge : ${x.recharges[comp.id]} tour(s)` : x.mana < comp.cout ? 'Mana insuffisant' : comp.id === 'souffle-draconique' && x.compteurs.souffle ? 'Déjà utilisé' : '',
+    raison: aEtat(x, 'silence') ? 'Réduit au silence' : (x.recharges[comp.id] ?? 0) > 0 ? `Recharge : ${x.recharges[comp.id]} tour(s)` : x.mana < comp.cout ? 'Mana insuffisant' : comp.id === 'souffle-draconique' && vrai(x.compteurs.souffle) ? 'Déjà utilisé' : '',
   }));
   return {
     competences: comps,
@@ -1254,7 +1256,7 @@ export function estimerAction(contenu: Contenu, combat: Combat, a: ActionCombat)
   };
   const ajouter = (d: [number, number]) => { res.degats = res.degats ? [res.degats[0] + d[0], res.degats[1] + d[1]] : d; };
   const verifierCible = (id: string | undefined, portee: 'melee' | 'distance'): Combattant | string => {
-    const c = id ? combat.combattants.find((y) => y.id === id) : undefined;
+    const c = vrai(id) ? combat.combattants.find((y) => y.id === id) : undefined;
     if (!c) return 'Il faut choisir une cible.';
     if (!actif(c)) return `${c.nom} est déjà hors de combat.`;
     if (c.camp === x.camp) return `${c.nom} est un allié.`;
@@ -1295,7 +1297,7 @@ export function estimerAction(contenu: Contenu, combat: Combat, a: ActionCombat)
         res.nbCibles = k.comp.cible === 'tous_ennemis' ? adversaires(combat, x).length : 1;
       } else if (k.comp.cible === 'allie' || k.comp.cible === 'allie_ko') {
         const liste = k.comp.cible === 'allie' ? allies(combat, x) : ciblesValides(combat, x, 'allie_ko', 'distance');
-        if (!a.cible || !liste.some((y) => y.id === a.cible)) return estimationImpossible(k.comp.cible === 'allie_ko' ? 'Il faut choisir un allié K.O.' : 'Il faut choisir un allié.');
+        if (!vrai(a.cible) || !liste.some((y) => y.id === a.cible)) return estimationImpossible(k.comp.cible === 'allie_ko' ? 'Il faut choisir un allié K.O.' : 'Il faut choisir un allié.');
       } else if (k.comp.cible === 'tous_allies') res.nbCibles = allies(combat, x).length;
       for (const ef of k.comp.effets) {
         if (ef.type === 'degats' && principale) {

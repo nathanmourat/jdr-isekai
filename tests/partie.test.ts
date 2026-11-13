@@ -1,7 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import { contenuDisque } from '../src/contenu/node';
 import { appliquer, choixVisibles, ErreurAction, listeHeros, nouvellePartie, palierCompagnon, rejouer, type Action } from '../src/moteur/partie';
-import { creerSauvegarde, ErreurSauvegarde, lireSauvegarde } from '../src/sauvegarde/migrations';
+import { creerSauvegarde, ErreurSauvegarde } from '../src/sauvegarde/migrations';
+import { lireSauvegarde } from '../src/sauvegarde/fichier';
 import { groupeDeDeux, jouer, jouerPrologues, jouerSceneGroupe, finirScene, finirTempsLibre, nouvellePartieDeTest } from './robot';
 
 const c = contenuDisque();

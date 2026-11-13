@@ -1,8 +1,10 @@
 /**
  * Héros : création, caractéristiques, niveaux, XP.
  */
-import type { Contenu } from '../contenu/charger';
-import { CARACS, type Competence } from '../contenu/schemas';
+import type { Contenu } from '../contenu/types';
+import type { Competence } from '../contenu/schemas';
+import { CARACS } from '../contenu/constantes';
+import { valeurs, vrai } from './outils';
 
 export type Carac = (typeof CARACS)[number];
 export type Caracs = Record<Carac, number>;
@@ -78,8 +80,8 @@ export function caracsDeDepart(contenu: Contenu, classe: string, race: string, l
       if ((plus[c] ?? 0) > 1 || (moins[c] ?? 0) > 1) throw new Error('Répartition libre : au plus +1 ou −1 par caractéristique');
       if ((plus[c] ?? 0) > 0 && (moins[c] ?? 0) > 0) throw new Error('Répartition libre : une même caractéristique ne peut pas avoir +1 et −1');
     }
-    const sp = Object.values(plus).reduce((a, b) => a + (b ?? 0), 0);
-    const sm = Object.values(moins).reduce((a, b) => a + (b ?? 0), 0);
+    const sp = valeurs(plus).reduce((a, b) => a + (b ?? 0), 0);
+    const sm = valeurs(moins).reduce((a, b) => a + (b ?? 0), 0);
     if (sp !== ra.modificateurs_libres.plus || sm !== ra.modificateurs_libres.moins) {
       throw new Error(`Répartition libre invalide : il faut +${ra.modificateurs_libres.plus} et −${ra.modificateurs_libres.moins}`);
     }
@@ -104,7 +106,7 @@ export function creerHeros(contenu: Contenu, o: OptionsCreation): Heros {
   const h: Heros = {
     id: o.id,
     joueurId: o.joueurId,
-    nom: o.nom.trim() || 'Héros sans nom',
+    nom: (vrai(o.nom.trim()) ? o.nom.trim() : 'Héros sans nom'),
     classe: o.classe,
     race: o.race,
     don: o.don,
@@ -131,7 +133,7 @@ export function creerHeros(contenu: Contenu, o: OptionsCreation): Heros {
     varianteActive: {},
     equipees: null,
   };
-  if (o.niveau && o.niveau > 1) monterJusquA(contenu, h, o.niveau, true);
+  if (vrai(o.niveau) && o.niveau > 1) monterJusquA(contenu, h, o.niveau, true);
   return h;
 }
 
@@ -181,9 +183,9 @@ export function repartitionAutomatique(contenu: Contenu, h: Heros) {
     const c = ordre[i++ % ordre.length];
     if (caracsTotales(contenu, h)[c] < 99) { h.caracsBonus[c]++; h.pointsCaracDispo--; }
   }
-  if (h.niveau >= contenu.config.personnage.niveau_branche && !h.branche) choisirBranche(contenu, h, cl.branches[0].id);
+  if (h.niveau >= contenu.config.personnage.niveau_branche && !vrai(h.branche)) choisirBranche(contenu, h, cl.branches[0].id);
   const comps = competencesConnues(contenu, h);
-  while (h.pointsCompetenceDispo > 0 && comps.length) {
+  while (h.pointsCompetenceDispo > 0 && comps.length > 0) {
     const cible = comps.reduce((a, b) => ((h.rangsCompetences[a] ?? 1) <= (h.rangsCompetences[b] ?? 1) ? a : b));
     if ((h.rangsCompetences[cible] ?? 1) >= contenu.config.personnage.rang_competence_max) break;
     ameliorerCompetence(contenu, h, cible);
@@ -198,7 +200,7 @@ export function repartirPoint(contenu: Contenu, h: Heros, c: Carac) {
 
 export function choisirBranche(contenu: Contenu, h: Heros, brancheId: string) {
   const cl = contenu.classes[h.classe];
-  if (h.branche) throw new Error('La branche est déjà choisie');
+  if (vrai(h.branche)) throw new Error('La branche est déjà choisie');
   if (h.niveau < contenu.config.personnage.niveau_branche) throw new Error(`Branche disponible au niveau ${contenu.config.personnage.niveau_branche}`);
   if (!cl.branches.some((b) => b.id === brancheId)) throw new Error('Branche inconnue');
   h.branche = brancheId;
@@ -232,8 +234,8 @@ export function ameliorerCompetence(contenu: Contenu, h: Heros, id: string) {
 export function caracsTotales(contenu: Contenu, h: Heros): Caracs {
   const res = { ...h.caracsBase };
   for (const c of CARACS) res[c] += h.caracsBonus[c];
-  for (const slot of Object.values(h.equipement)) {
-    const o = slot ? contenu.objets[slot] : null;
+  for (const slot of valeurs(h.equipement)) {
+    const o = vrai(slot) ? contenu.objets[slot] : null;
     for (const c of CARACS) res[c] += o?.bonus?.caracs?.[c] ?? 0;
   }
   return res;

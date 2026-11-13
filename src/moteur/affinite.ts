@@ -3,7 +3,8 @@
  * Un compagnon peut refuser : lignes rouges, palier « Engagée » réservé à la fin de sa quête,
  * aucune romance avant que le héros soit adulte.
  */
-import type { Contenu } from '../contenu/charger';
+import type { Contenu } from '../contenu/types';
+import { trier, vrai } from './outils';
 
 export interface Affinite {
   points: number;
@@ -16,7 +17,7 @@ export interface Affinite {
 export const affiniteVide = (): Affinite => ({ points: 0, blocage: null, dernierCadeau: null, lignesFranchies: [] });
 
 export function paliers(contenu: Contenu) {
-  return [...contenu.config.affinite.paliers].sort((a, b) => a.seuil - b.seuil);
+  return trier([...contenu.config.affinite.paliers], (a, b) => a.seuil - b.seuil);
 }
 
 /** Palier effectif (tient compte des blocages et de la quête personnelle pour « Engagée »). */
@@ -43,7 +44,7 @@ export function paliersAtteints(contenu: Contenu, a: Affinite, queteTerminee: bo
 export function modifierAffinite(contenu: Contenu, a: Affinite, delta: number, opts: { ageHeros: number; bonusDialogue?: number }): number {
   if (opts.ageHeros < 18) return 0; // pas de relation avant l'âge adulte
   let d = delta;
-  if (d > 0 && opts.bonusDialogue) d = Math.round(d * (1 + opts.bonusDialogue));
+  if (d > 0 && vrai(opts.bonusDialogue)) d = Math.round(d * (1 + opts.bonusDialogue));
   const plafond = a.blocage === 'definitive' ? paliers(contenu).find((p) => p.id === 'proche')!.seuil - 1 : 100;
   const avant = a.points;
   a.points = Math.max(0, Math.min(plafond, a.points + d));

@@ -12,7 +12,8 @@ Si une demande est floue ou contradictoire : poser la question plutôt que devin
   - interface Svelte + Phaser ; mode local OK ; mode Supabase écrit (`src/sync/supabase.ts`, `supabase/schema.sql`) mais **pas encore testé contre un vrai projet** (le groupe doit créer le projet)
   - textures du groupe intégrées (V2 : priorité 1 sauf portraits d'Aveline, calques de race, icônes ; bestiaire de 28 monstres)
 - [x] Combat libre + IA maison (13/11) : voir CONCEPTION § 7.5
-- [ ] Étape 3 et suivantes : chapitres 2 à 6, un par itération
+- [ ] Étape 3 et suivantes : chapitres 2 à 6, un par itération (**en pause** : portage Roblox d'abord)
+- [ ] **Portage Roblox (décidé le 13/11)** : voir `roblox/README-ROBLOX.md`. R0 fait (moteur traduit en Luau, parité web/Roblox vérifiée) ; R1 à R5 à venir
 
 ## Décisions validées (étape 0)
 - **Support** : jeu web **2D** (navigateur, PC et mobile).
@@ -29,6 +30,13 @@ Si une demande est floue ou contradictoire : poser la question plutôt que devin
 - **Romance** : **harem libre** (plusieurs compagnes engagées par héros, et une compagne peut aimer plusieurs héros), mais **chaque compagne peut refuser** (affinité, lignes rouges). Uniquement entre adultes, rien d'explicite (fondu au noir).
 - **Joueurs** : identifiés par **pseudo**, aucun prénom codé en dur.
 - **Races (révision du 13/11)** : **8 races** (humain, elfe, demi-elfe, nain, Ourvalis, Vulpin, demi-démon, sang-dragon). Chacune a des **modificateurs de caractéristiques à somme nulle** (le total reste de 60 ; chaque caractéristique reste entre 3 et 17) et un **trait racial** (un avantage et un défaut). Détails dans `docs/CONCEPTION.md` § 3.6. En graphisme : un **calque par race** superposé au sprite de classe (l'humain n'en a pas), une teinte de peau et une taille gérées par le code, et un portrait par défaut par race.
+
+## Version Roblox (décisions du 13/11)
+- **Portage complet** sur Roblox, en **3D simple** (style Roblox, décors générés par le code). Code dans `roblox/` (roblox-ts + Rojo).
+- **Compagnes = amitié seulement** sur Roblox (expérience tout public). La version web garde la romance. Règles Roblox : romance seulement en 17+ avec pièce d'identité.
+- **Un seul moteur** : `src/moteur` est traduit en Luau par TypeScriptToLua (`roblox/src/shared/moteur.lua`, généré). Le moteur doit rester compatible Luau : `npm run roblox:verifier` (dans `npm test`). Utiliser `vrai`, `cles/valeurs/entrees`, `trier`, `copieProfonde` (`src/moteur/outils.ts`).
+- Test de parité web/Roblox sous Lune : `npm run roblox:parite`.
+- Nathan teste dans Studio (je n'ai pas Studio) : chaque étape a une liste de contrôle dans `roblox/README-ROBLOX.md`.
 
 ## Choix techniques
 - TypeScript + Vite + **Phaser 3** (rendu 2D) + Svelte (menus et dialogues par-dessus) ; tests avec Vitest ; Playwright pour le test de bout en bout.

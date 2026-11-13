@@ -7,6 +7,7 @@
  * Les anciennes parties restent ainsi jouables après une mise à jour.
  */
 import { VERSION_ETAT, type Action, type EtatPartie } from '../moteur/partie';
+import { copieProfonde } from '../moteur/outils';
 
 export const FORMAT = 'velmaris-sauvegarde';
 
@@ -41,12 +42,11 @@ export function creerSauvegarde(depart: EtatPartie, actions: Action[], date: str
   return { format: FORMAT, version: VERSION_ETAT, exporteeLe: date, depart, actions, instantane };
 }
 
-export function lireSauvegarde(texte: string): Sauvegarde {
-  let brut: unknown;
-  try { brut = JSON.parse(texte); } catch { throw new ErreurSauvegarde('Fichier illisible : ce n\'est pas une sauvegarde (JSON invalide).'); }
-  const s = brut as Partial<Sauvegarde>;
-  if (!s || s.format !== FORMAT) throw new ErreurSauvegarde('Ce fichier n\'est pas une sauvegarde des Appelés de Velmaris.');
-  if (typeof s.version !== 'number' || !s.depart || !Array.isArray(s.actions)) throw new ErreurSauvegarde('Sauvegarde incomplète ou abîmée.');
+/** Vérifie une sauvegarde déjà décodée (objet), puis la met au format courant. */
+export function verifierSauvegarde(brut: unknown): Sauvegarde {
+  const s = brut as Partial<Sauvegarde> | null;
+  if (s === null || typeof s !== 'object' || s.format !== FORMAT) throw new ErreurSauvegarde('Ce fichier n\'est pas une sauvegarde des Appelés de Velmaris.');
+  if (typeof s.version !== 'number' || s.depart === undefined || !Array.isArray(s.actions)) throw new ErreurSauvegarde('Sauvegarde incomplète ou abîmée.');
   if (s.version > VERSION_ETAT) throw new ErreurSauvegarde(`Cette sauvegarde vient d'une version plus récente du jeu (format ${s.version}). Mettez le jeu à jour.`);
   return migrer(s as Sauvegarde);
 }
@@ -56,7 +56,7 @@ export function migrer(s: Sauvegarde): Sauvegarde {
   while (res.version < VERSION_ETAT) {
     const m = migrations[res.version];
     if (!m) throw new ErreurSauvegarde(`Aucune migration pour passer du format ${res.version} au format ${res.version + 1}.`);
-    res = m(structuredClone(res));
+    res = m(copieProfonde(res));
   }
   // l'instantané n'est valable que pour la version courante
   if (res !== s) delete res.instantane;

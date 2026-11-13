@@ -5,7 +5,8 @@
  */
 import { z } from 'zod';
 
-export const CARACS = ['FOR', 'AGI', 'INT', 'VIT', 'ESP', 'CHA'] as const;
+import { CARACS } from './constantes';
+export { CARACS };
 export const zCarac = z.enum(CARACS);
 export const zCaracs = z.object({
   FOR: z.number().int(),

@@ -2,7 +2,8 @@
  * Calendrier de Velmaris. Le temps est compté en jours depuis le 1er Germinal de l'année de départ
  * de la saison 1 (jour 0). Un nombre négatif correspond au passé (prologue d'enfance).
  */
-import type { Contenu } from '../contenu/charger';
+import type { Contenu } from '../contenu/types';
+import { vrai } from './outils';
 
 export interface DateMonde { annee: number; mois: number; jour: number }
 
@@ -47,7 +48,7 @@ export function fetesEntre(contenu: Contenu, de: number, a: number): { jour: num
   const res: { jour: number; nom: string }[] = [];
   for (let j = de + 1; j <= a; j++) {
     const f = feteDuJour(contenu, j);
-    if (f) res.push({ jour: j, nom: f });
+    if (vrai(f)) res.push({ jour: j, nom: f });
   }
   return res;
 }

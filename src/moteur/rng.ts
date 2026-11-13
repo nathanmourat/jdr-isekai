@@ -3,6 +3,8 @@
  * Même graine + mêmes tirages = mêmes résultats sur tous les navigateurs.
  * L'état tient dans un seul nombre, sauvegardé avec la partie.
  */
+import { imul } from './outils';
+
 export interface Rng {
   etat: number;
 }
@@ -10,16 +12,16 @@ export interface Rng {
 export function creerRng(graine: number | string): Rng {
   let h = 2166136261 >>> 0;
   const s = String(graine);
-  for (let i = 0; i < s.length; i++) h = Math.imul(h ^ s.charCodeAt(i), 16777619) >>> 0;
-  return { etat: h || 1 };
+  for (let i = 0; i < s.length; i++) h = imul(h ^ s.charCodeAt(i), 16777619) >>> 0;
+  return { etat: h !== 0 ? h : 1 };
 }
 
 /** Nombre dans [0, 1[ (algorithme mulberry32). Fait avancer l'état. */
 export function aleatoire(rng: Rng): number {
   rng.etat = (rng.etat + 0x6d2b79f5) >>> 0;
   let t = rng.etat;
-  t = Math.imul(t ^ (t >>> 15), t | 1);
-  t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+  t = imul(t ^ (t >>> 15), t | 1);
+  t = t ^ (t + imul(t ^ (t >>> 7), t | 61));
   return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
 }
 

@@ -2,7 +2,7 @@
   import { jeu } from '../jeu.svelte';
   import { CanalLocal, creerPartieLocale, partiesLocales, supprimerPartieLocale } from '../../sync/local';
   import { CanalSupabase, creerPartieEnLigne, enLigneConfigure, mesPartiesEnLigne, rejoindrePartieEnLigne } from '../../sync/supabase';
-  import { lireSauvegarde } from '../../sauvegarde/migrations';
+  import { lireSauvegarde } from '../../sauvegarde/fichier';
   import type { InfosPartie } from '../../sync/types';
   import { urlAsset } from '../../rendu/assets';
 

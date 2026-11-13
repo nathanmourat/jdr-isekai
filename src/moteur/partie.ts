@@ -5,7 +5,7 @@
  * `appliquer` ne fait jamais appel à l'heure ni au hasard du navigateur : tout passe par le Rng de la partie.
  * Ainsi, chaque joueur obtient exactement le même état en rejouant la même liste d'actions.
  */
-import type { Contenu } from '../contenu/charger';
+import type { Contenu } from '../contenu/types';
 import type { Choix, Condition, Consequence, Noeud, Scene } from '../contenu/schemas';
 import { affiniteVide, modifierAffinite, palier, paliersAtteints, pardonner, peutOffrir, reactionCadeau, verifierLignesRouges, type Affinite } from './affinite';
 import {
@@ -17,6 +17,7 @@ import {
   xpPourNiveau, type Carac, type Heros, type OptionsCreation,
 } from './personnage';
 import { creerRng, de, type Rng } from './rng';
+import { cles, copieProfonde, entrees, valeurs, vrai } from './outils';
 import { apprendre, creerTechnique, idFusion, peutApprendre, type Technique } from './fusions';
 import { anneeDepart, chapitreDe, fetesEntre, formaterDate, joursParMois, versDate, versJour } from './temps';
 
@@ -193,7 +194,7 @@ export function herosDuJoueur(etat: EtatPartie, joueur: string): Heros {
 }
 
 export function listeHeros(etat: EtatPartie): Heros[] {
-  return etat.ordreJoueurs.map((j) => etat.joueurs[j].herosId).filter((x): x is string => !!x).map((h) => etat.heros[h]);
+  return etat.ordreJoueurs.map((j) => etat.joueurs[j].herosId).filter((x): x is string => vrai(x)).map((h) => etat.heros[h]);
 }
 
 function journal(contenu: Contenu, etat: EtatPartie, texte: string) {
@@ -202,7 +203,7 @@ function journal(contenu: Contenu, etat: EtatPartie, texte: string) {
 }
 
 export function aFlag(etat: EtatPartie, flag: string, herosId?: string): boolean {
-  return !!etat.flags[flag] || (!!herosId && !!etat.flags[`${herosId}:${flag}`]);
+  return !!etat.flags[flag] || (vrai(herosId) && !!etat.flags[`${herosId}:${flag}`]);
 }
 
 export function affinite(etat: EtatPartie, herosId: string, compagnon: string): Affinite {
@@ -211,7 +212,7 @@ export function affinite(etat: EtatPartie, herosId: string, compagnon: string): 
 }
 
 export function queteTerminee(etat: EtatPartie, q: string | undefined): boolean {
-  return !!q && !!etat.quetes[q]?.terminee;
+  return vrai(q) && !!etat.quetes[q]?.terminee;
 }
 
 export function palierCompagnon(contenu: Contenu, etat: EtatPartie, herosId: string, compagnon: string) {
@@ -232,31 +233,31 @@ const ordreRangs = ['F', 'E', 'D', 'C', 'B', 'A', 'S'];
 export function conditionHeros(contenu: Contenu, etat: EtatPartie, c: Condition | undefined, h: Heros | null): boolean {
   if (!c) return true;
   const liste = (v?: string | string[]) => (v === undefined ? null : Array.isArray(v) ? v : [v]);
-  if (c.flag && !aFlag(etat, c.flag, h?.id)) return false;
-  if (c.pas_flag && aFlag(etat, c.pas_flag, h?.id)) return false;
-  for (const [q, et] of Object.entries(c.quete_etape ?? {})) if (etat.quetes[q]?.etape !== et) return false;
-  if (c.quete_terminee && !etat.quetes[c.quete_terminee]?.terminee) return false;
-  for (const [f, v] of Object.entries(c.reputation_min ?? {})) if ((etat.reputation[f] ?? 0) < v) return false;
+  if (vrai(c.flag) && !aFlag(etat, c.flag, h?.id)) return false;
+  if (vrai(c.pas_flag) && aFlag(etat, c.pas_flag, h?.id)) return false;
+  for (const [q, et] of entrees(c.quete_etape ?? {})) if (etat.quetes[q]?.etape !== et) return false;
+  if (vrai(c.quete_terminee) && !etat.quetes[c.quete_terminee]?.terminee) return false;
+  for (const [f, v] of entrees(c.reputation_min ?? {})) if ((etat.reputation[f] ?? 0) < v) return false;
   if (c.date_min && etat.jour < versJour(contenu, c.date_min)) return false;
   if (c.ou && !c.ou.some((x) => conditionHeros(contenu, etat, x, h))) return false;
-  const besoinHeros = c.race || c.classe || c.origine || c.don || c.affinite_min || c.affinite_palier || c.carac_min || c.niveau_min !== undefined || c.or_min !== undefined || c.objet || c.rang_guilde_min;
+  const besoinHeros = [c.race, c.classe, c.origine, c.don, c.affinite_min, c.affinite_palier, c.carac_min, c.objet, c.rang_guilde_min].some((x) => vrai(x)) || c.niveau_min !== undefined || c.or_min !== undefined;
   if (!besoinHeros) return true;
   if (!h) return false;
   const races = liste(c.race); if (races && !races.includes(h.race)) return false;
   const classes = liste(c.classe); if (classes && !classes.includes(h.classe)) return false;
   if (c.origine && h.origine !== c.origine) return false;
-  if (c.don && h.don !== c.don) return false;
-  for (const [co, v] of Object.entries(c.affinite_min ?? {})) if (affinite(etat, h.id, co).points < v) return false;
-  for (const [co, p] of Object.entries(c.affinite_palier ?? {})) {
+  if (vrai(c.don) && h.don !== c.don) return false;
+  for (const [co, v] of entrees(c.affinite_min ?? {})) if (affinite(etat, h.id, co).points < v) return false;
+  for (const [co, p] of entrees(c.affinite_palier ?? {})) {
     const ps = contenu.config.affinite.paliers.map((x) => x.id);
     if (palierCompagnon(contenu, etat, h.id, co).index < ps.indexOf(p)) return false;
   }
   const ca = caracsTotales(contenu, h);
-  for (const [k, v] of Object.entries(c.carac_min ?? {})) if (ca[k as Carac] < (v ?? 0)) return false;
+  for (const [k, v] of entrees(c.carac_min ?? {})) if (ca[k as Carac] < (v ?? 0)) return false;
   if (c.niveau_min !== undefined && h.niveau < c.niveau_min) return false;
   if (c.or_min !== undefined && h.or < c.or_min) return false;
-  if (c.objet && !(h.inventaire[c.objet] > 0)) return false;
-  if (c.rang_guilde_min && ordreRangs.indexOf(rangGuilde(contenu, etat.pointsGuilde[h.id] ?? 0)) < ordreRangs.indexOf(c.rang_guilde_min)) return false;
+  if (vrai(c.objet) && !(h.inventaire[c.objet] > 0)) return false;
+  if (vrai(c.rang_guilde_min) && ordreRangs.indexOf(rangGuilde(contenu, etat.pointsGuilde[h.id] ?? 0)) < ordreRangs.indexOf(c.rang_guilde_min)) return false;
   return true;
 }
 
@@ -276,26 +277,26 @@ function appliquerConsequence(contenu: Contenu, etat: EtatPartie, eff: Consequen
     if (f.startsWith('heros:')) for (const h of heros) etat.flags[`${h}:${f.slice(6)}`] = true;
     else etat.flags[f] = true;
   }
-  if (eff.retirer_flag) delete etat.flags[eff.retirer_flag];
-  for (const [f, v] of Object.entries(eff.reputation ?? {})) {
+  if (vrai(eff.retirer_flag)) delete etat.flags[eff.retirer_flag];
+  for (const [f, v] of entrees(eff.reputation ?? {})) {
     etat.reputation[f] = Math.max(-100, Math.min(100, (etat.reputation[f] ?? 0) + v));
     messages.push(`Réputation ${nomFaction(f)} ${v > 0 ? '+' : ''}${v}`);
   }
-  for (const [co, v] of Object.entries(eff.affinite ?? {})) {
+  for (const [co, v] of entrees(eff.affinite ?? {})) {
     for (const h of hs) {
       const bonus = (contenu.races[h.race].trait.parametres.affinite_dialogue ?? 0) + (contenu.dons[h.don].parametres.affinite_dialogue ?? 0);
       const d = modifierAffinite(contenu, affinite(etat, h.id, co), v, { ageHeros: age(h, versDate(contenu, etat.jour).annee), bonusDialogue: bonus });
       if (d !== 0) messages.push(`${contenu.compagnons[co].nom} : affinité ${d > 0 ? '+' : ''}${d} (${h.nom})`);
     }
   }
-  if (eff.xp) for (const h of hs) { const n = gagnerXp(contenu, h, eff.xp); messages.push(`${h.nom} gagne ${eff.xp} XP${n ? ` et monte au niveau ${h.niveau} !` : ''}`); }
-  if (eff.or) for (const h of hs) { h.or = Math.max(0, h.or + eff.or); messages.push(`${h.nom} ${eff.or > 0 ? 'gagne' : 'perd'} ${Math.abs(eff.or)} pièces d'or`); }
+  if (vrai(eff.xp)) for (const h of hs) { const n = gagnerXp(contenu, h, eff.xp); messages.push(`${h.nom} gagne ${eff.xp} XP${vrai(n) ? ` et monte au niveau ${h.niveau} !` : ''}`); }
+  if (vrai(eff.or)) for (const h of hs) { h.or = Math.max(0, h.or + eff.or); messages.push(`${h.nom} ${eff.or > 0 ? 'gagne' : 'perd'} ${Math.abs(eff.or)} pièces d'or`); }
   for (const o of liste(eff.objet)) {
     const h = hs[0];
-    if (h) { h.inventaire[o] = (h.inventaire[o] ?? 0) + 1; messages.push(`${h.nom} obtient : ${contenu.objets[o].nom}`); }
+    if (h !== undefined) { h.inventaire[o] = (h.inventaire[o] ?? 0) + 1; messages.push(`${h.nom} obtient : ${contenu.objets[o].nom}`); }
   }
-  if (eff.retirer_objet) for (const h of hs) if (h.inventaire[eff.retirer_objet]) { h.inventaire[eff.retirer_objet]--; break; }
-  if (eff.points_guilde) for (const h of hs) {
+  if (vrai(eff.retirer_objet)) for (const h of hs) if (vrai(h.inventaire[eff.retirer_objet])) { h.inventaire[eff.retirer_objet]--; break; }
+  if (vrai(eff.points_guilde)) for (const h of hs) {
     const avant = rangGuilde(contenu, etat.pointsGuilde[h.id] ?? 0);
     etat.pointsGuilde[h.id] = (etat.pointsGuilde[h.id] ?? 0) + eff.points_guilde;
     const apres = rangGuilde(contenu, etat.pointsGuilde[h.id]);
@@ -308,29 +309,29 @@ function appliquerConsequence(contenu: Contenu, etat: EtatPartie, eff: Consequen
     if (neuve) { journal(contenu, etat, `Nouvelle quête : ${q.titre}.`); messages.push(`Nouvelle quête : ${q.titre}`); }
     else messages.push(`Quête mise à jour : ${q.titre}`);
   }
-  if (eff.terminer_quete) {
+  if (vrai(eff.terminer_quete)) {
     etat.quetes[eff.terminer_quete] = { etape: etat.quetes[eff.terminer_quete]?.etape ?? 'fin', terminee: true };
     const q = contenu.quetes[eff.terminer_quete];
     journal(contenu, etat, `Quête terminée : ${q.titre}.`);
     messages.push(`Quête terminée : ${q.titre}`);
   }
-  if (eff.recruter && !etat.compagnonsRencontres.includes(eff.recruter)) {
+  if (vrai(eff.recruter) && !etat.compagnonsRencontres.includes(eff.recruter)) {
     etat.compagnonsRencontres.push(eff.recruter);
     const nom = contenu.compagnons[eff.recruter].nom;
     journal(contenu, etat, `${nom} croise la route du groupe.`);
     messages.push(`${nom} peut désormais accompagner un héros (palier « Alliée » requis).`);
   }
-  if (eff.pnj_mort && !etat.pnjMorts.includes(eff.pnj_mort)) {
+  if (vrai(eff.pnj_mort) && !etat.pnjMorts.includes(eff.pnj_mort)) {
     etat.pnjMorts.push(eff.pnj_mort);
     etat.flags[`mort:${eff.pnj_mort}`] = true;
     journal(contenu, etat, `${contenu.pnj[eff.pnj_mort]?.nom ?? eff.pnj_mort} a perdu la vie.`);
   }
   for (const h of hs) {
-    if (eff.atout) h.atout = eff.atout;
-    if (eff.origine_enfance) h.origineEnfance = eff.origine_enfance;
-    if (eff.contact && !h.contacts.includes(eff.contact)) h.contacts.push(eff.contact);
+    if (vrai(eff.atout)) h.atout = eff.atout;
+    if (vrai(eff.origine_enfance)) h.origineEnfance = eff.origine_enfance;
+    if (vrai(eff.contact) && !h.contacts.includes(eff.contact)) h.contacts.push(eff.contact);
   }
-  if (eff.journal) journal(contenu, etat, remplacerVariables(contenu, etat, eff.journal, heros));
+  if (vrai(eff.journal)) journal(contenu, etat, remplacerVariables(contenu, etat, eff.journal, heros));
   if (eff.avancer_temps) avancerTemps(contenu, etat, eff.avancer_temps.jours + eff.avancer_temps.mois * joursParMois(contenu));
   if (eff.aller_date) {
     const cible = versJour(contenu, eff.aller_date);
@@ -344,9 +345,9 @@ function appliquerConsequence(contenu: Contenu, etat: EtatPartie, eff: Consequen
     }
   }
   if (eff.soigner_groupe) for (const h of hs) h.blessure = false;
-  if (eff.fin_chapitre) { etat.finChapitre = eff.fin_chapitre; journal(contenu, etat, `Fin du chapitre ${eff.fin_chapitre}.`); }
+  if (vrai(eff.fin_chapitre)) { etat.finChapitre = eff.fin_chapitre; journal(contenu, etat, `Fin du chapitre ${eff.fin_chapitre}.`); }
   // Lignes rouges des compagnons
-  for (const h of hs) for (const co of Object.keys(contenu.compagnons)) {
+  for (const h of hs) for (const co of cles(contenu.compagnons)) {
     const lignes = verifierLignesRouges(contenu, co, affinite(etat, h.id, co), (f) => aFlag(etat, f, h.id));
     for (const l of lignes) messages.push(`${contenu.compagnons[co].nom} est profondément blessée : ${l}`);
     if (aFlag(etat, `pardon:${co}`, h.id)) pardonner(affinite(etat, h.id, co));
@@ -365,10 +366,10 @@ export function nomFaction(f: string): string {
 }
 
 export function remplacerVariables(contenu: Contenu, etat: EtatPartie, texte: string, heros: string[]): string {
-  const noms = heros.map((h) => etat.heros[h]?.nom).filter(Boolean);
+  const noms = heros.map((h) => etat.heros[h]?.nom).filter((n): n is string => vrai(n));
   const listeNoms = noms.length <= 1 ? noms[0] ?? 'le héros' : `${noms.slice(0, -1).join(', ')} et ${noms[noms.length - 1]}`;
-  const meneur = etat.meneur && etat.joueurs[etat.meneur]?.herosId ? etat.heros[etat.joueurs[etat.meneur].herosId!].nom : noms[0] ?? '';
-  const h0 = heros[0] ? etat.heros[heros[0]] : null;
+  const meneur = vrai(etat.meneur) && vrai(etat.joueurs[etat.meneur]?.herosId) ? etat.heros[etat.joueurs[etat.meneur].herosId!].nom : noms[0] ?? '';
+  const h0 = vrai(heros[0]) ? etat.heros[heros[0]] : null;
   return texte
     .replaceAll('{heros}', listeNoms)
     .replaceAll('{groupe}', listeNoms)
@@ -383,7 +384,7 @@ export function remplacerVariables(contenu: Contenu, etat: EtatPartie, texte: st
 export function sceneEstDisponible(contenu: Contenu, etat: EtatPartie, s: Scene, herosId: string | null): boolean {
   if (!s.repetable && etat.scenesVues.includes(s.id)) return false;
   if (s.type === 'individuel') {
-    if (!herosId) return false;
+    if (!vrai(herosId)) return false;
     if (!s.repetable && etat.scenesVues.includes(`${s.id}@${herosId}`)) return false;
     return conditionHeros(contenu, etat, s.disponible_si, etat.heros[herosId]);
   }
@@ -392,7 +393,7 @@ export function sceneEstDisponible(contenu: Contenu, etat: EtatPartie, s: Scene,
 
 /** Scènes que l'on peut lancer dans un lieu (ou partout si lieu = null). */
 export function scenesDisponibles(contenu: Contenu, etat: EtatPartie, lieu: string | null, herosId: string | null): Scene[] {
-  return Object.values(contenu.scenes).filter((s) => (lieu === null ? !s.lieu : s.lieu === lieu) && sceneEstDisponible(contenu, etat, s, herosId));
+  return valeurs(contenu.scenes).filter((s) => (lieu === null ? !vrai(s.lieu) : s.lieu === lieu) && sceneEstDisponible(contenu, etat, s, herosId));
 }
 
 function participantsGroupe(etat: EtatPartie): string[] {
@@ -446,7 +447,7 @@ function resoudreChoix(contenu: Contenu, etat: EtatPartie, cle: string, index: n
   const n = noeudCourant(contenu, etat, cle)!;
   const ch = n.choix[index];
   // Les conséquences de type affinité ne touchent que les héros qui ont voté ce choix
-  const herosVotants = votants.map((j) => etat.joueurs[j]?.herosId).filter((h): h is string => !!h && es.heros.includes(h));
+  const herosVotants = votants.map((j) => etat.joueurs[j]?.herosId).filter((h): h is string => vrai(h) && es.heros.includes(h));
   const msgs: string[] = [];
   for (const eff of ch.effets) {
     // affinité et drapeaux personnels (« heros:… ») : seulement pour ceux qui ont voté ce choix
@@ -455,7 +456,7 @@ function resoudreChoix(contenu: Contenu, etat: EtatPartie, cle: string, index: n
     const perso = flags.filter((f) => f.startsWith('heros:'));
     const communs = flags.filter((f) => !f.startsWith('heros:'));
     appliquerConsequence(contenu, etat, { ...reste, flag: communs }, es.heros, msgs);
-    if (aff || perso.length) appliquerConsequence(contenu, etat, { affinite: aff, flag: perso }, herosVotants.length ? herosVotants : es.heros, msgs);
+    if (aff || perso.length > 0) appliquerConsequence(contenu, etat, { affinite: aff, flag: perso }, herosVotants.length > 0 ? herosVotants : es.heros, msgs);
   }
   let suite = ch.aller;
   es.dernierTest = null;
@@ -483,7 +484,7 @@ function lancerCombat(contenu: Contenu, etat: EtatPartie, rencontre: string, cle
     const present = etat.joueurs[h.joueurId]?.present ?? false;
     allies.push(combattantHeros(contenu, h, present, etat.grimoire));
     const co = etat.equipe[id];
-    if (co && etat.compagnonsRencontres.includes(co)) {
+    if (vrai(co) && etat.compagnonsRencontres.includes(co)) {
       const p = paliersAtteints(contenu, affinite(etat, id, co), queteTerminee(etat, contenu.compagnons[co].quete));
       if (p.includes('alliee')) allies.push(combattantCompagnon(contenu, co, h, p));
     }
@@ -500,14 +501,14 @@ function terminerCombat(contenu: Contenu, etat: EtatPartie, cle: string) {
   for (const c of combat.combattants.filter((x) => x.type === 'heros')) {
     const h = etat.heros[c.herosId!];
     const utilisees = c.compteurs.potionsUtilisees ?? 0;
-    if (utilisees) h.inventaire['potion-soin-petite'] = Math.max(0, (h.inventaire['potion-soin-petite'] ?? 0) - utilisees);
+    if (vrai(utilisees)) h.inventaire['potion-soin-petite'] = Math.max(0, (h.inventaire['potion-soin-petite'] ?? 0) - utilisees);
   }
   if (combat.resultat === 'victoire') {
     const r = recompensesCombat(contenu, combat, etat.rng);
     for (const h of heros) {
       const n = gagnerXp(contenu, h, r.xpParHeros);
       h.or += r.orParHeros;
-      bilan.push(`${h.nom} : +${r.xpParHeros} XP, +${r.orParHeros} or${n ? ` — niveau ${h.niveau} !` : ''}`);
+      bilan.push(`${h.nom} : +${r.xpParHeros} XP, +${r.orParHeros} or${vrai(n) ? ` — niveau ${h.niveau} !` : ''}`);
     }
     r.objets.forEach((o, i) => {
       const h = heros[i % heros.length];
@@ -530,11 +531,11 @@ function apresCombat(contenu: Contenu, etat: EtatPartie, cle: string) {
   const { combat, contexte } = etat.combats[cle];
   delete etat.combats[cle];
   const victoire = combat.resultat === 'victoire';
-  if (contexte.origine === 'scene' && contexte.sceneCle && etat.scenes[contexte.sceneCle]) {
+  if (contexte.origine === 'scene' && vrai(contexte.sceneCle) && etat.scenes[contexte.sceneCle]) {
     entrerNoeud(contenu, etat, contexte.sceneCle, (victoire ? contexte.victoire : contexte.defaite)!);
     etat.scenes[contexte.sceneCle].messages.unshift(...(contexte.bilan ?? []));
   } else if (contexte.origine === 'donjon' && etat.donjon) {
-    if (victoire && contexte.evenementDonjon) etat.donjon.faits.push(contexte.evenementDonjon);
+    if (victoire && vrai(contexte.evenementDonjon)) etat.donjon.faits.push(contexte.evenementDonjon);
     etat.donjon.messages = [...(contexte.bilan ?? [])];
     if (!victoire) {
       // défaite ou fuite : le groupe se retrouve à l'entrée (mort douce) ; les combats déjà gagnés restent gagnés
@@ -544,7 +545,7 @@ function apresCombat(contenu: Contenu, etat: EtatPartie, cle: string) {
         : ['Le groupe se replie vers l\'entrée.'];
       etat.donjon = { ...d, x: contenu.donjons[d.id].depart.x, y: contenu.donjons[d.id].depart.y, messages: msg };
     }
-  } else if (contexte.origine === 'contrat' && contexte.contrat) {
+  } else if (contexte.origine === 'contrat' && vrai(contexte.contrat)) {
     const h = etat.heros[cle];
     const ct = contenu.contrats[contexte.contrat];
     if (victoire) {
@@ -562,7 +563,7 @@ const INFRANCHISSABLE = ['mur', 'vide', 'eau', 'colonne'];
 export function caseDonjon(contenu: Contenu, id: string, x: number, y: number): string {
   const d = contenu.donjons[id];
   const ligne = d.carte[y];
-  if (!ligne || x < 0 || x >= ligne.length) return 'vide';
+  if (!vrai(ligne) || x < 0 || x >= ligne.length) return 'vide';
   return d.legende[ligne[x]];
 }
 
@@ -576,18 +577,18 @@ function reveler(etat: EtatPartie, x: number, y: number) {
 
 function deplacerDonjon(contenu: Contenu, etat: EtatPartie, dx: number, dy: number) {
   const dj = etat.donjon ?? refuser("Le groupe n'est pas dans un donjon");
-  if (Object.keys(etat.combats).includes('groupe')) refuser('Un combat est en cours');
+  if (cles(etat.combats).includes('groupe')) refuser('Un combat est en cours');
   if (Math.abs(dx) + Math.abs(dy) !== 1) refuser('Déplacement d\'une case à la fois');
   const nx = dj.x + dx, ny = dj.y + dy;
   const t = caseDonjon(contenu, dj.id, nx, ny);
   const d = contenu.donjons[dj.id];
   const ev = d.evenements.find((e) => e.x === nx && e.y === ny && !(e.unique && dj.faits.includes(e.id)) && conditionScene(contenu, etat, e.si, participantsGroupe(etat)));
   if (INFRANCHISSABLE.some((m) => t.startsWith(m))) {
-    if (ev?.type === 'texte' && ev.texte) dj.messages = [ev.texte];
+    if (ev?.type === 'texte' && vrai(ev.texte)) dj.messages = [ev.texte];
     else refuser('Passage bloqué');
     return;
   }
-  if (t.startsWith('porte-verrouillee') && !listeHeros(etat).some((h) => h.inventaire['cle-crypte'])) {
+  if (t.startsWith('porte-verrouillee') && !listeHeros(etat).some((h) => vrai(h.inventaire['cle-crypte']))) {
     dj.messages = ['Une lourde porte de bronze, verrouillée. Il faudrait une clé.'];
     return;
   }
@@ -599,12 +600,12 @@ function deplacerDonjon(contenu: Contenu, etat: EtatPartie, dx: number, dy: numb
   switch (ev.type) {
     case 'combat':
       lancerCombat(contenu, etat, ev.rencontre!, 'groupe', { cle: 'groupe', origine: 'donjon', sceneCle: dj.sceneCle, victoire: null, defaite: null, evenementDonjon: ev.id, contrat: null, bilan: null });
-      if (ev.texte) dj.messages.push(ev.texte);
+      if (vrai(ev.texte)) dj.messages.push(ev.texte);
       return;
     case 'coffre': {
       dj.faits.push(ev.id);
       const msgs: string[] = [ev.texte ?? 'Un coffre !'];
-      if (ev.or) appliquerConsequence(contenu, etat, { or: Math.round(ev.or / Math.max(1, heros.length)) }, heros, msgs);
+      if (vrai(ev.or)) appliquerConsequence(contenu, etat, { or: Math.round(ev.or / Math.max(1, heros.length)) }, heros, msgs);
       ev.objets.forEach((o, i) => appliquerConsequence(contenu, etat, { objet: o }, [heros[i % heros.length]], msgs));
       dj.messages = msgs;
       return;
@@ -651,22 +652,22 @@ function resoudreTempsLibre(contenu: Contenu, etat: EtatPartie) {
     for (const choix of tl.choix[h.id] ?? []) {
       const a = contenu.activites[choix.activite];
       const g = a.gains;
-      if (g.xp_pourcent_niveau) { const xp = Math.round(xpPourNiveau(contenu, h.niveau) * g.xp_pourcent_niveau * f); const n = gagnerXp(contenu, h, xp); r.push(`${a.nom} : +${xp} XP${n ? ` (niveau ${h.niveau} !)` : ''}`); }
+      if (vrai(g.xp_pourcent_niveau)) { const xp = Math.round(xpPourNiveau(contenu, h.niveau) * g.xp_pourcent_niveau * f); const n = gagnerXp(contenu, h, xp); r.push(`${a.nom} : +${xp} XP${vrai(n) ? ` (niveau ${h.niveau} !)` : ''}`); }
       if (g.carac_plus_un) { h.pointsCaracDispo += 1; r.push(`${a.nom} : +1 point de caractéristique à répartir`); }
       let or = g.or_base * f;
       if (g.or_par_carac) or += caracsTotales(contenu, h)[g.or_par_carac.carac] * g.or_par_carac.valeur * f;
-      if (or) { h.or += Math.round(or); r.push(`${a.nom} : +${Math.round(or)} or`); }
-      if (g.points_guilde) { const p = Math.round(g.points_guilde * f); etat.pointsGuilde[h.id] = (etat.pointsGuilde[h.id] ?? 0) + p; r.push(`${a.nom} : +${p} points de guilde (rang ${rangGuilde(contenu, etat.pointsGuilde[h.id])})`); }
+      if (vrai(or)) { h.or += Math.round(or); r.push(`${a.nom} : +${Math.round(or)} or`); }
+      if (vrai(g.points_guilde)) { const p = Math.round(g.points_guilde * f); etat.pointsGuilde[h.id] = (etat.pointsGuilde[h.id] ?? 0) + p; r.push(`${a.nom} : +${p} points de guilde (rang ${rangGuilde(contenu, etat.pointsGuilde[h.id])})`); }
       if (g.objet_artisanat) {
         const n = Math.max(1, Math.round(f * (1 + (h.don === 'main-de-l-artisan' ? 1 : 0) + (h.classe === 'alchimiste' ? 1 : 0))));
         h.inventaire['potion-soin'] = (h.inventaire['potion-soin'] ?? 0) + n;
         r.push(`${a.nom} : ${n} potion(s) de soin fabriquée(s)`);
       }
-      if (g.affinite && choix.compagnon) {
+      if (vrai(g.affinite) && vrai(choix.compagnon)) {
         const d = modifierAffinite(contenu, affinite(etat, h.id, choix.compagnon), Math.round(g.affinite * Math.max(1, f)), { ageHeros: age(h, versDate(contenu, tl.jusqua).annee) });
         r.push(`${a.nom} avec ${contenu.compagnons[choix.compagnon].nom} : affinité +${d}`);
       }
-      if (g.affinite_tous) for (const co of etat.compagnonsRencontres) modifierAffinite(contenu, affinite(etat, h.id, co), g.affinite_tous, { ageHeros: age(h, versDate(contenu, tl.jusqua).annee) });
+      if (vrai(g.affinite_tous)) for (const co of etat.compagnonsRencontres) modifierAffinite(contenu, affinite(etat, h.id, co), g.affinite_tous, { ageHeros: age(h, versDate(contenu, tl.jusqua).annee) });
       if (g.soigne_blessure) { h.blessure = false; r.push(`${a.nom} : blessures guéries`); }
     }
     resultats[h.id] = r;
@@ -680,7 +681,7 @@ function resoudreTempsLibre(contenu: Contenu, etat: EtatPartie) {
 // ───────────────────────────── Application d'une action ─────────────────────────────
 
 export function appliquer(contenu: Contenu, etatAvant: EtatPartie, action: Action): EtatPartie {
-  const etat = structuredClone(etatAvant);
+  const etat = copieProfonde(etatAvant);
   etat.dernieresNouvelles = [];
   etat.grimoire ??= {}; // parties créées avant le combat libre
   const j = etat.joueurs[action.joueur];
@@ -688,11 +689,11 @@ export function appliquer(contenu: Contenu, etatAvant: EtatPartie, action: Actio
 
   switch (action.type) {
     case 'rejoindre': {
-      if (j) { j.pseudo = action.pseudo; j.present = true; break; }
+      if (j !== undefined) { j.pseudo = action.pseudo; j.present = true; break; }
       if (etat.ordreJoueurs.length >= MAX_JOUEURS) refuser(`La partie est complète (${MAX_JOUEURS} joueurs maximum)`);
       const pseudo = action.pseudo.trim().slice(0, 24);
-      if (!pseudo) refuser('Choisissez un pseudo');
-      if (Object.values(etat.joueurs).some((x) => x.pseudo.toLowerCase() === pseudo.toLowerCase())) refuser('Ce pseudo est déjà pris dans cette partie');
+      if (!vrai(pseudo)) refuser('Choisissez un pseudo');
+      if (valeurs(etat.joueurs).some((x) => x.pseudo.toLowerCase() === pseudo.toLowerCase())) refuser('Ce pseudo est déjà pris dans cette partie');
       etat.joueurs[action.joueur] = { id: action.joueur, pseudo, herosId: null, present: true };
       etat.ordreJoueurs.push(action.joueur);
       etat.meneur ??= action.joueur;
@@ -703,7 +704,7 @@ export function appliquer(contenu: Contenu, etatAvant: EtatPartie, action: Actio
       j.present = action.present;
       break;
     case 'creer_heros': {
-      if (j.herosId) refuser('Vous avez déjà un héros');
+      if (vrai(j.herosId)) refuser('Vous avez déjà un héros');
       const h = action.heros;
       if (listeHeros(etat).some((x) => x.don === h.don)) refuser(`Le don « ${contenu.dons[h.don]?.nom ?? h.don} » est déjà pris par un autre joueur`);
       const existants = listeHeros(etat);
@@ -717,16 +718,16 @@ export function appliquer(contenu: Contenu, etatAvant: EtatPartie, action: Actio
       // un réincarné qui arrive en cours de campagne n'a pas de prologue jouable
       etat.heros[id] = hero;
       j.herosId = id;
-      for (const [f, v] of Object.entries(contenu.races[hero.race].reputation_depart)) etat.reputation[f] = (etat.reputation[f] ?? 0) + v / Math.max(1, existants.length + 1);
+      for (const [f, v] of entrees(contenu.races[hero.race].reputation_depart)) etat.reputation[f] = (etat.reputation[f] ?? 0) + v / Math.max(1, existants.length + 1);
       etat.pointsGuilde[id] = enCours ? Math.round(existants.reduce((a, x) => a + (etat.pointsGuilde[x.id] ?? 0), 0) / Math.max(1, existants.length)) : 0;
       etat.equipe[id] = null;
-      if (contenu.dons[hero.don].parametres.affinite_depart) for (const co of Object.keys(contenu.compagnons)) affinite(etat, id, co).points = contenu.dons[hero.don].parametres.affinite_depart;
+      if (vrai(contenu.dons[hero.don].parametres.affinite_depart)) for (const co of cles(contenu.compagnons)) affinite(etat, id, co).points = contenu.dons[hero.don].parametres.affinite_depart;
       journal(contenu, etat, `${hero.nom}, ${contenu.races[hero.race].nom.toLowerCase()} ${contenu.classes[hero.classe].nom.toLowerCase()}, ${hero.origine === 'invoque' ? 'invoqué' : 'réincarné'}, rejoint l'histoire${niveau > 1 ? ` au niveau ${niveau}` : ''}.`);
       break;
     }
     case 'portrait': {
       const h = herosDuJoueur(etat, action.joueur);
-      if (action.image && action.image.length > 300_000) refuser('Image trop lourde (300 Ko maximum)');
+      if (vrai(action.image) && action.image.length > 300_000) refuser('Image trop lourde (300 Ko maximum)');
       h.portrait = action.image;
       break;
     }
@@ -763,14 +764,14 @@ export function appliquer(contenu: Contenu, etatAvant: EtatPartie, action: Actio
       if (action.cle !== 'groupe') { resoudreChoix(contenu, etat, action.cle, action.index, [action.joueur]); break; }
       es.votes[action.joueur] = action.index;
       // tous les joueurs présents ont voté → résolution
-      const presents = etat.ordreJoueurs.filter((x) => etat.joueurs[x].present && etat.joueurs[x].herosId);
+      const presents = etat.ordreJoueurs.filter((x) => etat.joueurs[x].present && vrai(etat.joueurs[x].herosId));
       if (presents.every((p) => es.votes[p] !== undefined)) resoudreVote(contenu, etat);
       break;
     }
     case 'trancher': {
       if (etat.meneur !== action.joueur) refuser('Seul le meneur du jour peut trancher');
       const es = etat.scenes.groupe ?? refuser('Aucune scène de groupe');
-      if (Object.keys(es.votes).length === 0) refuser('Personne n\'a encore voté');
+      if (cles(es.votes).length === 0) refuser('Personne n\'a encore voté');
       resoudreVote(contenu, etat);
       break;
     }
@@ -778,7 +779,7 @@ export function appliquer(contenu: Contenu, etatAvant: EtatPartie, action: Actio
       if (action.cle !== 'groupe' && j.herosId !== action.cle) refuser('Ce n\'est pas votre scène');
       if (etat.combats[action.cle]) refuser('Un combat est en cours');
       const n = noeudCourant(contenu, etat, action.cle) ?? refuser('Rien à continuer');
-      if (!n.suite) refuser('Il faut faire un choix');
+      if (!vrai(n.suite)) refuser('Il faut faire un choix');
       if (action.cle === 'groupe' && etat.donjon) refuser('Le groupe explore un donjon');
       entrerNoeud(contenu, etat, action.cle, n.suite!);
       break;
@@ -833,7 +834,7 @@ export function appliquer(contenu: Contenu, etatAvant: EtatPartie, action: Actio
       for (const a of action.activites) {
         const act = contenu.activites[a.activite] ?? refuser('Activité inconnue');
         if (!conditionHeros(contenu, etat, act.disponible_si, h)) refuser(`Activité « ${act.nom} » indisponible`);
-        if (act.choix_compagnon && (!a.compagnon || !etat.compagnonsRencontres.includes(a.compagnon))) refuser('Choisissez un compagnon rencontré');
+        if (act.choix_compagnon && (!vrai(a.compagnon) || !etat.compagnonsRencontres.includes(a.compagnon))) refuser('Choisissez un compagnon rencontré');
       }
       if (h.don === 'croissance-acceleree' && action.activites.filter((a) => a.activite === 'entrainement').length < 1) refuser('Le don Croissance accélérée donne une activité « Entraînement » en plus : choisissez-la');
       tl.choix[h.id] = action.activites;
@@ -865,10 +866,10 @@ export function appliquer(contenu: Contenu, etatAvant: EtatPartie, action: Actio
     }
     case 'equipe': {
       const h = herosDuJoueur(etat, action.joueur);
-      if (action.compagnon) {
+      if (vrai(action.compagnon)) {
         if (!etat.compagnonsRencontres.includes(action.compagnon)) refuser('Compagnon inconnu');
         if (palierCompagnon(contenu, etat, h.id, action.compagnon).index < 1) refuser('Il faut atteindre le palier « Alliée »');
-        const deja = Object.entries(etat.equipe).find(([hid, c]) => c === action.compagnon && hid !== h.id);
+        const deja = entrees(etat.equipe).find(([hid, c]) => c === action.compagnon && hid !== h.id);
         if (deja) refuser(`${contenu.compagnons[action.compagnon].nom} accompagne déjà ${etat.heros[deja[0]].nom}`);
       }
       etat.equipe[h.id] = action.compagnon;
@@ -881,7 +882,7 @@ export function appliquer(contenu: Contenu, etatAvant: EtatPartie, action: Actio
       if (!(h.inventaire[o.id] > 0)) refuser('Vous n\'avez pas cet objet');
       const emplacement = o.emplacement!;
       const ancien = h.equipement[emplacement];
-      if (ancien) h.inventaire[ancien] = (h.inventaire[ancien] ?? 0) + 1;
+      if (vrai(ancien)) h.inventaire[ancien] = (h.inventaire[ancien] ?? 0) + 1;
       h.inventaire[o.id]--;
       h.equipement[emplacement] = o.id;
       break;
@@ -889,12 +890,12 @@ export function appliquer(contenu: Contenu, etatAvant: EtatPartie, action: Actio
     case 'desequiper': {
       const h = herosDuJoueur(etat, action.joueur);
       const ancien = h.equipement[action.emplacement];
-      if (ancien) { h.inventaire[ancien] = (h.inventaire[ancien] ?? 0) + 1; h.equipement[action.emplacement] = null; }
+      if (vrai(ancien)) { h.inventaire[ancien] = (h.inventaire[ancien] ?? 0) + 1; h.equipement[action.emplacement] = null; }
       break;
     }
     case 'acheter': {
       const h = herosDuJoueur(etat, action.joueur);
-      const lieu = Object.values(contenu.regions).flatMap((r) => r.lieux).find((l) => l.id === action.lieu) ?? refuser('Lieu inconnu');
+      const lieu = valeurs(contenu.regions).flatMap((r) => r.lieux).find((l) => l.id === action.lieu) ?? refuser('Lieu inconnu');
       if (!lieu.boutique.includes(action.objet)) refuser('Cet objet n\'est pas vendu ici');
       const prix = prixAchat(contenu, h, action.objet);
       if (h.or < prix) refuser('Pas assez d\'or');
@@ -939,7 +940,7 @@ export function appliquer(contenu: Contenu, etatAvant: EtatPartie, action: Actio
       if (etat.combats[h.id]) refuser('Vous êtes déjà en combat');
       if (ordreRangs.indexOf(rangGuilde(contenu, etat.pointsGuilde[h.id] ?? 0)) < ordreRangs.indexOf(ct.rang_min)) refuser(`Contrat réservé au rang ${ct.rang_min}`);
       if (!conditionHeros(contenu, etat, ct.disponible_si, h)) refuser('Contrat indisponible');
-      if (ct.rencontre) {
+      if (vrai(ct.rencontre)) {
         lancerCombat(contenu, etat, ct.rencontre, h.id, { cle: h.id, origine: 'contrat', sceneCle: null, victoire: null, defaite: null, evenementDonjon: null, contrat: ct.id, bilan: null });
       } else if (ct.test) {
         const jet = de(etat.rng, 20);
@@ -979,12 +980,12 @@ export function appliquer(contenu: Contenu, etatAvant: EtatPartie, action: Actio
       const connue = (h.variantes[t.parent] ?? []).includes(t.id);
       if (!connue) {
         const pb = peutApprendre(contenu, h, t);
-        if (pb) refuser(pb);
+        if (vrai(pb)) refuser(pb);
       }
       // en combat : il faut que ce soit le tour du héros
-      const entree = action.cle ? etat.combats[action.cle] : undefined;
+      const entree = vrai(action.cle) ? etat.combats[action.cle] : undefined;
       const acteur = entree?.combat.combattants.find((c) => c.herosId === h.id && c.type === 'heros');
-      if (action.cle && (!entree || !acteur || entree.combat.enAttente !== acteur.id)) refuser('Ce n\'est pas votre tour');
+      if (vrai(action.cle) && (!entree || !acteur || entree.combat.enAttente !== acteur.id)) refuser('Ce n\'est pas votre tour');
       if (!etat.grimoire[id]) {
         etat.grimoire[id] = t;
         journal(contenu, etat, `${h.nom} invente une technique : ${t.nom}. Elle rejoint le grimoire de la partie.`);
@@ -1005,7 +1006,7 @@ export function appliquer(contenu: Contenu, etatAvant: EtatPartie, action: Actio
       const h = herosDuJoueur(etat, action.joueur);
       const t = etat.grimoire[action.technique] ?? refuser('Technique absente du grimoire');
       const pb = peutApprendre(contenu, h, t);
-      if (pb) refuser(pb);
+      if (vrai(pb)) refuser(pb);
       apprendre(h, t);
       journal(contenu, etat, `${h.nom} apprend la technique ${t.nom}.`);
       break;
@@ -1019,7 +1020,7 @@ export function appliquer(contenu: Contenu, etatAvant: EtatPartie, action: Actio
     }
     case 'variante_active': {
       const h = herosDuJoueur(etat, action.joueur);
-      if (action.technique && !(h.variantes[action.competence] ?? []).includes(action.technique)) refuser('Variante non apprise');
+      if (vrai(action.technique) && !(h.variantes[action.competence] ?? []).includes(action.technique)) refuser('Variante non apprise');
       h.varianteActive[action.competence] = action.technique;
       break;
     }
@@ -1033,7 +1034,7 @@ export function appliquer(contenu: Contenu, etatAvant: EtatPartie, action: Actio
       break;
     }
     case 'chapitre_suivant':
-      if (!etat.finChapitre) refuser('Le chapitre n\'est pas terminé');
+      if (!vrai(etat.finChapitre)) refuser('Le chapitre n\'est pas terminé');
       etat.finChapitre = null;
       break;
   }
@@ -1044,10 +1045,10 @@ export function appliquer(contenu: Contenu, etatAvant: EtatPartie, action: Actio
 function resoudreVote(contenu: Contenu, etat: EtatPartie) {
   const es = etat.scenes.groupe;
   const comptes = new Map<number, string[]>();
-  for (const [joueur, idx] of Object.entries(es.votes)) comptes.set(idx, [...(comptes.get(idx) ?? []), joueur]);
+  for (const [joueur, idx] of entrees(es.votes)) comptes.set(idx, [...(comptes.get(idx) ?? []), joueur]);
   let meilleur = -1, max = -1;
   for (const [idx, v] of comptes) {
-    if (v.length > max || (v.length === max && etat.meneur && v.includes(etat.meneur))) { meilleur = idx; max = v.length; }
+    if (v.length > max || (v.length === max && vrai(etat.meneur) && v.includes(etat.meneur))) { meilleur = idx; max = v.length; }
   }
   resoudreChoix(contenu, etat, 'groupe', meilleur, comptes.get(meilleur) ?? []);
 }

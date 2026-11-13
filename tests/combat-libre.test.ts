@@ -5,7 +5,7 @@ import { creerTechnique } from '../src/moteur/fusions';
 import { appliquer, nouvellePartie } from '../src/moteur/partie';
 import { creerHeros } from '../src/moteur/personnage';
 import { creerRng } from '../src/moteur/rng';
-import { lireSauvegarde } from '../src/sauvegarde/migrations';
+import { lireSauvegarde } from '../src/sauvegarde/fichier';
 import { jouer, nouvellePartieDeTest } from './robot';
 
 const c = contenuDisque();
