@@ -7110,18 +7110,55 @@ end
 function ____exports.formaterDate(contenu, jourAbsolu)
     local d = ____exports.versDate(contenu, jourAbsolu)
     local m = contenu.config.calendrier.mois[d.mois]
-    return ((((tostring((if d.jour == 1 then "1er" else d.jour)) .. " ") .. m.nom) .. " ") .. tostring(d.annee)) .. " AV"
+    return (((((((("Jour " .. tostring(d.jour)) .. " · ") .. m.nom) .. " (mois ") .. tostring(d.mois)) .. "/") .. tostring(#contenu.config.calendrier.mois)) .. ") · An ") .. tostring(d.annee)
+end
+--- Aide affichée au survol de la date : saison, calendrier « AV », fête la plus proche.
+function ____exports.aideDate(contenu, jourAbsolu)
+    local ____cal_result_2 = cal(contenu)
+    local jpa = ____cal_result_2.jpa
+    local d = ____exports.versDate(contenu, jourAbsolu)
+    local mois = contenu.config.calendrier.mois
+    local m = mois[d.mois]
+    local rangSaison = 0
+    do
+        local i = 0
+        while i < d.mois do
+            if mois[i + 1].saison == m.saison then
+                rangSaison = rangSaison + 1
+            end
+            i = i + 1
+        end
+    end
+    local article = (if m.saison == "printemps" then "du printemps" else (if m.saison == "hiver" then "de l'hiver" else "de l'" .. m.saison))
+    local res = {
+        ((((m.nom .. " : ") .. (if rangSaison == 1 then "1er" else tostring(rangSaison) .. "e")) .. " mois ") .. article) .. ".",
+        ("« AV » veut dire « Après le Voile » : c'est le calendrier de Velmaris. Nous sommes en " .. tostring(d.annee)) .. " AV."
+    }
+    local meilleure = nil
+    for ____, f in ipairs(contenu.config.calendrier.fetes) do
+        local dans = ____exports.versJour(contenu, {annee = d.annee, mois = f.mois, jour = f.jour}) - jourAbsolu
+        if dans < 0 then
+            dans = dans + jpa
+        end
+        if meilleure == nil or dans < meilleure.dans then
+            meilleure = {nom = f.nom, dans = dans}
+        end
+    end
+    if meilleure ~= nil then
+        res[#res + 1] = (if meilleure.dans == 0 then ("Aujourd'hui : " .. meilleure.nom) .. " !" else ((((("Prochaine fête : " .. meilleure.nom) .. ", dans ") .. tostring(meilleure.dans)) .. " jour") .. (if meilleure.dans > 1 then "s" else "")) .. ".")
+    end
+    return res
 end
 function ____exports.saisonDe(contenu, jourAbsolu)
     return contenu.config.calendrier.mois[____exports.versDate(contenu, jourAbsolu).mois].saison
 end
 function ____exports.feteDuJour(contenu, jourAbsolu)
     local d = ____exports.versDate(contenu, jourAbsolu)
-    local ____opt_2 = __TS__ArrayFind(
+    local ____opt_3 = __TS__ArrayFind(
         contenu.config.calendrier.fetes,
         function(____, f) return f.mois == d.mois and f.jour == d.jour end
     )
-    return ____opt_2 and ____opt_2.nom or nil
+    return ____opt_3 and ____opt_3.nom or nil
 end
 --- Fêtes rencontrées entre deux dates (exclu, inclus).
 function ____exports.fetesEntre(contenu, de, a)
@@ -8554,7 +8591,7 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 journal(
                     contenu,
                     etat,
-                    ((((((((hero.nom .. ", ") .. string.lower(contenu.races[hero.race].nom)) .. " ") .. string.lower(contenu.classes[hero.classe].nom)) .. ", ") .. (if hero.origine == "invoque" then "invoqué" else "réincarné")) .. ", rejoint l'histoire") .. (if niveau > 1 then " au niveau " .. tostring(niveau) else "")) .. "."
+                    ((((((((hero.nom .. " (") .. string.lower(contenu.races[hero.race].nom)) .. ", ") .. contenu.classes[hero.classe].nom) .. ", ") .. (if hero.origine == "invoque" then "invoqué" else "réincarné")) .. ") rejoint l'histoire") .. (if niveau > 1 then " au niveau " .. tostring(niveau) else "")) .. "."
                 )
                 break
             end
