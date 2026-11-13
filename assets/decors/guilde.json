@@ -1,0 +1,22 @@
+{
+ "_info": "Positions en pixels de l'image 1280×720. PNJ : point au sol (pieds). Autres : centre de la zone cliquable.",
+ "positions": {
+  "rowena": {
+   "x": 640,
+   "y": 466
+  },
+  "intendant-guilde": {
+   "x": 210,
+   "y": 494
+  },
+  "kaya": {
+   "x": 900,
+   "y": 600
+  },
+  "tableau": {
+   "x": 1050,
+   "y": 270
+  }
+ },
+ "avant_plan": "decors/guilde-avant.png"
+}

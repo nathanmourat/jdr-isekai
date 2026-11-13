@@ -1,0 +1,18 @@
+{
+ "_info": "Positions en pixels de l'image 1280×720. PNJ : point au sol (pieds). Autres : centre de la zone cliquable.",
+ "positions": {
+  "halvine": {
+   "x": 640,
+   "y": 410
+  },
+  "comptoir": {
+   "x": 640,
+   "y": 400
+  },
+  "porte": {
+   "x": 78,
+   "y": 320
+  }
+ },
+ "avant_plan": "decors/boutique-avant.png"
+}

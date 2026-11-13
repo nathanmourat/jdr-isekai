@@ -1,0 +1,21 @@
+{
+ "_info": "Positions en pixels de l'image 1280×720. PNJ : point au sol (pieds). Autres : centre de la zone cliquable.",
+ "positions": {
+  "aureliath": {
+   "x": 640,
+   "y": 480
+  },
+  "elianne": {
+   "x": 860,
+   "y": 516
+  },
+  "tobin": {
+   "x": 460,
+   "y": 524
+  },
+  "cercle": {
+   "x": 640,
+   "y": 600
+  }
+ }
+}

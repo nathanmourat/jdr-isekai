@@ -1,0 +1,9 @@
+{
+ "_info": "Positions en pixels de l'image 1280×720. PNJ : point au sol (pieds). Autres : centre de la zone cliquable.",
+ "positions": {
+  "entree": {
+   "x": 640,
+   "y": 460
+  }
+ }
+}
