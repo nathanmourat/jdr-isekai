@@ -1,0 +1,171 @@
+# Objets nommés (rares, épiques, légendaires), écrits à la main.
+# Les stats ne sont PAS écrites ici : generer.py les calcule avec la règle de budget.
+# Rareté maximum par palier : I = peu commun, II = rare, III et IV = épique, V et VI = légendaire, X = mythique.
+# Par classe : palier I = 2 peu communs nommés (arme + tenue, sans effet) ; palier II = 2 rares ;
+# paliers III à VI = 1 rare + 1 épique ; 1 légendaire au palier V (récompense de la quête de classe).
+# Rotation des emplacements par palier :
+#   I : arme + tenue                       II : accessoire + arme
+#   III : rare = tenue, épique = accessoire IV : rare = arme, épique = tenue
+#   V : rare = accessoire, épique = arme    VI : rare = tenue, épique = accessoire
+# Effets possibles : critique, precision, resistance:<élément>, touche:<élément>, mana, vigueur
+# Éléments : feu, glace, foudre, sacre, ombre, poison, arcane
+
+lame-runique:
+  - { palier: I, rarete: peu-commun, type: epee, nom: "Lame du Guet de Lysmont", description: "L'épée réglementaire des sergents du guet, gravée d'une première rune par un forgeron curieux.", effets: [] }
+  - { palier: I, rarete: peu-commun, type: lourde, nom: "Haubert du Temple du Seuil", description: "Une cotte de mailles bénite le jour de l'Appel ; ses anneaux vibrent quand une rune s'allume.", effets: [] }
+  - { palier: II, rarete: rare, type: bouclier, nom: "Rondache des caravaniers", description: "Un petit bouclier de bronze martelé, poli par le sable de la Marche.", effets: [resistance:feu] }
+  - { palier: II, rarete: rare, type: deux-mains, nom: "Fendeuse de Qarzim", description: "Une lame courbe à deux mains, forgée pour un champion des arènes du Grand Bazar.", effets: [critique] }
+  - { palier: III, rarete: rare, type: lourde, nom: "Cuirasse d'écorce-fer", description: "Des plaques taillées dans l'écorce durcie des arbres géants de Sylvenoire.", effets: [resistance:poison] }
+  - { palier: III, rarete: epique, type: anneau, nom: "Anneau des Racines", description: "Un anneau de bois vivant qui garde la mémoire de chaque rune qu'il a vue.", effets: [mana, precision] }
+  - { palier: IV, rarete: rare, type: epee, nom: "Épée des Mille Marches", description: "Forgée à Karak-Dûm, une marche gravée sur la lame pour chaque étage conquis.", effets: [touche:foudre] }
+  - { palier: IV, rarete: epique, type: lourde, nom: "Plates de la forge volcanique", description: "Une armure trempée dans la lave des Monts Grisfer, encore tiède au toucher.", effets: [vigueur, resistance:feu] }
+  - { palier: V, rarete: rare, type: bouclier, nom: "Pavois du Mur d'Aube", description: "Le grand bouclier des sentinelles de la frontière, couvert de sceaux de garde.", effets: [resistance:ombre] }
+  - { palier: V, rarete: epique, type: epee, nom: "Sceau-lame des Sentinelles", description: "Chaque rune gravée sur cette lame scelle un démon tombé sur le Mur.", effets: [critique, touche:sacre] }
+  - { palier: VI, rarete: rare, type: lourde, nom: "Armure de cendre trempée", description: "Une armure récupérée dans les forteresses noires et purifiée par les runes.", effets: [resistance:ombre] }
+  - { palier: VI, rarete: epique, type: anneau, nom: "Anneau du Premier Sceau", description: "On dit qu'il a fermé la première brèche du Voile.", effets: [critique, mana] }
+  - { palier: V, rarete: legendaire, type: epee, nom: "Velgraive, la Lame-Grimoire", description: "Une épée dont la lame est un livre de runes ; elle se réécrit à chaque combat.", effets: [critique, touche:arcane], pouvoir: "Commence chaque combat avec 1 charge de rune." }
+
+arcaniste:
+  - { palier: I, rarete: peu-commun, type: baton, nom: "Bâton de l'apprenti prodige", description: "Le bâton d'un élève du Temple qui a fait exploser trois salles d'étude.", effets: [] }
+  - { palier: I, rarete: peu-commun, type: legere, nom: "Robe des étincelles", description: "Une robe d'étude dont les ourlets crépitent d'étincelles bleues.", effets: [] }
+  - { palier: II, rarete: rare, type: amulette, nom: "Pendentif de verre-sable", description: "Du sable fondu par un éclair, monté en pendentif par un orfèvre de Qarzim.", effets: [mana] }
+  - { palier: II, rarete: rare, type: orbe, nom: "Orbe des mirages", description: "Une sphère où dansent les mirages du désert ; elle trouble les sorts ennemis.", effets: [critique] }
+  - { palier: III, rarete: rare, type: legere, nom: "Manteau de brume bleue", description: "Tissé avec la brume des sous-bois de Sylvenoire, il ne se mouille jamais.", effets: [resistance:glace] }
+  - { palier: III, rarete: epique, type: amulette, nom: "Larme d'Ithrael", description: "Une goutte de sève cristallisée, offerte par la cité-arbre.", effets: [mana, precision] }
+  - { palier: IV, rarete: rare, type: baton, nom: "Bâton de basalte chantant", description: "Taillé dans une colonne de basalte qui résonne à chaque éruption.", effets: [touche:foudre] }
+  - { palier: IV, rarete: epique, type: legere, nom: "Robe des Brumes salées", description: "La robe des mages de Port-Vérane, cousue d'écailles de sirène.", effets: [mana, resistance:glace] }
+  - { palier: V, rarete: rare, type: amulette, nom: "Médaillon de garde du Mur", description: "Les mages de la frontière y gravent un sort de bouclier.", effets: [resistance:ombre] }
+  - { palier: V, rarete: epique, type: baton, nom: "Bâton des trois tempêtes", description: "Feu, glace et foudre tournent autour de sa pointe sans jamais se mélanger.", effets: [critique, touche:glace] }
+  - { palier: VI, rarete: rare, type: legere, nom: "Robe tissée de cendre", description: "Une robe que les flammes des Terres Cendrées n'arrivent pas à consumer.", effets: [resistance:feu] }
+  - { palier: VI, rarete: epique, type: amulette, nom: "Cœur d'éther pur", description: "Un cristal d'éther intact, rare depuis que la Concorde les exploite.", effets: [mana, critique] }
+  - { palier: V, rarete: legendaire, type: baton, nom: "Ysgarde, Bâton des Quatre Vents", description: "Un bâton qui a appartenu à la fondatrice de l'école élémentaire du Temple.", effets: [critique, mana], pouvoir: "Les sorts de zone coûtent 15 % de mana en moins." }
+
+invocateur:
+  - { palier: I, rarete: peu-commun, type: orbe, nom: "Orbe du familier timide", description: "Une petite sphère où vit un esprit qui sort seulement quand on a peur.", effets: [] }
+  - { palier: I, rarete: peu-commun, type: legere, nom: "Tunique des liens", description: "Brodée de cercles d'invocation qui s'illuminent quand un esprit est proche.", effets: [] }
+  - { palier: II, rarete: rare, type: talisman, nom: "Talisman de l'esprit du puits", description: "Un talisman offert par les gardiens d'une oasis ; un esprit y dort.", effets: [vigueur] }
+  - { palier: II, rarete: rare, type: baton, nom: "Bâton des chacals d'ombre", description: "Les nomades disent qu'il appelle les esprits des chacals du canyon.", effets: [precision] }
+  - { palier: III, rarete: rare, type: legere, nom: "Robe de mousse ancienne", description: "Une robe vivante où poussent des mousses qui murmurent les noms des esprits.", effets: [resistance:poison] }
+  - { palier: III, rarete: epique, type: amulette, nom: "Pendentif de la dryade", description: "Le présent d'une dryade de Sylvenoire à qui l'on a rendu service.", effets: [mana, vigueur] }
+  - { palier: IV, rarete: rare, type: orbe, nom: "Orbe du wyrmling", description: "Un œuf de wyrm vide, qui garde encore la chaleur de son occupant.", effets: [touche:feu] }
+  - { palier: IV, rarete: epique, type: legere, nom: "Manteau du Nid des Wyrms", description: "Taillé dans la mue d'un jeune dragon de l'Archipel.", effets: [vigueur, resistance:feu] }
+  - { palier: V, rarete: rare, type: talisman, nom: "Talisman des âmes gardiennes", description: "Les âmes des sentinelles tombées veillent sur celui qui le porte.", effets: [resistance:ombre] }
+  - { palier: V, rarete: epique, type: orbe, nom: "Orbe du Pacte brisé", description: "Une sphère fêlée qui contient un esprit libéré d'un pacte démoniaque.", effets: [mana, touche:arcane] }
+  - { palier: VI, rarete: rare, type: legere, nom: "Robe du Lien éternel", description: "Les cercles brodés de cette robe ne s'éteignent jamais.", effets: [vigueur] }
+  - { palier: VI, rarete: epique, type: amulette, nom: "Sceau des mille esprits", description: "Un sceau de pierre où chaque invocateur du Temple a laissé une trace.", effets: [mana, precision] }
+  - { palier: V, rarete: legendaire, type: orbe, nom: "Nyxaliel, l'Orbe-Portail", description: "Une sphère qui ouvre une porte vers un monde d'esprits encore inconnu.", effets: [mana, vigueur], pouvoir: "Les invocations commencent le combat avec 20 % de PV en plus." }
+
+ombre:
+  - { palier: I, rarete: peu-commun, type: dague, nom: "Surin des ruelles", description: "Une lame fine retrouvée dans une ruelle de Lysmont, sans propriétaire connu.", effets: [] }
+  - { palier: I, rarete: peu-commun, type: intermediaire, nom: "Pourpoint du voleur de minuit", description: "Un pourpoint noir aux coutures silencieuses, qui ne craque jamais.", effets: [] }
+  - { palier: II, rarete: rare, type: anneau, nom: "Anneau du Vulpin rieur", description: "Une bague à tête de renard, gagnée aux dés ou volée, selon qui raconte.", effets: [critique] }
+  - { palier: II, rarete: rare, type: dague, nom: "Crocs jumeaux du canyon", description: "Deux dagues taillées dans les crocs d'un grand chacal du désert.", effets: [critique] }
+  - { palier: III, rarete: rare, type: intermediaire, nom: "Cape de feuilles mortes", description: "Une cape qui prend la couleur du sous-bois de Sylvenoire.", effets: [precision] }
+  - { palier: III, rarete: epique, type: anneau, nom: "Anneau du dernier souffle", description: "Il refroidit d'un coup quand un ennemi tourne le dos.", effets: [critique, precision] }
+  - { palier: IV, rarete: rare, type: dague, nom: "Stylet du brouillard", description: "Une lame de pirate, aussi grise que la brume de l'Archipel.", effets: [touche:glace] }
+  - { palier: IV, rarete: epique, type: intermediaire, nom: "Gilet de maille de grisargent", description: "Une maille naine si fine qu'elle tient dans une main.", effets: [vigueur, critique] }
+  - { palier: V, rarete: rare, type: anneau, nom: "Anneau de l'éclaireur du Mur", description: "Porté par les éclaireurs qui passent de l'autre côté du Mur d'Aube.", effets: [resistance:ombre] }
+  - { palier: V, rarete: epique, type: dague, nom: "Lame-sans-reflet", description: "Une dague noire qui n'apparaît pas dans les miroirs.", effets: [critique, touche:ombre] }
+  - { palier: VI, rarete: rare, type: intermediaire, nom: "Tenue de l'infiltré cendré", description: "Un cuir teint à la cendre pour se fondre dans les plaines du nord.", effets: [precision] }
+  - { palier: VI, rarete: epique, type: anneau, nom: "Anneau du Prince disparu", description: "Une chevalière aux armes d'Aubeclaire, trouvée là où personne ne l'attendait.", effets: [critique, vigueur] }
+  - { palier: V, rarete: legendaire, type: dague, nom: "Murmure, la Dague du Silence", description: "Personne n'a jamais entendu le bruit qu'elle fait en frappant.", effets: [critique, precision], pouvoir: "La première attaque du combat est toujours un coup critique." }
+
+gardien:
+  - { palier: I, rarete: peu-commun, type: masse, nom: "Masse du sacristain", description: "La masse d'un sacristain du Temple, bénite plus souvent que nécessaire.", effets: [] }
+  - { palier: I, rarete: peu-commun, type: lourde, nom: "Cuirasse de la Lumière Sereine", description: "L'armure de parade de l'Ordre, plus solide qu'elle n'en a l'air.", effets: [] }
+  - { palier: II, rarete: rare, type: bouclier, nom: "Écu de l'oasis", description: "Un bouclier peint d'un palmier, qui a protégé une caravane entière.", effets: [vigueur] }
+  - { palier: II, rarete: rare, type: epee, nom: "Épée du serment des sables", description: "Les gardes des caravanes jurent sur cette lame de ne jamais abandonner un voyageur.", effets: [precision] }
+  - { palier: III, rarete: rare, type: lourde, nom: "Harnois du gardien des racines", description: "Une armure de plaques ornée de feuilles, portée par les protecteurs d'Ithrael.", effets: [resistance:poison] }
+  - { palier: III, rarete: epique, type: bouclier, nom: "Bouclier-chêne", description: "Taillé d'une seule pièce dans un chêne millénaire qui a accepté de le donner.", effets: [vigueur, resistance:arcane] }
+  - { palier: IV, rarete: rare, type: masse, nom: "Marteau de l'enclume-mère", description: "Le marteau cérémoniel des forgerons de Karak-Dûm.", effets: [touche:feu] }
+  - { palier: IV, rarete: epique, type: lourde, nom: "Plates du Rempart nain", description: "Une armure si lourde qu'il faut deux nains pour aider à l'enfiler.", effets: [vigueur, resistance:feu] }
+  - { palier: V, rarete: rare, type: bouclier, nom: "Bouclier de l'Aube", description: "Il brille d'un éclat doré quand un démon approche.", effets: [resistance:ombre] }
+  - { palier: V, rarete: epique, type: sceptre, nom: "Sceptre de la sainte garde", description: "Le sceptre des capitaines de l'Ordre sur le Mur d'Aube.", effets: [vigueur, touche:sacre] }
+  - { palier: VI, rarete: rare, type: lourde, nom: "Armure du dernier rempart", description: "Portée par celui qui reste debout quand tous les autres ont reculé.", effets: [vigueur] }
+  - { palier: VI, rarete: epique, type: bouclier, nom: "Égide d'Obsidienne", description: "Un bouclier taillé dans un éclat de la Citadelle d'Obsidienne, purifié.", effets: [vigueur, resistance:ombre] }
+  - { palier: V, rarete: legendaire, type: masse, nom: "Solenne, le Marteau de l'Aube", description: "Le marteau du premier gardien du Mur, qui a tenu seul une nuit entière.", effets: [vigueur, touche:sacre], pouvoir: "Rempart protège aussi le héros : il subit 10 % de dégâts en moins." }
+
+alchimiste:
+  - { palier: I, rarete: peu-commun, type: arbalete, nom: "Lance-fioles bricolé", description: "Un mécanisme de récupération qui projette les fioles plus loin qu'un bras.", effets: [] }
+  - { palier: I, rarete: peu-commun, type: intermediaire, nom: "Tablier ignifugé de Halvine", description: "Halvine jure qu'il a résisté à trois explosions et demie.", effets: [] }
+  - { palier: II, rarete: rare, type: sacoche, nom: "Sacoche du marchand d'épices", description: "Une sacoche aux mille poches, qui sent toujours le cumin.", effets: [mana] }
+  - { palier: II, rarete: rare, type: arbalete, nom: "Arbalète à éther de la Concorde", description: "Une arme de marchand, alimentée par un petit cristal d'éther.", effets: [precision] }
+  - { palier: III, rarete: rare, type: intermediaire, nom: "Veste d'herboriste", description: "Une veste couverte de poches à graines, cousue par un botaniste elfe.", effets: [resistance:poison] }
+  - { palier: III, rarete: epique, type: sacoche, nom: "Besace des racines", description: "Les ingrédients qu'on y range ne pourrissent jamais.", effets: [mana, vigueur] }
+  - { palier: IV, rarete: rare, type: arbalete, nom: "Arbalète-soufflet naine", description: "Une arbalète à vapeur conçue par des ingénieurs gnomes de Karak-Dûm.", effets: [touche:feu] }
+  - { palier: IV, rarete: epique, type: intermediaire, nom: "Combinaison du plongeur de l'Archipel", description: "Cuir huilé et casque de verre, pour récolter les algues du Phare noyé.", effets: [vigueur, resistance:glace] }
+  - { palier: V, rarete: rare, type: sacoche, nom: "Sacoche de l'artificier du Mur", description: "Les artificiers de la frontière y rangent leurs bombes de siège.", effets: [precision] }
+  - { palier: V, rarete: epique, type: arbalete, nom: "Canon de poing à cristal", description: "Plus une arbalète, plus tout à fait un canon : une invention interdite à Lysmont.", effets: [critique, touche:feu] }
+  - { palier: VI, rarete: rare, type: intermediaire, nom: "Tenue anti-cendre", description: "Masque à filtre et cuir doublé, pour respirer dans les Terres Cendrées.", effets: [resistance:poison] }
+  - { palier: VI, rarete: epique, type: sacoche, nom: "Laboratoire portatif", description: "Une sacoche qui se déplie en petit atelier complet.", effets: [mana, critique] }
+  - { palier: V, rarete: legendaire, type: arbalete, nom: "Prisme, l'Arbalète-Alambic", description: "Elle distille ses propres fioles pendant qu'on la recharge.", effets: [precision, touche:poison], pouvoir: "Les objets de soin et les bombes utilisés par le héros sont 25 % plus efficaces." }
+
+archer:
+  - { palier: I, rarete: peu-commun, type: arc, nom: "Arc du chasseur de la plaine", description: "Un arc de frêne tendu par un chasseur des plaines d'Aubeclaire.", effets: [] }
+  - { palier: I, rarete: peu-commun, type: intermediaire, nom: "Cape du guetteur", description: "La cape des guetteurs royaux, qui guettent sans être vus.", effets: [] }
+  - { palier: II, rarete: rare, type: carquois, nom: "Carquois du vent du sud", description: "Les flèches qu'il contient sifflent comme le vent du désert.", effets: [critique] }
+  - { palier: II, rarete: rare, type: arc, nom: "Arc de corne d'Ourvalis", description: "Un arc composite des peuples-loups, en corne et en tendon.", effets: [precision] }
+  - { palier: III, rarete: rare, type: intermediaire, nom: "Tunique de l'éclaireur sylvain", description: "Elle garde l'odeur de la forêt, et les bêtes ne la sentent pas.", effets: [vigueur] }
+  - { palier: III, rarete: epique, type: carquois, nom: "Carquois des esprits", description: "Un esprit de la forêt y remplace chaque flèche tirée.", effets: [critique, mana] }
+  - { palier: IV, rarete: rare, type: arc, nom: "Arc de fer-cerf", description: "Un arc nain en métal souple, inventé pour tirer dans les mines.", effets: [touche:foudre] }
+  - { palier: IV, rarete: epique, type: intermediaire, nom: "Armure de plumes de wyrm", description: "Des plumes de dragon tissées sur du cuir, pour tirer en plein vol.", effets: [critique, resistance:feu] }
+  - { palier: V, rarete: rare, type: carquois, nom: "Carquois des flèches bénites", description: "Les prêtres du Mur bénissent chaque flèche avant la bataille.", effets: [touche:sacre] }
+  - { palier: V, rarete: epique, type: arc, nom: "Arc de l'Étoile du Mur", description: "On dit qu'une de ses flèches a touché un démon à une lieue de distance.", effets: [critique, touche:sacre] }
+  - { palier: VI, rarete: rare, type: intermediaire, nom: "Cuirasse de cuir cendré", description: "Un cuir noir, durci au feu des plaines du nord.", effets: [resistance:feu] }
+  - { palier: VI, rarete: epique, type: carquois, nom: "Carquois sans fond", description: "Personne n'a jamais vu le fond de ce carquois.", effets: [critique, precision] }
+  - { palier: V, rarete: legendaire, type: arc, nom: "Kestrévane, l'Arc du Faucon d'Âme", description: "L'arc d'un esprit faucon, qui guide la flèche jusqu'au cœur de la cible.", effets: [critique, precision], pouvoir: "Œil du faucon touche toujours, même un ennemi caché." }
+
+guerisseur:
+  - { palier: I, rarete: peu-commun, type: baton, nom: "Bâton du dispensaire", description: "Le bâton de marche des soigneurs du dispensaire de Lysmont.", effets: [] }
+  - { palier: I, rarete: peu-commun, type: legere, nom: "Aube de la novice", description: "La robe blanche des novices de l'Ordre, cousue de fils de lumière.", effets: [] }
+  - { palier: II, rarete: rare, type: talisman, nom: "Talisman du puits sacré", description: "Une pierre plongée dans le puits sacré d'une oasis.", effets: [vigueur] }
+  - { palier: II, rarete: rare, type: sceptre, nom: "Sceptre de l'eau vive", description: "Un sceptre d'argent qui fait jaillir quelques gouttes fraîches quand on soigne.", effets: [mana] }
+  - { palier: III, rarete: rare, type: legere, nom: "Robe de sève", description: "Une robe qui guérit doucement les égratignures de celui qui la porte.", effets: [vigueur] }
+  - { palier: III, rarete: epique, type: amulette, nom: "Graine du Premier Arbre", description: "Une graine qui n'a jamais germé et ne germera peut-être jamais.", effets: [mana, vigueur] }
+  - { palier: IV, rarete: rare, type: baton, nom: "Bâton de corail blanc", description: "Taillé dans un corail des récifs de l'Archipel, il apaise les brûlures.", effets: [resistance:feu] }
+  - { palier: IV, rarete: epique, type: legere, nom: "Chasuble de la source chaude", description: "Les guérisseurs nains la trempent dans les sources des Monts Grisfer.", effets: [mana, resistance:poison] }
+  - { palier: V, rarete: rare, type: amulette, nom: "Médaillon de la sœur de garde", description: "Porté par les soigneuses qui suivent les sentinelles au combat.", effets: [mana] }
+  - { palier: V, rarete: epique, type: sceptre, nom: "Sceptre de la lumière première", description: "Une relique de l'Ordre, d'avant que l'Ordre ait des secrets.", effets: [vigueur, touche:sacre] }
+  - { palier: VI, rarete: rare, type: legere, nom: "Robe de l'espérance", description: "Une robe simple, que les flammes et la cendre ne salissent jamais.", effets: [resistance:ombre] }
+  - { palier: VI, rarete: epique, type: talisman, nom: "Cœur de l'Aube", description: "Un talisman qui bat doucement, comme un cœur, quand un allié est en danger.", effets: [vigueur, mana] }
+  - { palier: V, rarete: legendaire, type: sceptre, nom: "Lumenaë, le Sceptre de Miséricorde", description: "Le sceptre d'une sainte oubliée, qui soignait amis et ennemis.", effets: [mana, vigueur], pouvoir: "Les soins du héros rendent 15 % de PV en plus." }
+
+berserker:
+  - { palier: I, rarete: peu-commun, type: deux-mains, nom: "Hache du bûcheron colérique", description: "Une hache de bûcheron si lourde que son propriétaire l'a lâchée de rage.", effets: [] }
+  - { palier: I, rarete: peu-commun, type: lourde, nom: "Cuir clouté de la fosse", description: "L'armure des combattants de la fosse aux paris, sous le Chaudron Fêlé.", effets: [] }
+  - { palier: II, rarete: rare, type: talisman, nom: "Croc de lion des sables", description: "Un croc porté en pendentif, arraché au roi des fauves du désert.", effets: [vigueur] }
+  - { palier: II, rarete: rare, type: deux-mains, nom: "Espadon du soleil brûlant", description: "Sa lame chauffe au soleil jusqu'à brûler ce qu'elle touche.", effets: [critique] }
+  - { palier: III, rarete: rare, type: lourde, nom: "Armure d'écailles de sanglier-roi", description: "Taillée dans le cuir d'un sanglier géant des forêts de l'ouest.", effets: [vigueur] }
+  - { palier: III, rarete: epique, type: anneau, nom: "Anneau du cri sauvage", description: "Quand on le serre, on entend un rugissement lointain.", effets: [critique, vigueur] }
+  - { palier: IV, rarete: rare, type: masse, nom: "Marteau-volcan", description: "Un marteau de forge naine, qui crache des étincelles à chaque coup.", effets: [touche:feu] }
+  - { palier: IV, rarete: epique, type: lourde, nom: "Plates d'écailles de dragon", description: "Une armure taillée dans les écailles d'un dragon de l'Archipel, avec sa permission.", effets: [vigueur, resistance:feu] }
+  - { palier: V, rarete: rare, type: talisman, nom: "Talisman de sang-dragon", description: "Une écaille qui réchauffe le sang de celui qui la porte.", effets: [resistance:glace] }
+  - { palier: V, rarete: epique, type: deux-mains, nom: "Fléau des Cendres", description: "Une grande hache forgée pour fendre les démons les plus massifs.", effets: [critique, touche:sacre] }
+  - { palier: VI, rarete: rare, type: lourde, nom: "Armure de l'enragé", description: "Elle a été réparée tant de fois qu'il ne reste presque rien de l'originale.", effets: [vigueur] }
+  - { palier: VI, rarete: epique, type: anneau, nom: "Anneau du feu intérieur", description: "Un anneau d'écaille qui brûle quand le porteur est blessé.", effets: [critique, vigueur] }
+  - { palier: V, rarete: legendaire, type: deux-mains, nom: "Drakhaar, la Hache des Dragons-Rois", description: "La hache d'un ancien pacte entre les dragons-rois et les hommes.", effets: [critique, touche:feu], pouvoir: "Sang de dragon se déclenche dès 50 % de PV au lieu du seuil habituel." }
+
+barde:
+  - { palier: I, rarete: peu-commun, type: instrument, nom: "Luth du Chaudron Fêlé", description: "Le luth que Bram garde derrière son comptoir, pour les soirs de fête.", effets: [] }
+  - { palier: I, rarete: peu-commun, type: intermediaire, nom: "Pourpoint du ménestrel", description: "Un pourpoint de velours aux couleurs vives, impossible à ne pas remarquer.", effets: [] }
+  - { palier: II, rarete: rare, type: anneau, nom: "Anneau des contes du bazar", description: "Le conteur du Grand Bazar le portait en racontant mille et une histoires.", effets: [precision] }
+  - { palier: II, rarete: rare, type: instrument, nom: "Flûte des dunes chantantes", description: "Sa mélodie imite le chant des dunes de la Marche.", effets: [mana] }
+  - { palier: III, rarete: rare, type: intermediaire, nom: "Cape du conteur sylvain", description: "Une cape brodée de toutes les légendes de Sylvenoire.", effets: [resistance:arcane] }
+  - { palier: III, rarete: epique, type: anneau, nom: "Anneau de la dryade chanteuse", description: "Il fredonne tout seul quand le porteur se tait trop longtemps.", effets: [mana, critique] }
+  - { palier: IV, rarete: rare, type: dague, nom: "Rapière du corsaire", description: "Une lame fine et élégante, gagnée à un capitaine pirate en duel de chansons.", effets: [critique] }
+  - { palier: IV, rarete: epique, type: intermediaire, nom: "Habit de gala de Port-Vérane", description: "La tenue de cérémonie des fêtes des sirènes.", effets: [vigueur, resistance:glace] }
+  - { palier: V, rarete: rare, type: anneau, nom: "Anneau de l'hymne du Mur", description: "Il porte gravées les paroles de l'hymne que chantent les sentinelles.", effets: [resistance:ombre] }
+  - { palier: V, rarete: epique, type: instrument, nom: "Harpe de l'Aube", description: "Ses cordes en fil d'or donnent du courage à tout un bataillon.", effets: [mana, touche:sacre] }
+  - { palier: VI, rarete: rare, type: intermediaire, nom: "Manteau du dernier refrain", description: "Le manteau d'un barde qui a chanté jusqu'aux portes de la Citadelle.", effets: [vigueur] }
+  - { palier: VI, rarete: epique, type: anneau, nom: "Anneau des voix perdues", description: "Il garde les voix des héros tombés, qui chantent encore pour les vivants.", effets: [mana, critique] }
+  - { palier: V, rarete: legendaire, type: instrument, nom: "Mélisande, le Luth des Âges", description: "Un luth qui joue les chansons de toutes les époques, même celles à venir.", effets: [mana, critique], pouvoir: "Refrain dure 1 tour de plus." }
+
+# ── Palier X : les 6 armes mythiques, « Reliques du Voile » ──
+# Forgées avant le Voile et cachées par l'Ordre. Fin de saison (niveau 40), un seul exemplaire par partie.
+mythiques:
+  - { palier: X, rarete: mythique, type: epee, nom: "Aube-Première, l'Épée du Premier Serment", description: "La lame sur laquelle fut prêté le premier serment de protéger le monde, bien avant le Voile.", effets: [critique, touche:sacre, vigueur], pouvoir: "Une fois par combat, quand un allié tombe K.O., le porteur le relève avec 30 % de ses PV." }
+  - { palier: X, rarete: mythique, type: deux-mains, nom: "Brise-Monde, la Hache du Premier Pacte", description: "Forgée dans le souffle du premier dragon-roi, pour sceller l'alliance entre les dragons et les hommes.", effets: [critique, vigueur, touche:feu], pouvoir: "Chaque ennemi vaincu par le porteur lui rend 10 % de ses PV max." }
+  - { palier: X, rarete: mythique, type: dague, nom: "Nuit-Première, le Croc d'avant le Voile", description: "Une lame taillée dans la première ombre du monde, quand la nuit n'avait pas encore de nom.", effets: [critique, precision, touche:ombre], pouvoir: "Les coups critiques du porteur infligent × 2 au lieu de × 1,5." }
+  - { palier: X, rarete: mythique, type: arc, nom: "Lointain, l'Arc de l'Horizon Perdu", description: "Un arc dont les flèches atteignaient, dit-on, des terres que le Voile a effacées des cartes.", effets: [critique, precision, touche:foudre], pouvoir: "Chaque attaque a 25 % de chances de tirer une seconde flèche sur un autre ennemi." }
+  - { palier: X, rarete: mythique, type: arbalete, nom: "Œil-du-Voile, l'Arbalète des Étoiles fixes", description: "Un mécanisme d'avant le Voile, que personne n'a jamais su démonter ni reproduire.", effets: [precision, mana, touche:glace], pouvoir: "Les tirs du porteur ignorent 30 % de la défense et des résistances de la cible." }
+  - { palier: X, rarete: mythique, type: baton, nom: "Ylvarae, le Bâton des Premières Racines", description: "Une branche de l'arbre-monde dont toutes les forêts descendent, Sylvenoire comprise.", effets: [mana, vigueur, touche:arcane], pouvoir: "Les compétences du porteur coûtent 20 % de mana en moins." }
