@@ -832,9 +832,9 @@ export function appliquer(contenu: Contenu, etatAvant: EtatPartie, action: Actio
     }
     case 'valider_temps_libre': {
       // un joueur absent n'a pas choisi : on lui attribue Repos + Guilde pour ne pas bloquer
-      if (etat.meneur !== action.joueur) refuser('Seul le meneur du jour peut valider pour les absents');
       const tl = etat.tempsLibre ?? refuser('Pas de temps libre en cours');
       if (tl.resultats) { etat.tempsLibre = null; break; }
+      if (etat.meneur !== action.joueur) refuser('Seul le meneur du jour peut valider pour les absents');
       for (const h of listeHeros(etat)) if (!tl.choix[h.id]) tl.choix[h.id] = [{ activite: 'repos' }, { activite: 'guilde' }];
       resoudreTempsLibre(contenu, etat);
       break;

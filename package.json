@@ -13,7 +13,8 @@
     "verifier": "svelte-check --tsconfig ./tsconfig.json",
     "equilibrage": "tsx scripts/equilibrage.ts",
     "assets:manquants": "tsx scripts/assets-manquants.ts",
-    "contenu:verifier": "tsx scripts/verifier-contenu.ts"
+    "contenu:verifier": "tsx scripts/verifier-contenu.ts",
+    "e2e": "node tests/e2e/parcours.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.119.0",

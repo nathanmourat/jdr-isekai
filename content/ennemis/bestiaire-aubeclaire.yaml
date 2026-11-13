@@ -1,0 +1,76 @@
+# ─── Bestiaire d'Aubeclaire (textures du groupe, BESTIAIRE.md) ───
+ennemis:
+  - id: gelee-verte
+    nom: Gelée verte
+    description: "Petite gelée verte qui rebondit. Inoffensive… en petit nombre."
+    niveau: 1
+    categorie: bete
+    caracteristiques: { FOR: 6, AGI: 6, INT: 2, VIT: 9, ESP: 4, CHA: 2 }
+    pv: 28
+    attaque: { stat: FOR, element: poison, portee: melee, puissance: 6 }
+    resistances: { physique: 0.15, feu: -0.25 }
+    recompenses: { xp: 12, or: 1 }
+  - id: rat-geant
+    nom: Rat géant
+    description: "Rat brun de la taille d'un chat, queue rose."
+    niveau: 1
+    categorie: bete
+    caracteristiques: { FOR: 6, AGI: 12, INT: 2, VIT: 5, ESP: 3, CHA: 2 }
+    pv: 22
+    attaque: { stat: AGI, portee: melee, puissance: 6 }
+    competences:
+      - id: morsure-infectee
+        nom: Morsure infectée
+        description: "Une morsure qui peut empoisonner."
+        recharge: 3
+        cible: ennemi
+        portee: melee
+        effets:
+          - { type: degats, puissance: 5, stat: AGI }
+          - { type: etat, etat: poison, duree: 2, valeur: 2, chance: 0.5 }
+        ia: { priorite: 2 }
+    recompenses: { xp: 10, or: 1 }
+  - id: chauve-souris
+    nom: Chauve-souris des cavernes
+    description: "Rapide et difficile à toucher."
+    niveau: 2
+    categorie: bete
+    rang: arriere
+    caracteristiques: { FOR: 5, AGI: 15, INT: 3, VIT: 5, ESP: 6, CHA: 2 }
+    pv: 24
+    attaque: { stat: AGI, portee: distance, puissance: 6 }
+    competences:
+      - id: cri-ultrasonique
+        nom: Cri ultrasonique
+        description: "Peut étourdir une cible."
+        recharge: 3
+        cible: ennemi
+        effets:
+          - { type: degats, puissance: 4, stat: AGI, element: arcane }
+          - { type: etat, etat: immobilise, duree: 1, chance: 0.3 }
+        ia: { priorite: 2 }
+    recompenses: { xp: 14, or: 0 }
+  - id: sanglier
+    nom: Sanglier des plaines
+    description: "Sanglier brun aux défenses blanches. Il charge."
+    niveau: 3
+    categorie: bete
+    caracteristiques: { FOR: 12, AGI: 8, INT: 2, VIT: 11, ESP: 4, CHA: 2 }
+    pv: 52
+    armure: 4
+    attaque: { stat: FOR, portee: melee, puissance: 8 }
+    competences:
+      - id: charge-du-sanglier
+        nom: Charge
+        description: "Une charge brutale."
+        recharge: 3
+        cible: ennemi
+        portee: melee
+        effets: [{ type: degats, puissance: 14, stat: FOR }]
+        ia: { priorite: 2 }
+    recompenses: { xp: 28, or: 0, objets: [{ id: ration, chance: 0.5 }] }
+
+rencontres:
+  - { id: egouts-lysmont, nom: "Les égouts de Lysmont", fond: crypte, ennemis: [{ id: rat-geant }, { id: rat-geant }, { id: gelee-verte }], renforts: [rat-geant] }
+  - { id: grotte-chauves-souris, nom: "La grotte aux chauves-souris", fond: crypte, ennemis: [{ id: chauve-souris }, { id: chauve-souris }, { id: chauve-souris }], renforts: [chauve-souris] }
+  - { id: sangliers-champs, nom: "Les sangliers des champs", fond: plaine, ennemis: [{ id: sanglier }, { id: sanglier }], renforts: [sanglier] }

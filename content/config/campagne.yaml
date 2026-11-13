@@ -92,10 +92,10 @@ config:
   difficulte:
     - { puissance: 1, pv: 1.0, degats: 1.00, ennemis_en_plus: 0 }
     - { puissance: 2, pv: 2.7, degats: 1.35, ennemis_en_plus: 0 }
-    - { puissance: 3, pv: 4.6, degats: 1.65, ennemis_en_plus: 1 }
-    - { puissance: 4, pv: 6.6, degats: 1.95, ennemis_en_plus: 1 }
-    - { puissance: 5, pv: 8.8, degats: 2.20, ennemis_en_plus: 2 }
-    - { puissance: 6, pv: 11.0, degats: 2.45, ennemis_en_plus: 2 }
+    - { puissance: 3, pv: 4.3, degats: 1.45, ennemis_en_plus: 1 }
+    - { puissance: 4, pv: 6.0, degats: 1.70, ennemis_en_plus: 1 }
+    - { puissance: 5, pv: 8.0, degats: 1.90, ennemis_en_plus: 2 }
+    - { puissance: 6, pv: 10.0, degats: 2.10, ennemis_en_plus: 2 }
 
   combat:
     minuteur_tour_secondes: 60
@@ -121,4 +121,5 @@ config:
     taille_sprite_combat: 64
     taille_sprite_boss: 128
     taille_sprite_exploration: 32
-    echelle_pixel_art: 2
+    echelle_pixel_art: 2      # agrandissement des tuiles et sprites d'exploration
+    echelle_combat: 3         # agrandissement des sprites de combat

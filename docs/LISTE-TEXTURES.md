@@ -12,12 +12,12 @@
 
 | Fait | N° | Fichier (dans `assets/`) | Dimensions | Contenu |
 |---|---|---|---|---|
-| [ ] | 1 | `cartes/aubeclaire.png` | 1920 × 1080 | Carte du royaume vue du dessus, style carte ancienne en pixel art. Y faire figurer : Lysmont (capitale, au centre), le Temple du Seuil (sur une colline au nord de Lysmont), la Combe-aux-Saules (forêt au sud-ouest), la Crypte de la Fontaine (ruines à l'est), des routes, une rivière, et le Mur d'Aube au loin, au nord. Aucun texte (j'ajoute les noms en jeu). |
-| [ ] | 2 | `decors/temple-du-seuil.png` | 1280 × 720 | Intérieur d'un grand temple blanc, cercle d'invocation lumineux bleu au sol, vitraux en forme de soleil, prêtres en robe blanche en arrière-plan. |
-| [ ] | 3 | `decors/lysmont-place.png` | 1280 × 720 | Place centrale de la capitale en plein jour : fontaine, étals, maisons à colombages, château blanc aux toits bleus au fond. |
-| [ ] | 4 | `decors/guilde.png` | 1280 × 720 | Hall de la Guilde des aventuriers : comptoir d'accueil, grand tableau de contrats couvert d'affiches, tables, aventuriers en armes, bannière avec une rose des vents. |
-| [ ] | 5 | `combat/fonds/plaine.png` | 1280 × 720 | Plaine herbeuse avec un chemin de terre et un ciel clair ; le sol occupe le tiers inférieur. |
-| [ ] | 6 | `combat/fonds/crypte.png` | 1280 × 720 | Salle de crypte en pierre, torches, colonnes ; sol dallé sur le tiers inférieur. |
+| [x] | 1 | `cartes/aubeclaire.png` | 1920 × 1080 | Carte du royaume vue du dessus, style carte ancienne en pixel art. Y faire figurer : Lysmont (capitale, au centre), le Temple du Seuil (sur une colline au nord de Lysmont), la Combe-aux-Saules (forêt au sud-ouest), la Crypte de la Fontaine (ruines à l'est), des routes, une rivière, et le Mur d'Aube au loin, au nord. Aucun texte (j'ajoute les noms en jeu). |
+| [x] | 2 | `decors/temple-du-seuil.png` | 1280 × 720 | Intérieur d'un grand temple blanc, cercle d'invocation lumineux bleu au sol, vitraux en forme de soleil, prêtres en robe blanche en arrière-plan. |
+| [x] | 3 | `decors/lysmont-place.png` | 1280 × 720 | Place centrale de la capitale en plein jour : fontaine, étals, maisons à colombages, château blanc aux toits bleus au fond. |
+| [x] | 4 | `decors/guilde.png` | 1280 × 720 | Hall de la Guilde des aventuriers : comptoir d'accueil, grand tableau de contrats couvert d'affiches, tables, aventuriers en armes, bannière avec une rose des vents. |
+| [x] | 5 | `combat/fonds/plaine.png` | 1280 × 720 | Plaine herbeuse avec un chemin de terre et un ciel clair ; le sol occupe le tiers inférieur. |
+| [x] | 6 | `combat/fonds/crypte.png` | 1280 × 720 | Salle de crypte en pierre, torches, colonnes ; sol dallé sur le tiers inférieur. |
 
 ### 1.2 Tileset du donjon « Crypte de la Fontaine »
 
@@ -25,7 +25,7 @@ Un seul fichier `tuiles/crypte.png`, avec des **tuiles de 32 × 32 alignées sur
 
 | Fait | N° | Fichier (dans `assets/`) | Dimensions | Contenu |
 |---|---|---|---|---|
-| [ ] | 7 | `tuiles/crypte.png` | 256 × N | Environ 45 tuiles : Sol dallé (3 variantes) ; Sol fissuré ; Mur vu de face (2 variantes) ; Haut de mur (vu de dessus) ; 4 angles de mur extérieurs ; 4 angles de mur intérieurs ; Bord de mur gauche, droite et bas ; Porte fermée ; Porte ouverte ; Escalier descendant ; Escalier montant ; Coffre fermé ; Coffre ouvert ; Torche murale (4 images d'animation) ; Plaque de piège inactive ; Plaque de piège activée (pics) ; Fontaine asséchée (bloc de 2 × 2 tuiles) ; Sarcophage (bloc de 1 × 2 tuiles) ; Tas d'os ; Gravats ; Toile d'araignée (coin) ; Levier (haut et bas) ; Grille de herse fermée et ouverte ; Sceau cendré au sol (rune violette, 2 images d'animation). |
+| [x] | 7 | `tuiles/crypte.png` | 256 × N | Environ 45 tuiles : Sol dallé (3 variantes) ; Sol fissuré ; Mur vu de face (2 variantes) ; Haut de mur (vu de dessus) ; 4 angles de mur extérieurs ; 4 angles de mur intérieurs ; Bord de mur gauche, droite et bas ; Porte fermée ; Porte ouverte ; Escalier descendant ; Escalier montant ; Coffre fermé ; Coffre ouvert ; Torche murale (4 images d'animation) ; Plaque de piège inactive ; Plaque de piège activée (pics) ; Fontaine asséchée (bloc de 2 × 2 tuiles) ; Sarcophage (bloc de 1 × 2 tuiles) ; Tas d'os ; Gravats ; Toile d'araignée (coin) ; Levier (haut et bas) ; Grille de herse fermée et ouverte ; Sceau cendré au sol (rune violette, 2 images d'animation). |
 
 ### 1.3 Héros — planches de combat (une par classe)
 
@@ -33,16 +33,16 @@ Planche de **512 × 384** : 6 lignes de 8 cases de 64 × 64, personnage **tourn�
 
 | Fait | N° | Fichier (dans `assets/`) | Dimensions | Contenu |
 |---|---|---|---|---|
-| [ ] | 8 | `personnages/heros/lame-runique/combat.png` | 512 × 384 | **Lame runique** : guerrier en armure légère, épée gravée de runes lumineuses bleues. |
-| [ ] | 9 | `personnages/heros/arcaniste/combat.png` | 512 × 384 | **Arcaniste élémentaire** : mage en robe, bâton, petites flammes et cristaux de glace qui flottent. |
-| [ ] | 10 | `personnages/heros/invocateur/combat.png` | 512 × 384 | **Invocateur** : mage à capuche, grimoire ouvert, cercle magique vert. |
-| [ ] | 11 | `personnages/heros/ombre/combat.png` | 512 × 384 | **Ombre** : assassin encapuchonné, foulard, deux dagues. |
-| [ ] | 12 | `personnages/heros/gardien/combat.png` | 512 × 384 | **Gardien sacré** : armure lourde blanche et or, grand bouclier, masse. |
-| [ ] | 13 | `personnages/heros/alchimiste/combat.png` | 512 × 384 | **Alchimiste-artificier** : lunettes de protection, tablier, ceinture de fioles, clé à molette. |
-| [ ] | 14 | `personnages/heros/archer/combat.png` | 512 × 384 | **Archer spirituel** : tenue de rôdeur verte, arc long, flèches aux pointes lumineuses. |
-| [ ] | 15 | `personnages/heros/guerisseur/combat.png` | 512 × 384 | **Guérisseur** : robe claire, bâton surmonté d'un soleil, sacoche de soins. |
-| [ ] | 16 | `personnages/heros/berserker/combat.png` | 512 × 384 | **Berserker draconique** : torse protégé par des écailles rouges, grande hache, cheveux en bataille. |
-| [ ] | 17 | `personnages/heros/barde/combat.png` | 512 × 384 | **Barde enchanteur** : tenue colorée, chapeau à plume, luth. |
+| [x] | 8 | `personnages/heros/lame-runique/combat.png` | 512 × 384 | **Lame runique** : guerrier en armure légère, épée gravée de runes lumineuses bleues. |
+| [x] | 9 | `personnages/heros/arcaniste/combat.png` | 512 × 384 | **Arcaniste élémentaire** : mage en robe, bâton, petites flammes et cristaux de glace qui flottent. |
+| [x] | 10 | `personnages/heros/invocateur/combat.png` | 512 × 384 | **Invocateur** : mage à capuche, grimoire ouvert, cercle magique vert. |
+| [x] | 11 | `personnages/heros/ombre/combat.png` | 512 × 384 | **Ombre** : assassin encapuchonné, foulard, deux dagues. |
+| [x] | 12 | `personnages/heros/gardien/combat.png` | 512 × 384 | **Gardien sacré** : armure lourde blanche et or, grand bouclier, masse. |
+| [x] | 13 | `personnages/heros/alchimiste/combat.png` | 512 × 384 | **Alchimiste-artificier** : lunettes de protection, tablier, ceinture de fioles, clé à molette. |
+| [x] | 14 | `personnages/heros/archer/combat.png` | 512 × 384 | **Archer spirituel** : tenue de rôdeur verte, arc long, flèches aux pointes lumineuses. |
+| [x] | 15 | `personnages/heros/guerisseur/combat.png` | 512 × 384 | **Guérisseur** : robe claire, bâton surmonté d'un soleil, sacoche de soins. |
+| [x] | 16 | `personnages/heros/berserker/combat.png` | 512 × 384 | **Berserker draconique** : torse protégé par des écailles rouges, grande hache, cheveux en bataille. |
+| [x] | 17 | `personnages/heros/barde/combat.png` | 512 × 384 | **Barde enchanteur** : tenue colorée, chapeau à plume, luth. |
 
 ### 1.4 Héros — planches d'exploration (une par classe)
 
@@ -50,16 +50,16 @@ Planche de **128 × 128** : 4 lignes de 4 cases de 32 × 32. Lignes : marche ver
 
 | Fait | N° | Fichier (dans `assets/`) | Dimensions | Contenu |
 |---|---|---|---|---|
-| [ ] | 18 | `personnages/heros/lame-runique/exploration.png` | 128 × 128 | **Lame runique** en marche. |
-| [ ] | 19 | `personnages/heros/arcaniste/exploration.png` | 128 × 128 | **Arcaniste élémentaire** en marche. |
-| [ ] | 20 | `personnages/heros/invocateur/exploration.png` | 128 × 128 | **Invocateur** en marche. |
-| [ ] | 21 | `personnages/heros/ombre/exploration.png` | 128 × 128 | **Ombre** en marche. |
-| [ ] | 22 | `personnages/heros/gardien/exploration.png` | 128 × 128 | **Gardien sacré** en marche. |
-| [ ] | 23 | `personnages/heros/alchimiste/exploration.png` | 128 × 128 | **Alchimiste-artificier** en marche. |
-| [ ] | 24 | `personnages/heros/archer/exploration.png` | 128 × 128 | **Archer spirituel** en marche. |
-| [ ] | 25 | `personnages/heros/guerisseur/exploration.png` | 128 × 128 | **Guérisseur** en marche. |
-| [ ] | 26 | `personnages/heros/berserker/exploration.png` | 128 × 128 | **Berserker draconique** en marche. |
-| [ ] | 27 | `personnages/heros/barde/exploration.png` | 128 × 128 | **Barde enchanteur** en marche. |
+| [x] | 18 | `personnages/heros/lame-runique/exploration.png` | 128 × 128 | **Lame runique** en marche. |
+| [x] | 19 | `personnages/heros/arcaniste/exploration.png` | 128 × 128 | **Arcaniste élémentaire** en marche. |
+| [x] | 20 | `personnages/heros/invocateur/exploration.png` | 128 × 128 | **Invocateur** en marche. |
+| [x] | 21 | `personnages/heros/ombre/exploration.png` | 128 × 128 | **Ombre** en marche. |
+| [x] | 22 | `personnages/heros/gardien/exploration.png` | 128 × 128 | **Gardien sacré** en marche. |
+| [x] | 23 | `personnages/heros/alchimiste/exploration.png` | 128 × 128 | **Alchimiste-artificier** en marche. |
+| [x] | 24 | `personnages/heros/archer/exploration.png` | 128 × 128 | **Archer spirituel** en marche. |
+| [x] | 25 | `personnages/heros/guerisseur/exploration.png` | 128 × 128 | **Guérisseur** en marche. |
+| [x] | 26 | `personnages/heros/berserker/exploration.png` | 128 × 128 | **Berserker draconique** en marche. |
+| [x] | 27 | `personnages/heros/barde/exploration.png` | 128 × 128 | **Barde enchanteur** en marche. |
 
 ### 1.5 Ennemis de base
 
@@ -67,9 +67,9 @@ Planche de **512 × 256** : 4 lignes de 8 cases de 64 × 64, ennemi **tourné ve
 
 | Fait | N° | Fichier (dans `assets/`) | Dimensions | Contenu |
 |---|---|---|---|---|
-| [ ] | 28 | `ennemis/loup-gris/combat.png` | 512 × 256 | Grand loup gris, poils hérissés, yeux jaunes. |
-| [ ] | 29 | `ennemis/gobelin-cendre/combat.png` | 512 × 256 | Gobelin à la peau gris cendre, yeux rouges, lance rouillée, marques violettes (corrompu par les Cendres). |
-| [ ] | 30 | `ennemis/squelette/combat.png` | 512 × 256 | Squelette en armure rouillée, épée et bouclier cassés, lueur bleue dans les orbites. |
+| [x] | 28 | `ennemis/loup-gris/combat.png` | 512 × 256 | Grand loup gris, poils hérissés, yeux jaunes. |
+| [x] | 29 | `ennemis/gobelin-cendre/combat.png` | 512 × 256 | Gobelin à la peau gris cendre, yeux rouges, lance rouillée, marques violettes (corrompu par les Cendres). |
+| [x] | 30 | `ennemis/squelette/combat.png` | 512 × 256 | Squelette en armure rouillée, épée et bouclier cassés, lueur bleue dans les orbites. |
 
 ### 1.6 Aveline (compagne de la version 1) — portraits
 
@@ -122,9 +122,9 @@ Description : femme de 24 ans, chevalière, cheveux châtain cuivré en tresse c
 
 | Fait | N° | Fichier (dans `assets/`) | Dimensions | Contenu |
 |---|---|---|---|---|
-| [ ] | 52 | `ennemis/araignee-geante/combat.png` | 512 × 256 | Araignée de la taille d'un chien, carapace noire et violette. |
-| [ ] | 53 | `ennemis/bandit/combat.png` | 512 × 256 | Bandit humain, foulard sur le visage, gourdin ou dague. |
-| [ ] | 54 | `ennemis/cultiste/combat.png` | 512 × 256 | Cultiste des Cendres en robe grise à capuche, sceau violet brillant sur la main. |
+| [x] | 52 | `ennemis/araignee-geante/combat.png` | 512 × 256 | Araignée de la taille d'un chien, carapace noire et violette. |
+| [x] | 53 | `ennemis/bandit/combat.png` | 512 × 256 | Bandit humain, foulard sur le visage, gourdin ou dague. |
+| [x] | 54 | `ennemis/cultiste/combat.png` | 512 × 256 | Cultiste des Cendres en robe grise à capuche, sceau violet brillant sur la main. |
 | [ ] | 55 | `ennemis/golem-fontaine/combat.png` | 1024 × 512 | **Mini-boss** (cases de 128 × 128) : golem de pierre couvert de mousse, avec une fontaine dans le dos et de l'eau qui coule de ses bras. |
 | [ ] | 56 | `ennemis/vorthak/combat.png` | 1024 × 512 | **Boss du chapitre 1** (cases de 128 × 128) : Vorthak, émissaire démon, grand, armure noire, cornes, épée à deux mains entourée de flammes violettes. |
 
@@ -161,20 +161,20 @@ Description : femme de 24 ans, chevalière, cheveux châtain cuivré en tresse c
 
 | Fait | N° | Fichier (dans `assets/`) | Dimensions | Contenu |
 |---|---|---|---|---|
-| [ ] | 74 | `personnages/races/elfe/calque-combat.png` | 512 × 384 | **Elfe** : longues oreilles pointues. |
-| [ ] | 75 | `personnages/races/elfe/calque-exploration.png` | 128 × 128 | **Elfe** : mêmes éléments, en petit. |
-| [ ] | 76 | `personnages/races/demi-elfe/calque-combat.png` | 512 × 384 | **Demi-elfe** : oreilles légèrement pointues. |
-| [ ] | 77 | `personnages/races/demi-elfe/calque-exploration.png` | 128 × 128 | **Demi-elfe** : mêmes éléments, en petit. |
-| [ ] | 78 | `personnages/races/nain/calque-combat.png` | 512 × 384 | **Nain** : barbe fournie et tressée (le jeu réduit lui-même la taille à 90 %). |
-| [ ] | 79 | `personnages/races/nain/calque-exploration.png` | 128 × 128 | **Nain** : mêmes éléments, en petit. |
-| [ ] | 80 | `personnages/races/ourvalis/calque-combat.png` | 512 × 384 | **Ourvalis** : oreilles de loup gris argent + queue de loup. |
-| [ ] | 81 | `personnages/races/ourvalis/calque-exploration.png` | 128 × 128 | **Ourvalis** : mêmes éléments, en petit. |
-| [ ] | 82 | `personnages/races/vulpin/calque-combat.png` | 512 × 384 | **Vulpin** : oreilles de renard roux à pointe blanche + queue touffue. |
-| [ ] | 83 | `personnages/races/vulpin/calque-exploration.png` | 128 × 128 | **Vulpin** : mêmes éléments, en petit. |
-| [ ] | 84 | `personnages/races/demi-demon/calque-combat.png` | 512 × 384 | **Demi-démon** : petites cornes noires recourbées + fine queue en pointe (le jeu applique la teinte gris-violet de la peau). |
-| [ ] | 85 | `personnages/races/demi-demon/calque-exploration.png` | 128 × 128 | **Demi-démon** : mêmes éléments, en petit. |
-| [ ] | 86 | `personnages/races/sang-dragon/calque-combat.png` | 512 × 384 | **Sang-dragon** : deux petites cornes + écailles rouges sur les joues et les avant-bras. |
-| [ ] | 87 | `personnages/races/sang-dragon/calque-exploration.png` | 128 × 128 | **Sang-dragon** : mêmes éléments, en petit. |
+| [x] | 74 | `personnages/races/elfe/calque-combat.png` | 512 × 384 | **Elfe** : longues oreilles pointues. |
+| [x] | 75 | `personnages/races/elfe/calque-exploration.png` | 128 × 128 | **Elfe** : mêmes éléments, en petit. |
+| [x] | 76 | `personnages/races/demi-elfe/calque-combat.png` | 512 × 384 | **Demi-elfe** : oreilles légèrement pointues. |
+| [x] | 77 | `personnages/races/demi-elfe/calque-exploration.png` | 128 × 128 | **Demi-elfe** : mêmes éléments, en petit. |
+| [x] | 78 | `personnages/races/nain/calque-combat.png` | 512 × 384 | **Nain** : barbe fournie et tressée (le jeu réduit lui-même la taille à 90 %). |
+| [x] | 79 | `personnages/races/nain/calque-exploration.png` | 128 × 128 | **Nain** : mêmes éléments, en petit. |
+| [x] | 80 | `personnages/races/ourvalis/calque-combat.png` | 512 × 384 | **Ourvalis** : oreilles de loup gris argent + queue de loup. |
+| [x] | 81 | `personnages/races/ourvalis/calque-exploration.png` | 128 × 128 | **Ourvalis** : mêmes éléments, en petit. |
+| [x] | 82 | `personnages/races/vulpin/calque-combat.png` | 512 × 384 | **Vulpin** : oreilles de renard roux à pointe blanche + queue touffue. |
+| [x] | 83 | `personnages/races/vulpin/calque-exploration.png` | 128 × 128 | **Vulpin** : mêmes éléments, en petit. |
+| [x] | 84 | `personnages/races/demi-demon/calque-combat.png` | 512 × 384 | **Demi-démon** : petites cornes noires recourbées + fine queue en pointe (le jeu applique la teinte gris-violet de la peau). |
+| [x] | 85 | `personnages/races/demi-demon/calque-exploration.png` | 128 × 128 | **Demi-démon** : mêmes éléments, en petit. |
+| [x] | 86 | `personnages/races/sang-dragon/calque-combat.png` | 512 × 384 | **Sang-dragon** : deux petites cornes + écailles rouges sur les joues et les avant-bras. |
+| [x] | 87 | `personnages/races/sang-dragon/calque-exploration.png` | 128 × 128 | **Sang-dragon** : mêmes éléments, en petit. |
 
 ### 2.8 Portraits par défaut des héros (un par race)
 
@@ -273,14 +273,14 @@ Une ligne de 6 à 8 cases de 64 × 64, soit au plus 512 × 64.
 
 | Fait | N° | Fichier (dans `assets/`) | Dimensions | Contenu |
 |---|---|---|---|---|
-| [ ] | 153 | `icones/races/determination.png` | 32 × 32 | Humain : poing serré lumineux. |
-| [ ] | 154 | `icones/races/sang-ancien.png` | 32 × 32 | Elfe : feuille argentée et étoile. |
-| [ ] | 155 | `icones/races/entre-deux-mondes.png` | 32 × 32 | Demi-elfe : deux mains qui se rejoignent. |
-| [ ] | 156 | `icones/races/robuste.png` | 32 × 32 | Nain : enclume et bouclier. |
-| [ ] | 157 | `icones/races/instinct-de-meute.png` | 32 × 32 | Ourvalis : trois griffures. |
-| [ ] | 158 | `icones/races/ruse.png` | 32 × 32 | Vulpin : queue de renard enroulée. |
-| [ ] | 159 | `icones/races/sang-cendre.png` | 32 × 32 | Demi-démon : goutte de sang violette et flamme noire. |
-| [ ] | 160 | `icones/races/ecailles-et-souffle.png` | 32 × 32 | Sang-dragon : écaille rouge et petite flamme. |
+| [x] | 153 | `icones/races/determination.png` | 32 × 32 | Humain : poing serré lumineux. |
+| [x] | 154 | `icones/races/sang-ancien.png` | 32 × 32 | Elfe : feuille argentée et étoile. |
+| [x] | 155 | `icones/races/entre-deux-mondes.png` | 32 × 32 | Demi-elfe : deux mains qui se rejoignent. |
+| [x] | 156 | `icones/races/robuste.png` | 32 × 32 | Nain : enclume et bouclier. |
+| [x] | 157 | `icones/races/instinct-de-meute.png` | 32 × 32 | Ourvalis : trois griffures. |
+| [x] | 158 | `icones/races/ruse.png` | 32 × 32 | Vulpin : queue de renard enroulée. |
+| [x] | 159 | `icones/races/sang-cendre.png` | 32 × 32 | Demi-démon : goutte de sang violette et flamme noire. |
+| [x] | 160 | `icones/races/ecailles-et-souffle.png` | 32 × 32 | Sang-dragon : écaille rouge et petite flamme. |
 
 ### 3.4 Icônes d'objets (32 × 32)
 

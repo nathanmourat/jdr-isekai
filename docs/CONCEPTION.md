@@ -505,11 +505,11 @@ On calcule la **puissance du groupe** : P = nombre de héros + 0,5 × nombre de 
 
 | P | 1 | 2 | 3 | 4 | 5 | 6 |
 |---|---|---|---|---|---|---|
-| Multiplicateur des PV ennemis | × 1,0 | × 1,8 | × 2,6 | × 3,4 | × 4,2 | × 5,0 |
-| Multiplicateur des dégâts ennemis | × 1,00 | × 1,05 | × 1,10 | × 1,15 | × 1,20 | × 1,25 |
+| Multiplicateur des PV ennemis | × 1,0 | × 2,7 | × 4,3 | × 6,0 | × 8,0 | × 10,0 |
+| Multiplicateur des dégâts ennemis | × 1,00 | × 1,35 | × 1,45 | × 1,70 | × 1,90 | × 2,10 |
 | Ennemis supplémentaires | 0 | 0 | +1 | +1 | +2 | +2 |
 
-Pour un P non entier (par exemple 2,5), on interpole entre deux colonnes.
+Pour un P non entier (par exemple 2,5), on interpole entre deux colonnes. Ces valeurs ont été réglées par la simulation : un groupe de N héros est bien plus efficace que N héros seuls (ils se soignent, se protègent et concentrent leurs coups), d'où une croissance plus rapide que linéaire. Les PV des ennemis supplémentaires sont pris sur le total.
 
 ### 7.4 Mort douce
 

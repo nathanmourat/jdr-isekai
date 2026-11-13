@@ -103,9 +103,9 @@ export function equilibrage(contenu: Contenu, n = 1000, nDons = 200, nGroupes = 
     return { id: d, nom: contenu.dons[d].nom, taux: v / tot };
   });
 
-  // Groupes de 2 à 4 héros aléatoires : la difficulté adaptée doit garder un taux comparable
+  // Groupes de 1 à 6 héros aléatoires : la difficulté adaptée doit garder un taux comparable
   const rngG = creerRng('groupes');
-  const resGroupes = [1, 2, 3, 4].map((taille) => {
+  const resGroupes = [1, 2, 3, 4, 5, 6].map((taille) => {
     let v = 0;
     for (let i = 0; i < nGroupes; i++) {
       const heros = Array.from({ length: taille }, () => ({ classe: classes[entier(rngG, 0, classes.length - 1)], race: races[entier(rngG, 0, races.length - 1)], don: dons[entier(rngG, 0, dons.length - 1)] }));
