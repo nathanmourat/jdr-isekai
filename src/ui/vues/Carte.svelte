@@ -2,6 +2,7 @@
   import { jeu } from '../jeu.svelte';
   import { conditionScene, listeHeros, scenesDisponibles } from '../../moteur/partie';
   import { imageCarte } from '../../rendu/assets';
+  import { lieuAvecCombat, prochaineEtape } from '../../moteur/guide';
 
   let { choisir }: { choisir: (id: string) => void } = $props();
   const c = jeu.contenu!;
@@ -16,22 +17,35 @@
     if (s.length) return 'secondaire';
     return '';
   }
+  const etape = $derived(prochaineEtape(c, etat, jeu.monHeros?.id ?? null));
 </script>
 
 <section>
   <h2>{region.nom}</h2>
+  {#if etape}
+    <div class="etape carte-ui">
+      <span>➤ <strong>Prochaine étape :</strong> {etape.objectif}{#if etape.nomLieu && !etape.objectif.includes(etape.nomLieu)}{' '}<span class="discret">({etape.nomLieu})</span>{/if}</span>
+      {#if etape.lieu && etape.disponible && lieux.some((l) => l.id === etape.lieu)}
+        <button class="principal petit" onclick={() => choisir(etape.lieu!)}>Y aller</button>
+      {:else if !etape.disponible}
+        <small class="discret">Pas encore possible : suivez les autres pistes en attendant.</small>
+      {/if}
+    </div>
+  {/if}
   <div class="carte">
     <img class="pixel" src={imageCarte(region.carte)} alt={`Carte : ${region.nom}`} />
     {#each lieux as l (l.id)}
       <button class={`lieu ${marque(l.id)}`} style={`left:${(l.position.x / 1920) * 100}%; top:${(l.position.y / 1080) * 100}%`} onclick={() => choisir(l.id)}>
-        <span class="point"></span><span class="nom">{l.nom}</span>
+        <span class="point"></span><span class="nom">{#if lieuAvecCombat(c, etat, l.id, jeu.monHeros?.id ?? null)}<span class="epee" title="Combat possible ici">⚔ </span>{/if}{l.nom}</span>
       </button>
     {/each}
   </div>
-  <p class="discret">Cliquez sur un lieu. <span class="leg principale">●</span> quête principale · <span class="leg secondaire">●</span> autre chose à faire.</p>
+  <p class="discret">Cliquez sur un lieu. <span class="leg principale">●</span> quête principale · <span class="leg secondaire">●</span> autre chose à faire · ⚔ combat possible.</p>
 </section>
 
 <style>
+  .etape { display: flex; justify-content: space-between; align-items: center; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 0.6rem; border-color: var(--or); }
+  .epee { color: #ff9b8a; }
   .carte { position: relative; border-radius: var(--rayon); overflow: hidden; border: 1px solid var(--bord); }
   .carte img { display: block; width: 100%; height: auto; }
   .lieu { position: absolute; transform: translate(-50%, -50%); display: flex; flex-direction: column; align-items: center; gap: 2px; background: none; border: none; padding: 0; }
