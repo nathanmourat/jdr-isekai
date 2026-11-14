@@ -1,6 +1,6 @@
 # Équilibrage de l'équipement (palier I)
 
-- 500 combats par rencontre de référence et par cas (31 s), niveau 1, race humaine, don « Œil du Seuil »
+- 500 combats par rencontre de référence et par cas (34 s), niveau 1, race humaine, don « Œil du Seuil »
 - Critère : chaque classe à ± 10 points de la moyenne des classes, pour chaque ensemble
 
 | Classe | Sans équipement | Communs | « De maître » | Nommés | Gain (nommés) |
