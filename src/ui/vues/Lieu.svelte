@@ -10,7 +10,7 @@
   import { jeu } from '../jeu.svelte';
   import { candidatsExamen, conditionHeros, conditionScene, etapeContrat, listeHeros, objetConnu, palierCompagnon, prochainExamen, rangHeros, scenesDisponibles } from '../../moteur/partie';
   import ObjetInfo from '../ObjetInfo.svelte';
-  import { absentsDuGroupe, aideNiveau, couleurNiveau, estGuilde, marqueurPnj, trouverLieu, niveauGroupe, niveauScene, sceneAvecCombat, type Marqueur } from '../../moteur/guide';
+  import { absentsDuGroupe, aideNiveau, couleurNiveau, estExaminateur, estGuilde, marqueurPnj, trouverLieu, niveauGroupe, niveauScene, sceneAvecCombat, type Marqueur } from '../../moteur/guide';
   import NiveauConseille from '../NiveauConseille.svelte';
   import { avantPlanDecor, imageDecor, imagePnjDecor, positionsImage, TAILLE_PNJ_DECOR } from '../../rendu/assets';
   import { portraitPersonnage } from '../outils';
@@ -203,21 +203,21 @@
         {#each scenesPnj as s (s.id)}{@render boutonScene(s, 'Lui parler')}{/each}
         {#if pnjChoisi === lieu.gerant && lieu.boutique.length}
           <div class="item"><button class:principal={!scenesPnj.length} aria-expanded={boutiqueOuverte} onclick={() => (boutiqueOuverte = !boutiqueOuverte)}>🛒 Voir la marchandise</button></div>
-        {:else if fiche?.identifie === undefined && !scenesPnj.length && pnjChoisi !== c.config.guilde.examinatrice}
+        {:else if fiche?.identifie === undefined && !scenesPnj.length && !estExaminateur(c, id, pnjChoisi)}
           <p>{nomPnj(pnjChoisi)} n'a rien de particulier à vous dire pour le moment.</p>
           {#if c.compagnons[pnjChoisi] && etat.compagnonsRencontres.includes(pnjChoisi)}
             <p class="discret">Palier : {palierCompagnon(c, etat, h.id, pnjChoisi).nom}. Offrez-lui un cadeau depuis l'onglet « Compagnons ».</p>
           {/if}
         {/if}
       </div>
-      {#if pnjChoisi === c.config.guilde.examinatrice}
+      {#if estExaminateur(c, id, pnjChoisi)}
         <div class="carte-ui examen" data-panneau="examen">
           <h3>🎖 Rang de Guilde : {rang}</h3>
           {#if examen}
             <p>Rang suivant : <strong>{examen.rang}</strong>. Il faut
               <span class:ok={examen.points >= examen.pointsRequis}>{examen.pointsRequis} points de Guilde ({examen.points})</span>,
               <span class:ok={h.niveau >= examen.niveauRequis}>le niveau {examen.niveauRequis} ({h.niveau})</span>,
-              puis réussir {examen.type === 'epreuve' ? 'une épreuve en plusieurs étapes, qui se termine par un combat' : 'un combat contre un examinateur'}.</p>
+              puis réussir {examen.type === 'epreuve' ? 'une épreuve en plusieurs étapes, qui se termine par un combat' : examen.type === 'scene' ? 'une épreuve qui arrive pendant l\'histoire' : 'un combat contre un examinateur'}.</p>
             <p class="discret">Les points ne donnent plus le rang : ils ouvrent l'examen. Aucun danger au combat d'examen : ni blessure, ni or perdu. En cas d'échec, on revient le lendemain.</p>
             {#if examen.pret}
               {#if avecMoi.length}<p class="discret">{avecMoi.join(', ')} {avecMoi.length > 1 ? 'sont prêts' : 'est prêt'} aussi : vous passerez le combat ensemble.</p>{/if}

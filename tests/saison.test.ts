@@ -4,7 +4,7 @@
  */
 import { describe, expect, it } from 'vitest';
 import { contenuDisque } from '../src/contenu/node';
-import { affinite, conditionScene, listeHeros, sceneEstDisponible, type EtatPartie } from '../src/moteur/partie';
+import { affinite, conditionScene, listeHeros, rangHeros, sceneEstDisponible, type EtatPartie } from '../src/moteur/partie';
 import { dormirHistoire, finirTempsLibre, groupeDeDeux, jouer, jouerPrologues, jouerSceneGroupe, type Robot } from './robot';
 
 const c = contenuDisque();
@@ -74,6 +74,8 @@ describe('Saison 1 jouée par le robot', () => {
     jouerChapitre(r, 5);
     expect(r.etat.quetes['q-ch5-guerre'].terminee).toBe(true);
     expect(r.etat.flags['mur-tombe'] && r.etat.flags['rang-s-obtenu'] && r.etat.flags['terres-cendrees-ouvertes']).toBe(true);
+    // l'épreuve de l'Arène donne le rang S (examen de type « scène »)
+    for (const h of listeHeros(r.etat)) expect(rangHeros(r.etat, h.id)).toBe('S');
     // l'aiguillage a décidé du sort de la Maréchale et de Vaelor selon la réputation
     expect(r.etat.flags['mort:marechale']).toBe((r.etat.reputation.troupes ?? 0) < 40 ? true : undefined);
     expect(r.etat.flags['aldric-vivant'] || r.etat.flags['aldric-mort'] || r.etat.flags['aldric-enfui']).toBe(true);

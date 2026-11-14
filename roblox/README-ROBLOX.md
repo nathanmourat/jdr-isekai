@@ -320,6 +320,13 @@ On y va par la **carte → « Y aller »** (téléportation). Chaque région a s
 - [ ] Vote de la fin : seules les fins possibles sont proposées (« La Couronne » toujours) ; épilogue des compagnes.
 - [ ] Écran « Fin de la saison 1 » avec le nom de la fin ; au château, chaque joueur voit son épilogue personnel (fin « Le Retour » : rester ou partir).
 
+### Liste de contrôle — examens de rang et maîtrises d'équipement (test 2, changements 10 et 11)
+- [ ] Dans n'importe quel comptoir de la Guilde, le panneau « 🎖 Rang de Guilde » montre le rang suivant, ce qu'il manque (points, niveau) et le bouton de l'examen quand tout est prêt.
+- [ ] Rangs E, D et A : un combat contre un examinateur (A : Dame Rowena en personne). En cas d'échec, on retente le lendemain.
+- [ ] Rangs C et B : une épreuve en plusieurs étapes (balises dorées), qui ne s'affiche pas au tableau des contrats.
+- [ ] Rang S : donné par l'épreuve de l'Arène au chapitre 5.
+- [ ] Dans le sac et les boutiques, un objet non maîtrisé par ta classe affiche un avertissement orange (malus), un objet interdit un message rouge.
+
 ## Publier sur Roblox (quand tout marche)
 
 1. **Fichier → Publier sur Roblox**, si ce n'est pas déjà fait.

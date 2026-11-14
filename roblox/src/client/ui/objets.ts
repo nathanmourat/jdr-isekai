@@ -6,7 +6,7 @@
 import { Players, RunService, TweenService } from "@rbxts/services";
 import { CONTENU } from "shared/donnees";
 import { COULEUR_RARETE, modeleObjet } from "shared/equipement3d";
-import { NOMS_RARETE, problemeEquipement, texteEffets, type Heros, type ObjetDef } from "shared/moteur";
+import { avertissementEquipement, NOMS_RARETE, problemeEquipement, texteEffets, type Heros, type ObjetDef } from "shared/moteur";
 import { monHeros, surChangement } from "../partie";
 import { bouton, COULEURS, esc, ligne, texte } from "./kit";
 
@@ -145,6 +145,12 @@ export function ficheObjet(parent: Instance, objetId: string, options: { nombre?
 	if (effets.size() > 0) texte(col, effets.join(" · "), 13);
 	if (o.pouvoir_unique !== undefined) texte(col, `<i>✦ ${esc(o.pouvoir_unique)}</i>`, 13, { couleur: COULEUR_RARETE.legendaire });
 	texte(col, esc(o.description), 12, { couleur: COULEURS.texte2 });
+	// maîtrise d'équipement : interdit (rouge) ou malus de non-maîtrise (orange), affiché avant l'achat et l'équipement
+	if (probleme !== undefined && probleme.sub(1, 7) !== "Réservé") texte(col, `⛔ ${esc(probleme)}`, 12, { couleur: COULEURS.rouge });
+	else if (probleme === undefined && h && o.type === "equipement") {
+		const malus = avertissementEquipement(CONTENU, h, o);
+		if (malus !== undefined) texte(col, `⚠ ${esc(malus)}`, 12, { couleur: COULEURS.or });
+	}
 	if (options.comparer && h) {
 		const c = comparaison(h, o);
 		if (c !== undefined) texte(col, c, 12, { couleur: COULEURS.texte2 });

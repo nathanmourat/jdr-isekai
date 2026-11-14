@@ -1,0 +1,21 @@
+# Épreuve d'examen du rang B (ne s'affiche pas au tableau : on la demande à Dame Rowena ou à l'intendant d'une Guilde).
+# L'épreuve du rang C est dans chapitre-1.yaml ; le rang A est un combat ; le rang S s'obtient pendant l'histoire (chapitre 5).
+contrats:
+  - id: c-examen-b
+    titre: "Épreuve du rang B"
+    description: "Une caravane de la Guilde à escorter dans la Marche des Sables, une piste à suivre dans le canyon, puis la championne de l'Arène. La Guilde veut savoir si vous tenez la distance."
+    rang_min: C
+    examen_rang: B
+    niveau: 15
+    duree_jours: 5
+    recompenses: { or: 0, xp: 600, points_guilde: 0 }
+    etapes:
+      - lieu: route-des-caravanes
+        objectif: "Escorter la caravane de la Guilde sur la Route des Caravanes."
+        texte: "Six chameaux, des caisses scellées du sceau de la Guilde, et un caravanier qui note tout dans un carnet. Au loin, une tempête de sable se lève."
+        choix:
+          - { texte: "Abriter la caravane derrière une dune et attendre.", resultat: "La tempête passe au-dessus de vous. Le caravanier note quelque chose dans son carnet." }
+          - { texte: "Forcer l'allure pour arriver avant la tempête.", resultat: "Vous arrivez à l'oasis avec du sable jusque dans les oreilles, mais à l'heure. Le caravanier note quelque chose." }
+      - { lieu: canyon-des-chacals, objectif: "Retrouver la caisse « perdue » dans le Canyon des Chacals.", texte: "Une caisse a disparu pendant la nuit. Des traces partent vers le canyon : des pas d'homme, mêlés à des pas de chacal.", bouton: "Suivre la piste", test: { carac: AGI, difficulte: 22, reussite: "La caisse est au fond d'une crevasse, posée exprès. Vous la remontez sans une égratignure.", echec: "Vous glissez dans la crevasse et remontez couvert de bleus. Mais vous avez la caisse." } }
+      - { lieu: arene, objectif: "Affronter la championne de l'Arène, à Lysmont.", texte: "Sorenne Vif-Argent fait tourner ses deux lames courtes. « Rowena dit que vous êtes prêts. Moi, je dis : montrez-le. »", combat: examen-rang-b }
+      - { lieu: guilde, objectif: "Revenir à la Guilde pour la cérémonie.", texte: "Tout le hall s'est tu. Dame Rowena tient une carte d'or pâle entre deux doigts.", bouton: "Recevoir son rang" }

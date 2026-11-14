@@ -31,7 +31,9 @@ import {
 	exemplaires,
 	prochaineEtape,
 	pvMax,
-	rangGuilde,
+	candidatsExamen,
+	prochainExamen,
+	rangHeros,
 	scenesDisponibles,
 	versDate,
 	xpPourNiveau,
@@ -79,7 +81,7 @@ export function barreHaut(parent: Frame, redessiner: () => void, allerA: (lieu: 
 	texte(l1, `<b>${formaterDate(CONTENU, etat.jour)}</b> · Chapitre ${etat.chapitre}`, 16, { largeur: new UDim(0, 300) });
 	texte(
 		l1,
-		`<font color="#d9a441">${esc(h.nom)} · niv. ${h.niveau} · rang ${rangGuilde(CONTENU, etat.pointsGuilde[h.id] ?? 0)} · ${h.or} or</font>${etat.meneur !== undefined ? ` · Meneur : ${esc(etat.joueurs[etat.meneur]?.pseudo ?? "?")}` : ""}`,
+		`<font color="#d9a441">${esc(h.nom)} · niv. ${h.niveau} · rang ${rangHeros(etat, h.id)} · ${h.or} or</font>${etat.meneur !== undefined ? ` · Meneur : ${esc(etat.joueurs[etat.meneur]?.pseudo ?? "?")}` : ""}`,
 		15,
 		{ largeur: new UDim(1, -320) },
 	);
@@ -239,7 +241,25 @@ function vueLieu(parent: Frame, id: string, fermer: () => void, redessiner: () =
 		}
 	}
 	if (estGuilde(id) && voir("contrats")) {
-		const rang = rangGuilde(CONTENU, etat.pointsGuilde[h.id] ?? 0);
+		const rang = rangHeros(etat, h.id);
+		// Examen du rang suivant : les points ne donnent plus le rang, ils ouvrent l'examen
+		const ex = prochainExamen(CONTENU, etat, h.id);
+		const ce = carte(parent, `🎖 Rang de Guilde : ${rang}`);
+		if (ex === undefined) {
+			texte(ce, "Tu as atteint le rang le plus haut de la Guilde.", 14, { couleur: COULEURS.or });
+		} else {
+			const ok = (v: boolean, t: string) => `<font color="${v ? "#7fc77a" : "#e0605a"}">${t}</font>`;
+			const epreuve = ex.type === "epreuve" ? "une épreuve en plusieurs étapes, qui se termine par un combat" : ex.type === "scene" ? "une épreuve qui arrive pendant l'histoire" : "un combat contre un examinateur";
+			texte(ce, `Rang suivant : <b>${ex.rang}</b>. Il faut ${ok(ex.points >= ex.pointsRequis, `${ex.pointsRequis} points de Guilde (${ex.points})`)}, ${ok(h.niveau >= ex.niveauRequis, `le niveau ${ex.niveauRequis} (${h.niveau})`)}, puis réussir ${epreuve}.`, 14);
+			texte(ce, "Aucun danger au combat d'examen : ni blessure, ni or perdu. En cas d'échec, on revient le lendemain.", 12, { couleur: COULEURS.texte2 });
+			if (ex.pret) {
+				const avec = candidatsExamen(CONTENU, etat, h.id).filter((x) => x !== h.id).map((x) => etat.heros[x].nom);
+				if (avec.size() > 0) texte(ce, `Avec toi : ${avec.join(", ")} (prêts pour le même examen).`, 13, { couleur: COULEURS.texte2 });
+				bouton(ce, ex.type === "epreuve" ? `Commencer l'épreuve du rang ${ex.rang}` : `⚔ Passer l'examen du rang ${ex.rang}`, () => agir({ type: "examen_rang" }), { principal: true });
+			} else {
+				texte(ce, ex.raison, 13, { couleur: COULEURS.or });
+			}
+		}
 		const c = carte(parent, `Tableau des contrats (ton rang : ${rang})`);
 		if (enCours) {
 			texte(c, `<b>En cours : ${enCours.contrat.titre}</b> (étape ${enCours.numero}/${enCours.total})`, 15, { couleur: COULEURS.or });
@@ -248,7 +268,7 @@ function vueLieu(parent: Frame, id: string, fermer: () => void, redessiner: () =
 		}
 		texte(c, "Un contrat se joue en plusieurs étapes, dans différents lieux (une balise lumineuse t'y attend). On revient ici toucher la récompense. Un seul contrat à la fois.", 13, { couleur: COULEURS.texte2 });
 		for (const [, ct] of pairs(CONTENU.contrats)) {
-			if (!conditionHeros(CONTENU, etat, ct.disponible_si, h)) continue;
+			if (ct.examen_rang !== undefined || !conditionHeros(CONTENU, etat, ct.disponible_si, h)) continue;
 			texte(c, `<b>${ct.titre}</b>  <font color="#beaf96">rang ${ct.rang_min}${ct.etapes.size() > 0 ? ` · ${ct.etapes.size()} étapes` : ""}</font>`, 15);
 			texte(c, `${ct.description} Récompense : ${ct.recompenses.or} or, ${ct.recompenses.xp} XP, ${ct.recompenses.points_guilde} pts de guilde.`, 13, { couleur: COULEURS.texte2 });
 			const ok = RANGS.indexOf(rang) >= RANGS.indexOf(ct.rang_min) && enCours === undefined;

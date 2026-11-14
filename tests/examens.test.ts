@@ -108,11 +108,32 @@ describe('Rangs de Guilde : examens', () => {
     jouer(c, r, { type: 'examen_rang', joueur: 'j1' });
     expect(r.etat.contrats.h1.id).toBe('c-examen-c');
     expect(c.contrats['c-examen-c'].etapes.some((e) => !!e.combat)).toBe(true);
-    // rang B : pas encore d'examen
+    // rang B : une épreuve aussi (Marche des Sables, puis l'Arène)
     r.etat.rangs.h2 = 'C';
     r.etat.pointsGuilde.h2 = 2000;
     r.etat.heros.h2.niveau = 20;
-    expect(prochainExamen(c, r.etat, 'h2')!.raison).toMatch(/prochain chapitre/);
+    expect(prochainExamen(c, r.etat, 'h2')!.type).toBe('epreuve');
+  });
+
+  it('rangs A et S : un combat contre Dame Rowena, puis l\'épreuve du chapitre 5 (scène de l\'histoire)', () => {
+    const r = aLaGuilde('rangs-hauts');
+    r.etat.rangs.h1 = 'B';
+    r.etat.pointsGuilde.h1 = 3500;
+    r.etat.heros.h1.niveau = 22;
+    const a = prochainExamen(c, r.etat, 'h1')!;
+    expect(a.rang).toBe('A');
+    expect(a.type).toBe('combat');
+    expect(a.pret).toBe(true);
+    r.etat.rangs.h1 = 'A';
+    r.etat.pointsGuilde.h1 = 7000;
+    r.etat.heros.h1.niveau = 30;
+    const s = prochainExamen(c, r.etat, 'h1')!;
+    expect(s.rang).toBe('S');
+    expect(s.type).toBe('scene');
+    expect(s.pret).toBe(false);
+    expect(s.raison).toMatch(/histoire/);
+    // la scène donne le rang S à tous les héros présents, même sans avoir passé les examens précédents
+    expect(c.scenes['ch5-rang-s'].noeuds['rang'].effets.some((e) => e.rang_guilde === 'S')).toBe(true);
   });
 
   it('une sauvegarde au format 6 est migrée au format 7', () => {

@@ -183,7 +183,7 @@ scenes:
           - { dit: "Rowena descend dans l'arène et accroche à votre poitrine une broche d'or noir : le rang S. La foule hurle si fort que les oiseaux s'envolent de tout Lysmont." }
           - { qui: kaya, dit: "Kaya reçoit la sienne en tremblant. Elle la regarde, longtemps. Puis elle hurle à la lune, en plein jour, et dix mille personnes hurlent avec elle.", si: { flag: kaya-recrutee } }
         effets:
-          - { flag: rang-s-obtenu, points_guilde: 3000, xp: 2500, objet: insigne-rang-s, quete: { id: q-ch5-guerre, etape: aldric }, journal: "Germinal 1026 : {groupe} passent l'épreuve du rang S à l'Arène de Lysmont." }
+          - { flag: rang-s-obtenu, rang_guilde: S, points_guilde: 3000, xp: 2500, objet: insigne-rang-s, quete: { id: q-ch5-guerre, etape: aldric }, journal: "Germinal 1026 : {groupe} passent l'épreuve du rang S à l'Arène de Lysmont." }
         fin: true
 
   # ─────────────────────────────────────────────────────────────

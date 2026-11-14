@@ -319,6 +319,8 @@ export const zConsequence = z.object({
   miser: z.number().int().min(1).optional(),
   /** Quête de classe terminée : l'ultime de la classe est débloqué (utilisable dès le niveau `niveau_ultime`). */
   debloquer_ultime: z.boolean().optional(),
+  /** Rang de Guilde donné par l'histoire (examen de type « scene ») : les héros de la scène l'obtiennent s'ils ne l'ont pas. */
+  rang_guilde: z.string().optional(),
   /** Pari gagné : rend la mise multipliée (2 = la mise et autant en gain). */
   gain_pari: z.number().min(0).optional(),
   /** Pari perdu : la mise est définitivement perdue. */
@@ -616,12 +618,13 @@ export const zConfig = z.object({
     examinatrice: z.string().default('rowena'),
     /**
      * Rangs : les `points` ne font que débloquer l'examen ; il faut aussi le `niveau_min`.
-     * `examen` : un combat contre un examinateur (`rencontre`), ou une épreuve en plusieurs étapes (`contrat`).
+     * `examen` : un combat contre un examinateur (`rencontre`), une épreuve en plusieurs étapes (`contrat`),
+     * ou une scène de l'histoire (`scene`) qui donne le rang avec l'effet `rang_guilde`.
      * Sans `examen`, le rang n'est pas encore accessible (examen à venir avec un prochain chapitre).
      */
     rangs: z.array(z.object({
       rang: z.string(), points: z.number(), niveau_min: z.number().int().min(1).default(1),
-      examen: z.object({ type: z.enum(['combat', 'epreuve']), rencontre: z.string().optional(), contrat: z.string().optional() }).optional(),
+      examen: z.object({ type: z.enum(['combat', 'epreuve', 'scene']), rencontre: z.string().optional(), contrat: z.string().optional(), scene: z.string().optional() }).optional(),
     })),
   }),
   difficulte: z.array(zDifficulte).min(1),

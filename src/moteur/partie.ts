@@ -309,7 +309,7 @@ export interface ProchainExamen {
   points: number;
   pointsRequis: number;
   niveauRequis: number;
-  type: 'combat' | 'epreuve' | null;
+  type: 'combat' | 'epreuve' | 'scene' | null;
   /** Vrai si le héros peut passer l'examen maintenant. */
   pret: boolean;
   /** Ce qui manque, en une phrase ('' si l'examen est possible). */
@@ -330,6 +330,7 @@ export function prochainExamen(contenu: Contenu, etat: EtatPartie, herosId: stri
   if (points < suivant.points) raison = `Il faut ${suivant.points} points de Guilde (vous en avez ${points}).`;
   else if (h.niveau < suivant.niveau_min) raison = `Il faut être niveau ${suivant.niveau_min} (vous êtes niveau ${h.niveau}).`;
   else if (!suivant.examen) raison = `L'examen du rang ${suivant.rang} arrivera avec un prochain chapitre.`;
+  else if (suivant.examen.type === 'scene') raison = `L'épreuve du rang ${suivant.rang} fait partie de l'histoire : « ${contenu.scenes[suivant.examen.scene ?? '']?.titre ?? suivant.rang} ».`;
   else if (rate !== undefined && etat.jour <= rate) raison = 'Examen raté aujourd\'hui : revenez demain.';
   else if (suivant.examen.type === 'epreuve' && vrai(etat.contrats[herosId])) raison = 'Terminez d\'abord votre contrat en cours.';
   return { rang: suivant.rang, points, pointsRequis: suivant.points, niveauRequis: suivant.niveau_min, type: suivant.examen ? suivant.examen.type : null, pret: raison === '', raison };
@@ -419,6 +420,9 @@ function appliquerConsequence(contenu: Contenu, etat: EtatPartie, eff: Consequen
     else etat.flags[f] = true;
   }
   if (vrai(eff.retirer_flag)) delete etat.flags[eff.retirer_flag];
+  if (vrai(eff.rang_guilde)) for (const h of hs) {
+    if (ordreRangs.indexOf(rangHeros(etat, h.id)) < ordreRangs.indexOf(eff.rang_guilde)) messages.push(promouvoir(contenu, etat, h, eff.rang_guilde));
+  }
   if (eff.debloquer_ultime === true) for (const h of hs) {
     if (h.ultime === true) continue;
     h.ultime = true;

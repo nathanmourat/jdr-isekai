@@ -146,6 +146,7 @@ function verifierReferences(c: Contenu): string[] {
     const ex = r.examen;
     if (!ex) continue;
     if (ex.type === 'combat' && (!ex.rencontre || !c.rencontres[ex.rencontre])) e.push(`Rang ${r.rang} › examen › rencontre « ${ex.rencontre ?? ''} » introuvable`);
+    if (ex.type === 'scene' && (!ex.scene || !c.scenes[ex.scene])) e.push(`Rang ${r.rang} › examen › scène « ${ex.scene ?? ''} » introuvable`);
     if (ex.type === 'epreuve' && (!ex.contrat || !c.contrats[ex.contrat] || c.contrats[ex.contrat].etapes.length === 0)) e.push(`Rang ${r.rang} › examen › contrat à étapes « ${ex.contrat ?? ''} » introuvable`);
   }
   if (!c.pnj[c.config.guilde.examinatrice]) e.push(`Guilde › examinatrice « ${c.config.guilde.examinatrice} » introuvable dans les PNJ`);
@@ -254,6 +255,7 @@ function verifierConsequence(c: Contenu, ou: string, eff: Consequence, e: string
   const liste = (v?: string | string[]) => (v === undefined ? [] : Array.isArray(v) ? v : [v]);
   for (const o of liste(eff.objet)) if (!c.objets[o]) e.push(`${ou} › objet « ${o} » introuvable`);
   for (const id of Object.keys(eff.affinite ?? {})) if (!c.compagnons[id]) e.push(`${ou} › affinité › compagnon « ${id} » introuvable`);
+  if (eff.rang_guilde && !c.config.guilde.rangs.some((r) => r.rang === eff.rang_guilde)) e.push(`${ou} › rang_guilde « ${eff.rang_guilde} » inconnu`);
   if (eff.recruter && !c.compagnons[eff.recruter]) e.push(`${ou} › recruter › compagnon « ${eff.recruter} » introuvable`);
   if (eff.quete && !c.quetes[eff.quete.id]) e.push(`${ou} › quête « ${eff.quete.id} » introuvable`);
   if (eff.quete && c.quetes[eff.quete.id] && !c.quetes[eff.quete.id].etapes.some((x) => x.id === eff.quete!.etape)) e.push(`${ou} › quête « ${eff.quete.id} » › étape « ${eff.quete.etape} » introuvable`);

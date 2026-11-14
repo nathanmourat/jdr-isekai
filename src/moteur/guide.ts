@@ -106,12 +106,23 @@ export function scenesDuPnj(contenu: Contenu, etat: EtatPartie, lieu: string, pn
   return scenesDisponibles(contenu, etat, lieu, herosId).filter((s) => s.pnj === pnj);
 }
 
+/**
+ * Vrai si ce PNJ fait passer les examens de rang dans ce lieu : l'examinatrice (Dame Rowena),
+ * ou le gérant d'un comptoir de Guilde régional (Ibrek, Orsa, Hjalmi, Marée, Valka…).
+ */
+export function estExaminateur(contenu: Contenu, lieu: string, pnj: string): boolean {
+  if (pnj === contenu.config.guilde.examinatrice) return true;
+  if (!estGuilde(lieu)) return false;
+  const l = trouverLieu(contenu, lieu)?.lieu;
+  return !!l && l.gerant === pnj;
+}
+
 /** Symbole à afficher au-dessus d'un PNJ (null : rien d'important à dire). */
 export function marqueurPnj(contenu: Contenu, etat: EtatPartie, lieu: string, pnj: string, herosId: string | null): Marqueur | null {
   let res: Marqueur | null = null;
   for (const s of scenesDuPnj(contenu, etat, lieu, pnj, herosId)) res = plusImportant(res, marqueurScene(contenu, s));
   // l'examinatrice de la Guilde porte un « ! » quand le héros peut passer un examen de rang
-  if (pnj === contenu.config.guilde.examinatrice && examenPret(contenu, etat, herosId)) res = plusImportant(res, 'secondaire');
+  if (estExaminateur(contenu, lieu, pnj) && examenPret(contenu, etat, herosId)) res = plusImportant(res, 'secondaire');
   return res;
 }
 
@@ -130,7 +141,7 @@ export function marqueurLieu(contenu: Contenu, etat: EtatPartie, lieu: string, h
   if (examenPret(contenu, etat, herosId)) {
     for (const r of valeurs(contenu.regions)) {
       const l = r.lieux.find((x) => x.id === lieu);
-      if (l && l.pnj.some((p) => p.id === contenu.config.guilde.examinatrice)) res = plusImportant(res, 'secondaire');
+      if (l && l.pnj.some((p) => estExaminateur(contenu, lieu, p.id))) res = plusImportant(res, 'secondaire');
     }
   }
   return res;

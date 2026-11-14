@@ -131,6 +131,8 @@ export interface ContratDef {
 	titre: string;
 	description: string;
 	rang_min: string;
+	/** Épreuve d'examen : ne s'affiche pas au tableau ; la terminer donne ce rang. */
+	examen_rang?: string;
 	etapes: EtapeContratDef[];
 	disponible_si?: Condition;
 	recompenses: { or: number; xp: number; points_guilde: number };
@@ -411,6 +413,23 @@ export function rejouer(
 export function listeHeros(etat: EtatPartie): Heros[];
 export function formaterDate(contenu: Contenu, jour: number): string;
 export function rangGuilde(contenu: Contenu, points: number): string;
+/** Rang de Guilde du héros (obtenu par examen ; F au départ). */
+export function rangHeros(etat: EtatPartie, herosId: string): string;
+export interface ProchainExamen {
+	rang: string;
+	points: number;
+	pointsRequis: number;
+	niveauRequis: number;
+	type: "combat" | "epreuve" | "scene" | undefined;
+	pret: boolean;
+	raison: string;
+}
+/** Examen du rang suivant (undefined : rang le plus haut déjà atteint). */
+export function prochainExamen(contenu: Contenu, etat: EtatPartie, herosId: string): ProchainExamen | undefined;
+/** Héros présents qui passeront le même combat d'examen (lui compris). */
+export function candidatsExamen(contenu: Contenu, etat: EtatPartie, herosId: string): string[];
+/** Vrai si ce PNJ fait passer les examens dans ce lieu (Dame Rowena, ou l'intendant d'une Guilde régionale). */
+export function estExaminateur(contenu: Contenu, lieu: string, pnj: string): boolean;
 export function creerRng(graine: string): Rng;
 export function caracsDeDepart(contenu: Contenu, classe: string, race: string, libres?: OptionsHeros["libres"]): Caracs;
 export function caracsTotales(contenu: Contenu, h: Heros): Caracs;
@@ -455,6 +474,8 @@ export const NOMS_RARETE: Record<string, string>;
 export const POUVOIRS: Record<string, string>;
 export function bonusEquipement(contenu: Contenu, h: Heros): BonusEquipement;
 export function problemeEquipement(contenu: Contenu, h: Heros, o: ObjetDef): string | undefined;
+/** Avertissement de non-maîtrise (malus), à montrer avant l'achat et l'équipement. */
+export function avertissementEquipement(contenu: Contenu, h: Heros, o: ObjetDef): string | undefined;
 export function exemplaires(heros: Heros[], objet: string): number;
 export function texteEffets(o: ObjetDef): string[];
 export function caseDonjon(contenu: Contenu, id: string, x: number, y: number): string;

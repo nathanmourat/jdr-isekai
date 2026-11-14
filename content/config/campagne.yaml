@@ -92,6 +92,7 @@ config:
   # Rangs de Guilde : les points ne font que DÉBLOQUER l'examen ; il faut aussi le niveau minimum.
   # examen « combat » : un combat contre un examinateur (sans danger : ni blessure ni or perdu, on retente le lendemain).
   # examen « epreuve » : un contrat en plusieurs étapes qui se termine par un combat.
+  # examen « scene » : une scène de l'histoire donne le rang (effet rang_guilde) ; le rang S s'obtient au chapitre 5.
   # Sans « examen » : le rang n'est pas encore accessible (il arrivera avec un prochain chapitre).
   guilde:
     examinatrice: rowena
@@ -100,9 +101,9 @@ config:
       - { rang: E, points: 100, niveau_min: 3, examen: { type: combat, rencontre: examen-rang-e } }
       - { rang: D, points: 300, niveau_min: 6, examen: { type: combat, rencontre: examen-rang-d } }
       - { rang: C, points: 700, niveau_min: 10, examen: { type: epreuve, contrat: c-examen-c } }
-      - { rang: B, points: 1500, niveau_min: 15 }
-      - { rang: A, points: 3000, niveau_min: 22 }
-      - { rang: S, points: 6000, niveau_min: 30 }
+      - { rang: B, points: 1500, niveau_min: 15, examen: { type: epreuve, contrat: c-examen-b } }
+      - { rang: A, points: 3000, niveau_min: 22, examen: { type: combat, rencontre: examen-rang-a } }
+      - { rang: S, points: 6000, niveau_min: 30, examen: { type: scene, scene: ch5-rang-s } }
 
   # Difficulté selon la puissance du groupe P = héros + 0,5 × compagnons présents.
   # Interpolation linéaire entre deux colonnes pour un P non entier.

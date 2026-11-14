@@ -1,0 +1,63 @@
+# Examinateurs des rangs B et A de la Guilde (les rangs E, D et C sont dans chapitre-1.yaml).
+# Réglés avec npm run equilibrage:examens : entre 45 % et 85 % de réussite seul, au niveau minimum, sans équipement.
+ennemis:
+  - id: examinateur-rang-b
+    nom: Sorenne Vif-Argent
+    description: "Ancienne championne de l'Arène, examinatrice du rang B. Deux lames courtes, un sourire tranquille, et pas une goutte de sueur."
+    niveau: 15
+    categorie: humanoide
+    sprite: bandit
+    caracteristiques: { FOR: 16, AGI: 19, INT: 11, VIT: 19, ESP: 12, CHA: 12 }
+    pv: 400
+    armure: 11
+    attaque: { stat: AGI, portee: melee, puissance: 26 }
+    attaques:
+      - { nom: "Double taille", phrase: "croise ses deux lames sur {cible}", effet: entaille }
+      - { nom: "Feinte", phrase: "trompe {cible} d'une feinte et frappe", effet: entaille }
+    competences:
+      - id: danse-vif-argent
+        nom: Danse de vif-argent
+        description: "Trois touches, si rapides qu'elles ne font qu'un seul bruit."
+        recharge: 3
+        cible: ennemi
+        portee: melee
+        effets: [{ type: degats, puissance: 13, stat: AGI, coups: 3 }]
+        ia: { priorite: 2, quand: toujours }
+    recompenses: { xp: 400, or: 0, objets: [] }
+
+  - id: examinateur-rang-a
+    nom: Dame Rowena, maîtresse de la Guilde
+    description: "Pour le rang A, c'est la maîtresse de la Guilde elle-même qui descend dans l'arène. Elle a rangé sa pipe. C'est mauvais signe."
+    niveau: 22
+    categorie: humanoide
+    sprite: bandit
+    caracteristiques: { FOR: 20, AGI: 18, INT: 14, VIT: 22, ESP: 16, CHA: 15 }
+    pv: 650
+    armure: 14
+    attaque: { stat: FOR, portee: melee, puissance: 31 }
+    attaques:
+      - { nom: "Lame de la Guilde", phrase: "frappe {cible} d'une épée qui a tout vu", effet: entaille }
+      - { nom: "Coup d'expérience", phrase: "trouve la faille de {cible} du premier coup", effet: impact }
+    competences:
+      - id: lecon-de-rowena
+        nom: Leçon de Rowena
+        description: "« Vous avez laissé une ouverture. » Un seul coup, au bon endroit."
+        recharge: 3
+        cible: ennemi
+        portee: melee
+        effets:
+          - { type: degats, puissance: 34, stat: FOR }
+          - { type: etat, etat: expose, duree: 2, valeur: 0.15, chance: 0.5 }
+        ia: { priorite: 2, quand: toujours }
+      - id: second-souffle-rowena
+        nom: Vieille habitude
+        description: "Elle respire, une seule fois, et se remet en garde."
+        recharge: 5
+        cible: soi
+        effets: [{ type: soin, puissance: 30, stat: VIT }]
+        ia: { priorite: 3, quand: soi_blesse }
+    recompenses: { xp: 900, or: 0, objets: [] }
+
+rencontres:
+  - { id: examen-rang-b, nom: "Examen du rang B", fond: arene, fuite_possible: false, ennemis: [{ id: examinateur-rang-b }], renforts: [examinateur-rang-b] }
+  - { id: examen-rang-a, nom: "Examen du rang A", fond: arene, fuite_possible: false, ennemis: [{ id: examinateur-rang-a }], renforts: [examinateur-rang-a] }
