@@ -155,7 +155,7 @@
         {#if vue === 'temps-libre'}<TempsLibre />{:else}<FinChapitre />{/if}
       </Fenetre>
     {:else if lieu}
-      <Lieu id={lieu} retour={() => (lieu = null)} />
+      <Lieu id={lieu} retour={() => (lieu = null)} aller={ouvrirLieu} />
     {:else}
       <Carte choisir={ouvrirLieu} bind:ville />
     {/if}

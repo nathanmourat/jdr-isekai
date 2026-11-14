@@ -12,6 +12,7 @@
   import ObjetInfo from '../ObjetInfo.svelte';
   import { activiteChangee, signatureActivite } from '../activite';
   import { alertesSante } from '../sante';
+  import { flechesDuLieu } from '../chemins';
   import { absentsDuGroupe, aideNiveau, couleurNiveau, estExaminateur, estGuilde, marqueurPnj, trouverLieu, niveauGroupe, niveauScene, sceneAvecCombat, type Marqueur } from '../../moteur/guide';
   import NiveauConseille from '../NiveauConseille.svelte';
   import { avantPlanDecor, imageDecor, imagePnjDecor, positionsImage, TAILLE_PNJ_DECOR } from '../../rendu/assets';
@@ -25,7 +26,7 @@
   import Fenetre from '../Fenetre.svelte';
   import { ecrirePreference, lirePreference } from '../preferences';
 
-  let { id, retour }: { id: string; retour: () => void } = $props();
+  let { id, retour, aller = null }: { id: string; retour: () => void; aller?: ((lieu: string) => void) | null } = $props();
   const c = jeu.contenu!;
   const etat = $derived(jeu.etat!);
   const h = $derived(jeu.monHeros!);
@@ -152,6 +153,11 @@
   interface Zone { cle: string; nom: string; x: number; y: number; l: number; h: number; action: () => void }
   const aFaireIci = $derived(!!etapeIci || scenesSurPlace.length > 0);
   /** Zones cliquables du décor (invisibles ; un contour apparaît au survol). Positions : centre de la zone, dans le JSON du décor. */
+  // flèches de chemin posées sur le décor (test 3, point 2) : clé `suite` / `chemin` / `retour` du JSON, sinon bord droit / gauche
+  const fleches = $derived(aller ? flechesDuLieu(c, etat, h.id, id).map((f) => {
+    const p = f.retour ? positions?.retour : positions?.suite ?? positions?.chemin;
+    return { ...f, x: p?.x ?? (f.retour ? 56 : 1224), y: p?.y ?? 360 };
+  }) : []);
   const zones = $derived.by((): Zone[] => {
     const res: Zone[] = [];
     const ajouter = (cle: string, nom: string, l: number, hz: number, action: () => void) => {
@@ -201,6 +207,13 @@
 <section class="lieu">
   <Cadre169>
     <div class="decor pixel" role="presentation" onclick={clicDecor} data-decor={decor} style={`background-image:url(${imageDecor(decor, piece === 'chambre' ? 'Chambre du Chaudron Fêlé' : lieu.nom)})`}>
+    {#each fleches as f (f.vers + f.retour)}
+      <button class="fleche-chemin" class:retour={f.retour} data-fleche={f.vers} style={`left:calc(${pct(f.x, 1280)} - 32px); top:calc(${pct(f.y, 720)} - 32px)`}
+        aria-label={`${f.retour ? 'Revenir à' : 'Aller à'} ${f.nom}${f.niveau !== null ? `, niveau conseillé ${f.niveau}` : ''}`} onclick={() => aller?.(f.vers)}>
+        <span class="pulse" aria-hidden="true">{f.retour ? '⬅' : '➜'}</span>
+        <span class="nom-fleche">{f.nom}{#if f.niveau !== null} <NiveauConseille niveau={f.niveau} />{/if}</span>
+      </button>
+    {/each}
     {#each zones as z (z.cle)}
       <button class="zone" data-zone={z.cle} style={`left:${pct(z.x, 1280)}; top:${pct(z.y, 720)}; width:${pct(z.l, 1280)}; height:${pct(z.h, 720)}`} title={z.nom} aria-label={z.nom} onclick={z.action}><span class="etiquette">{z.nom}</span></button>
     {/each}
@@ -442,6 +455,16 @@
 
   /* Zones et personnages : la zone cliquable est FIXE (centrée par des marges, jamais par transform),
      au moins 44 × 44 px ; les animations ne touchent que des éléments décoratifs à l'intérieur. */
+  /* flèche de chemin : zone fixe de 64 × 64 (jamais centrée par transform), seule la pastille pulse */
+  .fleche-chemin { position: absolute; z-index: 30; width: 64px; height: 64px; min-width: 44px; min-height: 44px; padding: 0; border: none; background: none; cursor: pointer; }
+  .fleche-chemin:hover, .fleche-chemin:active { background: none; transform: none; }
+  .fleche-chemin .pulse { position: absolute; inset: 6px; display: grid; place-items: center; border-radius: 50%; background: #1d1928e6; border: 2px solid var(--or); color: var(--or-2); font-size: 1.6rem; pointer-events: none; animation: pulse-fleche 1.4s ease-in-out infinite; box-shadow: 0 0 12px #ffd16677; }
+  .fleche-chemin .nom-fleche { position: absolute; top: 100%; left: 50%; translate: -50% 0; margin-top: 2px; width: max-content; max-width: 11em; text-align: center; font-size: clamp(0.65rem, 1.4vw, 0.85rem); background: #1b1308e6; color: #f3ead7; padding: 0.1em 0.5em; border-radius: 4px; pointer-events: none; }
+  .fleche-chemin.retour .nom-fleche { left: 0; translate: 0 0; }
+  .fleche-chemin:not(.retour) .nom-fleche { left: auto; right: 0; translate: 0 0; }
+  .fleche-chemin:focus-visible .pulse { outline: 3px solid var(--or-2); }
+  @keyframes pulse-fleche { 50% { scale: 1.12; box-shadow: 0 0 20px #ffd166aa; } }
+  @media (prefers-reduced-motion: reduce) { .fleche-chemin .pulse { animation: none; } }
   .zone, .perso { position: absolute; padding: 0; background: none; border: none; border-radius: 10px; min-width: 44px; min-height: 44px; cursor: pointer; }
   .zone:active, .perso:active, .zone:hover, .perso:hover { transform: none; background: none; }
   .zone { transform: translate(-50%, -50%); z-index: 5; border: 2px dashed transparent; }
