@@ -1,0 +1,276 @@
+# Chapitre 3 — scènes personnelles des compagnes (individuelles).
+scenes:
+  # ── Elianne ───────────────────────────────────────────────────
+  - id: el-priere
+    pnj: elianne
+    titre: "Elianne — La prière du soir"
+    type: individuel
+    lieu: ithrael-auberge
+    decor: ithrael-auberge
+    disponible_si: { flag: elianne-recrutee }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: elianne, dit: "Elianne est agenouillée sur la plateforme de l'auberge, face au soleil couchant, les mains jointes. Elle ne prie pas. Elle regarde ses mains." }
+          - { qui: elianne, dit: "« Avant, les mots venaient tout seuls. Maintenant… » Elle vous fait de la place à côté d'elle. « Tu pries, toi ? Dans ton monde, je veux dire. »" }
+        choix:
+          - texte: "S'agenouiller à côté d'elle, en silence."
+            effets: [{ affinite: { elianne: 6 } }]
+            aller: silence
+          - texte: "« Pas vraiment. Mais je sais écouter. »"
+            effets: [{ affinite: { elianne: 5 } }]
+            aller: ecoute
+          - texte: "« Prier ne sert à rien. Agir, si. »"
+            effets: [{ affinite: { elianne: -1 } }]
+            aller: agir
+      silence:
+        repliques:
+          - { qui: elianne, expression: joie, dit: "Le soleil disparaît. Au bout d'un long moment, elle murmure : « Merci. C'est la première fois depuis des semaines que ce silence ne me fait pas peur. »" }
+        fin: true
+      ecoute:
+        repliques:
+          - { qui: elianne, dit: "Elle parle longtemps : de l'orphelinat, des chants du Temple, du jour de l'Appel. « J'étais si fière, ce jour-là. » Elle se tait. « Je ne sais plus si je dois l'être. »" }
+        fin: true
+      agir:
+        repliques:
+          - { qui: elianne, dit: "« Peut-être. » Elle se relève, épousseta sa robe. « Mais il faut savoir pourquoi on agit. C'est à ça que servent les prières. » Elle s'en va, sans colère." }
+        fin: true
+
+  - id: el-lettres
+    pnj: elianne
+    titre: "Elianne — Le tribut du Voile"
+    type: individuel
+    lieu: ithrael-auberge
+    decor: ithrael-auberge
+    quete: q-elianne
+    disponible_si: { flag: elianne-recrutee, affinite_palier: { elianne: proche } }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: elianne, dit: "Elianne sort de son sac un paquet de lettres jaunies, attachées par un ruban gris. « Je les ai trouvées dans les archives du Temple, l'an dernier. Des lettres de Grands Prieurs, sur quatre siècles. »" }
+          - { qui: elianne, expression: tristesse, dit: "« Elles parlent toutes du « tribut du Voile ». Chaque Appel a un prix. Personne n'écrit lequel. Mais l'une d'elles dit : « Le Souverain grandit à chaque fois que nous appelons. Qu'importe : nos héros grandissent plus vite. » »" }
+        choix:
+          - texte: "« Ça veut dire que notre venue a renforcé les Cendres ? »"
+            aller: prix
+          - texte: "Lui prendre la main. « Ce n'est pas ta faute, Elianne. »"
+            effets: [{ affinite: { elianne: 4 } }]
+            aller: prix
+      prix:
+        repliques:
+          - { qui: elianne, dit: "« Je crois, oui. » Elle range les lettres. « Les Grands Prieurs le savaient. Auréliath le sait. Et il a quand même appelé. » Ses mains tremblent. « Il faut une preuve. Une preuve que personne ne pourra brûler. »" }
+          - { qui: elianne, dit: "« On dit que les nains de Grisfer gardent les registres de tous les Appels, gravés dans la pierre des Mille Marches. Les nains ne détruisent jamais rien. » Elle relève la tête. « Tu viendras ? »" }
+        effets: [{ affinite: { elianne: 8 }, quete: { id: q-elianne, etape: revelation }, flag: tribut-du-voile, xp: 200 }]
+        fin: true
+
+  - id: el-chapelle
+    pnj: elianne
+    titre: "Elianne — La chapelle des racines"
+    type: individuel
+    lieu: ithrael-auberge
+    decor: ithrael-auberge
+    romance: true
+    disponible_si: { flag: elianne-recrutee, affinite_palier: { elianne: amoureuse } }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: elianne, expression: gene, dit: "Elianne vous a emmené(e) dans une petite chapelle de racines, oubliée des elfes. Une seule bougie. « On m'a appris que l'amour ne devait aller qu'à la Lumière. » Elle rit doucement. « On m'a appris beaucoup de choses fausses. »" }
+        choix:
+          - texte: "« Alors apprenons-en une vraie, ensemble. »"
+            effets: [{ affinite: { elianne: 6 } }]
+            aller: oui
+      oui:
+        repliques:
+          - { qui: elianne, expression: joie, dit: "Elle souffle la bougie. Dans le noir, il n'y a plus que sa main dans la vôtre, et son rire, enfin libre…" }
+          - { dit: "(Fondu au noir.)" }
+        fin: true
+
+  # ── Ilyssë ────────────────────────────────────────────────────
+  - id: il-etoiles
+    pnj: ilysse
+    titre: "Ilyssë — Les étoiles de l'autre monde"
+    type: individuel
+    lieu: ithrael-racines
+    decor: ithrael-racines
+    disponible_si: { flag: ilysse-recrutee }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: ilysse, dit: "Ilyssë vous attend avec un carnet, une plume, et l'air d'un chat devant une souris. « Assieds-toi. Les étoiles de ton monde. Combien ? Quelles couleurs ? Est-ce qu'elles bougent ? Est-ce que vous avez des dragons ? Non ? Quel dommage. »" }
+        choix:
+          - texte: "Répondre patiemment à toutes ses questions."
+            effets: [{ affinite: { ilysse: 6 } }]
+            aller: patient
+          - texte: "« Et toi ? Pose-moi une question qui ne soit pas une étude. »"
+            effets: [{ affinite: { ilysse: 7 } }]
+            aller: personnel
+      patient:
+        repliques:
+          - { qui: ilysse, expression: joie, dit: "Elle note trois pages, fébrile. « Des lunes artificielles ? Des voitures sans chevaux ? Tu inventes. » Elle sourit. « Continue d'inventer. »" }
+        fin: true
+      personnel:
+        repliques:
+          - { qui: ilysse, expression: surprise, dit: "Elle pose sa plume. Long silence. « …Est-ce que tu as peur de mourir ici ? Loin de chez toi ? » Elle détourne les yeux. « Moi, j'ai peur de vivre encore cinq cents ans sans avoir compris. »" }
+        fin: true
+
+  - id: il-notes
+    pnj: ilysse
+    titre: "Ilyssë — Les notes confisquées"
+    type: individuel
+    lieu: ithrael-cour
+    decor: ithrael-cour
+    quete: q-ilysse
+    disponible_si: { flag: ilysse-recrutee, affinite_palier: { ilysse: proche } }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: ilysse, dit: "« Cinquante ans de travail. » Ilyssë désigne un coffre scellé derrière le trône vide de la Reine. « Confisqués le jour de mon bannissement. La Reine m'a pardonné. Elle ne m'a pas rendu mes notes. »" }
+        choix:
+          - texte: "Demander les notes à la Reine. (Charisme, difficulté 24)"
+            test: { carac: CHA, difficulte: 24, reussite: rendues, echec: vol }
+          - texte: "Ouvrir le coffre, discrètement. (Agilité, difficulté 23)"
+            test: { carac: AGI, difficulte: 23, reussite: vol-reussi, echec: vol }
+      rendues:
+        repliques:
+          - { qui: reine-seve, dit: "La Reine écoute, puis ouvre le coffre elle-même. « Les vérités qu'on enferme pourrissent. Tiens, Ilyssë. »" }
+        suite: notes
+      vol-reussi:
+        repliques:
+          - { dit: "Le coffre s'ouvre sans un bruit. Ilyssë serre ses carnets contre elle comme un enfant." }
+        suite: notes
+      vol:
+        repliques:
+          - { dit: "Un garde vous surprend… et détourne les yeux. Le capitaine Vaelor, de loin, hausse les épaules. Les carnets sont à vous." }
+        suite: notes
+      notes:
+        repliques:
+          - { qui: ilysse, dit: "Ilyssë feuillette, fébrile, et s'arrête sur un schéma : un cercle, déchiré, et des fils qui le recousent. « Mon idée d'il y a cinquante ans. Recoudre le Voile depuis l'endroit où il est le plus fin. » Elle vous regarde. « Avec quelqu'un qui vient de l'autre côté. »" }
+          - { qui: ilysse, expression: gene, dit: "« Tu… tu crois que ce serait possible ? Avec toi ? » Elle referme le carnet, gênée de son propre espoir." }
+        effets: [{ affinite: { ilysse: 10 }, quete: { id: q-ilysse, etape: voile }, flag: plan-recoudre, xp: 200 }]
+        fin: true
+
+  - id: il-branches
+    pnj: ilysse
+    titre: "Ilyssë — Sur la plus haute branche"
+    type: individuel
+    lieu: ithrael-racines
+    decor: ithrael-racines
+    romance: true
+    disponible_si: { flag: ilysse-recrutee, affinite_palier: { ilysse: amoureuse } }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: ilysse, expression: gene, dit: "Sur la plus haute branche d'Ithrael, le ciel est immense. Ilyssë ne regarde pas les étoiles : elle vous regarde. « J'ai étudié des milliers de choses. Jamais celle-là. » Elle soupire. « C'est très mal documenté, l'amour. »" }
+        choix:
+          - texte: "« Alors étudions-le. Lentement. »"
+            effets: [{ affinite: { ilysse: 6 } }]
+            aller: oui
+      oui:
+        repliques:
+          - { qui: ilysse, expression: joie, dit: "Elle éclate de rire — un vrai rire, qui fait s'envoler une chouette. Puis elle pose la tête contre votre épaule, et pour une fois, elle ne pose plus aucune question…" }
+          - { dit: "(Fondu au noir.)" }
+        fin: true
+
+  # ── Les autres compagnes, au fil du chapitre ──────────────────
+  - id: ky-rang-a
+    pnj: kaya
+    titre: "Kaya — Le rang A"
+    type: individuel
+    lieu: ithrael-auberge
+    decor: ithrael-auberge
+    disponible_si: { flag: sylvenoire-ouverte, affinite_min: { kaya: 30 } }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: kaya, expression: joie, dit: "Kaya débarque dans votre hamac en brandissant une carte de cuivre. « RANG A ! Rowena m'a écrit ! Rang A ! » Elle vous secoue comme un prunier. « Encore un rang, et je rentre chez moi la tête haute ! »" }
+        choix:
+          - texte: "La féliciter et fêter ça. Brochettes à volonté."
+            effets: [{ affinite: { kaya: 6 } }]
+            aller: fete
+          - texte: "« Et après le rang S, tu feras quoi ? »"
+            effets: [{ affinite: { kaya: 4 } }]
+            aller: apres
+      fete:
+        repliques:
+          - { qui: kaya, dit: "Les elfes n'ont jamais vu personne manger autant. Thaliel, effaré, compte les brochettes sur ses doigts. Kaya hurle à la lune depuis la plus haute branche. Personne ne dort." }
+        fin: true
+      apres:
+        repliques:
+          - { qui: kaya, dit: "Elle s'arrête, surprise. « Après ? » Elle réfléchit, les oreilles en arrière. « Je n'y avais jamais pensé. » Elle vous regarde. « Peut-être que je resterai avec toi. Si tu veux. »" }
+        fin: true
+
+  - id: nd-comptes-sylve
+    pnj: nadja
+    titre: "Nadja — Les comptes des elfes"
+    type: individuel
+    lieu: ithrael-marche
+    decor: ithrael-marche
+    disponible_si: { flag: sylvenoire-ouverte, affinite_min: { nadja: 25 } }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: nadja, dit: "Nadja est désespérée. « Ils n'ont pas de monnaie. Ils échangent. Une graine contre une chanson. Un arc contre « un souvenir agréable ». » Elle se tient la tête. « Comment on fait des affaires avec des gens qui n'ont pas de prix ? »" }
+        choix:
+          - texte: "« Tu échanges un souvenir. Raconte-leur Qarzim. »"
+            effets: [{ affinite: { nadja: 6 } }]
+            aller: souvenir
+          - texte: "« Tu respires et tu profites. Pour une fois. »"
+            effets: [{ affinite: { nadja: 4 } }]
+            aller: respire
+      souvenir:
+        repliques:
+          - { qui: nadja, expression: joie, dit: "Elle raconte le Bazar, les épices, la poussière. Les elfes écoutent, fascinés. Elle repart avec trois arcs, un manteau et l'air ahuri de quelqu'un qui vient de faire la meilleure affaire de sa vie sans dépenser une pièce." }
+        fin: true
+      respire:
+        repliques:
+          - { qui: nadja, dit: "Elle s'assoit sur une branche, les jambes dans le vide. Au bout d'une heure, elle dit : « C'est la première fois depuis mes seize ans que je ne compte rien. » Elle sourit. « C'est terrifiant. »" }
+        fin: true
+
+  - id: sr-lettre-mur
+    pnj: seraphine
+    titre: "Séraphine — Une lettre du Mur d'Aube"
+    type: individuel
+    lieu: ithrael-marche
+    decor: ithrael-marche
+    disponible_si: { quete_etape: { q-seraphine: rumeurs }, flag: sylvenoire-ouverte }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: seraphine, dit: "Séraphine a reçu une lettre d'un officier du Mur d'Aube. Elle la lit pour la dixième fois. « Une patrouille a vu un homme en armure noire, sur les remparts de Valgrane en ruine. Il portait une cape bleue. La cape des princes d'Aubeclaire. »" }
+        choix:
+          - texte: "« On ira voir. Dès qu'on pourra. Je te le promets. »"
+            effets: [{ affinite: { seraphine: 6 }, flag: heros:promesse-seraphine }]
+            aller: fin
+          - texte: "« Une cape, ça se vole. Prépare-toi au pire. »"
+            effets: [{ affinite: { seraphine: 2 } }]
+            aller: fin
+      fin:
+        repliques:
+          - { qui: seraphine, dit: "« Une armure noire… » Elle replie la lettre. « S'il est vivant, pourquoi ne revient-il pas ? » Personne ne répond." }
+        fin: true
+
+  - id: av-domaine
+    pnj: aveline
+    titre: "Aveline — Le manoir"
+    type: individuel
+    lieu: domaine-lisiere
+    decor: domaine-lisiere
+    disponible_si: { flag: domaine-obtenu, affinite_min: { aveline: 25 } }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: aveline, dit: "Aveline a passé la journée à apprendre à vos miliciens à tenir une lance. Elle a de la paille dans les cheveux et l'air heureux. « Castelroc, le domaine de mon père, ressemblait à ça. Avant. »" }
+        choix:
+          - texte: "« Alors aide-moi à en faire un endroit dont ton père aurait été fier. »"
+            effets: [{ affinite: { aveline: 6 }, reputation: { troupes: 3 } }]
+            aller: fin
+          - texte: "« Tu pourrais rester ici. Être la capitaine de ma garde. »"
+            effets: [{ affinite: { aveline: 5 } }]
+            aller: capitaine
+      capitaine:
+        repliques:
+          - { qui: aveline, expression: gene, dit: "Elle rougit jusqu'aux oreilles. « Je sers la Couronne. » Un temps. « …Mais la Couronne ne m'a jamais offert un manoir avec des pommiers. » Elle détourne la tête pour cacher son sourire." }
+        suite: fin
+      fin:
+        repliques:
+          - { qui: aveline, dit: "Le soir, elle reste assise sur les marches du manoir à regarder vos gens rentrer des champs. « Je comprends pourquoi on se bat, maintenant. Pas pour un roi. Pour ça. »" }
+        fin: true

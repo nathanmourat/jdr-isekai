@@ -618,6 +618,8 @@ function multiplicateurDegatsSource(combat: Combat, s: Combattant, cible: Combat
   }
   // Aura de l'Élu : un allié porteur du don renforce tout le groupe
   if (allies(combat, s).some((a) => a.don?.id === 'aura-de-l-elu')) m *= 1 + 0.05;
+  // Épuisement : après 30 tours, les coups portent de plus en plus (+10 % par tour), pour qu'un combat finisse toujours
+  if (combat.tour > 30) m *= 1 + 0.1 * (combat.tour - 30);
   return m;
 }
 

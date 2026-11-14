@@ -14,3 +14,11 @@ objets:
   - { id: lettre-valgrane, nom: "Lettre scellée de Valgrane", description: "Un ordre de repli daté de 1003, signé du commandant de Valgrane… et contresigné d'un sceau de l'Ordre.", type: quete }
   - { id: grand-livre-rouge, nom: "Copie du Grand Livre rouge", description: "Les comptes secrets de la Concorde : qui achète les cristaux, qui doit de l'argent à qui.", type: quete }
   - { id: insigne-main-de-sable, nom: "Insigne de la Main de Sable", description: "Une main de bronze tenant un grain de sable : la marque des assassins de Qarzim.", type: quete }
+  # ── Chapitre 3 : Sylvenoire
+  - { id: the-de-sylve, nom: "Thé de sylve", description: "Des feuilles d'argent qui sentent la pluie.", type: cadeau, prix: 16 }
+  - { id: miel-des-fleurs-d-argent, nom: "Miel des fleurs d'argent", description: "Un miel presque blanc, qui brille dans le noir.", type: cadeau, prix: 24 }
+  - { id: plume-de-chouette-blanche, nom: "Plume de chouette blanche", description: "Les elfes l'offrent à ceux dont ils respectent la sagesse.", type: cadeau, prix: 20 }
+  - { id: livre-des-contes-sylvains, nom: "Contes sylvains", description: "Des histoires elfiques sur les étoiles, les arbres et les dragons d'avant.", type: cadeau, prix: 35 }
+  - { id: codex-dechirure, nom: "Codex de la Déchirure", description: "Le grand livre des elfes qui ont tenté de recoudre le Voile. Les dernières pages sont arrachées.", type: quete }
+  - { id: corne-de-morra, nom: "Corne brisée", description: "Une corne noire, brisée pendant le combat de la Nuitlongue. Elle est encore tiède.", type: quete }
+  - { id: sceau-du-domaine, nom: "Sceau du domaine", description: "Le sceau de cire de vos terres : il vous fait seigneur ou dame, pour le meilleur et pour les impôts.", type: quete }

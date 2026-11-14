@@ -1,0 +1,44 @@
+# Sœur Elianne — la prêtresse (rencontrée au chapitre 1, compagne à partir du chapitre 3).
+compagnon:
+  id: elianne
+  nom: "Sœur Elianne"
+  titre: "Prêtresse de l'Ordre"
+  age: 29
+  genre: f
+  personnalite: "Douce, patiente, mais têtue comme une mule quand il s'agit de justice. Elle rit rarement, et toujours au mauvais moment."
+  passe: "Orpheline élevée par l'Ordre de la Lumière Sereine. Elle a assisté à l'Appel des héros, et ne s'en est jamais tout à fait remise."
+  objectif: "Découvrir la vérité sur les invocations… et choisir entre sa foi et la vérité."
+  chapitre_arrivee: 3
+  quete: q-elianne
+  lignes_rouges:
+    - { flag: cruaute-gratuite, description: "« Vous l'avez fait souffrir pour rien. Je ne peux pas pardonner ça. »", penalite: -30 }
+    - { flag: profanation, description: "« Vous avez profané les morts. Ils ne vous avaient rien fait. »", penalite: -40, definitive: true }
+  cadeaux:
+    prefere: [plume-de-chouette-blanche, livre-ancien]
+    apprecie: [the-de-sylve, fleur-des-champs, miel-des-fleurs-d-argent]
+    deteste: [bijou-dore, epices-de-qarzim]
+  combat:
+    caracteristiques: { FOR: 6, AGI: 8, INT: 10, VIT: 10, ESP: 15, CHA: 11 }
+    attaque: { stat: ESP, element: sacre, portee: distance, puissance: 7 }
+    armure: 3
+    rang: arriere
+    competences:
+      - id: elianne-priere
+        nom: Prière de la Sœur
+        description: "Une prière qui soigne tout le groupe."
+        recharge: 3
+        cible: tous_allies
+        effets: [{ type: soin, puissance: 9, stat: ESP }]
+        ia: { priorite: 4, quand: allie_blesse }
+      - id: elianne-lumiere
+        nom: Lumière qui brûle
+        description: "La lumière sacrée frappe un ennemi ; les démons la craignent."
+        recharge: 2
+        cible: ennemi
+        effets: [{ type: degats, puissance: 11, stat: ESP, element: sacre }]
+        ia: { priorite: 2 }
+  bonus_paliers:
+    alliee: { id: regeneration-groupe, nom: "Prière du soir", description: "Le groupe récupère 3 % de ses PV à chaque tour.", parametres: { valeur: 0.03 } }
+    proche: { id: aura-defense, nom: "Bénédiction", description: "+8 % de défense pour tout le groupe.", parametres: { valeur: 0.08 } }
+    amoureuse: { id: aura-precision, nom: "Regard clair", description: "+5 % de précision pour le groupe.", parametres: { valeur: 0.05 } }
+    engagee: { id: attaque-combinee, nom: "Lumière partagée", description: "Attaque combinée avec son héros : +25 % de dégâts.", parametres: { degats: 0.25 } }

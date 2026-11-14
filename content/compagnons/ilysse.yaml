@@ -1,0 +1,46 @@
+# Ilyssë Vaëlnor — la mage elfe (chapitre 3).
+compagnon:
+  id: ilysse
+  nom: "Ilyssë Vaëlnor"
+  titre: "Mage elfe, bannie d'Ithrael"
+  age: 153
+  genre: f
+  personnalite: "Érudite, sarcastique, curieuse jusqu'à l'imprudence. Elle compte en siècles et s'ennuie en heures. Les Appelés la fascinent."
+  passe: "Bannie d'Ithrael il y a cinquante ans pour avoir étudié la Déchirure, un sujet tabou chez les elfes. Elle vit seule à la lisière de la forêt, avec ses livres."
+  objectif: "Comprendre — et peut-être réparer — le Voile."
+  chapitre_arrivee: 3
+  quete: q-ilysse
+  lignes_rouges:
+    - { flag: savoir-detruit, description: "« Vous avez brûlé des livres. Des LIVRES. Vous ne valez pas mieux que ceux qui m'ont bannie. »", penalite: -35 }
+    - { flag: foret-brulee, description: "« La forêt se souviendra de ce feu. Moi aussi. »", penalite: -50, definitive: true }
+  cadeaux:
+    prefere: [livre-des-contes-sylvains, livre-ancien]
+    apprecie: [the-de-sylve, plume-de-chouette-blanche, carnet-de-contes]
+    deteste: [viande-grillee, kit-entretien-armes]
+  combat:
+    caracteristiques: { FOR: 5, AGI: 9, INT: 16, VIT: 8, ESP: 13, CHA: 9 }
+    attaque: { stat: INT, element: arcane, portee: distance, puissance: 8 }
+    armure: 2
+    rang: arriere
+    competences:
+      - id: ilysse-eclat
+        nom: Éclat de Voile
+        description: "Un éclat de lumière violette, arraché au Voile lui-même."
+        recharge: 2
+        cible: ennemi
+        effets:
+          - { type: degats, puissance: 13, stat: INT, element: arcane }
+          - { type: etat, etat: expose, duree: 2, valeur: 0.15 }
+        ia: { priorite: 3 }
+      - id: ilysse-tempete
+        nom: Tempête de runes
+        description: "Des runes elfiques explosent sur tous les ennemis."
+        recharge: 3
+        cible: tous_ennemis
+        effets: [{ type: degats, puissance: 9, stat: INT, element: arcane }]
+        ia: { priorite: 3, quand: plusieurs_ennemis }
+  bonus_paliers:
+    alliee: { id: aura-degats, nom: "Savoir des runes", description: "+6 % de dégâts pour tout le groupe.", parametres: { valeur: 0.06 } }
+    proche: { id: aura-precision, nom: "Analyse des sceaux", description: "+6 % de précision pour le groupe.", parametres: { valeur: 0.06 } }
+    amoureuse: { id: aura-defense, nom: "Bouclier de runes", description: "+8 % de défense pour tout le groupe.", parametres: { valeur: 0.08 } }
+    engagee: { id: attaque-combinee, nom: "Deux mondes, un sort", description: "Attaque combinée avec son héros : +25 % de dégâts.", parametres: { degats: 0.25 } }

@@ -284,6 +284,13 @@ On y va par la **carte → « Y aller »** (téléportation). Chaque région a s
 - [ ] Les combats du chapitre se déroulent dans le désert (route, canyon, mines, résidence).
 - [ ] Ruines de Sel : le donjon se joue comme la Crypte. Après 3 défaites, on peut ressortir par l'escalier (porte de secours).
 
+### Liste de contrôle — chapitre 3 (Sylvenoire)
+- [ ] Fin du chapitre 2 → dormir → au château : « Les domaines » ; Elianne rejoint le groupe.
+- [ ] La carte affiche « Sylvenoire » : la lisière, puis Ithrael (arbre-palais aux plateformes, lanternes bleues, huttes à toit de feuillage, champignons lumineux la nuit).
+- [ ] « Votre domaine » apparaît sur la carte de Sylvenoire ; l'activité « Gestion du domaine » du temps libre augmente les troupes.
+- [ ] Bibliothèque des Racines : donjon jouable, Codex à la fin.
+- [ ] Nuitlongue : combat contre Morra, puis le choix l'achever / l'épargner.
+
 ## Publier sur Roblox (quand tout marche)
 
 1. **Fichier → Publier sur Roblox**, si ce n'est pas déjà fait.

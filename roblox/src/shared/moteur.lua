@@ -5199,6 +5199,9 @@ function multiplicateurDegatsSource(combat, s, cible, element)
     ) then
         m = m * (1 + 0.05)
     end
+    if combat.tour > 30 then
+        m = m * (1 + 0.1 * (combat.tour - 30))
+    end
     return m
 end
 function reductionCible(combat, cible, element, source)
@@ -5559,29 +5562,29 @@ function invoquer(contenu, combat, maitre, creature, duree)
 end
 function resoudreCibles(combat, rng, s, ____type, cibleChoisie, portee)
     repeat
-        local ____switch190 = ____type
-        local ____cond190 = ____switch190 == "soi"
-        if ____cond190 then
+        local ____switch191 = ____type
+        local ____cond191 = ____switch191 == "soi"
+        if ____cond191 then
             return {s}
         end
-        ____cond190 = ____cond190 or ____switch190 == "tous_allies"
-        if ____cond190 then
+        ____cond191 = ____cond191 or ____switch191 == "tous_allies"
+        if ____cond191 then
             return ____exports.allies(combat, s)
         end
-        ____cond190 = ____cond190 or ____switch190 == "tous_ennemis"
-        if ____cond190 then
+        ____cond191 = ____cond191 or ____switch191 == "tous_ennemis"
+        if ____cond191 then
             return ____exports.adversaires(combat, s)
         end
-        ____cond190 = ____cond190 or ____switch190 == "ennemi_aleatoire"
-        if ____cond190 then
+        ____cond191 = ____cond191 or ____switch191 == "ennemi_aleatoire"
+        if ____cond191 then
             return {}
         end
-        ____cond190 = ____cond190 or ____switch190 == "allie_ko"
-        if ____cond190 then
+        ____cond191 = ____cond191 or ____switch191 == "allie_ko"
+        if ____cond191 then
             return (if cibleChoisie then {cibleChoisie} else {})
         end
-        ____cond190 = ____cond190 or ____switch190 == "allie"
-        if ____cond190 then
+        ____cond191 = ____cond191 or ____switch191 == "allie"
+        if ____cond191 then
             return {cibleChoisie or s}
         end
         do
@@ -6451,9 +6454,9 @@ function pacifiable(x, c)
 end
 function executer(contenu, combat, rng, x, a)
     repeat
-        local ____switch366 = a.type
-        local ____cond366 = ____switch366 == "attaque"
-        if ____cond366 then
+        local ____switch367 = a.type
+        local ____cond367 = ____switch367 == "attaque"
+        if ____cond367 then
             do
                 log(combat, {
                     type = "action",
@@ -6475,8 +6478,8 @@ function executer(contenu, combat, rng, x, a)
                 return false
             end
         end
-        ____cond366 = ____cond366 or ____switch366 == "competence"
-        if ____cond366 then
+        ____cond367 = ____cond367 or ____switch367 == "competence"
+        if ____cond367 then
             do
                 local k = ____exports.competenceCombattant(contenu, x, a.competence)
                 x.mana = x.mana - ____exports.coutMana(x, k.comp)
@@ -6526,8 +6529,8 @@ function executer(contenu, combat, rng, x, a)
                 return false
             end
         end
-        ____cond366 = ____cond366 or ____switch366 == "objet"
-        if ____cond366 then
+        ____cond367 = ____cond367 or ____switch367 == "objet"
+        if ____cond367 then
             do
                 local cible = (if vrai(a.cible) then __TS__ArrayFind(
                     combat.combattants,
@@ -6590,8 +6593,8 @@ function executer(contenu, combat, rng, x, a)
                 return false
             end
         end
-        ____cond366 = ____cond366 or ____switch366 == "defendre"
-        if ____cond366 then
+        ____cond367 = ____cond367 or ____switch367 == "defendre"
+        if ____cond367 then
             ajouterEtat(combat, x, {
                 id = "garde",
                 duree = 2,
@@ -6606,14 +6609,14 @@ function executer(contenu, combat, rng, x, a)
             log(combat, {type = "action", source = x.id, texte = x.nom .. " se met en garde."})
             return false
         end
-        ____cond366 = ____cond366 or ____switch366 == "changer_rang"
-        if ____cond366 then
+        ____cond367 = ____cond367 or ____switch367 == "changer_rang"
+        if ____cond367 then
             x.rang = (if x.rang == "avant" then "arriere" else "avant")
             log(combat, {type = "action", source = x.id, texte = ((x.nom .. " passe au rang ") .. (if x.rang == "avant" then "avant" else "arrière")) .. "."})
             return false
         end
-        ____cond366 = ____cond366 or ____switch366 == "pacifier"
-        if ____cond366 then
+        ____cond367 = ____cond367 or ____switch367 == "pacifier"
+        if ____cond367 then
             do
                 local c = ____exports.trouver(combat, a.cible)
                 c.parti = true
@@ -6621,8 +6624,8 @@ function executer(contenu, combat, rng, x, a)
                 return false
             end
         end
-        ____cond366 = ____cond366 or ____switch366 == "viser"
-        if ____cond366 then
+        ____cond367 = ____cond367 or ____switch367 == "viser"
+        if ____cond367 then
             do
                 local v = ____exports.VISEES[a.partie]
                 local c = ____exports.trouver(combat, a.cible)
@@ -6681,8 +6684,8 @@ function executer(contenu, combat, rng, x, a)
                 return false
             end
         end
-        ____cond366 = ____cond366 or ____switch366 == "se_cacher"
-        if ____cond366 then
+        ____cond367 = ____cond367 or ____switch367 == "se_cacher"
+        if ____cond367 then
             do
                 if chance(
                     rng,
@@ -6702,8 +6705,8 @@ function executer(contenu, combat, rng, x, a)
                 return false
             end
         end
-        ____cond366 = ____cond366 or ____switch366 == "fuir"
-        if ____cond366 then
+        ____cond367 = ____cond367 or ____switch367 == "fuir"
+        if ____cond367 then
             do
                 local p = 0.5 + 0.03 * (x.caracs.AGI - math.max(table.unpack(__TS__ArrayMap(
                     ____exports.adversaires(combat, x),
@@ -6731,35 +6734,35 @@ function conditionIA(combat, x, comp)
     local q = comp.ia.quand
     local amis = ____exports.allies(combat, x)
     repeat
-        local ____switch399 = q
-        local ____cond399 = ____switch399 == "allie_blesse"
-        if ____cond399 then
+        local ____switch400 = q
+        local ____cond400 = ____switch400 == "allie_blesse"
+        if ____cond400 then
             return __TS__ArraySome(
                 amis,
                 function(____, a) return a.pv / a.pvMax < 0.6 and a.type ~= "invocation" end
             )
         end
-        ____cond399 = ____cond399 or ____switch399 == "soi_blesse"
-        if ____cond399 then
+        ____cond400 = ____cond400 or ____switch400 == "soi_blesse"
+        if ____cond400 then
             return x.pv / x.pvMax < 0.5
         end
-        ____cond399 = ____cond399 or ____switch399 == "plusieurs_ennemis"
-        if ____cond399 then
+        ____cond400 = ____cond400 or ____switch400 == "plusieurs_ennemis"
+        if ____cond400 then
             return #____exports.adversaires(combat, x) >= 2
         end
-        ____cond399 = ____cond399 or ____switch399 == "debut_combat"
-        if ____cond399 then
+        ____cond400 = ____cond400 or ____switch400 == "debut_combat"
+        if ____cond400 then
             return combat.tour <= 2
         end
-        ____cond399 = ____cond399 or ____switch399 == "cible_faible"
-        if ____cond399 then
+        ____cond400 = ____cond400 or ____switch400 == "cible_faible"
+        if ____cond400 then
             return __TS__ArraySome(
                 ____exports.adversaires(combat, x),
                 function(____, a) return a.pv / a.pvMax < 0.4 end
             )
         end
-        ____cond399 = ____cond399 or ____switch399 == "allie_ko"
-        if ____cond399 then
+        ____cond400 = ____cond400 or ____switch400 == "allie_ko"
+        if ____cond400 then
             return __TS__ArraySome(
                 combat.combattants,
                 function(____, a) return a.camp == x.camp and a.ko and a.type ~= "invocation" end
@@ -7665,9 +7668,9 @@ function ____exports.estimerAction(contenu, combat, a)
         return c
     end
     repeat
-        local ____switch480 = a.type
-        local ____cond480 = ____switch480 == "attaque" or ____switch480 == "viser"
-        if ____cond480 then
+        local ____switch481 = a.type
+        local ____cond481 = ____switch481 == "attaque" or ____switch481 == "viser"
+        if ____cond481 then
             do
                 local c = verifierCible(a.cible, x.attaque.portee)
                 if type(c) == "string" then
@@ -7693,8 +7696,8 @@ function ____exports.estimerAction(contenu, combat, a)
                 return res
             end
         end
-        ____cond480 = ____cond480 or ____switch480 == "competence"
-        if ____cond480 then
+        ____cond481 = ____cond481 or ____switch481 == "competence"
+        if ____cond481 then
             do
                 local k = ____exports.competenceCombattant(contenu, x, a.competence)
                 res.mana = ____exports.coutMana(x, k.comp)
@@ -7757,15 +7760,15 @@ function ____exports.estimerAction(contenu, combat, a)
                 return res
             end
         end
-        ____cond480 = ____cond480 or ____switch480 == "se_cacher"
-        if ____cond480 then
+        ____cond481 = ____cond481 or ____switch481 == "se_cacher"
+        if ____cond481 then
             res.reussite = ____exports.chanceSeCacher(combat, x)
             local ____res_effets_156 = res.effets
             ____res_effets_156[#____res_effets_156 + 1] = "furtif : impossible à cibler, prochaine attaque critique"
             return res
         end
-        ____cond480 = ____cond480 or ____switch480 == "fuir"
-        if ____cond480 then
+        ____cond481 = ____cond481 or ____switch481 == "fuir"
+        if ____cond481 then
             res.reussite = math.min(
                 0.9,
                 math.max(
@@ -7778,8 +7781,8 @@ function ____exports.estimerAction(contenu, combat, a)
             )
             return res
         end
-        ____cond480 = ____cond480 or ____switch480 == "objet"
-        if ____cond480 then
+        ____cond481 = ____cond481 or ____switch481 == "objet"
+        if ____cond481 then
             if a.objet == "potion" then
                 local ____temp_159 = 16 * 1.5
                 local ____opt_157 = x.passif
@@ -7791,8 +7794,8 @@ function ____exports.estimerAction(contenu, combat, a)
             end
             return res
         end
-        ____cond480 = ____cond480 or ____switch480 == "defendre"
-        if ____cond480 then
+        ____cond481 = ____cond481 or ____switch481 == "defendre"
+        if ____cond481 then
             local ____res_effets_160 = res.effets
             ____res_effets_160[#____res_effets_160 + 1] = "−50 % de dégâts reçus jusqu'au prochain tour, +10 % de mana"
             return res

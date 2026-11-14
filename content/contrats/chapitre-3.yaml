@@ -1,0 +1,67 @@
+# Contrats de guilde du chapitre 3, au Relais de la Guilde d'Ithrael. Dernière étape : retour au Relais.
+contrats:
+  - id: c-loups-brume
+    titre: "Loups de brume à la lisière"
+    description: "Des loups de brume attaquent les bûcherons qui travaillent à la lisière."
+    rang_min: D
+    niveau: 16
+    rencontre: lisiere-loups
+    duree_jours: 3
+    disponible_si: { flag: sylvenoire-ouverte }
+    recompenses: { or: 200, xp: 600, points_guilde: 120 }
+    etapes:
+      - { lieu: lisiere-sylvenoire, objectif: "Aller à la lisière de Sylvenoire.", texte: "Des haches abandonnées, des arbres à moitié coupés. Les bûcherons ont fui en laissant tout.", bouton: "Attendre la brume" }
+      - { lieu: lisiere-sylvenoire, objectif: "Repousser les loups de brume.", texte: "La brume monte. Des yeux blancs s'allument.", combat: lisiere-loups }
+      - { lieu: guilde-ithrael, objectif: "Revenir au Relais de la Guilde.", texte: "Orsa note la prime dans son registre. « Les elfes diront que c'est la faute des bûcherons. Ils auront à moitié raison. »", bouton: "Toucher la récompense" }
+
+  - id: c-champignons
+    titre: "Spores dans le marais"
+    description: "Un cercle de champignons vénéneux s'étend dans le Marais de brume. Il faut le détruire avant les pluies."
+    rang_min: D
+    niveau: 16
+    rencontre: champignons-marais
+    duree_jours: 3
+    disponible_si: { flag: sylvenoire-ouverte }
+    recompenses: { or: 190, xp: 580, points_guilde: 110, objets: [antidote, antidote] }
+    etapes:
+      - lieu: marais-de-brume
+        objectif: "Traverser le Marais de brume."
+        texte: "L'eau noire arrive aux genoux. Des chapeaux violets dépassent de la brume."
+        choix:
+          - { texte: "Avancer avec un linge humide sur le visage.", resultat: "Les spores vous piquent les yeux, mais pas les poumons." }
+          - { texte: "Allumer des torches pour éloigner les spores.", resultat: "Les champignons reculent devant le feu. Pour l'instant." }
+      - { lieu: marais-de-brume, objectif: "Détruire le cercle de champignons.", texte: "Au centre du cercle, les plus gros champignons se lèvent sur des pattes de racines.", combat: champignons-marais }
+      - { lieu: guilde-ithrael, objectif: "Revenir au Relais de la Guilde.", texte: "Orsa vous tend une serviette. « Vous sentez le marais. Payés quand même. »", bouton: "Toucher la récompense" }
+
+  - id: c-eclaireurs
+    titre: "Éclaireurs de la Légion"
+    description: "Des éclaireurs de la Légion Cendrée ont été vus près du Bois des Feux follets. La Reine paie pour leurs têtes… enfin, pour leur départ."
+    rang_min: C
+    niveau: 18
+    rencontre: eclaireurs-legion
+    duree_jours: 4
+    disponible_si: { flag: sylvenoire-ouverte }
+    recompenses: { or: 260, xp: 720, points_guilde: 150 }
+    etapes:
+      - lieu: bois-des-feux-follets
+        objectif: "Trouver les traces des éclaireurs."
+        texte: "Des brindilles cassées, des traces de bottes ferrées, une odeur de cendre."
+        choix:
+          - { texte: "Les suivre à la trace.", resultat: "Les traces mènent à un camp caché sous les fougères." }
+          - { texte: "Demander aux feux follets.", resultat: "Une lumière bleue vous conduit, en dansant, droit vers le camp." }
+      - { lieu: camp-legion-sylve, objectif: "Chasser les éclaireurs.", texte: "Les éclaireurs se lèvent d'un bond autour du feu.", combat: eclaireurs-legion }
+      - { lieu: guilde-ithrael, objectif: "Revenir au Relais de la Guilde.", texte: "Orsa siffle. « Rang C, et déjà des démons. Rowena va être jalouse. »", bouton: "Toucher la récompense" }
+
+  - id: c-sylvains
+    titre: "Les sylvains fous"
+    description: "Deux sylvains corrompus barrent la route des caravanes d'Ithrael."
+    rang_min: C
+    niveau: 19
+    rencontre: sylvains-corrompus
+    duree_jours: 3
+    disponible_si: { flag: sylvenoire-ouverte }
+    recompenses: { or: 280, xp: 780, points_guilde: 160, objets: [potion-soin-grande] }
+    etapes:
+      - { lieu: vieux-chene, objectif: "Aller sur la route des caravanes, près du Vieux-Chêne.", texte: "Des chariots renversés, des racines partout. Les arbres bougent quand on ne les regarde pas.", bouton: "Avancer" }
+      - { lieu: vieux-chene, objectif: "Arrêter les sylvains corrompus.", texte: "Deux sylvains aux feuilles violettes se tournent vers vous en grinçant.", combat: sylvains-corrompus }
+      - { lieu: guilde-ithrael, objectif: "Revenir au Relais de la Guilde.", texte: "Orsa compte les échardes dans vos manches. « La route est libre. Les elfes vont dire merci. Avec un an de retard. »", bouton: "Toucher la récompense" }

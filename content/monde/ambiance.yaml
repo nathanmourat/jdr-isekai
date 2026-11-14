@@ -54,3 +54,11 @@ ambiance:
   - { id: q-ruines, lieu: qarzim-oasis, qui: client, texte: "On dit que les Appelés sont revenus vivants des Ruines de Sel. Personne ne revient des Ruines.", si: { flag: ruines-explorees } }
   - { id: q-oasis, lieu: qarzim-oasis, qui: client, texte: "L'eau de l'Oasis Bleue est revenue. Mère Ziyane offre la tournée !", si: { flag: eau-rendue } }
   - { id: q-nuit, lieu: qarzim-porte, texte: "La nuit, le désert est froid comme une tombe. Gardez une couverture.", moment: nuit, si: { flag: sables-ouverts } }
+  # ─── Sylvenoire (Ithrael)
+  - { id: s-humains, lieu: ithrael-racines, texte: "Des humains, à Ithrael… La Reine devient bien patiente.", si: { flag: sylvenoire-ouverte, pas_flag: elfes-allies } }
+  - { id: s-heros, lieu: ithrael-racines, texte: "Ce sont eux qui ont défendu la Clairière pendant la Nuitlongue.", si: { flag: elfes-allies } }
+  - { id: s-marche, lieu: ithrael-marche, qui: marchand, texte: "Une graine contre une chanson ! Une bonne chanson, hein.", si: { flag: sylvenoire-ouverte } }
+  - { id: s-ilysse, lieu: ithrael-cour, texte: "Ilyssë Vaëlnor est revenue… On dit que la Reine lui a pardonné.", si: { flag: ilysse-recrutee } }
+  - { id: s-follets, lieu: ithrael-auberge, qui: client, texte: "Ne suivez jamais les lumières bleues. Jamais.", si: { flag: sylvenoire-ouverte } }
+  - { id: s-legion, lieu: ithrael-racines, qui: garde, texte: "La Légion rôde sous les arbres. Gardez votre arc à portée de main.", si: { flag: sylvenoire-ouverte, pas_flag: elfes-allies } }
+  - { id: s-nuit, lieu: ithrael-auberge, texte: "La nuit, les arbres chantent. Écoutez bien.", moment: nuit, si: { flag: sylvenoire-ouverte } }

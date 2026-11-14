@@ -1,0 +1,85 @@
+# Chapitre 3 — « La Forêt qui se souvient » (1018 → 1021), Sylvenoire, niveaux 15 à 22.
+quetes:
+  - id: q-ch3-foret
+    titre: "Chapitre 3 — La Forêt qui se souvient"
+    type: principale
+    chapitre: 3
+    niveau: 14
+    region: sylvenoire
+    resume: "Les elfes de Sylvenoire détiennent la vérité sur la Déchirure. Mais Ithrael ne s'ouvre pas aux humains, et la Légion Cendrée rôde déjà sous les arbres."
+    etapes:
+      - { id: domaines, objectif: "Se présenter au château de Lysmont : la Couronne a des nouvelles (Germinal 1018).", scene: ch3-domaines, lieu: chateau }
+      - { id: lisiere, objectif: "Entrer en Sylvenoire par la lisière.", scene: ch3-lisiere, lieu: lisiere-sylvenoire, niveau: 15 }
+      - { id: reine, objectif: "Être reçus par la Reine-Sève, à Ithrael (Floréal 1019).", scene: ch3-reine, lieu: ithrael-cour, niveau: 16 }
+      - { id: bibliotheque, objectif: "Descendre dans la Bibliothèque des Racines (Solaire 1020).", scene: ch3-bibliotheque, lieu: bibliotheque-racines, niveau: 19 }
+      - { id: nuitlongue, objectif: "Défendre la Clairière de la Déchirure pendant la Nuitlongue (30 Nuitlongue 1020).", scene: ch3-nuitlongue, lieu: clairiere-dechirure, niveau: 21 }
+      - { id: verdict, objectif: "Retourner à la Cour de la Reine-Sève.", scene: ch3-verdict, lieu: ithrael-cour }
+      - { id: fin, objectif: "Chapitre terminé." }
+
+  - id: q-follets
+    titre: "Les lumières du bois"
+    type: secondaire
+    chapitre: 3
+    niveau: 15
+    region: sylvenoire
+    resume: "Un enfant d'Ithrael a suivi les feux follets. Personne n'ose aller le chercher."
+    etapes:
+      - { id: thaliel, objectif: "Écouter Thaliel, à la Feuille d'Argent.", scene: sq-follets-thaliel, lieu: ithrael-auberge }
+      - { id: bois, objectif: "Chercher l'enfant dans le Bois des Feux follets.", scene: sq-follets-bois, lieu: bois-des-feux-follets, niveau: 16 }
+      - { id: retour, objectif: "Ramener l'enfant à la Feuille d'Argent.", scene: sq-follets-retour, lieu: ithrael-auberge }
+  - id: q-vieux-chene
+    titre: "Le Vieux-Chêne malade"
+    type: secondaire
+    chapitre: 3
+    niveau: 17
+    region: sylvenoire
+    resume: "La sève du Vieux-Chêne est devenue violette, et les sylvains autour de lui deviennent fous."
+    etapes:
+      - { id: mirwen, objectif: "Écouter Mirwen, au Marché des Graines.", scene: sq-chene-mirwen, lieu: ithrael-marche }
+      - { id: chene, objectif: "Examiner le Vieux-Chêne.", scene: sq-chene, lieu: vieux-chene, niveau: 19 }
+      - { id: retour, objectif: "Rapporter le remède à Mirwen.", scene: sq-chene-retour, lieu: ithrael-marche }
+  - id: q-graine
+    titre: "La graine volée"
+    type: secondaire
+    chapitre: 3
+    niveau: 16
+    region: sylvenoire
+    resume: "Une graine sacrée a disparu du Cercle des dryades. Les dryades accusent les elfes ; les elfes accusent les humains."
+    etapes:
+      - { id: vaelor, objectif: "Parler au capitaine Vaelor, à la Porte des Racines.", scene: sq-graine-vaelor, lieu: ithrael-racines }
+      - { id: cercle, objectif: "Interroger les dryades au Cercle.", scene: sq-graine-cercle, lieu: cercle-des-dryades }
+      - { id: marais, objectif: "Retrouver le voleur dans le Marais de brume.", scene: sq-graine-marais, lieu: marais-de-brume, niveau: 17 }
+  - id: q-domaine
+    titre: "Les gens du domaine"
+    type: secondaire
+    chapitre: 3
+    niveau: 16
+    region: sylvenoire
+    resume: "Votre nouveau domaine a besoin d'un seigneur : des fermes pillées, un manoir en ruine, et des gens qui attendent de voir ce que vous valez."
+    etapes:
+      - { id: arrivee, objectif: "Découvrir votre domaine.", scene: sq-domaine-arrivee, lieu: domaine-lisiere }
+      - { id: pillards, objectif: "Chasser ceux qui pillent vos fermes, au camp avancé de la Légion.", scene: sq-domaine-pillards, lieu: camp-legion-sylve, niveau: 17 }
+      - { id: milice, objectif: "Organiser la défense du domaine avec Maître Aubin.", scene: sq-domaine-milice, lieu: domaine-lisiere }
+
+  - id: q-elianne
+    titre: "Ce que la Lumière cache"
+    type: compagnon
+    chapitre: 3
+    niveau: 15
+    region: sylvenoire
+    resume: "Elianne a trouvé, dans les archives du Temple, des lettres qui parlent d'un « tribut du Voile ». Elle n'arrive plus à prier."
+    etapes:
+      - { id: lettres, objectif: "Écouter les doutes d'Elianne (palier « Proche »).", scene: el-lettres, lieu: ithrael-auberge }
+      - { id: revelation, objectif: "Découvrir ce que l'Ordre cache sur les invocations (chapitre 4)." }
+      - { id: choix, objectif: "Aider Elianne à choisir entre sa foi et la vérité (chapitre 5)." }
+  - id: q-ilysse
+    titre: "La Bibliothèque des Racines"
+    type: compagnon
+    chapitre: 3
+    niveau: 16
+    region: sylvenoire
+    resume: "Ilyssë a été bannie pour avoir étudié la Déchirure. Elle veut retrouver ses propres notes, confisquées et cachées par la Reine."
+    etapes:
+      - { id: notes, objectif: "Aider Ilyssë à reprendre ses notes confisquées (palier « Proche »).", scene: il-notes, lieu: ithrael-cour }
+      - { id: voile, objectif: "Étudier le Voile là où il est le plus fin (chapitre 4)." }
+      - { id: recoudre, objectif: "Trouver comment recoudre le Voile (chapitre 5)." }

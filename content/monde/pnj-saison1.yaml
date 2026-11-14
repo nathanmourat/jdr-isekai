@@ -12,3 +12,12 @@ pnj:
   - { id: vask, nom: "Capitaine Orlen Vask", titre: "Mercenaire de la Concorde", description: "Cuirasse dorée cabossée, crâne rasé, cicatrice du menton à l'oreille." }
   - { id: faelis, nom: "Faelis Brumevent", titre: "Marchande elfe", description: "Elfe sylvaine aux cheveux d'argent tressés de feuilles, longue cape vert sombre. Elle vend des herbes, et des secrets." }
   - { id: archiviste, nom: "Maître Corvin", titre: "Archiviste royal", description: "Petit homme voûté aux doigts tachés d'encre, qui parle aux livres plus qu'aux gens." }
+  # ── Chapitre 3 : Sylvenoire
+  - { id: reine-seve, nom: "La Reine-Sève", titre: "Reine des elfes de Sylvenoire", description: "Grande, immobile, des cheveux comme des racines blanches et des yeux couleur de mousse. Elle a vu la Déchirure." }
+  - { id: thaliel, nom: "Thaliel", titre: "Aubergiste de la Feuille d'Argent", description: "Jeune elfe souriant, tablier vert, qui monte et descend les échelles plus vite qu'un écureuil.", accueil: "Bienvenue à la Feuille d'Argent ! Les hamacs sont doux, et la vue est gratuite." }
+  - { id: mirwen, nom: "Mirwen", titre: "Marchande du Marché des Graines", description: "Elfe âgée aux mains couvertes de terre, qui connaît le nom de chaque graine de la forêt.", accueil: "Une graine bien choisie vaut une épée. Regardez, mais ne marchez pas sur les pousses." }
+  - { id: orsa, nom: "Orsa Brindebois", titre: "Intendante du Relais de la Guilde", description: "Naine trapue aux tresses rousses, hache à la ceinture, seule naine tolérée à Ithrael — et fière de l'être.", accueil: "Des contrats, du matériel, et pas de feuilles dans mon registre. Qu'est-ce qu'il vous faut ?" }
+  - { id: vaelor, nom: "Vaelor", titre: "Capitaine de la garde d'Ithrael", description: "Elfe au visage fermé, arc long dans le dos, qui n'a jamais souri à un humain." }
+  - { id: intendant-domaine, nom: "Maître Aubin", titre: "Intendant de votre domaine", description: "Vieil homme aux mains de paysan et au regard d'ancien soldat, qui tient vos comptes mieux que vous." }
+  - { id: morra, nom: "Morwenna « Morra »", titre: "Commandante de la Légion Cendrée", description: "Cornes noires, cheveux couleur de braise, épée-faux plus haute qu'elle. Humour noir, fierté, fatigue." }
+  - { id: enfant-ithrael, nom: "Lirëa", titre: "Enfant d'Ithrael", description: "Une petite elfe de quarante ans (huit, pour un humain), qui suit tout ce qui brille." }

@@ -1,0 +1,236 @@
+# Ennemis du chapitre 3 (Sylvenoire, niveaux 15 à 22).
+# Fichier généré par scripts/contenu/bestiaire.py à partir de scripts/contenu/ch3_ennemis.py : modifier la source, puis relancer.
+ennemis:
+  - id: feu-follet-sauvage
+    nom: "Feu follet"
+    description: "Un esprit de lumière bleue, sans corps. Il attire les voyageurs loin des sentiers."
+    niveau: 15
+    categorie: esprit
+    sprite: feu-follet
+    rang: arriere
+    caracteristiques: { FOR: 9, AGI: 12, INT: 18, VIT: 14, ESP: 9, CHA: 4 }
+    pv: 132
+    armure: 6
+    attaque: { stat: INT, element: arcane, portee: distance, puissance: 10 }
+    attaques:
+      - { nom: "Lueur brûlante", phrase: "frôle {cible} d'une lueur glacée", effet: rune }
+      - { nom: "Éclat", phrase: "éclate au visage de {cible}", effet: rune }
+    resistances: { physique: 0.3, arcane: 0.5, ombre: -0.3 }
+    competences:
+      - id: lueur-trompeuse
+        nom: Lueur trompeuse
+        description: "Une lumière qui égare."
+        recharge: 3
+        cible: ennemi
+        effets: [{ type: etat, etat: affaibli, duree: 2, valeur: 0.2, chance: 0.6 }]
+        ia: { priorite: 3 }
+    recompenses: { xp: 203, or: 15 }
+
+  - id: champignon-veneneux
+    nom: "Champignon vénéneux"
+    description: "Un myconide au chapeau violet, qui crache des spores."
+    niveau: 16
+    categorie: bete
+    caracteristiques: { FOR: 9, AGI: 13, INT: 9, VIT: 20, ESP: 9, CHA: 5 }
+    pv: 197
+    armure: 8
+    attaque: { stat: VIT, element: poison, portee: melee, puissance: 11 }
+    attaques:
+      - { nom: "Coup de chapeau", phrase: "assène un coup de chapeau à {cible}", effet: impact }
+      - { nom: "Spores", phrase: "crache des spores sur {cible}", effet: poison }
+    resistances: { poison: 0.6, feu: -0.4 }
+    competences:
+      - id: nuage-de-spores
+        nom: Nuage de spores
+        description: "Des spores sur tout le groupe."
+        recharge: 3
+        cible: tous_ennemis
+        effets:
+          - { type: degats, puissance: 8, stat: VIT, element: poison }
+          - { type: etat, etat: poison, duree: 2, valeur: 6 }
+        ia: { priorite: 3 }
+    recompenses: { xp: 320, or: 24 }
+
+  - id: loup-de-brume
+    nom: "Loup de brume"
+    description: "Un loup translucide, bleu brume, aux yeux blancs. Les elfes disent que ce sont des chiens de garde de la forêt."
+    niveau: 17
+    categorie: esprit
+    sprite: loup-spectral
+    caracteristiques: { FOR: 9, AGI: 22, INT: 9, VIT: 17, ESP: 9, CHA: 5 }
+    pv: 282
+    armure: 10
+    attaque: { stat: AGI, element: physique, portee: melee, puissance: 12 }
+    attaques:
+      - { nom: "Morsure de brume", phrase: "traverse {cible} d'une morsure glacée", effet: entaille }
+      - { nom: "Hurlement", phrase: "hurle à la face de {cible}", effet: rune }
+    resistances: { physique: 0.2, glace: 0.4, sacre: -0.3 }
+    competences:
+      - id: chasse-fantome
+        nom: Chasse fantôme
+        description: "Deux morsures rapides."
+        recharge: 2
+        cible: ennemi
+        portee: melee
+        effets: [{ type: degats, puissance: 10, stat: AGI, element: glace, coups: 2 }]
+        ia: { priorite: 3 }
+    recompenses: { xp: 491, or: 34 }
+
+  - id: sylvain-corrompu
+    nom: "Sylvain corrompu"
+    description: "Un arbre vivant aux feuilles tachées de violet. La corruption des cristaux l'a rendu fou."
+    niveau: 19
+    categorie: construction
+    caracteristiques: { FOR: 24, AGI: 14, INT: 10, VIT: 18, ESP: 10, CHA: 5 }
+    pv: 311
+    armure: 11
+    attaque: { stat: FOR, element: physique, portee: melee, puissance: 12 }
+    attaques:
+      - { nom: "Branche-fouet", phrase: "fouette {cible} d'une branche noueuse", effet: impact }
+      - { nom: "Racines", phrase: "fait jaillir des racines sous {cible}", effet: impact }
+    resistances: { physique: 0.2, poison: 0.5, feu: -0.5 }
+    competences:
+      - id: etreinte-des-racines
+        nom: Étreinte des racines
+        description: "Des racines immobilisent la cible."
+        recharge: 3
+        cible: ennemi
+        effets:
+          - { type: degats, puissance: 14, stat: FOR }
+          - { type: etat, etat: immobilise, duree: 1, chance: 0.5 }
+        ia: { priorite: 3 }
+    recompenses: { xp: 580, or: 38 }
+
+  - id: garde-sylvain
+    nom: "Garde sylvain"
+    description: "Archer elfe de la garde d'Ithrael, cape vert sombre, arc long."
+    niveau: 16
+    categorie: humanoide
+    sprite: bandit
+    rang: arriere
+    caracteristiques: { FOR: 9, AGI: 20, INT: 9, VIT: 16, ESP: 9, CHA: 5 }
+    pv: 197
+    armure: 8
+    attaque: { stat: AGI, element: physique, portee: distance, puissance: 11 }
+    attaques:
+      - { nom: "Flèche elfique", phrase: "décoche une flèche silencieuse sur {cible}", effet: impact }
+      - { nom: "Tir double", phrase: "tire deux flèches vers {cible}", effet: impact }
+    recompenses: { xp: 320, or: 24 }
+
+  - id: eclaireur-cendre
+    nom: "Éclaireur de la Légion"
+    description: "Un soldat de la Légion Cendrée : armure noire, cape en lambeaux, épée qui fume."
+    niveau: 17
+    categorie: demon
+    sprite: cultiste
+    caracteristiques: { FOR: 21, AGI: 13, INT: 9, VIT: 16, ESP: 9, CHA: 5 }
+    pv: 208
+    armure: 9
+    attaque: { stat: FOR, element: physique, portee: melee, puissance: 11 }
+    attaques:
+      - { nom: "Lame fumante", phrase: "taille {cible} d'une lame qui fume", effet: ombre }
+      - { nom: "Coup de garde", phrase: "frappe {cible} du pommeau", effet: impact }
+    resistances: { feu: 0.3, ombre: 0.3, sacre: -0.3 }
+    recompenses: { xp: 350, or: 26 }
+
+  - id: diablotin-sylve
+    nom: "Diablotin"
+    description: "Un petit démon rouge aux ailes de chauve-souris, une fourche à la main. Il rit tout le temps."
+    niveau: 16
+    categorie: demon
+    sprite: diablotin
+    rang: arriere
+    caracteristiques: { FOR: 9, AGI: 19, INT: 9, VIT: 15, ESP: 9, CHA: 5 }
+    pv: 139
+    armure: 7
+    attaque: { stat: AGI, element: feu, portee: distance, puissance: 11 }
+    attaques:
+      - { nom: "Fourche", phrase: "pique {cible} de sa fourche", effet: entaille }
+      - { nom: "Boule de feu", phrase: "lance une petite boule de feu sur {cible}", effet: feu }
+    resistances: { feu: 0.6, sacre: -0.4 }
+    recompenses: { xp: 224, or: 16 }
+
+  - id: gardien-des-racines
+    nom: "Le Gardien des Racines"
+    description: "Un sylvain immense, plus vieux que le royaume. Il garde la Bibliothèque, et il ne sait plus pourquoi."
+    niveau: 19
+    categorie: construction
+    boss: true
+    sprite: sylvain-corrompu
+    caracteristiques: { FOR: 26, AGI: 14, INT: 10, VIT: 20, ESP: 10, CHA: 5 }
+    pv: 760
+    armure: 14
+    attaque: { stat: FOR, element: physique, portee: melee, puissance: 14 }
+    attaques:
+      - { nom: "Tronc", phrase: "écrase {cible} sous un bras de bois", effet: impact }
+      - { nom: "Tempête de feuilles", phrase: "fouette {cible} d'une tempête de feuilles", effet: entaille }
+    resistances: { physique: 0.25, poison: 0.6, feu: -0.4 }
+    competences:
+      - id: seve-ancienne
+        nom: Sève ancienne
+        description: "Il se régénère par ses racines."
+        recharge: 4
+        cible: soi
+        effets: [{ type: soin, puissance: 28, stat: VIT }]
+        ia: { priorite: 4, quand: soi_blesse }
+      - id: foret-vivante
+        nom: Forêt vivante
+        description: "Des racines frappent tout le groupe."
+        recharge: 3
+        cible: tous_ennemis
+        effets:
+          - { type: degats, puissance: 14, stat: FOR }
+          - { type: etat, etat: immobilise, duree: 1, chance: 0.3 }
+        ia: { priorite: 4 }
+    recompenses: { xp: 2485, or: 190 }
+
+  - id: morra-commandante
+    nom: "Morwenna « Morra »"
+    description: "Commandante de la Légion Cendrée : cornes noires, cheveux couleur de braise, épée-faux. Elle se bat comme si elle n'avait plus rien à perdre."
+    niveau: 21
+    categorie: demon
+    boss: true
+    sprite: chevalier-cendre
+    caracteristiques: { FOR: 28, AGI: 14, INT: 10, VIT: 21, ESP: 10, CHA: 5 }
+    pv: 777
+    armure: 15
+    attaque: { stat: FOR, element: ombre, portee: melee, puissance: 15 }
+    attaques:
+      - { nom: "Faux de cendre", phrase: "fauche {cible} d'un large arc noir", effet: ombre }
+      - { nom: "Ricanement", phrase: "frappe {cible} du plat de la lame en riant", effet: ombre }
+    resistances: { feu: 0.5, ombre: 0.5, sacre: -0.25 }
+    competences:
+      - id: moisson-noire
+        nom: Moisson noire
+        description: "Un coup de faux sur tout le groupe."
+        recharge: 3
+        cible: tous_ennemis
+        effets:
+          - { type: degats, puissance: 15, stat: FOR, element: ombre }
+          - { type: etat, etat: affaibli, duree: 2, valeur: 0.15, chance: 0.5 }
+        ia: { priorite: 4 }
+      - id: pacte-de-sang
+        nom: Pacte de sang
+        description: "Elle se soigne en frappant."
+        recharge: 3
+        cible: ennemi
+        portee: melee
+        effets:
+          - { type: degats, puissance: 18, stat: FOR, element: ombre }
+          - { type: soin, puissance: 12, stat: FOR, cible: soi }
+        ia: { priorite: 3 }
+    recompenses: { xp: 2887, or: 210 }
+
+rencontres:
+  - { id: lisiere-loups, nom: "Les loups de brume", fond: foret-profonde, ennemis: [{ id: loup-de-brume }, { id: loup-de-brume }], renforts: [loup-de-brume] }
+  - { id: follets-bois, nom: "Les feux follets", fond: foret-profonde, ennemis: [{ id: feu-follet-sauvage }, { id: feu-follet-sauvage }, { id: feu-follet-sauvage }], renforts: [feu-follet-sauvage] }
+  - { id: champignons-marais, nom: "Le cercle de champignons", fond: marais, ennemis: [{ id: champignon-veneneux }, { id: champignon-veneneux }], renforts: [champignon-veneneux] }
+  - { id: sylvains-corrompus, nom: "Les sylvains corrompus", fond: foret-profonde, ennemis: [{ id: sylvain-corrompu }, { id: feu-follet-sauvage, rang: arriere }], renforts: [sylvain-corrompu] }
+  - { id: gardes-ithrael, nom: "La garde d'Ithrael", fond: foret-profonde, ennemis: [{ id: garde-sylvain }, { id: garde-sylvain }], renforts: [garde-sylvain] }
+  - { id: eclaireurs-legion, nom: "Éclaireurs de la Légion", fond: foret-profonde, ennemis: [{ id: eclaireur-cendre }, { id: eclaireur-cendre }, { id: diablotin-sylve, rang: arriere }], renforts: [eclaireur-cendre] }
+  - { id: bibliotheque-sylvains, nom: "Les gardiens de bois", fond: bibliotheque, ennemis: [{ id: sylvain-corrompu }, { id: champignon-veneneux }], renforts: [champignon-veneneux] }
+  - { id: bibliotheque-follets, nom: "Les lumières de la Bibliothèque", fond: bibliotheque, ennemis: [{ id: feu-follet-sauvage }, { id: feu-follet-sauvage }, { id: loup-de-brume }], renforts: [feu-follet-sauvage] }
+  - { id: bibliotheque-gardien, nom: "Le Gardien des Racines", fond: bibliotheque, fuite_possible: false, ennemis: [{ id: gardien-des-racines }, { id: feu-follet-sauvage, rang: arriere }], renforts: [feu-follet-sauvage] }
+  - { id: nuitlongue-legion, nom: "La Légion dans la forêt", fond: foret-profonde, fuite_possible: false, ennemis: [{ id: eclaireur-cendre }, { id: eclaireur-cendre }, { id: diablotin-sylve, rang: arriere }], renforts: [diablotin-sylve] }
+  - { id: nuitlongue-morra, nom: "Morra, commandante des Cendres", fond: clairiere, fuite_possible: false, ennemis: [{ id: morra-commandante }, { id: eclaireur-cendre }], renforts: [eclaireur-cendre] }
+  - { id: domaine-brigands, nom: "Les brigands du domaine", fond: plaine, ennemis: [{ id: eclaireur-cendre }, { id: diablotin-sylve, rang: arriere }], renforts: [diablotin-sylve] }

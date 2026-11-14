@@ -13,6 +13,7 @@ const c = contenuDisque();
 export const SCENES_SAISON: Record<number, string[]> = {
   1: ['ch1-appel', 'ch1-examen', 'sq-tournoi', 'sq-loups', 'ch1-crypte', 'sq-tanneurs', 'ch1-lanternes', 'ch1-serment'],
   2: ['ch2-depart', 'ch2-caravane', 'sq-pillards-retour', 'ch2-palais', 'sq-matriarche-fin', 'ch2-complot', 'ch2-bazar', 'sq-puits-retour', 'ch2-tempete', 'ch2-revolte'],
+  3: ['ch3-domaines', 'ch3-lisiere', 'sq-follets-retour', 'ch3-reine', 'sq-domaine-milice', 'ch3-bibliotheque', 'ch3-nuitlongue', 'ch3-verdict'],
 };
 
 /** Joue un chapitre ; à la fin, passe au chapitre suivant (auberge). */
@@ -43,5 +44,18 @@ describe('Saison 1 jouée par le robot', () => {
     expect(r.etat.chapitre).toBe(3);
     // le robot ne s'équipe pas et perd souvent : il progresse moins vite qu'un vrai groupe
     for (const h of listeHeros(r.etat)) expect(h.niveau).toBeGreaterThanOrEqual(6);
+  });
+
+  it('chapitre 3 : Sylvenoire, la Bibliothèque des Racines et la Nuitlongue', () => {
+    const r = groupeDeDeux(c, 'saison3');
+    jouerPrologues(c, r);
+    for (const n of [1, 2, 3]) jouerChapitre(r, n);
+    expect(r.etat.quetes['q-ch3-foret'].terminee).toBe(true);
+    expect(r.etat.flags['codex-lu']).toBe(true);
+    expect(r.etat.flags['domaine-obtenu']).toBe(true);
+    expect(r.etat.compagnonsRencontres).toEqual(expect.arrayContaining(['elianne', 'ilysse']));
+    expect(r.etat.flags['morra-vivante'] || r.etat.flags['morra-tuee']).toBe(true);
+    expect((r.etat.reputation.troupes ?? 0)).toBeGreaterThan(10);
+    expect(r.etat.chapitre).toBe(4);
   });
 });

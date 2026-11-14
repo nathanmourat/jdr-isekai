@@ -78,6 +78,11 @@ export const LIEU_DU_DECOR: Record<string, string> = {
 	"ville-desert": "qarzim-porte",
 	mine: "mines-ether",
 	ruines: "ruines-de-sel",
+	// chapitre 3 : Sylvenoire
+	"foret-profonde": "bois-des-feux-follets",
+	marais: "bois-des-feux-follets",
+	bibliotheque: "bibliotheque-racines",
+	clairiere: "clairiere-dechirure",
 };
 
 /** Hauteur à laquelle est dessiné le donjon (au-dessus du monde). */

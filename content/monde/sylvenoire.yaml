@@ -1,0 +1,120 @@
+# Région du chapitre 3 : Sylvenoire (niveaux 15 à 22). Positions en pixels sur la carte (1920 × 1080).
+# La région s'ouvre au départ de Lysmont (scène « Les domaines », Germinal 1018).
+regions:
+  - id: sylvenoire
+    nom: "Sylvenoire"
+    description: "La forêt primaire des elfes : arbres géants, brume bleue, et une mémoire plus longue que celle des hommes."
+    carte: sylvenoire
+    chapitre: 3
+    position_monde: { x: 520, y: 520 }
+    disponible_si: { flag: ch3-depart-fait }
+    villes:
+      - id: ithrael
+        nom: "Ithrael"
+        description: "La cité des elfes, bâtie dans les branches d'un arbre plus haut qu'une montagne."
+        plan: ithrael-plan
+        position: { x: 980, y: 480 }
+    lieux:
+      - id: ithrael-racines
+        nom: "Porte des Racines"
+        description: "L'entrée d'Ithrael : un escalier taillé dans une racine, gardé par des archers silencieux."
+        decor: ithrael-racines
+        ville: ithrael
+        position: { x: 980, y: 540 }
+        position_plan: { x: 640, y: 620 }
+        disponible_si: { flag: sylvenoire-ouverte }
+        pnj: [{ id: vaelor }, { id: ilysse, si: { flag: ilysse-recrutee } }]
+      - id: ithrael-cour
+        nom: "Cour de la Reine-Sève"
+        description: "Une salle vivante, aux murs de branches tressées, où la Reine écoute plus qu'elle ne parle."
+        decor: ithrael-cour
+        ville: ithrael
+        position: { x: 980, y: 420 }
+        position_plan: { x: 640, y: 140 }
+        disponible_si: { flag: sylvenoire-ouverte }
+        pnj: [{ id: reine-seve }, { id: ilysse, si: { flag: ilysse-recrutee } }]
+      - id: ithrael-auberge
+        nom: "La Feuille d'Argent"
+        description: "L'auberge des voyageurs, perchée dans les branches. Les lits sont des hamacs, et la vue est vertigineuse."
+        decor: ithrael-auberge
+        ville: ithrael
+        auberge: true
+        position: { x: 1030, y: 470 }
+        position_plan: { x: 900, y: 430 }
+        disponible_si: { flag: sylvenoire-ouverte }
+        pnj: [{ id: thaliel }, { id: elianne, si: { flag: elianne-recrutee } }, { id: kaya, si: { flag: kaya-recrutee } }]
+        gerant: thaliel
+        boutique: [ration, potion-soin-grande, eau-d-oasis, the-de-sylve, miel-des-fleurs-d-argent]
+      - id: ithrael-marche
+        nom: "Marché des Graines"
+        description: "Des étals dans les branches : graines, herbes, arcs de frêne et tissus de soie d'araignée."
+        decor: ithrael-marche
+        ville: ithrael
+        position: { x: 930, y: 470 }
+        position_plan: { x: 380, y: 400 }
+        disponible_si: { flag: sylvenoire-ouverte }
+        pnj: [{ id: mirwen }, { id: nadja, si: { flag: nadja-rencontree } }, { id: seraphine, si: { flag: seraphine-recrutee } }]
+        gerant: mirwen
+        boutique: [
+          potion-soin-grande, potion-mana-grande, antidote, bombe-feu, bombe-fumee, the-de-sylve, miel-des-fleurs-d-argent,
+          plume-de-chouette-blanche, livre-des-contes-sylvains, epee-iii, epee-iii-maitre, deux-mains-iii, deux-mains-iii-maitre,
+          masse-iii, masse-iii-maitre, dague-iii, dague-iii-maitre, arc-iii, arc-iii-maitre, arbalete-iii, arbalete-iii-maitre,
+          baton-iii, baton-iii-maitre, sceptre-iii, sceptre-iii-maitre, orbe-iii, orbe-iii-maitre, instrument-iii,
+          instrument-iii-maitre, lourde-iii, lourde-iii-maitre, intermediaire-iii, intermediaire-iii-maitre, legere-iii,
+          legere-iii-maitre, bouclier-iii, bouclier-iii-maitre, anneau-iii, anneau-iii-maitre, amulette-iii, amulette-iii-maitre,
+          talisman-iii, talisman-iii-maitre, carquois-iii, carquois-iii-maitre, sacoche-iii, sacoche-iii-maitre,
+        ]
+      - id: guilde-ithrael
+        nom: "Relais de la Guilde (Ithrael)"
+        description: "Une petite cabane au pied de l'arbre, où la Guilde a le droit — tout juste — d'afficher ses contrats."
+        decor: guilde
+        ville: ithrael
+        position: { x: 1040, y: 540 }
+        position_plan: { x: 1020, y: 600 }
+        disponible_si: { flag: sylvenoire-ouverte }
+        pnj: [{ id: orsa }, { id: aveline, si: { flag: aveline-rencontree } }]
+        gerant: orsa
+        boutique: [
+          potion-soin-grande, potion-mana-grande, cuirasse-d-ecorce-fer, anneau-des-racines, manteau-de-brume-bleue,
+          larme-d-ithrael, robe-de-mousse-ancienne, pendentif-de-la-dryade, cape-de-feuilles-mortes, anneau-du-dernier-souffle,
+          harnois-du-gardien-des-racines, bouclier-chene, veste-d-herboriste, besace-des-racines, tunique-de-l-eclaireur-sylvain,
+          carquois-des-esprits, robe-de-seve, graine-du-premier-arbre, armure-d-ecailles-de-sanglier-roi, anneau-du-cri-sauvage,
+          cape-du-conteur-sylvain, anneau-de-la-dryade-chanteuse,
+        ]
+      # ── Hors de la ville
+      - id: lisiere-sylvenoire
+        nom: "Lisière de Sylvenoire"
+        description: "Là où les champs d'Aubeclaire cèdent la place à des troncs larges comme des tours."
+        decor: lisiere-sylvenoire
+        position: { x: 1640, y: 520 }
+        disponible_si: { flag: ch3-depart-fait }
+      - id: domaine-lisiere
+        nom: "Votre domaine"
+        description: "Des terres données par la Couronne (ou par la Guilde), entre la forêt et les champs : un manoir à relever, des fermes, des gens."
+        decor: domaine-lisiere
+        position: { x: 1720, y: 760 }
+        disponible_si: { flag: domaine-obtenu }
+        pnj: [{ id: intendant-domaine }, { id: aveline, si: { flag: aveline-rencontree } }]
+      - id: bois-des-feux-follets
+        nom: "Bois des Feux follets"
+        description: "Un bois où les lumières bleues dansent entre les troncs. On s'y perd facilement, même en plein jour."
+        decor: bois-des-feux-follets
+        position: { x: 640, y: 300 }
+        disponible_si: { flag: sylvenoire-ouverte }
+      - id: bibliotheque-racines
+        nom: "Bibliothèque des Racines"
+        description: "Une bibliothèque creusée sous les racines du plus vieil arbre du monde. Interdite depuis mille ans."
+        decor: bibliotheque-racines
+        position: { x: 760, y: 700 }
+        disponible_si: { quete_etape: { q-ch3-foret: bibliotheque } }
+      - id: clairiere-dechirure
+        nom: "Clairière de la Déchirure"
+        description: "Une clairière où rien ne pousse. Au centre, l'air tremble comme au-dessus d'un feu."
+        decor: clairiere-dechirure
+        position: { x: 420, y: 520 }
+        disponible_si: { flag: sylvenoire-ouverte }
+      # ── Lieux d'étape
+      - { id: marais-de-brume, nom: "Marais de brume", description: "Une eau noire sous une brume bleue, et des champignons partout.", decor: marais-de-brume, position: { x: 1160, y: 860 }, etape_seulement: true }
+      - { id: cercle-des-dryades, nom: "Cercle des dryades", description: "Sept arbres en cercle, qui murmurent quand on entre.", decor: cercle-des-dryades, position: { x: 1360, y: 300 }, etape_seulement: true }
+      - { id: vieux-chene, nom: "Le Vieux-Chêne", description: "Un chêne immense, dont l'écorce suinte une sève violette.", decor: vieux-chene, position: { x: 1240, y: 640 }, etape_seulement: true }
+      - { id: camp-legion-sylve, nom: "Camp avancé de la Légion", description: "Des tentes noires, cachées sous les fougères, à un jour de marche d'Ithrael.", decor: camp-legion-sylve, position: { x: 300, y: 820 }, etape_seulement: true }

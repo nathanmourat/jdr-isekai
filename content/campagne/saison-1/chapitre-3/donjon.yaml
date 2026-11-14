@@ -1,0 +1,47 @@
+# Donjon du chapitre 3 : la Bibliothèque des Racines (vue de dessus). Tuiles provisoires en attendant le graphiste.
+donjons:
+  - id: bibliotheque-racines
+    nom: "Bibliothèque des Racines"
+    tileset: bibliotheque-racines
+    legende:
+      "#": mur
+      ".": sol
+      "S": escalier
+      "D": porte
+      "O": sol-os
+      "T": sol-piege
+      "C": sol-coffre
+      "F": colonne-fontaine
+      "X": sol-sceau
+    depart: { x: 1, y: 1 }
+    carte:
+      - "########################"
+      - "#S.....D.......#.......#"
+      - "#......#...O...D...C...#"
+      - "#..C...#.......#.......#"
+      - "###D######D#####...T...#"
+      - "#......#.......####D####"
+      - "#..O...D...T...#.......#"
+      - "#......#.......D...O...#"
+      - "####D###.......#.......#"
+      - "#......####D########D###"
+      - "#..T...#...F...#.......#"
+      - "#..X...D.......D...C...#"
+      - "#......#.......#.......#"
+      - "########################"
+    evenements:
+      - { id: entree, x: 2, y: 1, type: texte, texte: "Des étagères taillées dans les racines, à perte de vue. Des millions de livres. Et une odeur de terre, de cire et de très vieux papier." }
+      - { id: follets, x: 11, y: 2, type: combat, rencontre: bibliotheque-follets, texte: "Des lumières bleues dansent entre les rayonnages… et se tournent vers vous." }
+      - { id: coffre-1, x: 3, y: 3, type: coffre, texte: "Un lutrin renversé cache une boîte de bois.", or: 160, objets: [potion-soin-grande] }
+      - { id: coffre-2, x: 19, y: 2, type: coffre, texte: "Un coffre de copiste : plumes, encre… et une bourse oubliée.", or: 200, objets: [livre-des-contes-sylvains] }
+      - { id: piege-1, x: 19, y: 4, type: piege, texte: "Une étagère bascule dans un nuage de poussière !", test: { carac: AGI, difficulte: 23 }, degats_pourcent: 15 }
+      - { id: sylvains, x: 11, y: 6, type: combat, rencontre: bibliotheque-sylvains, texte: "Les racines du plafond se détachent et prennent forme : des gardiens de bois." }
+      - { id: piege-2, x: 11, y: 5, type: piege, texte: "Une racine s'enroule autour de vos chevilles !", test: { carac: FOR, difficulte: 23 }, degats_pourcent: 15 }
+      - { id: os, x: 3, y: 6, type: texte, texte: "Le squelette d'un elfe, assis contre un rayonnage, un livre sur les genoux. Il est mort en lisant." }
+      - { id: coffre-3, x: 19, y: 7, type: coffre, texte: "Une armoire scellée de cire verte.", or: 180, objets: [potion-mana-grande, plume-de-chouette-blanche] }
+      - { id: piege-3, x: 3, y: 10, type: piege, texte: "Des spores s'échappent d'un champignon géant !", test: { carac: VIT, difficulte: 23 }, degats_pourcent: 15 }
+      - { id: gardien, x: 11, y: 11, type: combat, rencontre: bibliotheque-gardien, texte: "Au centre de la dernière salle, un arbre se déplie lentement. Ses yeux s'ouvrent : deux nœuds de lumière verte. « Qui… vient lire ? »" }
+      - { id: codex, x: 19, y: 11, type: coffre, texte: "Sur un pupitre de bois vivant, un livre plus grand qu'un bouclier : le Codex de la Déchirure.", objets: [codex-dechirure] }
+      - { id: sceau, x: 3, y: 11, type: texte, texte: "Un cercle gravé au sol, et au centre, une phrase en elfique : « Ici, nous avons demandé pardon. »" }
+      - { id: sortie, x: 1, y: 1, type: sortie, unique: false, si: { objet: codex-dechirure } }
+      - { id: pas-fini, x: 1, y: 1, type: texte, unique: false, texte: "Vous n'avez pas trouvé le Codex. Ilyssë refuse de remonter sans lui." }

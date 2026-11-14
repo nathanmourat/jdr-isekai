@@ -65,6 +65,11 @@ if (graine === 'saison') {
   jouer(c, r, { type: 'chapitre_suivant', joueur: 'j1' });
   dormirHistoire(c, r);
   for (const s of ['ch2-depart', 'ch2-caravane', 'sq-pillards-retour', 'ch2-palais', 'sq-chacals-retour', 'ch2-complot', 'ch2-bazar', 'sq-puits-retour', 'ch2-tempete', 'ch2-revolte']) jouerSceneGroupe(c, r, s);
+  // chapitre 3 : Sylvenoire
+  finirTempsLibre(c, r);
+  jouer(c, r, { type: 'chapitre_suivant', joueur: 'j1' });
+  dormirHistoire(c, r);
+  for (const s of ['ch3-domaines', 'ch3-lisiere', 'sq-follets-retour', 'ch3-reine', 'sq-domaine-milice', 'ch3-bibliotheque', 'ch3-nuitlongue', 'ch3-verdict']) jouerSceneGroupe(c, r, s);
 }
 finirTempsLibre(c, r);
 

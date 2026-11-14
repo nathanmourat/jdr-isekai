@@ -1,0 +1,295 @@
+# Chapitre 3 — « La Forêt qui se souvient » : quête principale (scènes de groupe, choix votés).
+scenes:
+  # ─────────────────────────────────────────────────────────────
+  - id: ch3-domaines
+    pnj: edmund-iv
+    titre: "Les domaines"
+    type: groupe
+    lieu: chateau
+    decor: chateau-trone
+    quete: q-ch3-foret
+    disponible_si: { flag: chapitre-2-fini, pas_flag: ch3-depart-fait, date_min: { annee: 1018, mois: 1, jour: 1 } }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "Germinal 1018. Six ans depuis l'Appel. À Lysmont, on vous salue dans la rue ; certains enfants jouent aux Appelés avec des épées de bois." }
+          - { qui: edmund-iv, dit: "Le roi Edmund vous reçoit debout, ce qui ne lui arrive jamais. « Qarzim. Le traité. Ma fille vivante. » Il hoche la tête. « La Couronne paie ses dettes. »", si: { flag: serment-couronne } }
+          - { qui: edmund-iv, dit: "« Chevaliers d'Aubeclaire : je vous donne des terres à la lisière de Sylvenoire. Un manoir, des fermes, des gens. Gardez-les bien : la frontière est fragile. »", si: { flag: serment-couronne } }
+          - { qui: rowena, dit: "C'est Dame Rowena qui vous attend dans la salle du trône, un rouleau de parchemin à la main. « Le roi n'aime pas les héros libres. Mais il aime encore moins devoir quelque chose à la Guilde. »", si: { pas_flag: serment-couronne } }
+          - { qui: rowena, dit: "« Alors la Guilde vous offre des terres qu'elle a reçues en paiement il y a cent ans, à la lisière de Sylvenoire. Un manoir en ruine. Des fermes. Des gens qui ont besoin d'être protégés. Considérez ça comme une prime. »", si: { pas_flag: serment-couronne } }
+          - { qui: elianne, dit: "Sœur Elianne s'avance, un voyage dans les yeux et un sac sur l'épaule. « L'Ordre m'envoie avec vous. Officiellement, pour lire la tablette des Ruines avec les elfes. »" }
+          - { qui: elianne, expression: tristesse, dit: "Plus bas, quand le roi s'éloigne : « Officieusement… j'ai trouvé des choses, dans les archives du Temple. Des choses qui m'empêchent de dormir. J'ai besoin de savoir. »" }
+        choix:
+          - texte: "« Bienvenue, Sœur Elianne. Nous chercherons la vérité ensemble. »"
+            effets: [{ affinite: { elianne: 5 } }]
+            aller: domaine
+          - texte: "« L'Ordre nous espionne, maintenant ? »"
+            effets: [{ affinite: { elianne: -2 }, reputation: { ordre: -3 } }]
+            aller: soupcon
+      soupcon:
+        repliques:
+          - { qui: elianne, dit: "Elle ne s'offense pas. « L'Ordre croit que je l'espionne pour lui. Moi, je crois que je l'espionne pour vous. » Un sourire triste. « Nous verrons bien qui a raison. »" }
+        suite: domaine
+      domaine:
+        repliques:
+          - { dit: "Le sceau de vos terres est de cire verte, frappé d'une feuille et d'une épée. Sur la carte, votre domaine touche la lisière de Sylvenoire : la forêt des elfes, où personne n'entre sans invitation." }
+          - { qui: seraphine, dit: "Séraphine pose un doigt sur la carte. « La tablette des Ruines, la fresque… tout mène à Sylvenoire. Et votre domaine en est la porte. » Elle sourit. « Le hasard fait bien les choses. Ou mon père. »", si: { flag: seraphine-recrutee } }
+        effets:
+          - { flag: [ch3-depart-fait, domaine-obtenu, elianne-recrutee], recruter: elianne, objet: sceau-du-domaine, reputation: { troupes: 10 }, quete: { id: q-ch3-foret, etape: lisiere }, journal: "Germinal 1018 : {groupe} reçoivent un domaine à la lisière de Sylvenoire. Sœur Elianne les accompagne." }
+        fin: true
+
+  # ─────────────────────────────────────────────────────────────
+  - id: ch3-lisiere
+    titre: "La lisière de Sylvenoire"
+    type: groupe
+    lieu: lisiere-sylvenoire
+    decor: lisiere-sylvenoire
+    quete: q-ch3-foret
+    disponible_si: { quete_etape: { q-ch3-foret: lisiere } }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "Les champs s'arrêtent net, comme coupés au couteau. Au-delà, des troncs larges comme des tours, une brume bleue, et un silence qui écoute." }
+          - { qui: vaelor, dit: "Une flèche se plante à vos pieds. Puis dix archers apparaissent dans les branches, comme sortis de l'écorce. « Humains. Faites demi-tour. Sylvenoire n'est pas à vous. »" }
+        choix:
+          - texte: "Montrer la tablette (ou la copie de la fresque) des Ruines de Sel."
+            aller: tablette
+          - texte: "« Nous sommes les voisins : notre domaine touche votre forêt. » (Charisme, difficulté 23)"
+            test: { carac: CHA, difficulte: 23, reussite: voisins, echec: loups }
+          - texte: "Attendre sans bouger, les mains ouvertes."
+            aller: loups
+      tablette:
+        repliques:
+          - { qui: vaelor, dit: "Le capitaine descend d'une branche, lentement. Il regarde l'écriture elfique et pâlit. « Où avez-vous trouvé ça ? Ces mots… ce sont ceux des Anciens. »" }
+        effets: [{ reputation: { elfes: 5 } }]
+        suite: loups
+      voisins:
+        repliques:
+          - { qui: vaelor, dit: "« Les voisins. » L'elfe pèse le mot. « Il y a cent ans, le seigneur de vos terres brûlait nos arbres pour se chauffer. » Il baisse son arc. « Prouvez que vous êtes différents. »" }
+        effets: [{ reputation: { elfes: 8 } }]
+        suite: loups
+      loups:
+        repliques:
+          - { dit: "La brume s'épaissit d'un coup. Les archers se figent. Des yeux blancs s'allument entre les troncs : des loups translucides, qui ne font aucun bruit en marchant." }
+          - { qui: vaelor, dit: "« Les loups de brume ! Ils ne sortent jamais à la lisière… » Il n'a pas le temps de finir." }
+        combat: { rencontre: lisiere-loups, victoire: ilysse, defaite: ilysse-sauve }
+      ilysse-sauve:
+        repliques:
+          - { dit: "Les loups vous renversent. Puis une lumière violette explose au milieu de la meute, et les loups se dissipent comme de la fumée." }
+        suite: ilysse
+      ilysse:
+        repliques:
+          - { qui: ilysse, dit: "Une elfe en robe de voyage couverte de taches d'encre sort de la brume, un livre ouvert dans une main, une baguette dans l'autre. « Les loups de brume gardent la forêt contre ce qui ne vient pas de ce monde. Ils vous ont pris pour des intrus. » Elle vous détaille. « Ils n'avaient pas tout à fait tort. »" }
+          - { qui: vaelor, expression: colere, dit: "« Ilyssë Vaëlnor. Tu es bannie. Tu n'as rien à faire ici. »" }
+          - { qui: ilysse, dit: "« Je suis à la lisière, Vaelor. La lisière, c'est encore à personne. » Elle se tourne vers vous, les yeux brillants. « Des Appelés. Des vrais. Avec une tablette des Anciens. J'ai attendu ce jour pendant cinquante ans. »" }
+        choix:
+          - texte: "« Vous pouvez la lire ? Venez avec nous. »"
+            effets: [{ affinite: { ilysse: 6 } }]
+            aller: accord
+          - texte: "« Pourquoi vous a-t-on bannie ? »"
+            effets: [{ affinite: { ilysse: 3 } }]
+            aller: bannie
+      bannie:
+        repliques:
+          - { qui: ilysse, dit: "« Pour avoir posé la seule question qui compte : pourquoi le ciel s'est-il déchiré ? » Elle referme son livre d'un coup sec. « La Reine préfère l'oubli. Moi, je préfère savoir. »" }
+        suite: accord
+      accord:
+        repliques:
+          - { qui: vaelor, dit: "Le capitaine soupire longuement. « La Reine voudra voir la tablette. Et vous. » Il désigne Ilyssë du menton. « Elle, elle reste dehors. »" }
+          - { qui: ilysse, dit: "« Bien sûr. » Ilyssë sourit d'un air qui promet exactement le contraire." }
+        effets:
+          - { flag: [sylvenoire-ouverte, ilysse-recrutee], recruter: ilysse, quete: { id: q-ch3-foret, etape: reine }, xp: 300, journal: "{groupe} entrent en Sylvenoire. Ilyssë Vaëlnor, mage elfe bannie, se joint à eux." }
+        fin: true
+
+  # ─────────────────────────────────────────────────────────────
+  - id: ch3-reine
+    pnj: reine-seve
+    titre: "La Reine-Sève"
+    type: groupe
+    lieu: ithrael-cour
+    decor: ithrael-cour
+    quete: q-ch3-foret
+    disponible_si: { quete_etape: { q-ch3-foret: reine }, date_min: { annee: 1019, mois: 2, jour: 1 } }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "Floréal 1019. Il a fallu près d'un an pour que la Reine accepte de vous recevoir. Les elfes ne sont jamais pressés." }
+          - { dit: "La Cour est une salle vivante : des branches tressées pour murs, de la mousse pour tapis, et au fond, une femme si immobile qu'on la prendrait pour une statue." }
+          - { qui: reine-seve, dit: "« Des Appelés. Dans ma Cour. » Sa voix est douce comme le vent dans les feuilles. « La dernière fois que j'ai vu un Appelé, il s'appelait Orvan, et il était venu me demander pardon pour ce que l'Ordre allait faire. C'était il y a six cents ans. »" }
+          - { qui: ilysse, dit: "Ilyssë, qui n'était évidemment pas restée dehors, s'étrangle derrière un pilier.", si: { flag: ilysse-recrutee } }
+        suite: question
+      question:
+        parole_a:
+          regle: { race: [elfe, demi-elfe] }
+          question: { qui: reine-seve, dit: "La Reine tourne ses yeux couleur de mousse vers {nom}. « Toi, {pseudo}. Tu as du sang de la forêt. Dis-moi : faut-il réveiller ce qui dort ? »" }
+          reponses:
+            - { texte: "« Je suis elfe, ma Reine. Et je sais que l'oubli n'a jamais guéri personne. »", si: { race: elfe }, effets: [{ reputation: { elfes: 10 } }], aller: reponse }
+            - { texte: "« À moitié elfe, à moitié humaine. Je sais ce que c'est, de vivre entre deux mondes qui se taisent. »", si: { race: demi-elfe }, effets: [{ reputation: { elfes: 8 }, affinite: { ilysse: 3 } }], aller: reponse }
+            - { texte: "« Ce qui dort est en train de se réveiller tout seul, au nord. Mieux vaut savoir pourquoi. »", effets: [{ reputation: { elfes: 6 } }], aller: reponse }
+            - { texte: "« Nous ne voulons pas réveiller. Nous voulons comprendre. »", effets: [{ reputation: { elfes: 4 } }], aller: reponse }
+            - { texte: "« Avec tout le respect que je vous dois… on n'a pas le temps de dormir. »", effets: [{ affinite: { ilysse: 4 } }], aller: reponse }
+      reponse:
+        repliques:
+          - { qui: reine-seve, dit: "Un long silence. Les branches des murs bougent, comme si la salle respirait." }
+          - { qui: reine-seve, dit: "« Il y a mille ans, les dragons-rois régnaient. Mon peuple a voulu les vaincre. Nous avons ouvert le Voile pour y puiser une force qui n'était pas la nôtre. Le ciel s'est déchiré. Les dragons sont tombés… et le nord est devenu cendres. »" }
+          - { qui: reine-seve, dit: "« Tout le reste est écrit dans la Bibliothèque des Racines. Fermée depuis mille ans. » Elle vous fixe. « Pourquoi devrais-je vous l'ouvrir ? »" }
+        choix:
+          - texte: "« Parce que la Légion arrive, et que vous ne la vaincrez pas en fermant les yeux. » (Charisme, difficulté 24)"
+            test: { carac: CHA, difficulte: 24, reussite: ouverte, echec: condition }
+          - texte: "« Parce qu'Ilyssë a raison depuis cinquante ans. »"
+            si: { flag: ilysse-recrutee }
+            effets: [{ affinite: { ilysse: 8 }, reputation: { elfes: -5 } }]
+            aller: condition
+          - texte: "« Nous protégerons la forêt en échange. Notre domaine sera votre rempart. »"
+            effets: [{ reputation: { elfes: 10, troupes: 5 }, flag: pacte-lisiere }]
+            aller: ouverte
+      condition:
+        repliques:
+          - { qui: reine-seve, dit: "« Alors prouvez-le. » La Reine se lève, et ses cheveux-racines glissent sur le sol. « La Bibliothèque s'ouvre à l'été prochain, quand la sève monte. Si son Gardien vous laisse passer, c'est que la forêt vous accepte. »" }
+        suite: fin
+      ouverte:
+        repliques:
+          - { qui: reine-seve, dit: "Pour la première fois, quelque chose qui ressemble à un sourire. « Soit. La Bibliothèque s'ouvre à l'été prochain, quand la sève monte. Son Gardien décidera du reste. »" }
+          - { qui: reine-seve, dit: "Elle se tourne vers le pilier. « Et toi, Ilyssë Vaëlnor, tu peux sortir de derrière ce pilier. Tu les accompagneras. Ta peine est… suspendue. »", si: { flag: ilysse-recrutee } }
+        effets: [{ reputation: { elfes: 5 }, affinite: { ilysse: 5 } }]
+        suite: fin
+      fin:
+        repliques:
+          - { qui: elianne, dit: "En sortant, Elianne vous retient par la manche. « Elle a dit qu'Orvan était venu lui demander pardon pour ce que l'Ordre « allait faire ». Pas ce qu'il avait fait. Ce que l'Ordre allait faire. » Elle est pâle. « Le Premier Appelé… savait. »" }
+        effets:
+          - { quete: { id: q-ch3-foret, etape: bibliotheque }, flag: orvan-nomme, journal: "Floréal 1019 : la Reine-Sève raconte la Déchirure et accepte d'ouvrir la Bibliothèque des Racines." }
+        fin: true
+
+  # ─────────────────────────────────────────────────────────────
+  - id: ch3-bibliotheque
+    titre: "La Bibliothèque des Racines"
+    type: groupe
+    lieu: bibliotheque-racines
+    decor: bibliotheque-racines
+    quete: q-ch3-foret
+    disponible_si: { quete_etape: { q-ch3-foret: bibliotheque }, date_min: { annee: 1020, mois: 4, jour: 1 } }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "Solaire 1020. La sève monte. Sous le plus vieil arbre du monde, une porte de racines s'ouvre pour la première fois depuis mille ans." }
+          - { qui: ilysse, expression: joie, dit: "Ilyssë a les mains qui tremblent. « Mille ans de savoir. Ne touchez à rien. Ne respirez pas trop fort. Et si vous devez vous battre… faites-le loin des étagères. »", si: { flag: ilysse-recrutee } }
+        choix:
+          - texte: "Descendre dans la Bibliothèque."
+            aller: donjon
+      donjon:
+        donjon: { id: bibliotheque-racines, sortie: sortie, abandon: abandon }
+      abandon:
+        repliques:
+          - { dit: "Le Gardien vous repousse une dernière fois vers l'escalier. Mais dans votre fuite, Ilyssë a eu le temps de recopier une page entière d'un livre tombé à terre." }
+        suite: revelation
+      sortie:
+        repliques:
+          - { dit: "Le Gardien des Racines s'est rendormi. Au fond de la salle, sur un pupitre de bois vivant, un livre énorme : le Codex de la Déchirure." }
+        suite: revelation
+      revelation:
+        repliques:
+          - { qui: ilysse, dit: "Ilyssë lit à voix haute, et sa voix se brise par moments. « « Nous avons ouvert le Voile pour vaincre les dragons. Le Voile n'est pas une porte : c'est une peau. Chaque passage la déchire un peu. Chaque déchirure laisse passer des Cendres. » »" }
+          - { qui: ilysse, dit: "« « En l'an 430, des prêtres humains sont venus copier nos rituels. Nous les avons chassés. Trop tard. » » Elle lève les yeux. « L'Ordre. L'Appel vient de nous. C'est notre rituel, recopié par des voleurs. »" }
+          - { qui: elianne, expression: tristesse, dit: "Elianne s'assoit sur une marche, sans un mot. Elle serre son chapelet si fort que les perles craquent." }
+          - { qui: ilysse, dit: "« Il y a une dernière phrase, à moitié effacée. « Seul celui qui vient de l'autre côté peut recoudre ce qui a été déchiré. » » Elle vous regarde, tous, longuement. « Celui qui vient de l'autre côté. Vous. »" }
+        effets:
+          - { flag: codex-lu, xp: 400, quete: { id: q-ch3-foret, etape: nuitlongue }, journal: "Solaire 1020 : dans la Bibliothèque des Racines, {groupe} apprennent que l'Appel est un rituel elfe volé par l'Ordre, et que chaque passage déchire le Voile." }
+        fin: true
+
+  # ─────────────────────────────────────────────────────────────
+  - id: ch3-nuitlongue
+    titre: "La Nuitlongue"
+    type: groupe
+    lieu: clairiere-dechirure
+    decor: clairiere-dechirure
+    quete: q-ch3-foret
+    disponible_si: { quete_etape: { q-ch3-foret: nuitlongue }, date_min: { annee: 1020, mois: 11, jour: 30 } }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "30 Nuitlongue 1020. La nuit la plus longue de l'année. Dans la Clairière de la Déchirure, l'air tremble plus fort que jamais." }
+          - { qui: vaelor, dit: "« Ils arrivent par le nord ! » Le capitaine Vaelor court entre les arbres. « La Légion Cendrée. Des centaines. Ils veulent la Clairière. »" }
+          - { qui: ilysse, dit: "« Bien sûr qu'ils la veulent. » Ilyssë est livide. « C'est l'endroit où le Voile est le plus fin. Avec assez de cristaux d'éther, ils pourraient le déchirer… de l'intérieur. »", si: { flag: ilysse-recrutee } }
+        combat: { rencontre: nuitlongue-legion, victoire: morra, defaite: morra }
+      morra:
+        repliques:
+          - { dit: "Les soldats de la Légion reculent. Un passage s'ouvre dans leurs rangs. Une femme s'avance : cornes noires, cheveux couleur de braise, une épée-faux plus haute qu'elle." }
+          - { qui: morra, dit: "« Morwenna. Commandante de la Première Légion. Mais on m'appelle Morra. » Elle fait tourner sa faux. « Les Appelés. Le Souverain dit que vous êtes ses enfants. Moi, je dis que vous êtes ses chiens. Voyons qui a raison. »" }
+        combat: { rencontre: nuitlongue-morra, victoire: vaincue, defaite: retraite }
+      retraite:
+        repliques:
+          - { dit: "Morra vous domine. Sa faux s'arrête sur votre gorge… puis elle la relève." }
+          - { qui: morra, dit: "« Pas cette nuit. » Elle siffle ; la Légion se retire. « Le Souverain veut que vous viviez. Je ne sais pas pourquoi. Ça m'agace. »" }
+        effets: [{ flag: morra-vivante }]
+        suite: apres
+      vaincue:
+        repliques:
+          - { dit: "Morra tombe à genoux. Une de ses cornes est brisée. Elle lève les yeux vers vous, et dans ces yeux, il n'y a pas de haine. Il y a… de la fatigue." }
+          - { qui: morra, dit: "« Allez-y. » Elle laisse tomber sa faux. « Finissez. Il me tuera de toute façon, pour avoir perdu. »" }
+        effets: [{ objet: corne-de-morra }]
+        choix:
+          - texte: "L'achever. C'est une commandante de la Légion."
+            effets: [{ flag: morra-tuee, reputation: { elfes: 5, legion: -20 } }]
+            aller: achevee
+          - texte: "L'épargner. « Va-t'en. Et ne reviens pas. »"
+            effets: [{ flag: [morra-vivante, morra-epargnee], reputation: { elfes: -5 } }]
+            aller: epargnee
+          - texte: "« Pourquoi te tuerait-il ? » (Esprit, difficulté 24)"
+            test: { carac: ESP, difficulte: 24, reussite: soeur, echec: epargnee-silence }
+      soeur:
+        repliques:
+          - { qui: morra, dit: "Elle vous fixe longtemps. Puis, très bas : « Parce qu'il a ma sœur. Lyss. Elle a seize ans, enfin… l'équivalent. Il la garde dans la Citadelle. Tant que j'obéis, elle vit. »" }
+          - { qui: morra, dit: "« Si je rentre vaincue, il la punira. Si je ne rentre pas… » Elle rit, un rire cassé. « Je ne sais pas ce qu'il fera. »" }
+        effets: [{ flag: [morra-vivante, morra-epargnee, morra-soeur-connue] }]
+        suite: epargnee
+      epargnee-silence:
+        repliques:
+          - { qui: morra, dit: "Elle détourne les yeux. « Ça ne te regarde pas, Appelé. »" }
+        effets: [{ flag: [morra-vivante, morra-epargnee] }]
+        suite: epargnee
+      epargnee:
+        repliques:
+          - { qui: morra, dit: "Morra se relève, ramasse sa faux. Elle hésite, comme si elle allait dire quelque chose. Puis elle disparaît dans la nuit, sans se retourner." }
+          - { qui: elianne, dit: "Elianne la regarde partir. « Elle n'avait pas les yeux d'un monstre. » Elle frissonne. « C'est presque pire. »" }
+        suite: apres
+      achevee:
+        repliques:
+          - { dit: "La lame tombe. La commandante de la Première Légion ne se relèvera plus. Autour de vous, les derniers soldats cendrés s'enfuient vers le nord." }
+          - { qui: ilysse, dit: "Ilyssë ramasse la corne brisée, pensive. « Une démone qui n'a pas supplié. On en apprend tous les jours. »", si: { flag: ilysse-recrutee } }
+        suite: apres
+      apres:
+        repliques:
+          - { dit: "À l'aube, la Clairière est intacte. Le Voile tremble encore, mais il tient. Les elfes sortent des arbres, un par un, et vous regardent comme on regarde des gens qu'on ne connaissait pas." }
+        effets:
+          - { reputation: { elfes: 10 }, xp: 450, quete: { id: q-ch3-foret, etape: verdict }, journal: "30 Nuitlongue 1020 : {groupe} défendent la Clairière de la Déchirure contre la Légion Cendrée et sa commandante, Morra." }
+        fin: true
+
+  # ─────────────────────────────────────────────────────────────
+  - id: ch3-verdict
+    pnj: reine-seve
+    titre: "Le verdict de la Reine"
+    type: groupe
+    lieu: ithrael-cour
+    decor: ithrael-cour
+    quete: q-ch3-foret
+    disponible_si: { quete_etape: { q-ch3-foret: verdict } }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: reine-seve, dit: "La Reine-Sève vous attend debout, ce qui, chez elle, vaut une ovation. « Vous avez défendu la Clairière. Mon peuple s'en souviendra pendant mille ans. C'est long, mille ans, pour un souvenir. »" }
+          - { qui: reine-seve, dit: "« Les elfes de Sylvenoire seront vos alliés quand viendra la guerre. Nos archers. Nos guérisseurs. Notre mémoire. »" }
+          - { qui: reine-seve, dit: "« Ilyssë Vaëlnor. Ta peine est levée. Tu avais raison, et j'avais peur. Les reines aussi ont le droit d'avoir peur. »", si: { flag: ilysse-recrutee } }
+          - { qui: ilysse, expression: tristesse, dit: "Ilyssë ne dit rien. Pour une fois, elle n'a pas de réplique. Elle s'incline, très bas, et ses épaules tremblent.", si: { flag: ilysse-recrutee } }
+        effets: [{ flag: elfes-allies, reputation: { elfes: 5 } }]
+        choix:
+          - texte: "« Merci, ma Reine. Nous reviendrons. »"
+            aller: fin
+      fin:
+        repliques:
+          - { qui: elianne, dit: "Ce soir-là, sur la plus haute branche d'Ithrael, Elianne regarde vers l'est, vers les Monts Grisfer, et plus loin, la mer. « Si chaque Appel déchire le Voile… alors les invocations doivent cesser. Il faut que quelqu'un le dise. » Elle se tourne vers vous. « Il faut des preuves. »" }
+          - { qui: seraphine, dit: "Séraphine déplie une lettre qui vient d'arriver. « Les nains de Grisfer refusent toute alliance avec la Couronne. Et les dragons de l'Archipel… » Elle hésite. « On dit qu'une dragonne s'est réveillée. »", si: { flag: seraphine-recrutee } }
+          - { dit: "La forêt se souvient. Désormais, vous aussi. Et la guerre approche à grands pas." }
+        effets:
+          - { terminer_quete: q-ch3-foret, xp: 400 }
+          - { fin_chapitre: 3 }
+        fin: true

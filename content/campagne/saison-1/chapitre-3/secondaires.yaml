@@ -1,0 +1,251 @@
+# Chapitre 3 — quêtes secondaires (Sylvenoire et votre domaine).
+scenes:
+  # ── Les lumières du bois ──────────────────────────────────────
+  - id: sq-follets-thaliel
+    pnj: thaliel
+    titre: "Les lumières du bois : l'enfant perdue"
+    type: groupe
+    lieu: ithrael-auberge
+    decor: ithrael-auberge
+    quete: q-follets
+    disponible_si: { flag: sylvenoire-ouverte, pas_flag: follets-acceptes }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: thaliel, dit: "Thaliel n'a plus de sourire. « Ma petite sœur, Lirëa. Elle a suivi les feux follets hier soir, vers le bois. Les gardes disent qu'on ne revient pas du Bois des Feux follets. »" }
+        choix:
+          - texte: "« Nous la ramènerons. »"
+            effets: [{ flag: follets-acceptes, quete: { id: q-follets, etape: bois } }]
+            aller: fin
+      fin:
+        fin: true
+  - id: sq-follets-bois
+    titre: "Les lumières du bois : dans le bois"
+    type: groupe
+    lieu: bois-des-feux-follets
+    decor: bois-des-feux-follets
+    quete: q-follets
+    disponible_si: { quete_etape: { q-follets: bois } }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "Des lumières bleues dansent entre les troncs. Elles vous appellent, doucement. Au loin, une petite voix chante." }
+        choix:
+          - texte: "Ignorer les lumières et suivre la voix. (Esprit, difficulté 24)"
+            test: { carac: ESP, difficulte: 24, reussite: trouvee, echec: egares }
+          - texte: "Disperser les feux follets."
+            aller: combat
+      egares:
+        repliques:
+          - { dit: "Les lumières vous font tourner en rond. Puis elles s'impatientent… et attaquent." }
+        suite: combat
+      combat:
+        combat: { rencontre: follets-bois, victoire: trouvee, defaite: trouvee }
+      trouvee:
+        repliques:
+          - { qui: enfant-ithrael, dit: "Au pied d'un arbre, une petite elfe chante aux lumières, ravie. « Elles sont jolies ! Elles m'ont montré plein de choses ! » Elle n'a aucune idée du danger." }
+        effets: [{ quete: { id: q-follets, etape: retour } }]
+        fin: true
+  - id: sq-follets-retour
+    pnj: thaliel
+    titre: "Les lumières du bois : le retour"
+    type: groupe
+    lieu: ithrael-auberge
+    decor: ithrael-auberge
+    quete: q-follets
+    rend_quete: true
+    disponible_si: { quete_etape: { q-follets: retour } }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: thaliel, expression: joie, dit: "Thaliel serre sa sœur à l'étouffer. « Merci. Merci ! Vos hamacs sont gratuits, pour toujours. Et je vais vous chanter une chanson. Une longue. »" }
+        effets: [{ terminer_quete: q-follets, xp: 450, or: 120, reputation: { elfes: 6 } }]
+        fin: true
+
+  # ── Le Vieux-Chêne malade ─────────────────────────────────────
+  - id: sq-chene-mirwen
+    pnj: mirwen
+    titre: "Le Vieux-Chêne malade : la sève violette"
+    type: groupe
+    lieu: ithrael-marche
+    decor: ithrael-marche
+    quete: q-vieux-chene
+    disponible_si: { flag: sylvenoire-ouverte, pas_flag: chene-accepte }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: mirwen, dit: "Mirwen montre un flacon de sève violette. « Le Vieux-Chêne. Il a trois mille ans. Sa sève devient comme ça depuis que des marchands humains ont enterré des caisses à ses pieds. Et les sylvains autour de lui deviennent fous. »" }
+        choix:
+          - texte: "« Des caisses… de cristaux d'éther ? Nous allons voir. »"
+            effets: [{ flag: chene-accepte, quete: { id: q-vieux-chene, etape: chene } }]
+            aller: fin
+      fin:
+        fin: true
+  - id: sq-chene
+    titre: "Le Vieux-Chêne malade : les racines"
+    type: groupe
+    lieu: vieux-chene
+    decor: vieux-chene
+    quete: q-vieux-chene
+    disponible_si: { quete_etape: { q-vieux-chene: chene } }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "Au pied du Vieux-Chêne, la terre est retournée. Des caisses marquées d'une rune violette dépassent du sol. Les cristaux qu'elles contiennent pulsent comme des cœurs malades." }
+          - { dit: "Les sylvains corrompus se dressent autour de l'arbre. Ils ne vous laisseront pas approcher." }
+        combat: { rencontre: sylvains-corrompus, victoire: caisses, defaite: caisses }
+      caisses:
+        repliques:
+          - { dit: "Vous arrachez les caisses une à une. La sève du Vieux-Chêne pâlit lentement, du violet au vert." }
+        choix:
+          - texte: "Détruire les cristaux sur place."
+            effets: [{ reputation: { elfes: 6, concorde: -4 } }]
+            aller: fini
+          - texte: "Garder les cristaux comme preuve du trafic de la Concorde."
+            effets: [{ objet: [cristal-ether, cristal-ether], flag: preuve-cristaux-sylve }]
+            aller: fini
+      fini:
+        effets: [{ quete: { id: q-vieux-chene, etape: retour } }]
+        fin: true
+  - id: sq-chene-retour
+    pnj: mirwen
+    titre: "Le Vieux-Chêne malade : le remède"
+    type: groupe
+    lieu: ithrael-marche
+    decor: ithrael-marche
+    quete: q-vieux-chene
+    rend_quete: true
+    disponible_si: { quete_etape: { q-vieux-chene: retour } }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: mirwen, dit: "Mirwen goûte une goutte de sève, ferme les yeux, et sourit. « Il guérira. Dans cent ans, il ne s'en souviendra plus. Nous, si. » Elle vous donne une petite graine dorée. « Plantez-la sur vos terres. »" }
+        effets: [{ terminer_quete: q-vieux-chene, xp: 500, reputation: { elfes: 8, troupes: 3 }, objet: miel-des-fleurs-d-argent }]
+        fin: true
+
+  # ── La graine volée ───────────────────────────────────────────
+  - id: sq-graine-vaelor
+    pnj: vaelor
+    titre: "La graine volée : les accusations"
+    type: groupe
+    lieu: ithrael-racines
+    decor: ithrael-racines
+    quete: q-graine
+    disponible_si: { flag: sylvenoire-ouverte, pas_flag: graine-acceptee }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: vaelor, dit: "Le capitaine Vaelor est de mauvaise humeur, ce qui ne change pas de d'habitude. « Les dryades disent qu'un elfe a volé leur graine sacrée. Les elfes disent que c'est un humain. Vous êtes des humains. Vous êtes donc suspects. Ou utiles. Choisissez. »" }
+        choix:
+          - texte: "« Utiles. Nous trouverons le voleur. »"
+            effets: [{ flag: graine-acceptee, quete: { id: q-graine, etape: cercle } }]
+            aller: fin
+      fin:
+        fin: true
+  - id: sq-graine-cercle
+    titre: "La graine volée : le Cercle des dryades"
+    type: groupe
+    lieu: cercle-des-dryades
+    decor: cercle-des-dryades
+    quete: q-graine
+    disponible_si: { quete_etape: { q-graine: cercle } }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "Les sept arbres du Cercle murmurent. Une dryade sort d'une écorce, furieuse, des feuilles plein les cheveux. « La graine de l'Arbre-Premier ! Volée ! Par quelqu'un qui sentait la boue et le champignon ! »" }
+        choix:
+          - texte: "« La boue et le champignon… le Marais de brume. »"
+            effets: [{ quete: { id: q-graine, etape: marais }, xp: 60 }]
+            aller: fin
+      fin:
+        fin: true
+  - id: sq-graine-marais
+    titre: "La graine volée : le voleur"
+    type: groupe
+    lieu: marais-de-brume
+    decor: marais-de-brume
+    quete: q-graine
+    rend_quete: true
+    disponible_si: { quete_etape: { q-graine: marais } }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "Au milieu du marais, des champignons géants entourent un petit tas de terre. Dessus, la graine sacrée brille doucement. Les champignons l'ont « volée » pour la faire pousser chez eux." }
+        combat: { rencontre: champignons-marais, victoire: graine, defaite: graine }
+      graine:
+        repliques:
+          - { dit: "Vous rapportez la graine au Cercle. Les dryades chantent ; Vaelor, lui, ne dit rien. Mais le soir même, il vous laisse passer la Porte des Racines sans vous fouiller. Chez lui, c'est presque une accolade." }
+        effets: [{ terminer_quete: q-graine, xp: 450, reputation: { elfes: 10 } }]
+        fin: true
+
+  # ── Les gens du domaine ───────────────────────────────────────
+  - id: sq-domaine-arrivee
+    pnj: intendant-domaine
+    titre: "Les gens du domaine : l'arrivée"
+    type: groupe
+    lieu: domaine-lisiere
+    decor: domaine-lisiere
+    quete: q-domaine
+    disponible_si: { flag: domaine-obtenu, pas_flag: domaine-visite }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "Votre domaine : un manoir au toit à moitié effondré, cinq fermes, un moulin qui ne tourne plus, et une centaine de personnes qui vous regardent arriver en se demandant si vous serez pires que le précédent seigneur." }
+          - { qui: intendant-domaine, dit: "Un vieil homme s'avance, chapeau à la main. « Maître Aubin, intendant. Trois fermes ont été pillées ce mois-ci. Des hommes en armure noire, venus de la forêt. Les gens ont peur, mes seigneurs. »" }
+        choix:
+          - texte: "« Plus maintenant. Où sont-ils ? »"
+            effets: [{ flag: domaine-visite, quete: { id: q-domaine, etape: pillards }, reputation: { troupes: 2 } }]
+            aller: fin
+      fin:
+        repliques:
+          - { qui: intendant-domaine, dit: "« Les gardes forestiers ont vu un camp, au sud-ouest de la forêt. » Il hésite. « Revenez vivants. Le dernier seigneur n'est pas revenu. »" }
+        fin: true
+  - id: sq-domaine-pillards
+    titre: "Les gens du domaine : le camp avancé"
+    type: groupe
+    lieu: camp-legion-sylve
+    decor: camp-legion-sylve
+    quete: q-domaine
+    disponible_si: { quete_etape: { q-domaine: pillards } }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "Sous les fougères, des tentes noires. Des soldats de la Légion, et des diablotins qui rient en comptant des sacs de grain volé : votre grain." }
+        combat: { rencontre: domaine-brigands, victoire: victoire, defaite: defaite }
+      victoire:
+        repliques:
+          - { dit: "Le camp est vide. Vous rapportez le grain, et des armes noires que les forgerons du domaine pourront refondre." }
+        effets: [{ reputation: { troupes: 6 }, quete: { id: q-domaine, etape: milice } }]
+        fin: true
+      defaite:
+        repliques:
+          - { dit: "Vous battez en retraite, mais la Légion a compris : ces terres ont désormais un seigneur. Le camp est abandonné le lendemain." }
+        effets: [{ reputation: { troupes: 2 }, quete: { id: q-domaine, etape: milice } }]
+        fin: true
+  - id: sq-domaine-milice
+    pnj: intendant-domaine
+    titre: "Les gens du domaine : la milice"
+    type: groupe
+    lieu: domaine-lisiere
+    decor: domaine-lisiere
+    quete: q-domaine
+    rend_quete: true
+    disponible_si: { quete_etape: { q-domaine: milice } }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: intendant-domaine, dit: "Maître Aubin a réuni les fermiers dans la cour du manoir. « Ils veulent apprendre à se défendre. Avec vous. » Des fourches, des arcs de chasse, des visages déterminés." }
+        choix:
+          - texte: "Les entraîner vous-mêmes, chaque matin."
+            effets: [{ reputation: { troupes: 10 } }]
+            aller: fin
+          - texte: "Engager des sergents de la Guilde. (150 or)"
+            si: { or_min: 150 }
+            effets: [{ or: -150, reputation: { troupes: 14 } }]
+            aller: fin
+      fin:
+        repliques:
+          - { dit: "Quelques mois plus tard, votre domaine a une milice. Petite, mal équipée, mais fière. Et une bannière : la vôtre." }
+          - { qui: intendant-domaine, dit: "« Dans les temps libres, pensez à « Gérer le domaine » : plus vous y passez de temps, plus nous serons nombreux le jour où il faudra marcher au nord. »" }
+        effets: [{ terminer_quete: q-domaine, xp: 400 }]
+        fin: true
