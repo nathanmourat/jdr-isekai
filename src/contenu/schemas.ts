@@ -107,6 +107,11 @@ export const zClasse = z.object({
   attaque: z.object({ stat: zCarac, element: zElement.default('physique'), portee: z.enum(['melee', 'distance']), puissance: z.number().default(8) }),
   rang_prefere: z.enum(['avant', 'arriere']),
   armure: z.number().default(0),
+  /**
+   * Familles d'équipement (champ `categorie` des objets) que la classe maîtrise. Une arme ou une armure d'une autre
+   * famille s'équipe avec un malus ; une famille de `interdits` ne s'équipe pas du tout.
+   */
+  maitrises: z.object({ armes: z.array(z.string()).min(1), armures: z.array(z.string()).min(1), interdits: z.array(z.string()).default([]) }),
   passif: z.object({ id: z.string(), nom: z.string(), description: z.string(), parametres: z.record(z.string(), z.number()).default({}) }),
   competences: z.array(z.string()).min(2),
   branches: z.array(z.object({ id: z.string(), nom: z.string(), description: z.string(), competences: z.array(z.object({ niveau: z.number().int(), competence: z.string() })) })).length(2),
@@ -536,6 +541,8 @@ export const zContrat = z.object({
   titre: z.string(),
   description: z.string(),
   rang_min: z.string().default('F'),
+  /** Épreuve d'examen : ce contrat ne s'affiche pas au tableau ; le terminer donne ce rang (voir guilde.rangs). */
+  examen_rang: z.string().optional(),
   /** Niveau conseillé (comparé au niveau moyen du groupe : vert, orange, rouge). */
   niveau: z.number({ error: 'niveau conseillé obligatoire (champ « niveau »)' }).int().min(1),
   etapes: z.array(zEtapeContrat).default([]),
@@ -604,7 +611,19 @@ export const zConfig = z.object({
     jours_entre_cadeaux: z.number().int(),
   }),
   reputation: z.object({ paliers: z.array(z.object({ nom: z.string(), seuil: z.number() })) }),
-  guilde: z.object({ rangs: z.array(z.object({ rang: z.string(), points: z.number() })) }),
+  guilde: z.object({
+    /** PNJ qui fait passer les examens de rang (elle porte un « ! » quand un examen est possible). */
+    examinatrice: z.string().default('rowena'),
+    /**
+     * Rangs : les `points` ne font que débloquer l'examen ; il faut aussi le `niveau_min`.
+     * `examen` : un combat contre un examinateur (`rencontre`), ou une épreuve en plusieurs étapes (`contrat`).
+     * Sans `examen`, le rang n'est pas encore accessible (examen à venir avec un prochain chapitre).
+     */
+    rangs: z.array(z.object({
+      rang: z.string(), points: z.number(), niveau_min: z.number().int().min(1).default(1),
+      examen: z.object({ type: z.enum(['combat', 'epreuve']), rencontre: z.string().optional(), contrat: z.string().optional() }).optional(),
+    })),
+  }),
   difficulte: z.array(zDifficulte).min(1),
   combat: z.object({
     minuteur_tour_secondes: z.number(), regen_mana_base: z.number(), defense_par_vit: z.number(), resistance_par_esp: z.number(),

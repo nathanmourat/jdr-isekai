@@ -142,6 +142,18 @@ function verifierReferences(c: Contenu): string[] {
     for (const id of r.renforts) if (!c.ennemis[id]) e.push(`Rencontre ${r.id} › renfort « ${id} » introuvable`);
   }
   for (const en of Object.values(c.ennemis)) for (const o of en.recompenses.objets) if (!c.objets[o.id]) e.push(`Ennemi ${en.id} › objet « ${o.id} » introuvable`);
+  for (const r of c.config.guilde.rangs) {
+    const ex = r.examen;
+    if (!ex) continue;
+    if (ex.type === 'combat' && (!ex.rencontre || !c.rencontres[ex.rencontre])) e.push(`Rang ${r.rang} › examen › rencontre « ${ex.rencontre ?? ''} » introuvable`);
+    if (ex.type === 'epreuve' && (!ex.contrat || !c.contrats[ex.contrat] || c.contrats[ex.contrat].etapes.length === 0)) e.push(`Rang ${r.rang} › examen › contrat à étapes « ${ex.contrat ?? ''} » introuvable`);
+  }
+  if (!c.pnj[c.config.guilde.examinatrice]) e.push(`Guilde › examinatrice « ${c.config.guilde.examinatrice} » introuvable dans les PNJ`);
+  const familles = new Set(Object.values(c.objets).map((o) => o.categorie).filter((x): x is string => !!x));
+  for (const cl of Object.values(c.classes)) {
+    for (const f of [...cl.maitrises.armes, ...cl.maitrises.armures, ...cl.maitrises.interdits]) if (!familles.has(f)) e.push(`Classe ${cl.id} › maîtrises › famille d'équipement « ${f} » inconnue`);
+    for (const f of cl.maitrises.interdits) if (cl.maitrises.armes.includes(f) || cl.maitrises.armures.includes(f)) e.push(`Classe ${cl.id} › la famille « ${f} » est à la fois maîtrisée et interdite`);
+  }
   for (const o of Object.values(c.objets)) {
     for (const cl of o.classes ?? []) if (!c.classes[cl]) e.push(`Objet ${o.id} › classe « ${cl} » introuvable`);
     if (o.type === 'equipement' && !o.emplacement) e.push(`Objet ${o.id} › équipement sans emplacement`);

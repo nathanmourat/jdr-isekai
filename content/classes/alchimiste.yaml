@@ -7,6 +7,9 @@ classe:
   attaque: { stat: INT, element: physique, portee: distance, puissance: 7 }
   rang_prefere: arriere
   armure: 4
+  # Familles d'équipement que la classe utilise bien. Hors de cette liste : l'objet s'équipe, avec un malus.
+  # `interdits` : familles que la classe ne peut pas porter du tout (rare).
+  maitrises: { armes: [arbalete], armures: [intermediaire], interdits: [] }
   passif:
     id: fioles-optimisees
     nom: Fioles optimisées

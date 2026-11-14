@@ -2,10 +2,10 @@
 
 Ce document résume, en français simple, ce qui a changé après le deuxième test, et **ce que le groupe doit vérifier en jouant**.
 
-- **Faits et en ligne** : changements 1 à 9 (lots F2, G et le début du lot H).
-- **Pas encore faits** : changements 10 (examens de rang à la Guilde) et 11 (maîtrises d'équipement). Ils touchent le cœur des règles et l'équilibrage ; ils sont décrits à la fin, dans « Ce qui reste à faire ».
+- **Les 11 changements sont faits.**
+- **Où est le code** : les changements 1 à 9 sont sur la branche commune `claude/festive-mccarthy-ahagx5`. Les changements 10 et 11 (et la fin de ce rapport) sont sur une branche à part, **`claude/test-2-lot-h-fin`**, que Nathan fusionnera quand il aura fini son travail en cours. Tant qu'elle n'est pas fusionnée, le site ne montre pas les changements 10 et 11.
 - La version Roblox n'a pas été modifiée. Elle devra reprendre ces changements (voir « Pour la version Roblox »).
-- Les anciennes parties se rouvrent (sauvegarde au format 6). Mais la scène de l'examen de la Guilde a changé (nouveau pari) : **il vaut mieux recommencer une partie** pour tester.
+- Les anciennes parties se rouvrent (sauvegarde au format 6 sur la branche commune, 7 après la fusion). Mais la scène de l'examen de la Guilde a changé (nouveau pari) : **il vaut mieux recommencer une partie** pour tester.
 
 ---
 
@@ -88,12 +88,42 @@ Le contenu et le moteur sont partagés ; l'interface Roblox doit suivre :
 - Sauvegarde au format 6.
 - **Attention** : `npm run roblox:parite` échouait déjà avant ce travail (le moteur Luau de `roblox/` n'a pas été régénéré depuis le lot F du test 1). `npm test`, qui vérifie que le moteur reste compatible Luau, passe.
 
-## Ce qui reste à faire
+## Changements 10 et 11 (branche `claude/test-2-lot-h-fin`)
 
-### Changement 10 — Monter de rang à la Guilde, avec un examen (pas fait)
-Aujourd'hui, le rang monte encore tout seul avec les points de Guilde. Prévu : les points ne font que débloquer l'examen ; niveau minimum par rang ; combat d'examen pour F → E et E → D ; épreuve en plusieurs étapes à partir de D → C ; cérémonie avec Rowena.
+### 10. Monter de rang à la Guilde, avec un examen
+- Les points de Guilde **ne donnent plus le rang** : ils ouvrent l'examen. Il faut aussi un niveau minimum (E : niveau 3 ; D : 6 ; C : 10 ; B : 15 ; A : 22 ; S : 30).
+- Quand c'est possible, un message l'annonce et **Dame Rowena porte un « ! »**. On lui parle : son panneau montre le rang, ce qu'il manque, et le bouton de l'examen.
+- **Rangs E et D** : un combat contre un examinateur de la Guilde (le Sergent Maelric, puis la Capitaine Ysolde Brandefer). Aucun danger : en cas de défaite, ni blessure ni or perdu, et on retente le lendemain. Les héros présents et prêts pour le même rang passent le combat ensemble.
+- **Rang C** : une épreuve en 4 étapes (escorter un chariot, enquêter aux Tanneurs, affronter le Maître d'armes Corvan Elsterre à l'arène, cérémonie à la Guilde). Elle se joue seul.
+- **Rangs B, A, S** : l'examen arrivera avec les prochains chapitres (le jeu le dit).
+- Examen réussi : cérémonie avec Rowena, nouveau rang affiché, contrats du rang ouverts.
+- **Ancienne partie** : un héros qui avait gagné un rang « automatiquement » repart du rang F (ses points sont gardés) et doit passer l'examen.
+- Simulation (`rapports/equilibrage-examens.md`) : en moyenne, 75 % de réussite au rang E, 57 % au rang D, 62 % au rang C, au niveau minimum et sans équipement. **L'écart entre classes est grand** : Arcaniste, Alchimiste et Lame runique ont du mal seuls aux rangs D et C. À surveiller.
 
-### Changement 11 — Malus d'équipement selon la classe (pas fait)
-Aujourd'hui, un objet réservé à une classe reste bloqué (« Réservé à : … »). Prévu : chaque classe a ses familles d'armes et d'armures maîtrisées ; hors maîtrise, l'objet s'équipe avec un malus affiché ; quelques interdits rares.
+### 11. Équipement : malus quand la classe ne maîtrise pas l'objet
+- Plus de blocage « Réservé à : … » pour l'équipement courant : tout s'équipe, mais **hors des familles maîtrisées par la classe, il y a un malus**, affiché en orange avant l'achat et avant d'équiper.
+  - Arme non maîtrisée : −30 % de dégâts (compétences comprises) et −15 points de chance de toucher.
+  - Armure non maîtrisée : la moitié de son armure est perdue, et −2 en Agilité.
+  - Bouclier, carquois ou sacoche d'une autre classe : bonus réduits de moitié.
+- **Interdits (en rouge), liste proposée** : l'armure lourde pour l'Arcaniste, l'Invocateur et le Guérisseur. Rien d'autre.
+- **Réservés** : seulement les objets légendaires et mythiques propres à une classe.
+- Familles maîtrisées par classe : tableau dans `docs/CONCEPTION.md` (§ 8). Elles reprennent le catalogue validé par le groupe : un objet prévu pour une classe est toujours maîtrisé par elle.
+- Les deux simulations d'équilibrage passent toujours (les tenues de référence sont maîtrisées).
 
-Ces deux changements modifient les règles du moteur et l'équilibrage : ils sont à confier à une session dédiée (prompt fourni).
+### À vérifier en jouant (après la fusion)
+1. Avec 100 points de Guilde et le niveau 3 : le « ! » de Rowena, son panneau, l'examen du rang E. Perdre exprès : aucun or perdu, « revenez demain ».
+2. À deux joueurs prêts en même temps : le combat d'examen se joue-t-il bien à deux ?
+3. Un contrat de rang E reste-t-il fermé tant que l'examen n'est pas réussi ?
+4. Équiper une épée avec une Ombre : le message orange apparaît-il dans la boutique et dans la fiche ? Les dégâts baissent-ils en combat ?
+5. Un Arcaniste devant une armure lourde : « Interdit » en rouge, bouton grisé.
+
+### Ce qui n'a pas été essayé à l'écran
+Le panneau d'examen de Rowena, le combat d'examen et les messages de malus n'ont été vérifiés que par les tests automatiques (157 tests) et la vérification des types, pas à la main dans le navigateur.
+
+### Pour la version Roblox
+Action `examen_rang`, `etat.rangs` (le rang ne se lit plus dans les points : fonction `rangHeros`), contrat `examen_rang`, champ `maitrises` des classes, `messageEquipement`. Sauvegarde au format 7.
+
+## Petits restes
+- Les propositions automatiques du combat (« Suivre le script ») ne proposent pas encore les objets du sac.
+- Le parchemin de retour n'a pas encore d'usage.
+- `npm run e2e:carte` reste à lancer sur un PC où Playwright est installé.

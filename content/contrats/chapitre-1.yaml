@@ -172,3 +172,23 @@ contrats:
           - { texte: "Entrer dans le noir, sans un bruit.", resultat: "Vous arrivez sous la colonie avant qu'elle ne s'éveille." }
       - { lieu: grotte-des-mineurs, objectif: "Chasser la colonie.", texte: "Des cris stridents résonnent sous la voûte.", combat: grotte-chauves-souris }
       - { lieu: guilde, objectif: "Revenir à la Guilde toucher la récompense.", texte: "Les mineurs sont retournés au travail. La prime est prête.", bouton: "Toucher la récompense" }
+
+  # ── Épreuve d'examen du rang C (ne s'affiche pas au tableau : on la demande à Dame Rowena).
+  - id: c-examen-c
+    titre: "Épreuve du rang C"
+    description: "Escorter, enquêter, puis affronter le maître d'armes : la Guilde veut voir tout ce que vous savez faire."
+    rang_min: D
+    examen_rang: C
+    niveau: 10
+    duree_jours: 3
+    recompenses: { or: 0, xp: 120, points_guilde: 0 }
+    etapes:
+      - lieu: route-du-nord
+        objectif: "Escorter le chariot de la Guilde sur la route du nord."
+        texte: "Un chariot bâché, deux mules, et un cocher qui ne dit pas ce qu'il transporte. À mi-chemin, un arbre barre la route."
+        choix:
+          - { texte: "Dégager l'arbre en gardant un œil sur les fossés.", resultat: "Rien ne bouge. Le cocher note quelque chose dans un carnet." }
+          - { texte: "Faire le tour par le champ, chariot compris.", resultat: "Les mules protestent, mais le chariot passe. Le cocher note quelque chose dans un carnet." }
+      - { lieu: quartier-tanneurs, objectif: "Retrouver le colis « volé » dans le quartier des Tanneurs.", texte: "Le colis du chariot a disparu pendant la nuit. Les traces mènent aux ruelles des Tanneurs : à vous de trouver qui ment.", bouton: "Mener l'enquête", test: { carac: INT, difficulte: 16, reussite: "Le « voleur » est un commis de la Guilde : tout était arrangé, et vous l'avez compris.", echec: "Vous accusez la mauvaise personne. La Guilde vous fera repasser l'épreuve." } }
+      - { lieu: arene, objectif: "Affronter le maître d'armes à l'arène.", texte: "Corvan Elsterre vous attend au centre du sable, l'épée déjà tirée. « Dernière partie. Montrez-moi. »", combat: examen-rang-c }
+      - { lieu: guilde, objectif: "Revenir à la Guilde pour la cérémonie.", texte: "Tout le hall s'est tu. Dame Rowena tient une carte d'argent entre deux doigts.", bouton: "Recevoir son rang" }

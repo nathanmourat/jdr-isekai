@@ -14,6 +14,7 @@
     "equilibrage": "tsx scripts/equilibrage.ts",
     "equilibrage:equipements": "tsx scripts/equilibrage-equipements.ts",
     "equilibrage:chapitres": "tsx scripts/equilibrage-chapitres.ts",
+    "equilibrage:examens": "tsx scripts/equilibrage-examens.ts",
     "assets:manquants": "tsx scripts/assets-manquants.ts",
     "contenu:verifier": "tsx scripts/verifier-contenu.ts",
     "e2e": "node tests/e2e/parcours.mjs",

@@ -7,6 +7,9 @@ classe:
   attaque: { stat: FOR, element: physique, portee: melee, puissance: 10 }
   rang_prefere: avant
   armure: 8
+  # Familles d'équipement que la classe utilise bien. Hors de cette liste : l'objet s'équipe, avec un malus.
+  # `interdits` : familles que la classe ne peut pas porter du tout (rare).
+  maitrises: { armes: [epee, masse, sceptre], armures: [lourde], interdits: [] }
   passif:
     id: rempart
     nom: Rempart

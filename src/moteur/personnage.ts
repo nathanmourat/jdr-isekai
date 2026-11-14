@@ -6,6 +6,7 @@ import type { Competence } from '../contenu/schemas';
 import type { Technique } from './fusions';
 import { CARACS } from '../contenu/constantes';
 import { valeurs, vrai } from './outils';
+import { bonusCaracPorte } from './equipement';
 
 export type Carac = (typeof CARACS)[number];
 export type Caracs = Record<Carac, number>;
@@ -261,7 +262,7 @@ export function caracsTotales(contenu: Contenu, h: Heros): Caracs {
   for (const c of CARACS) res[c] += h.caracsBonus[c];
   for (const slot of valeurs(h.equipement)) {
     const o = vrai(slot) ? contenu.objets[slot] : null;
-    for (const c of CARACS) res[c] += o?.bonus?.caracs?.[c] ?? 0;
+    if (o) for (const c of CARACS) res[c] += bonusCaracPorte(contenu, h.classe, o, c);
   }
   return res;
 }

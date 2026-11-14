@@ -7,6 +7,9 @@ classe:
   attaque: { stat: INT, element: arcane, portee: distance, puissance: 7 }
   rang_prefere: arriere
   armure: 4
+  # Familles d'équipement que la classe utilise bien. Hors de cette liste : l'objet s'équipe, avec un malus.
+  # `interdits` : familles que la classe ne peut pas porter du tout (rare).
+  maitrises: { armes: [baton, orbe], armures: [legere], interdits: [lourde] }
   passif:
     id: resonance
     nom: Résonance

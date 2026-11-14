@@ -89,15 +89,20 @@ config:
       - { nom: "Allié",   seuil: 45 }
       - { nom: "Honoré",  seuil: 80 }
 
+  # Rangs de Guilde : les points ne font que DÉBLOQUER l'examen ; il faut aussi le niveau minimum.
+  # examen « combat » : un combat contre un examinateur (sans danger : ni blessure ni or perdu, on retente le lendemain).
+  # examen « epreuve » : un contrat en plusieurs étapes qui se termine par un combat.
+  # Sans « examen » : le rang n'est pas encore accessible (il arrivera avec un prochain chapitre).
   guilde:
+    examinatrice: rowena
     rangs:
       - { rang: F, points: 0 }
-      - { rang: E, points: 100 }
-      - { rang: D, points: 300 }
-      - { rang: C, points: 700 }
-      - { rang: B, points: 1500 }
-      - { rang: A, points: 3000 }
-      - { rang: S, points: 6000 }
+      - { rang: E, points: 100, niveau_min: 3, examen: { type: combat, rencontre: examen-rang-e } }
+      - { rang: D, points: 300, niveau_min: 6, examen: { type: combat, rencontre: examen-rang-d } }
+      - { rang: C, points: 700, niveau_min: 10, examen: { type: epreuve, contrat: c-examen-c } }
+      - { rang: B, points: 1500, niveau_min: 15 }
+      - { rang: A, points: 3000, niveau_min: 22 }
+      - { rang: S, points: 6000, niveau_min: 30 }
 
   # Difficulté selon la puissance du groupe P = héros + 0,5 × compagnons présents.
   # Interpolation linéaire entre deux colonnes pour un P non entier.

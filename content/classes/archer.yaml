@@ -7,6 +7,9 @@ classe:
   attaque: { stat: AGI, element: physique, portee: distance, puissance: 8 }
   rang_prefere: arriere
   armure: 3
+  # Familles d'équipement que la classe utilise bien. Hors de cette liste : l'objet s'équipe, avec un malus.
+  # `interdits` : familles que la classe ne peut pas porter du tout (rare).
+  maitrises: { armes: [arc, arbalete], armures: [intermediaire], interdits: [] }
   passif:
     id: oeil-du-faucon
     nom: Œil du faucon

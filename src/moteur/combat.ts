@@ -11,7 +11,7 @@ import type { Contenu } from '../contenu/types';
 import type { Competence, Effet, Ennemi } from '../contenu/schemas';
 import { aleatoire, chance, choisir, de, type Rng } from './rng';
 import { cles, copieProfonde, entrees, trier, valeurs, vrai } from './outils';
-import { bonusEquipement, type BonusEquipement } from './equipement';
+import { bonusEquipement, type BonusEquipement, armeNonMaitrisee, bonusArmurePuissance, MALUS_EQUIPEMENT } from './equipement';
 import { caracsTotales, competencesEquipees, manaMax, pvMax, rangMaitrise, type Caracs, type Carac, type Heros } from './personnage';
 
 export type Element = 'physique' | 'feu' | 'glace' | 'foudre' | 'sacre' | 'ombre' | 'poison' | 'arcane';
@@ -174,10 +174,17 @@ export function combattantHeros(contenu: Contenu, h: Heros, controle: boolean, t
   let puissance = cl.attaque.puissance;
   for (const slot of valeurs(h.equipement)) {
     const o = vrai(slot) ? contenu.objets[slot] : null;
-    armure += o?.bonus?.armure ?? 0;
-    puissance += o?.bonus?.puissance ?? 0;
+    if (!o) continue;
+    const b = bonusArmurePuissance(contenu, h.classe, o);
+    armure += b.armure;
+    puissance += b.puissance;
   }
   const be = bonusEquipement(contenu, h);
+  // arme non maîtrisée par la classe : moins de dégâts (compétences comprises) et moins de précision
+  if (armeNonMaitrisee(contenu, h)) {
+    puissance = Math.max(1, Math.round(puissance * MALUS_EQUIPEMENT.arme.puissance));
+    be.precision += MALUS_EQUIPEMENT.arme.precision;
+  }
   const pmax = Math.round(pvMax(contenu, caracs.VIT, h.niveau) * (h.blessure ? 1 - contenu.config.mort_douce.blessure_pv_pourcent / 100 : 1) * (1 + be.vigueur));
   const propres: Competence[] = [];
   const rangsVariantes: Record<string, number> = {};

@@ -66,6 +66,15 @@ export const migrations: Record<number, Migration> = {
     s.version = 6;
     return s;
   },
+  // v6 → v7 (test 2, lot H) : le rang de Guilde s'obtient par examen. Les actions sont rejouées :
+  // un héros qui avait un rang « automatique » repart du rang F et passe l'examen (ses points sont gardés).
+  6: (s) => {
+    const d = s.depart as { rangs?: unknown; examensRates?: unknown };
+    d.rangs ??= {};
+    d.examensRates ??= {};
+    s.version = 7;
+    return s;
+  },
 };
 
 export class ErreurSauvegarde extends Error {

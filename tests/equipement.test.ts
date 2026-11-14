@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { contenuDisque } from '../src/contenu/node';
 import { aPouvoir, combattantHeros, coutMana, demarrerCombat, jouerAction } from '../src/moteur/combat';
-import { bonusEquipement, exemplaires, problemeEquipement, texteEffets } from '../src/moteur/equipement';
+import { aptitudeEquipement, avertissementEquipement, bonusEquipement, exemplaires, messageEquipement, problemeEquipement, texteEffets } from '../src/moteur/equipement';
 import { appliquer } from '../src/moteur/partie';
 import { creerHeros, type Heros } from '../src/moteur/personnage';
 import { creerRng } from '../src/moteur/rng';
@@ -30,7 +30,7 @@ describe('Équipement : catalogue', () => {
 });
 
 describe('Équipement : règles', () => {
-  it('refuse un objet de niveau trop élevé ou réservé à une autre classe', () => {
+  it('refuse un objet de niveau trop élevé, ou un légendaire réservé à une autre classe', () => {
     expect(problemeEquipement(c, heros('lame-runique', 1), c.objets.velgraive)).toMatch(/Niveau 28/);
     expect(problemeEquipement(c, heros('lame-runique', 30), c.objets.velgraive)).toBeUndefined();
     expect(problemeEquipement(c, heros('lame-runique', 30), c.objets.kestrevane)).toMatch(/Réservé/);
@@ -42,7 +42,9 @@ describe('Équipement : règles', () => {
     r.etat.heros.h1.inventaire.velgraive = 1;
     r.etat.heros.h1.inventaire['arc-court'] = 1;
     expect(() => appliquer(c, r.etat, { type: 'equiper', joueur: 'j1', objet: 'velgraive' })).toThrow(/Niveau 28/);
-    expect(() => appliquer(c, r.etat, { type: 'equiper', joueur: 'j1', objet: 'arc-court' })).toThrow(/Réservé/);
+    // un arc n'est pas maîtrisé par la Lame runique : il s'équipe quand même (avec un malus)
+    const avecArc = appliquer(c, r.etat, { type: 'equiper', joueur: 'j1', objet: 'arc-court' });
+    expect(avecArc.heros.h1.equipement.arme).toBe('arc-court');
     r.etat.heros.h1.niveau = 28;
     jouer(c, r, { type: 'equiper', joueur: 'j1', objet: 'velgraive' });
     expect(r.etat.heros.h1.equipement.arme).toBe('velgraive');
@@ -63,6 +65,56 @@ describe('Équipement : règles', () => {
     } finally {
       lieu.boutique.pop();
     }
+  });
+});
+
+describe('Équipement : maîtrises de classe', () => {
+  it('chaque classe maîtrise au moins une famille d\'armes et une famille d\'armures du catalogue', () => {
+    for (const cl of Object.values(c.classes)) {
+      expect(cl.maitrises.armes.length, cl.id).toBeGreaterThan(0);
+      expect(cl.maitrises.armures.length, cl.id).toBeGreaterThan(0);
+    }
+    // les objets que le catalogue destine à une classe sont maîtrisés par elle (armes et armures)
+    for (const o of Object.values(c.objets)) {
+      if (o.type !== 'equipement' || o.emplacement === 'accessoire') continue;
+      for (const cl of o.classes ?? []) expect(aptitudeEquipement(c, cl, o), `${o.id} / ${cl}`).toBe('maitrise');
+    }
+  });
+
+  it('maîtrisé, non maîtrisé, interdit, réservé', () => {
+    expect(aptitudeEquipement(c, 'ombre', c.objets.dague)).toBe('maitrise');
+    expect(aptitudeEquipement(c, 'ombre', c.objets['epee-courte'])).toBe('non-maitrise');
+    expect(aptitudeEquipement(c, 'arcaniste', c.objets['lourde-i'])).toBe('interdit');
+    expect(aptitudeEquipement(c, 'ombre', c.objets['lourde-i'])).toBe('non-maitrise');
+    expect(aptitudeEquipement(c, 'lame-runique', c.objets.kestrevane)).toBe('reserve');
+    expect(avertissementEquipement(c, heros('ombre'), c.objets['epee-courte'])).toBe('Non maîtrisé par Ombre : −30 % de dégâts, −15 points de chance de toucher');
+    expect(avertissementEquipement(c, heros('ombre'), c.objets.dague)).toBeUndefined();
+    expect(problemeEquipement(c, heros('arcaniste'), c.objets['lourde-i'])).toMatch(/^Interdit : Arcaniste élémentaire ne peut pas porter les armures lourdes/);
+    expect(messageEquipement(c, heros('ombre'), c.objets['epee-courte'])).toMatch(/^Non maîtrisé/);
+  });
+
+  it('une arme non maîtrisée frappe moins fort et touche moins souvent', () => {
+    const maitre = heros('ombre');
+    maitre.equipement.arme = 'dague';
+    const maladroit = heros('ombre');
+    maladroit.equipement.arme = 'epee-courte';
+    const a = combattantHeros(c, maitre, true);
+    const b = combattantHeros(c, maladroit, true);
+    const brute = c.classes.ombre.attaque.puissance + (c.objets['epee-courte'].bonus?.puissance ?? 0);
+    expect(b.attaque.puissance).toBe(Math.max(1, Math.round(brute * 0.7)));
+    expect(b.attaque.puissance).toBeLessThan(a.attaque.puissance);
+    expect((b.objets?.precision ?? 0) - (a.objets?.precision ?? 0)).toBeCloseTo(-0.15);
+  });
+
+  it('une armure non maîtrisée protège moitié moins et gêne l\'Agilité', () => {
+    const h = heros('ombre');
+    const sans = combattantHeros(c, h, true);
+    h.equipement.armure = 'lourde-i';
+    const avec = combattantHeros(c, h, true);
+    const bonus = c.objets['lourde-i'].bonus?.armure ?? 0;
+    expect(avec.armure - sans.armure).toBe(Math.floor(bonus * 0.5));
+    expect(avec.caracs.AGI).toBe(sans.caracs.AGI + (c.objets['lourde-i'].bonus?.caracs.AGI ?? 0) - 2);
+    expect(() => appliquer(c, (() => { const r = groupeDeDeux(c); r.etat.heros.h2.inventaire['lourde-i'] = 1; return r.etat; })(), { type: 'equiper', joueur: 'j2', objet: 'lourde-i' })).toThrow(/Interdit/);
   });
 });
 

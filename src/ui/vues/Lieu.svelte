@@ -8,7 +8,7 @@
    */
   import { tick } from 'svelte';
   import { jeu } from '../jeu.svelte';
-  import { conditionHeros, conditionScene, etapeContrat, listeHeros, objetConnu, palierCompagnon, rangGuilde, scenesDisponibles } from '../../moteur/partie';
+  import { candidatsExamen, conditionHeros, conditionScene, etapeContrat, listeHeros, objetConnu, palierCompagnon, prochainExamen, rangHeros, scenesDisponibles } from '../../moteur/partie';
   import ObjetInfo from '../ObjetInfo.svelte';
   import { absentsDuGroupe, aideNiveau, couleurNiveau, estGuilde, marqueurPnj, trouverLieu, niveauGroupe, niveauScene, sceneAvecCombat, type Marqueur } from '../../moteur/guide';
   import NiveauConseille from '../NiveauConseille.svelte';
@@ -30,8 +30,11 @@
   const scenes = $derived(scenesDisponibles(c, etat, id, h.id));
   /** Scènes qui ne passent par aucun personnage présent : on les lance depuis « Sur place ». */
   const scenesSurPlace = $derived(scenes.filter((s) => !s.pnj || !pnj.some((p) => p.id === s.pnj)));
-  const contrats = $derived(estGuilde(id) ? Object.values(c.contrats).filter((ct) => conditionHeros(c, etat, ct.disponible_si, h)) : []);
-  const rang = $derived(rangGuilde(c, etat.pointsGuilde[h.id] ?? 0));
+  const contrats = $derived(estGuilde(id) ? Object.values(c.contrats).filter((ct) => !ct.examen_rang && conditionHeros(c, etat, ct.disponible_si, h)) : []);
+  const rang = $derived(rangHeros(etat, h.id));
+  /** Examen du prochain rang de Guilde, et héros présents qui peuvent le passer en même temps. */
+  const examen = $derived(prochainExamen(c, etat, h.id));
+  const avecMoi = $derived(candidatsExamen(c, etat, h.id).filter((x) => x !== h.id).map((x) => etat.heros[x].nom));
   const ordre = ['F', 'E', 'D', 'C', 'B', 'A', 'S'];
   const nomPnj = (p: string) => c.compagnons[p]?.nom ?? c.pnj[p]?.nom ?? p;
   const fusions = $derived(estGuilde(id) ? fusionsPossibles(c, h) : []);
@@ -200,13 +203,33 @@
         {#each scenesPnj as s (s.id)}{@render boutonScene(s, 'Lui parler')}{/each}
         {#if pnjChoisi === lieu.gerant && lieu.boutique.length}
           <div class="item"><button class:principal={!scenesPnj.length} aria-expanded={boutiqueOuverte} onclick={() => (boutiqueOuverte = !boutiqueOuverte)}>🛒 Voir la marchandise</button></div>
-        {:else if fiche?.identifie === undefined && !scenesPnj.length}
+        {:else if fiche?.identifie === undefined && !scenesPnj.length && pnjChoisi !== c.config.guilde.examinatrice}
           <p>{nomPnj(pnjChoisi)} n'a rien de particulier à vous dire pour le moment.</p>
           {#if c.compagnons[pnjChoisi] && etat.compagnonsRencontres.includes(pnjChoisi)}
             <p class="discret">Palier : {palierCompagnon(c, etat, h.id, pnjChoisi).nom}. Offrez-lui un cadeau depuis l'onglet « Compagnons ».</p>
           {/if}
         {/if}
       </div>
+      {#if pnjChoisi === c.config.guilde.examinatrice}
+        <div class="carte-ui examen" data-panneau="examen">
+          <h3>🎖 Rang de Guilde : {rang}</h3>
+          {#if examen}
+            <p>Rang suivant : <strong>{examen.rang}</strong>. Il faut
+              <span class:ok={examen.points >= examen.pointsRequis}>{examen.pointsRequis} points de Guilde ({examen.points})</span>,
+              <span class:ok={h.niveau >= examen.niveauRequis}>le niveau {examen.niveauRequis} ({h.niveau})</span>,
+              puis réussir {examen.type === 'epreuve' ? 'une épreuve en plusieurs étapes, qui se termine par un combat' : 'un combat contre un examinateur'}.</p>
+            <p class="discret">Les points ne donnent plus le rang : ils ouvrent l'examen. Aucun danger au combat d'examen : ni blessure, ni or perdu. En cas d'échec, on revient le lendemain.</p>
+            {#if examen.pret}
+              {#if avecMoi.length}<p class="discret">{avecMoi.join(', ')} {avecMoi.length > 1 ? 'sont prêts' : 'est prêt'} aussi : vous passerez le combat ensemble.</p>{/if}
+              <button class="principal" onclick={() => jeu.agir({ type: 'examen_rang' })}>{examen.type === 'epreuve' ? `Commencer l'épreuve du rang ${examen.rang}` : `⚔ Passer l'examen du rang ${examen.rang}`}</button>
+            {:else}
+              <p class="aide-niveau orange">{examen.raison}</p>
+            {/if}
+          {:else}
+            <p>Vous avez atteint le rang le plus haut de la Guilde.</p>
+          {/if}
+        </div>
+      {/if}
       {#if fiche?.identifie !== undefined}
         <div class="carte-ui">
           <h3>🔎 Faire identifier un objet <span class="badge or">{fiche.identifie} or</span></h3>
@@ -342,6 +365,8 @@
   .entre { justify-content: space-between; }
   .alerte { color: #ffb4a8; }
   .aide-niveau { font-size: 0.85rem; }
+  .examen { border-color: var(--or); margin-bottom: 0.8rem; }
+  .examen .ok { color: var(--vert); }
   .aide-niveau.orange { color: #f2a33a; }
   .aide-niveau.rouge { color: var(--rouge); }
   .colonnes { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
