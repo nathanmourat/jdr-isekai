@@ -6,6 +6,20 @@
 
 ---
 
+> **Textures HD (14/11, branche `textures-hd`)** : les héros, les calques de race et les monstres existent maintenant en **résolution double**. Les tailles indiquées plus bas sont celles d'origine ; une image HD a simplement des cases deux fois plus grandes, et le jeu l'affiche à la même taille à l'écran, avec deux fois plus de détails.
+>
+> | Image | Format d'origine | **Format HD** |
+> |---|---|---|
+> | Héros, planche de combat `heros/<classe>/combat.png` | cases de 64 (512 × 384) | **cases de 128 (1024 × 768)** |
+> | Héros, planche d'exploration `heros/<classe>/exploration.png` | cases de 32 (128 × 128) | **cases de 64 (256 × 256)** |
+> | Calques de race `races/<race>/calque-combat.png` / `calque-exploration.png` | 64 et 32 | **128 et 64** |
+> | Monstres `ennemis/<id>/combat.png` | cases de 64 (512 × 256) | **cases de 128 (1024 × 512)** |
+> | Boss (à l'avenir) | cases de 128 | **cases de 256** |
+> | PNJ `pnj/<id>/decor.png`, Aveline | 80 × 128 | 80 × 128 (redessinés plus finement) |
+> | Décors `decors/*.png`, plan de Lysmont | 1280 × 720 | 1280 × 720 (redessinés plus finement) |
+>
+> Le jeu lit la taille des cases dans la largeur de l'image (8 colonnes en combat, 4 en exploration) : les deux formats fonctionnent, même mélangés. Un héros et son calque de race doivent quand même avoir la même résolution pour être parfaitement alignés.
+
 ## PRIORITÉ 1 — indispensable pour tester
 
 ### 1.1 Carte, décors et fonds de combat

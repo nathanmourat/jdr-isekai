@@ -32,6 +32,8 @@ async function preparer(page) {
     const fin = page.getByRole('button', { name: 'Terminer la scène' });
     if (await fin.isVisible()) { await fin.click(); break; }
     if (await page.locator('.suite').isVisible()) { await page.locator('.replique').click(); continue; }
+    const suivant = page.getByRole('button', { name: 'Continuer', exact: true });
+    if (await suivant.isVisible()) { await suivant.click(); continue; }
     const reponse = page.locator('.reponse, .choix button:not([disabled])').first();
     if (await reponse.isVisible()) { await reponse.click(); continue; }
     await page.waitForTimeout(100);
@@ -41,6 +43,8 @@ async function preparer(page) {
 
 /** Clique UNE fois au centre du point (clic réel : appui puis relâchement). */
 async function unClic(page, selecteur) {
+  // comme un joueur : on fait défiler la page jusqu'au point s'il est hors de l'écran
+  await page.locator(selecteur).scrollIntoViewIfNeeded();
   const boite = await page.locator(selecteur).boundingBox();
   if (!boite) throw new Error(`${selecteur} introuvable`);
   if (boite.width < 44 || boite.height < 44) erreurs.push(`${selecteur} : zone cliquable de ${boite.width}×${boite.height} px (44×44 attendus)`);
@@ -67,7 +71,9 @@ async function parcourir(page, nomEcran) {
       await unClic(page, `[data-lieu="${id}"]`);
       const titre = await page.locator('.lieu h2').textContent({ timeout: 2000 }).catch(() => null);
       if (titre !== attendu) erreurs.push(`${nomEcran} › plan › ${id} : « ${titre} » au lieu de « ${attendu} »`);
-      await page.getByRole('button', { name: /Plan de la ville/ }).click();
+      // retour au plan ; si le lieu ne s'est pas ouvert, on est resté sur le plan (l'erreur est déjà notée)
+      const retourPlan = page.getByRole('button', { name: /Plan de la ville/ });
+      if (await retourPlan.isVisible()) await retourPlan.click();
     }
     await page.getByRole('button', { name: /Retour à la carte/ }).click();
   }
