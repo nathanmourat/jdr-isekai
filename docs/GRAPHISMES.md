@@ -176,9 +176,7 @@ Les planches de `assets/ennemis/<id>/combat.png` servent aussi aux **invocations
 
 ## 6. Fiche de description des personnages (pour l'IA ou un dessinateur)
 
-Le modèle de prompt ci-dessous est à adapter à votre outil. Gardez **la même phrase de style** pour tous les portraits :
-
-> *Style : « anime illustration, bust portrait, clean lineart, soft cel shading, fantasy JRPG character art, transparent background, facing slightly left, consistent art style » + description du personnage + expression.*
+**Le style fixe et les prompts complets sont dans [`PORTRAITS-IA.md`](PORTRAITS-IA.md)** (décision du 15/11) : buste de trois quarts **tourné vers la droite de l'image** (le portrait est affiché à gauche du texte du dialogue), lumière en haut à gauche, fond gris uni détouré ensuite. Gardez **le même bloc de style** pour tous les portraits.
 
 | Id | Description visuelle |
 |---|---|

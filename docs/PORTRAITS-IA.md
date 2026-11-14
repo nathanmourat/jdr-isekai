@@ -29,7 +29,7 @@ photorealistic, 3D render, painterly, sketch, blurry, gradient background, scene
 Choix du style :
 - **Fond gris uni** : pas de reflets colorés sur les armures et les cheveux clairs. Exception : **demi-démon** (peau gris-violet), remplacer par `Plain flat solid green background`.
 - **Lumière en haut à gauche** : règle de tout le jeu (`GRAPHISMES.md` § 1).
-- **Tourné vers la droite** : dans `Dialogue.svelte`, le portrait est affiché à gauche du texte. *(À confirmer par le groupe : `GRAPHISMES.md` § 6 dit encore « facing slightly left ».)*
+- **Tourné vers la droite** : dans `Dialogue.svelte`, le portrait est affiché à gauche du texte. Décision du 15/11 (`GRAPHISMES.md` § 6 mis à jour).
 - **Visage dans la moitié haute** : le portrait est affiché entre 72 et 140 px dans les dialogues.
 
 ## 3. Méthode pour garder le même visage
