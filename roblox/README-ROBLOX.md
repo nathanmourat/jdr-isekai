@@ -320,6 +320,16 @@ On y va par la **carte → « Y aller »** (téléportation). Chaque région a s
 - [ ] Vote de la fin : seules les fins possibles sont proposées (« La Couronne » toujours) ; épilogue des compagnes.
 - [ ] Écran « Fin de la saison 1 » avec le nom de la fin ; au château, chaque joueur voit son épilogue personnel (fin « Le Retour » : rester ou partir).
 
+### Liste de contrôle — un vrai royaume (bâtiments agrandis, 14/11)
+Le monde est trois fois plus grand (1,8 stud par pixel de la carte au lieu de 0,6) et les bâtiments sont agrandis (×2,2 pour les maisons, ×2,6 pour les temples, ×3 pour les palais). Un personnage mesure environ 5 studs.
+- [ ] Lysmont est entourée de remparts crénelés (tours rondes, chemin de ronde) avec une porte fortifiée sur chaque route qui sort (temple au nord, Combe à l'ouest, crypte à l'est, campagne au sud).
+- [ ] Le château est une forteresse : courtines de 36 studs, tours d'angle, châtelet d'entrée avec herse et bannières, logis royal, donjon et grande tour du roi (plus de 130 studs).
+- [ ] La ville est pleine de maisons (quartiers entre les rues) ; la grande place a son marché et sa fontaine agrandie.
+- [ ] Les villes des autres régions (Qarzim, Ithrael, Karak-Dûm, Fort-Aube, Camp de l'Aube) ont leurs remparts aux couleurs de la région ; Port-Vérane reste ouvert sur la mer.
+- [ ] La caméra recule jusqu'à 420 studs (molette) ; on marche un peu plus vite (24 au lieu de 16).
+- [ ] Les combats « sur place » se déroulent devant la porte des bâtiments, pas à l'intérieur des murs.
+- [ ] Performance : si Studio rame au démarrage, dis-le-moi (nombre de pièces à réduire).
+
 ### Liste de contrôle — examens de rang et maîtrises d'équipement (test 2, changements 10 et 11)
 - [ ] Dans n'importe quel comptoir de la Guilde, le panneau « 🎖 Rang de Guilde » montre le rang suivant, ce qu'il manque (points, niveau) et le bouton de l'examen quand tout est prêt.
 - [ ] Rangs E, D et A : un combat contre un examinateur (A : Dame Rowena en personne). En cas d'échec, on retente le lendemain.

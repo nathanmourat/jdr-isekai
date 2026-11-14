@@ -197,7 +197,7 @@ function allerA(h: Humanoid, racine: BasePart, but: Vector3) {
 
 function pointDePlace(): Vector3 {
 	const a = hasard.NextNumber(0, 2 * math.pi);
-	const r = hasard.NextNumber(10, 18);
+	const r = hasard.NextNumber(22, 50);
 	return centrePlace.add(new Vector3(math.cos(a) * r, 0, math.sin(a) * r));
 }
 
@@ -301,7 +301,7 @@ function marche() {
 		const a = (k / 24) * 2 * math.pi;
 		if (directions.some((d) => math.abs(((a - d + math.pi * 3) % (math.pi * 2)) - math.pi) < 0.3)) continue;
 		if (k % 4 !== 0) continue;
-		const pos = centrePlace.add(new Vector3(math.cos(a) * 31, 0, math.sin(a) * 31));
+		const pos = centrePlace.add(new Vector3(math.cos(a) * 54, 0, math.sin(a) * 54));
 		etal(pos, centrePlace, AUVENTS[pose % AUVENTS.size()], noms[pose]);
 		pose++;
 	}
@@ -362,16 +362,17 @@ function animaux() {
 	const combe = lieu("combe-aux-saules");
 	const tanneurs = lieu("quartier-tanneurs");
 	const chateau = lieu("chateau");
-	if (combe) for (let i = 0; i < 6; i++) poule(positionLieu(combe).add(new Vector3(-10 + i * 3, 0, 20)));
-	if (tanneurs) for (let i = 0; i < 3; i++) poule(positionLieu(tanneurs).add(new Vector3(-6 + i * 4, 0, 14)));
+	if (combe) for (let i = 0; i < 6; i++) poule(positionLieu(combe).add(new Vector3(-20 + i * 6, 0, 44)));
+	if (tanneurs) for (let i = 0; i < 3; i++) poule(positionLieu(tanneurs).add(new Vector3(-12 + i * 8, 0, 34)));
 	const taverne = lieu("taverne");
-	if (taverne) chat(positionLieu(taverne).add(new Vector3(-6, 0, 11)), rgb(220, 140, 60));
-	if (tanneurs) chat(positionLieu(tanneurs).add(new Vector3(2, 0, 3)), rgb(60, 60, 65));
-	chat(centrePlace.add(new Vector3(5, 0, -6)), rgb(240, 240, 235));
+	if (taverne) chat(positionLieu(taverne).add(new Vector3(-14, 0, 26)), rgb(220, 140, 60));
+	if (tanneurs) chat(positionLieu(tanneurs).add(new Vector3(4, 0, 30)), rgb(60, 60, 65));
+	chat(centrePlace.add(new Vector3(18, 0, -24)), rgb(240, 240, 235));
 	if (chateau) {
 		for (const [x, c] of [[-30, rgb(110, 75, 45)], [-36, rgb(60, 45, 35)]] as const) {
 			const cheval = quadrupede("Cheval", c, 1.9);
-			cheval.PivotTo(new CFrame(positionLieu(chateau).add(new Vector3(x, 0.4, 10))).mul(CFrame.Angles(0, math.rad(90), 0)));
+			// devant le châtelet d'entrée de la forteresse
+			cheval.PivotTo(new CFrame(positionLieu(chateau).add(new Vector3(x * 2.4, 0.4, 56))).mul(CFrame.Angles(0, math.rad(90), 0)));
 			cheval.Parent = dossier;
 		}
 	}

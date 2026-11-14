@@ -44,7 +44,7 @@ export function majMarqueurs(visible: boolean) {
 			gui.Size = new UDim2(0, 220, 0, 40);
 			gui.StudsOffset = new Vector3(0, 9, 0);
 			gui.AlwaysOnTop = true;
-			gui.MaxDistance = 400;
+			gui.MaxDistance = 1200;
 			gui.Adornee = ancre;
 			etiquette = new Instance("TextLabel");
 			etiquette.Size = UDim2.fromScale(1, 1);

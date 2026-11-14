@@ -7,13 +7,33 @@
  */
 import { CollectionService, Workspace } from "@rbxts/services";
 import { CONTENU } from "shared/donnees";
-import { ORIGINES, positionLieu, STYLES } from "shared/geo";
+import { ECHELLE, GRANDEUR, ORIGINES, positionLieu, STYLES } from "shared/geo";
 import type { LieuDef, RegionDef } from "shared/moteur";
 import { arbre, bloc, buisson, C, fleurs, lumiere, nuit, rocher, sapin, toit, tonneau, VERTICAL } from "./decor";
 import { balise } from "./monde";
+import { agrandir, ajouterOuverture, type Contour, croisement, dansContour, enceinte, type Pierres, pointAgrandi } from "./royaume";
 
 const terrain = Workspace.Terrain;
 const rgb = (r: number, g: number, b: number) => Color3.fromRGB(r, g, b);
+
+/**
+ * Agrandissement du bâtiment en cours de construction : les pièces sont agrandies après coup (Model:ScaleTo),
+ * mais le terrain (feuillage, rochers) doit être posé directement à la bonne taille.
+ */
+let K = 1;
+function boule(c: Vector3, decalage: Vector3, rayon: number, matiere: Enum.Material) {
+	terrain.FillBall(c.add(decalage.mul(K)), rayon * K, matiere);
+}
+
+/** Agrandissement de chaque genre de bâtiment (un personnage mesure 5 studs). */
+const GRANDEUR_GENRE: Record<string, number> = {
+	palais: GRANDEUR.palais,
+	temple: GRANDEUR.edifice,
+	porte: GRANDEUR.palais,
+	ruines: 2.4,
+	rochers: 2.4,
+	camp: 2,
+};
 
 interface Palette {
 	sol: Enum.Material;
@@ -63,7 +83,7 @@ function maisonStyle(centre: Vector3, m: Model, p: Palette, style: string, l = 1
 	if (style === "foret") {
 		// hutte ronde en bois, toit de feuillage
 		bloc(new Vector3(h, l, l), centre.add(new Vector3(0, h / 2, 0)), p.mur, { forme: "cylindre", rotation: VERTICAL, matiere: p.matMur, parent: m });
-		terrain.FillBall(centre.add(new Vector3(0, h + 1, 0)), l * 0.62, Enum.Material.LeafyGrass);
+		boule(centre, new Vector3(0, h + 1, 0), l * 0.62, Enum.Material.LeafyGrass);
 	} else if (style === "archipel") {
 		// maison sur pilotis
 		for (const [x, z] of [[-1, -1], [1, -1], [-1, 1], [1, 1]] as const) bloc(new Vector3(0.8, 4, 0.8), centre.add(new Vector3((x * l) / 2.2, 2, (z * pr) / 2.2)), C.bois, { matiere: Enum.Material.Wood, parent: m });
@@ -138,7 +158,7 @@ const BATIMENTS: Record<string, Construire> = {
 				const l2 = bloc(new Vector3(1, 1, 1), c.add(new Vector3(r - 1, y + 1.5, -6)), p.accent, { neon: true, parent: m });
 				lumiere(l2, p.accent, 16);
 			}
-			terrain.FillBall(c.add(new Vector3(0, 44, -6)), 20, Enum.Material.LeafyGrass);
+			boule(c, new Vector3(0, 44, -6), 20, Enum.Material.LeafyGrass);
 			return c.add(new Vector3(0, 0, 4));
 		}
 		const l = 30;
@@ -163,7 +183,7 @@ const BATIMENTS: Record<string, Construire> = {
 		}
 		const coeur = bloc(new Vector3(3, 3, 3), c.add(new Vector3(0, 3, 0)), p.accent, { forme: "boule", neon: true, parent: m });
 		lumiere(coeur, p.accent, 26);
-		if (s === "foret") for (let i = 0; i < 5; i++) terrain.FillBall(c.add(new Vector3(math.cos(i) * 14, 1, math.sin(i) * 14)), 3, Enum.Material.LeafyGrass);
+		if (s === "foret") for (let i = 0; i < 5; i++) boule(c, new Vector3(math.cos(i) * 14, 1, math.sin(i) * 14), 3, Enum.Material.LeafyGrass);
 		return c.add(new Vector3(0, 0, 14));
 	},
 	camp: (c, m, p) => {
@@ -184,7 +204,7 @@ const BATIMENTS: Record<string, Construire> = {
 		return c.add(new Vector3(0, 0, 8));
 	},
 	mine: (c, m, p) => {
-		terrain.FillBall(c.add(new Vector3(0, -2, -10)), 16, Enum.Material.Rock);
+		boule(c, new Vector3(0, -2, -10), 16, Enum.Material.Rock);
 		bloc(new Vector3(8, 8, 2), c.add(new Vector3(0, 4, 2)), rgb(15, 12, 15), { parent: m });
 		for (const x of [-4.5, 4.5]) bloc(new Vector3(1, 9, 1), c.add(new Vector3(x, 4.5, 3)), C.bois, { matiere: Enum.Material.Wood, parent: m });
 		bloc(new Vector3(10, 1, 1.2), c.add(new Vector3(0, 9, 3)), C.bois, { matiere: Enum.Material.Wood, parent: m });
@@ -206,8 +226,8 @@ const BATIMENTS: Record<string, Construire> = {
 		return c.add(new Vector3(0, 0, 8));
 	},
 	rochers: (c) => {
-		for (let i = 0; i < 7; i++) rocher(c.add(new Vector3(math.cos(i * 0.9) * 18, 0, math.sin(i * 0.9) * 14)), 4 + (i % 3) * 2);
-		for (let i = 0; i < 3; i++) terrain.FillBall(c.add(new Vector3(-20 + i * 20, 6, -18)), 10, Enum.Material.Rock);
+		for (let i = 0; i < 7; i++) rocher(c.add(new Vector3(math.cos(i * 0.9) * 18, 0, math.sin(i * 0.9) * 14).mul(K)), (4 + (i % 3) * 2) * K);
+		for (let i = 0; i < 3; i++) boule(c, new Vector3(-20 + i * 20, 6, -18), 10, Enum.Material.Rock);
 		return c.add(new Vector3(0, 0, 10));
 	},
 	port: (c, m) => {
@@ -234,11 +254,11 @@ const BATIMENTS: Record<string, Construire> = {
 
 // ───────────────────────────── Région ─────────────────────────────
 
-function vegetation(region: RegionDef, style: string, origine: Vector3, parent: Instance, libres: Vector3[]) {
+function vegetation(region: RegionDef, style: string, origine: Vector3, parent: Instance, libres: Vector3[], ville: Contour | undefined) {
 	const graine = new Random(region.id.size() * 97);
-	const libre = (p: Vector3) => !libres.some((x) => x.sub(p).Magnitude < 40);
-	for (let i = 0; i < 160; i++) {
-		const p = origine.add(new Vector3(graine.NextNumber(-500, 500), 0, graine.NextNumber(-380, 380)));
+	const libre = (p: Vector3) => !libres.some((x) => x.sub(p).Magnitude < 70) && !(ville !== undefined && dansContour(ville, p, -20));
+	for (let i = 0; i < 420; i++) {
+		const p = origine.add(new Vector3(graine.NextNumber(-1550, 1550), 0, graine.NextNumber(-900, 900)));
 		if (!libre(p)) continue;
 		const r = graine.NextNumber();
 		if (style === "desert") {
@@ -281,21 +301,27 @@ function vegetation(region: RegionDef, style: string, origine: Vector3, parent: 
 }
 
 function preparerSol(style: string, origine: Vector3, p: Palette) {
-	terrain.FillBlock(new CFrame(origine.add(new Vector3(0, -6, 0))), new Vector3(1300, 12, 1000), p.sol);
+	terrain.FillBlock(new CFrame(origine.add(new Vector3(0, -6, 0))), new Vector3(3800, 12, 2400), p.sol);
 	// bordures : collines ou eau selon le style
 	const graine = new Random(math.floor(origine.Magnitude));
 	if (style === "archipel") {
 		// la mer autour d'îles
-		terrain.FillBlock(new CFrame(origine.add(new Vector3(0, -4, 0))), new Vector3(1300, 8, 1000), Enum.Material.Water);
-		for (let i = 0; i < 10; i++) terrain.FillBall(origine.add(new Vector3(graine.NextNumber(-500, 500), -14, graine.NextNumber(-380, 380))), graine.NextNumber(40, 80), Enum.Material.Sand);
-		terrain.FillBall(origine.add(new Vector3(0, -40, 0)), 120, Enum.Material.Grass);
+		terrain.FillBlock(new CFrame(origine.add(new Vector3(0, -4, 0))), new Vector3(3800, 8, 2400), Enum.Material.Water);
+		for (let i = 0; i < 16; i++) terrain.FillBall(origine.add(new Vector3(graine.NextNumber(-1500, 1500), -30, graine.NextNumber(-950, 950))), graine.NextNumber(90, 190), Enum.Material.Sand);
+		// la grande île du port
+		terrain.FillBall(origine.add(new Vector3(0, -110, 0)), 340, Enum.Material.Grass);
 	}
-	for (let i = 0; i < 22; i++) {
+	for (let i = 0; i < 34; i++) {
 		const a = graine.NextNumber(0, math.pi * 2);
-		const r = graine.NextNumber(520, 640);
+		const r = graine.NextNumber(1500, 1800);
 		const mat = style === "montagne" ? Enum.Material.Rock : style === "cendres" ? Enum.Material.Basalt : style === "foret" ? Enum.Material.LeafyGrass : p.sol2;
-		terrain.FillBall(origine.add(new Vector3(math.cos(a) * r, style === "montagne" ? 10 : -10, math.sin(a) * r * 0.8)), graine.NextNumber(40, style === "montagne" ? 120 : 80), mat);
+		terrain.FillBall(origine.add(new Vector3(math.cos(a) * r, style === "montagne" ? 20 : -20, math.sin(a) * r * 0.6)), graine.NextNumber(90, style === "montagne" ? 300 : 180), mat);
 	}
+}
+
+/** Pierres des remparts d'une région, d'après sa palette. */
+function pierresDe(p: Palette): Pierres {
+	return { mur: p.mur, matiere: p.matMur, toit: p.toit, fanion: p.tissus[0] };
 }
 
 function construireRegion(region: RegionDef, dossier: Folder) {
@@ -305,11 +331,26 @@ function construireRegion(region: RegionDef, dossier: Folder) {
 	if (!origine || !p) return;
 	preparerSol(style, origine, p);
 	const libres: Vector3[] = [];
-	const centreVille = region.villes && region.villes.size() > 0
-		? origine.add(new Vector3((region.villes[0].position.x - 960) * 0.6, 0, (region.villes[0].position.y - 570) * 0.6))
+	const villeDef = region.villes && region.villes.size() > 0 ? region.villes[0] : undefined;
+	const centreVille = villeDef
+		? origine.add(new Vector3((villeDef.position.x - 960) * ECHELLE, 0, (villeDef.position.y - 570) * ECHELLE))
 		: origine;
+	// contour de la ville : il englobe tous ses lieux, avec de la marge pour les bâtiments agrandis
+	let contour: Contour | undefined;
+	if (villeDef) {
+		let rx = 220;
+		let rz = 200;
+		for (const l of region.lieux) {
+			if (l.ville !== villeDef.id || l.etape_seulement === true) continue;
+			const d = positionLieu(l).sub(centreVille);
+			rx = math.max(rx, math.abs(d.X) + 130);
+			rz = math.max(rz, math.abs(d.Z) + 130);
+		}
+		contour = { centre: centreVille, rx, rz };
+	}
 	// le cœur de la ville est pavé
-	terrain.FillCylinder(new CFrame(centreVille.add(new Vector3(0, -0.5, 0))), 1, 70, p.chemin);
+	terrain.FillCylinder(new CFrame(centreVille.add(new Vector3(0, -0.5, 0))), 1, 170, p.chemin);
+	const ouvertures: number[] = [math.pi / 2, -math.pi / 2];
 	for (const l of region.lieux) {
 		if (l.etape_seulement === true) {
 			pcall(() => balise(l));
@@ -321,15 +362,19 @@ function construireRegion(region: RegionDef, dossier: Folder) {
 		const centre = positionLieu(l);
 		libres.push(centre);
 		const g = genre(l);
+		K = GRANDEUR_GENRE[g] ?? GRANDEUR.maison;
 		const [ok, porte] = pcall(() => (BATIMENTS[g] ?? BATIMENTS.maison)(centre, modele, p, style));
-		const entree = ok ? (porte as Vector3) : centre;
 		if (!ok) warn(`[Velmaris] Lieu ${l.id} : ${tostring(porte)}`);
-		// chemin jusqu'au centre de la ville
+		agrandir(modele, centre, K);
+		const entree = ok ? pointAgrandi(porte as Vector3, centre, K) : centre;
+		K = 1;
+		// rue jusqu'au centre de la ville
 		const d = centreVille.sub(entree);
 		if (d.Magnitude > 4) {
-			terrain.FillBlock(CFrame.lookAt(entree.add(d.div(2)), centreVille).add(new Vector3(0, -0.4, 0)), new Vector3(7, 1.2, d.Magnitude), p.chemin);
-			libres.push(entree.add(d.div(2)));
+			terrain.FillBlock(CFrame.lookAt(entree.add(d.div(2)), centreVille).add(new Vector3(0, -0.4, 0)), new Vector3(16, 1.2, d.Magnitude), p.chemin);
+			for (let t = 0; t <= d.Magnitude; t += 30) libres.push(entree.add(d.Unit.mul(t)));
 		}
+		if (contour) ajouterOuverture(ouvertures, croisement(contour, centreVille, entree));
 		// point d'entrée : invite « Entrer »
 		const ancre = bloc(new Vector3(4, 6, 4), entree.add(new Vector3(0, 3, 0)), C.or, { parent: modele, nom: "Entree" });
 		CollectionService.AddTag(ancre, "EntreeLieu");
@@ -346,19 +391,46 @@ function construireRegion(region: RegionDef, dossier: Folder) {
 		invite.SetAttribute("Lieu", l.id);
 		invite.Parent = ancre;
 	}
-	// quelques maisons sans lieu autour de la place, pour faire une vraie ville
-	if (region.villes && region.villes.size() > 0) {
+	if (contour) {
+		// remparts (pas pour le port pirate de l'Archipel, ouvert sur la mer)
+		if (style !== "archipel") {
+			const murs = new Instance("Model");
+			murs.Name = `${region.id}-remparts`;
+			murs.Parent = dossier;
+			pcall(() => enceinte(contour!.centre, contour!.rx, contour!.rz, ouvertures, murs, pierresDe(p), style === "foret" ? 22 : 26));
+			for (let i = 0; i < 60; i++) {
+				const a = (i / 60) * 2 * math.pi;
+				libres.push(contour.centre.add(new Vector3(math.cos(a) * contour.rx, 0, math.sin(a) * contour.rz)));
+			}
+		}
+		// quartiers : des maisons sans lieu entre les rues, tournées vers le centre
 		const deco = new Instance("Model");
 		deco.Name = `${region.id}-maisons`;
 		deco.Parent = dossier;
-		for (let i = 0; i < 10; i++) {
-			const a = (i / 10) * math.pi * 2 + 0.2;
-			const pos = centreVille.add(new Vector3(math.cos(a) * 95, 0, math.sin(a) * 75));
-			if (libres.some((x) => x.sub(pos).Magnitude < 25)) continue;
-			pcall(() => maisonStyle(pos, deco, p, style, 10 + (i % 3) * 2, 9, 7 + (i % 2) * 2));
+		const graine = new Random(region.id.size() * 31);
+		let n = 0;
+		for (let x = -contour.rx; x <= contour.rx && n < 34; x += 50) {
+			for (let z = -contour.rz; z <= contour.rz && n < 34; z += 50) {
+				const pos = centreVille.add(new Vector3(x + graine.NextNumber(-8, 8), 0, z + graine.NextNumber(-8, 8)));
+				if (!dansContour(contour, pos, 45) || pos.sub(centreVille).Magnitude < 190) continue;
+				if (libres.some((v) => v.sub(pos).Magnitude < 45)) continue;
+				const m = new Instance("Model");
+				m.Name = "Maison";
+				m.Parent = deco;
+				K = graine.NextNumber(1.8, 2.4);
+				const [okM] = pcall(() => maisonStyle(pos, m, p, style, 10 + (n % 3) * 2, 9, 7 + (n % 2) * 2));
+				if (okM) {
+					agrandir(m, pos, K);
+					const versCentre = centreVille.sub(pos);
+					m.PivotTo(new CFrame(pos).mul(CFrame.Angles(0, math.atan2(versCentre.X, versCentre.Z), 0)));
+				}
+				K = 1;
+				libres.push(pos);
+				n++;
+			}
 		}
 	}
-	vegetation(region, style, origine, dossier, libres);
+	vegetation(region, style, origine, dossier, libres, contour);
 }
 
 /** Construit toutes les régions sauf Aubeclaire (monde.ts). */

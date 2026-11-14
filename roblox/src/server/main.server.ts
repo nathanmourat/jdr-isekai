@@ -14,6 +14,16 @@ import { habillerLesHeros } from "./tenues";
 import { construireRegions } from "./regions";
 
 construireMonde();
+// un royaume à grande échelle : on voit loin et on marche un peu plus vite
+const reglerJoueur = (j: Player) => {
+	j.CameraMaxZoomDistance = 420;
+	j.CharacterAdded.Connect((perso) => {
+		const h = perso.WaitForChild("Humanoid", 10) as Humanoid | undefined;
+		if (h) h.WalkSpeed = 24;
+	});
+};
+Players.GetPlayers().forEach(reglerJoueur);
+Players.PlayerAdded.Connect(reglerJoueur);
 // les autres régions (chapitres 2 à 6), loin de Lysmont
 task.spawn(construireRegions);
 // les modèles 3D sont créés en arrière-plan (cela prend quelques secondes) : le jeu démarre sans attendre

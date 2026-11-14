@@ -439,6 +439,7 @@ export function construireInterieurs() {
 		m.Name = "lysmont-place";
 		m.Parent = dossier;
 		const centre = positionLieu(place);
-		place.pnj.forEach((p, k) => pnj(m, place.id, p.id, centre.add(new Vector3(-8 + k * 4, 0, 10)), centre.add(new Vector3(0, 0, 20))));
+		// au sud de la fontaine (agrandie), face à la place
+		place.pnj.forEach((p, k) => pnj(m, place.id, p.id, centre.add(new Vector3(-10 + k * 5, 0, 26)), centre.add(new Vector3(0, 0, 50))));
 	}
 }

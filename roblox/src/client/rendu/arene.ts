@@ -4,7 +4,7 @@
  *  - héros = avatar Roblox du joueur, habillé de son équipement en 3D (arme de sa classe s'il n'en a pas) ; ennemis = modèles 3D préparés par le serveur ;
  *  - les événements du combat sont joués un par un : élan, coup, chiffres de dégâts, effets d'élément, K.O.
  */
-import { Players, ReplicatedStorage, TweenService, UserInputService, Workspace } from "@rbxts/services";
+import { CollectionService, Players, ReplicatedStorage, TweenService, UserInputService, Workspace } from "@rbxts/services";
 import { equiperPersonnage, type EquipementPorte } from "shared/equipement3d";
 import { CONTENU } from "shared/donnees";
 import { LIEU_DU_DECOR, ORIGINES, positionLieu, regionDuLieu, trouverLieu } from "shared/geo";
@@ -65,6 +65,14 @@ function sol(position: Vector3): number {
 	return r ? r.Position.Y : 0;
 }
 
+/** Position de la porte d'un lieu (pièce « Entree » marquée EntreeLieu), si elle est construite. */
+function entreeDe(lieu: string): Vector3 | undefined {
+	for (const e of CollectionService.GetTagged("EntreeLieu")) {
+		if (e.IsA("BasePart") && e.GetAttribute("Lieu") === lieu) return e.Position;
+	}
+	return undefined;
+}
+
 /** Repère du combat : origine au sol, axe X = de la gauche (héros) vers la droite (ennemis). */
 function choisirRepere(combat: Combat, enDonjon: boolean): CFrame {
 	if (enDonjon || combat.fond === "crypte") {
@@ -84,9 +92,17 @@ function choisirRepere(combat: Combat, enDonjon: boolean): CFrame {
 		o = pLieu;
 		versCamera = new Vector3(0, 0, 1);
 	} else {
-		const d = pPlace.sub(pLieu);
-		versCamera = d.Magnitude > 1 ? d.Unit : new Vector3(0, 0, 1);
-		o = pLieu.add(versCamera.mul(30));
+		// devant la porte du bâtiment (les bâtiments sont grands : on se bat dehors, face à l'entrée)
+		const porte = lieu ? entreeDe(lieu.id) : undefined;
+		if (porte) {
+			const d = new Vector3(porte.X - pLieu.X, 0, porte.Z - pLieu.Z);
+			versCamera = d.Magnitude > 1 ? d.Unit : new Vector3(0, 0, 1);
+			o = new Vector3(porte.X, 0, porte.Z).add(versCamera.mul(34));
+		} else {
+			const d = pPlace.sub(pLieu);
+			versCamera = d.Magnitude > 1 ? d.Unit : new Vector3(0, 0, 1);
+			o = pLieu.add(versCamera.mul(70));
+		}
 	}
 	o = new Vector3(o.X, sol(o), o.Z);
 	// la caméra regarde depuis « versCamera » : l'axe X du repère est perpendiculaire

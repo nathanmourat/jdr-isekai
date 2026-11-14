@@ -9,19 +9,24 @@
 import { CONTENU } from "./donnees";
 import type { LieuDef } from "./moteur";
 
-/** 1 pixel de la carte d'une région (1920 × 1080) = ECHELLE studs, autour du centre de la région. */
-export const ECHELLE = 0.6;
+/**
+ * 1 pixel de la carte d'une région (1920 × 1080) = ECHELLE studs, autour du centre de la région.
+ * 1,8 : une région fait environ 3 500 × 1 900 studs, de quoi bâtir de vraies villes (un personnage mesure 5 studs).
+ */
+export const ECHELLE = 1.8;
+/** Agrandissement des bâtiments par rapport à leurs mesures de base (maisons, auberges, Guildes…). */
+export const GRANDEUR = { maison: 2.2, edifice: 2.6, palais: 3 };
 export const CENTRE_CARTE = { x: 960, y: 570 };
 
 /** Origine 3D de chaque région (centre de sa carte). */
 export const ORIGINES: Record<string, Vector3> = {
 	aubeclaire: new Vector3(0, 0, 0),
-	"marche-des-sables": new Vector3(0, 0, 3200),
-	sylvenoire: new Vector3(-3200, 0, 0),
-	"monts-grisfer": new Vector3(3200, 0, 0),
-	"archipel-des-brumes": new Vector3(-3200, 0, 3200),
-	"mur-d-aube": new Vector3(0, 0, -3200),
-	"terres-cendrees": new Vector3(0, 0, -6400),
+	"marche-des-sables": new Vector3(0, 0, 6000),
+	sylvenoire: new Vector3(-6000, 0, 0),
+	"monts-grisfer": new Vector3(6000, 0, 0),
+	"archipel-des-brumes": new Vector3(-6000, 0, 6000),
+	"mur-d-aube": new Vector3(0, 0, -6000),
+	"terres-cendrees": new Vector3(0, 0, -12000),
 };
 
 /** Style de décor de chaque région (terrain, bâtiments, végétation). */
