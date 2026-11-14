@@ -17,3 +17,12 @@ export function lirePreference(cle: string, defaut: boolean): boolean {
 export function ecrirePreference(cle: string, valeur: boolean) {
   try { localStorage.setItem(PREFIXE + cle, valeur ? '1' : '0'); } catch { /* stockage indisponible : préférence non retenue */ }
 }
+
+/** Variante texte (par exemple : la dernière étape vue, pour savoir si elle a changé). */
+export function lireTexte(cle: string): string | null {
+  try { return localStorage.getItem(PREFIXE + cle); } catch { return null; }
+}
+
+export function ecrireTexte(cle: string, valeur: string) {
+  try { localStorage.setItem(PREFIXE + cle, valeur); } catch { /* stockage indisponible */ }
+}

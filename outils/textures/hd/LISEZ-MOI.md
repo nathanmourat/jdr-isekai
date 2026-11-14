@@ -10,6 +10,7 @@ python npcs.py           # PNJ détourés 80×128 (dessinés nativement, plus de
 python run_decors2.py    # 20 décors 1280×720 dessinés nativement + JSON + premiers plans
 python plan_lysmont.py   # plan de Lysmont
 python fonds.py          # 32 fonds de combat 1280×720 (sol dans le tiers inférieur)
+python scenes_plus.py    # taverne et Guilde plus détaillées (taverne, taverne-avant, guilde, guilde-avant ; les .json ne changent pas)
 ```
 
 Nouveautés par rapport à la V3 :

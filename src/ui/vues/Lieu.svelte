@@ -10,6 +10,7 @@
   import { jeu } from '../jeu.svelte';
   import { candidatsExamen, conditionHeros, conditionScene, etapeContrat, listeHeros, objetConnu, palierCompagnon, prochainExamen, rangHeros, scenesDisponibles } from '../../moteur/partie';
   import ObjetInfo from '../ObjetInfo.svelte';
+  import { activiteChangee, signatureActivite } from '../activite';
   import { absentsDuGroupe, aideNiveau, couleurNiveau, estExaminateur, estGuilde, marqueurPnj, trouverLieu, niveauGroupe, niveauScene, sceneAvecCombat, type Marqueur } from '../../moteur/guide';
   import NiveauConseille from '../NiveauConseille.svelte';
   import { avantPlanDecor, imageDecor, imagePnjDecor, positionsImage, TAILLE_PNJ_DECOR } from '../../rendu/assets';
@@ -117,6 +118,13 @@
   function parler(p: string) { pnjChoisi = p; boutiqueOuverte = false; examenOuvert = false; identifierOuvert = false; }
   let examenOuvert = $state(false);
   let identifierOuvert = $state(false);
+  // une scène, un combat ou une épreuve qui commence referme toutes les fenêtres et la bulle (test 3, point 11)
+  let activiteVue: string | null = null;
+  $effect(() => {
+    const sig = signatureActivite(etat, h.id);
+    if (activiteChangee(activiteVue, sig)) { pnjChoisi = null; boutiqueOuverte = false; examenOuvert = false; identifierOuvert = false; contratsOuverts = false; litOuvert = false; }
+    activiteVue = sig;
+  });
   /** Place de la bulle dans le décor (en %) : au-dessus de la tête, ou sous les pieds si la tête est trop haute. */
   const bulle = $derived.by(() => {
     const p = persos.find((x) => x.id === pnjChoisi);
@@ -125,6 +133,15 @@
     const dessous = tete < 42;
     return { x: Math.min(80, Math.max(20, (p.x / 1280) * 100)), y: dessous ? (p.y / 720) * 100 : tete, dessous };
   });
+  // bulle trop longue : elle défile à l'intérieur, avec un dégradé et « ▼ suite » tant qu'il reste quelque chose en dessous
+  let bulleEl = $state<HTMLElement | null>(null);
+  let resteSuite = $state(false);
+  function majSuite() { resteSuite = !!bulleEl && bulleEl.scrollHeight - bulleEl.scrollTop - bulleEl.clientHeight > 4; }
+  $effect(() => { void pnjChoisi; void bulle; void scenesPnj; if (bulleEl) void tick().then(majSuite); });
+  /** Hauteur maximale de la bulle : la place entre le personnage et le bord, sans passer sous la barre du haut (3,5rem). */
+  const styleBulle = $derived(bulle ? (bulle.dessous
+    ? `left:${bulle.x}%; top:${bulle.y}%; max-height:min(calc(${100 - bulle.y}% - 0.8rem), calc(100dvh - 4rem))`
+    : `left:${bulle.x}%; bottom:${100 - bulle.y}%; max-height:min(calc(${bulle.y}% - 4.2rem), calc(100dvh - 4rem))`) : '');
   /** Un clic sur le décor lui-même (pas sur un personnage ni une zone) referme la bulle. */
   function clicDecor(e: MouseEvent) { if (e.target === e.currentTarget) pnjChoisi = null; }
 
@@ -197,7 +214,7 @@
     </div>
     {#if pnjChoisi && bulle}
       {@const fiche = c.pnj[pnjChoisi]}
-      <div class="bulle carte-ui" class:dessous={bulle.dessous} style={bulle.dessous ? `left:${bulle.x}%; top:${bulle.y}%` : `left:${bulle.x}%; bottom:${100 - bulle.y}%`} role="dialog" aria-label={`Discussion avec ${nomPnj(pnjChoisi)}`}>
+      <div class="bulle carte-ui" class:dessous={bulle.dessous} style={styleBulle} bind:this={bulleEl} onscroll={majSuite} role="dialog" aria-label={`Discussion avec ${nomPnj(pnjChoisi)}`}>
         <div class="ligne entre tete-bulle">
           <div class="ligne">
             <img class="tete pixel" src={portraitPersonnage(c, pnjChoisi)} alt="" />
@@ -228,6 +245,7 @@
             <p class="discret">Palier : {palierCompagnon(c, etat, h.id, pnjChoisi).nom}. Offrez-lui un cadeau depuis le menu « Compagnons ».</p>
           {/if}
         {/if}
+        {#if resteSuite}<button class="suite-bulle" tabindex="-1" aria-hidden="true" onclick={() => bulleEl?.scrollBy({ top: bulleEl.clientHeight * 0.7, behavior: 'smooth' })}>▼ suite</button>{/if}
       </div>
     {/if}
   </Cadre169>
@@ -400,8 +418,9 @@
   .corps-cadre > p:first-child { margin-top: 0.6rem; }
 
   /* bulle de discussion près du personnage (au-dessus de sa tête, ou sous ses pieds s'il est en haut du décor) */
-  .bulle { position: absolute; z-index: 250; translate: -50% 0; width: min(340px, 90%); max-height: 62%; overflow-y: auto; overscroll-behavior: contain; display: grid; gap: 0.4rem; padding: 0.6rem 0.7rem; margin-bottom: 0.6rem; border-color: var(--or); background: #14111cf2; animation: bulle 0.15s ease-out; }
+  .bulle { position: absolute; z-index: 250; translate: -50% 0; width: min(340px, 90%); max-height: 62%; border-bottom: 3px solid var(--or); padding-bottom: 0.9rem !important; overflow-y: auto; overscroll-behavior: contain; display: grid; gap: 0.4rem; padding: 0.6rem 0.7rem; margin-bottom: 0.6rem; border-color: var(--or); background: #14111cf2; animation: bulle 0.15s ease-out; }
   .bulle.dessous { margin: 0.4rem 0 0; }
+  .suite-bulle { position: sticky; bottom: -0.9rem; margin: 0 -0.7rem -0.9rem; min-height: 2.2rem !important; text-align: center !important; border: none; border-radius: 0; background: linear-gradient(#14111c00, #14111c 60%); color: var(--or); font-size: 0.85rem; padding-top: 0.8rem; }
   .bulle h3, .bulle p { margin: 0.1em 0; }
   .bulle > button { min-height: 44px; text-align: left; }
   .tete-bulle { flex-wrap: nowrap; align-items: flex-start; }
@@ -413,7 +432,7 @@
   @media (prefers-reduced-motion: reduce) { .bulle { animation: none; } }
   /* téléphone en portrait : l'image est petite, la bulle se place juste dessous, sur toute la largeur */
   @media (max-aspect-ratio: 1 / 1) {
-    .bulle, .bulle.dessous { left: 50% !important; top: calc(100% + 0.4rem) !important; bottom: auto !important; width: calc(100vw - 1rem); max-height: calc(100dvh - 56.25vw - 8.5rem); margin: 0; }
+    .bulle, .bulle.dessous { left: 50% !important; top: calc(100% + 0.4rem) !important; bottom: auto !important; width: calc(100vw - 1rem); max-height: calc(100dvh - 56.25vw - 8.5rem) !important; margin: 0; }
   }
   @media (max-aspect-ratio: 1 / 1) { .corps-cadre { max-height: calc(100dvh - 56.25vw - 7.5rem); } }
 
@@ -428,7 +447,7 @@
   .perso:active:not(:disabled), .perso:hover:not(:disabled) { transform: translate(-50%, -100%); }
   .perso img { height: 100%; width: auto; max-width: none; display: block; pointer-events: none; transition: filter 0.15s; }
   .perso:hover img, .perso:focus-visible img, .perso.choisi img { filter: brightness(1.25) drop-shadow(0 0 4px #ffd166); }
-  .etiquette { position: absolute; left: 50%; bottom: 100%; transform: translateX(-50%); margin-bottom: 2px; white-space: nowrap; font-size: clamp(0.65rem, 1.4vw, 0.85rem); background: #1b1308e6; color: #f3ead7; padding: 0.05em 0.5em; border-radius: 4px; opacity: 0; pointer-events: none; transition: opacity 0.15s; }
+  .etiquette { position: absolute; left: 50%; bottom: 100%; transform: translateX(-50%); margin-bottom: 2px; width: max-content; max-width: 12em; text-align: center; font-size: clamp(0.65rem, 1.4vw, 0.85rem); background: #1b1308e6; color: #f3ead7; padding: 0.05em 0.5em; border-radius: 4px; opacity: 0; pointer-events: none; transition: opacity 0.15s; }
   .zone .etiquette { bottom: auto; top: 50%; transform: translate(-50%, -50%); margin: 0; }
   .zone:hover .etiquette, .zone:focus-visible .etiquette, .perso:hover .etiquette, .perso:focus-visible .etiquette, .perso.choisi .etiquette { opacity: 1; }
   .symbole { position: absolute; left: 50%; bottom: 100%; margin-left: -0.3em; font-weight: 900; font-size: clamp(1.1rem, 3vw, 1.7rem); line-height: 1; text-shadow: 0 0 3px #000, 0 0 3px #000; animation: saut 1.2s infinite; pointer-events: none; }

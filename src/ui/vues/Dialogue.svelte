@@ -175,7 +175,7 @@
   .decor { position: absolute; inset: 0; background: var(--decor) center / contain no-repeat; }
   .bandeau { position: relative; display: flex; gap: 0.6rem; align-items: center; padding: 0.6rem 1rem; padding-top: calc(max(0.3rem, env(safe-area-inset-top)) + 3rem); background: linear-gradient(rgba(10,8,14,0.85), transparent); }
   .bandeau h2 { margin: 0; text-shadow: 0 2px 4px #000; }
-  .boite { position: relative; grid-row: 3; justify-self: center; width: min(1100px, calc(100% - 1rem)); margin: 0.5rem; margin-bottom: max(0.5rem, env(safe-area-inset-bottom)); max-height: 52dvh; overflow-y: auto; overscroll-behavior: contain; background: rgba(20,17,28,0.88); backdrop-filter: blur(2px); padding-right: 3rem; }
+  .boite { position: relative; grid-row: 3; justify-self: center; width: min(1100px, calc(100% - 1rem)); margin: 0.5rem; margin-bottom: max(0.5rem, env(safe-area-inset-bottom)); max-height: 52dvh; overflow-y: auto; overscroll-behavior: contain; background: rgba(20,17,28,0.88); backdrop-filter: blur(2px); padding-right: 3rem; border-bottom: 3px solid var(--or); }
   .boite.cachee { display: none; }
   .reduire { position: absolute; top: 0.4rem; right: 0.4rem; min-width: 44px; min-height: 40px; padding: 0; }
   .rouvrir { position: absolute; z-index: 5; left: 50%; translate: -50% 0; bottom: max(0.6rem, env(safe-area-inset-bottom)); min-height: 44px; background: #14111cf0; border-color: var(--or); }

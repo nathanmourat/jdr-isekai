@@ -259,6 +259,8 @@ export class SceneCombat extends Phaser.Scene {
     // les ennemis affichent leur niveau à côté de leur nom ; un nom long passe sur deux lignes pour ne pas recouvrir le voisin
     const libelleNom = c.camp === 'ennemis' ? `${c.nom} · Niv. ${c.niveau}` : c.nom;
     const nom = this.add.text(0, 10, libelleNom, { fontFamily: 'Source Sans 3', fontSize: '13px', color: '#f3ead7', stroke: '#000', strokeThickness: 3, align: 'center', wordWrap: { width: 120 } }).setOrigin(0.5, 0).setResolution(2);
+    // un nom n'est jamais coupé : s'il reste trop large (un seul long mot), la police réduit jusqu'à 80 %
+    for (let px = 13; nom.width > 124 && px > 10.4; ) { px -= 0.5; nom.setFontSize(px); }
     const zone = this.add.zone(0, -taille * echelle / 2, taille * echelle * 0.7, taille * echelle);
     const etats = this.add.text(0, -taille * echelle - 6, '', { fontFamily: 'Source Sans 3', fontSize: '14px', color: '#f3ead7', stroke: '#000', strokeThickness: 3 }).setOrigin(0.5, 1).setResolution(2);
     const items: Phaser.GameObjects.GameObject[] = [sprite];

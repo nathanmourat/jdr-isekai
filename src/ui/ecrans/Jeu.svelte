@@ -5,6 +5,7 @@
    * comme des tiroirs depuis la droite. La page ne défile jamais.
    */
   import { onMount } from 'svelte';
+  import { activiteChangee, signatureActivite } from '../activite';
   import { jeu } from '../jeu.svelte';
   import { aideDate, formaterDate, saisonDe } from '../../moteur/temps';
   import { attenteRepos, noeudCourant, rangHeros, sceneEstDisponible } from '../../moteur/partie';
@@ -87,6 +88,13 @@
   $effect(() => {
     if (vue !== vuePrecedente && vuePrecedente !== '') { tiroir = null; menuOuvert = false; }
     vuePrecedente = vue;
+  });
+  // une épreuve ou un combat qui commence sans changer de vue (contrat, examen) referme aussi le tiroir
+  let activitePrecedente: string | null = null;
+  $effect(() => {
+    const sig = signatureActivite(etat, h.id);
+    if (activiteChangee(activitePrecedente, sig)) { tiroir = null; menuOuvert = false; }
+    activitePrecedente = sig;
   });
 
   const entrees: [Panneau, string, string, string][] = [
@@ -260,7 +268,7 @@
     .infos, .meneur, .texte, .titre { display: none; }
     .barre-haut { flex-wrap: nowrap; padding-top: max(0.2rem, env(safe-area-inset-top)); padding-bottom: 0.2rem; }
     .gauche { flex-wrap: nowrap; min-width: 0; }
-    .barre-heros { font-size: 0.78rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+    .barre-heros { font-size: clamp(0.62rem, 2.6vw, 0.78rem); line-height: 1.1; white-space: normal; overflow-wrap: anywhere; max-width: 100%; }
     .droite { flex-wrap: nowrap; gap: 0.25rem; }
     .icone { min-width: 44px; min-height: 40px; padding: 0 0.4rem; }
   }

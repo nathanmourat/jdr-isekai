@@ -30,11 +30,11 @@
 
 <style>
   .voile { position: absolute; inset: 0; background: #0009; z-index: 60; }
-  .fenetre { position: absolute; z-index: 61; left: 50%; top: 50%; translate: -50% -50%; width: min(760px, calc(100% - 1.5rem)); max-height: calc(100% - 5rem); display: flex; flex-direction: column; padding: 0; animation: apparaitre 0.18s ease-out; }
+  .fenetre { position: absolute; z-index: 61; left: 50%; top: calc(50% + 1.2rem); translate: -50% -50%; width: min(760px, calc(100% - 1.5rem)); max-height: min(calc(100% - 5rem), calc(100dvh - 4.5rem)); border-bottom: 3px solid var(--or); display: flex; flex-direction: column; padding: 0; animation: apparaitre 0.18s ease-out; }
   header { display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; padding: 0.6rem 0.9rem; border-bottom: 1px solid var(--bord); }
   header h2 { margin: 0; }
   .fermer { min-width: 44px; min-height: 44px; }
-  .contenu { overflow-y: auto; padding: 0.9rem; overscroll-behavior: contain; }
+  .contenu { overflow-y: auto; padding: 0.9rem 0.9rem 1.2rem; overscroll-behavior: contain; mask-image: linear-gradient(#000 calc(100% - 1.2rem), #0008); }
   @keyframes apparaitre { from { opacity: 0; scale: 0.97; } }
   @media (prefers-reduced-motion: reduce) { .fenetre { animation: none; } }
 </style>

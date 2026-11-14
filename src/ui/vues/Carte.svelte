@@ -10,6 +10,7 @@
   import { aideNiveau, couleurNiveau, lieuAvecCombat, lieuxDesEtapes, marqueurLieu, niveauDuLieu, niveauGroupe, prochaineEtape, trouverLieu, type Marqueur } from '../../moteur/guide';
   import NiveauConseille from '../NiveauConseille.svelte';
   import Cadre169 from '../Cadre169.svelte';
+  import { ecrireTexte, lireTexte } from '../preferences';
 
   let { choisir, ville = $bindable(null) }: { choisir: (id: string) => void; ville?: string | null } = $props();
   const c = jeu.contenu!;
@@ -37,6 +38,19 @@
   const lieuxVille = $derived(villeOuverte ? lieux.filter((l) => l.ville === villeOuverte.id) : []);
   const positions = $derived(villeOuverte ? positionsImage(`cartes/${villeOuverte.plan}`) : null);
   const etape = $derived(prochaineEtape(c, etat, moi));
+  // encadré repliable, retenu pour chaque joueur sur cet appareil ; il se redéplie quand l'étape change
+  const cleEtape = $derived(etape ? `${etape.objectif}|${etape.lieu ?? ''}` : '');
+  let etapeRepliee = $state(false);
+  $effect(() => {
+    const k = `etape:${jeu.joueurActif ?? ''}`;
+    const vue = lireTexte(`${k}:vue`);
+    if (vue !== cleEtape) { ecrireTexte(`${k}:vue`, cleEtape); ecrireTexte(`${k}:repliee`, '0'); etapeRepliee = false; }
+    else etapeRepliee = lireTexte(`${k}:repliee`) === '1';
+  });
+  function basculerEtape() {
+    etapeRepliee = !etapeRepliee;
+    ecrireTexte(`etape:${jeu.joueurActif ?? ''}:repliee`, etapeRepliee ? '1' : '0');
+  }
 
   const symbole = (m: Marqueur | null) => (m === 'rendre' ? '?' : m ? '!' : '');
   const ordre: (Marqueur | null)[] = [null, 'secondaire', 'rendre', 'principale'];
@@ -132,8 +146,12 @@
       <h2>{villeOuverte ? villeOuverte.nom : region.nom}</h2>
     </div>
     {#if etape}
-      <div class="bandeau-etape carte-ui">
-        <span>➤ <strong>Prochaine étape :</strong> {etape.objectif}{#if etape.nomLieu && !etape.objectif.includes(etape.nomLieu)}{' '}<span class="discret">({etape.nomLieu})</span>{/if}{#if niveauEtape !== null}{' '}<NiveauConseille niveau={niveauEtape} aide />{/if}</span>
+      <div class="bandeau-etape carte-ui" class:repliee={etapeRepliee}>
+        <button class="replier" onclick={basculerEtape} aria-expanded={!etapeRepliee} aria-label={etapeRepliee ? 'Déplier la prochaine étape' : 'Replier la prochaine étape'}>{etapeRepliee ? '▸' : '▾'}</button>
+        {#if etapeRepliee}
+          <span class="ligne-etape"><strong>Prochaine étape :</strong> {etape.nomLieu ?? etape.objectif}{#if niveauEtape !== null} · <NiveauConseille niveau={niveauEtape} />{/if}</span>
+        {:else}
+        <span class="texte-etape">➤ <strong>Prochaine étape :</strong> {etape.objectif}{#if etape.nomLieu && !etape.objectif.includes(etape.nomLieu)}{' '}<span class="discret">({etape.nomLieu})</span>{/if}{#if niveauEtape !== null}{' '}<NiveauConseille niveau={niveauEtape} aide />{/if}</span>
         {#if etape.lieu && etape.disponible && etapeAccessible}
           <button class="principal petit" onclick={allerEtape}>Y aller</button>
         {:else if etape.attenteJour !== null}
@@ -141,6 +159,7 @@
           {#if lieux.some((l) => l.auberge)}<button class="petit" onclick={() => choisir(lieux.find((l) => l.auberge)!.id)}>Aller à l'auberge</button>{/if}
         {:else if !etape.disponible}
           <small class="discret">Pas encore possible : suivez les autres pistes en attendant.</small>
+        {/if}
         {/if}
       </div>
     {/if}
@@ -163,6 +182,10 @@
   .onglets-regions { display: flex; gap: 0.3rem; flex-wrap: wrap; }
   .onglets-regions button { background: #1d1928e6; }
   .onglets-regions .actif { border-color: var(--or); background: #3b2f18; }
+  .bandeau-etape .replier { min-width: 44px; min-height: 44px; padding: 0; flex: none; background: transparent; border: none; font-size: 1.1rem; margin: -0.4rem 0 -0.4rem -0.5rem; }
+  .bandeau-etape .texte-etape { flex: 1; min-width: 0; }
+  .bandeau-etape.repliee { flex-wrap: nowrap; padding-top: 0.2rem; padding-bottom: 0.2rem; }
+  .ligne-etape { flex: 1; min-width: 0; overflow-wrap: anywhere; }
   .bandeau-etape { display: flex; justify-content: space-between; align-items: center; gap: 0.6rem; flex-wrap: wrap; border-color: var(--or); padding: 0.5rem 0.7rem; background: #1d1928e6; font-size: 0.92rem; }
   .epee { color: #ff9b8a; }
   .niv { font-weight: 700; }
