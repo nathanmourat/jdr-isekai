@@ -11,6 +11,8 @@ const L = 960, H = 540;
 
 interface Vue {
   conteneur: Phaser.GameObjects.Container;
+  /** Nom, niveau, barres de vie et de mana : dessinés au-dessus de tous les personnages, pour qu'un voisin ne les cache jamais. */
+  etiquette: Phaser.GameObjects.Container;
   sprite: Phaser.GameObjects.Sprite;
   calque: Phaser.GameObjects.Sprite | null;
   barre: Phaser.GameObjects.Graphics;
@@ -87,11 +89,43 @@ export class SceneCombat extends Phaser.Scene {
     this.pret = true;
     this.marqueurActif = this.add.triangle(0, 0, 0, 0, 16, 0, 8, 12, 0xffd166).setDepth(50).setVisible(false);
     this.tweens.add({ targets: this.marqueurActif, y: '+=6', yoyo: true, repeat: -1, duration: 400 });
+    // le cadre change de taille (téléphone tourné, fenêtre redimensionnée) : on réajuste le zoom
+    this.scale.on(Phaser.Scale.Events.RESIZE, () => { if (this.majZoom() && this.dernier) this.afficher(this.dernier.combat, this.dernier.opts); });
     if (this.enAttente) { const e = this.enAttente; this.enAttente = null; this.afficher(e.combat, e.opts); }
+  }
+
+  // ───────────── Zoom sur l'action (écrans étroits) ─────────────
+  /**
+   * Sur un écran étroit (téléphone), le cadre de combat est réduit à la largeur de l'écran et les personnages
+   * deviennent petits. On zoome alors la caméra sur la bande où se tiennent les combattants (on coupe le ciel
+   * et les bords vides), et on rapproche un peu les combattants pour qu'ils restent dans le cadre.
+   * Sur ordinateur (cadre de 700 px de large ou plus), rien ne change.
+   */
+  private zoom = 1;
+  private dernier: { combat: Combat; opts: OptionsCombat } | null = null;
+  /** Largeur affichée du cadre en dessous de laquelle on zoome, et force du zoom. */
+  static readonly LARGEUR_ZOOM = 700;
+  static readonly ZOOM_ETROIT = 1.3;
+  /** Centre de la bande des combattants (pieds vers y = 355 à 390, têtes vers y = 160). */
+  static readonly CENTRE_ACTION = { x: L / 2, y: 300 };
+
+  /** Met la caméra au bon zoom. Renvoie true si le zoom a changé (il faut alors replacer les combattants). */
+  private majZoom(): boolean {
+    const largeur = this.scale.displaySize.width;
+    const z = largeur > 0 && largeur < SceneCombat.LARGEUR_ZOOM ? SceneCombat.ZOOM_ETROIT : 1;
+    const camera = this.cameras.main;
+    camera.setZoom(z);
+    if (z > 1) camera.centerOn(SceneCombat.CENTRE_ACTION.x, SceneCombat.CENTRE_ACTION.y);
+    else camera.centerOn(L / 2, H / 2);
+    const change = z !== this.zoom;
+    this.zoom = z;
+    return change;
   }
 
   afficher(combat: Combat, opts: OptionsCombat) {
     if (!this.pret) { this.enAttente = { combat, opts }; return; }
+    this.dernier = { combat, opts };
+    this.majZoom();
     if (combat.id !== this.combatId) this.reinitialiser(combat);
     this.dessinerFond(combat.fond);
     const positions = this.positions(combat, opts.echelle);
@@ -99,7 +133,7 @@ export class SceneCombat extends Phaser.Scene {
       if (c.parti && !this.vues.has(c.id)) continue;
       const vue = this.vues.get(c.id) ?? this.creerVue(c, opts);
       const p = positions.get(c.id);
-      if (p) this.tweens.add({ targets: vue.conteneur, x: p.x, y: p.y, duration: 250 });
+      if (p) this.tweens.add({ targets: [vue.conteneur, vue.etiquette], x: p.x, y: p.y, duration: 250 });
       vue.zone.removeAllListeners();
       const cliquable = opts.ciblesCliquables.includes(c.id);
       vue.zone.setInteractive({ useHandCursor: cliquable });
@@ -107,9 +141,9 @@ export class SceneCombat extends Phaser.Scene {
       vue.nom.setColor(cliquable ? '#ffd166' : '#f3ead7');
       this.majBarre(vue, c);
       this.majEtats(vue, c);
-      if (c.parti && vue.conteneur.alpha > 0) this.tweens.add({ targets: vue.conteneur, alpha: 0, duration: 500 });
-      if (c.ko && !c.parti) { vue.conteneur.setAlpha(0.45); vue.sprite.setAngle(c.camp === 'heros' ? -80 : 80); }
-      else if (!c.parti) { vue.conteneur.setAlpha(1); vue.sprite.setAngle(0); }
+      if (c.parti && vue.conteneur.alpha > 0) this.tweens.add({ targets: [vue.conteneur, vue.etiquette], alpha: 0, duration: 500 });
+      if (c.ko && !c.parti) { vue.conteneur.setAlpha(0.45); vue.etiquette.setAlpha(0.45); vue.sprite.setAngle(c.camp === 'heros' ? -80 : 80); }
+      else if (!c.parti) { vue.conteneur.setAlpha(1); vue.etiquette.setAlpha(1); vue.sprite.setAngle(0); }
       // invisible (Pas d'ombre, se cacher) : le personnage devient semi-transparent
       const furtif = !c.ko && c.etats.some((e) => e.id === 'furtif');
       vue.sprite.setAlpha(furtif ? 0.4 : 1);
@@ -125,7 +159,7 @@ export class SceneCombat extends Phaser.Scene {
   }
 
   private reinitialiser(combat: Combat) {
-    for (const v of this.vues.values()) { v.bulles?.remove(); v.conteneur.destroy(); }
+    for (const v of this.vues.values()) { v.bulles?.remove(); v.conteneur.destroy(); v.etiquette.destroy(); }
     this.vues.clear();
     this.combatId = combat.id;
     this.nbEvenements = Math.max(0, combat.evenements.length - 12);
@@ -160,9 +194,11 @@ export class SceneCombat extends Phaser.Scene {
         const xBase = camp === 'heros' ? (rang === 'avant' ? L * 0.36 : L * 0.17) : (rang === 'avant' ? L * 0.64 : L * 0.83);
         // plusieurs combattants au même rang : étalés en largeur, en quinconce
         const pas = Math.min(80, 220 / Math.max(1, liste.length)) * (echelle / 2);
+        // zoom sur l'action : on rapproche les combattants du centre pour qu'ils restent dans le cadre zoomé
+        const serrer = this.zoom > 1 ? 0.95 / this.zoom : 1;
         liste.forEach((c, i) => {
           const dx = (i - (liste.length - 1) / 2) * pas;
-          res.set(c.id, { x: xBase + dx, y: sol + 20 + (i % 2) * 34 });
+          res.set(c.id, { x: L / 2 + (xBase + dx - L / 2) * serrer, y: sol + 20 + (i % 2) * 34 });
         });
       }
     }
@@ -197,15 +233,16 @@ export class SceneCombat extends Phaser.Scene {
     const barre = this.add.graphics();
     // les ennemis affichent leur niveau à côté de leur nom
     const libelleNom = c.camp === 'ennemis' ? `${c.nom} · Niv. ${c.niveau}` : c.nom;
-    const nom = this.add.text(0, 10, libelleNom, { fontFamily: 'Source Sans 3', fontSize: '13px', color: '#f3ead7', stroke: '#000', strokeThickness: 3 }).setOrigin(0.5, 0);
+    const nom = this.add.text(0, 10, libelleNom, { fontFamily: 'Source Sans 3', fontSize: '13px', color: '#f3ead7', stroke: '#000', strokeThickness: 3 }).setOrigin(0.5, 0).setResolution(2);
     const zone = this.add.zone(0, -taille * echelle / 2, taille * echelle * 0.7, taille * echelle);
-    const etats = this.add.text(0, -taille * echelle - 6, '', { fontFamily: 'Source Sans 3', fontSize: '14px', color: '#f3ead7', stroke: '#000', strokeThickness: 3 }).setOrigin(0.5, 1);
+    const etats = this.add.text(0, -taille * echelle - 6, '', { fontFamily: 'Source Sans 3', fontSize: '14px', color: '#f3ead7', stroke: '#000', strokeThickness: 3 }).setOrigin(0.5, 1).setResolution(2);
     const items: Phaser.GameObjects.GameObject[] = [sprite];
     if (calque) items.push(calque);
-    items.push(barre, nom, zone, etats);
+    items.push(zone, etats);
     const conteneur = this.add.container(versDroite ? -100 : L + 100, H * 0.7, items);
     conteneur.setDepth(10);
-    const v: Vue = { conteneur, sprite, calque, barre, nom, cleTexture, anime, zone, etats, bulles: null, teinte: c.teinte ? Phaser.Display.Color.HexStringToColor(c.teinte).color : null };
+    const etiquette = this.add.container(conteneur.x, conteneur.y, [barre, nom]).setDepth(40);
+    const v: Vue = { conteneur, etiquette, sprite, calque, barre, nom, cleTexture, anime, zone, etats, bulles: null, teinte: c.teinte ? Phaser.Display.Color.HexStringToColor(c.teinte).color : null };
     this.vues.set(c.id, v);
     return v;
   }
