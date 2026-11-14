@@ -9,7 +9,8 @@
   import { tick } from 'svelte';
   import { jeu } from '../jeu.svelte';
   import { conditionHeros, conditionScene, etapeContrat, listeHeros, palierCompagnon, rangGuilde, scenesDisponibles } from '../../moteur/partie';
-  import { absentsDuGroupe, marqueurPnj, type Marqueur } from '../../moteur/guide';
+  import { absentsDuGroupe, aideNiveau, couleurNiveau, marqueurPnj, niveauGroupe, niveauScene, sceneAvecCombat, type Marqueur } from '../../moteur/guide';
+  import NiveauConseille from '../NiveauConseille.svelte';
   import { avantPlanDecor, imageDecor, imagePnjDecor, positionsImage, TAILLE_PNJ_DECOR } from '../../rendu/assets';
   import { portraitPersonnage } from '../outils';
   import { fusionsPossibles } from '../../moteur/fusions';
@@ -53,7 +54,20 @@
   const scenesPnj = $derived(pnjChoisi ? scenes.filter((s) => s.pnj === pnjChoisi) : []);
   const symbole = (m: Marqueur | null) => (m === 'rendre' ? '?' : m ? '!' : '');
   const titreSymbole = (m: Marqueur | null) => (m === 'principale' ? 'Quête principale' : m === 'rendre' ? 'Quête à rendre' : m ? 'Quête secondaire' : '');
-  function lancer(s: Scene) { jeu.agir({ type: 'lancer_scene', scene: s.id }); }
+  /** Avant un combat bien trop fort pour le groupe (rouge), on demande une confirmation. */
+  function tropFort(niveau: number | null): boolean {
+    if (niveau === null) return false;
+    const groupe = niveauGroupe(etat);
+    return couleurNiveau(niveau, groupe) === 'rouge' && !confirm(`${aideNiveau(niveau, groupe)}\n\nY aller quand même ?`);
+  }
+  function lancer(s: Scene) {
+    if (sceneAvecCombat(s) && tropFort(niveauScene(c, s))) return;
+    jeu.agir({ type: 'lancer_scene', scene: s.id });
+  }
+  function combatDuContrat() {
+    if (etapeIci && tropFort(etapeIci.contrat.niveau)) return;
+    jeu.agir({ type: 'etape_contrat' });
+  }
   const etiquetteScene = (s: Scene) => (s.rend_quete ? 'Quête à rendre' : s.quete ? (c.quetes[s.quete].type === 'principale' ? 'Quête principale' : 'Quête secondaire') : '');
   async function montrerPanneaux() { await tick(); panneaux?.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }
 
@@ -115,7 +129,7 @@
 {#snippet boutonScene(s: Scene, verbe: string)}
   <div class="item">
     <div class="ligne entre">
-      <span>{s.titre}{#if etiquetteScene(s)} <span class="badge or">{etiquetteScene(s)}</span>{/if}</span>
+      <span>{s.titre}{#if etiquetteScene(s)} <span class="badge or">{etiquetteScene(s)}</span>{/if}{#if niveauScene(c, s) !== null} <NiveauConseille niveau={niveauScene(c, s)!} />{/if}</span>
       <button class="principal" onclick={() => lancer(s)}>{verbe}</button>
     </div>
     {#if s.type === 'groupe'}
@@ -189,7 +203,7 @@
 
     {#if etapeIci}
       <div class="carte-ui contrat-etape">
-        <h3>📜 Contrat : {etapeIci.contrat.titre} <span class="badge or">étape {etapeIci.numero}/{etapeIci.total}</span></h3>
+        <h3>📜 Contrat : {etapeIci.contrat.titre} <span class="badge or">étape {etapeIci.numero}/{etapeIci.total}</span> <NiveauConseille niveau={etapeIci.contrat.niveau} /></h3>
         {#each etapeIci.notes as n, i (i)}<p class="discret">{n}</p>{/each}
         <p>{etapeIci.etape.texte}</p>
         {#if etapeIci.etape.choix.length}
@@ -197,7 +211,7 @@
             {#each etapeIci.etape.choix as ch, i (i)}<button onclick={() => jeu.agir({ type: 'etape_contrat', choix: i })}>{ch.texte}</button>{/each}
           </div>
         {:else if etapeIci.etape.combat}
-          <button class="principal" onclick={() => jeu.agir({ type: 'etape_contrat' })}>⚔ {etapeIci.etape.bouton ?? 'Engager le combat'}</button>
+          <button class="principal" onclick={combatDuContrat}>⚔ {etapeIci.etape.bouton ?? 'Engager le combat'}</button>
         {:else if etapeIci.etape.test}
           <button class="principal" onclick={() => jeu.agir({ type: 'etape_contrat' })}>{etapeIci.etape.bouton ?? 'Tenter'} ({etapeIci.etape.test.carac}, difficulté {etapeIci.etape.test.difficulte})</button>
         {:else}
@@ -234,8 +248,9 @@
           <p class="discret">Un contrat se joue en plusieurs étapes sur la carte : le prochain lieu clignote. On revient ici toucher la récompense. Un seul contrat à la fois.</p>
           {#each contrats as ct (ct.id)}
             <div class="item">
-              <div class="ligne"><strong>{ct.titre}</strong><span class="badge">rang {ct.rang_min}</span>{#if ct.etapes.length}<span class="badge">{ct.etapes.length} étapes</span>{/if}</div>
+              <div class="ligne"><strong>{ct.titre}</strong><span class="badge">rang {ct.rang_min}</span><NiveauConseille niveau={ct.niveau} />{#if ct.etapes.length}<span class="badge">{ct.etapes.length} étapes</span>{/if}</div>
               <p class="discret">{ct.description} Récompense : {ct.recompenses.or} or, {ct.recompenses.xp} XP, {ct.recompenses.points_guilde} pts de guilde.</p>
+              {#if couleurNiveau(ct.niveau, niveauGroupe(etat)) !== 'vert'}<p class={`aide-niveau ${couleurNiveau(ct.niveau, niveauGroupe(etat))}`}>{aideNiveau(ct.niveau, niveauGroupe(etat))}</p>{/if}
               <button disabled={ordre.indexOf(rang) < ordre.indexOf(ct.rang_min) || !!contratEnCours} title={contratEnCours ? "Terminez d'abord votre contrat en cours" : ''} onclick={() => jeu.agir({ type: 'contrat', contrat: ct.id })}>Accepter (en solo)</button>
             </div>
           {/each}
@@ -305,6 +320,9 @@
   .en-cours { border: 1px solid var(--or); border-radius: 8px; padding: 0.5rem 0.7rem; margin-bottom: 0.5rem; }
   .entre { justify-content: space-between; }
   .alerte { color: #ffb4a8; }
+  .aide-niveau { font-size: 0.85rem; }
+  .aide-niveau.orange { color: #f2a33a; }
+  .aide-niveau.rouge { color: var(--rouge); }
   .colonnes { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
   .item { padding: 0.4rem 0; border-bottom: 1px solid var(--bord); }
   .item:last-of-type { border-bottom: none; }

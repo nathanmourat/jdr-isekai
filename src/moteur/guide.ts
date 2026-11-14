@@ -4,7 +4,8 @@
  */
 import type { Contenu } from '../contenu/types';
 import type { Scene } from '../contenu/schemas';
-import { conditionHeros, etapeContrat, scenesDisponibles, sceneEstDisponible, type EtatPartie } from './partie';
+import { conditionHeros, etapeContrat, listeHeros, scenesDisponibles, sceneEstDisponible, type EtatPartie } from './partie';
+import { niveauMoyen } from './personnage';
 import { entrees, valeurs, vrai } from './outils';
 import { versJour } from './temps';
 
@@ -132,5 +133,60 @@ export function lieuxDesEtapes(contenu: Contenu, etat: EtatPartie, herosId: stri
   }
   const ec = vrai(herosId) ? etapeContrat(contenu, etat, herosId) : null;
   if (ec && !res.includes(ec.etape.lieu)) res.push(ec.etape.lieu);
+  return res;
+}
+// ───────────────────────────── Niveau conseillé des quêtes et des contrats ─────────────────────────────
+
+/** vert : le groupe a le niveau ; orange : il lui manque 1 ou 2 niveaux ; rouge : il lui en manque 3 ou plus. */
+export type CouleurNiveau = 'vert' | 'orange' | 'rouge';
+
+/** Niveau du groupe : la moyenne des niveaux des héros (arrondie à l'inférieur). */
+export function niveauGroupe(etat: EtatPartie): number {
+  return niveauMoyen(listeHeros(etat));
+}
+
+export function couleurNiveau(conseille: number, groupe: number): CouleurNiveau {
+  const manque = conseille - groupe;
+  if (manque <= 0) return 'vert';
+  return manque <= 2 ? 'orange' : 'rouge';
+}
+
+/** Phrase d'aide affichée à côté du niveau conseillé. */
+export function aideNiveau(conseille: number, groupe: number): string {
+  const debut = `Conseillé : niveau ${conseille}. Votre groupe : niveau ${groupe}.`;
+  const couleur = couleurNiveau(conseille, groupe);
+  if (couleur === 'vert') return `${debut} Vous avez le niveau.`;
+  if (couleur === 'orange') return `${debut} Ce sera difficile : entraînez-vous ou faites d'abord des contrats plus faciles.`;
+  return `${debut} C'est bien trop fort pour l'instant : entraînez-vous ou faites d'abord des contrats plus faciles.`;
+}
+
+/** Niveau conseillé d'une quête : celui de son étape en cours si elle en a un, sinon celui de la quête. */
+export function niveauQuete(contenu: Contenu, etat: EtatPartie, queteId: string): number {
+  const def = contenu.quetes[queteId];
+  const e = def.etapes.find((x) => x.id === etat.quetes[queteId]?.etape);
+  return e?.niveau ?? def.niveau;
+}
+
+/** Niveau conseillé d'une scène : celui de l'étape de quête qui la lance (null : scène sans quête). */
+export function niveauScene(contenu: Contenu, s: Scene): number | null {
+  if (!vrai(s.quete)) return null;
+  const def = contenu.quetes[s.quete];
+  if (!def) return null;
+  return def.etapes.find((x) => x.scene === s.id)?.niveau ?? def.niveau;
+}
+
+/** Niveau conseillé le plus élevé parmi les étapes en cours qui mènent à ce lieu (quêtes, contrat du héros) ; null s'il n'y en a pas. */
+export function niveauDuLieu(contenu: Contenu, etat: EtatPartie, lieu: string, herosId: string | null): number | null {
+  let res: number | null = null;
+  const garder = (n: number) => { if (res === null || n > res) res = n; };
+  for (const [id, q] of entrees(etat.quetes)) {
+    const def = contenu.quetes[id];
+    if (!def || q.terminee) continue;
+    const e = def.etapes.find((x) => x.id === q.etape);
+    const l = e ? e.lieu ?? (vrai(e.scene) ? contenu.scenes[e.scene]?.lieu : undefined) : undefined;
+    if (l === lieu) garder(e?.niveau ?? def.niveau);
+  }
+  const ec = vrai(herosId) ? etapeContrat(contenu, etat, herosId) : null;
+  if (ec && ec.etape.lieu === lieu) garder(ec.contrat.niveau);
   return res;
 }

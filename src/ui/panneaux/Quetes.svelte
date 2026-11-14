@@ -2,6 +2,8 @@
   /** Quêtes : pour chacune, l'étape en cours, le prochain lieu et la liste des étapes. Le contrat en cours y figure aussi. */
   import { jeu } from '../jeu.svelte';
   import { etapeContrat } from '../../moteur/partie';
+  import { niveauQuete } from '../../moteur/guide';
+  import NiveauConseille from '../NiveauConseille.svelte';
   const c = jeu.contenu!;
   const etat = $derived(jeu.etat!);
   const quetes = $derived(Object.entries(etat.quetes).map(([id, q]) => ({ def: c.quetes[id], ...q })).sort((a, b) => Number(a.terminee) - Number(b.terminee)));
@@ -14,7 +16,7 @@
 <section class="grille">
   {#if contrat}
     <article class="carte-ui">
-      <div class="ligne"><h3>{contrat.contrat.titre}</h3><span class="badge">Contrat de guilde</span><span class="badge or">étape {contrat.numero}/{contrat.total}</span></div>
+      <div class="ligne"><h3>{contrat.contrat.titre}</h3><span class="badge">Contrat de guilde</span><span class="badge or">étape {contrat.numero}/{contrat.total}</span><NiveauConseille niveau={contrat.contrat.niveau} aide /></div>
       <p class="discret">{contrat.contrat.description}</p>
       <ol class="etapes">
         {#each contrat.contrat.etapes as e, i (i)}
@@ -28,7 +30,7 @@
   {#each quetes as q (q.def.id)}
     {@const index = q.def.etapes.findIndex((e) => e.id === q.etape)}
     <article class="carte-ui" class:terminee={q.terminee}>
-      <div class="ligne"><h3>{q.def.titre}</h3><span class="badge">{types[q.def.type]}</span>{#if q.terminee}<span class="badge or">terminée</span>{:else if q.def.etapes.length > 1 && index >= 0}<span class="badge or">étape {index + 1}/{q.def.etapes.length}</span>{/if}</div>
+      <div class="ligne"><h3>{q.def.titre}</h3><span class="badge">{types[q.def.type]}</span>{#if q.terminee}<span class="badge or">terminée</span>{:else if q.def.etapes.length > 1 && index >= 0}<span class="badge or">étape {index + 1}/{q.def.etapes.length}</span>{/if}{#if !q.terminee}<NiveauConseille niveau={niveauQuete(c, etat, q.def.id)} aide />{/if}</div>
       <p class="discret">{q.def.resume}</p>
       {#if !q.terminee}
         <ol class="etapes">

@@ -1,20 +1,23 @@
+# `niveau` : niveau conseillé de la quête (obligatoire). Une étape peut avoir son propre `niveau` (quête longue).
 quetes:
   - id: q-ch1-appel
     titre: "Chapitre 1 — L'Appel"
     type: principale
     chapitre: 1
+    niveau: 1
     resume: "Invoqués ou revenus d'une autre vie, vous voici à Lysmont. Survivez, entrez à la Guilde, et découvrez ce que la Couronne attend de vous."
     etapes:
       - { id: appel, objectif: "Écouter le Grand Prieur au Temple du Seuil.", scene: ch1-appel, lieu: temple-du-seuil }
       - { id: examen, objectif: "Passer l'examen d'entrée de la Guilde.", scene: ch1-examen, lieu: guilde }
-      - { id: crypte, objectif: "Explorer la Crypte de la Fontaine (Brumaire 1013).", scene: ch1-crypte, lieu: crypte-fontaine }
-      - { id: lanternes, objectif: "Assister à la Fête des Lanternes (15 Floréal 1014).", scene: ch1-lanternes, lieu: lysmont-place }
-      - { id: serment, objectif: "Répondre à la convocation du roi (Nivôse 1014).", scene: ch1-serment, lieu: chateau }
+      - { id: crypte, objectif: "Explorer la Crypte de la Fontaine (Brumaire 1013).", scene: ch1-crypte, lieu: crypte-fontaine, niveau: 4 }
+      - { id: lanternes, objectif: "Assister à la Fête des Lanternes (15 Floréal 1014).", scene: ch1-lanternes, lieu: lysmont-place, niveau: 4 }
+      - { id: serment, objectif: "Répondre à la convocation du roi (Nivôse 1014).", scene: ch1-serment, lieu: chateau, niveau: 6 }
       - { id: fin, objectif: "Chapitre terminé." }
   - id: q-boutique
     titre: "Premiers pas au Comptoir"
     type: secondaire
     chapitre: 1
+    niveau: 1
     resume: "Dame Halvine vous montre comment acheter et vendre dans sa boutique."
     etapes:
       - { id: acheter, objectif: "Acheter un objet utile au Comptoir de Halvine (une petite potion de soin, par exemple).", lieu: boutique, declencheur: { acheter: boutique } }
@@ -24,6 +27,7 @@ quetes:
     titre: "Les loups de la Combe-aux-Saules"
     type: secondaire
     chapitre: 1
+    niveau: 1
     resume: "Gareth le fermier perd ses moutons, et sa fille n'ose plus sortir."
     etapes:
       - { id: contrat, objectif: "Prendre l'affaire auprès de Dame Rowena, à la Guilde.", scene: sq-loups-guilde, lieu: guilde }
@@ -35,6 +39,7 @@ quetes:
     titre: "Le marchand de reliques"
     type: secondaire
     chapitre: 1
+    niveau: 2
     resume: "Au Chaudron Fêlé, un marchand vend des « os de saint » à prix d'or."
     etapes:
       - { id: enqueter, objectif: "Approcher Ferrand à la taverne.", scene: sq-reliques, lieu: taverne }
@@ -42,6 +47,7 @@ quetes:
     titre: "Les disparus du quartier des Tanneurs"
     type: secondaire
     chapitre: 1
+    niveau: 3
     resume: "Trois personnes ont disparu en un mois dans les ruelles des Tanneurs."
     etapes:
       - { id: enqueter, objectif: "Écouter les habitants du quartier des Tanneurs.", scene: sq-tanneurs-plainte, lieu: quartier-tanneurs }
@@ -52,6 +58,7 @@ quetes:
     titre: "L'apprenti de l'Ordre"
     type: secondaire
     chapitre: 1
+    niveau: 2
     resume: "Sœur Elianne s'inquiète : son apprenti Tobin passe ses nuits dans les archives interdites."
     etapes:
       - { id: parler, objectif: "Parler à Sœur Elianne au Temple du Seuil.", scene: sq-apprenti, lieu: temple-du-seuil }
@@ -59,6 +66,7 @@ quetes:
     titre: "Le tournoi des écuyers"
     type: secondaire
     chapitre: 1
+    niveau: 2
     resume: "Aveline arbitre le tournoi des écuyers ; il manque un participant… ou un adversaire."
     etapes:
       - { id: participer, objectif: "Se présenter à l'arène.", scene: sq-tournoi-inscription, lieu: arene }
@@ -68,6 +76,7 @@ quetes:
     titre: "Le Serment brisé"
     type: compagnon
     chapitre: 1
+    niveau: 3
     resume: "Le père d'Aveline a été exécuté pour trahison après la chute de Valgrane. Elle n'y a jamais cru."
     etapes:
       - { id: confidence, objectif: "Gagner la confiance d'Aveline (palier « Proche »)." }

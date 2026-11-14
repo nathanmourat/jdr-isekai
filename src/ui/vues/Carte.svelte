@@ -7,7 +7,8 @@
   import { conditionScene, listeHeros } from '../../moteur/partie';
   import { formaterDate } from '../../moteur/temps';
   import { imageCarte, imagePlan, positionsImage } from '../../rendu/assets';
-  import { lieuAvecCombat, lieuxDesEtapes, marqueurLieu, prochaineEtape, type Marqueur } from '../../moteur/guide';
+  import { aideNiveau, couleurNiveau, lieuAvecCombat, lieuxDesEtapes, marqueurLieu, niveauDuLieu, niveauGroupe, prochaineEtape, type Marqueur } from '../../moteur/guide';
+  import NiveauConseille from '../NiveauConseille.svelte';
 
   let { choisir, ville = $bindable(null) }: { choisir: (id: string) => void; ville?: string | null } = $props();
   const c = jeu.contenu!;
@@ -41,6 +42,17 @@
     const p = positions?.[l.id] ?? l.position_plan ?? { x: 200 + (i % 4) * 290, y: 200 + Math.floor(i / 4) * 200 };
     return `left:${(p.x / 1280) * 100}%; top:${(p.y / 720) * 100}%`;
   }
+  /** Infobulle d'un lieu : son nom, et le niveau conseillé de l'étape qui y mène. */
+  function infobulle(id: string, nom: string): string {
+    const n = niveauDuLieu(c, etat, id, moi);
+    return n === null ? nom : `${nom} — étape en cours. ${aideNiveau(n, niveauGroupe(etat))}`;
+  }
+  /** Couleur du niveau conseillé de l'étape qui mène à ce lieu ('' s'il n'y en a pas). */
+  function couleurLieu(id: string): string {
+    const n = niveauDuLieu(c, etat, id, moi);
+    return n === null ? '' : `niv-${couleurNiveau(n, niveauGroupe(etat))}`;
+  }
+  const niveauEtape = $derived(etape?.lieu ? niveauDuLieu(c, etat, etape.lieu, moi) : null);
   function allerEtape() {
     if (!etape?.lieu) return;
     choisir(etape.lieu);
@@ -51,7 +63,7 @@
   <h2>{villeOuverte ? villeOuverte.nom : region.nom}</h2>
   {#if etape}
     <div class="etape carte-ui">
-      <span>➤ <strong>Prochaine étape :</strong> {etape.objectif}{#if etape.nomLieu && !etape.objectif.includes(etape.nomLieu)}{' '}<span class="discret">({etape.nomLieu})</span>{/if}</span>
+      <span>➤ <strong>Prochaine étape :</strong> {etape.objectif}{#if etape.nomLieu && !etape.objectif.includes(etape.nomLieu)}{' '}<span class="discret">({etape.nomLieu})</span>{/if}{#if niveauEtape !== null}{' '}<NiveauConseille niveau={niveauEtape} aide />{/if}</span>
       {#if etape.lieu && etape.disponible && lieux.some((l) => l.id === etape.lieu)}
         <button class="principal petit" onclick={allerEtape}>Y aller</button>
       {:else if etape.attenteJour !== null}
@@ -69,10 +81,10 @@
       <img class="pixel" src={imagePlan(villeOuverte.plan, villeOuverte.nom)} alt={`Plan : ${villeOuverte.nom}`} />
       {#each lieuxVille as l, i (l.id)}
         {@const m = marqueurLieu(c, etat, l.id, moi)}
-        <button class={`lieu ${m ?? ''}`} class:etape={etapes.includes(l.id)} data-lieu={l.id} aria-label={l.nom} style={positionPlan(l, i)} onclick={() => choisir(l.id)}>
+        <button class={`lieu ${m ?? ''}`} class:etape={etapes.includes(l.id)} data-lieu={l.id} aria-label={l.nom} title={infobulle(l.id, l.nom)} style={positionPlan(l, i)} onclick={() => choisir(l.id)}>
           {#if m}<span class="symbole">{symbole(m)}</span>{/if}
           <span class="point"></span>
-          <span class="nom">{#if lieuAvecCombat(c, etat, l.id, moi)}<span class="epee" title="Combat possible ici">⚔ </span>{/if}{l.nom}</span>
+          <span class="nom">{#if lieuAvecCombat(c, etat, l.id, moi)}<span class="epee" title="Combat possible ici">⚔ </span>{/if}{l.nom}{#if niveauDuLieu(c, etat, l.id, moi) !== null} <span class={`niv ${couleurLieu(l.id)}`}>niv. {niveauDuLieu(c, etat, l.id, moi)}</span>{/if}</span>
         </button>
       {/each}
     </div>
@@ -89,10 +101,10 @@
       {/each}
       {#each horsVille as l (l.id)}
         {@const m = marqueurLieu(c, etat, l.id, moi)}
-        <button class={`lieu ${m ?? ''}`} class:etape={etapes.includes(l.id)} data-lieu={l.id} aria-label={l.nom} style={`left:${(l.position.x / 1920) * 100}%; top:${(l.position.y / 1080) * 100}%`} onclick={() => choisir(l.id)}>
+        <button class={`lieu ${m ?? ''}`} class:etape={etapes.includes(l.id)} data-lieu={l.id} aria-label={l.nom} title={infobulle(l.id, l.nom)} style={`left:${(l.position.x / 1920) * 100}%; top:${(l.position.y / 1080) * 100}%`} onclick={() => choisir(l.id)}>
           {#if m}<span class="symbole">{symbole(m)}</span>{/if}
           <span class="point"></span>
-          <span class="nom">{#if lieuAvecCombat(c, etat, l.id, moi)}<span class="epee" title="Combat possible ici">⚔ </span>{/if}{l.nom}</span>
+          <span class="nom">{#if lieuAvecCombat(c, etat, l.id, moi)}<span class="epee" title="Combat possible ici">⚔ </span>{/if}{l.nom}{#if niveauDuLieu(c, etat, l.id, moi) !== null} <span class={`niv ${couleurLieu(l.id)}`}>niv. {niveauDuLieu(c, etat, l.id, moi)}</span>{/if}</span>
         </button>
       {/each}
     </div>
@@ -103,6 +115,10 @@
 <style>
   .etape { display: flex; justify-content: space-between; align-items: center; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 0.6rem; border-color: var(--or); }
   .epee { color: #ff9b8a; }
+  .niv { font-weight: 700; }
+  .niv-vert { color: var(--vert); }
+  .niv-orange { color: #f2a33a; }
+  .niv-rouge { color: var(--rouge); }
   .carte { position: relative; border-radius: var(--rayon); overflow: hidden; border: 1px solid var(--bord); }
   .carte img { display: block; width: 100%; height: auto; }
   /* Zone cliquable FIXE de 44 × 44 px, centrée sur le point par des marges (jamais par transform : le style

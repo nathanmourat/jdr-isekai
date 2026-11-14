@@ -388,10 +388,14 @@ export const zQuete = z.object({
   titre: z.string(),
   type: z.enum(['principale', 'secondaire', 'classe', 'compagnon', 'contrat']),
   chapitre: z.number().int(),
+  /** Niveau conseillé (comparé au niveau moyen du groupe : vert, orange, rouge). */
+  niveau: z.number({ error: 'niveau conseillé obligatoire (champ « niveau »)' }).int().min(1),
   region: z.string().default('aubeclaire'),
   resume: z.string(),
   etapes: z.array(z.object({
     id: z.string(), objectif: z.string(), scene: z.string().optional(), lieu: z.string().optional(),
+    /** Niveau conseillé de cette étape, s'il diffère de celui de la quête. */
+    niveau: z.number().int().min(1).optional(),
     /** L'étape se valide toute seule quand le héros fait cette action (puis la quête passe à l'étape suivante). */
     declencheur: z.object({ acheter: z.string().optional(), vendre: z.boolean().optional() }).optional(),
   })),
@@ -507,6 +511,8 @@ export const zContrat = z.object({
   titre: z.string(),
   description: z.string(),
   rang_min: z.string().default('F'),
+  /** Niveau conseillé (comparé au niveau moyen du groupe : vert, orange, rouge). */
+  niveau: z.number({ error: 'niveau conseillé obligatoire (champ « niveau »)' }).int().min(1),
   etapes: z.array(zEtapeContrat).default([]),
   rencontre: z.string().optional(),
   test: z.object({ carac: zCarac, difficulte: z.number() }).optional(),

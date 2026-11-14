@@ -7,6 +7,7 @@ contrats:
     titre: "Chasse aux loups"
     description: "Des loups rôdent près des bergeries de la Combe."
     rang_min: F
+    niveau: 1
     rencontre: loups-combe
     duree_jours: 3
     recompenses: { or: 30, xp: 45, points_guilde: 20 }
@@ -31,6 +32,7 @@ contrats:
     titre: "Cueillette de lune-sauge"
     description: "Trouver de la lune-sauge pour l'apothicaire (test d'Esprit)."
     rang_min: F
+    niveau: 1
     test: { carac: ESP, difficulte: 18 }
     duree_jours: 2
     recompenses: { or: 25, xp: 30, points_guilde: 15, objets: [antidote] }
@@ -48,6 +50,7 @@ contrats:
     titre: "Gobelins sur la route du nord"
     description: "Des gobelins cendrés attaquent les charrettes."
     rang_min: F
+    niveau: 2
     rencontre: gobelins-route
     duree_jours: 4
     recompenses: { or: 40, xp: 60, points_guilde: 25 }
@@ -65,6 +68,7 @@ contrats:
     titre: "Médiation au marché"
     description: "Calmer une dispute entre deux marchands (test de Charisme)."
     rang_min: E
+    niveau: 2
     test: { carac: CHA, difficulte: 19 }
     duree_jours: 1
     recompenses: { or: 50, xp: 35, points_guilde: 25 }
@@ -82,6 +86,7 @@ contrats:
     titre: "Bandits de grand chemin"
     description: "Escorter une caravane jusqu'au gué de Valmont."
     rang_min: E
+    niveau: 2
     rencontre: bandits-route
     duree_jours: 5
     recompenses: { or: 65, xp: 80, points_guilde: 35, objets: [potion-soin-petite] }
@@ -100,6 +105,7 @@ contrats:
     titre: "Le nid sous la crypte"
     description: "Nettoyer un nid d'araignées géantes."
     rang_min: D
+    niveau: 3
     rencontre: crypte-araignees
     duree_jours: 3
     recompenses: { or: 80, xp: 110, points_guilde: 45 }
@@ -117,6 +123,7 @@ contrats:
     titre: "Rats dans les égouts"
     description: "Les égouts sous la place de Lysmont grouillent de rats géants et de gelées."
     rang_min: F
+    niveau: 1
     rencontre: egouts-lysmont
     duree_jours: 2
     recompenses: { or: 25, xp: 40, points_guilde: 20 }
@@ -134,6 +141,7 @@ contrats:
     titre: "Les sangliers des champs"
     description: "Deux sangliers ravagent les champs de blé au nord de la capitale."
     rang_min: F
+    niveau: 3
     rencontre: sangliers-champs
     duree_jours: 3
     recompenses: { or: 35, xp: 60, points_guilde: 25, objets: [ration] }
@@ -151,6 +159,7 @@ contrats:
     titre: "La grotte aux chauves-souris"
     description: "Des mineurs refusent de retourner au travail : la grotte est infestée."
     rang_min: E
+    niveau: 2
     rencontre: grotte-chauves-souris
     duree_jours: 3
     recompenses: { or: 50, xp: 70, points_guilde: 30 }
