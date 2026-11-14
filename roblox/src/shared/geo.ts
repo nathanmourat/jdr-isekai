@@ -97,6 +97,12 @@ export const LIEU_DU_DECOR: Record<string, string> = {
 	breche: "breche-du-mur",
 	camp: "camp-des-allies",
 	"plaine-cendree": "plaine-cendree",
+	// chapitre 6 : Terres Cendrées
+	cendres: "foret-petrifiee",
+	voile: "foret-petrifiee",
+	"lac-de-lave": "lac-de-lave",
+	citadelle: "citadelle-porte",
+	sommet: "citadelle-sommet",
 };
 
 /** Hauteur à laquelle est dessiné le donjon (au-dessus du monde). */

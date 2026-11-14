@@ -59,7 +59,7 @@ if (graine === 'equipement') {
 }
 if (graine === 'contrats') scenarioContrats();
 if (graine !== 'contrats') for (const s of ['ch1-appel', 'ch1-examen', 'sq-tournoi', 'sq-loups', 'ch1-crypte', 'sq-tanneurs', 'ch1-lanternes', 'ch1-serment']) jouerSceneGroupe(c, r, s);
-// graine « saison » : les chapitres 2 à 5 en plus (Marche des Sables, Sylvenoire, Grisfer et l'Archipel, Mur d'Aube)
+// graine « saison » : toute la saison 1 (chapitres 2 à 6, jusqu'à la fin)
 if (graine === 'saison') {
   finirTempsLibre(c, r);
   jouer(c, r, { type: 'chapitre_suivant', joueur: 'j1' });
@@ -80,6 +80,11 @@ if (graine === 'saison') {
   jouer(c, r, { type: 'chapitre_suivant', joueur: 'j1' });
   dormirHistoire(c, r);
   for (const s of ['ch5-depart', 'ch5-fort', 'sq-convoi-retour', 'ch5-chute', 'sq-espion-retour', 'ch5-rang-s', 'ch5-aldric', 'sq-chiens-plaine', 'ch5-contre-offensive']) jouerSceneGroupe(c, r, s);
+  // chapitre 6 : les Terres Cendrées, Orvan en 3 phases et la fin de la saison
+  finirTempsLibre(c, r);
+  jouer(c, r, { type: 'chapitre_suivant', joueur: 'j1' });
+  dormirHistoire(c, r);
+  for (const s of ['ch6-depart', 'ch6-cendrebourg', 'sq-enfants-retour', 'ch6-souvenirs', 'sq-pretres-retour', 'ch6-citadelle', 'ch6-orvan']) jouerSceneGroupe(c, r, s);
 }
 finirTempsLibre(c, r);
 

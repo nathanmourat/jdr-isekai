@@ -1,0 +1,99 @@
+# Région du chapitre 6 : les Terres Cendrées et la Citadelle d'Obsidienne (niveaux 34 à 40). Positions en pixels sur la carte (1920 × 1080).
+regions:
+  - id: terres-cendrees
+    nom: "Terres Cendrées"
+    description: "Au-delà du Mur : des plaines de cendre, des forêts de pierre, des lacs de lave, et au centre, la Citadelle d'Obsidienne."
+    carte: terres-cendrees
+    chapitre: 6
+    position_monde: { x: 960, y: 40 }
+    disponible_si: { flag: ch6-depart-fait }
+    villes:
+      - id: camp-de-l-aube
+        nom: "Camp de l'Aube"
+        description: "Le camp de l'alliance, planté au milieu des Cendres : tentes elfes, forges naines, et un dragon qui monte la garde."
+        plan: camp-de-l-aube-plan
+        position: { x: 1000, y: 880 }
+    lieux:
+      - id: camp-tentes
+        nom: "La Tente des Braves"
+        description: "Une grande tente de toile, des lits de camp, et la soupe de Mère Brisac, qui a suivi l'armée « parce que sinon, qui vous nourrirait ? »."
+        decor: camp-tentes
+        ville: camp-de-l-aube
+        auberge: true
+        position: { x: 1000, y: 900 }
+        position_plan: { x: 640, y: 420 }
+        disponible_si: { flag: ch6-depart-fait }
+        pnj: [{ id: mere-brisac }, { id: ysoria, si: { flag: ysoria-recrutee } }, { id: morra, si: { flag: morra-recrutee } }, { id: kaya, si: { flag: kaya-recrutee } }, { id: aveline, si: { flag: aveline-rencontree } }]
+        gerant: mere-brisac
+        boutique: [ration, potion-soin-supreme, potion-mana-grande, gateau-lysmont]
+      - id: camp-forge
+        nom: "La Forge de campagne"
+        description: "Maîtresse Durna a suivi les nains jusqu'ici. Son enclume est posée sur un rocher d'obsidienne. « Le meilleur métal du monde, et il est gratuit ! »"
+        decor: camp-forge
+        ville: camp-de-l-aube
+        position: { x: 920, y: 860 }
+        position_plan: { x: 380, y: 400 }
+        disponible_si: { flag: ch6-depart-fait }
+        pnj: [{ id: durna }, { id: nadja, si: { flag: nadja-rencontree } }]
+        gerant: durna
+        boutique: [
+          potion-soin-supreme, potion-mana-grande, antidote, bombe-feu, bombe-fumee, epee-vi, epee-vi-maitre, deux-mains-vi,
+          deux-mains-vi-maitre, masse-vi, masse-vi-maitre, dague-vi, dague-vi-maitre, arc-vi, arc-vi-maitre, arbalete-vi,
+          arbalete-vi-maitre, baton-vi, baton-vi-maitre, sceptre-vi, sceptre-vi-maitre, orbe-vi, orbe-vi-maitre,
+          instrument-vi, instrument-vi-maitre, lourde-vi, lourde-vi-maitre, intermediaire-vi, intermediaire-vi-maitre,
+          legere-vi, legere-vi-maitre, bouclier-vi, bouclier-vi-maitre, anneau-vi, anneau-vi-maitre, amulette-vi,
+          amulette-vi-maitre, talisman-vi, talisman-vi-maitre, carquois-vi, carquois-vi-maitre, sacoche-vi, sacoche-vi-maitre,
+        ]
+      - id: guilde-camp
+        nom: "Comptoir de la Guilde (Camp de l'Aube)"
+        description: "La tente de commandement de la Guilde. Sur le tableau, les dernières missions de la guerre."
+        decor: guilde
+        ville: camp-de-l-aube
+        position: { x: 1080, y: 860 }
+        position_plan: { x: 1020, y: 380 }
+        disponible_si: { flag: ch6-depart-fait }
+        pnj: [{ id: valka }, { id: elianne, si: { flag: elianne-recrutee } }, { id: seraphine, si: { flag: seraphine-recrutee } }, { id: ilysse, si: { flag: ilysse-recrutee } }]
+        gerant: valka
+        boutique: [
+          potion-soin-supreme, potion-mana-grande, armure-de-cendre-trempee, robe-tissee-de-cendre, robe-du-lien-eternel,
+          tenue-de-l-infiltre-cendre, armure-du-dernier-rempart, tenue-anti-cendre, cuirasse-de-cuir-cendre, robe-de-l-esperance,
+          armure-de-l-enrage, manteau-du-dernier-refrain, anneau-du-premier-sceau, cur-d-ether-pur, sceau-des-mille-esprits,
+          anneau-du-prince-disparu, egide-d-obsidienne, laboratoire-portatif, carquois-sans-fond, cur-de-l-aube,
+          anneau-du-feu-interieur, anneau-des-voix-perdues,
+        ]
+      # ── Hors du camp
+      - id: cendrebourg
+        nom: "Cendrebourg"
+        description: "Un village de démons. Pas de soldats : des fermiers, des forgerons, des enfants aux petites cornes. Ils vous regardent arriver avec terreur."
+        decor: cendrebourg
+        position: { x: 560, y: 640 }
+        disponible_si: { flag: ch6-depart-fait }
+        pnj: [{ id: ashka, si: { pas_flag: demons-extermines } }]
+      - id: foret-petrifiee
+        nom: "La Forêt pétrifiée"
+        description: "Des arbres de pierre noire, figés au moment de la première Déchirure. On y entend parfois des voix du passé."
+        decor: foret-petrifiee
+        position: { x: 1420, y: 620 }
+        disponible_si: { flag: ch6-depart-fait }
+      - id: lac-de-lave
+        nom: "Le Lac de lave"
+        description: "Un lac de feu, immense, d'où émergent des os de dragons. Les plus anciens sont morts avant la naissance du royaume."
+        decor: lac-de-lave
+        position: { x: 1560, y: 340 }
+        disponible_si: { flag: ch6-depart-fait }
+      - id: citadelle-porte
+        nom: "Porte de la Citadelle d'Obsidienne"
+        description: "Une tour noire plus haute que les montagnes, sans fenêtres. Sa porte est ouverte. Elle l'a toujours été."
+        decor: citadelle-porte
+        position: { x: 960, y: 300 }
+        disponible_si: { quete_etape: { q-ch6-souverain: citadelle } }
+      - id: citadelle-sommet
+        nom: "Sommet de la Citadelle"
+        description: "Une salle ronde, ouverte sur le ciel couleur de braise. Au centre, un trône. Sous le trône, la première déchirure du Voile."
+        decor: citadelle-sommet
+        position: { x: 960, y: 160 }
+        disponible_si: { quete_etape: { q-ch6-souverain: orvan } }
+        pnj: [{ id: orvan, si: { pas_flag: mort:orvan } }]
+      # ── Lieux d'étape
+      - { id: col-des-soupirs, nom: "Col des Soupirs", description: "Un passage entre deux falaises de basalte, où le vent souffle comme quelqu'un qui pleure.", decor: col-des-soupirs, position: { x: 380, y: 300 }, etape_seulement: true }
+      - { id: puits-de-cendre, nom: "Le Puits de cendre", description: "Un gouffre au fond duquel brille une lumière violette. Les gardes d'obsidienne y descendent des prisonniers.", decor: puits-de-cendre, position: { x: 300, y: 820 }, etape_seulement: true }

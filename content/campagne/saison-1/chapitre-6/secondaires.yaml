@@ -1,0 +1,183 @@
+# Chapitre 6 — quêtes secondaires (scènes courtes, une par étape).
+scenes:
+  # ── Le dragon gris
+  - id: sq-dragon-ysoria
+    pnj: ysoria
+    titre: "Le dragon gris"
+    type: groupe
+    lieu: camp-tentes
+    decor: camp-tentes
+    quete: q-dragon-gris
+    disponible_si: { flag: ch6-depart-fait, pas_flag: dragon-gris-commence, ou: [{ flag: ysoria-recrutee }] }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: ysoria, dit: "Ysoria n'a pas touché à sa soupe. « Au Lac de lave, il y a un dragon mort qui marche. Gris. Les Cendres l'ont relevé. » Elle serre les poings. « Je connais son odeur. C'est Valdrask. Le grand-père de mon grand-père. »" }
+          - { qui: ysoria, dit: "« Il ne sait plus qui il est. Il souffre. » Elle vous regarde. « Chez les dragons, quand un ancien souffre, c'est la famille qui l'aide à partir. Tu es de la famille. Viens. »" }
+        choix:
+          - texte: "« Je viens avec toi. »"
+            effets: [{ flag: dragon-gris-commence, quete: { id: q-dragon-gris, etape: lac }, affinite: { ysoria: 5 } }]
+            aller: fin
+      fin:
+        fin: true
+  - id: sq-dragon-lac
+    titre: "Le repos de Valdrask"
+    type: groupe
+    lieu: lac-de-lave
+    decor: lac-de-lave
+    quete: q-dragon-gris
+    rend_quete: true
+    disponible_si: { quete_etape: { q-dragon-gris: lac } }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "Au bord du Lac de lave, un dragon aux ailes trouées se dresse, gris comme la cendre. Ses yeux sont vides. Autour de lui, des ombres du Voile tournent comme des mouches." }
+          - { qui: ysoria, dit: "Ysoria s'avance. « Valdrask. C'est moi. Ysoria. » Le dragon gris tourne la tête vers elle. Puis il rugit, et le souffle gris part vers vous.", si: { flag: ysoria-recrutee } }
+        choix:
+          - texte: "Lui rendre le repos."
+            aller: combat
+      combat:
+        combat: { rencontre: cendres-dragons, victoire: repos, defaite: repos-dur }
+      repos-dur:
+        repliques:
+          - { dit: "Le dragon gris vous repousse… puis s'arrête, au bord du lac. Ysoria s'est mise entre vous et lui, les bras ouverts. Il la regarde longtemps. Il se couche." }
+        suite: repos
+      repos:
+        repliques:
+          - { dit: "Le dragon gris s'allonge au bord du lac, la tête sur ses pattes. Ses yeux se rallument une seconde, dorés, et il regarde Ysoria. Puis ils s'éteignent, doucement, pour de bon." }
+          - { qui: ysoria, expression: tristesse, dit: "Ysoria pose la main sur son museau. « Dors, grand-père. » Elle ne pleure pas. Les dragons ne pleurent pas devant les autres. Mais elle vous prend la main, et la serre très fort.", si: { flag: ysoria-recrutee } }
+        effets: [{ terminer_quete: q-dragon-gris, or: 900, xp: 5000, reputation: { dragons: 10 }, affinite: { ysoria: 8 } }]
+        fin: true
+
+  # ── Les prêtres oubliés
+  - id: sq-pretres-valka
+    pnj: valka
+    titre: "Les prêtres oubliés"
+    type: groupe
+    lieu: guilde-camp
+    decor: guilde
+    quete: q-pretres-oublies
+    disponible_si: { flag: ch6-depart-fait, pas_flag: pretres-commence }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: valka, dit: "Valka jette sur la table une robe en lambeaux, blanche et or. « L'Ordre. Très vieux modèle. Une patrouille l'a trouvée au Col des Soupirs, avec des dizaines d'autres. Et des voix qui chantent, la nuit. »" }
+          - { qui: valka, dit: "« Les prêtres qui ont abandonné Orvan, il y a six cents ans… On dit qu'ils sont venus le chercher, plus tard. Pour s'excuser, ou pour finir le travail. Ils ne sont jamais rentrés. »" }
+        choix:
+          - texte: "« Nous irons au Col des Soupirs. »"
+            effets: [{ flag: pretres-commence, quete: { id: q-pretres-oublies, etape: col } }]
+            aller: fin
+      fin:
+        fin: true
+  - id: sq-pretres-col
+    titre: "Le Col des Soupirs"
+    type: groupe
+    lieu: col-des-soupirs
+    decor: col-des-soupirs
+    quete: q-pretres-oublies
+    disponible_si: { quete_etape: { q-pretres-oublies: col } }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "Au Col des Soupirs, le vent pleure entre les falaises. Au milieu du passage, des prêtres morts depuis des siècles chantent une prière à l'envers, autour d'un autel de basalte. Des gardes d'obsidienne les protègent." }
+          - { qui: elianne, dit: "Elianne écoute. Elle pâlit. « C'est la prière du pardon. Ils la chantent à l'envers. Ça fait six cents ans qu'ils demandent pardon, et qu'ils le refusent. »", si: { flag: elianne-recrutee } }
+        choix:
+          - texte: "Interrompre la prière."
+            aller: combat
+          - texte: "Chanter la prière dans le bon sens, par-dessus la leur. (Esprit, difficulté 36)"
+            test: { carac: ESP, difficulte: 36, reussite: pardon, echec: combat }
+      pardon:
+        repliques:
+          - { dit: "Votre voix monte. Les prêtres s'arrêtent, un par un. Le plus vieux vous regarde, et dans ses orbites vides, quelque chose brille. Puis ils tombent en poussière, et le vent emporte la poussière vers le sud." }
+          - { dit: "Les gardes d'obsidienne, eux, n'ont pas besoin de pardon." }
+        effets: [{ flag: pretres-apaises }]
+        suite: combat
+      combat:
+        combat: { rencontre: citadelle-liches, victoire: apres, defaite: apres-dur }
+      apres-dur:
+        repliques:
+          - { dit: "Les gardes vous repoussent jusqu'à la sortie du col… mais l'autel se brise tout seul, et les liches s'effondrent. Sans prière, plus rien ne les tient debout." }
+        suite: apres
+      apres:
+        repliques:
+          - { dit: "Sur l'autel brisé, un registre de l'Ordre, écrit il y a six siècles. La dernière page dit : « Nous l'avons trahi. Que quelqu'un, un jour, lui dise que nous le regrettions. »" }
+        effets: [{ flag: regrets-de-l-ordre, quete: { id: q-pretres-oublies, etape: retour }, xp: 5000 }]
+        fin: true
+  - id: sq-pretres-retour
+    pnj: valka
+    titre: "Le registre des regrets"
+    type: groupe
+    lieu: guilde-camp
+    decor: guilde
+    quete: q-pretres-oublies
+    rend_quete: true
+    disponible_si: { quete_etape: { q-pretres-oublies: retour } }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: valka, dit: "Valka lit la dernière page, et ses oreilles se couchent. « Six cents ans pour écrire une phrase. » Elle vous rend le registre. « Gardez-le. Si vous le voyez, là-haut… Vous savez quoi lui dire. »" }
+        effets: [{ terminer_quete: q-pretres-oublies, or: 900, xp: 5000, points_guilde: 500 }]
+        fin: true
+
+  # ── Les enfants de Cendrebourg
+  - id: sq-enfants-ashka
+    pnj: ashka
+    titre: "Les enfants de Cendrebourg"
+    type: groupe
+    lieu: cendrebourg
+    decor: cendrebourg
+    quete: q-enfants-cendrebourg
+    disponible_si: { flag: demons-epargnes, pas_flag: enfants-commence }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: ashka, dit: "Mère Ashka vous attend à l'entrée du village, appuyée sur son bâton. Elle a l'air d'avoir pris dix ans en une nuit. « Les gardes d'obsidienne sont venus. Ils ont pris cinq enfants. Pour en faire des soldats, au Puits de cendre. »" }
+          - { qui: ashka, dit: "« Vous nous avez épargnés. Je n'ai pas le droit de vous demander plus. » Elle baisse la tête. « Je vous le demande quand même. »" }
+        choix:
+          - texte: "« Nous allons les chercher. »"
+            effets: [{ flag: enfants-commence, quete: { id: q-enfants-cendrebourg, etape: puits } }]
+            aller: fin
+      fin:
+        fin: true
+  - id: sq-enfants-puits
+    titre: "Le Puits de cendre"
+    type: groupe
+    lieu: puits-de-cendre
+    decor: puits-de-cendre
+    quete: q-enfants-cendrebourg
+    disponible_si: { quete_etape: { q-enfants-cendrebourg: puits } }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "Au fond du Puits de cendre, une lumière violette. Cinq petits démons, attachés ensemble, regardent des gardes d'obsidienne graver des runes sur des armures trop grandes pour eux." }
+          - { qui: morra, expression: colere, dit: "Morra ne dit rien. Elle descend la première, sa faux à la main.", si: { flag: morra-recrutee } }
+        choix:
+          - texte: "Libérer les enfants."
+            aller: combat
+      combat:
+        combat: { rencontre: cendres-gardes, victoire: libres, defaite: libres-dur }
+      libres-dur:
+        repliques:
+          - { dit: "Les gardes vous repoussent… mais pendant le combat, le plus grand des enfants a rongé ses liens, puis ceux des autres. Ils grimpent hors du puits comme des chats." }
+        suite: libres
+      libres:
+        repliques:
+          - { dit: "Le plus petit des enfants vous tire par la manche. « Vous êtes les humains qui n'ont pas brûlé le village ? » Vous hochez la tête. Il réfléchit, très sérieux. « Merci. » Puis il vous donne une petite fleur grise." }
+        effets: [{ objet: fleur-de-cendre, quete: { id: q-enfants-cendrebourg, etape: retour }, xp: 5000 }]
+        fin: true
+  - id: sq-enfants-retour
+    pnj: ashka
+    titre: "Le retour des enfants"
+    type: groupe
+    lieu: cendrebourg
+    decor: cendrebourg
+    quete: q-enfants-cendrebourg
+    rend_quete: true
+    disponible_si: { quete_etape: { q-enfants-cendrebourg: retour } }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "Tout le village vous attend. Quand les enfants courent vers leurs parents, une clameur monte de Cendrebourg, si forte qu'on l'entend jusqu'au Camp de l'Aube." }
+          - { qui: ashka, dit: "Mère Ashka pose sa main ridée sur votre front, à la manière démone. « Quand cette guerre sera finie, il y aura toujours une place pour vous à Cendrebourg. Toujours. »" }
+        effets: [{ terminer_quete: q-enfants-cendrebourg, or: 800, xp: 5000, reputation: { legion: 20 } }]
+        fin: true

@@ -378,6 +378,7 @@ export interface EtatPartie {
 	mouvementsOr: { heros: string; montant: number; raison: string }[];
 	contrats: Record<string, { id: string; etape: number; notes: string[] }>;
 	secondDepart: Record<string, number>;
+	flags: Record<string, boolean | undefined>;
 	journal: { jour: number; chapitre: number; texte: string }[];
 	dernieresNouvelles: string[];
 	rng: Rng;

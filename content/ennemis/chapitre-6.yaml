@@ -1,0 +1,264 @@
+# Ennemis du chapitre 6 (Terres Cendrées et Citadelle d'Obsidienne, niveaux 34 à 40), dont Orvan en 3 phases.
+# Fichier généré par scripts/contenu/bestiaire.py à partir de scripts/contenu/ch6_ennemis.py : modifier la source, puis relancer.
+ennemis:
+  - id: garde-d-obsidienne
+    nom: "Garde d'obsidienne"
+    description: "Un soldat d'élite de la Citadelle, armure noire polie comme un miroir, hallebarde de verre volcanique."
+    niveau: 35
+    categorie: demon
+    sprite: chevalier-cendre
+    caracteristiques: { FOR: 34, AGI: 19, INT: 14, VIT: 26, ESP: 14, CHA: 6 }
+    pv: 636
+    armure: 17
+    attaque: { stat: FOR, element: physique, portee: melee, puissance: 19 }
+    attaques:
+      - { nom: "Hallebarde de verre", phrase: "fauche {cible} d'une hallebarde d'obsidienne", effet: entaille }
+      - { nom: "Coup de bouclier", phrase: "repousse {cible} d'un coup de bouclier", effet: impact }
+    resistances: { feu: 0.3, ombre: 0.3, sacre: -0.3 }
+    recompenses: { xp: 1035, or: 52 }
+
+  - id: ombre-du-voile
+    nom: "Ombre du Voile"
+    description: "Une silhouette violette, sans visage, échappée d'une déchirure. Elle chuchote dans une langue que personne ne parle."
+    niveau: 36
+    categorie: mort-vivant
+    sprite: feu-follet
+    rang: arriere
+    caracteristiques: { FOR: 14, AGI: 20, INT: 35, VIT: 27, ESP: 14, CHA: 7 }
+    pv: 508
+    armure: 17
+    attaque: { stat: INT, element: arcane, portee: distance, puissance: 19 }
+    attaques:
+      - { nom: "Murmure", phrase: "chuchote à l'oreille de {cible}", effet: ombre }
+      - { nom: "Éclat du Voile", phrase: "lance un éclat violet sur {cible}", effet: arcane }
+    resistances: { physique: 0.1, arcane: 0.4, sacre: -0.4 }
+    competences:
+      - id: dechirure
+        nom: Petite déchirure
+        description: "Elle ouvre une fente dans l'air, qui aspire les forces."
+        recharge: 3
+        cible: ennemi
+        effets:
+          - { type: degats, puissance: 15, stat: INT, element: arcane }
+          - { type: etat, etat: affaibli, duree: 2, valeur: 0.15, chance: 0.5 }
+        ia: { priorite: 3 }
+    recompenses: { xp: 1080, or: 54 }
+
+  - id: dragon-de-cendre
+    nom: "Dragon de cendre"
+    description: "Un dragon mort il y a des siècles, relevé par les Cendres. Ses ailes sont trouées, son souffle est gris."
+    niveau: 37
+    categorie: mort-vivant
+    sprite: wyrmling
+    caracteristiques: { FOR: 39, AGI: 20, INT: 14, VIT: 29, ESP: 14, CHA: 7 }
+    pv: 857
+    armure: 21
+    attaque: { stat: FOR, element: ombre, portee: melee, puissance: 21 }
+    attaques:
+      - { nom: "Griffes grises", phrase: "lacère {cible} de ses griffes", effet: entaille }
+      - { nom: "Morsure de cendre", phrase: "mord {cible}", effet: ombre }
+    resistances: { feu: 0.5, ombre: 0.3, sacre: -0.4 }
+    competences:
+      - id: souffle-gris
+        nom: Souffle gris
+        description: "Un souffle de cendre froide sur tout le groupe."
+        recharge: 3
+        cible: tous_ennemis
+        effets: [{ type: degats, puissance: 13, stat: FOR, element: ombre }]
+        ia: { priorite: 3 }
+    recompenses: { xp: 1575, or: 74 }
+
+  - id: liche-cendree
+    nom: "Liche cendrée"
+    description: "Un ancien prêtre de l'Ordre, venu chercher Orvan il y a des siècles, et qui n'est jamais reparti. Il soigne les démons qu'il haïssait."
+    niveau: 36
+    categorie: mort-vivant
+    sprite: cultiste
+    rang: arriere
+    caracteristiques: { FOR: 14, AGI: 20, INT: 38, VIT: 29, ESP: 14, CHA: 7 }
+    pv: 835
+    armure: 20
+    attaque: { stat: INT, element: ombre, portee: distance, puissance: 20 }
+    attaques:
+      - { nom: "Trait de cendre", phrase: "lance un trait de cendre sur {cible}", effet: ombre }
+      - { nom: "Prière inversée", phrase: "maudit {cible} d'une prière à l'envers", effet: ombre }
+    resistances: { ombre: 0.4, sacre: -0.5 }
+    competences:
+      - id: requiem
+        nom: Requiem
+        description: "Un chant qui recoud les chairs mortes."
+        recharge: 4
+        cible: tous_allies
+        effets: [{ type: soin, puissance: 15, stat: INT }]
+        ia: { priorite: 3, quand: allie_blesse }
+    recompenses: { xp: 1512, or: 72 }
+
+  - id: chevalier-cendre
+    nom: "Chevalier cendré"
+    description: "Un chevalier de la garde personnelle du Souverain, en armure noire aux runes violettes. Il ne parle jamais."
+    niveau: 37
+    categorie: demon
+    caracteristiques: { FOR: 41, AGI: 20, INT: 14, VIT: 31, ESP: 14, CHA: 7 }
+    pv: 1358
+    armure: 24
+    attaque: { stat: FOR, element: physique, portee: melee, puissance: 22 }
+    attaques:
+      - { nom: "Lame runique", phrase: "frappe {cible} d'une lame aux runes violettes", effet: ombre }
+      - { nom: "Charge", phrase: "renverse {cible}", effet: impact }
+    resistances: { feu: 0.3, ombre: 0.4, sacre: -0.3 }
+    competences:
+      - id: serment-noir
+        nom: Serment noir
+        description: "Il plante son épée au sol : l'ombre protège ses alliés."
+        recharge: 4
+        cible: tous_allies
+        effets: [{ type: etat, etat: bonus_defense, duree: 2, valeur: 0.2 }]
+        ia: { priorite: 3, quand: debut_combat }
+    recompenses: { xp: 2251, or: 111 }
+
+  - id: golem-d-obsidienne
+    nom: "Golem d'obsidienne"
+    description: "Un golem noir veiné de lave, gardien de la Citadelle. Chaque pas fait trembler le sol."
+    niveau: 38
+    categorie: construction
+    caracteristiques: { FOR: 42, AGI: 20, INT: 14, VIT: 32, ESP: 14, CHA: 7 }
+    pv: 1254
+    armure: 25
+    attaque: { stat: FOR, element: physique, portee: melee, puissance: 22 }
+    attaques:
+      - { nom: "Poing d'obsidienne", phrase: "écrase {cible} d'un poing noir", effet: impact }
+      - { nom: "Éclats de verre", phrase: "projette des éclats tranchants sur {cible}", effet: entaille }
+    resistances: { physique: 0.3, poison: 1.0, feu: 0.5, glace: -0.3, foudre: -0.2 }
+    recompenses: { xp: 2342, or: 114 }
+
+  - id: geolier-d-obsidienne
+    nom: "Le Geôlier"
+    description: "Un colosse d'obsidienne qui porte à la ceinture les clés de toutes les cellules de la Citadelle. Ses chaînes traînent par terre en chantant."
+    niveau: 37
+    categorie: construction
+    boss: true
+    sprite: golem-d-obsidienne
+    caracteristiques: { FOR: 43, AGI: 20, INT: 14, VIT: 32, ESP: 14, CHA: 7 }
+    pv: 2465
+    armure: 26
+    attaque: { stat: FOR, element: physique, portee: melee, puissance: 23 }
+    attaques:
+      - { nom: "Chaîne", phrase: "fouette {cible} d'une chaîne d'obsidienne", effet: impact }
+      - { nom: "Poing", phrase: "écrase {cible}", effet: impact }
+    resistances: { physique: 0.3, poison: 1.0, feu: 0.5, glace: -0.2 }
+    competences:
+      - id: enchainement
+        nom: Enchaînement
+        description: "Ses chaînes s'enroulent autour d'un héros."
+        recharge: 3
+        cible: ennemi
+        effets:
+          - { type: degats, puissance: 14, stat: FOR }
+          - { type: etat, etat: immobilise, duree: 1, chance: 0.5 }
+        ia: { priorite: 3 }
+    recompenses: { xp: 6752, or: 370 }
+
+  - id: orvan-souverain
+    nom: "Orvan, Souverain des Cendres"
+    description: "Un homme grand, en armure d'obsidienne, couronne de flammes noires. Ses yeux sont ceux d'un homme très fatigué. Il était le premier Appelé."
+    niveau: 39
+    categorie: demon
+    boss: true
+    sprite: chevalier-cendre
+    caracteristiques: { FOR: 45, AGI: 21, INT: 15, VIT: 34, ESP: 15, CHA: 7 }
+    pv: 2073
+    armure: 27
+    attaque: { stat: FOR, element: ombre, portee: melee, puissance: 24 }
+    attaques:
+      - { nom: "Épée du premier Appel", phrase: "frappe {cible} d'une épée qui vient d'un autre monde", effet: ombre }
+      - { nom: "Geste royal", phrase: "renverse {cible} d'un simple geste", effet: arcane }
+    resistances: { feu: 0.4, ombre: 0.5, sacre: -0.2 }
+    competences:
+      - id: couronne-de-flammes
+        nom: Couronne de flammes
+        description: "La couronne s'embrase : des flammes noires tombent sur le groupe."
+        recharge: 3
+        cible: tous_ennemis
+        effets:
+          - { type: degats, puissance: 15, stat: FOR, element: ombre }
+          - { type: etat, etat: brulure, duree: 2, valeur: 12, chance: 0.5 }
+        ia: { priorite: 4 }
+    recompenses: { xp: 7307, or: 390 }
+
+  - id: orvan-dechaine
+    nom: "Orvan déchaîné"
+    description: "Le Souverain a jeté sa couronne. Il se bat comme un homme qui a tout perdu il y a six cents ans, et qui n'a plus rien à perdre."
+    niveau: 40
+    categorie: demon
+    boss: true
+    sprite: chevalier-cendre
+    caracteristiques: { FOR: 46, AGI: 21, INT: 15, VIT: 34, ESP: 15, CHA: 7 }
+    pv: 2300
+    armure: 28
+    attaque: { stat: FOR, element: ombre, portee: melee, puissance: 24 }
+    attaques:
+      - { nom: "Fureur", phrase: "frappe {cible} de toutes ses forces", effet: ombre }
+      - { nom: "Cri du premier Appelé", phrase: "hurle sur {cible} un nom que personne ne connaît", effet: arcane }
+    resistances: { feu: 0.4, ombre: 0.5 }
+    competences:
+      - id: six-cents-ans
+        nom: Six cents ans de colère
+        description: "Une série de coups, de plus en plus forts."
+        recharge: 3
+        cible: ennemi
+        effets: [{ type: degats, puissance: 11, stat: FOR, coups: 3, element: ombre }]
+        ia: { priorite: 4 }
+      - id: rage-ancienne
+        nom: Rage ancienne
+        description: "Sa colère le rend plus fort."
+        recharge: 5
+        cible: soi
+        effets: [{ type: etat, etat: bonus_degats, duree: 3, valeur: 0.25 }]
+        ia: { priorite: 4, quand: soi_blesse }
+    recompenses: { xp: 7589, or: 400 }
+
+  - id: orvan-coeur-du-voile
+    nom: "Orvan, cœur du Voile"
+    description: "Orvan a plongé dans la déchirure, sous la Citadelle. Il est devenu une silhouette de lumière violette, reliée au Voile par mille fils. S'il tombe, le Voile tombe avec lui… ou se recoud."
+    niveau: 40
+    categorie: mort-vivant
+    boss: true
+    sprite: feu-follet
+    caracteristiques: { FOR: 15, AGI: 21, INT: 46, VIT: 34, ESP: 15, CHA: 7 }
+    pv: 2123
+    armure: 28
+    attaque: { stat: INT, element: arcane, portee: distance, puissance: 24 }
+    attaques:
+      - { nom: "Fil du Voile", phrase: "transperce {cible} d'un fil de lumière", effet: arcane }
+      - { nom: "Souvenir", phrase: "montre à {cible} un souvenir de son monde d'origine", effet: arcane }
+    resistances: { physique: 0.2, arcane: 0.5, ombre: 0.3 }
+    competences:
+      - id: tempete-du-voile
+        nom: Tempête du Voile
+        description: "Le Voile se déchire autour du groupe."
+        recharge: 3
+        cible: tous_ennemis
+        effets:
+          - { type: degats, puissance: 15, stat: INT, element: arcane }
+          - { type: etat, etat: malus_defense, duree: 2, valeur: 0.15, chance: 0.5 }
+        ia: { priorite: 4 }
+      - id: recoudre-soi
+        nom: Mille fils
+        description: "Les fils du Voile recousent ses blessures."
+        recharge: 5
+        cible: soi
+        effets: [{ type: soin, puissance: 30, stat: INT }]
+        ia: { priorite: 4, quand: soi_blesse }
+    recompenses: { xp: 7589, or: 400 }
+
+rencontres:
+  - { id: cendres-gardes, nom: "Les gardes d'obsidienne", fond: cendres, ennemis: [{ id: garde-d-obsidienne }, { id: garde-d-obsidienne }, { id: liche-cendree, rang: arriere }], renforts: [garde-d-obsidienne] }
+  - { id: cendres-ombres, nom: "Les ombres du Voile", fond: voile, ennemis: [{ id: ombre-du-voile }, { id: ombre-du-voile }, { id: ombre-du-voile }], renforts: [ombre-du-voile] }
+  - { id: cendres-dragons, nom: "Le dragon de cendre", fond: lac-de-lave, ennemis: [{ id: dragon-de-cendre }, { id: ombre-du-voile, rang: arriere }], renforts: [ombre-du-voile] }
+  - { id: cendres-chevaliers, nom: "Les chevaliers du Souverain", fond: citadelle, ennemis: [{ id: chevalier-cendre }, { id: ombre-du-voile, rang: arriere }], renforts: [garde-d-obsidienne] }
+  - { id: citadelle-golems, nom: "Le golem d'obsidienne", fond: citadelle, ennemis: [{ id: golem-d-obsidienne }, { id: garde-d-obsidienne }], renforts: [garde-d-obsidienne] }
+  - { id: citadelle-liches, nom: "Les prêtres oubliés", fond: citadelle, ennemis: [{ id: garde-d-obsidienne }, { id: liche-cendree, rang: arriere }, { id: ombre-du-voile, rang: arriere }], renforts: [garde-d-obsidienne] }
+  - { id: citadelle-geolier, nom: "Le Geôlier", fond: citadelle, fuite_possible: false, ennemis: [{ id: geolier-d-obsidienne }, { id: garde-d-obsidienne }], renforts: [garde-d-obsidienne] }
+  - { id: orvan-1, nom: "Orvan, Souverain des Cendres", fond: sommet, fuite_possible: false, ennemis: [{ id: orvan-souverain }, { id: chevalier-cendre }], renforts: [garde-d-obsidienne] }
+  - { id: orvan-2, nom: "Orvan déchaîné", fond: sommet, fuite_possible: false, ennemis: [{ id: orvan-dechaine }] }
+  - { id: orvan-3, nom: "Orvan, cœur du Voile", fond: voile, fuite_possible: false, ennemis: [{ id: orvan-coeur-du-voile }, { id: ombre-du-voile, rang: arriere }], renforts: [ombre-du-voile] }

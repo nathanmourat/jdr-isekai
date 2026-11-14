@@ -311,6 +311,15 @@ On y va par la **carte → « Y aller »** (téléportation). Chaque région a s
 - [ ] Contre-offensive : camp de la Légion, puis le Gardien de la Brèche ; fin du chapitre.
 - [ ] Quête de classe étape 3 : l'ultime est débloqué (utilisable au niveau 30).
 
+### Liste de contrôle — chapitre 6 (Terres Cendrées) et fin de la saison
+- [ ] Fin du chapitre 5 → dormir → à l'État-major de Fort-Aube : « Au-delà du Mur ».
+- [ ] La carte affiche « Terres Cendrées » : Camp de l'Aube (Tente des Braves avec lit, Forge de Durna au palier VI, comptoir de la Guilde), Cendrebourg, Forêt pétrifiée, Lac de lave.
+- [ ] Cendrebourg : le choix épargner / protéger / brûler le village (brûler fait partir Morra).
+- [ ] Citadelle d'Obsidienne : donjon jouable ; avec Morra et la clé de braise, Lyss est libérée.
+- [ ] Sommet : Orvan en 3 phases (Souverain, déchaîné, cœur du Voile), puis l'épargner ou l'achever.
+- [ ] Vote de la fin : seules les fins possibles sont proposées (« La Couronne » toujours) ; épilogue des compagnes.
+- [ ] Écran « Fin de la saison 1 » avec le nom de la fin ; au château, chaque joueur voit son épilogue personnel (fin « Le Retour » : rester ou partir).
+
 ## Publier sur Roblox (quand tout marche)
 
 1. **Fichier → Publier sur Roblox**, si ce n'est pas déjà fait.

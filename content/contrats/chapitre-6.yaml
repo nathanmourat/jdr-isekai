@@ -1,0 +1,48 @@
+# Contrats de guilde du chapitre 6, au comptoir de la Guilde du Camp de l'Aube. Dernière étape : retour au comptoir.
+contrats:
+  - id: c-ombres-foret
+    titre: "Les ombres de la Forêt pétrifiée"
+    description: "Des ombres du Voile sortent de la Forêt pétrifiée la nuit et rôdent autour du camp. Il faut les renvoyer d'où elles viennent."
+    rang_min: A
+    niveau: 35
+    rencontre: cendres-ombres
+    duree_jours: 3
+    disponible_si: { flag: ch6-depart-fait }
+    recompenses: { or: 900, xp: 6000, points_guilde: 500 }
+    etapes:
+      - { lieu: foret-petrifiee, objectif: "Entrer dans la Forêt pétrifiée.", texte: "Des arbres de pierre, figés au milieu d'un vent qui n'existe plus. Entre les troncs, des chuchotements.", bouton: "Suivre les chuchotements" }
+      - { lieu: foret-petrifiee, objectif: "Renvoyer les ombres.", texte: "Les silhouettes violettes se tournent vers vous, toutes ensemble.", combat: cendres-ombres }
+      - { lieu: guilde-camp, objectif: "Revenir au comptoir du Camp de l'Aube.", texte: "Valka coche une ligne de plus sur sa liste. « Les sentinelles dormiront mieux. Moi aussi. »", bouton: "Toucher la récompense" }
+
+  - id: c-gardes-col
+    titre: "Le poste du Col des Soupirs"
+    description: "Des gardes d'obsidienne tiennent le Col des Soupirs et coupent la route des convois. Il faut rouvrir le passage."
+    rang_min: A
+    niveau: 35
+    rencontre: cendres-gardes
+    duree_jours: 4
+    disponible_si: { flag: ch6-depart-fait }
+    recompenses: { or: 950, xp: 6200, points_guilde: 520, objets: [potion-soin-supreme] }
+    etapes:
+      - lieu: col-des-soupirs
+        objectif: "Approcher du Col des Soupirs."
+        texte: "Une barricade d'obsidienne en travers du passage. Derrière, des gardes et un prêtre mort qui chante."
+        choix:
+          - { texte: "Attaquer de front.", resultat: "Les gardes lèvent leurs hallebardes. Ils vous attendaient." }
+          - { texte: "Escalader la falaise pour les prendre à revers.", resultat: "Vous tombez derrière la barricade. Le prêtre arrête de chanter." }
+      - { lieu: col-des-soupirs, objectif: "Rouvrir le passage.", texte: "Les gardes d'obsidienne forment les rangs.", combat: cendres-gardes }
+      - { lieu: guilde-camp, objectif: "Revenir au comptoir du Camp de l'Aube.", texte: "« Les convois repassent. Mère Brisac vous remercie : ses oignons arrivent enfin. »", bouton: "Toucher la récompense" }
+
+  - id: c-golem-lac
+    titre: "Le golem du Lac de lave"
+    description: "Un golem d'obsidienne s'est échappé de la Citadelle et monte la garde au bord du Lac de lave, sur la route des éclaireurs."
+    rang_min: S
+    niveau: 38
+    rencontre: citadelle-golems
+    duree_jours: 3
+    disponible_si: { flag: ch6-depart-fait }
+    recompenses: { or: 1100, xp: 7000, points_guilde: 600, objets: [potion-mana-grande] }
+    etapes:
+      - { lieu: lac-de-lave, objectif: "Aller au Lac de lave.", texte: "Au bord du lac, un golem noir, immobile. Les éclaireurs n'osent pas passer.", bouton: "S'approcher" }
+      - { lieu: lac-de-lave, objectif: "Abattre le golem.", texte: "La lave se rallume dans ses veines.", combat: citadelle-golems }
+      - { lieu: guilde-camp, objectif: "Revenir au comptoir du Camp de l'Aube.", texte: "Valka hoche la tête. « Rang S, travail de rang S. Durna veut les morceaux. Évidemment. »", bouton: "Toucher la récompense" }

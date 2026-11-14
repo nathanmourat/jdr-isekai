@@ -38,3 +38,7 @@ pnj:
   - { id: valka, nom: "Sergente Valka", titre: "Intendante de la Guilde au Mur", description: "Une Ourvalis aux oreilles déchirées, ancienne rang A, qui distribue les missions comme des ordres.", accueil: "Missions au tableau. Pas de questions. Revenez vivants, c'est un ordre." }
   - { id: aldric, nom: "Prince Aldric", titre: "Frère de Séraphine, disparu en 1009", description: "Armure noire, cape bleue des princes d'Aubeclaire en lambeaux, yeux où brûle une lueur violette." }
   - { id: champion, nom: "Le Champion masqué", titre: "Épreuve du rang S", description: "Un guerrier en armure d'argent sans blason, masque lisse. Personne ne connaît son visage." }
+  # ── Chapitre 6 : les Terres Cendrées
+  - { id: orvan, nom: "Orvan", titre: "Souverain des Cendres, le Premier Appelé", description: "Un homme grand et maigre, en armure d'obsidienne, couronne de flammes noires. Six cents ans dans ses yeux. Il parle doucement, comme quelqu'un qui n'a parlé à personne depuis très longtemps." }
+  - { id: lyss, nom: "Lyss", titre: "Sœur cadette de Morra", description: "Une jeune démone aux petites cornes et aux cheveux de braise, comme sa sœur. Elle a l'air d'avoir seize ans. Elle en a cent quatre-vingts." }
+  - { id: ashka, nom: "Mère Ashka", titre: "Doyenne de Cendrebourg", description: "Une très vieille démone aux cornes usées, appuyée sur un bâton d'os. Elle a vu naître les Cendres et n'a jamais tenu une arme." }

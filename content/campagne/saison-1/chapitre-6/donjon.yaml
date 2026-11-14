@@ -1,0 +1,47 @@
+# Donjon du chapitre 6 : la Citadelle d'Obsidienne (vue de dessus). Tuiles provisoires en attendant le graphiste.
+donjons:
+  - id: citadelle-obsidienne
+    nom: "La Citadelle d'Obsidienne"
+    tileset: citadelle-obsidienne
+    legende:
+      "#": mur
+      ".": sol
+      "S": escalier
+      "D": porte
+      "O": sol-os
+      "T": sol-piege
+      "C": sol-coffre
+      "F": colonne-fontaine
+      "X": sol-sceau
+    depart: { x: 1, y: 1 }
+    carte:
+      - "########################"
+      - "#S.....D.......#.......#"
+      - "#......#...O...D...C...#"
+      - "#..C...#.......#.......#"
+      - "###D######D#####...T...#"
+      - "#......#.......####D####"
+      - "#..O...D...T...#.......#"
+      - "#......#.......D...O...#"
+      - "####D###.......#.......#"
+      - "#......####D########D###"
+      - "#..T...#...F...#.......#"
+      - "#..X...D.......D...C...#"
+      - "#......#.......#.......#"
+      - "########################"
+    evenements:
+      - { id: entree, x: 2, y: 1, type: texte, texte: "Des couloirs d'obsidienne polie, où votre reflet marche à côté de vous. Pas de torches : les murs brillent d'une lueur violette, de l'intérieur." }
+      - { id: chevaliers, x: 11, y: 2, type: combat, rencontre: cendres-chevaliers, texte: "Deux chevaliers en armure noire montent la garde devant une porte. Ils tirent l'épée sans un mot." }
+      - { id: coffre-1, x: 3, y: 3, type: coffre, texte: "Le coffre d'un officier de la Légion. Des lettres jamais envoyées, et une bourse.", or: 600, objets: [potion-soin-supreme] }
+      - { id: coffre-2, x: 19, y: 2, type: coffre, texte: "Une armurerie oubliée. Tout est rouillé, sauf une fiole qui brille encore.", or: 700, objets: [potion-mana-grande] }
+      - { id: piege-1, x: 19, y: 4, type: piege, texte: "Le sol devient un miroir, et votre reflet vous frappe !", test: { carac: ESP, difficulte: 35 }, degats_pourcent: 15 }
+      - { id: golems, x: 11, y: 6, type: combat, rencontre: citadelle-golems, texte: "Une salle immense. Au centre, un golem d'obsidienne se déplie, veiné de lave." }
+      - { id: piege-2, x: 11, y: 5, type: piege, texte: "Des éclats de verre noir tombent du plafond !", test: { carac: AGI, difficulte: 35 }, degats_pourcent: 15 }
+      - { id: os, x: 3, y: 6, type: texte, texte: "Une salle remplie d'armures de l'Ordre, très anciennes, alignées contre le mur. Personne ne les a portées depuis six cents ans." }
+      - { id: coffre-3, x: 19, y: 7, type: coffre, texte: "La chambre d'Orvan. Un lit jamais défait, et sur la table, un objet étrange, de votre monde : une petite boîte en plastique, qui ne fonctionne plus depuis longtemps.", or: 800, objets: [potion-soin-supreme, potion-mana-grande] }
+      - { id: piege-3, x: 3, y: 10, type: piege, texte: "Un cercle violet s'allume sous vos pieds : un fragment du Voile !", test: { carac: VIT, difficulte: 35 }, degats_pourcent: 15 }
+      - { id: geolier, x: 11, y: 11, type: combat, rencontre: citadelle-geolier, texte: "Un colosse d'obsidienne vous barre la route. À sa ceinture, cent clés qui chantent. « PERSONNE… NE SORT. »" }
+      - { id: cles, x: 19, y: 11, type: coffre, texte: "Le trousseau du Geôlier, tombé près des cellules. Cent clés, une par cellule.", objets: [cles-des-cellules] }
+      - { id: sceau, x: 3, y: 11, type: texte, texte: "Sur le mur, gravé à la main, maladroitement, dans une langue que vous seuls pouvez lire : « Je veux rentrer chez moi. » La gravure a six cents ans." }
+      - { id: sortie, x: 1, y: 1, type: sortie, unique: false, si: { objet: cles-des-cellules } }
+      - { id: pas-fini, x: 1, y: 1, type: texte, unique: false, texte: "Les prisonniers sont toujours enfermés. Il faut trouver les clés du Geôlier." }

@@ -1,0 +1,73 @@
+# Chapitre 6 — épilogues personnels : une scène par héros (individuelle), après la fin de la saison.
+# Chaque héros voit ce qui le concerne : son rang, ses compagnes, et, pour la fin « Le Retour », son choix de rester ou de partir.
+scenes:
+  - id: ep-heros
+    titre: "Épilogue — Printemps 1030"
+    type: individuel
+    lieu: chateau
+    decor: chateau-trone
+    disponible_si: { flag: saison-1-finie, pas_flag: epilogue-vu }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "Printemps 1030. Dix-huit ans après l'Appel, vous marchez dans les rues de Lysmont. Les enfants vous montrent du doigt. Les vieux vous saluent. Les marchands vous font des prix." }
+          - { dit: "La broche du rang S brille sur votre poitrine. À la Guilde, Dame Rowena a fait accrocher votre portrait au-dessus du tableau des contrats. Les jeunes recrues vous demandent des autographes.", si: { flag: rang-s-obtenu } }
+          - { dit: "Sur vos terres, à la lisière de Sylvenoire, les champs ont été replantés. Les miliciens qui ont tenu la porte de Fort-Aube sont rentrés chez eux en héros. On a donné votre nom au moulin.", si: { flag: domaine-obtenu } }
+          - { dit: "Aveline de Castelroc ne vous quitte plus. « Une capitaine a besoin de quelqu'un à protéger », dit-elle. Personne n'est dupe.", si: { affinite_palier: { aveline: proche } } }
+          - { dit: "Séraphine vous écrit toutes les semaines, de longues lettres pleines de lois à changer et de dessins dans les marges.", si: { affinite_palier: { seraphine: proche } } }
+          - { dit: "Kaya débarque sans prévenir, deux fois par mois, avec un contrat « trop facile pour moi toute seule ».", si: { affinite_palier: { kaya: proche } } }
+          - { dit: "Elianne passe vous voir chaque dimanche, et vous marchez longtemps, sans rien dire. C'est le meilleur moment de la semaine.", si: { affinite_palier: { elianne: proche } } }
+          - { dit: "Nadja vous a réservé une part de la Maison Kesh. « Associé à vie. C'est dans le contrat. Lis les petites lignes. »", si: { affinite_palier: { nadja: proche } } }
+          - { dit: "Ilyssë vous envoie chacun de ses livres, dédicacés d'une phrase sarcastique, différente à chaque fois.", si: { affinite_palier: { ilysse: proche } } }
+          - { dit: "Ysoria atterrit parfois dans votre jardin, au milieu de la nuit, avec le petit Atchoum, pour « vérifier que tout va bien ».", si: { affinite_palier: { ysoria: proche } } }
+          - { dit: "Morra et Lyss viennent dîner chez vous tous les mois. Morra apporte le pain. Lyss pose mille questions.", si: { affinite_palier: { morra: proche }, pas_flag: demons-extermines } }
+        aiguillage:
+          - { si: { flag: fin-retour }, aller: porte }
+        suite: fin
+      porte:
+        repliques:
+          - { dit: "Mais d'abord, il y a eu la porte. Ce mois-là, au sommet de la Citadelle, vous avez regardé longtemps les lumières de votre ancien monde. Puis il a fallu choisir." }
+        choix:
+          - texte: "Rester à Velmaris. Ce monde est devenu le vôtre."
+            effets: [{ flag: heros:reste-a-velmaris }]
+            aller: reste
+          - texte: "Rentrer chez vous, en promettant de revenir un jour."
+            effets: [{ flag: heros:rentre-chez-lui }]
+            aller: parti
+      reste:
+        repliques:
+          - { dit: "Quand la porte s'est refermée, vous avez senti quelque chose se fermer aussi en vous. Puis s'ouvrir, autrement. Velmaris. Chez vous." }
+        suite: fin
+      parti:
+        repliques:
+          - { dit: "Vous avez franchi la porte avec un sac, une épée, et une lettre pour chacun de ceux qui restaient. De l'autre côté, il paraît que vous n'aviez pas vieilli d'un jour. Ilyssë dit qu'une porte, ça peut se rouvrir. Un jour. Peut-être en saison 2." }
+        suite: fin
+      fin:
+        repliques:
+          - { dit: "Le soir tombe sur Lysmont. Quelque part, une auberge allume ses lanternes. Une nouvelle histoire attend. Elle attend toujours." }
+        effets: [{ flag: heros:epilogue-vu, xp: 1000 }]
+        fin: true
+
+  # Version web seulement (romance entre adultes, fondu au noir) : la compagne la plus proche du héros.
+  - id: ep-romance
+    titre: "Épilogue — Ce qui compte"
+    type: individuel
+    lieu: chateau
+    decor: chateau-trone
+    romance: true
+    disponible_si: { flag: saison-1-finie, pas_flag: epilogue-romance-vu, ou: [{ affinite_palier: { aveline: amoureuse } }, { affinite_palier: { seraphine: amoureuse } }, { affinite_palier: { kaya: amoureuse } }, { affinite_palier: { elianne: amoureuse } }, { affinite_palier: { nadja: amoureuse } }, { affinite_palier: { ilysse: amoureuse } }, { affinite_palier: { ysoria: amoureuse } }, { affinite_palier: { morra: amoureuse } }] }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "Le soir de la grande fête de la paix, sur les remparts du château, vous n'êtes pas seul·e." }
+          - { dit: "Aveline a troqué son armure contre une robe bleue qu'elle porte très mal, et qu'elle adore. « Ne ris pas. » Vous ne riez pas.", si: { affinite_palier: { aveline: amoureuse } } }
+          - { dit: "Séraphine a fui le bal pour vous rejoindre. « Mon père cherche toujours un prince pour moi. Je lui ai dit que j'avais trouvé mieux. »", si: { affinite_palier: { seraphine: amoureuse } } }
+          - { dit: "Kaya s'est assise contre vous, la tête sur votre épaule, la queue enroulée autour de votre jambe. « Ma meute. »", si: { affinite_palier: { kaya: amoureuse } } }
+          - { dit: "Elianne vous tient la main, le voile posé sur les genoux. « J'ai prié pour toi chaque jour de la guerre. Aujourd'hui, je n'ai plus rien à demander. »", si: { affinite_palier: { elianne: amoureuse } } }
+          - { dit: "Nadja vous tend un contrat, un vrai, écrit à la main. Il n'y a qu'une ligne. Il n'y a pas de petites lignes.", si: { affinite_palier: { nadja: amoureuse } } }
+          - { dit: "Ilyssë a apporté un télescope, et pour une fois, elle ne regarde pas les étoiles. « Mal documenté, l'amour. Je continue mes recherches. »", si: { affinite_palier: { ilysse: amoureuse } } }
+          - { dit: "Ysoria s'est enroulée autour de vous, brûlante comme une forge. « Mille ans. J'ai dit mille ans. Je tiens toujours parole. »", si: { affinite_palier: { ysoria: amoureuse } } }
+          - { dit: "Morra a posé son front contre le vôtre, ses cornes contre vos cheveux. « Ensemble. J'ai appris. Tu vois ? »", si: { affinite_palier: { morra: amoureuse }, pas_flag: demons-extermines } }
+          - { dit: "(Fondu au noir.)" }
+        effets: [{ flag: heros:epilogue-romance-vu }]
+        fin: true

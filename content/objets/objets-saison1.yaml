@@ -37,3 +37,6 @@ objets:
   - { id: cle-de-braise, nom: "Clé de braise", description: "Une clé forgée par Durna Martelfeu dans le souffle d'Ysoria. Elle est toujours chaude. Elle ouvre les chaînes d'obsidienne.", type: quete }
   - { id: armure-de-corvin, nom: "Armure du premier maréchal", description: "Une armure bosselée aux armes du premier maréchal du Mur. Tolvan dit qu'elle porte chance.", type: quete }
   - { id: lettre-de-l-espion, nom: "Lettre chiffrée", description: "Une lettre codée trouvée sur l'espion de la tour de guet. Les chiffres ressemblent à ceux de la Concorde.", type: quete }
+  # ── Chapitre 6 : les Terres Cendrées
+  - { id: cles-des-cellules, nom: "Trousseau du Geôlier", description: "Cent clés d'obsidienne, une par cellule de la Citadelle. Elles chantent quand on les secoue.", type: quete }
+  - { id: fleur-de-cendre, nom: "Fleur de cendre", description: "Une petite fleur grise, la seule qui pousse dans les Terres Cendrées. Elle ne fane jamais.", type: cadeau, prix: 40 }

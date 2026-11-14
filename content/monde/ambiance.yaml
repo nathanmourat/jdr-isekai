@@ -88,3 +88,11 @@ ambiance:
   - { id: m-dragons, lieu: camp-des-allies, texte: "Un dragon dort sur la colline. Il ronfle. Personne n'ose le réveiller.", si: { flag: dragons-allies } }
   - { id: m-rang-s, lieu: fort-aube-cantine, qui: client, texte: "Ce sont eux, les rangs S ! J'ai vu l'épreuve. Incroyable.", si: { flag: rang-s-obtenu } }
   - { id: m-nuit, lieu: fort-aube-porte, texte: "La nuit, on voit les feux de la Légion, au nord. Des milliers.", moment: nuit, si: { flag: ch5-depart-fait } }
+  # ─── Terres Cendrées (Camp de l'Aube)
+  - { id: t-ciel, lieu: camp-tentes, texte: "Il ne fait jamais nuit, ici. Le ciel reste couleur de braise. On dort mal.", si: { flag: ch6-depart-fait, pas_flag: saison-1-finie } }
+  - { id: t-soupe, lieu: camp-tentes, qui: client, texte: "Mère Brisac a suivi l'armée jusqu'ici. Rien ne l'arrête. Même pas les Cendres.", si: { flag: ch6-depart-fait } }
+  - { id: t-forge, lieu: camp-forge, qui: marchand, texte: "De l'obsidienne gratuite partout ! Le paradis des forgerons !", si: { flag: ch6-depart-fait } }
+  - { id: t-cendrebourg, lieu: camp-tentes, qui: client, texte: "Les enfants démons de Cendrebourg sont venus voir les dragons. Ils n'ont pas peur, eux.", si: { flag: demons-epargnes } }
+  - { id: t-citadelle, lieu: guilde-camp, qui: garde, texte: "La Citadelle… On dit que sa porte a toujours été ouverte. Ça fait encore plus peur.", si: { flag: ch6-depart-fait, pas_flag: orvan-vaincu } }
+  - { id: t-paix, lieu: camp-tentes, texte: "C'est fini. C'est vraiment fini. Le ciel est bleu, au-dessus des Cendres.", si: { flag: voile-recousu } }
+  - { id: t-pacte, lieu: camp-tentes, texte: "Des ambassadeurs démons, au camp ! Et personne ne sort l'épée. Drôle d'époque.", si: { flag: royaume-des-cendres } }

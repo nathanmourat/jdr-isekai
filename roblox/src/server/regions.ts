@@ -46,8 +46,8 @@ export function genre(l: LieuDef): string {
 	if (a("temple") || a("sanctuaire") || a("autel") || a("bibliotheque") || a("clairiere")) return "temple";
 	if (a("campement") || a("camp")) return "camp";
 	if (a("mine") || a("forge")) return "mine";
-	if (a("ruines") || a("phare") || a("breche") || a("tour-de-guet")) return "ruines";
-	if (a("canyon") || a("falaise") || a("nid") || a("crete") || a("plaine-cendree") || a("coulee")) return "rochers";
+	if (a("ruines") || a("phare") || a("breche") || a("tour-de-guet") || a("puits")) return "ruines";
+	if (a("canyon") || a("falaise") || a("nid") || a("crete") || a("plaine-cendree") || a("coulee") || a("petrifiee") || a("lac-de-lave") || a("col-")) return "rochers";
 	if (a("port") || a("quai")) return "port";
 	if (a("porte") || a("route") || a("mur") || a("ronde") || a("rempart")) return "porte";
 	if (l.boutique.size() > 0) return "boutique";

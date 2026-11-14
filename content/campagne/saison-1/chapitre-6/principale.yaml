@@ -1,0 +1,333 @@
+# Chapitre 6 — « Le Souverain des Cendres » : quête principale, combat final contre Orvan (3 phases) et les 4 fins de la saison 1.
+# Les fins se votent : seules celles dont les conditions sont remplies sont proposées (« La Couronne » l'est toujours).
+scenes:
+  # ─────────────────────────────────────────────────────────────
+  - id: ch6-depart
+    titre: "Au-delà du Mur"
+    type: groupe
+    lieu: fort-aube-etat-major
+    decor: fort-aube-etat-major
+    quete: q-ch6-souverain
+    disponible_si: { flag: chapitre-5-fini, pas_flag: ch6-depart-fait, date_min: { annee: 1027, mois: 1, jour: 1 } }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "Germinal 1027. Quinze ans depuis l'Appel. Ceux d'entre vous qui sont arrivés à dix-huit ans en ont trente-trois. Vous avez des cicatrices, des domaines, des gens qui comptent sur vous." }
+          - { qui: marechale, dit: "La Maréchale Corvin plante une dernière figurine sur la carte : une tour noire, au centre des Terres Cendrées. « La Citadelle d'Obsidienne. Trois ans de marche, peut-être moins. L'armée tiendra le camp. Vous, vous irez jusqu'au bout. »", si: { pas_flag: mort:marechale } }
+          - { dit: "Sur la grande table de l'État-major, à la place de la Maréchale, il n'y a plus que son épée, posée en travers de la carte. Personne n'ose s'y asseoir. On vous demande de décider de la route.", si: { flag: mort:marechale } }
+          - { qui: seraphine, dit: "Séraphine roule la carte. « Mon père voulait que j'attende ici. Je lui ai répondu que j'avais trente ans et une épée. » Elle sourit. « Il n'a rien dit. C'est un progrès. »", si: { flag: seraphine-recrutee } }
+          - { qui: ilysse, dit: "Ilyssë a les mains pleines de cartes du Voile. « Plus on approche de la Citadelle, plus le Voile est fin. Si on recoud quelque chose, ce sera là-bas. »", si: { flag: ilysse-recrutee } }
+        choix:
+          - texte: "« En route. Jusqu'à la Citadelle. »"
+            aller: route
+      route:
+        repliques:
+          - { dit: "La porte des Cendres se referme derrière l'armée. Devant vous, la plaine grise s'étend jusqu'à l'horizon. Le ciel est couleur de braise, et il ne fait jamais tout à fait nuit." }
+          - { dit: "Au bout de trois jours de marche, on plante le Camp de l'Aube. Mère Brisac installe sa marmite avant même qu'on ait monté les tentes. Durna installe son enclume. Un dragon se couche sur la colline et s'endort." }
+        effets:
+          - { flag: ch6-depart-fait, or: 800, quete: { id: q-ch6-souverain, etape: cendrebourg }, journal: "Germinal 1027 : {groupe} franchissent la porte des Terres Cendrées. L'alliance plante le Camp de l'Aube." }
+        fin: true
+
+  # ─────────────────────────────────────────────────────────────
+  - id: ch6-cendrebourg
+    titre: "Cendrebourg"
+    type: groupe
+    lieu: cendrebourg
+    decor: cendrebourg
+    quete: q-ch6-souverain
+    disponible_si: { quete_etape: { q-ch6-souverain: cendrebourg }, date_min: { annee: 1027, mois: 7, jour: 1 } }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "Brumaire 1027. Les éclaireurs ont trouvé un village. Pas une caserne : un village. Des maisons de basalte, des champs de champignons gris, un puits. Et des démons qui travaillent la terre." }
+          - { dit: "Quand vous arrivez, ils lâchent leurs outils. Les mères cachent les enfants derrière elles. Personne ne prend une arme. Ils n'en ont pas." }
+          - { qui: ashka, dit: "Une très vieille démone s'avance, appuyée sur un bâton. « Je suis Ashka. Il n'y a pas de soldats ici. Le Souverain a pris tous ceux qui pouvaient se battre. Il ne reste que nous. » Elle baisse la tête. « Faites ce que vous êtes venus faire. »" }
+          - { qui: morra, dit: "Morra pose la main sur votre bras. Elle a la voix qui tremble. « Je suis née dans un village comme celui-là. »", si: { flag: morra-recrutee } }
+          - { qui: valka, dit: "La Sergente Valka, derrière vous, à voix basse : « Les ordres de l'état-major disent de ne rien laisser derrière nous. Rien. » Elle ne vous regarde pas. « Vous décidez. »" }
+        choix:
+          - texte: "« Personne ne vous fera de mal. L'armée passera à côté du village. »"
+            effets: [{ flag: demons-epargnes, reputation: { legion: 20 }, affinite: { morra: 10, elianne: 5 } }]
+            aller: epargne
+          - texte: "« Partagez votre eau avec l'armée, et nous protégerons le village jusqu'à la fin de la guerre. »"
+            effets: [{ flag: [demons-epargnes, cendrebourg-protege], reputation: { legion: 25, troupes: 5 }, affinite: { morra: 12 } }]
+            aller: protege
+          - texte: "« Les ordres sont les ordres. » Brûler le village."
+            effets: [{ flag: demons-extermines, reputation: { legion: -50 }, affinite: { elianne: -20, ilysse: -10, ysoria: -10 } }]
+            aller: brule
+      epargne:
+        repliques:
+          - { qui: ashka, dit: "Ashka vous regarde longtemps. Puis elle se met à pleurer, sans bruit. « Six cents ans qu'on nous dit que les humains sont des monstres. » Elle essuie ses yeux. « Je dirai aux autres villages que c'était un mensonge. »" }
+        suite: apres
+      protege:
+        repliques:
+          - { qui: ashka, dit: "Ashka hoche la tête, lentement, puis tend la main, à la manière humaine. Elle ne sait pas bien faire. « Marché conclu. » Le soir même, les enfants démons viennent voir les dragons de près. Les dragons font semblant de dormir." }
+        suite: apres
+      brule:
+        repliques:
+          - { dit: "Le feu prend vite, dans les champs gris. Les démons fuient vers les collines, sans se retourner. Ashka ne fuit pas. Elle reste assise devant sa maison, jusqu'au bout." }
+          - { qui: morra, expression: colere, dit: "Morra regarde brûler le village. Elle ne dit rien. Le lendemain matin, sa tente est vide. Il ne reste que sa corne brisée, posée sur votre lit.", si: { flag: morra-recrutee } }
+          - { qui: elianne, expression: tristesse, dit: "Elianne est restée toute la nuit à genoux devant les cendres. Elle ne vous a plus adressé la parole pendant un mois.", si: { flag: elianne-recrutee } }
+        effets: [{ pnj_mort: ashka }]
+        suite: apres
+      apres:
+        effets:
+          - { xp: 4000, quete: { id: q-ch6-souverain, etape: souvenirs }, journal: "Brumaire 1027 : {groupe} arrivent à Cendrebourg, un village de démons sans soldats." }
+        fin: true
+
+  # ─────────────────────────────────────────────────────────────
+  - id: ch6-souvenirs
+    titre: "La Forêt pétrifiée"
+    type: groupe
+    lieu: foret-petrifiee
+    decor: foret-petrifiee
+    quete: q-ch6-souverain
+    disponible_si: { quete_etape: { q-ch6-souverain: souvenirs }, date_min: { annee: 1028, mois: 4, jour: 1 } }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "Solaire 1028. Les arbres de la Forêt pétrifiée sont figés en plein mouvement, comme si un vent terrible les avait couchés il y a six siècles et s'était arrêté d'un coup. Au milieu, une clairière. Et une voix." }
+          - { dit: "Le Voile est si fin, ici, que le passé se rejoue. Devant vous, transparent comme un reflet : un jeune homme en vêtements étranges, perdu au milieu d'un cercle de prêtres. Le Premier Appel. An 430." }
+          - { dit: "« Qui êtes-vous ? Où suis-je ? » Le jeune homme a votre accent. L'accent de votre monde. Un prêtre lui répond : « Tu es Orvan. Tu es notre champion. Tu vas tuer les dragons pour nous. »" }
+        choix:
+          - texte: "Regarder la suite du souvenir."
+            aller: suite
+      suite:
+        repliques:
+          - { dit: "Le souvenir avance. Orvan se bat contre les dragons, gagne, revient. Les prêtres le félicitent. Puis le Voile se déchire derrière lui, et les premières Cendres tombent sur la vallée." }
+          - { dit: "« Il faut refermer », dit un prêtre. « Il faut quelqu'un de l'autre côté pour tenir le fil. » Ils regardent Orvan. Ils le poussent dans la déchirure, et la referment sur lui. Il crie votre langue en tombant." }
+          - { qui: elianne, expression: tristesse, dit: "Elianne a la main sur la bouche. « Ils l'ont abandonné là. Dans les Cendres. Pour recoudre le Voile avec lui dedans. »", si: { flag: elianne-recrutee } }
+          - { qui: ilysse, dit: "Ilyssë, très pâle : « Ça n'a pas marché. Le Voile ne se recoud pas avec quelqu'un dedans. Il se recoud avec quelqu'un qui tient le fil de son plein gré. » Elle vous regarde. « Ils ont fait de lui le Souverain des Cendres. Six cents ans de colère. »", si: { flag: ilysse-recrutee } }
+          - { dit: "Les arbres de pierre se mettent à bouger. Le souvenir s'efface, et les ombres du Voile, attirées par votre chaleur, sortent des troncs." }
+        choix:
+          - texte: "Se défendre contre les ombres."
+            aller: combat
+      combat:
+        combat: { rencontre: cendres-ombres, victoire: apres, defaite: apres }
+      apres:
+        repliques:
+          - { dit: "Quand les ombres se dissipent, la forêt redevient silencieuse. Vous savez maintenant qui vous attend au sommet de la Citadelle. Un Appelé. Comme vous. Le premier." }
+        effets:
+          - { flag: [orvan-histoire-connue, orvan-premier-appele], xp: 4500, quete: { id: q-ch6-souverain, etape: citadelle }, journal: "Solaire 1028 : dans la Forêt pétrifiée, {groupe} voient le souvenir du Premier Appel. Orvan était un Appelé, abandonné par l'Ordre." }
+        fin: true
+
+  # ─────────────────────────────────────────────────────────────
+  - id: ch6-citadelle
+    titre: "La Citadelle d'Obsidienne"
+    type: groupe
+    lieu: citadelle-porte
+    decor: citadelle-porte
+    quete: q-ch6-souverain
+    disponible_si: { quete_etape: { q-ch6-souverain: citadelle }, date_min: { annee: 1029, mois: 2, jour: 1 } }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "Floréal 1029. La Citadelle d'Obsidienne. De près, ce n'est pas une tour : c'est une montagne taillée, lisse comme un miroir noir. Votre reflet vous regarde entrer." }
+          - { qui: morra, dit: "Morra serre la clé de braise si fort que sa main fume. « Les cellules sont au milieu. Lyss est au milieu. » Elle relève la tête. « On y va. »", si: { flag: morra-recrutee } }
+        choix:
+          - texte: "Entrer dans la Citadelle."
+            aller: donjon
+      donjon:
+        donjon: { id: citadelle-obsidienne, sortie: sortie, abandon: abandon }
+      abandon:
+        repliques:
+          - { dit: "Le Geôlier vous repousse vers la porte. Mais ses clés ont glissé de sa ceinture pendant le combat. Elles sont dans votre main." }
+        effets: [{ objet: cles-des-cellules }]
+        suite: cellules
+      sortie:
+        repliques:
+          - { dit: "Le Geôlier est tombé. Ses clés sonnent dans votre main. Derrière lui, un couloir de cellules, et au fond, une porte gravée d'une couronne de flammes." }
+        suite: cellules
+      cellules:
+        repliques:
+          - { dit: "Dans les cellules, des prisonniers de six siècles : des soldats du royaume, des elfes, des démons qui ont dit non. Et dans la dernière, une jeune démone aux cheveux de braise, enchaînée au mur par des chaînes d'obsidienne." }
+        aiguillage:
+          - { si: { flag: morra-recrutee, objet: cle-de-braise }, aller: lyss-libre }
+        suite: lyss-captive
+      lyss-libre:
+        repliques:
+          - { qui: lyss, dit: "« Morra ? » La jeune démone ouvre de grands yeux. « Morra, c'est toi ? Tu as… des amis ? »" }
+          - { dit: "Morra glisse la clé de braise dans la serrure. Les chaînes d'obsidienne fondent comme de la cire. Lyss tombe dans les bras de sa sœur." }
+          - { qui: morra, expression: joie, dit: "Morra pleure. Morwenna, commandante de la Première Légion, trois cents ans, pleure comme une enfant, sa petite sœur serrée contre elle. Personne ne fait de remarque. Personne n'en a envie." }
+        effets: [{ flag: lyss-liberee, retirer_objet: cle-de-braise, terminer_quete: q-morra, affinite: { morra: 15 } }]
+        suite: porte
+      lyss-captive:
+        repliques:
+          - { qui: lyss, dit: "La jeune démone vous regarde. « Ces chaînes ne s'ouvrent pas avec des clés. Il faut… je ne sais pas. » Elle sourit, courageuse. « Allez-y. Quand le Souverain tombera, elles tomberont peut-être aussi. »" }
+        effets: [{ flag: lyss-trouvee }]
+        suite: porte
+      porte:
+        repliques:
+          - { dit: "Vous libérez tous les autres prisonniers avec les clés du Geôlier. Ils redescendent vers le camp, en vous bénissant dans dix langues." }
+          - { dit: "La porte à la couronne de flammes s'ouvre toute seule. Derrière, un escalier monte en spirale, très haut. Une voix descend, calme, presque amicale : « Prenez votre temps. Je vous attends depuis six cents ans. Je peux attendre encore un peu. »" }
+        effets:
+          - { xp: 5000, quete: { id: q-ch6-souverain, etape: orvan }, journal: "Floréal 1029 : {groupe} entrent dans la Citadelle d'Obsidienne et libèrent ses prisonniers." }
+        fin: true
+
+  # ─────────────────────────────────────────────────────────────
+  - id: ch6-orvan
+    pnj: orvan
+    titre: "Le Souverain des Cendres"
+    type: groupe
+    lieu: citadelle-sommet
+    decor: citadelle-sommet
+    quete: q-ch6-souverain
+    disponible_si: { quete_etape: { q-ch6-souverain: orvan }, date_min: { annee: 1029, mois: 12, jour: 1 } }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "Aurore 1029. Au sommet de la Citadelle, le ciel est si proche qu'on pourrait le toucher. Au centre de la salle, un trône d'obsidienne. Sous le trône, une fente de lumière violette : la première déchirure du Voile." }
+          - { qui: orvan, dit: "Sur le trône, un homme se lève. Grand, maigre, une couronne de flammes noires sur la tête. Il a l'air fatigué. Il vous regarde un par un, longuement. « Vous avez mis le temps. »" }
+          - { qui: orvan, dit: "« Je suis Orvan. Le premier. Ils m'ont arraché à mon monde comme vous, et quand ils n'ont plus eu besoin de moi, ils m'ont jeté de l'autre côté. » Il sourit sans joie. « Chaque Appel depuis m'a rendu plus fort. Chaque Appelé est un peu mon enfant. Vous aussi. »" }
+          - { qui: orvan, dit: "« Vous avez dit la vérité au peuple. Je l'ai senti, ici. Le Voile a tremblé. » Il penche la tête. « C'est la première fois en six cents ans que quelqu'un fait ça. »", si: { flag: secret-revele } }
+          - { qui: orvan, dit: "« Vous avez épargné Cendrebourg. » Il a l'air surpris. Vraiment surpris. « Pourquoi ? »", si: { flag: demons-epargnes } }
+          - { qui: orvan, dit: "« Vous avez brûlé Cendrebourg. » Il hoche la tête, lentement. « Vous êtes bien mes enfants. »", si: { flag: demons-extermines } }
+          - { qui: orvan, dit: "« Morwenna. » Il regarde Morra. « Tu as trahi. » Morra soutient son regard. « J'ai choisi. » Il réfléchit. « Oui. C'est peut-être la même chose. »", si: { flag: morra-recrutee } }
+          - { qui: orvan, dit: "« Maintenant, je vais faire ce que l'Ordre m'a appris : je vais vous utiliser. Vos vies vont déchirer le Voile pour de bon, et les Cendres recouvriront tout. Ce sera juste. » Il lève son épée. « Défendez-vous. »" }
+        choix:
+          - texte: "« Nous ne sommes pas tes enfants. » Combattre."
+            aller: phase1
+          - texte: "« Tu n'as pas à faire ça. Nous connaissons ton histoire. » (Charisme, difficulté 34)"
+            test: { carac: CHA, difficulte: 34, reussite: ecoute, echec: phase1 }
+      ecoute:
+        repliques:
+          - { qui: orvan, dit: "Orvan s'arrête. Sa main tremble sur son épée. « Mon histoire… » Pendant une seconde, c'est un jeune homme perdu qui vous regarde. Puis la couronne s'embrase. « Six cents ans ne s'effacent pas avec des mots. Mais… je me souviendrai que vous avez essayé. »" }
+        effets: [{ flag: orvan-ecoute }]
+        suite: phase1
+      phase1:
+        combat: { rencontre: orvan-1, victoire: transition1, defaite: aide1 }
+      aide1:
+        repliques:
+          - { dit: "Orvan vous écrase. Il lève son épée… et un torrent de feu le renverse : Ysoria, en forme de dragonne, a traversé le plafond. « On ne touche pas à ma famille ! »", si: { flag: ysoria-recrutee } }
+          - { dit: "Orvan vous écrase… mais vos compagnes vous relèvent, toutes ensemble, et le repoussent contre son trône.", si: { pas_flag: ysoria-recrutee } }
+        suite: transition1
+      transition1:
+        repliques:
+          - { dit: "Orvan recule, sa couronne fendue. Il la regarde, puis la jette au sol, où elle se brise. « Assez de cérémonies. » Ses yeux s'allument de violet. Il n'a plus rien d'un roi." }
+        choix:
+          - texte: "Continuer le combat."
+            aller: phase2
+      phase2:
+        combat: { rencontre: orvan-2, victoire: transition2, defaite: aide2 }
+      aide2:
+        repliques:
+          - { dit: "Orvan déchaîné vous jette contre les murs, un par un. Puis une lumière dorée vous enveloppe : Elianne, les mains levées, prie de toutes ses forces. Vous vous relevez.", si: { flag: elianne-recrutee } }
+          - { dit: "Orvan déchaîné vous jette contre les murs. Mais quelque chose vous relève : la voix de tous ceux que vous avez aidés depuis quinze ans. Vous vous relevez.", si: { pas_flag: elianne-recrutee } }
+        suite: transition2
+      transition2:
+        repliques:
+          - { dit: "Orvan tombe à genoux. Puis il rit, et se laisse glisser en arrière, dans la déchirure, sous le trône. La lumière violette l'avale." }
+          - { dit: "La déchirure s'ouvre en grand. Au milieu, une silhouette de lumière, reliée au Voile par mille fils. Orvan. Le cœur du Voile. S'il tombe, le Voile tombe avec lui… ou se recoud." }
+          - { qui: ilysse, dit: "Ilyssë hurle par-dessus le vent : « Les fils ! Ne coupez pas les fils, coupez ce qui les tient ! »", si: { flag: ilysse-recrutee } }
+        choix:
+          - texte: "Plonger dans la déchirure."
+            aller: phase3
+      phase3:
+        combat: { rencontre: orvan-3, victoire: vaincu, defaite: aide3 }
+      aide3:
+        repliques:
+          - { dit: "La lumière vous rejette. Mais tous les fils du Voile se tournent vers vous, à la fois. Vous venez de l'autre côté, vous aussi. Vous pouvez les tenir. Vous les tenez." }
+        suite: vaincu
+      vaincu:
+        repliques:
+          - { dit: "La lumière s'éteint. Orvan est là, à genoux sur le sol d'obsidienne, redevenu un homme. Un homme maigre, aux cheveux blancs, qui a l'air d'avoir vingt ans et six cents ans à la fois." }
+          - { qui: orvan, dit: "« C'est fini. » Il regarde ses mains, qui ne brûlent plus. « Je ne sais plus qui je suis sans la colère. » Il lève les yeux vers vous. « À vous de décider. Vous êtes les derniers Appelés. Ce monde est à vous. »" }
+          - { qui: lyss, dit: "Au loin, dans les cellules, un bruit de chaînes qui tombent. Puis une voix de jeune fille qui rit.", si: { flag: lyss-trouvee } }
+        effets: [{ flag: [orvan-vaincu, lyss-liberee] }]
+        choix:
+          - texte: "L'épargner. « Tu as assez souffert. »"
+            effets: [{ flag: orvan-epargne }]
+            aller: epargne
+          - texte: "L'achever. Six cents ans de morts demandent justice."
+            effets: [{ flag: orvan-mort, pnj_mort: orvan }]
+            aller: mort
+      epargne:
+        repliques:
+          - { qui: orvan, dit: "Orvan ferme les yeux. Pour la première fois depuis six siècles, il pleure. « Merci. » Il a la voix d'un garçon. « Je m'appelais… Je m'appelle Orvan. »" }
+        suite: choix-fin
+      mort:
+        repliques:
+          - { dit: "La lame tombe. Le Souverain des Cendres ne se relève pas. Sur son visage, il n'y a ni colère ni peur. Seulement du repos." }
+        suite: choix-fin
+      choix-fin:
+        repliques:
+          - { dit: "Sous le trône, la déchirure palpite, ouverte. Le Voile attend. Le monde attend. Vos compagnes vous regardent. C'est maintenant que tout se décide." }
+          - { qui: ilysse, dit: "Ilyssë, à genoux devant la fente, les mains pleines de fils de lumière : « Je peux le recoudre. Pour toujours. Plus aucun Appel. Ou… ouvrir une porte, une seule, avant. Vers votre monde. »", si: { flag: ilysse-recrutee } }
+          - { qui: morra, dit: "Morra, sa sœur contre elle : « Les Cendres ont besoin de quelqu'un. Quelqu'un qui ne les déteste pas. »", si: { flag: morra-recrutee } }
+        choix:
+          - texte: "Recoudre le Voile pour toujours. Plus jamais d'Appel, plus jamais de Cendres."
+            si: { flag: secret-revele, ou: [{ affinite_palier: { ilysse: alliee } }, { affinite_palier: { elianne: alliee } }] }
+            aller: fin-sceau
+          - texte: "Proposer la paix à Orvan : qu'il règne sur les Cendres, en paix, avec les démons et l'alliance."
+            si: { flag: orvan-epargne, pas_flag: demons-extermines, affinite_palier: { morra: amoureuse }, reputation_min: { elfes: 30, nains: 30, dragons: 30 } }
+            aller: fin-pacte
+          - texte: "Ouvrir une porte vers votre monde, le temps que chacun choisisse, puis recoudre le Voile."
+            si: { flag: voile-compris, affinite_palier: { ilysse: proche } }
+            aller: fin-retour
+          - texte: "Rentrer à Lysmont en vainqueurs. La Couronne et l'Ordre décideront du reste."
+            aller: fin-couronne
+
+      # ── A. Le Sceau
+      fin-sceau:
+        repliques:
+          - { dit: "Ilyssë prend les fils. Vous les tenez avec elle, tous ensemble, vous qui venez de l'autre côté. Elianne prie. Le Voile se referme, point par point, comme une plaie qui guérit." }
+          - { dit: "Quand c'est fini, il n'y a plus de déchirure. Plus de lumière violette. Au-dessus des Terres Cendrées, pour la première fois depuis six siècles, le ciel devient bleu." }
+          - { dit: "À Lysmont, l'Ordre est dissous. Le cercle de l'Appel, au Temple du Seuil, est recouvert de terre, et on y plante un pommier. Il n'y aura plus jamais d'Appel." }
+          - { qui: orvan, dit: "Orvan, s'il vit encore, s'installe à Cendrebourg et apprend à cultiver des champignons gris. Il dit que c'est la chose la plus difficile qu'il ait jamais faite.", si: { flag: orvan-epargne } }
+        effets: [{ flag: [fin-sceau, voile-recousu] }]
+        suite: compagnes
+      # ── B. Le Pacte
+      fin-pacte:
+        repliques:
+          - { qui: orvan, dit: "Orvan écoute votre proposition sans vous interrompre. Puis il regarde Morra, Lyss, les dragons qui tournent au-dessus de la Citadelle, les ambassadeurs elfes et nains qui montent l'escalier. « Un royaume. Pas une prison. » Il hoche la tête. « J'essaierai. »" }
+          - { dit: "Les Terres Cendrées deviennent un royaume démon, en paix fragile avec le reste du monde. Cendrebourg en devient la première ville libre. Mère Ashka y préside le premier conseil." }
+          - { qui: morra, expression: joie, dit: "Morra devient l'ambassadrice des Cendres à Lysmont. Elle arrive à sa première audience avec un pain chaud sous le bras. Le roi Edmund, médusé, accepte d'en manger un morceau." }
+          - { qui: ilysse, dit: "Mais Ilyssë, penchée sur la déchirure entrouverte, fronce les sourcils. « Il y a quelque chose, de l'autre côté. Quelque chose qui regarde par le trou. Ce n'est pas Orvan. Ce n'est pas nous. »", si: { flag: ilysse-recrutee } }
+        effets: [{ flag: [fin-pacte, royaume-des-cendres] }]
+        suite: compagnes
+      # ── C. La Couronne
+      fin-couronne:
+        repliques:
+          - { dit: "Vous redescendez de la Citadelle en vainqueurs. L'armée de l'alliance plante le drapeau d'Aubeclaire au sommet. La Légion Cendrée se rend, régiment par régiment." }
+          - { dit: "À Lysmont, on vous accueille sous une pluie de pétales. Le roi Edmund vous décore. Il y a des banquets, des chansons, des statues." }
+          - { qui: aureliath, dit: "Et au Temple du Seuil, le cercle de l'Appel se rallume. « Le royaume aura toujours besoin de héros », dit le Grand Prieur. Personne n'ose lui répondre.", si: { pas_flag: aureliath-demis } }
+          - { dit: "Au-dessus des Terres Cendrées, la déchirure ne s'est pas refermée. Elle s'effrite, lentement, et de nouvelles fissures apparaissent, chaque année un peu plus nombreuses. De nouveaux Appelés arriveront. Peut-être bientôt." }
+        effets: [{ flag: [fin-couronne, voile-effrite] }]
+        suite: compagnes
+      # ── D. Le Retour
+      fin-retour:
+        repliques:
+          - { dit: "Ilyssë tire sur les fils, doucement, comme on ouvre un rideau. La déchirure s'élargit et, au milieu, apparaît une porte. Derrière, flou comme sous l'eau : un ciel orange, des toits plats, des lumières alignées. Votre monde." }
+          - { qui: ilysse, expression: tristesse, dit: "« Elle restera ouverte un mois. Ensuite, je la recoudrai, pour toujours. » Elle détourne les yeux. « Chacun de vous doit choisir. Rester, ou partir. Personne ne choisira à votre place. »" }
+          - { dit: "Ce soir-là, au Camp de l'Aube, personne ne dort. On parle bas. On se regarde beaucoup." }
+        effets: [{ flag: [fin-retour, porte-ouverte] }]
+        suite: compagnes
+
+      # ── Épilogue des compagnes (selon ce que chacune a vécu)
+      compagnes:
+        repliques:
+          - { dit: "Trois mois plus tard. Printemps 1030. Le monde a changé. Voici ce que sont devenus ceux qui ont marché avec vous." }
+          - { qui: aveline, dit: "Aveline de Castelroc devient maréchale du Mur reconstruit. Sur la porte nord de Valgrane, rebâtie, on a gravé le nom de son père, et sous le sien, celui de ses compagnons.", si: { flag: castelroc-rehabilite } }
+          - { qui: aveline, dit: "Aveline reste capitaine de la garde royale. Elle n'a jamais su la vérité sur Valgrane. Parfois, elle va s'asseoir dans les ruines, et elle attend une réponse qui ne vient pas.", si: { flag: aveline-rencontree, pas_flag: castelroc-rehabilite } }
+          - { qui: seraphine, dit: "Séraphine siège au conseil de son père, et change une loi par semaine. La première interdit de traiter quiconque comme une arme. Aldric, guéri, apprend à jardiner sous les pommiers du château.", si: { flag: aldric-captif } }
+          - { qui: seraphine, dit: "Séraphine siège au conseil de son père, et change une loi par semaine. Chaque printemps, elle va déposer des fleurs sous un pommier, derrière le Mur.", si: { flag: aldric-mort } }
+          - { qui: seraphine, dit: "Séraphine siège au conseil de son père. Le jour de la fin de la guerre, une lettre est arrivée, sans signature, avec un dessin de pommier. Elle l'a gardée.", si: { ou: [{ flag: aldric-libre }, { flag: aldric-enfui }] } }
+          - { qui: kaya, dit: "Kaya, rang S, retourne chez les Lunecroc et devient la plus jeune cheffe de leur histoire. Elle passe la moitié de l'année à chasser les monstres pour la Guilde, et l'autre à se disputer avec les anciens.", si: { flag: kaya-rang-s } }
+          - { qui: kaya, dit: "Kaya continue de grimper les rangs de la Guilde, un contrat à la fois. Elle y arrivera. Elle y arrive toujours.", si: { flag: kaya-recrutee, pas_flag: kaya-rang-s } }
+          - { qui: elianne, dit: "Elianne devient prieure d'un Ordre reconstruit, sans secrets. Son premier sermon tient en une phrase : « La Lumière n'a pas besoin qu'on mente pour elle. »", si: { flag: elianne-prieure } }
+          - { qui: elianne, dit: "Elianne a quitté l'Ordre. Elle soigne gratuitement, dans un dispensaire au pied du Mur, où viennent des humains, des elfes, des nains et des démons.", si: { flag: elianne-libre } }
+          - { qui: nadja, dit: "Nadja ouvre la Maison Kesh, la première maison de commerce honnête de Qarzim. Enfin, honnête à quatre-vingts pour cent. Elle devient très riche, très vite.", si: { flag: concorde-tombee } }
+          - { qui: ilysse, dit: "Ilyssë est rappelée à Ithrael, où la Reine-Sève lui offre une chaire à la Bibliothèque des Racines. Son premier livre s'intitule « Comment recoudre un monde ». Il est très mal relié. Il se vend très bien.", si: { flag: voile-recousable } }
+          - { qui: ysoria, dit: "Les dragons reviennent dans le ciel du monde. Ysoria et le petit Atchoum survolent les villes au printemps, et les enfants leur font signe.", si: { flag: dragons-reviennent } }
+          - { qui: ysoria, dit: "Les dragons retournent dormir dans l'Archipel. Ysoria, elle, ne dort pas : elle a promis de surveiller les humains. Elle prend son rôle très au sérieux.", si: { flag: dragons-dorment } }
+          - { qui: morra, dit: "Morra et Lyss vivent ensemble, pour la première fois en deux siècles. Lyss veut tout voir, tout goûter, tout apprendre. Morra la suit partout en grognant, et ne l'a jamais vue aussi heureuse.", si: { flag: morra-recrutee, pas_flag: demons-extermines } }
+          - { dit: "Sur le Mur d'Aube, on a gravé le nom de la Maréchale Ilsabet Corvin, tombée à la porte centrale.", si: { flag: mort:marechale } }
+          - { dit: "À Ithrael, on a planté un arbre pour le capitaine Vaelor. Les archers elfes le saluent en passant.", si: { flag: mort:vaelor } }
+        suite: fin
+      fin:
+        repliques:
+          - { dit: "Et vous ? Votre histoire n'est pas finie. Elle ne fait que commencer autrement." }
+          - { dit: "FIN DE LA SAISON 1." }
+        effets:
+          - { flag: saison-1-finie, terminer_quete: q-ch6-souverain, xp: 8000, journal: "Aurore 1029 : au sommet de la Citadelle d'Obsidienne, {groupe} affrontent Orvan, le Souverain des Cendres. La saison 1 s'achève." }
+          - { fin_chapitre: 6 }
+        fin: true

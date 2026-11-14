@@ -1,0 +1,50 @@
+# Chapitre 6 — « Le Souverain des Cendres » (1027 → 1030), les Terres Cendrées, niveaux 34 à 40.
+quetes:
+  - id: q-ch6-souverain
+    titre: "Chapitre 6 — Le Souverain des Cendres"
+    type: principale
+    chapitre: 6
+    niveau: 33
+    region: terres-cendrees
+    resume: "La porte des Terres Cendrées est ouverte. Au bout de la route, la Citadelle d'Obsidienne, et Orvan, le Souverain, qui vous attend depuis six cents ans."
+    etapes:
+      - { id: depart, objectif: "Rejoindre l'État-major de Fort-Aube pour franchir la porte (Germinal 1027).", scene: ch6-depart, lieu: fort-aube-etat-major }
+      - { id: cendrebourg, objectif: "Approcher du village de Cendrebourg (Brumaire 1027).", scene: ch6-cendrebourg, lieu: cendrebourg, niveau: 34 }
+      - { id: souvenirs, objectif: "Traverser la Forêt pétrifiée (Solaire 1028).", scene: ch6-souvenirs, lieu: foret-petrifiee, niveau: 35 }
+      - { id: citadelle, objectif: "Entrer dans la Citadelle d'Obsidienne (Floréal 1029).", scene: ch6-citadelle, lieu: citadelle-porte, niveau: 37 }
+      - { id: orvan, objectif: "Monter au sommet de la Citadelle et affronter Orvan (Aurore 1029).", scene: ch6-orvan, lieu: citadelle-sommet, niveau: 39 }
+      - { id: fin, objectif: "Saison 1 terminée." }
+
+  # ── Quêtes secondaires
+  - id: q-dragon-gris
+    titre: "Le dragon gris"
+    type: secondaire
+    chapitre: 6
+    niveau: 35
+    region: terres-cendrees
+    resume: "Au Lac de lave, un dragon mort depuis mille ans s'est relevé. Ysoria dit que c'est son arrière-grand-oncle. Elle veut qu'il se repose."
+    etapes:
+      - { id: ysoria, objectif: "Écouter Ysoria, à la Tente des Braves.", scene: sq-dragon-ysoria, lieu: camp-tentes }
+      - { id: lac, objectif: "Rendre le repos au dragon gris, au Lac de lave.", scene: sq-dragon-lac, lieu: lac-de-lave, niveau: 36 }
+  - id: q-pretres-oublies
+    titre: "Les prêtres oubliés"
+    type: secondaire
+    chapitre: 6
+    niveau: 36
+    region: terres-cendrees
+    resume: "Une patrouille a trouvé des robes de l'Ordre, très anciennes, au Col des Soupirs. Leurs propriétaires ne sont jamais rentrés. Ils sont toujours là-bas."
+    etapes:
+      - { id: valka, objectif: "Écouter la Sergente Valka, au comptoir de la Guilde.", scene: sq-pretres-valka, lieu: guilde-camp }
+      - { id: col, objectif: "Monter au Col des Soupirs.", scene: sq-pretres-col, lieu: col-des-soupirs, niveau: 36 }
+      - { id: retour, objectif: "Faire votre rapport à Valka.", scene: sq-pretres-retour, lieu: guilde-camp }
+  - id: q-enfants-cendrebourg
+    titre: "Les enfants de Cendrebourg"
+    type: secondaire
+    chapitre: 6
+    niveau: 35
+    region: terres-cendrees
+    resume: "Les gardes d'obsidienne ont emmené cinq enfants de Cendrebourg vers le Puits de cendre, pour en faire des soldats."
+    etapes:
+      - { id: ashka, objectif: "Écouter Mère Ashka, à Cendrebourg.", scene: sq-enfants-ashka, lieu: cendrebourg }
+      - { id: puits, objectif: "Descendre au Puits de cendre.", scene: sq-enfants-puits, lieu: puits-de-cendre, niveau: 35 }
+      - { id: retour, objectif: "Ramener les enfants à Cendrebourg.", scene: sq-enfants-retour, lieu: cendrebourg }

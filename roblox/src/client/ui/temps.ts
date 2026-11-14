@@ -78,15 +78,29 @@ export function vueTempsLibre(parent: Frame, redessiner: () => void) {
 	);
 }
 
+const TITRES_CHAPITRES: Record<number, string> = { 2: "Les Routes du Sud", 3: "La Forêt qui se souvient", 4: "Feu et Écailles", 5: "La Guerre des Cendres", 6: "Le Souverain des Cendres" };
+const FINS_SAISON: [string, string][] = [["fin-sceau", "A. Le Sceau"], ["fin-pacte", "B. Le Pacte"], ["fin-couronne", "C. La Couronne"], ["fin-retour", "D. Le Retour"]];
+
 export function vueFinChapitre(parent: Frame) {
 	const etat = jeu.etat!;
 	const annee = versDate(CONTENU, etat.jour).annee;
-	const c = carte(parent, `Fin du chapitre ${etat.finChapitre}`);
-	texte(c, `Printemps ${annee}. Voici où en sont les héros.`, 15);
+	const n = etat.finChapitre ?? 1;
+	const finSaison = n === 6;
+	const c = carte(parent, finSaison ? "Fin de la saison 1" : `Fin du chapitre ${n}`);
+	if (finSaison) {
+		for (const [f, nom] of FINS_SAISON) if (etat.flags[f] === true) texte(c, `<b>Fin ${nom}</b>`, 17, { couleur: COULEURS.or });
+	}
+	texte(c, `${annee}. Voici où en sont les héros.`, 15);
 	for (const h of listeHeros(etat)) {
 		texte(c, `<b>${esc(h.nom)}</b> — ${age(h, annee)} ans · niveau ${h.niveau} · ${h.or} or`, 15);
 		for (const co of etat.compagnonsRencontres) texte(c, `   ${CONTENU.compagnons[co].nom} : ${palierCompagnon(CONTENU, etat, h.id, co).nom}`, 14, { couleur: COULEURS.texte2 });
 	}
-	texte(c, "Le chapitre 2, « Les Routes du Sud », arrivera dans une prochaine mise à jour. Ta sauvegarde sera reprise telle quelle.", 15);
-	bouton(c, "Continuer à explorer Aubeclaire", () => agir({ type: "chapitre_suivant" }), { principal: true });
+	if (finSaison) {
+		texte(c, "<b>La saison 1 est terminée.</b> Vous pouvez continuer à parcourir Velmaris, finir vos contrats et vos quêtes de compagnes.", 15);
+		texte(c, "La saison 2 arrivera dans une prochaine mise à jour : la sauvegarde sera reprise, et la fin obtenue décidera de son point de départ.", 15);
+	} else {
+		texte(c, "<b>Un long moment va passer.</b> Quand tout le monde est prêt, retrouvez-vous dans une auberge et utilisez le lit : le groupe dormira jusqu'au début du chapitre suivant.", 15);
+		texte(c, `Chapitre ${n + 1} : « ${TITRES_CHAPITRES[n + 1] ?? ""} ».`, 15);
+	}
+	bouton(c, "Continuer", () => agir({ type: "chapitre_suivant" }), { principal: true });
 }
