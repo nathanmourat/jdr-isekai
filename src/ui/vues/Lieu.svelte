@@ -11,6 +11,7 @@
   import { candidatsExamen, conditionHeros, conditionScene, etapeContrat, listeHeros, objetConnu, palierCompagnon, prochainExamen, rangHeros, scenesDisponibles } from '../../moteur/partie';
   import ObjetInfo from '../ObjetInfo.svelte';
   import { activiteChangee, signatureActivite } from '../activite';
+  import { alertesSante } from '../sante';
   import { absentsDuGroupe, aideNiveau, couleurNiveau, estExaminateur, estGuilde, marqueurPnj, trouverLieu, niveauGroupe, niveauScene, sceneAvecCombat, type Marqueur } from '../../moteur/guide';
   import NiveauConseille from '../NiveauConseille.svelte';
   import { avantPlanDecor, imageDecor, imagePnjDecor, positionsImage, TAILLE_PNJ_DECOR } from '../../rendu/assets';
@@ -70,6 +71,9 @@
   const titreSymbole = (m: Marqueur | null) => (m === 'principale' ? 'Quête principale' : m === 'rendre' ? 'Quête à rendre' : m ? 'Quête secondaire' : '');
   /** Avant un combat bien trop fort pour le groupe (rouge), on demande une confirmation. */
   function tropFort(niveau: number | null): boolean {
+    // héros trop affaiblis (moins de la moitié de leurs PV) : on prévient avant le combat (test 3, point 12)
+    const alertes = alertesSante(c, etat);
+    if (alertes.length && !confirm(`${alertes.join('\n')}\n\nCombattre quand même ?`)) return true;
     if (niveau === null) return false;
     const groupe = niveauGroupe(etat);
     return couleurNiveau(niveau, groupe) === 'rouge' && !confirm(`${aideNiveau(niveau, groupe)}\n\nY aller quand même ?`);
@@ -281,7 +285,7 @@
             <p>{etapeIci.etape.texte}</p>
             {#if etapeIci.etape.choix.length}
               <div class="reponses">
-                {#each etapeIci.etape.choix as ch, i (i)}<button onclick={() => jeu.agir({ type: 'etape_contrat', choix: i })}>{ch.texte}</button>{/each}
+                {#each etapeIci.etape.choix as ch, i (i)}{@const prix = -(ch.effets ?? []).reduce((n, e) => n + Math.min(0, e.or ?? 0), 0)}<button disabled={prix > h.or} title={prix > h.or ? `Pas assez d'or : il faut ${prix} or (vous en avez ${h.or})` : undefined} onclick={() => jeu.agir({ type: 'etape_contrat', choix: i })}>{ch.texte}{prix > 0 && !/(d+ or)/.test(ch.texte) ? ` (${prix} or)` : ''}</button>{#if prix > h.or}<small class="discret">Pas assez d'or : il faut {prix} or.</small>{/if}{/each}
               </div>
             {:else if etapeIci.etape.combat}
               <button class="principal" onclick={combatDuContrat}>⚔ {etapeIci.etape.bouton ?? 'Engager le combat'}</button>

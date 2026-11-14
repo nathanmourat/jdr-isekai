@@ -8,7 +8,7 @@
   import { activiteChangee, signatureActivite } from '../activite';
   import { jeu } from '../jeu.svelte';
   import { aideDate, formaterDate, saisonDe } from '../../moteur/temps';
-  import { attenteRepos, noeudCourant, rangHeros, sceneEstDisponible } from '../../moteur/partie';
+  import { attenteRepos, listeHeros, noeudCourant, rangHeros, sceneEstDisponible } from '../../moteur/partie';
   import Carte from '../vues/Carte.svelte';
   import Lieu from '../vues/Lieu.svelte';
   import Dialogue from '../vues/Dialogue.svelte';
@@ -24,6 +24,8 @@
   import Histoire from '../panneaux/Histoire.svelte';
   import FicheRapide from '../panneaux/FicheRapide.svelte';
   import Notifications from '../Notifications.svelte';
+  import Gains from '../Gains.svelte';
+  import { santeHeros } from '../sante';
   import PiecesAnimees from '../PiecesAnimees.svelte';
   import Tiroir from '../Tiroir.svelte';
   import Fenetre from '../Fenetre.svelte';
@@ -174,6 +176,16 @@
           {/if}
         </div>
         <button class="badge or barre-heros" aria-expanded={ficheOuverte} title="Ouvrir ou fermer ma fiche" onclick={() => (ficheOuverte = !ficheOuverte)}>{h.nom} · niv. {h.niveau} · rang {rangHeros(etat, h.id)} · {h.or} or {ficheOuverte ? '▴' : '▾'}</button>
+        <!-- PV et mana de chaque héros du groupe (test 3, point 12) ; repliés avec la barre -->
+        <div class="mini-sante" role="list" aria-label="PV et mana du groupe">
+          {#each listeHeros(etat) as x (x.id)}
+            {@const st = santeHeros(c, x)}
+            <div class="mini" role="listitem" title={`${x.nom} (${etat.joueurs[x.joueurId]?.pseudo ?? '?'}) : ${st.pv}/${st.pvMax} PV · ${st.mana}/${st.manaMax} mana`} aria-label={`${x.nom} : ${st.pv} sur ${st.pvMax} PV, ${st.mana} sur ${st.manaMax} mana`}>
+              <span class="initiale">{x.nom.slice(0, 1)}</span>
+              <span class="jauges"><span class="j pv" class:bas={st.pv < st.pvMax * 0.5}><span style={`width:${(st.pv / st.pvMax) * 100}%`}></span></span><span class="j mana"><span style={`width:${(st.mana / st.manaMax) * 100}%`}></span></span></span>
+            </div>
+          {/each}
+        </div>
         {#if etat.meneur}<span class="badge meneur" title="Le meneur du jour tranche les égalités et guide le groupe dans les donjons">Meneur : {etat.joueurs[etat.meneur]?.pseudo}</span>{/if}
         {#if jeu.joueursLocaux.length > 1}
           <select aria-label="Joueur actif sur cet appareil" value={jeu.joueurActif} onchange={(e) => jeu.changerJoueur((e.target as HTMLSelectElement).value)}>
@@ -227,11 +239,22 @@
   {/if}
 
   {#if jeu.erreur}<p class="erreur flottant" role="alert">{jeu.erreur} <button class="petit" onclick={() => (jeu.erreur = null)}>OK</button></p>{/if}
-  <Notifications />
+  <!-- notifications empilées en haut à droite (gains de 3 s, puis messages), sans bloquer les clics -->
+  <div class="pile-notifs"><Gains /><Notifications /></div>
   <PiecesAnimees />
 </div>
 
 <style>
+  .mini-sante { display: flex; gap: 0.3rem; align-items: center; }
+  .mini { display: flex; align-items: center; gap: 0.2rem; padding: 0.1rem 0.3rem; border-radius: 6px; background: #14111cb3; }
+  .initiale { font-size: 0.7rem; font-weight: 700; color: var(--or-2); }
+  .jauges { display: grid; gap: 2px; width: 34px; }
+  .j { display: block; height: 4px; border-radius: 2px; background: #000b; overflow: hidden; }
+  .j > span { display: block; height: 100%; }
+  .j.pv > span { background: #5fc46d; }
+  .j.pv.bas > span { background: var(--rouge); }
+  .j.mana > span { background: #4f8dff; }
+  .pile-notifs { position: fixed; right: 0.6rem; top: 3.4rem; z-index: 95; display: grid; gap: 0.4rem; justify-items: end; pointer-events: none; max-width: min(340px, calc(100vw - 1.2rem)); }
   :global(html.jeu-plein-ecran), :global(html.jeu-plein-ecran body) { overflow: hidden; height: 100%; overscroll-behavior: none; }
   .jeu { position: fixed; inset: 0; width: 100vw; height: 100dvh; overflow: hidden; background: #07060a; }
   .scene { position: absolute; inset: 0; }
@@ -268,6 +291,10 @@
     .infos, .meneur, .texte, .titre { display: none; }
     .barre-haut { flex-wrap: nowrap; padding-top: max(0.2rem, env(safe-area-inset-top)); padding-bottom: 0.2rem; }
     .gauche { flex-wrap: nowrap; min-width: 0; }
+    .mini-sante { gap: 0.15rem; flex: none; }
+    .mini { padding: 0.1rem 0.15rem; }
+    .mini .initiale { display: none; }
+    .jauges { width: 20px; }
     .barre-heros { font-size: clamp(0.62rem, 2.6vw, 0.78rem); line-height: 1.1; white-space: normal; overflow-wrap: anywhere; max-width: 100%; }
     .droite { flex-wrap: nowrap; gap: 0.25rem; }
     .icone { min-width: 44px; min-height: 40px; padding: 0 0.4rem; }

@@ -1,5 +1,6 @@
 <script lang="ts">
   import { jeu } from '../jeu.svelte';
+  import { santeHeros } from '../sante';
   import { caracsTotales, competencesConnues, competencesEquipees, manaMax, pvMax, xpPourNiveau, age } from '../../moteur/personnage';
   import { prixVente, prochainExamen, rangHeros } from '../../moteur/partie';
   import { CARACS } from '../../contenu/schemas';
@@ -17,6 +18,7 @@
   const cl = $derived(c.classes[h.classe]);
   const ra = $derived(c.races[h.race]);
   const k = $derived(caracsTotales(c, h));
+  const sante = $derived(santeHeros(c, h));
   const connues = $derived(competencesConnues(c, h));
   const equipees = $derived(competencesEquipees(c, h));
   const maxEquipees = c.config.personnage.competences_equipees_max;
@@ -40,7 +42,13 @@
       <h2>{h.nom}</h2>
       <p>{ra.nom} · {cl.nom} · {h.origine === 'invoque' ? 'Invoqué' : 'Réincarné'} · {age(h, versDate(c, etat.jour).annee)} ans</p>
       <p class="discret">Niveau {h.niveau} — XP {h.xp} / {xpPourNiveau(c, h.niveau)} · Rang de guilde {rangHeros(etat, h.id)}{#if prochainExamen(c, etat, h.id)?.pret} <span class="badge or">examen du rang {prochainExamen(c, etat, h.id)!.rang} possible</span>{/if} · {h.or} or{h.blessure ? ' · blessé' : ''}</p>
-      <p class="discret">PV max {pvMax(c, k.VIT, h.niveau)} · Mana {manaMax(k.ESP, h.niveau)}</p>
+
+      <div class="sante">
+        <p><strong>PV : {sante.pv} / {sante.pvMax}</strong>{#if h.blessure} <span class="badge rouge">blessé : −{c.config.mort_douce.blessure_pv_pourcent} % jusqu'au repos (auberge, Temple)</span>{/if}</p>
+        <div class="jauge pv"><div style={`width:${(sante.pv / sante.pvMax) * 100}%`}></div></div>
+        <p><strong>Mana : {sante.mana} / {sante.manaMax}</strong> <span class="discret">(plein au début de chaque combat)</span></p>
+        <div class="jauge mana"><div style="width:100%"></div></div>
+      </div>
       <label class="discret">Changer de portrait <input type="file" accept="image/*" onchange={portrait} /></label>
       <label class="discret ligne">Si je suis absent, mon héros
         <select value={h.siAbsent} onchange={(e) => jeu.agir({ type: 'si_absent', mode: (e.target as HTMLSelectElement).value as 'ia' | 'camp' })} style="width:auto">
@@ -137,6 +145,12 @@
 </section>
 
 <style>
+  .sante p { margin: 0.2em 0; }
+  .sante .jauge { height: 8px; border-radius: 4px; background: #000a; border: 1px solid var(--bord); overflow: hidden; margin-bottom: 0.3rem; }
+  .sante .jauge > div { height: 100%; }
+  .sante .pv > div { background: linear-gradient(90deg, #3f9b4f, #7fd18a); }
+  .sante .mana > div { background: #4f8dff; }
+  .badge.rouge { color: var(--rouge); border-color: #7a2f2a; }
   .malus-equip { color: #f2a33a; }
   .refus-equip { color: var(--rouge); }
   .fiche { display: grid; gap: 0.8rem; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }

@@ -36,7 +36,7 @@
 {/if}
 
 <style>
-  .notifications { position: fixed; right: 0.6rem; top: 3.6rem; z-index: 90; max-width: min(340px, calc(100vw - 2rem)); display: grid; gap: 0.4rem; pointer-events: none; }
+  .notifications { max-width: min(340px, calc(100vw - 2rem)); display: grid; gap: 0.4rem; pointer-events: none; }
   p { margin: 0; background: var(--fond-2); border: 1px solid var(--or); border-radius: var(--rayon); padding: 0.5rem 0.8rem; box-shadow: var(--ombre); font-size: 0.92rem; animation: entree 0.3s ease-out; transition: opacity 0.6s; }
   p.sortie { opacity: 0; }
   @keyframes entree { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }

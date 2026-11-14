@@ -146,6 +146,7 @@ scenes:
             test: { carac: INT, difficulte: 15, reussite: demasque, echec: rate }
           - texte: "L'acheter. On ne sait jamais."
             si: { or_min: 100 }
+            visible_si_bloque: true
             effets: [{ or: -100, objet: relique-douteuse }]
             aller: achete
           - texte: "Aller prévenir l'Ordre : vendre de fausses reliques est un crime."
@@ -348,6 +349,9 @@ scenes:
           - texte: "L'observer de loin pendant qu'il s'échauffe."
             aller: observe
           - texte: "Payer un verre à l'un de ses anciens adversaires."
+            si: { or_min: 2 }
+            visible_si_bloque: true
+            effets: [{ or: -2 }]
             aller: verre
       observe:
         repliques:

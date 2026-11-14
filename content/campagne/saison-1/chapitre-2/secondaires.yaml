@@ -158,6 +158,7 @@ scenes:
             aller: combat
           - texte: "Acheter les gardes pour qu'ils « oublient » le barrage. (100 or)"
             si: { or_min: 100 }
+            visible_si_bloque: true
             effets: [{ or: -100 }]
             aller: achat
       sabotage:

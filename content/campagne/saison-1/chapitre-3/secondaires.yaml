@@ -241,6 +241,7 @@ scenes:
             aller: fin
           - texte: "Engager des sergents de la Guilde. (150 or)"
             si: { or_min: 150 }
+            visible_si_bloque: true
             effets: [{ or: -150, reputation: { troupes: 14 } }]
             aller: fin
       fin:

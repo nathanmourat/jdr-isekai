@@ -18,6 +18,7 @@ scenes:
             test: { carac: INT, difficulte: 20, reussite: gravee, echec: brulure }
           - texte: "Acheter le fragment de colonne. (60 or)"
             si: { or_min: 60 }
+            visible_si_bloque: true
             effets: [{ or: -60 }]
             aller: gravee
       gravee:
@@ -186,6 +187,7 @@ scenes:
             test: { carac: INT, difficulte: 21, reussite: plans, echec: bricolage }
           - texte: "Racheter les plans tels quels. (80 or)"
             si: { or_min: 80 }
+            visible_si_bloque: true
             effets: [{ or: -80 }]
             aller: bricolage
       plans:

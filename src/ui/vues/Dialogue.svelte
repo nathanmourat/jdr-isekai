@@ -32,6 +32,18 @@
   const combatEnAttente = $derived(!!etat.combats[cle === 'groupe' ? 'groupe' : cle]);
 
   function texte(t: string) { return remplacerVariables(c, etat, t, es.heros); }
+  /** Prix d'un choix payant (or retiré par ses effets), affiché sur le bouton s'il n'est pas déjà écrit (test 3, point 13). */
+  function libelleChoix(ch: (typeof choix)[number]): string {
+    const t = texte(ch.choix.texte);
+    const prix = -ch.choix.effets.reduce((n, e) => n + Math.min(0, e.or ?? 0), 0);
+    return prix > 0 && !/(d+ or)/.test(t) ? `${t} (${prix} or)` : t;
+  }
+  /** Pourquoi un choix est grisé : surtout le manque d'or, expliqué clairement. */
+  function raisonIndispo(ch: (typeof choix)[number]): string {
+    const min = ch.choix.si?.or_min;
+    if (min !== undefined) return `Pas assez d'or : il faut ${min} or (${es.heros.map((h) => `${etat.heros[h].nom} : ${etat.heros[h].or}`).join(', ')})`;
+    return 'indisponible';
+  }
   // Un personnage s'adresse à un joueur précis : lui seul répond
   const parole = $derived(noeud?.parole_a && es.parole ? { def: noeud.parole_a, heros: etat.heros[es.parole.heros], reponses: es.parole.reponses } : null);
   const joueurInterroge = $derived(parole ? etat.joueurs[parole.heros.joueurId] : null);
@@ -143,7 +155,7 @@
         <div class="choix">
           {#each choix as ch (ch.index)}
             <div class="option">
-              <span class="libelle">{texte(ch.choix.texte)}{#if !ch.possible} <span class="badge">indisponible</span>{/if}{#if miseDuChoix(ch.choix)} <span class="badge or">mise : {miseDuChoix(ch.choix)} or</span>{/if}
+              <span class="libelle">{libelleChoix(ch)}{#if !ch.possible} <span class="badge" class:rouge={ch.choix.si?.or_min !== undefined}>{raisonIndispo(ch)}</span>{/if}{#if miseDuChoix(ch.choix)} <span class="badge or">mise : {miseDuChoix(ch.choix)} or</span>{/if}
                 {#each mesJoueurs.filter((j) => blocageMise(j, ch)) as j (j)}<br /><small class="aide-mise">{blocageMise(j, ch)}</small>{/each}</span>
               <div class="ligne">
                 {#if groupe && votants(ch.index).length}<span class="discret">Votes : {votants(ch.index).join(', ')}</span>{/if}
@@ -171,6 +183,7 @@
 </section>
 
 <style>
+  .badge.rouge { color: var(--rouge); border-color: #7a2f2a; }
   .scene { position: absolute; inset: 0; overflow: hidden; display: grid; grid-template-rows: auto 1fr auto; background: #07060a; }
   .decor { position: absolute; inset: 0; background: var(--decor) center / contain no-repeat; }
   .bandeau { position: relative; display: flex; gap: 0.6rem; align-items: center; padding: 0.6rem 1rem; padding-top: calc(max(0.3rem, env(safe-area-inset-top)) + 3rem); background: linear-gradient(rgba(10,8,14,0.85), transparent); }

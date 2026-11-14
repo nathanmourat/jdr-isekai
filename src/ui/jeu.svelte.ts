@@ -7,6 +7,7 @@ import { contenuNavigateur } from '../contenu/navigateur';
 import { appliquer, ErreurAction, jourPeutPasser, rejouer, type Action, type EtatPartie } from '../moteur/partie';
 import { creerSauvegarde } from '../sauvegarde/migrations';
 import { genererId, type Canal } from '../sync/types';
+import { calculerGains, type Gain } from './gains';
 
 type SansJoueur = Action extends infer A ? (A extends Action ? Omit<A, 'joueur'> & { joueur?: string } : never) : never;
 
@@ -30,6 +31,9 @@ class Jeu {
   joueursLocaux = $state<string[]>([]);
   joueurActif = $state<string>('');
   erreur = $state<string | null>(null);
+  /** Gains et pertes des dernières actions reçues (notifications courtes), avec un numéro unique. */
+  gains = $state<(Gain & { id: number })[]>([]);
+  private numeroGain = 0;
   info = $state<string | null>(null);
   chargement = $state(false);
   /** Nombre d'entrées du journal déjà vues par le joueur actif (résumé « pendant votre absence »). */
@@ -135,7 +139,13 @@ class Jeu {
     if (!nouvelles.length) return;
     // une action d'un joueur (pas le simple passage d'un jour) compte comme du jeu actif
     if (nouvelles.some((a) => a.type !== 'jour_passe' && a.type !== 'presence')) this.derniereActivite = Date.now();
+    const avant = this.etat;
     const { etat } = rejouer(this.contenu, this.etat ?? this.depart, nouvelles);
+    // notifications de gain : pas au chargement d'une partie (on ne rejoue pas les anciens gains)
+    if (avant && this.actions.length > 0) {
+      const nouveaux = calculerGains(this.contenu, avant, etat).map((g) => ({ ...g, id: ++this.numeroGain }));
+      if (nouveaux.length) this.gains = [...this.gains, ...nouveaux].slice(-8);
+    }
     this.actions = toutes.slice();
     this.etat = etat;
   }

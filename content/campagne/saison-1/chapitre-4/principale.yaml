@@ -142,6 +142,7 @@ scenes:
             aller: jambe
           - texte: "« Nous vous payons le double de Vask. » (500 or)"
             si: { or_min: 500 }
+            visible_si_bloque: true
             effets: [{ or: -500 }]
             aller: carte
           - texte: "« Un duel. Si nous gagnons, la carte est à nous. »"

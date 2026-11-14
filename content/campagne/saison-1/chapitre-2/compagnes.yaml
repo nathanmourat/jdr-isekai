@@ -119,6 +119,8 @@ scenes:
             effets: [{ affinite: { nadja: 3 } }]
             aller: notes
           - texte: "« Ce marchand a l'air pauvre. Payons le prix qu'il demande. »"
+            si: { or_min: 15 }
+            visible_si_bloque: true
             effets: [{ affinite: { nadja: 1 }, or: -15 }]
             aller: genereux
       bien:
@@ -252,6 +254,7 @@ scenes:
             test: { carac: CHA, difficulte: 20, reussite: piste, echec: rachat }
           - texte: "Racheter l'anneau pour Séraphine. (100 or)"
             si: { or_min: 100 }
+            visible_si_bloque: true
             effets: [{ or: -100, affinite: { seraphine: 4 } }]
             aller: piste
       piste:
