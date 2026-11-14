@@ -74,9 +74,55 @@ Aveline, an adult woman aged 24, a knight and captain of the royal guard. Mature
 
 > Aveline, femme adulte de 24 ans, chevalière et capitaine de la garde royale. Visage d'adulte. Cheveux châtain cuivré attachés en une tresse courte posée sur son épaule gauche, quelques mèches libres autour du visage. Yeux gris-vert, regard droit et ferme, sourcils marqués, petite cicatrice pâle du côté droit du menton. Peau claire et chaude. Armure de plates argentée et polie, liserés bleus et or, épaulières arrondies et gorgerin, cape bleu royal attachée aux épaules par une agrafe dorée. Allure digne et disciplinée.
 
+Retouche validée le 15/11 : tresse courte, **emblème du soleil levant** (or) à la place des fleurs de lys sur les agrafes et le plastron.
+
 ### 4.2 Portraits par défaut des races
 
-À venir : 8 races × 2 versions (`portrait-defaut.png` et `portrait-defaut-f.png`), expression déterminée, tenue d'aventurier neutre.
+- **Fichiers** : `assets/personnages/races/<race>/portrait-defaut.png` (héros) et `portrait-defaut-f.png` (héroïne). `LISTE-TEXTURES.md` n° 88 à 95 et section « sexe du héros ».
+- **Une seule image par portrait** (pas d'expressions) : expression **déterminée**, tenue d'aventurier neutre, **sans marque de classe** (pas d'arme, pas de symbole), pour convenir aux 10 classes.
+- **Ne pas ressembler aux compagnes** : l'héroïne Ourvalis ne doit pas ressembler à Kaya, la demi-démone à Morra, la sang-dragon à Ysoria, l'elfe à Ilyssë (couleurs de cheveux différentes ci-dessous).
+- Les détails de race suivent les calques des sprites (`GRAPHISMES.md` § 4) : oreilles, cornes, écailles visibles, **tête dégagée** (pas de capuche sur la tête).
+
+**Expression commune** (à la place des expressions du § 4) :
+
+```
+Determined expression: confident, focused gaze at the viewer, a faint resolute smile.
+```
+
+> Expression déterminée : regard assuré et concentré vers le spectateur, léger sourire résolu.
+
+**Tenue commune** (à ajouter à chaque fiche) :
+
+```
+Neutral adventurer's travel outfit with no class insignia and no weapon visible: layered linen shirt, leather jerkin or light coat, travel cloak fastened at the collar, hood down.
+```
+
+> Tenue d'aventurier de voyage neutre, sans insigne de classe ni arme visible : chemise de lin superposée, pourpoint de cuir ou manteau léger, cape de voyage attachée au col, capuche baissée.
+
+| Race | Héros (`portrait-defaut`) | Héroïne (`portrait-defaut-f`) |
+|---|---|---|
+| `humain` | `An adult human man around 27, short dark brown hair, light stubble, brown eyes, tanned skin, a few freckles. Earthy brown and moss-green clothes.` | `An adult human woman around 26, shoulder-length chestnut hair tied back loosely, hazel eyes, light olive skin. Earthy brown and moss-green clothes.` |
+| `elfe` | `An adult elf man (looks about 28), long pointed elven ears, fine features, long straight silver-blond hair, pale blue eyes, fair skin. Green and silver clothes with leaf embroidery.` | `An adult elf woman (looks about 26), long pointed elven ears, fine features, long platinum-blond hair with a thin side braid, pale blue eyes, fair skin, no glasses. Green and silver clothes with leaf embroidery.` |
+| `demi-elfe` | `An adult half-elf man around 26, slightly pointed ears (shorter than an elf's), mixed human and elven features, wavy auburn hair, green eyes. Practical travel clothes in teal and brown.` | `An adult half-elf woman around 25, slightly pointed ears (shorter than an elf's), mixed human and elven features, wavy dark-blond hair, green eyes. Practical travel clothes in teal and brown.` |
+| `nain` | `An adult dwarf man around 40, broad stocky build, thick chestnut-red beard braided and adorned with small iron rings, bushy eyebrows, grey eyes, ruddy skin. Sturdy leather apron over a travel coat, forge-orange and slate-grey colors.` | `An adult dwarf woman around 35, broad sturdy build, thick chestnut-red hair in two heavy braids adorned with small iron rings, freckles, grey eyes, ruddy skin. Sturdy leather apron over a travel coat, forge-orange and slate-grey colors.` |
+| `ourvalis` | `An adult Ourvalis man (wolf-folk) around 28, silver-grey wolf ears on top of the head, short shaggy grey hair, yellow eyes, discreet white tribal paint lines on the cheekbones, tanned skin. Nomad leather and sand-colored cloth.` | `An adult Ourvalis woman (wolf-folk) around 27, dark charcoal-grey wolf ears on top of the head, dark grey hair in a high ponytail, yellow eyes, discreet white tribal paint lines on the cheekbones, tanned skin, no headband. Nomad leather and sand-colored cloth.` |
+| `vulpin` | `An adult Vulpin man (fox-folk) around 27, red fox ears with white tips on top of the head, tousled ginger hair, amber eyes, sly smile. Nomadic merchant's clothes: patterned scarf, many small pouches, ochre and turquoise colors.` | `An adult Vulpin woman (fox-folk) around 26, red fox ears with white tips on top of the head, ginger hair in a loose bun with strands falling, amber eyes, sly smile. Nomadic merchant's clothes: patterned scarf, many small pouches, ochre and turquoise colors.` |
+| `demi-demon` | `An adult half-demon man around 28, grey-violet skin, small curved black horns, dark red eyes, messy black hair. Dark hooded cloak with the hood down (horns visible), charcoal and deep purple colors.` | `An adult half-demon woman around 27, grey-violet skin, small curved black horns, dark red eyes, short ash-white bob haircut. Dark hooded cloak with the hood down (horns visible), charcoal and deep purple colors.` |
+| `sang-dragon` | `An adult dragon-blooded man around 29, two small backswept horns, small red scales on the cheekbones and the side of the neck, golden eyes with slit pupils, short black hair. Archipelago sailor's outfit: open-collar shirt, sash, weathered navy coat.` | `An adult dragon-blooded woman around 27, two small backswept horns, small red scales on the cheekbones and the side of the neck, golden eyes with slit pupils, dark teal hair in a short braid. Archipelago sailor's outfit: open-collar shirt, sash, weathered navy coat.` |
+
+**Demi-démon** : remplacer le fond par `Plain flat solid green background` (§ 2).
+
+**Ordre d'un prompt de race** : bloc STYLE (§ 2) + fiche de la race (tableau) + tenue commune + expression commune.
+
+Traductions (pour vérifier) :
+- **Humain** : homme d'environ 27 ans, cheveux bruns courts, barbe de quelques jours, yeux marron, peau hâlée, quelques taches de rousseur / femme d'environ 26 ans, cheveux châtains mi-longs attachés lâchement, yeux noisette, peau olive claire. Vêtements brun terre et vert mousse.
+- **Elfe** : longues oreilles pointues, traits fins, longs cheveux blond argenté (lui) ou blond platine avec une fine tresse (elle, sans lunettes), yeux bleu pâle, peau claire. Vert et argent, broderies de feuilles.
+- **Demi-elfe** : oreilles légèrement pointues, traits mêlés humain et elfe, cheveux ondulés auburn (lui) ou blond foncé (elle), yeux verts. Sarcelle et brun.
+- **Nain** : carrure trapue, barbe châtain roux tressée ornée d'anneaux de fer (lui) ; deux grosses tresses châtain roux ornées d'anneaux, taches de rousseur (elle). Tablier de cuir sur manteau de voyage, orange forge et gris ardoise.
+- **Ourvalis** : oreilles de loup gris argent (lui) ou gris anthracite (elle), cheveux gris courts en bataille (lui) ou en queue haute (elle, sans bandeau : ne pas ressembler à Kaya), yeux jaunes, fines peintures tribales blanches. Cuir nomade et tissu couleur sable.
+- **Vulpin** : oreilles de renard roux à pointe blanche, cheveux roux, yeux ambre, sourire malicieux. Tenue de marchand nomade, foulard à motifs, bourses, ocre et turquoise.
+- **Demi-démon** : peau gris-violet, petites cornes noires recourbées, yeux rouge sombre, cheveux noirs en bataille (lui) ou carré court blanc cendré (elle : ne pas ressembler à Morra). Cape à capuche baissée, anthracite et violet profond.
+- **Sang-dragon** : deux petites cornes vers l'arrière, petites écailles rouges sur les pommettes et le cou, yeux dorés à pupille fendue, cheveux noirs courts (lui) ou tresse courte sarcelle foncé (elle : ne pas ressembler à Ysoria). Tenue de marin de l'Archipel.
 
 ### 4.3 Autres compagnes et PNJ importants
 
