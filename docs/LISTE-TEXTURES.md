@@ -92,13 +92,13 @@ Description : femme de 24 ans, chevalière, cheveux châtain cuivré en tresse c
 
 | Fait | N° | Fichier (dans `assets/`) | Dimensions | Contenu |
 |---|---|---|---|---|
-| [ ] | 37 | `decors/taverne.png` | 1280 × 720 | Taverne chaleureuse « Le Chaudron Fêlé » : comptoir, tonneaux, cheminée, clients. |
-| [ ] | 38 | `decors/chateau-trone.png` | 1280 × 720 | Salle du trône du château de Lysmont : tapis bleu, trône doré, bannières, gardes. |
-| [ ] | 39 | `decors/combe-aux-saules.png` | 1280 × 720 | Forêt de saules au crépuscule, ruisseau, brume légère. |
-| [ ] | 40 | `decors/quartier-tanneurs.png` | 1280 × 720 | Ruelles pauvres de Lysmont : cuves de teinture, linge suspendu, ambiance inquiétante. |
-| [ ] | 41 | `decors/lysmont-lanternes-nuit.png` | 1280 × 720 | La place de Lysmont la nuit de la Fête des Lanternes : lanternes flottantes dans le ciel, puis incendie au loin (une seule image : fête + premières flammes). |
-| [ ] | 42 | `decors/arene.png` | 1280 × 720 | Arène du tournoi des écuyers : gradins, drapeaux, sable. |
-| [ ] | 43 | `decors/crypte-entree.png` | 1280 × 720 | Entrée extérieure de la Crypte de la Fontaine : ruines couvertes de lierre, escalier qui descend. |
+| [x] | 37 | `decors/taverne.png` | 1280 × 720 | Taverne chaleureuse « Le Chaudron Fêlé » : comptoir, tonneaux, cheminée, clients. |
+| [x] | 38 | `decors/chateau-trone.png` | 1280 × 720 | Salle du trône du château de Lysmont : tapis bleu, trône doré, bannières, gardes. |
+| [x] | 39 | `decors/combe-aux-saules.png` | 1280 × 720 | Forêt de saules au crépuscule, ruisseau, brume légère. |
+| [x] | 40 | `decors/quartier-tanneurs.png` | 1280 × 720 | Ruelles pauvres de Lysmont : cuves de teinture, linge suspendu, ambiance inquiétante. |
+| [x] | 41 | `decors/lysmont-lanternes-nuit.png` | 1280 × 720 | La place de Lysmont la nuit de la Fête des Lanternes : lanternes flottantes dans le ciel, puis incendie au loin (une seule image : fête + premières flammes). |
+| [x] | 42 | `decors/arene.png` | 1280 × 720 | Arène du tournoi des écuyers : gradins, drapeaux, sable. |
+| [x] | 43 | `decors/crypte-entree.png` | 1280 × 720 | Entrée extérieure de la Crypte de la Fontaine : ruines couvertes de lierre, escalier qui descend. |
 
 ### 2.2 Décors du prologue d'enfance (réincarnés) — sans personnages
 
@@ -197,21 +197,21 @@ Une ligne de 6 à 8 cases de 64 × 64, soit au plus 512 × 64.
 
 | Fait | N° | Fichier (dans `assets/`) | Dimensions | Contenu |
 |---|---|---|---|---|
-| [ ] | 96 | `effets/entaille.png` | ≤ 512 × 64 | Trait de lame blanc. |
-| [ ] | 97 | `effets/impact.png` | ≤ 512 × 64 | Choc physique (étoile, poussière). |
-| [ ] | 98 | `effets/feu.png` | ≤ 512 × 64 | Explosion de flammes orange. |
-| [ ] | 99 | `effets/glace.png` | ≤ 512 × 64 | Cristaux de glace qui éclatent. |
-| [ ] | 100 | `effets/foudre.png` | ≤ 512 × 64 | Éclair jaune. |
-| [ ] | 101 | `effets/soin.png` | ≤ 512 × 64 | Particules vertes et dorées qui montent. |
-| [ ] | 102 | `effets/poison.png` | ≤ 512 × 64 | Bulles vertes. |
-| [ ] | 103 | `effets/rune.png` | ≤ 512 × 64 | Cercle de rune bleu qui tourne. |
-| [ ] | 104 | `effets/bouclier.png` | ≤ 512 × 64 | Dôme translucide bleu. |
-| [ ] | 105 | `effets/bonus.png` | ≤ 512 × 64 | Flèche dorée qui monte (amélioration). |
-| [ ] | 106 | `effets/malus.png` | ≤ 512 × 64 | Flèche violette qui descend (affaiblissement). |
-| [ ] | 107 | `effets/critique.png` | ≤ 512 × 64 | Éclat rouge et blanc. |
-| [ ] | 108 | `effets/sacre.png` | ≤ 512 × 64 | Rayon de lumière dorée. |
-| [ ] | 109 | `effets/ombre.png` | ≤ 512 × 64 | Volutes violettes. |
-| [ ] | 110 | `effets/invocation.png` | ≤ 512 × 64 | Cercle vert et fumée. |
+| [x] | 96 | `effets/entaille.png` | ≤ 512 × 64 | Trait de lame blanc. |
+| [x] | 97 | `effets/impact.png` | ≤ 512 × 64 | Choc physique (étoile, poussière). |
+| [x] | 98 | `effets/feu.png` | ≤ 512 × 64 | Explosion de flammes orange. |
+| [x] | 99 | `effets/glace.png` | ≤ 512 × 64 | Cristaux de glace qui éclatent. |
+| [x] | 100 | `effets/foudre.png` | ≤ 512 × 64 | Éclair jaune. |
+| [x] | 101 | `effets/soin.png` | ≤ 512 × 64 | Particules vertes et dorées qui montent. |
+| [x] | 102 | `effets/poison.png` | ≤ 512 × 64 | Bulles vertes. |
+| [x] | 103 | `effets/rune.png` | ≤ 512 × 64 | Cercle de rune bleu qui tourne. |
+| [x] | 104 | `effets/bouclier.png` | ≤ 512 × 64 | Dôme translucide bleu. |
+| [x] | 105 | `effets/bonus.png` | ≤ 512 × 64 | Flèche dorée qui monte (amélioration). |
+| [x] | 106 | `effets/malus.png` | ≤ 512 × 64 | Flèche violette qui descend (affaiblissement). |
+| [x] | 107 | `effets/critique.png` | ≤ 512 × 64 | Éclat rouge et blanc. |
+| [x] | 108 | `effets/sacre.png` | ≤ 512 × 64 | Rayon de lumière dorée. |
+| [x] | 109 | `effets/ombre.png` | ≤ 512 × 64 | Volutes violettes. |
+| [x] | 110 | `effets/invocation.png` | ≤ 512 × 64 | Cercle vert et fumée. |
 
 ---
 
@@ -299,13 +299,13 @@ Une ligne de 6 à 8 cases de 64 × 64, soit au plus 512 × 64.
 | [ ] | 171 | `icones/objets/bijou-dore.png` | 32 × 32 | Collier doré clinquant (cadeau détesté par Aveline). |
 | [ ] | 172 | `icones/objets/fleur-des-champs.png` | 32 × 32 | Petit bouquet. |
 | [ ] | 173 | `icones/objets/livre-ancien.png` | 32 × 32 | Livre relié de cuir. |
-| [ ] | 174 | `icones/objets/epee-courte.png` | 32 × 32 | Épée courte. |
-| [ ] | 175 | `icones/objets/baton-apprenti.png` | 32 × 32 | Bâton de mage simple. |
-| [ ] | 176 | `icones/objets/arc-court.png` | 32 × 32 | Arc court. |
-| [ ] | 177 | `icones/objets/dague.png` | 32 × 32 | Dague. |
-| [ ] | 178 | `icones/objets/bouclier-bois.png` | 32 × 32 | Bouclier rond en bois. |
-| [ ] | 179 | `icones/objets/armure-cuir.png` | 32 × 32 | Plastron de cuir. |
-| [ ] | 180 | `icones/objets/robe-mage.png` | 32 × 32 | Robe de tissu. |
+| [x] | 174 | `icones/objets/epee-courte.png` | 32 × 32 | Épée courte. |
+| [x] | 175 | `icones/objets/baton-apprenti.png` | 32 × 32 | Bâton de mage simple. |
+| [x] | 176 | `icones/objets/arc-court.png` | 32 × 32 | Arc court. |
+| [x] | 177 | `icones/objets/dague.png` | 32 × 32 | Dague. |
+| [x] | 178 | `icones/objets/bouclier-bois.png` | 32 × 32 | Bouclier rond en bois. |
+| [x] | 179 | `icones/objets/armure-cuir.png` | 32 × 32 | Plastron de cuir. |
+| [x] | 180 | `icones/objets/robe-mage.png` | 32 × 32 | Robe de tissu. |
 | [ ] | 181 | `icones/objets/sceau-cendre.png` | 32 × 32 | Fragment de pierre noire marqué d'une rune violette (objet de quête). |
 | [ ] | 182 | `icones/objets/cle-crypte.png` | 32 × 32 | Vieille clé de bronze (objet de quête). |
 | [ ] | 183 | `icones/objets/piece-or.png` | 32 × 32 | Pièce d'or (monnaie, aussi en 16 × 16). |
@@ -356,18 +356,31 @@ Ces images sont déjà branchées dans le jeu : tant qu'elles ne sont pas livré
 
 | Fait | N° | Fichier | Taille | Description |
 |---|---|---|---|---|
-| [ ] | T1 | `decors/temple-du-seuil.png` (nouvelle version) | 1280 × 720 | Version plus détaillée du Temple du Seuil. Le Grand Prieur Auréliath doit être dessiné **au centre** (vers x = 640, y = 330) : c'est là que se trouve sa zone cliquable. S'il est ailleurs, indiquez sa position. |
-| [ ] | T2 | `cartes/lysmont-plan.png` | 1280 × 720 | Plan de la Ville de Lysmont vu de dessus : place, Guilde, Chaudron Fêlé (auberge), boutique, château, quartier des Tanneurs, arène. |
-| [ ] | T3 | `cartes/lysmont-plan.json` | — | Position de chaque lieu sur le plan, en pixels : `{ "lysmont-place": { "x": 640, "y": 380 }, "guilde": {…}, "taverne": {…}, "boutique": {…}, "chateau": {…}, "quartier-tanneurs": {…}, "arene": {…}, "egouts": {…}, "marche": {…}, "tannerie-abandonnee": {…} }`. Sans ce fichier, le jeu utilise les positions de `content/monde/aubeclaire.yaml`. |
-| [ ] | T4 | `decors/boutique.png` | 1280 × 720 | Intérieur du Comptoir de Halvine : étagères pleines, comptoir, balance. |
-| [ ] | T5 | `decors/auberge-chambre.png` | 1280 × 720 | Chambre de l'auberge du Chaudron Fêlé, avec un lit bien visible. |
-| [ ] | T6 | `decors/auberge-chambre.json` | — | Position du lit : `{ "lit": { "x": 900, "y": 470 } }`. Sans ce fichier, le bouton du lit est placé à cet endroit. |
+| [x] | T1 | `decors/temple-du-seuil.png` (nouvelle version) | 1280 × 720 | Version plus détaillée du Temple du Seuil. Le Grand Prieur Auréliath doit être dessiné **au centre** (vers x = 640, y = 330) : c'est là que se trouve sa zone cliquable. S'il est ailleurs, indiquez sa position. |
+| [x] | T2 | `cartes/lysmont-plan.png` | 1280 × 720 | Plan de la Ville de Lysmont vu de dessus : place, Guilde, Chaudron Fêlé (auberge), boutique, château, quartier des Tanneurs, arène. |
+| [x] | T3 | `cartes/lysmont-plan.json` | — | Position de chaque lieu sur le plan, en pixels : `{ "lysmont-place": { "x": 640, "y": 380 }, "guilde": {…}, "taverne": {…}, "boutique": {…}, "chateau": {…}, "quartier-tanneurs": {…}, "arene": {…}, "egouts": {…}, "marche": {…}, "tannerie-abandonnee": {…} }`. Sans ce fichier, le jeu utilise les positions de `content/monde/aubeclaire.yaml`. |
+| [x] | T4 | `decors/boutique.png` | 1280 × 720 | Intérieur du Comptoir de Halvine : étagères pleines, comptoir, balance. |
+| [x] | T5 | `decors/auberge-chambre.png` | 1280 × 720 | Chambre de l'auberge du Chaudron Fêlé, avec un lit bien visible. |
+| [x] | T6 | `decors/auberge-chambre.json` | — | Position du lit : `{ "lit": { "x": 900, "y": 470 } }`. Sans ce fichier, le bouton du lit est placé à cet endroit. |
 | [ ] | T7 | `personnages/pnj/halvine/portrait-neutre.png` | 512 × 512 | Dame Halvine Corbelet, marchande : petite femme vive, lunettes rondes, tablier plein de poches. |
-| [ ] | T8 | `effets/impact.png`, `effets/foudre.png`, `effets/sacre.png`, `effets/ombre.png`, `effets/invocation.png` | 512 × 64 | Effets de combat utilisés par les nouvelles animations, en plus de ceux des n° 96 à 110 (bandes de 8 images de 64 × 64). |
+| [x] | T8 | `effets/impact.png`, `effets/foudre.png`, `effets/sacre.png`, `effets/ombre.png`, `effets/invocation.png` | 512 × 64 | Effets de combat utilisés par les nouvelles animations, en plus de ceux des n° 96 à 110 (bandes de 8 images de 64 × 64). |
 
 Le dossier du Grand Prieur a changé de nom avec le personnage : `personnages/pnj/aureliath/` (anciennement `mathis`), n° 68 et 69.
 
-Décors encore provisoires utilisés par les nouvelles étapes de contrat (facultatifs) : `decors/route-du-nord.png`, `gue-de-valmont.png`, `champs-du-nord.png`, `grotte-des-mineurs.png`, `collines-lune-sauge.png`, `egouts.png`.
+### Images livrées avec `textures-v3` (branchées après le test 2)
+
+Toutes ces images sont des créations originales du groupe, générées par script (`outils/textures/decors-v3/`).
+
+| Fait | N° | Fichier | Taille | Description |
+|---|---|---|---|---|
+| [x] | V1 | `decors/taverne.png`, `chateau-trone.png`, `combe-aux-saules.png`, `combe-lisiere.png`, `combe-ruisseau.png`, `combe-taniere.png`, `arene.png`, `quartier-tanneurs.png`, `crypte-entree.png`, `egouts.png`, `route-du-nord.png`, `gue-de-valmont.png`, `champs-du-nord.png`, `grotte-des-mineurs.png`, `collines-lune-sauge.png`, `lysmont-lanternes-nuit.png` | 1280 × 720 | Nouveaux décors. Les PNJ ne sont plus dessinés dedans : le jeu les pose par-dessus. |
+| [x] | V2 | `decors/guilde.png` (nouvelle version) | 1280 × 720 | Hall de la Guilde : comptoir d'équipement à gauche, comptoir de Rowena au centre, tableau des contrats à droite. |
+| [x] | V3 | `decors/<id>.json` | — | `positions` : pour un PNJ, le point au sol où poser ses pieds ; pour une zone cliquable (`porte`, `escalier`, `porte_chambre`, `lit`, `tableau`, `entree`, `sortie`…), le centre de la zone. En pixels de l'image 1280 × 720. |
+| [x] | V4 | `decors/guilde-avant.png`, `boutique-avant.png`, `taverne-avant.png` | 1280 × 720 | Premier plan (les comptoirs), dessiné par-dessus les PNJ. |
+| [x] | V5 | `personnages/pnj/<id>/decor.png` (aureliath, elianne, tobin, rowena, kaya, halvine, bram, ferrand, edmund-iv, seraphine, gareth, intendant-guilde) et `personnages/compagnes/aveline/decor.png` | 80 × 128 | PNJ détourés, vus de face. Ancre : le milieu du bas de l'image = les pieds. Le haut de l'image sert de portrait tant que le portrait 512 × 512 n'existe pas. |
+| [x] | V6 | `effets/entaille.png`, `impact`, `feu`, `glace`, `foudre`, `soin`, `poison`, `rune`, `bouclier`, `bonus`, `malus`, `critique`, `sacre`, `ombre`, `invocation` | 512 × 64 | Effets de combat : 8 images de 64 × 64, effet centré. Sans l'image, le jeu dessine l'effet lui-même. |
+
+Un PNJ sans `decor.png` est remplacé par une silhouette provisoire ; un PNJ sans position dans le JSON est placé automatiquement au sol.
 
 ## Récapitulatif
 

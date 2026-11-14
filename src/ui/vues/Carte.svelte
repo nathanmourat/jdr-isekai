@@ -69,7 +69,7 @@
       <img class="pixel" src={imagePlan(villeOuverte.plan, villeOuverte.nom)} alt={`Plan : ${villeOuverte.nom}`} />
       {#each lieuxVille as l, i (l.id)}
         {@const m = marqueurLieu(c, etat, l.id, moi)}
-        <button class={`lieu ${m ?? ''}`} class:etape={etapes.includes(l.id)} style={positionPlan(l, i)} onclick={() => choisir(l.id)}>
+        <button class={`lieu ${m ?? ''}`} class:etape={etapes.includes(l.id)} data-lieu={l.id} aria-label={l.nom} style={positionPlan(l, i)} onclick={() => choisir(l.id)}>
           {#if m}<span class="symbole">{symbole(m)}</span>{/if}
           <span class="point"></span>
           <span class="nom">{#if lieuAvecCombat(c, etat, l.id, moi)}<span class="epee" title="Combat possible ici">⚔ </span>{/if}{l.nom}</span>
@@ -81,7 +81,7 @@
       <img class="pixel" src={imageCarte(region.carte)} alt={`Carte : ${region.nom}`} />
       {#each villes as v (v.id)}
         {@const m = marqueurVille(v.id)}
-        <button class={`lieu ville ${m ?? ''}`} class:etape={lieux.some((l) => l.ville === v.id && etapes.includes(l.id))} style={`left:${(v.position.x / 1920) * 100}%; top:${(v.position.y / 1080) * 100}%`} onclick={() => (ville = v.id)}>
+        <button class={`lieu ville ${m ?? ''}`} class:etape={lieux.some((l) => l.ville === v.id && etapes.includes(l.id))} data-ville={v.id} aria-label={v.nom} style={`left:${(v.position.x / 1920) * 100}%; top:${(v.position.y / 1080) * 100}%`} onclick={() => (ville = v.id)}>
           {#if m}<span class="symbole">{symbole(m)}</span>{/if}
           <span class="point"></span>
           <span class="nom">{#if combatVille(v.id)}<span class="epee" title="Combat possible dans la ville">⚔ </span>{/if}{v.nom}</span>
@@ -89,7 +89,7 @@
       {/each}
       {#each horsVille as l (l.id)}
         {@const m = marqueurLieu(c, etat, l.id, moi)}
-        <button class={`lieu ${m ?? ''}`} class:etape={etapes.includes(l.id)} style={`left:${(l.position.x / 1920) * 100}%; top:${(l.position.y / 1080) * 100}%`} onclick={() => choisir(l.id)}>
+        <button class={`lieu ${m ?? ''}`} class:etape={etapes.includes(l.id)} data-lieu={l.id} aria-label={l.nom} style={`left:${(l.position.x / 1920) * 100}%; top:${(l.position.y / 1080) * 100}%`} onclick={() => choisir(l.id)}>
           {#if m}<span class="symbole">{symbole(m)}</span>{/if}
           <span class="point"></span>
           <span class="nom">{#if lieuAvecCombat(c, etat, l.id, moi)}<span class="epee" title="Combat possible ici">⚔ </span>{/if}{l.nom}</span>
@@ -105,12 +105,19 @@
   .epee { color: #ff9b8a; }
   .carte { position: relative; border-radius: var(--rayon); overflow: hidden; border: 1px solid var(--bord); }
   .carte img { display: block; width: 100%; height: auto; }
-  .lieu { position: absolute; transform: translate(-50%, -50%); display: flex; flex-direction: column; align-items: center; gap: 2px; background: none; border: none; padding: 0; }
-  .point { width: 18px; height: 18px; border-radius: 50%; background: #e8dcc0; border: 3px solid #3b2a10; box-shadow: 0 0 0 2px #0006; }
-  .ville .point { width: 26px; height: 26px; border-radius: 6px; }
-  .nom { font-size: clamp(0.65rem, 1.4vw, 0.9rem); background: #1b1308d9; color: #f3ead7; padding: 0.05em 0.45em; border-radius: 4px; white-space: nowrap; }
-  .lieu:hover .nom { background: #3b2a10; }
-  .symbole { font-weight: 900; font-size: clamp(1rem, 2.2vw, 1.5rem); line-height: 1; text-shadow: 0 0 3px #000, 0 0 3px #000; animation: saut 1.2s infinite; }
+  /* Zone cliquable FIXE de 44 × 44 px, centrée sur le point par des marges (jamais par transform : le style
+     « bouton enfoncé » du site décalait le bouton au moment de l'appui, et le clic tombait à côté).
+     Le point, le symbole et le nom sont décoratifs : ils ne captent pas le clic et seuls eux sont animés. */
+  .lieu { position: absolute; width: 44px; height: 44px; margin: -22px 0 0 -22px; padding: 0; background: none; border: none; border-radius: 50%; cursor: pointer; }
+  .lieu:hover:not(:disabled), .lieu:active:not(:disabled) { transform: none; background: none; }
+  .lieu:hover, .lieu:focus-visible { background: #ffd16626; }
+  .lieu > span { position: absolute; left: 50%; pointer-events: none; }
+  .point { top: 50%; width: 18px; height: 18px; margin: -9px 0 0 -9px; border-radius: 50%; background: #e8dcc0; border: 3px solid #3b2a10; box-shadow: 0 0 0 2px #0006; z-index: 2; }
+  .ville .point { width: 26px; height: 26px; margin: -13px 0 0 -13px; border-radius: 6px; }
+  .nom { top: calc(50% + 15px); transform: translateX(-50%); z-index: 1; font-size: clamp(0.65rem, 1.4vw, 0.9rem); background: #1b1308d9; color: #f3ead7; padding: 0.05em 0.45em; border-radius: 4px; white-space: nowrap; }
+  .ville .nom { top: calc(50% + 19px); }
+  .lieu:hover .nom, .lieu:focus-visible .nom { background: #3b2a10; z-index: 3; }
+  .symbole { bottom: calc(50% + 12px); width: 1.2em; margin-left: -0.6em; text-align: center; z-index: 2; font-weight: 900; font-size: clamp(1rem, 2.2vw, 1.5rem); line-height: 1; text-shadow: 0 0 3px #000, 0 0 3px #000; animation: saut 1.2s infinite; }
   .principale .symbole, .leg.principale { color: var(--or-2); }
   .secondaire .symbole, .leg.secondaire { color: #d5dbe6; }
   .rendre .symbole, .leg.rendre { color: #9fd3ff; }
@@ -120,8 +127,8 @@
   .rendre .point { background: #9fd3ff; }
   .etape .point { animation: clignote 0.9s infinite; border-color: #fff; }
   .etape .nom { outline: 1px solid var(--or-2); }
-  @keyframes clignote { 50% { box-shadow: 0 0 0 9px #ffffff55; transform: scale(1.25); } }
+  @keyframes clignote { 50% { box-shadow: 0 0 0 9px #ffffff55; } }
   @keyframes pulse { 50% { box-shadow: 0 0 0 8px #ffd16633; } }
   @keyframes saut { 50% { transform: translateY(-3px); } }
-  @media (prefers-reduced-motion: reduce) { .symbole, .principale .point { animation: none; } }
+  @media (prefers-reduced-motion: reduce) { .symbole, .principale .point, .etape .point { animation: none; } }
 </style>

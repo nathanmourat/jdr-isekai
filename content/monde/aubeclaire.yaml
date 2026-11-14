@@ -18,8 +18,10 @@ regions:
         description: "Le grand temple blanc où l'Ordre accomplit l'Appel."
         decor: temple-du-seuil
         position: { x: 960, y: 345 }
-        # `position` : où se tient le personnage sur le décor (1280 × 720), pour cliquer sur lui.
-        pnj: [{ id: aureliath, position: { x: 640, y: 330 } }, { id: elianne }]
+        # Les PNJ sont posés sur le décor aux positions de assets/decors/<decor>.json (pieds du personnage).
+        # `gerant` : le PNJ à qui l'on parle pour ouvrir la boutique du lieu.
+        pnj: [{ id: aureliath }, { id: elianne }]
+        gerant: elianne
         boutique: [potion-soin-petite, antidote]
       - id: lysmont-place
         nom: "Place de Lysmont"
@@ -38,7 +40,8 @@ regions:
         position: { x: 1075, y: 610 }
         position_plan: { x: 900, y: 430 }
         disponible_si: { flag: appel-fait }
-        pnj: [{ id: rowena }, { id: kaya, si: { flag: examen-reussi } }]
+        pnj: [{ id: rowena }, { id: intendant-guilde }, { id: kaya, si: { flag: examen-reussi } }]
+        gerant: intendant-guilde
         # équipements nommés du palier I (peu communs) en plus des armes de base ; tout le palier I commun est chez Halvine
         boutique: [
           potion-soin-petite, antidote, bombe-feu, bombe-fumee, epee-courte, dague, arc-court, baton-apprenti, bouclier-bois,
@@ -58,6 +61,7 @@ regions:
         position_plan: { x: 380, y: 430 }
         disponible_si: { flag: appel-fait }
         pnj: [{ id: bram, si: { pas_flag: mort:bram } }, { id: ferrand, si: { flag: examen-reussi } }]
+        gerant: bram
         boutique: [ration, gateau-lysmont, livre-ancien]
       - id: boutique
         nom: "Le Comptoir de Halvine"
@@ -68,6 +72,7 @@ regions:
         position_plan: { x: 560, y: 560 }
         disponible_si: { flag: appel-fait }
         pnj: [{ id: halvine }]
+        gerant: halvine
         # équipements du palier I : communs et versions « de maître » (peu communs)
         boutique: [
           potion-soin-petite, potion-soin, potion-mana, antidote, bombe-feu, bombe-fumee, ration, fleur-des-champs,
@@ -118,9 +123,9 @@ regions:
         position: { x: 1488, y: 500 }
         disponible_si: { quete_etape: { q-ch1-appel: crypte } }
       # ── Lieux d'étape : ils n'apparaissent sur la carte que pendant l'étape de quête ou de contrat qui y mène.
-      - { id: combe-lisiere, nom: "Lisière de la Combe", description: "Ronces, souches et empreintes dans la terre meuble.", decor: combe-aux-saules, position: { x: 540, y: 730 }, etape_seulement: true }
-      - { id: combe-ruisseau, nom: "Ruisseau aux Saules", description: "Une eau froide et claire sous les branches tombantes.", decor: combe-aux-saules, position: { x: 400, y: 880 }, etape_seulement: true }
-      - { id: combe-taniere, nom: "Vieux saule creux", description: "Un saule énorme, aux racines creusées comme une grotte.", decor: combe-aux-saules, position: { x: 300, y: 760 }, etape_seulement: true }
+      - { id: combe-lisiere, nom: "Lisière de la Combe", description: "Ronces, souches et empreintes dans la terre meuble.", decor: combe-lisiere, position: { x: 540, y: 730 }, etape_seulement: true }
+      - { id: combe-ruisseau, nom: "Ruisseau aux Saules", description: "Une eau froide et claire sous les branches tombantes.", decor: combe-ruisseau, position: { x: 400, y: 880 }, etape_seulement: true }
+      - { id: combe-taniere, nom: "Vieux saule creux", description: "Un saule énorme, aux racines creusées comme une grotte.", decor: combe-taniere, position: { x: 300, y: 760 }, etape_seulement: true }
       - { id: route-du-nord, nom: "Route du nord", description: "Une route pavée qui file vers le Mur d'Aube, bordée de fossés.", decor: route-du-nord, position: { x: 1040, y: 210 }, etape_seulement: true }
       - { id: gue-de-valmont, nom: "Gué de Valmont", description: "La rivière s'élargit ; les chariots passent à gué, lentement.", decor: gue-de-valmont, position: { x: 1300, y: 780 }, etape_seulement: true }
       - { id: champs-du-nord, nom: "Champs de blé du nord", description: "Des champs dorés, retournés par endroits comme par une charrue folle.", decor: champs-du-nord, position: { x: 800, y: 440 }, etape_seulement: true }

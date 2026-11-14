@@ -402,9 +402,11 @@ export const zLieu = z.object({
   /** Position sur le plan de la ville (1280 × 720), utilisée tant que le fichier assets/cartes/<plan>.json n'est pas livré. */
   position_plan: z.object({ x: z.number(), y: z.number() }).optional(),
   disponible_si: zCondition.optional(),
-  /** `position` : endroit du décor (1280 × 720) où se tient le PNJ, pour pouvoir cliquer sur sa silhouette. */
+  /** `position` : point au sol (pieds) du PNJ sur le décor (1280 × 720), si assets/decors/<decor>.json ne le donne pas. */
   pnj: z.array(z.object({ id: z.string(), si: zCondition.optional(), position: z.object({ x: z.number(), y: z.number() }).optional() })).default([]),
   boutique: z.array(z.string()).default([]),
+  /** PNJ qui tient la boutique du lieu : on lui parle (« Voir la marchandise ») pour l'ouvrir. Obligatoire si le lieu a une boutique. */
+  gerant: z.string().optional(),
   /** true : le lieu n'apparaît sur la carte que pendant l'étape de quête ou de contrat qui y mène. */
   etape_seulement: z.boolean().default(false),
   /** true : on peut y dormir (le lit de l'auberge fait passer les mois). */
@@ -433,6 +435,8 @@ export const zPnj = z.object({
   nom: z.string(),
   titre: z.string().default(''),
   description: z.string().default(''),
+  /** Phrase d'accueil quand on lui parle (gérant de boutique surtout). */
+  accueil: z.string().optional(),
 });
 export type Pnj = z.infer<typeof zPnj>;
 

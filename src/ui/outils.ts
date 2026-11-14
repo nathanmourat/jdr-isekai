@@ -13,12 +13,14 @@ export function nomPersonnage(contenu: Contenu, etat: EtatPartie, qui: string, h
 /** Portrait d'un personnage de dialogue (vraie image si présente, sinon provisoire). */
 export function portraitPersonnage(contenu: Contenu, qui: string, expression = 'neutre'): string | null {
   if (qui === 'narrateur' || qui === 'heros' || qui === 'meneur') return null;
+  // Tant que le portrait anime (512 × 512) n'est pas livré, on montre le haut de l'image « decor.png »
+  // (tête et épaules) : les balises <img class="portrait"> la cadrent par le haut (object-position: top).
   if (contenu.compagnons[qui]) {
-    const base = `personnages/compagnes/${qui}/portrait-`;
-    return imagePortrait([`${base}${expression}`, `${base}neutre`], qui, contenu.compagnons[qui].nom);
+    const base = `personnages/compagnes/${qui}/`;
+    return imagePortrait([`${base}portrait-${expression}`, `${base}portrait-neutre`, `${base}decor`], qui, contenu.compagnons[qui].nom);
   }
-  const base = `personnages/pnj/${qui}/portrait-`;
-  return imagePortrait([`${base}${expression}`, `${base}neutre`], qui, contenu.pnj[qui]?.nom ?? qui);
+  const base = `personnages/pnj/${qui}/`;
+  return imagePortrait([`${base}portrait-${expression}`, `${base}portrait-neutre`, `${base}decor`], qui, contenu.pnj[qui]?.nom ?? qui);
 }
 
 export function portraitHeros(contenu: Contenu, h: Heros): string {

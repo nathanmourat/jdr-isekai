@@ -1,0 +1,45 @@
+{
+ "_info": "Centre de chaque lieu sur le plan, en pixels de l'image 1280×720 (identique à position_plan du contenu).",
+ "lieux": {
+  "lysmont-place": {
+   "x": 640,
+   "y": 380
+  },
+  "guilde": {
+   "x": 900,
+   "y": 430
+  },
+  "taverne": {
+   "x": 380,
+   "y": 430
+  },
+  "boutique": {
+   "x": 560,
+   "y": 560
+  },
+  "chateau": {
+   "x": 640,
+   "y": 150
+  },
+  "quartier-tanneurs": {
+   "x": 980,
+   "y": 610
+  },
+  "arene": {
+   "x": 1020,
+   "y": 230
+  },
+  "egouts": {
+   "x": 740,
+   "y": 480
+  },
+  "marche": {
+   "x": 500,
+   "y": 330
+  },
+  "tannerie-abandonnee": {
+   "x": 1090,
+   "y": 540
+  }
+ }
+}

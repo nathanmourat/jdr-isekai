@@ -57,7 +57,7 @@
 
 <style>
   .compagnon { display: flex; gap: 1rem; flex-wrap: wrap; }
-  .compagnon img { width: 160px; height: 160px; border-radius: 10px; border: 2px solid var(--violet); object-fit: cover; }
+  .compagnon img { width: 160px; height: 160px; border-radius: 10px; border: 2px solid var(--violet); object-fit: cover; object-position: top; }
   .infos { flex: 1 1 300px; }
   .infos p { margin: 0.25em 0; }
   .paliers { display: flex; gap: 0.3rem; flex-wrap: wrap; margin: 0.4rem 0; }

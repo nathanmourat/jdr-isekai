@@ -178,3 +178,37 @@ export function planProvisoire(nom: string, titre: string): string {
 export function imagePlan(nom: string, titre: string): string {
   return urlAsset(`cartes/${nom}`) ?? planProvisoire(nom, titre);
 }
+// ───────────────────────────── PNJ posés sur les décors ─────────────────────────────
+
+/** Taille d'un PNJ de décor (decor.png), dans le repère du décor 1280 × 720. Ancre : milieu du bas (les pieds). */
+export const TAILLE_PNJ_DECOR = { l: 80, h: 128 };
+
+/** Image détourée d'un PNJ (ou d'une compagne) à poser sur un décor, ou null si elle n'est pas livrée. */
+export function urlPnjDecor(id: string): string | null {
+  return urlAsset(`personnages/pnj/${id}/decor`) ?? urlAsset(`personnages/compagnes/${id}/decor`);
+}
+
+/** Silhouette provisoire (80 × 128) d'un PNJ dont l'image decor.png n'est pas encore livrée. */
+export function silhouetteProvisoire(id: string): string {
+  const k = `silhouette:${id}`;
+  if (cache.has(k)) return cache.get(k)!;
+  const [c, ctx] = canvas(TAILLE_PNJ_DECOR.l, TAILLE_PNJ_DECOR.h);
+  ctx.fillStyle = couleur(id, 40, 30);
+  ctx.strokeStyle = '#0b0910'; ctx.lineWidth = 2;
+  ctx.beginPath(); ctx.arc(40, 30, 16, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(20, 126); ctx.lineTo(24, 58); ctx.quadraticCurveTo(40, 44, 56, 58); ctx.lineTo(60, 126); ctx.closePath(); ctx.fill(); ctx.stroke();
+  ctx.fillStyle = '#f3ead7'; ctx.font = '700 20px sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  ctx.fillText('?', 40, 31);
+  const url = c.toDataURL();
+  cache.set(k, url);
+  return url;
+}
+
+export function imagePnjDecor(id: string): string {
+  return urlPnjDecor(id) ?? silhouetteProvisoire(id);
+}
+
+/** Premier plan d'un décor (comptoir…), à dessiner par-dessus les PNJ : assets/decors/<nom>-avant.png, ou null. */
+export function avantPlanDecor(nom: string): string | null {
+  return urlAsset(`decors/${nom}-avant`);
+}

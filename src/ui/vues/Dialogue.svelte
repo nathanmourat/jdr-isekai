@@ -141,7 +141,7 @@
   .bandeau h2 { margin: 0; text-shadow: 0 2px 4px #000; }
   .boite { position: relative; grid-row: 3; margin: 0.8rem; background: rgba(20,17,28,0.92); backdrop-filter: blur(2px); }
   .replique { display: flex; gap: 0.9rem; align-items: flex-start; cursor: pointer; }
-  .portrait { width: clamp(72px, 14vw, 140px); aspect-ratio: 1; border-radius: 8px; border: 2px solid var(--or); object-fit: cover; background: var(--fond); flex: none; }
+  .portrait { width: clamp(72px, 14vw, 140px); aspect-ratio: 1; border-radius: 8px; border: 2px solid var(--or); object-fit: cover; object-position: top; background: var(--fond); flex: none; }
   .qui { margin: 0; color: var(--or-2); font-weight: 700; font-family: 'Cinzel', serif; }
   .dit { margin: 0.2em 0 0; font-size: 1.08rem; }
   .narration { font-style: italic; color: #e9e1f3; }

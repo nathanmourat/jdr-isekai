@@ -1,0 +1,17 @@
+{
+ "_info": "Positions en pixels de l'image 1280×720. PNJ : point au sol (pieds). Autres : centre de la zone cliquable.",
+ "positions": {
+  "lit": {
+   "x": 1010,
+   "y": 510
+  },
+  "porte": {
+   "x": 110,
+   "y": 340
+  },
+  "coffre": {
+   "x": 230,
+   "y": 540
+  }
+ }
+}

@@ -152,6 +152,8 @@ function verifierReferences(c: Contenu): string[] {
   for (const reg of Object.values(c.regions)) for (const l of reg.lieux) {
     for (const o of l.boutique) if (!c.objets[o]) e.push(`Lieu ${l.id} › objet de boutique « ${o} » introuvable`);
     for (const p of l.pnj) if (!c.pnj[p.id] && !c.compagnons[p.id]) e.push(`Lieu ${l.id} › PNJ « ${p.id} » introuvable`);
+    if (l.boutique.length && !l.gerant) e.push(`Lieu ${l.id} › boutique sans « gerant » : indiquez le PNJ qui la tient`);
+    if (l.gerant && !l.pnj.some((p) => p.id === l.gerant)) e.push(`Lieu ${l.id} › gérant « ${l.gerant} » absent de la liste « pnj » du lieu`);
     if (l.disponible_si) verifierCondition(c, `Lieu ${l.id}`, l.disponible_si, e);
     if (l.ville && !reg.villes.some((v) => v.id === l.ville)) e.push(`Lieu ${l.id} › ville « ${l.ville} » introuvable dans la région ${reg.id}`);
   }

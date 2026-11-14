@@ -1,0 +1,26 @@
+{
+ "_info": "Positions en pixels de l'image 1280×720. PNJ : point au sol (pieds). Autres : centre de la zone cliquable.",
+ "positions": {
+  "bram": {
+   "x": 300,
+   "y": 380
+  },
+  "ferrand": {
+   "x": 1040,
+   "y": 600
+  },
+  "escalier": {
+   "x": 1080,
+   "y": 340
+  },
+  "porte_chambre": {
+   "x": 1214,
+   "y": 140
+  },
+  "sortie": {
+   "x": 48,
+   "y": 600
+  }
+ },
+ "avant_plan": "decors/taverne-avant.png"
+}

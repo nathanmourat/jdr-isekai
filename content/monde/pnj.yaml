@@ -3,16 +3,17 @@ pnj:
   - { id: aureliath, nom: "Grand Prieur Auréliath", titre: "Ordre de la Lumière Sereine", description: "Crâne rasé, barbe blanche, sourire bienveillant un peu trop parfait." }
   - { id: rowena, nom: "Dame Rowena", titre: "Maîtresse de la Guilde", description: "Cheveux gris coupés court, cicatrice sur l'œil, pipe éteinte entre les dents." }
   - { id: edmund-iv, nom: "Edmund IV", titre: "Roi d'Aubeclaire", description: "Couronne lourde, barbe grise, regard fatigué et dur." }
-  - { id: seraphine, nom: "Séraphine d'Aubeclaire", titre: "Princesse", description: "Seconde de la lignée, espiègle sous l'étiquette." }
-  - { id: elianne, nom: "Sœur Elianne", titre: "Prêtresse", description: "Douce, patiente, têtue quand il s'agit de justice." }
-  - { id: kaya, nom: "Kaya Lunecroc", titre: "Aventurière ourvalis, rang E", description: "Oreilles de loup argentées, franche jusqu'à la gaffe." }
+  - { id: seraphine, nom: "Séraphine d'Aubeclaire", titre: "Princesse", description: "Longs cheveux blond pâle, petit diadème, robe blanche et or. Seconde de la lignée, espiègle sous l'étiquette." }
+  - { id: elianne, nom: "Sœur Elianne", titre: "Prêtresse", description: "Cheveux noirs au carré sous un voile clair, chapelet de perles bleues. Douce, patiente, têtue quand il s'agit de justice.", accueil: "Que la Lumière vous garde. Le Temple vend peu de choses, mais elles soignent." }
+  - { id: kaya, nom: "Kaya Lunecroc", titre: "Aventurière ourvalis, rang E", description: "Oreilles et queue de loup argentées, bandeau rouge, épée à la hanche. Franche jusqu'à la gaffe." }
   - { id: vorthak, nom: "Vorthak", titre: "Émissaire des Cendres", description: "Démon en armure noire aux flammes violettes." }
-  - { id: ferrand, nom: "Ferrand", titre: "Marchand de reliques", description: "Sourire huileux, manteau trop beau pour son commerce." }
-  - { id: halvine, nom: "Dame Halvine Corbelet", titre: "Marchande du Comptoir", description: "Petite femme vive aux lunettes rondes, tablier plein de poches, compte plus vite que son boulier." }
-  - { id: bram, nom: "Bram", titre: "Tavernier du Chaudron Fêlé", description: "Colosse jovial, tablier taché, cœur d'or." }
+  - { id: ferrand, nom: "Ferrand", titre: "Marchand de reliques", description: "Moustache noire, bagues à tous les doigts, sourire huileux, manteau violet et or trop beau pour son commerce." }
+  - { id: halvine, nom: "Dame Halvine Corbelet", titre: "Marchande du Comptoir", description: "Petite femme vive aux lunettes rondes, tablier plein de poches, boulier à la main, compte plus vite que lui.", accueil: "Bienvenue au Comptoir ! Regardez tout, touchez peu, et payez comptant." }
+  - { id: bram, nom: "Bram", titre: "Tavernier du Chaudron Fêlé", description: "Colosse jovial au crâne lisse et à la grande barbe brune, tablier taché, chope à la main, cœur d'or.", accueil: "Installez-vous ! Ici on mange chaud, et le lit est à l'étage." }
+  - { id: intendant-guilde, nom: "Maître Barnoul Kestrin", titre: "Intendant de la Guilde", description: "Costaud, peau mate, barbe brune, tablier de cuir, un registre à la main, l'air sévère. Rien ne sort de la réserve sans sa signature.", accueil: "Nom, rang, et ce qu'il vous faut. Tout est noté dans le registre." }
   - { id: lina, nom: "Lina", titre: "Jeune tanneuse", description: "Disparue du quartier des Tanneurs." }
-  - { id: tobin, nom: "Tobin", titre: "Apprenti de l'Ordre", description: "Dix-neuf ans, curieux, trop curieux." }
-  - { id: gareth, nom: "Gareth", titre: "Fermier de la Combe-aux-Saules", description: "Mains calleuses, chapeau de paille." }
+  - { id: tobin, nom: "Tobin", titre: "Apprenti de l'Ordre", description: "Dix-neuf ans, cheveux roux en bataille, taches de rousseur, un livre toujours sous le bras. Curieux, trop curieux." }
+  - { id: gareth, nom: "Gareth", titre: "Fermier de la Combe-aux-Saules", description: "Mains calleuses, chapeau de paille, salopette bleue et fourche à la main." }
   - { id: mentor, nom: "Maître Orlo", titre: "Mentor d'enfance", description: "Vieux bibliothécaire bourru." }
   - { id: rival, nom: "Cassian", titre: "Rival d'enfance", description: "Fils de garde, fier et rapide." }
   - { id: ami-enfance, nom: "Pipa", titre: "Amie d'enfance", description: "Rieuse, intrépide, toujours une égratignure au genou." }
