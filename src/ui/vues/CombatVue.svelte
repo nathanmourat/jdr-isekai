@@ -6,7 +6,6 @@
   import { jeu } from '../jeu.svelte';
   import PhaserHote from '../PhaserHote.svelte';
   import ActionsLibres from './ActionsLibres.svelte';
-  import CompetenceInfo from '../CompetenceInfo.svelte';
   import { utiliseMana, type SceneCombat } from '../../rendu/SceneCombat';
   import { actionsDisponibles, estimerAction, NOMS_ETATS, type ActionCombat, type Combat, type Combattant, type EvenementCombat } from '../../moteur/combat';
   import type { Competence } from '../../contenu/schemas';
@@ -194,14 +193,49 @@
   const herosActeur = $derived(acteur?.herosId ? etat.heros[acteur.herosId] ?? null : null);
   const nom = (id: string) => combat.combattants.find((x) => x.id === id)?.nom ?? id;
   const etatsDe = (x: Combattant) => x.etats.map((e) => `${NOMS_ETATS[e.id]}${e.cumul > 1 ? ` ×${e.cumul}` : ''}${e.duree > 50 ? '' : ` (${e.duree} tour${e.duree > 1 ? 's' : ''})`}`).join(', ');
-  const journal = $derived(vu.evenements.slice(-8).reverse());
+  const journal = $derived(vu.evenements.slice(-60).reverse());
+  /** Dernière ligne du journal, affichée seule en haut de la scène. */
+  const derniere = $derived(vu.evenements.length ? vu.evenements[vu.evenements.length - 1] : null);
+
+  // ───────────── Barre d'actions compacte (test 3, point 3) ─────────────
+  /** Détail de l'action survolée (souris) ou tenue appuyée (téléphone), affiché au-dessus des boutons. */
+  let detail = $state<string | null>(null);
+  let appui: ReturnType<typeof setTimeout> | null = null;
+  let appuiLong = false;
+  function survol(texte: string) { return { onpointerenter: (e: PointerEvent) => { if (e.pointerType === 'mouse') detail = texte; }, onpointerleave: (e: PointerEvent) => { if (e.pointerType === 'mouse') detail = null; },
+    onpointerdown: (e: PointerEvent) => { if (e.pointerType === 'mouse') return; appuiLong = false; appui = setTimeout(() => { appuiLong = true; detail = texte; }, 450); },
+    onpointerup: () => { if (appui) clearTimeout(appui); }, oncontextmenu: (e: Event) => e.preventDefault() }; }
+  /** Un appui long montre le détail sans lancer l'action. */
+  function siCourt(f: () => void) { return () => { if (appuiLong) { appuiLong = false; return; } detail = null; f(); }; }
+  function detailComp(k: { comp: Competence; rang: number; raison: string | null }): string {
+    const r = reel(k.comp);
+    const bouts = [k.comp.description];
+    if (k.comp.cout) bouts.push(`${k.comp.cout} mana`);
+    if (r?.degats) bouts.push(`${r.degats[0]}–${r.degats[1]} dégâts`);
+    if (r?.reussite !== null && r?.reussite !== undefined) bouts.push(`${pourcent(r.reussite)} de réussite`);
+    if (k.comp.recharge) bouts.push(`recharge ${k.comp.recharge} tour${k.comp.recharge > 1 ? 's' : ''}`);
+    if (k.raison) bouts.push(k.raison);
+    return `${k.comp.nom}${k.rang > 1 ? ` ${k.rang}` : ''} : ${bouts.join(' · ')}`;
+  }
+  const iconeComp = (k: Competence) => (k.cible === 'allie' || k.cible === 'allie_ko' || k.cible === 'tous_allies' ? '✚' : k.cible === 'soi' ? '✧' : '✦');
+  const detailAttaque = $derived.by(() => {
+    if (!acteur || !dispo) return '';
+    const cible = (acteur.attaque.portee === 'melee' ? dispo.ciblesMelee : dispo.ciblesDistance)[0];
+    const e = cible ? estimerAction(c, combat, { type: 'attaque', acteur: acteur.id, cible }) : null;
+    return `Attaque de base : fiable, sans mana${e?.degats ? ` · ${e.degats[0]}–${e.degats[1]} dégâts` : ''}${e?.reussite != null ? ` · ${pourcent(e.reussite)} de réussite` : ''}`;
+  });
+  /** Panneau « Proposer mon action » (texte libre et propositions de l'IA) : il se ferme dès que l'action est jouée. */
+  let proposerOuvert = $state(false);
+  $effect(() => { void combat.evenements.length; void combat.enAttente; proposerOuvert = false; detail = null; });
+  /** Hauteur de la barre du bas : la scène Phaser s'arrête au-dessus, pour ne jamais cacher les combattants. */
+  let hauteurBarre = $state(0);
   const herosCamp = $derived(vu.combattants.filter((x) => x.camp === 'heros' && !x.parti));
   const ennemis = $derived(vu.combattants.filter((x) => x.camp === 'ennemis' && !x.parti));
   const peutSecondDepart = $derived(jeu.monHeros?.don === 'second-depart' && etat.secondDepart[jeu.monHeros.id] !== etat.session && combat.instantane && !combat.resultat && termine);
 </script>
 
 <section class="combat">
-  <div class="arene">
+  <div class="arene" style={`bottom:${hauteurBarre ? hauteurBarre + 8 : 0}px`}>
     <PhaserHote plein scene="combat" surPret={(s) => (scene = s as SceneCombat)} />
     {#if suspense}
       <div class="suspense" class:fini={!!suspense.resultat} aria-live="polite">
@@ -220,6 +254,7 @@
   <!-- en-tête par-dessus la scène : nom du combat, tour, options -->
   <div class="hud-combat">
     <h2>⚔ {combat.nom} <span class="discret">· Tour {combat.tour}</span></h2>
+    {#if derniere}<p class="ligne-journal" aria-live="polite" class:fort={derniere.type === 'ko' || derniere.type === 'fin'}>{derniere.texte}</p>{/if}
     <div class="ligne">
       <label class="option"><input type="checkbox" checked={jeu.animationsRapides} onchange={(e) => jeu.changerAnimationsRapides((e.target as HTMLInputElement).checked)} /> Animations rapides</label>
       <button class="petit" aria-expanded={journalOuvert} onclick={() => (journalOuvert = !journalOuvert)}>📜 Journal{journalOuvert ? ' ▸' : ' ◂'}</button>
@@ -248,7 +283,7 @@
   {/if}
 
   <!-- actions et propositions du combat libre : panneau en bas, qui se replie -->
-  <div class="panneau-bas" class:reduit={actionsReduites}>
+  <div class="panneau-bas" class:reduit={actionsReduites} bind:clientHeight={hauteurBarre}>
     <button class="entete-panneau" aria-expanded={!actionsReduites} onclick={() => (actionsReduites = !actionsReduites)}>
       <span>{#if combat.resultat && termine}{combat.resultat === 'victoire' ? '🏆 Victoire !' : combat.resultat === 'defaite' ? 'Défaite…' : 'Fuite'}{:else if acteur && monTour && termine}À vous : {acteur.nom} <span class="stats">{acteur.pv}/{acteur.pvMax} PV · {acteur.mana}/{acteur.manaMax} mana</span>{:else if acteur && termine}Au tour de {acteur.nom}{:else}Le tour se déroule…{/if}</span>
       <span class="bascule">{actionsReduites ? '▴ Actions' : '▾ Réduire'}</span>
@@ -265,41 +300,37 @@
       {:else if acteur && monTour && dispo}
         <h3>À vous : {acteur.nom} <span class="discret">({acteur.pv}/{acteur.pvMax} PV · {acteur.mana}/{acteur.manaMax} mana)</span></h3>
         {#if selection}
-          <p class="consigne">Choisissez une cible{cibles.length ? ' (cliquez sur le personnage ou ci-dessous)' : ' — aucune cible possible'} :</p>
-          <div class="ligne">
+          <p class="consigne">Cliquez sur la cible dans la scène{cibles.length ? '' : ' — aucune cible possible'}, ou :</p>
+          <div class="ligne cibles">
             {#each cibles as id (id)}<button onclick={() => viser(id)}>{nom(id)}<small>{chanceSur(id)}</small></button>{/each}
             <button class="petit" onclick={() => (selection = null)}>Annuler</button>
           </div>
         {:else}
-          {#key acteur.id}<ActionsLibres {cle} acteur={acteur} />{/key}
-          <details class="manuel" open>
-            <summary>Ce que font mes compétences</summary>
+          <p class="detail" aria-live="polite">{detail ?? 'Survolez une action (ou appuyez longuement) pour voir son détail.'}</p>
+          <div class="actions courtes">
+            <button {...survol(detailAttaque)} onclick={siCourt(() => choisir({ type: 'attaque' }))}>⚔ Attaque</button>
             {#each dispo.competences as k (k.comp.id)}
-              <p class="explication" class:indispo={!k.utilisable}><CompetenceInfo comp={k.comp} rang={k.rang} heros={herosActeur} sujet={acteur} reel={reel(k.comp)} />{#if k.raison} <span class="badge">{k.raison}</span>{/if}</p>
-            {/each}
-            <p class="discret">Plus une action est puissante, moins elle est sûre : une attaque de base touche plus souvent qu'une compétence coûteuse. La maîtrise et le niveau améliorent la précision.</p>
-          </details>
-          <details class="manuel">
-          <summary>Toutes les actions (mode manuel)</summary>
-          <div class="actions">
-            <button onclick={() => choisir({ type: 'attaque' })}>Attaque <small>fiable</small></button>
-            {#each dispo.competences as k (k.comp.id)}
-              {@const r = reel(k.comp)}
-              <button disabled={!k.utilisable} title={`${k.comp.description}${k.raison ? ' — ' + k.raison : ''}`} onclick={() => choisir({ type: 'competence', comp: k.comp })}>
-                {k.comp.nom}{k.rang > 1 ? ` ${k.rang}` : ''} <small class:trop-cher={k.raison === 'Mana insuffisant'}>{k.comp.cout ? `${k.comp.cout} mana` : ''}{r?.reussite !== null && r?.reussite !== undefined ? ` · ${pourcent(r.reussite)}` : ''}{k.raison ? ` · ${k.raison}` : ''}</small>
+              <button disabled={!k.utilisable} class:trop-cher={k.raison === 'Mana insuffisant'} aria-label={detailComp(k)} {...survol(detailComp(k))} onclick={siCourt(() => choisir({ type: 'competence', comp: k.comp }))}>
+                {iconeComp(k.comp)} {k.comp.nom}{k.rang > 1 ? ` ${k.rang}` : ''}{#if k.comp.cout}&nbsp;<small class="cout">{k.comp.cout}💧</small>{/if}
               </button>
             {/each}
-            <button disabled={dispo.potions <= 0} onclick={() => choisir({ type: 'potion' })}>Potion ({dispo.potions})</button>
-            {#if dispo.bombes > 0}<button onclick={() => envoyer({ type: 'objet', acteur: acteur!.id, objet: 'bombe' })}>Bombe ({dispo.bombes})</button>{/if}
+            <button disabled={dispo.potions <= 0} {...survol(`Potion de soin : rend des PV à un allié (il vous en reste ${dispo.potions})`)} onclick={siCourt(() => choisir({ type: 'potion' }))}>🧪 Potion <small class="cout">{dispo.potions}</small></button>
+            {#if dispo.bombes > 0}<button {...survol('Bombe : dégâts à tous les ennemis')} onclick={siCourt(() => envoyer({ type: 'objet', acteur: acteur!.id, objet: 'bombe' }))}>💣 Bombe <small class="cout">{dispo.bombes}</small></button>{/if}
             {#each dispo.sac as o (o.id)}
-              <button title={o.description} onclick={() => utiliserDuSac(o.id, o.cible)}>🎒 {o.nom} ({o.nombre})</button>
+              <button {...survol(`${o.nom} : ${o.description}`)} onclick={siCourt(() => utiliserDuSac(o.id, o.cible))}>🎒 {o.nom} <small class="cout">{o.nombre}</small></button>
             {/each}
-            {#if dispo.pacifier.length}<button onclick={() => choisir({ type: 'pacifier' })}>Pacifier</button>{/if}
-            <button onclick={() => envoyer({ type: 'defendre', acteur: acteur!.id })}>Se défendre</button>
-            <button onclick={() => envoyer({ type: 'changer_rang', acteur: acteur!.id })}>Passer au rang {acteur.rang === 'avant' ? 'arrière' : 'avant'}</button>
-            {#if dispo.fuite}<button class="danger" onclick={() => envoyer({ type: 'fuir', acteur: acteur!.id })}>Fuir</button>{/if}
+            {#if dispo.pacifier.length}<button {...survol('Pacifier : tenter de calmer un ennemi')} onclick={siCourt(() => choisir({ type: 'pacifier' }))}>🕊 Pacifier</button>{/if}
+            <button {...survol('Se défendre : moins de dégâts reçus jusqu\'au prochain tour')} onclick={siCourt(() => envoyer({ type: 'defendre', acteur: acteur!.id }))}>🛡 Défendre</button>
+            <button {...survol(`Passer au rang ${acteur.rang === 'avant' ? 'arrière (moins exposé, mais pas de corps à corps)' : 'avant (corps à corps possible)'}`)} onclick={siCourt(() => envoyer({ type: 'changer_rang', acteur: acteur!.id }))}>↔ Rang {acteur.rang === 'avant' ? 'arrière' : 'avant'}</button>
+            {#if dispo.fuite}<button class="danger" {...survol('Fuir le combat')} onclick={siCourt(() => envoyer({ type: 'fuir', acteur: acteur!.id }))}>🏃 Fuir</button>{/if}
+            <button class="proposer" aria-expanded={proposerOuvert} onclick={() => (proposerOuvert = !proposerOuvert)}>✍ Proposer<span class="long"> / conseils</span></button>
           </div>
-          </details>
+          {#if proposerOuvert}
+            <div class="panneau-proposer carte-ui" role="dialog" aria-label="Proposer mon action">
+              <div class="ligne entre"><strong>Proposer mon action</strong><button class="petit fermer-proposer" aria-label="Fermer" onclick={() => (proposerOuvert = false)}>✕</button></div>
+              {#key acteur.id}<ActionsLibres {cle} acteur={acteur} />{/key}
+            </div>
+          {/if}
         {/if}
       {:else if acteur}
         <p>C'est au tour de <strong>{acteur.nom}</strong> ({etat.joueurs[acteur.joueurId ?? '']?.pseudo ?? '?'})…</p>
@@ -314,7 +345,28 @@
   .option { display: flex; align-items: center; gap: 0.3rem; font-size: 0.9rem; color: var(--texte-2); }
   .option input { width: auto; }
   .combat { position: absolute; inset: 0; }
-  .arene { position: absolute; inset: 0; }
+  .arene { position: absolute; inset: 0; transition: bottom 0.15s; }
+  .ligne-journal { flex-basis: 100%; order: 3; margin: 0; max-width: min(760px, 100%); font-size: 0.9rem; line-height: 1.25; background: #14111cd9; border-radius: 6px; padding: 0.15rem 0.55rem; text-shadow: none; }
+  .ligne-journal.fort { color: var(--or-2); font-weight: 600; }
+  .detail { margin: 0.25rem 0 0.35rem; font-size: 0.85rem; color: var(--texte-2); min-height: 1.2em; }
+  .actions.courtes { display: flex; flex-wrap: wrap; gap: 0.3rem; }
+  .actions.courtes button { min-height: 44px; padding: 0.2rem 0.6rem; font-size: 0.92rem; -webkit-touch-callout: none; user-select: none; }
+  .actions.courtes .cout { display: inline; color: var(--bleu); font-size: 0.8rem; }
+  .actions.courtes .trop-cher .cout { color: var(--rouge); }
+  .actions.courtes .proposer { border-color: var(--or); }
+  .panneau-proposer { position: absolute; bottom: calc(100% + 0.4rem); right: 0; width: min(520px, 100%); max-height: 55dvh; overflow-y: auto; overscroll-behavior: contain; padding: 0.6rem 0.7rem; background: #14111cf5; border-color: var(--or); z-index: 2; }
+  .fermer-proposer { min-width: 44px; min-height: 44px; }
+  .cibles button { min-height: 44px; }
+  /* téléphone : les actions tiennent sur une ligne qu'on fait défiler du doigt, pour laisser voir le combat */
+  @media (max-width: 640px), (max-height: 500px) {
+    .actions.courtes { flex-wrap: nowrap; overflow-x: auto; overscroll-behavior-x: contain; padding-bottom: 0.2rem; scrollbar-width: thin; }
+    .actions.courtes button { flex: none; }
+    .entete-panneau { min-height: 40px; font-size: 0.9rem; padding: 0.15rem 0.6rem; }
+    .entete-panneau .stats { font-size: 0.75rem; }
+    .panneau-actions { padding: 0 0.5rem 0.4rem; }
+    .detail { display: none; }
+    .proposer .long { display: none; }
+  }
   .hud-combat { position: absolute; z-index: 20; top: calc(max(0.3rem, env(safe-area-inset-top)) + 3rem); left: max(0.5rem, env(safe-area-inset-left)); right: max(0.5rem, env(safe-area-inset-right)); display: flex; justify-content: space-between; align-items: center; gap: 0.4rem; flex-wrap: wrap; pointer-events: none; }
   .hud-combat > * { pointer-events: auto; }
   .hud-combat h2 { margin: 0; font-size: clamp(1rem, 2.4vw, 1.3rem); text-shadow: 0 2px 6px #000, 0 0 2px #000; }
@@ -330,13 +382,16 @@
   .entete-panneau { display: flex; justify-content: space-between; align-items: center; gap: 0.6rem; min-height: 44px; padding: 0.3rem 0.8rem; background: none; border: none; text-align: left; font-family: 'Cinzel', serif; color: var(--or-2); }
   .entete-panneau:hover:not(:disabled) { background: #ffffff0a; }
   .bascule { font-family: 'Source Sans 3', system-ui, sans-serif; font-size: 0.9rem; white-space: nowrap; }
-  .panneau-actions { max-height: 45dvh; overflow-y: auto; overscroll-behavior: contain; padding: 0 0.8rem 0.8rem; border-top: 1px solid var(--bord); }
+  .panneau-actions { max-height: 30dvh; overflow-y: auto; overscroll-behavior: contain; padding: 0 0.8rem 0.8rem; border-top: 1px solid var(--bord); }
   /* le titre du panneau (« À vous… », « Victoire ! ») est déjà dans l'en-tête */
   .panneau-actions > h3:first-child { display: none; }
   .stats { font-family: 'Source Sans 3', system-ui, sans-serif; font-size: 0.85rem; color: var(--texte-2); }
   /* téléphone en paysage : peu de hauteur, le panneau reste petit pour laisser voir le combat */
   @media (max-height: 500px) {
-    .panneau-actions { max-height: 34dvh; }
+    .panneau-actions { max-height: 30dvh; }
+    .detail { display: none; }
+    .actions.courtes button { min-height: 40px; font-size: 0.85rem; padding: 0.15rem 0.45rem; }
+    .ligne-journal { font-size: 0.8rem; }
     .hud-combat h2 { font-size: 0.95rem; }
     .hud-combat .option { display: none; }
     .entete-panneau { min-height: 40px; }
@@ -360,10 +415,6 @@
   .actions { display: flex; flex-wrap: wrap; gap: 0.4rem; }
   .actions small, .ligne button small { display: block; color: var(--texte-2); font-size: 0.75rem; }
   .consigne { color: var(--or-2); }
-  .manuel { margin-top: 0.6rem; }
-  .explication { margin: 0.35em 0; }
-  .explication.indispo { opacity: 0.6; }
-  .manuel summary { cursor: pointer; color: var(--texte-2); margin-bottom: 0.4rem; }
   .combattant { display: grid; grid-template-columns: 1fr 90px; gap: 0.1rem 0.5rem; align-items: center; margin-bottom: 0.35rem; font-size: 0.9rem; }
   .combattant small { grid-column: 1 / -1; }
   .combattant.ko { opacity: 0.45; }
@@ -372,7 +423,6 @@
   .combattant .barre.mana > div { background: #4f8dff; }
   .mana-txt { color: var(--bleu); }
   .niveau { color: var(--or-2); }
-  .actions small.trop-cher { color: var(--rouge); font-weight: 600; }
   .combattant.ennemi .barre > div { background: var(--rouge); }
   .journal p { margin: 0.15em 0; font-size: 0.88rem; }
   .journal .fort { color: var(--or-2); font-weight: 600; }
