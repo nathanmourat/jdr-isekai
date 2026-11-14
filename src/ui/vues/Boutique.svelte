@@ -1,7 +1,7 @@
 <script lang="ts">
   /** Boutique d'un lieu : acheter et vendre, avec quantité et confirmation. */
   import { jeu } from '../jeu.svelte';
-  import { prixAchat, prixVente } from '../../moteur/partie';
+  import { objetConnu, prixAchat, prixVente } from '../../moteur/partie';
   import ObjetInfo from '../ObjetInfo.svelte';
 
   let { lieu, objets }: { lieu: string; objets: string[] } = $props();
@@ -66,7 +66,7 @@
     {#each objets as o (o)}
       {@const prix = prixAchat(c, h, o)}
       <div class="ligne item">
-        <span class="nom"><ObjetInfo id={o} /> <span class="badge">{types[c.objets[o].type]}</span>{#if h.inventaire[o]} <span class="badge">vous en avez {h.inventaire[o]}</span>{/if}</span>
+        <span class="nom"><ObjetInfo id={o} /> <span class="badge">{objetConnu(c, jeu.etat!, o) ? types[c.objets[o].type] : '???'}</span>{#if h.inventaire[o]} <span class="badge">vous en avez {h.inventaire[o]}</span>{/if}</span>
         <button disabled={h.or < prix} title={h.or < prix ? "Pas assez d'or" : ''} onclick={() => ouvrir(o, 'acheter')}>Acheter · {prix} or</button>
       </div>
     {/each}
@@ -78,6 +78,9 @@
       </div>
     {:else}<p class="discret">Votre sac est vide : rien à vendre.</p>{/each}
     <p class="discret">Les objets se revendent à moitié prix. Les objets de quête ne se vendent pas.</p>
+  {/if}
+  {#if !choix}
+    <p class="discret">Survolez un objet (ou touchez le petit « i ») pour voir à quoi il sert.</p>
   {/if}
 </div>
 

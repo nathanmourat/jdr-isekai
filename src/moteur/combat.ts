@@ -94,7 +94,8 @@ export interface Combattant {
 export type ActionCombat =
   | { type: 'attaque'; acteur: string; cible: string }
   | { type: 'competence'; acteur: string; competence: string; cible?: string }
-  | { type: 'objet'; acteur: string; objet: 'potion' | 'bombe'; cible?: string }
+  /** `item` : identifiant d'un consommable du sac (potion de soin, de mana, antidote, bombes…) ; sans `item`, la petite potion ou la bombe improvisée. */
+  | { type: 'objet'; acteur: string; objet: 'potion' | 'bombe'; cible?: string; item?: string }
   | { type: 'defendre'; acteur: string }
   | { type: 'changer_rang'; acteur: string }
   | { type: 'pacifier'; acteur: string; cible: string }
@@ -243,6 +244,7 @@ export function combattantHeros(contenu: Contenu, h: Heros, controle: boolean, t
     boss: false,
     fuitSous: null,
     compteurs: {
+      ...sacDeCombat(contenu, h),
       potionsInventaire,
       bombes: don.parametres.objets_improvises ?? 0,
       esquives: don.parametres.esquives ?? 0,
@@ -271,6 +273,31 @@ export function combattantHeros(contenu: Contenu, h: Heros, controle: boolean, t
     phrase: null,
     effetAttaque: null,
   };
+}
+
+/**
+ * Consommables du sac utilisables en combat : tout objet « consommable » qui a des effets, sauf la petite potion
+ * (comptée à part avec les potions offertes par la classe ou le don). Compteur « sac:<id> » = nombre disponible.
+ */
+function sacDeCombat(contenu: Contenu, h: Heros): Record<string, number> {
+  const res: Record<string, number> = {};
+  for (const [id, n] of entrees(h.inventaire)) {
+    const o = contenu.objets[id];
+    if (!o || n <= 0 || id === 'potion-soin-petite' || o.type !== 'consommable' || o.effets.length === 0) continue;
+    res[`sac:${id}`] = n;
+  }
+  return res;
+}
+
+/** Objets du sac encore disponibles pour ce combattant : identifiant, nom, nombre, cible. */
+export function objetsDuSac(contenu: Contenu, x: Combattant): { id: string; nom: string; nombre: number; cible: string; description: string }[] {
+  const res: { id: string; nom: string; nombre: number; cible: string; description: string }[] = [];
+  for (const [k, n] of entrees(x.compteurs)) {
+    if (!k.startsWith('sac:') || n <= 0) continue;
+    const o = contenu.objets[k.slice(4)];
+    if (o) res.push({ id: o.id, nom: o.nom, nombre: n, cible: o.cible, description: o.description });
+  }
+  return trier(res, (a, b) => (a.id < b.id ? -1 : a.id > b.id ? 1 : 0));
 }
 
 export function combattantEnnemi(contenu: Contenu, def: Ennemi, id: string, mult = { pv: 1, degats: 1 }): Combattant {
@@ -1138,8 +1165,12 @@ function verifierAction(contenu: Contenu, combat: Combat, x: Combattant, a: Acti
     if (!k) throw new Error('Compétence inconnue');
     if (!competenceUtilisable(contenu, x, k.comp)) throw new Error('Compétence indisponible (mana, recharge ou silence)');
   }
-  if (a.type === 'objet' && a.objet === 'potion' && x.potions <= 0) throw new Error('Plus de potion');
-  if (a.type === 'objet' && a.objet === 'bombe' && x.bombes <= 0) throw new Error('Plus de bombe');
+  if (a.type === 'objet' && vrai(a.item)) {
+    if (!contenu.objets[a.item] || (x.compteurs[`sac:${a.item}`] ?? 0) <= 0) throw new Error("Vous n'avez plus cet objet");
+  } else {
+    if (a.type === 'objet' && a.objet === 'potion' && x.potions <= 0) throw new Error('Plus de potion');
+    if (a.type === 'objet' && a.objet === 'bombe' && x.bombes <= 0) throw new Error('Plus de bombe');
+  }
   if (a.type === 'fuir' && !combat.fuitePossible) throw new Error('Impossible de fuir ce combat');
   if (a.type === 'pacifier') {
     const c = trouver(combat, a.cible);
@@ -1195,11 +1226,15 @@ function executer(contenu: Contenu, combat: Combat, rng: Rng, x: Combattant, a: 
     }
     case 'objet': {
       const cible = vrai(a.cible) ? combat.combattants.find((y) => y.id === a.cible) ?? x : x;
-      const objetId = a.objet === 'potion' ? 'potion-soin-petite' : 'bombe-feu';
+      const duSac = vrai(a.item);
+      const objetId = duSac ? a.item! : a.objet === 'potion' ? 'potion-soin-petite' : 'bombe-feu';
       const obj = contenu.objets[objetId];
       const economise = x.passif?.id === 'fioles-optimisees' && chance(rng, x.passif.parametres.economie ?? 0.25);
-      if (a.objet === 'potion') { if (!economise) x.potions--; } else if (!economise) x.bombes--;
-      if (a.objet === 'potion' && !economise && (x.compteurs.potionsInventaire ?? 0) > 0) { x.compteurs.potionsInventaire--; x.compteurs.potionsUtilisees = (x.compteurs.potionsUtilisees ?? 0) + 1; }
+      if (duSac) {
+        // objet du sac : il sort de l'inventaire à la fin du combat (compteur « utilise:<id> »)
+        if (!economise) { x.compteurs[`sac:${objetId}`] = (x.compteurs[`sac:${objetId}`] ?? 0) - 1; x.compteurs[`utilise:${objetId}`] = (x.compteurs[`utilise:${objetId}`] ?? 0) + 1; }
+      } else if (a.objet === 'potion') { if (!economise) x.potions--; } else if (!economise) x.bombes--;
+      if (!duSac && a.objet === 'potion' && !economise && (x.compteurs.potionsInventaire ?? 0) > 0) { x.compteurs.potionsInventaire--; x.compteurs.potionsUtilisees = (x.compteurs.potionsUtilisees ?? 0) + 1; }
       log(combat, { type: 'action', source: x.id, cible: cible.id, competence: objetId, texte: `${x.nom} utilise : ${obj.nom}${economise ? ' (sans la consommer !)' : ''}.` });
       appliquerEffets(contenu, combat, rng, x, { id: objetId, nom: obj.nom, description: '', cout: 0, recharge: 0, cible: obj.cible, portee: 'distance', effets: obj.effets, ia: { priorite: 1, quand: 'toujours' } }, 1, cible, true);
       if ((x.compteurs.objetGratuit ?? 0) > 0) { x.compteurs.objetGratuit = 0; log(combat, { type: 'info', source: x.id, texte: `${x.nom} agit encore ! (Réserve du Néant)` }); return true; }
@@ -1357,6 +1392,7 @@ export function actionsDisponibles(contenu: Contenu, combat: Combat, acteurId: s
     competences: comps,
     potions: x.potions,
     bombes: x.bombes,
+    sac: objetsDuSac(contenu, x),
     pacifier: x.don?.id === 'langue-universelle' ? adversaires(combat, x).filter((c) => pacifiable(x, c)).map((c) => c.id) : [],
     fuite: combat.fuitePossible,
     ciblesMelee: ciblesValides(combat, x, 'ennemi', 'melee').map((c) => c.id),

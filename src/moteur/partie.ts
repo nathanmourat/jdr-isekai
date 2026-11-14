@@ -23,7 +23,7 @@ import { competencesConnues as connuesDe } from './personnage';
 import { exemplaires, problemeEquipement } from './equipement';
 import { anneeDepart, chapitreDe, fetesEntre, formaterDate, joursParMois, versDate, versJour } from './temps';
 
-export const VERSION_ETAT = 5;
+export const VERSION_ETAT = 6;
 export const MAX_JOUEURS = 6;
 
 export interface Joueur { id: string; pseudo: string; herosId: string | null; present: boolean }
@@ -132,6 +132,10 @@ export interface EtatPartie {
   mouvementsOr: MouvementOr[];
   /** Contrats à étapes en cours, par héros (un seul à la fois). */
   contrats: Record<string, ContratEnCours>;
+  /** Objets mystérieux dont l'effet a été découvert (achat ou identification) : connus de toute la partie. */
+  objetsConnus: string[];
+  /** Goûts découverts des compagnons : pour chacun, les cadeaux dont on connaît la réaction. */
+  goutsConnus: Record<string, string[]>;
 }
 
 export type Action =
@@ -167,6 +171,8 @@ export type Action =
   | { type: 'acheter'; joueur: string; objet: string; lieu: string; quantite?: number }
   | { type: 'vendre'; joueur: string; objet: string; quantite?: number }
   | { type: 'utiliser'; joueur: string; objet: string }
+  /** Payer un PNJ (Ferrand) pour connaître l'effet d'un objet mystérieux avant de l'acheter. */
+  | { type: 'identifier'; joueur: string; objet: string; pnj: string }
   | { type: 'repartir'; joueur: string; carac: Carac }
   | { type: 'ameliorer'; joueur: string; competence: string }
   | { type: 'branche'; joueur: string; branche: string }
@@ -227,6 +233,8 @@ export function nouvellePartie(contenu: Contenu, id: string, nom: string, graine
     mises: {},
     mouvementsOr: [],
     contrats: {},
+    objetsConnus: [],
+    goutsConnus: {},
   };
 }
 
@@ -399,6 +407,7 @@ function appliquerConsequence(contenu: Contenu, etat: EtatPartie, eff: Consequen
     }
   }
   if (eff.soigner_groupe) for (const h of hs) h.blessure = false;
+  for (const [co, o] of entrees(eff.reveler_gout ?? {})) decouvrirGout(etat, co, o);
   // Paris : la mise sort vraiment du porte-monnaie ; elle revient (multipliée) si le pari est gagné
   if (eff.miser !== undefined) for (const h of hs) {
     if (h.or < eff.miser) continue;
@@ -594,7 +603,7 @@ function entrerNoeud(contenu: Contenu, etat: EtatPartie, cle: string, noeudId: s
     return;
   }
   if (n.combat) {
-    lancerCombat(contenu, etat, n.combat.rencontre, cle === 'groupe' ? 'groupe' : cle, { cle: cle === 'groupe' ? 'groupe' : cle, origine: 'scene', sceneCle: cle, victoire: n.combat.victoire, defaite: n.combat.defaite, evenementDonjon: null, contrat: null, bilan: null });
+    lancerCombat(contenu, etat, n.combat.rencontre, cle === 'groupe' ? 'groupe' : cle, { cle: cle === 'groupe' ? 'groupe' : cle, origine: 'scene', sceneCle: cle, victoire: n.combat.victoire, defaite: n.combat.defaite, evenementDonjon: null, contrat: null, bilan: null }, scene.lieu ?? null);
   } else if (n.donjon) {
     const d = contenu.donjons[n.donjon.id];
     etat.donjon = { id: d.id, x: d.depart.x, y: d.depart.y, faits: [], sceneCle: cle, sortie: n.donjon.sortie, messages: [`Le groupe entre dans : ${d.nom}.`], vus: [] };
@@ -755,7 +764,43 @@ function resoudreChoix(contenu: Contenu, etat: EtatPartie, cle: string, index: n
 
 // ───────────────────────────── Combats ─────────────────────────────
 
-function lancerCombat(contenu: Contenu, etat: EtatPartie, rencontre: string, cle: string, contexte: ContexteCombat) {
+/** Vrai si l'effet de cet objet est connu du joueur (un objet mystérieux reste « ??? » tant qu'il n'est pas découvert). */
+export function objetConnu(contenu: Contenu, etat: EtatPartie, objet: string): boolean {
+  return !contenu.objets[objet]?.mystere || (etat.objetsConnus ?? []).includes(objet);
+}
+
+function decouvrirObjet(contenu: Contenu, etat: EtatPartie, objet: string) {
+  if (objetConnu(contenu, etat, objet)) return;
+  etat.objetsConnus.push(objet);
+  const o = contenu.objets[objet];
+  etat.dernieresNouvelles.push(`Objet identifié : ${o.nom}. ${o.description}`);
+}
+
+/** Réaction connue d'un compagnon à un cadeau (null tant qu'on ne l'a pas découverte). */
+export function goutConnu(contenu: Contenu, etat: EtatPartie, compagnon: string, objet: string): 'prefere' | 'apprecie' | 'neutre' | 'deteste' | null {
+  if (!((etat.goutsConnus ?? {})[compagnon] ?? []).includes(objet)) return null;
+  return reactionCadeau(contenu, compagnon, objet);
+}
+
+function decouvrirGout(etat: EtatPartie, compagnon: string, objet: string) {
+  etat.goutsConnus[compagnon] ??= [];
+  if (!etat.goutsConnus[compagnon].includes(objet)) etat.goutsConnus[compagnon].push(objet);
+}
+
+/** Ration de voyage : il en faut une par héros pour un combat hors de la ville ; sans ration, on part fatigué. */
+export const RATION = { objet: 'ration', malusPv: 0.15 };
+
+/** Vrai si un combat dans ce lieu se passe « en route » (hors d'une ville) : chaque héros y mange une ration. */
+export function lieuHorsVille(contenu: Contenu, lieu: string | null | undefined): boolean {
+  if (!vrai(lieu)) return false;
+  for (const r of valeurs(contenu.regions)) {
+    const l = r.lieux.find((x) => x.id === lieu);
+    if (l) return !vrai(l.ville);
+  }
+  return false;
+}
+
+function lancerCombat(contenu: Contenu, etat: EtatPartie, rencontre: string, cle: string, contexte: ContexteCombat, lieu: string | null = null) {
   const herosIds = cle === 'groupe' ? participantsGroupe(etat) : [cle];
   if (herosIds.length === 0) refuser('Aucun héros disponible pour combattre');
   const allies: Combattant[] = [];
@@ -770,6 +815,20 @@ function lancerCombat(contenu: Contenu, etat: EtatPartie, rencontre: string, cle
     }
   }
   const combat = demarrerCombat(contenu, rencontre, allies, etat.rng, `${cle}:${etat.numeroAction}`);
+  if (lieuHorsVille(contenu, lieu)) {
+    // en route : chaque héros mange une ration ; sans ration, il commence le combat fatigué
+    for (const x of combat.combattants) {
+      if (x.type !== 'heros' || !vrai(x.herosId)) continue;
+      const h = etat.heros[x.herosId];
+      if ((h.inventaire[RATION.objet] ?? 0) > 0) {
+        h.inventaire[RATION.objet]--;
+        etat.dernieresNouvelles.push(`${h.nom} mange une ration de voyage en route.`);
+      } else {
+        x.pv = Math.max(1, x.pv - Math.round(x.pvMax * RATION.malusPv));
+        etat.dernieresNouvelles.push(`${h.nom} n'a pas de ration : la route l'a fatigué (−${Math.round(RATION.malusPv * 100)} % de PV au début du combat).`);
+      }
+    }
+  }
   etat.combats[cle] = { combat, contexte };
 }
 
@@ -782,6 +841,12 @@ function terminerCombat(contenu: Contenu, etat: EtatPartie, cle: string) {
     const h = etat.heros[c.herosId!];
     const utilisees = c.compteurs.potionsUtilisees ?? 0;
     if (vrai(utilisees)) h.inventaire['potion-soin-petite'] = Math.max(0, (h.inventaire['potion-soin-petite'] ?? 0) - utilisees);
+    // autres objets du sac consommés pendant le combat (potions de soin et de mana, antidotes, bombes…)
+    for (const [k, n] of entrees(c.compteurs)) {
+      if (!k.startsWith('utilise:') || n <= 0) continue;
+      const objet = k.slice(8);
+      h.inventaire[objet] = Math.max(0, (h.inventaire[objet] ?? 0) - n);
+    }
     // Maîtrise : chaque utilisation d'une compétence pendant le combat compte pour un point
     for (const [k, n] of entrees(c.compteurs)) {
       if (!k.startsWith('usage:') || n <= 0) continue;
@@ -991,6 +1056,8 @@ export function appliquer(contenu: Contenu, etatAvant: EtatPartie, action: Actio
   etat.dernieresNouvelles = [];
   etat.mouvementsOr = [];
   etat.mises ??= {};
+  etat.objetsConnus ??= [];
+  etat.goutsConnus ??= {};
   etat.contrats ??= {};
   for (const h of valeurs(etat.heros)) { h.grimoire ??= {}; h.maitrise ??= {}; }
   if (etat.grimoire) repartirAncienGrimoire(contenu, etat); // parties d'avant le grimoire personnel
@@ -1239,6 +1306,7 @@ export function appliquer(contenu: Contenu, etatAvant: EtatPartie, action: Actio
       const r = reactionCadeau(contenu, action.compagnon, action.objet);
       const d = modifierAffinite(contenu, a, contenu.config.affinite.cadeau[r], { ageHeros: age(h, versDate(contenu, etat.jour).annee) });
       a.dernierCadeau = etat.jour;
+      decouvrirGout(etat, action.compagnon, action.objet);
       etat.dernieresNouvelles.push(`${contenu.compagnons[action.compagnon].nom} ${({ prefere: 'adore', apprecie: 'apprécie', neutre: 'accepte poliment', deteste: 'n\'aime pas du tout' } as const)[r]} ce cadeau (${d >= 0 ? '+' : ''}${d}).`);
       break;
     }
@@ -1283,6 +1351,7 @@ export function appliquer(contenu: Contenu, etatAvant: EtatPartie, action: Actio
       h.or -= prix;
       h.inventaire[action.objet] = (h.inventaire[action.objet] ?? 0) + n;
       etat.dernieresNouvelles.push(`${h.nom} achète ${n > 1 ? `${n} × ` : ''}${contenu.objets[action.objet].nom} : −${prix} or.`);
+      decouvrirObjet(contenu, etat, action.objet);
       declencherEtapes(contenu, etat, (d) => d.acheter === action.lieu);
       break;
     }
@@ -1298,6 +1367,20 @@ export function appliquer(contenu: Contenu, etatAvant: EtatPartie, action: Actio
       h.or += gain;
       etat.dernieresNouvelles.push(`${h.nom} vend ${n > 1 ? `${n} × ` : ''}${o.nom} : +${gain} or.`);
       declencherEtapes(contenu, etat, (d) => d.vendre === true);
+      break;
+    }
+    case 'identifier': {
+      const h = herosDuJoueur(etat, action.joueur);
+      const o = contenu.objets[action.objet] ?? refuser('Objet inconnu');
+      const expert = contenu.pnj[action.pnj] ?? refuser('Personnage inconnu');
+      const prix = expert.identifie ?? refuser(`${expert.nom} n'identifie pas les objets`);
+      if (etat.pnjMorts.includes(action.pnj)) refuser(`${expert.nom} n'est plus là`);
+      if (!o.mystere) refuser("Cet objet n'a rien de mystérieux");
+      if (objetConnu(contenu, etat, o.id)) refuser('Vous savez déjà ce que c\'est');
+      if (h.or < prix) refuser(`Pas assez d'or : l'identification coûte ${prix} pièces`);
+      h.or -= prix;
+      etat.mouvementsOr.push({ heros: h.id, montant: -prix, raison: 'identification' });
+      decouvrirObjet(contenu, etat, o.id);
       break;
     }
     case 'utiliser': {
@@ -1358,7 +1441,7 @@ export function appliquer(contenu: Contenu, etatAvant: EtatPartie, action: Actio
       if (etat.combats[h.id]) refuser('Vous êtes déjà en combat');
       if (vrai(e.combat)) {
         st.notes = [];
-        lancerCombat(contenu, etat, e.combat, h.id, { cle: h.id, origine: 'contrat', sceneCle: null, victoire: null, defaite: null, evenementDonjon: null, contrat: x.contrat.id, bilan: null });
+        lancerCombat(contenu, etat, e.combat, h.id, { cle: h.id, origine: 'contrat', sceneCle: null, victoire: null, defaite: null, evenementDonjon: null, contrat: x.contrat.id, bilan: null }, e.lieu);
         break;
       }
       if (e.test) {

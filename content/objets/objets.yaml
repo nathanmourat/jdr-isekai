@@ -1,25 +1,25 @@
 # Objets : consommables, cadeaux, équipement, objets de quête, matériaux.
 objets:
   # ── Consommables ──
-  - { id: potion-soin-petite, nom: "Petite potion de soin", description: "Rend un peu de PV.", type: consommable, prix: 15, cible: allie, effets: [{ type: soin, puissance: 16, stat: VIT }] }
-  - { id: potion-soin, nom: "Potion de soin", description: "Rend beaucoup de PV.", type: consommable, prix: 40, cible: allie, effets: [{ type: soin, puissance: 30, stat: VIT }] }
-  - { id: potion-mana, nom: "Potion de mana", description: "Rend 20 points de mana.", type: consommable, prix: 30, cible: soi, effets: [{ type: mana, valeur: 20 }] }
-  - { id: antidote, nom: "Antidote", description: "Retire poisons et effets négatifs.", type: consommable, prix: 12, cible: allie, effets: [{ type: purifier }] }
-  - { id: bombe-feu, nom: "Bombe incendiaire", description: "Dégâts de feu sur tous les ennemis.", type: consommable, prix: 35, cible: tous_ennemis, effets: [{ type: degats, puissance: 10, stat: INT, element: feu }] }
-  - { id: bombe-fumee, nom: "Bombe fumigène", description: "Le groupe devient plus difficile à toucher.", type: consommable, prix: 25, cible: tous_allies, effets: [{ type: etat, etat: bonus_defense, duree: 2, valeur: 0.2 }] }
-  - { id: parchemin-retour, nom: "Parchemin de retour", description: "Ramène le groupe en ville (hors combat).", type: consommable, prix: 50 }
-  - { id: ration, nom: "Ration de voyage", description: "Pain, fromage et viande séchée.", type: consommable, prix: 3 }
+  - { id: potion-soin-petite, nom: "Petite potion de soin", description: "Rend un peu de PV.", utilite: "À boire en combat (bouton « Potion »).", type: consommable, prix: 15, cible: allie, effets: [{ type: soin, puissance: 16, stat: VIT }] }
+  - { id: potion-soin, nom: "Potion de soin", description: "Rend beaucoup de PV.", utilite: "À boire en combat (bouton du sac, dans « Toutes les actions »).", type: consommable, prix: 40, cible: allie, effets: [{ type: soin, puissance: 30, stat: VIT }] }
+  - { id: potion-mana, nom: "Potion de mana", description: "Rend 20 points de mana.", utilite: "À boire en combat pour relancer des sorts (bouton du sac).", type: consommable, prix: 30, cible: soi, effets: [{ type: mana, valeur: 20 }] }
+  - { id: antidote, nom: "Antidote", description: "Retire poisons et effets négatifs.", utilite: "À utiliser en combat sur un allié empoisonné, brûlé ou affaibli (bouton du sac).", type: consommable, prix: 12, cible: allie, effets: [{ type: purifier }] }
+  - { id: bombe-feu, nom: "Bombe incendiaire", description: "Dégâts de feu sur tous les ennemis.", utilite: "À lancer en combat : touche tous les ennemis d'un coup (bouton du sac).", type: consommable, prix: 35, cible: tous_ennemis, effets: [{ type: degats, puissance: 10, stat: INT, element: feu }] }
+  - { id: bombe-fumee, nom: "Bombe fumigène", description: "Le groupe devient plus difficile à toucher.", utilite: "À lancer en combat : protège tout le groupe pendant 2 tours (bouton du sac).", type: consommable, prix: 25, cible: tous_allies, effets: [{ type: etat, etat: bonus_defense, duree: 2, valeur: 0.2 }] }
+  - { id: parchemin-retour, nom: "Parchemin de retour", description: "Ramène le groupe en ville (hors combat).", utilite: "Pas encore utilisable : il servira dans les grands donjons des prochains chapitres.", type: consommable, prix: 50 }
+  - { id: ration, nom: "Ration de voyage", description: "Pain, fromage et viande séchée.", utilite: "Il en faut une par héros pour chaque combat hors de la ville. Sans ration, la route fatigue : −15 % de PV au début du combat.", type: consommable, prix: 3 }
   # ── Cadeaux ──
   - { id: gateau-lysmont, nom: "Gâteau de Lysmont", description: "Une pâtisserie à la crème, spécialité de la capitale.", type: cadeau, prix: 8 }
   - { id: kit-entretien-armes, nom: "Kit d'entretien d'armes", description: "Pierre à aiguiser, huile et chiffon.", type: cadeau, prix: 20 }
   - { id: bijou-dore, nom: "Collier doré", description: "Clinquant et cher.", type: cadeau, prix: 60 }
   - { id: fleur-des-champs, nom: "Bouquet de fleurs des champs", description: "Simple et joli.", type: cadeau, prix: 4 }
-  - { id: livre-ancien, nom: "Livre ancien", description: "Chroniques de chevalerie.", type: cadeau, prix: 25 }
+  - { id: livre-ancien, nom: "Livre ancien", description: "Des chroniques de chevalerie, aux enluminures passées : un beau cadeau pour qui aime les histoires d'honneur.", type: cadeau, prix: 25, mystere: true }
   # ── Équipement ──
   # ── Quête et matériaux ──
   - { id: sceau-cendre, nom: "Sceau cendré", description: "Fragment de pierre noire marqué d'une rune violette.", type: quete }
   - { id: cle-crypte, nom: "Clé de bronze de la crypte", description: "Ouvre la salle du fond de la Crypte de la Fontaine.", type: quete }
-  - { id: croc-de-loup, nom: "Croc de loup", description: "Matériau d'artisanat.", type: materiau, prix: 4 }
-  - { id: soie-d-araignee, nom: "Soie d'araignée", description: "Matériau d'artisanat.", type: materiau, prix: 6 }
-  - { id: breloque-cabossee, nom: "Breloque cabossée", description: "Une vieille breloque en cuivre, trouvée entre deux pavés. Elle ne sert à rien, mais elle se vend.", type: materiau, prix: 12 }
-  - { id: relique-douteuse, nom: "Relique douteuse", description: "Un « os de saint » vendu sous le manteau.", type: quete, prix: 0 }
+  - { id: croc-de-loup, nom: "Croc de loup", description: "Une dent longue comme un doigt.", utilite: "Matériau : se revend, ou sert à l'activité « Artisanat » du temps libre.", type: materiau, prix: 4 }
+  - { id: soie-d-araignee, nom: "Soie d'araignée", description: "Un fil solide et collant.", utilite: "Matériau : se revend, ou sert à l'activité « Artisanat » du temps libre.", type: materiau, prix: 6 }
+  - { id: breloque-cabossee, nom: "Breloque cabossée", description: "Une vieille breloque en cuivre, trouvée entre deux pavés. Elle ne sert à rien, mais elle se vend.", utilite: "À revendre dans une boutique (onglet « Vendre »).", type: materiau, prix: 12 }
+  - { id: relique-douteuse, nom: "Relique douteuse", description: "Un « os de saint » vendu sous le manteau : en vérité, un os de poulet verni.", type: quete, prix: 0, mystere: true }

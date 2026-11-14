@@ -8,7 +8,8 @@
    */
   import { tick } from 'svelte';
   import { jeu } from '../jeu.svelte';
-  import { conditionHeros, conditionScene, etapeContrat, listeHeros, palierCompagnon, rangGuilde, scenesDisponibles } from '../../moteur/partie';
+  import { conditionHeros, conditionScene, etapeContrat, listeHeros, objetConnu, palierCompagnon, rangGuilde, scenesDisponibles } from '../../moteur/partie';
+  import ObjetInfo from '../ObjetInfo.svelte';
   import { absentsDuGroupe, aideNiveau, couleurNiveau, marqueurPnj, niveauGroupe, niveauScene, sceneAvecCombat, type Marqueur } from '../../moteur/guide';
   import NiveauConseille from '../NiveauConseille.svelte';
   import { avantPlanDecor, imageDecor, imagePnjDecor, positionsImage, TAILLE_PNJ_DECOR } from '../../rendu/assets';
@@ -69,6 +70,12 @@
     jeu.agir({ type: 'etape_contrat' });
   }
   const etiquetteScene = (s: Scene) => (s.rend_quete ? 'Quête à rendre' : s.quete ? (c.quetes[s.quete].type === 'principale' ? 'Quête principale' : 'Quête secondaire') : '');
+  /** Objets mystérieux pas encore identifiés, que le héros possède ou que les boutiques accessibles vendent. */
+  const mysteres = $derived.by(() => {
+    const vus = new Set<string>(Object.entries(h.inventaire).filter(([, n]) => n > 0).map(([o]) => o));
+    for (const l of c.regions.aubeclaire.lieux) if (conditionScene(c, etat, l.disponible_si, tous)) for (const o of l.boutique) vus.add(o);
+    return [...vus].filter((o) => c.objets[o]?.mystere && !objetConnu(c, etat, o)).sort();
+  });
   async function montrerPanneaux() { await tick(); panneaux?.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }
 
   // ───────────── Le décor : PNJ et zones cliquables ─────────────
@@ -191,13 +198,25 @@
         {#each scenesPnj as s (s.id)}{@render boutonScene(s, 'Lui parler')}{/each}
         {#if pnjChoisi === lieu.gerant && lieu.boutique.length}
           <div class="item"><button class:principal={!scenesPnj.length} aria-expanded={boutiqueOuverte} onclick={() => (boutiqueOuverte = !boutiqueOuverte)}>🛒 Voir la marchandise</button></div>
-        {:else if !scenesPnj.length}
+        {:else if fiche?.identifie === undefined && !scenesPnj.length}
           <p>{nomPnj(pnjChoisi)} n'a rien de particulier à vous dire pour le moment.</p>
           {#if c.compagnons[pnjChoisi] && etat.compagnonsRencontres.includes(pnjChoisi)}
             <p class="discret">Palier : {palierCompagnon(c, etat, h.id, pnjChoisi).nom}. Offrez-lui un cadeau depuis l'onglet « Compagnons ».</p>
           {/if}
         {/if}
       </div>
+      {#if fiche?.identifie !== undefined}
+        <div class="carte-ui">
+          <h3>🔎 Faire identifier un objet <span class="badge or">{fiche.identifie} or</span></h3>
+          <p class="discret">Un objet mystérieux affiche « ??? ». {nomPnj(pnjChoisi)} vous dit ce qu'il est vraiment, avant même de l'acheter. Une fois identifié, tout le groupe le sait.</p>
+          {#each mysteres as o (o)}
+            <div class="ligne item entre">
+              <ObjetInfo id={o} />
+              <button class="petit" disabled={h.or < fiche.identifie} title={h.or < fiche.identifie ? "Pas assez d'or" : ''} onclick={() => jeu.agir({ type: 'identifier', objet: o, pnj: pnjChoisi! })}>Identifier · {fiche.identifie} or</button>
+            </div>
+          {:else}<p class="discret">Aucun objet mystérieux à identifier pour le moment.</p>{/each}
+        </div>
+      {/if}
       {#if boutiqueOuverte && pnjChoisi === lieu.gerant}<Boutique lieu={id} objets={lieu.boutique} />{/if}
     {/if}
 

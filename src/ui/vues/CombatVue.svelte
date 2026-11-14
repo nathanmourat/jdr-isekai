@@ -103,13 +103,14 @@
   const acteur = $derived(combat.enAttente ? combat.combattants.find((x) => x.id === combat.enAttente) ?? null : null);
   const monTour = $derived(!!acteur && !!acteur.joueurId && jeu.joueursLocaux.includes(acteur.joueurId));
   const dispo = $derived(acteur && monTour ? actionsDisponibles(c, combat, acteur.id) : null);
-  let selection = $state<{ type: 'attaque' } | { type: 'competence'; comp: Competence } | { type: 'potion' } | { type: 'pacifier' } | null>(null);
+  let selection = $state<{ type: 'attaque' } | { type: 'competence'; comp: Competence } | { type: 'potion' } | { type: 'pacifier' } | { type: 'sac'; item: string; cible: string } | null>(null);
   let scene: SceneCombat | null = null;
 
   const cibles = $derived.by((): string[] => {
     if (!dispo || !acteur || !selection) return [];
     if (selection.type === 'attaque') return acteur.attaque.portee === 'melee' ? dispo.ciblesMelee : dispo.ciblesDistance;
     if (selection.type === 'potion') return dispo.allies;
+    if (selection.type === 'sac') return selection.cible === 'allie' ? dispo.allies : selection.cible === 'allie_ko' ? dispo.alliesKo : selection.cible === 'ennemi' ? dispo.ciblesDistance : [];
     if (selection.type === 'pacifier') return dispo.pacifier;
     const k = selection.comp;
     if (k.cible === 'ennemi') return k.portee === 'melee' ? dispo.ciblesMelee : dispo.ciblesDistance;
@@ -140,10 +141,16 @@
     if (sel.type === 'competence' && !['ennemi', 'allie', 'allie_ko'].includes(sel.comp.cible)) return envoyer({ type: 'competence', acteur: acteur!.id, competence: sel.comp.id });
     selection = sel;
   }
+  /** Objet du sac : sans cible à choisir (soi, tout le groupe, tous les ennemis), il part tout de suite. */
+  function utiliserDuSac(item: string, cible: string) {
+    if (cible === 'allie' || cible === 'allie_ko' || cible === 'ennemi') selection = { type: 'sac', item, cible };
+    else envoyer({ type: 'objet', acteur: acteur!.id, objet: 'potion', item });
+  }
   function viser(id: string) {
     if (!selection || !acteur) return;
     if (selection.type === 'attaque') envoyer({ type: 'attaque', acteur: acteur.id, cible: id });
     else if (selection.type === 'potion') envoyer({ type: 'objet', acteur: acteur.id, objet: 'potion', cible: id });
+    else if (selection.type === 'sac') envoyer({ type: 'objet', acteur: acteur.id, objet: 'potion', item: selection.item, cible: id });
     else if (selection.type === 'pacifier') envoyer({ type: 'pacifier', acteur: acteur.id, cible: id });
     else envoyer({ type: 'competence', acteur: acteur.id, competence: selection.comp.id, cible: id });
   }
@@ -156,7 +163,7 @@
   }
   /** Chance de réussite de l'action choisie contre une cible précise (affichée avant de valider). */
   function chanceSur(id: string): string {
-    if (!selection || !acteur || selection.type === 'potion' || selection.type === 'pacifier') return '';
+    if (!selection || !acteur || selection.type === 'potion' || selection.type === 'pacifier' || selection.type === 'sac') return '';
     const action: ActionCombat = selection.type === 'attaque' ? { type: 'attaque', acteur: acteur.id, cible: id } : { type: 'competence', acteur: acteur.id, competence: selection.comp.id, cible: id };
     const e = estimerAction(c, combat, action);
     return e.possible && e.reussite !== null ? ` · ${Math.round(e.reussite * 100)} % de réussite${e.degats ? `, ${e.degats[0]}–${e.degats[1]} dégâts` : ''}` : '';
@@ -231,6 +238,9 @@
             {/each}
             <button disabled={dispo.potions <= 0} onclick={() => choisir({ type: 'potion' })}>Potion ({dispo.potions})</button>
             {#if dispo.bombes > 0}<button onclick={() => envoyer({ type: 'objet', acteur: acteur!.id, objet: 'bombe' })}>Bombe ({dispo.bombes})</button>{/if}
+            {#each dispo.sac as o (o.id)}
+              <button title={o.description} onclick={() => utiliserDuSac(o.id, o.cible)}>🎒 {o.nom} ({o.nombre})</button>
+            {/each}
             {#if dispo.pacifier.length}<button onclick={() => choisir({ type: 'pacifier' })}>Pacifier</button>{/if}
             <button onclick={() => envoyer({ type: 'defendre', acteur: acteur!.id })}>Se défendre</button>
             <button onclick={() => envoyer({ type: 'changer_rang', acteur: acteur!.id })}>Passer au rang {acteur.rang === 'avant' ? 'arrière' : 'avant'}</button>

@@ -242,4 +242,8 @@ function verifierConsequence(c: Contenu, ou: string, eff: Consequence, e: string
   if (eff.quete && !c.quetes[eff.quete.id]) e.push(`${ou} › quête « ${eff.quete.id} » introuvable`);
   if (eff.quete && c.quetes[eff.quete.id] && !c.quetes[eff.quete.id].etapes.some((x) => x.id === eff.quete!.etape)) e.push(`${ou} › quête « ${eff.quete.id} » › étape « ${eff.quete.etape} » introuvable`);
   if (eff.terminer_quete && !c.quetes[eff.terminer_quete]) e.push(`${ou} › quête « ${eff.terminer_quete} » introuvable`);
+  for (const [co, o] of Object.entries(eff.reveler_gout ?? {})) {
+    if (!c.compagnons[co]) e.push(`${ou} › reveler_gout › compagnon « ${co} » introuvable`);
+    if (!c.objets[o]) e.push(`${ou} › reveler_gout › objet « ${o} » introuvable`);
+  }
 }

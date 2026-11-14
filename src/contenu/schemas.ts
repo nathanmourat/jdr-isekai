@@ -216,6 +216,10 @@ export const zObjet = z.object({
   pouvoir_unique: z.string().optional(),
   /** un seul exemplaire par partie (armes mythiques) */
   unique_par_partie: z.boolean().default(false),
+  /** À quoi sert l'objet, en une phrase (affichée dans l'infobulle). */
+  utilite: z.string().optional(),
+  /** Objet mystérieux : « ??? — effet inconnu » tant qu'on ne l'a pas acheté ou fait identifier. */
+  mystere: z.boolean().default(false),
 });
 export type Objet = z.infer<typeof zObjet>;
 
@@ -304,6 +308,8 @@ export const zConsequence = z.object({
   fin_chapitre: z.number().optional(),
   soigner_groupe: z.boolean().optional(),
   /** Pari : retire cette somme au héros qui choisit (elle est mise de côté). */
+  /** Un goût d'un compagnon est découvert en discutant : { compagnon: objet }. */
+  reveler_gout: z.record(z.string(), z.string()).optional(),
   miser: z.number().int().min(1).optional(),
   /** Pari gagné : rend la mise multipliée (2 = la mise et autant en gain). */
   gain_pari: z.number().min(0).optional(),
@@ -448,6 +454,8 @@ export const zPnj = z.object({
   description: z.string().default(''),
   /** Phrase d'accueil quand on lui parle (gérant de boutique surtout). */
   accueil: z.string().optional(),
+  /** Prix auquel ce PNJ identifie un objet mystérieux (absent : il n'identifie rien). */
+  identifie: z.number().int().min(0).optional(),
 });
 export type Pnj = z.infer<typeof zPnj>;
 

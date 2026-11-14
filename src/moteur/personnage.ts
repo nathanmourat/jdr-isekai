@@ -126,7 +126,7 @@ export function creerHeros(contenu: Contenu, o: OptionsCreation): Heros {
     rangsCompetences: Object.fromEntries(cl.competences.map((c) => [c, 1])),
     branche: null,
     equipement: { arme: null, armure: null, accessoire: null },
-    inventaire: { 'potion-soin-petite': contenu.config.combat.potions_depart },
+    inventaire: { 'potion-soin-petite': contenu.config.combat.potions_depart, ration: 3 },
     or: 50,
     blessure: false,
     atout: null,

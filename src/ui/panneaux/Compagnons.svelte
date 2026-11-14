@@ -1,7 +1,6 @@
 <script lang="ts">
   import { jeu } from '../jeu.svelte';
-  import { affinite, palierCompagnon } from '../../moteur/partie';
-  import { reactionCadeau } from '../../moteur/affinite';
+  import { affinite, goutConnu, palierCompagnon } from '../../moteur/partie';
   import { portraitPersonnage } from '../outils';
 
   const c = jeu.contenu!;
@@ -9,6 +8,8 @@
   const h = $derived(jeu.monHeros!);
   const cadeaux = $derived(Object.entries(h.inventaire).filter(([o, n]) => n > 0 && c.objets[o].type === 'cadeau'));
   const paliers = c.config.affinite.paliers;
+  /** Goûts déjà découverts (en lui offrant ce cadeau, ou en discutant). */
+  const REACTIONS = { prefere: 'adore', apprecie: 'aime bien', neutre: 'sans plus', deteste: 'déteste' } as const;
 </script>
 
 <section class="grille">
@@ -44,9 +45,10 @@
         {#if cadeaux.length}
           <div class="ligne">
             {#each cadeaux as [o, n] (o)}
-              <button class="petit" onclick={() => jeu.agir({ type: 'cadeau', compagnon: id, objet: o })}>{c.objets[o].nom} ×{n}{reactionCadeau(c, id, o) === 'prefere' && a.lignesFranchies.length === 0 ? '' : ''}</button>
+              <button class="petit" onclick={() => jeu.agir({ type: 'cadeau', compagnon: id, objet: o })}>{c.objets[o].nom} ×{n}{#if goutConnu(c, etat, id, o)} <small class="gout">({REACTIONS[goutConnu(c, etat, id, o)!]})</small>{/if}</button>
             {/each}
           </div>
+        <p class="discret">Ses goûts se découvrent en lui offrant des cadeaux : la réaction reste ensuite notée ici.</p>
         {:else}<p class="discret">Vous n'avez aucun cadeau. On en trouve dans les boutiques de Lysmont.</p>{/if}
       </div>
     </article>
@@ -57,6 +59,7 @@
 
 <style>
   .compagnon { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .gout { color: #ff9bb8; }
   .compagnon img { width: 160px; height: 160px; border-radius: 10px; border: 2px solid var(--violet); object-fit: cover; object-position: top; }
   .infos { flex: 1 1 300px; }
   .infos p { margin: 0.25em 0; }

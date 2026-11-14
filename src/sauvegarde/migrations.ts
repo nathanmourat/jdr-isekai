@@ -57,6 +57,15 @@ export const migrations: Record<number, Migration> = {
     s.version = 5;
     return s;
   },
+  // v5 → v6 (test 2, lot H) : objets mystérieux identifiés, goûts découverts des compagnons, rangs de Guilde
+  // obtenus par examen. Les actions sont rejouées : un ancien rang « automatique » est recalculé par le moteur.
+  5: (s) => {
+    const d = s.depart as { objetsConnus?: unknown; goutsConnus?: unknown };
+    d.objetsConnus ??= [];
+    d.goutsConnus ??= {};
+    s.version = 6;
+    return s;
+  },
 };
 
 export class ErreurSauvegarde extends Error {
