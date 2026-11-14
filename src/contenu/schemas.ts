@@ -367,7 +367,8 @@ export const zNoeud = z.object({
   choix: z.array(zChoix).default([]),
   suite: z.string().optional(),
   combat: z.object({ rencontre: z.string(), victoire: z.string(), defaite: z.string() }).optional(),
-  donjon: z.object({ id: z.string(), sortie: z.string() }).optional(),
+  /** `abandon` : nœud suivant si le groupe renonce après 3 défaites (porte de secours). */
+  donjon: z.object({ id: z.string(), sortie: z.string(), abandon: z.string().optional() }).optional(),
   fin: z.boolean().default(false),
 });
 export type Noeud = z.infer<typeof zNoeud>;

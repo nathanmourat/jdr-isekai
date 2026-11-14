@@ -5,8 +5,9 @@
  * parler à un PNJ, consulter un tableau, acheter… ; le voyage rapide (« Y aller ») ; et masque les PNJ
  * que la partie de ce joueur ne doit pas encore voir (condition « si » du lieu).
  */
-import { Players, ProximityPromptService, TweenService, Workspace } from "@rbxts/services";
+import { CollectionService, Players, ProximityPromptService, TweenService, Workspace } from "@rbxts/services";
 import { CONTENU } from "shared/donnees";
+import { trouverLieu } from "shared/geo";
 import { conditionScene, lieuAvecCombat, lieuxDesEtapes, listeHeros, scenesDisponibles } from "shared/moteur";
 import { jeu, monHeros } from "../partie";
 
@@ -20,11 +21,10 @@ function montrer(modele: Model, oui: boolean) {
 	}
 }
 
+/** Entrées des lieux : étiquetées « EntreeLieu » par le serveur (pas besoin de parcourir tout le décor). */
 function entrees(): BasePart[] {
-	const dossier = Workspace.FindFirstChild("Velmaris");
-	if (!dossier) return [];
 	const res: BasePart[] = [];
-	for (const e of dossier.GetDescendants()) if (e.IsA("BasePart") && e.Name === "Entree") res.push(e);
+	for (const e of CollectionService.GetTagged("EntreeLieu")) if (e.IsA("BasePart")) res.push(e);
 	return res;
 }
 
@@ -36,7 +36,7 @@ export function majMarqueurs(visible: boolean) {
 	const etapes = etat && h ? lieuxDesEtapes(CONTENU, etat, h.id) : [];
 	for (const ancre of entrees()) {
 		const id = ancre.GetAttribute("Lieu") as string;
-		const lieu = CONTENU.regions.aubeclaire.lieux.find((l) => l.id === id);
+		const lieu = trouverLieu(id);
 		const invite = ancre.FindFirstChildOfClass("ProximityPrompt");
 		let etiquette = panneaux.get(id);
 		if (!etiquette) {
@@ -95,7 +95,7 @@ export function majPnj() {
 		if (!e.IsA("Model") || e.GetAttribute("Pnj") === undefined) continue;
 		const lieuId = e.GetAttribute("Lieu") as string;
 		const pnjId = e.GetAttribute("Pnj") as string;
-		const lieu = CONTENU.regions.aubeclaire.lieux.find((l) => l.id === lieuId);
+		const lieu = trouverLieu(lieuId);
 		const entree = lieu?.pnj.find((p) => p.id === pnjId);
 		const ok = etat !== undefined && (entree === undefined || conditionScene(CONTENU, etat, entree.si, tous));
 		montrer(e, ok);

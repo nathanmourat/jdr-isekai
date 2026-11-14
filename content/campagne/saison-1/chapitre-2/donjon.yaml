@@ -1,0 +1,47 @@
+# Donjon du chapitre 2 : les Ruines de Sel (vue de dessus). Même légende que la Crypte ; tuiles provisoires
+# tant que le graphiste n'a pas livré assets/tuiles/ruines-de-sel.png.
+donjons:
+  - id: ruines-de-sel
+    nom: "Ruines de Sel"
+    tileset: ruines-de-sel
+    legende:
+      "#": mur
+      ".": sol
+      "S": escalier
+      "D": porte
+      "O": sol-os
+      "T": sol-piege
+      "C": sol-coffre
+      "F": colonne-fontaine
+      "X": sol-sceau
+    depart: { x: 1, y: 1 }
+    carte:
+      - "########################"
+      - "#S.....#.......#.......#"
+      - "#......D...O...#...C...#"
+      - "#......#.......D.......#"
+      - "###D####...T...####D####"
+      - "#......#.......#.......#"
+      - "#..C...#########...O...#"
+      - "#......#.......#.......#"
+      - "########...O...D...T...#"
+      - "#......#.......####D####"
+      - "#..O...#..F....#.......#"
+      - "#..X...D.......D...C...#"
+      - "#......#.......#.......#"
+      - "########################"
+    evenements:
+      - { id: entree, x: 2, y: 1, type: texte, texte: "Le vent hurle au-dessus de vous. Ici, tout est blanc : les murs, le sol, les ossements. Du sel, partout." }
+      - { id: momies-1, x: 10, y: 3, type: combat, rencontre: ruines-momies, texte: "Des silhouettes bandées de blanc se détachent des murs. Leurs yeux s'allument, turquoise." }
+      - { id: piege-1, x: 11, y: 4, type: piege, texte: "Le sol de sel s'effondre sous vos pieds !", test: { carac: AGI, difficulte: 20 }, degats_pourcent: 15 }
+      - { id: coffre-1, x: 19, y: 2, type: coffre, texte: "Un coffre de cèdre, intact sous une couche de sel.", or: 120, objets: [potion-soin-grande] }
+      - { id: scorpions, x: 19, y: 6, type: combat, rencontre: ruines-scorpions, texte: "Un nid de scorpions dans une salle effondrée. Ils n'aiment pas les visiteurs." }
+      - { id: piege-2, x: 19, y: 8, type: piege, texte: "Une dalle libère un jet de sel brûlant !", test: { carac: ESP, difficulte: 20 }, degats_pourcent: 15 }
+      - { id: coffre-2, x: 3, y: 6, type: coffre, texte: "Des jarres d'offrandes. L'une contient encore quelque chose.", or: 80, objets: [cristal-ether, potion-mana-grande] }
+      - { id: momies-2, x: 11, y: 8, type: combat, rencontre: ruines-momies, texte: "La garde royale des Ruines se réveille, lance au poing." }
+      - { id: roi, x: 11, y: 10, type: combat, rencontre: ruines-roi, texte: "Sur un trône de sel, un roi momifié lève la tête. Sur sa couronne brille un cristal d'éther fendu. « Qui… vient voler… le Voile ? »" }
+      - { id: coffre-3, x: 19, y: 11, type: coffre, texte: "Le trésor du roi : de l'or terni et une arme d'apparat.", or: 150, objets: [epee-du-serment-des-sables] }
+      - { id: fresque, x: 3, y: 10, type: texte, texte: "Une fresque immense : des elfes en cercle autour d'un ciel déchiré. Au centre, une plaie violette d'où tombent des éclats… des cristaux." }
+      - { id: inscriptions, x: 3, y: 11, type: texte, texte: "Sous la fresque, une phrase en elfique, que la tablette du roi reproduit : « Ce que nous avons déchiré, la terre l'a gardé en éclats. »" }
+      - { id: sortie, x: 1, y: 1, type: sortie, unique: false, si: { objet: tablette-dechirure } }
+      - { id: pas-fini, x: 1, y: 1, type: texte, unique: false, texte: "La tempête fait encore rage au-dehors. Et vous n'avez pas trouvé ce que les elfes ont laissé ici." }

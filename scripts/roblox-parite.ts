@@ -8,7 +8,7 @@ import { execFileSync } from 'node:child_process';
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { contenuDisque } from '../src/contenu/node';
 import { appliquer, nouvellePartie } from '../src/moteur/partie';
-import { finirCombats, finirTempsLibre, groupeDeDeux, jouer, jouerPrologues, jouerSceneGroupe, nouvellePartieDeTest } from '../tests/robot';
+import { dormirHistoire, finirCombats, finirTempsLibre, groupeDeDeux, jouer, jouerPrologues, jouerSceneGroupe, nouvellePartieDeTest } from '../tests/robot';
 
 const lune = process.env.LUNE ?? 'lune';
 
@@ -59,6 +59,13 @@ if (graine === 'equipement') {
 }
 if (graine === 'contrats') scenarioContrats();
 if (graine !== 'contrats') for (const s of ['ch1-appel', 'ch1-examen', 'sq-tournoi', 'sq-loups', 'ch1-crypte', 'sq-tanneurs', 'ch1-lanternes', 'ch1-serment']) jouerSceneGroupe(c, r, s);
+// graine « saison » : le chapitre 2 en plus (Marche des Sables, donjon des Ruines de Sel, révolte)
+if (graine === 'saison') {
+  finirTempsLibre(c, r);
+  jouer(c, r, { type: 'chapitre_suivant', joueur: 'j1' });
+  dormirHistoire(c, r);
+  for (const s of ['ch2-depart', 'ch2-caravane', 'sq-pillards-retour', 'ch2-palais', 'sq-chacals-retour', 'ch2-complot', 'ch2-bazar', 'sq-puits-retour', 'ch2-tempete', 'ch2-revolte']) jouerSceneGroupe(c, r, s);
+}
 finirTempsLibre(c, r);
 
 mkdirSync('roblox/parite/tmp', { recursive: true });

@@ -1,0 +1,86 @@
+# Contrats de guilde du chapitre 2, au Comptoir de la Guilde de Qarzim. Dernière étape : retour au Comptoir.
+contrats:
+  - id: c-scorpions
+    titre: "Nid de scorpions près des puits"
+    description: "Des scorpions des sables ont fait leur nid sous un puits de caravane."
+    rang_min: E
+    niveau: 9
+    rencontre: scorpions-sables
+    duree_jours: 3
+    disponible_si: { flag: sables-ouverts }
+    recompenses: { or: 90, xp: 260, points_guilde: 60, objets: [antidote] }
+    etapes:
+      - { lieu: puits-asseches, objectif: "Aller aux puits du sud.", texte: "Une odeur âcre monte d'un puits. Des carcasses de rats, vidées de l'intérieur.", bouton: "Descendre voir" }
+      - { lieu: puits-asseches, objectif: "Détruire le nid de scorpions.", texte: "Au fond, des dizaines de petits dards s'agitent. Et deux gros scorpions se dressent.", combat: scorpions-sables }
+      - { lieu: guilde-qarzim, objectif: "Revenir au Comptoir de la Guilde.", texte: "Ibrek coche une case dans son registre. « Les caravanes vous remercient. »", bouton: "Toucher la récompense" }
+
+  - id: c-escorte-sables
+    titre: "Escorte vers l'oasis perdue"
+    description: "Un géographe vulpin veut cartographier l'oasis perdue. Il a besoin de bras… et d'épées."
+    rang_min: E
+    niveau: 10
+    rencontre: chacals-dunes
+    duree_jours: 5
+    disponible_si: { flag: sables-ouverts }
+    recompenses: { or: 110, xp: 300, points_guilde: 70 }
+    etapes:
+      - lieu: qarzim-porte
+        objectif: "Retrouver le géographe à la Porte des Caravanes."
+        texte: "Le géographe a des instruments partout et aucune gourde. « L'eau ? J'avais oublié l'eau. »"
+        choix:
+          - { texte: "Lui acheter de l'eau.", resultat: "Il vous remercie trois fois et vous promet un pourboire.", effets: [{ or: -10 }] }
+          - { texte: "Partager la vôtre.", resultat: "Vous serez à court plus vite, mais il vous regarde comme un héros." }
+      - { lieu: oasis-perdue, objectif: "Escorter le géographe jusqu'à l'oasis perdue.", texte: "À mi-chemin, des chacals vous encerclent, attirés par l'odeur des provisions.", combat: chacals-dunes }
+      - { lieu: guilde-qarzim, objectif: "Revenir au Comptoir de la Guilde.", texte: "Le géographe a sa carte. Ibrek a son rapport. Et vous, votre paie.", bouton: "Toucher la récompense" }
+
+  - id: c-pillards-route
+    titre: "Pillards sur la route du nord"
+    description: "Une bande de pillards rançonne les caravanes qui montent vers Aubeclaire."
+    rang_min: D
+    niveau: 11
+    rencontre: caravane-pillards
+    duree_jours: 4
+    disponible_si: { flag: sables-ouverts }
+    recompenses: { or: 140, xp: 340, points_guilde: 90 }
+    etapes:
+      - lieu: route-des-caravanes
+        objectif: "Patrouiller sur la Route des Caravanes."
+        texte: "Des traces de sabots, une roue brisée, un ballot d'étoffes abandonné. Ils ne sont pas loin."
+        choix:
+          - { texte: "Tendre un piège avec le ballot comme appât.", resultat: "Les pillards mordent à l'hameçon au crépuscule." }
+          - { texte: "Suivre les traces de sabots.", resultat: "Les traces mènent à un vallon où fume un feu de camp." }
+      - { lieu: route-des-caravanes, objectif: "Mettre les pillards hors d'état de nuire.", texte: "Les cimeterres sortent des fourreaux.", combat: caravane-pillards }
+      - { lieu: guilde-qarzim, objectif: "Revenir au Comptoir de la Guilde.", texte: "Ibrek compte les chèches turquoise que vous posez sur le comptoir. « La route est libre. »", bouton: "Toucher la récompense" }
+
+  - id: c-momies
+    titre: "Les momies du sud"
+    description: "Des momies de sel ont été vues hors des Ruines. Une caravane a fui en abandonnant sa cargaison."
+    rang_min: D
+    niveau: 13
+    rencontre: ruines-momies
+    duree_jours: 4
+    disponible_si: { flag: ruines-explorees }
+    recompenses: { or: 170, xp: 420, points_guilde: 110, objets: [potion-soin-grande] }
+    etapes:
+      - { lieu: dunes-chantantes, objectif: "Retrouver la cargaison abandonnée.", texte: "Des caisses éventrées dans le sable. Des empreintes de pieds bandés partent vers le sud.", bouton: "Suivre les empreintes" }
+      - { lieu: dunes-chantantes, objectif: "Renvoyer les momies au repos.", texte: "Au creux d'une dune, deux momies montent la garde autour de la cargaison, comme si elle leur appartenait.", combat: ruines-momies }
+      - { lieu: guilde-qarzim, objectif: "Revenir au Comptoir de la Guilde.", texte: "La cargaison est rendue. Ibrek frissonne. « Des momies hors des Ruines… Ce n'est pas normal. »", bouton: "Toucher la récompense" }
+
+  - id: c-cristaux
+    titre: "Le convoi de cristaux"
+    description: "Escorter un convoi de cristaux d'éther vers le nord. Bien payé. Peut-être trop bien."
+    rang_min: D
+    niveau: 12
+    rencontre: mercenaires-mines
+    duree_jours: 5
+    disponible_si: { flag: sables-ouverts }
+    recompenses: { or: 200, xp: 360, points_guilde: 80 }
+    etapes:
+      - lieu: mines-ether
+        objectif: "Prendre le convoi aux mines d'éther."
+        texte: "Les caisses sont marquées d'une rune violette. Le chef de convoi refuse de dire où elles vont."
+        choix:
+          - { texte: "Ouvrir une caisse en douce.", resultat: "Des cristaux, emballés dans de la cendre. De la cendre noire, comme à Lysmont, la Nuit des Lanternes.", effets: [{ flag: convoi-cendre }] }
+          - { texte: "Faire le travail sans poser de questions.", resultat: "Le chef de convoi hoche la tête, satisfait. Trop satisfait." }
+      - { lieu: route-des-caravanes, objectif: "Escorter le convoi vers le nord.", texte: "À la frontière, les « acheteurs » attendent : des mercenaires de la Concorde, et un mage aux mains violettes. Ils ne veulent pas de témoins.", combat: mercenaires-mines }
+      - { lieu: guilde-qarzim, objectif: "Revenir au Comptoir de la Guilde.", texte: "Ibrek écoute votre récit, pâle. « Je vais écrire à Dame Rowena. Ce soir. »", bouton: "Toucher la récompense" }

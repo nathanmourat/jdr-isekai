@@ -1,0 +1,115 @@
+# Chapitre 2 — « Les Routes du Sud » (1015 → 1018), Marche des Sables, niveaux 8 à 15.
+quetes:
+  - id: q-ch2-routes
+    titre: "Chapitre 2 — Les Routes du Sud"
+    type: principale
+    chapitre: 2
+    niveau: 8
+    region: marche-des-sables
+    resume: "Une mission diplomatique à Qarzim, avec la princesse Séraphine. Mais dans la cité de la Concorde, les cristaux d'éther cachent quelque chose."
+    etapes:
+      - { id: depart, objectif: "Répondre à la convocation de la princesse Séraphine, au château de Lysmont (Germinal 1015).", scene: ch2-depart, lieu: chateau }
+      - { id: caravane, objectif: "Escorter la caravane sur la Route des Caravanes.", scene: ch2-caravane, lieu: route-des-caravanes, niveau: 9 }
+      - { id: palais, objectif: "Être reçus par le Prévôt Hassad au Palais de la Concorde.", scene: ch2-palais, lieu: qarzim-palais, niveau: 9 }
+      - { id: complot, objectif: "Assister au banquet de la Résidence d'Aubeclaire (10 Ardent 1016).", scene: ch2-complot, lieu: qarzim-residence, niveau: 11 }
+      - { id: bazar, objectif: "Enquêter pendant le Grand Bazar de Qarzim (1er Brumaire 1016).", scene: ch2-bazar, lieu: qarzim-bazar, niveau: 12 }
+      - { id: tempete, objectif: "Traverser le désert vers les Ruines de Sel (Solaire 1017).", scene: ch2-tempete, lieu: ruines-de-sel, niveau: 14 }
+      - { id: revolte, objectif: "Rejoindre le campement Lunecroc : la révolte gronde (Aurore 1017).", scene: ch2-revolte, lieu: campement-lunecroc, niveau: 14 }
+      - { id: fin, objectif: "Chapitre terminé." }
+
+  - id: q-matriarche
+    titre: "La Grande Mère des chacals"
+    type: secondaire
+    chapitre: 2
+    niveau: 10
+    region: marche-des-sables
+    resume: "Les caravanes qui passent par le canyon perdent des chameaux. Une meute énorme, menée par une matriarche presque blanche."
+    etapes:
+      - { id: guilde, objectif: "Écouter Ibrek au Comptoir de la Guilde de Qarzim.", scene: sq-chacals-guilde, lieu: guilde-qarzim }
+      - { id: canyon, objectif: "Descendre dans le Canyon des Chacals.", scene: sq-chacals-canyon, lieu: canyon-des-chacals }
+      - { id: taniere, objectif: "Affronter la matriarche au fond du canyon.", scene: sq-chacals, lieu: canyon-des-chacals, niveau: 11 }
+      - { id: retour, objectif: "Revenir au Comptoir de la Guilde.", scene: sq-chacals-retour, lieu: guilde-qarzim }
+
+  - id: q-puits
+    titre: "Les puits asséchés"
+    type: secondaire
+    chapitre: 2
+    niveau: 11
+    region: marche-des-sables
+    resume: "Le bassin de l'Oasis Bleue baisse chaque semaine. Mère Ziyane soupçonne quelqu'un de voler l'eau de Qarzim."
+    etapes:
+      - { id: ziyane, objectif: "Parler à Mère Ziyane, à l'auberge de l'Oasis Bleue.", scene: sq-puits-ziyane, lieu: qarzim-oasis }
+      - { id: puits, objectif: "Suivre l'ancien canal jusqu'aux puits asséchés.", scene: sq-puits-canal, lieu: puits-asseches }
+      - { id: mines, objectif: "Trouver où va l'eau, du côté des mines d'éther.", scene: sq-puits-mines, lieu: mines-ether, niveau: 12 }
+      - { id: retour, objectif: "Rapporter la vérité à Mère Ziyane.", scene: sq-puits-retour, lieu: qarzim-oasis }
+
+  - id: q-caravane-fantome
+    titre: "La caravane fantôme"
+    type: secondaire
+    chapitre: 2
+    niveau: 12
+    region: marche-des-sables
+    resume: "Une caravane disparue il y a vingt ans réapparaît certaines nuits dans les Dunes chantantes."
+    etapes:
+      - { id: rumeur, objectif: "Écouter Maître Ouzram, au Grand Bazar.", scene: sq-fantome-rumeur, lieu: qarzim-bazar }
+      - { id: dunes, objectif: "Attendre la nuit dans les Dunes chantantes.", scene: sq-fantome-dunes, lieu: dunes-chantantes, niveau: 13 }
+      - { id: oasis, objectif: "Rapporter les cendres du marchand à l'Oasis perdue.", scene: sq-fantome-oasis, lieu: oasis-perdue }
+
+  - id: q-pillards
+    titre: "Le repaire des pillards"
+    type: secondaire
+    chapitre: 2
+    niveau: 10
+    region: marche-des-sables
+    resume: "Les pillards qui ont attaqué votre caravane ont un repaire. Et quelqu'un, à Qarzim, les paie."
+    etapes:
+      - { id: indice, objectif: "Faire parler le prisonnier, à la Porte des Caravanes.", scene: sq-pillards-prisonnier, lieu: qarzim-porte }
+      - { id: repaire, objectif: "Attaquer le repaire des pillards.", scene: sq-pillards-repaire, lieu: repaire-pillards, niveau: 11 }
+      - { id: retour, objectif: "Montrer les preuves à Nadja, à la Porte des Caravanes.", scene: sq-pillards-retour, lieu: qarzim-porte }
+
+  # ── Compagnes
+  - id: q-kaya
+    titre: "Le Hurlement des Ancêtres"
+    type: compagnon
+    chapitre: 2
+    niveau: 10
+    region: marche-des-sables
+    resume: "Kaya revient chez les siens, chassés de leurs terres. Elle veut devenir rang S pour leur rendre leur fierté."
+    etapes:
+      - { id: tribu, objectif: "Accompagner Kaya au campement Lunecroc (palier « Proche »).", scene: ky-hurlement, lieu: campement-lunecroc }
+      - { id: terres, objectif: "Aider Kaya à reprendre une part des terres de sa tribu (chapitre 4)." }
+      - { id: rang-s, objectif: "Passer l'épreuve du rang S avec Kaya (chapitre 5)." }
+  - id: q-nadja
+    titre: "Le Grand Livre rouge"
+    type: compagnon
+    chapitre: 2
+    niveau: 11
+    region: marche-des-sables
+    resume: "La dette de Nadja est écrite dans un livre de comptes secret de la Concorde. Ce livre dit aussi qui achète les cristaux."
+    etapes:
+      - { id: livre, objectif: "Aider Nadja à copier le Grand Livre rouge (palier « Proche »).", scene: nd-livre, lieu: qarzim-palais }
+      - { id: acheteurs, objectif: "Suivre la piste des acheteurs de cristaux (chapitre 4)." }
+      - { id: liberte, objectif: "Libérer Nadja de sa dette (chapitre 5)." }
+  - id: q-seraphine
+    titre: "La Couronne et le Masque"
+    type: compagnon
+    chapitre: 2
+    niveau: 11
+    region: marche-des-sables
+    resume: "Séraphine n'a jamais cru à la mort de son frère Aldric. À Qarzim, quelqu'un a vu un homme portant son anneau."
+    etapes:
+      - { id: anneau, objectif: "Suivre la piste de l'anneau d'Aldric avec Séraphine (palier « Proche »).", scene: sr-anneau, lieu: qarzim-bazar }
+      - { id: rumeurs, objectif: "Trouver où l'anneau a été vendu (chapitre 4)." }
+      - { id: aldric, objectif: "Retrouver Aldric (chapitre 5)." }
+
+  # ── Quêtes de classe (une chaîne par classe : chapitres 2, 4 et 5 ; la dernière étape débloque l'ultime)
+  - { id: q-classe-lame-runique, titre: "Classe — La rune perdue", type: classe, chapitre: 2, niveau: 10, region: marche-des-sables, resume: "Une rune gravée sur une colonne des Ruines de Sel ne ressemble à aucune autre.", etapes: [{ id: etape1, objectif: "Déchiffrer la rune de la colonne brisée (Lame runique).", scene: cl-lame-runique-1, lieu: qarzim-bazar }, { id: etape2, objectif: "Forger la rune à Karak-Dûm (chapitre 4)." }, { id: etape3, objectif: "Graver la rune des Mille Sceaux (chapitre 5)." }] }
+  - { id: q-classe-arcaniste, titre: "Classe — Le feu du désert", type: classe, chapitre: 2, niveau: 10, region: marche-des-sables, resume: "Un ermite du désert dit savoir dompter la foudre des tempêtes de sable.", etapes: [{ id: etape1, objectif: "Trouver l'ermite des dunes (Arcaniste).", scene: cl-arcaniste-1, lieu: qarzim-porte }, { id: etape2, objectif: "Capturer le feu d'un volcan de Grisfer (chapitre 4)." }, { id: etape3, objectif: "Faire converger les quatre éléments (chapitre 5)." }] }
+  - { id: q-classe-invocateur, titre: "Classe — Le pacte des bêtes", type: classe, chapitre: 2, niveau: 10, region: marche-des-sables, resume: "Les esprits des bêtes du désert répondent mal à l'appel. Il faut leur parler, pas leur ordonner.", etapes: [{ id: etape1, objectif: "Parler à l'esprit du grand fennec (Invocateur).", scene: cl-invocateur-1, lieu: campement-lunecroc }, { id: etape2, objectif: "Gagner la confiance d'un esprit-dragon (chapitre 4)." }, { id: etape3, objectif: "Ouvrir la Porte du Bestiaire (chapitre 5)." }] }
+  - { id: q-classe-ombre, titre: "Classe — La Main et l'Ombre", type: classe, chapitre: 2, niveau: 10, region: marche-des-sables, resume: "La Main de Sable recrute. Pour une Ombre, c'est une occasion… ou un piège.", etapes: [{ id: etape1, objectif: "Répondre à l'invitation sur les toits de Qarzim (Ombre).", scene: cl-ombre-1, lieu: qarzim-porte }, { id: etape2, objectif: "Retrouver le maître qui a formé Kezir (chapitre 4)." }, { id: etape3, objectif: "Apprendre les Mille Coupures (chapitre 5)." }] }
+  - { id: q-classe-gardien, titre: "Classe — Le serment du bouclier", type: classe, chapitre: 2, niveau: 10, region: marche-des-sables, resume: "Un vieux paladin de l'Ordre vit en ermite près des puits. Il garde un bouclier sans blason.", etapes: [{ id: etape1, objectif: "Trouver le paladin des puits (Gardien).", scene: cl-gardien-1, lieu: qarzim-oasis }, { id: etape2, objectif: "Tenir la passe des Mille Marches (chapitre 4)." }, { id: etape3, objectif: "Prêter le serment du Bastion éternel (chapitre 5)." }] }
+  - { id: q-classe-alchimiste, titre: "Classe — L'atelier d'airain", type: classe, chapitre: 2, niveau: 10, region: marche-des-sables, resume: "Au fond du Bazar, un atelier vend des plans d'automates. Il manque toujours une pièce.", etapes: [{ id: etape1, objectif: "Racheter les plans de l'atelier du Bazar (Alchimiste).", scene: cl-alchimiste-1, lieu: qarzim-bazar }, { id: etape2, objectif: "Trouver un cœur de forge à Karak-Dûm (chapitre 4)." }, { id: etape3, objectif: "Achever le Golem d'airain (chapitre 5)." }] }
+  - { id: q-classe-archer, titre: "Classe — Le chant des ancêtres", type: classe, chapitre: 2, niveau: 10, region: marche-des-sables, resume: "Les Ourvalis disent que les ancêtres guident les flèches de ceux qui savent écouter le vent.", etapes: [{ id: etape1, objectif: "Écouter le vent avec l'Ancienne Sorha (Archer).", scene: cl-archer-1, lieu: campement-lunecroc }, { id: etape2, objectif: "Tirer sur la cible des vents, dans l'Archipel (chapitre 4)." }, { id: etape3, objectif: "Appeler la Pluie des Ancêtres (chapitre 5)." }] }
+  - { id: q-classe-guerisseur, titre: "Classe — Le souffle des vivants", type: classe, chapitre: 2, niveau: 10, region: marche-des-sables, resume: "Une fièvre touche les mineurs de l'éther. Les guérisseurs de la Concorde refusent de les soigner.", etapes: [{ id: etape1, objectif: "Soigner les mineurs malades (Guérisseur).", scene: cl-guerisseur-1, lieu: mines-ether }, { id: etape2, objectif: "Trouver la source sacrée de l'Archipel (chapitre 4)." }, { id: etape3, objectif: "Apprendre le Second Souffle (chapitre 5)." }] }
+  - { id: q-classe-berserker, titre: "Classe — Le sang qui chante", type: classe, chapitre: 2, niveau: 10, region: marche-des-sables, resume: "Dans les fosses de combat de Qarzim, un vieux sang-dragon défie quiconque prétend avoir du feu dans les veines.", etapes: [{ id: etape1, objectif: "Relever le défi des fosses de Qarzim (Berserker).", scene: cl-berserker-1, lieu: qarzim-porte }, { id: etape2, objectif: "Écouter le sang au Nid des Wyrms (chapitre 4)." }, { id: etape3, objectif: "Prendre la Forme du Wyrm (chapitre 5)." }] }
+  - { id: q-classe-barde, titre: "Classe — La chanson perdue", type: classe, chapitre: 2, niveau: 10, region: marche-des-sables, resume: "Les Dunes chantantes chantent une mélodie que personne n'a jamais su noter.", etapes: [{ id: etape1, objectif: "Noter le chant des dunes (Barde).", scene: cl-barde-1, lieu: qarzim-oasis }, { id: etape2, objectif: "Trouver le dernier couplet chez les sirènes (chapitre 4)." }, { id: etape3, objectif: "Jouer la Symphonie du dernier acte (chapitre 5)." }] }

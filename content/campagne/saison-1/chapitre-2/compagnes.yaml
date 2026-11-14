@@ -1,0 +1,318 @@
+# Chapitre 2 — scènes personnelles des compagnes (individuelles : chaque héros vit sa propre relation).
+# Rappel : une compagne peut refuser un héros (lignes rouges), et rien n'est explicite (fondu au noir).
+scenes:
+  # ── Kaya ──────────────────────────────────────────────────────
+  - id: ky-grillades
+    pnj: kaya
+    titre: "Kaya — Le concours de brochettes"
+    type: individuel
+    lieu: qarzim-oasis
+    decor: qarzim-oasis
+    disponible_si: { flag: kaya-recrutee, affinite_min: { kaya: 5 } }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: kaya, dit: "Kaya pose deux montagnes de brochettes sur la table. « Concours ! Celui qui en mange le plus a gagné. Le perdant paie. Et ne viens pas pleurer après. »" }
+        choix:
+          - texte: "Relever le défi. (Vitalité, difficulté 19)"
+            test: { carac: VIT, difficulte: 19, reussite: gagne, echec: perd }
+          - texte: "Tricher en glissant des brochettes sous la table."
+            effets: [{ flag: heros:triche-brochettes }]
+            aller: triche
+          - texte: "« Je te regarde manger, ça me suffit. »"
+            effets: [{ affinite: { kaya: 2 } }]
+            aller: regarde
+      gagne:
+        repliques:
+          - { qui: kaya, expression: surprise, dit: "Kaya fixe votre assiette vide, puis la sienne, à moitié pleine. « Impossible. Tu as un deuxième estomac. Avoue. »" }
+          - { qui: kaya, expression: joie, dit: "Elle éclate de rire et vous donne une tape dans le dos à vous décrocher une épaule. « Revanche demain ! »" }
+        effets: [{ affinite: { kaya: 7 } }]
+        fin: true
+      perd:
+        repliques:
+          - { qui: kaya, expression: joie, dit: "« HA ! » Kaya lève les bras au ciel, une brochette dans chaque main. « La reine des brochettes ! Tu paies ! »" }
+        effets: [{ affinite: { kaya: 5 }, or: -10 }]
+        fin: true
+      triche:
+        repliques:
+          - { qui: kaya, expression: colere, dit: "Kaya renifle. Une fois. Deux fois. Puis elle se penche sous la table. « Sérieusement ? Tu triches à un concours de brochettes ? » Elle vous jette un os à la figure… mais elle rit à moitié." }
+        effets: [{ affinite: { kaya: -2 } }]
+        fin: true
+      regarde:
+        repliques:
+          - { qui: kaya, expression: gene, dit: "Kaya s'arrête, une brochette à mi-chemin. Ses oreilles rougissent. « Mange au lieu de dire des bêtises. »" }
+        fin: true
+
+  - id: ky-hurlement
+    pnj: sorha
+    titre: "Kaya — Le Hurlement des Ancêtres"
+    type: individuel
+    lieu: campement-lunecroc
+    decor: campement-lunecroc
+    quete: q-kaya
+    disponible_si: { flag: kaya-recrutee, affinite_palier: { kaya: proche } }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: sorha, dit: "La nuit est pleine. L'Ancienne Sorha a allumé un feu bleu au centre du campement. « Kaya veut hurler avec les ancêtres. Elle a choisi qui l'accompagnerait. » Elle vous regarde de son œil valide. « Toi. »" }
+          - { qui: kaya, dit: "Kaya ne plaisante pas, pour une fois. « Quand un Lunecroc hurle sur la falaise, les ancêtres répondent. Ou pas. S'ils ne répondent pas, c'est qu'on ne mérite pas encore. Moi, ils ne m'ont jamais répondu. »" }
+        choix:
+          - texte: "Hurler avec elle, de toutes vos forces."
+            aller: hurle
+          - texte: "Lui prendre la main, en silence, pendant qu'elle hurle."
+            aller: main
+      hurle:
+        repliques:
+          - { dit: "Vos deux voix montent dans la nuit, maladroites puis justes. Et du fond du désert… quelque chose répond. Un hurlement immense, qui fait trembler le sable." }
+        suite: reponse
+      main:
+        repliques:
+          - { dit: "Kaya hurle. Sa main serre la vôtre à vous briser les doigts. Et du fond du désert… quelque chose répond. Un hurlement immense, qui fait trembler le sable." }
+        suite: reponse
+      reponse:
+        repliques:
+          - { qui: kaya, expression: tristesse, dit: "Kaya pleure sans s'en cacher. « Ils ont répondu. Ils ont répondu… » Elle s'essuie les yeux d'un revers de bras. « Je deviendrai rang S. Je reprendrai nos terres. Et tu seras là pour voir ça. C'est un ordre. »" }
+        effets: [{ affinite: { kaya: 10 }, quete: { id: q-kaya, etape: terres }, reputation: { ourvalis: 5 } }]
+        fin: true
+
+  - id: ky-falaise
+    pnj: kaya
+    titre: "Kaya — La falaise au clair de lune"
+    type: individuel
+    lieu: campement-lunecroc
+    decor: campement-lunecroc
+    romance: true
+    disponible_si: { flag: kaya-recrutee, affinite_palier: { kaya: amoureuse } }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: kaya, expression: gene, dit: "Kaya est assise au bord de la falaise, la queue battant nerveusement le rocher. « Chez nous, quand on aime quelqu'un, on le lui dit. Pas de détours. Pas de poèmes. Alors… » Elle inspire. « Je t'aime. Voilà. C'est dit. »" }
+        choix:
+          - texte: "« Moi aussi, Kaya. Sans détour. »"
+            effets: [{ affinite: { kaya: 6 } }]
+            aller: oui
+          - texte: "L'embrasser pour toute réponse."
+            effets: [{ affinite: { kaya: 6 } }]
+            aller: oui
+      oui:
+        repliques:
+          - { qui: kaya, expression: joie, dit: "Elle rit, un rire qui finit en hurlement de joie lancé à la lune. Puis elle se blottit contre vous, et la nuit du désert devient soudain très chaude…" }
+          - { dit: "(Fondu au noir.)" }
+        fin: true
+
+  # ── Nadja ─────────────────────────────────────────────────────
+  - id: nd-marchandage
+    pnj: nadja
+    titre: "Nadja — Leçon de marchandage"
+    type: individuel
+    lieu: qarzim-bazar
+    decor: qarzim-bazar
+    disponible_si: { flag: nadja-rencontree }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: nadja, dit: "Nadja vous entraîne devant un étal de tapis. « Leçon numéro un : on ne paie jamais le premier prix. Montre-moi ce que tu vaux. »" }
+        choix:
+          - texte: "Marchander avec aplomb. (Charisme, difficulté 18)"
+            test: { carac: CHA, difficulte: 18, reussite: bien, echec: rate }
+          - texte: "Laisser Nadja faire, et prendre des notes."
+            effets: [{ affinite: { nadja: 3 } }]
+            aller: notes
+          - texte: "« Ce marchand a l'air pauvre. Payons le prix qu'il demande. »"
+            effets: [{ affinite: { nadja: 1 }, or: -15 }]
+            aller: genereux
+      bien:
+        repliques:
+          - { qui: nadja, expression: surprise, dit: "Le marchand finit par vous offrir le thé ET le tapis. Nadja vous dévisage. « …Tu as déjà fait ça. Avoue. »" }
+        effets: [{ affinite: { nadja: 6 }, or: 30 }]
+        fin: true
+      rate:
+        repliques:
+          - { qui: nadja, dit: "Vous repartez avec un tapis hors de prix et un sourire de vainqueur. Nadja se masse les tempes. « On reprendra la leçon. Depuis le début. »" }
+        effets: [{ affinite: { nadja: 3 }, or: -20 }]
+        fin: true
+      notes:
+        repliques:
+          - { qui: nadja, dit: "En trois phrases, Nadja divise le prix par quatre. « Tu vois ? Le secret, c'est de toujours avoir l'air de pouvoir partir. » Elle vous fait un clin d'œil. « Avec les gens aussi. »" }
+        fin: true
+      genereux:
+        repliques:
+          - { qui: nadja, dit: "Nadja vous regarde comme si vous veniez de jeter de l'or dans un puits. Puis, plus doucement : « …Tu es bizarre. Ça me plaît, bizarrement. »" }
+        fin: true
+
+  - id: nd-livre
+    pnj: nadja
+    titre: "Nadja — Le Grand Livre rouge"
+    type: individuel
+    lieu: qarzim-palais
+    decor: qarzim-palais
+    quete: q-nadja
+    disponible_si: { flag: nadja-rencontree, affinite_palier: { nadja: proche } }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: nadja, dit: "Minuit, au pied du Palais. Nadja a troqué ses voiles contre une tenue noire. « Ma dette est écrite dans le Grand Livre rouge, au dernier étage. Avec celles de la moitié de Qarzim, et le nom de tous les acheteurs de cristaux. Je veux une copie. Tu m'aides ? »" }
+        choix:
+          - texte: "Grimper par les terrasses. (Agilité, difficulté 21)"
+            test: { carac: AGI, difficulte: 21, reussite: copie, echec: alerte }
+          - texte: "Faire diversion pendant qu'elle entre. (Charisme, difficulté 20)"
+            test: { carac: CHA, difficulte: 20, reussite: copie, echec: alerte }
+      copie:
+        repliques:
+          - { dit: "Le Grand Livre est un registre de cuir rouge, épais comme un tronc. Nadja recopie à toute vitesse, à la lueur d'un cristal." }
+          - { qui: nadja, expression: surprise, dit: "Elle s'arrête sur une page. « Ces cristaux… ils partent vers le nord. Des caisses entières. Payées en or noir, par un acheteur qui signe d'une rune violette. » Elle pâlit. « La Concorde vend aux Cendres. »" }
+        effets: [{ objet: grand-livre-rouge, affinite: { nadja: 10 }, quete: { id: q-nadja, etape: acheteurs }, flag: concorde-vend-aux-cendres, xp: 120 }]
+        suite: fin
+      alerte:
+        repliques:
+          - { dit: "Une cloche sonne. Des gardes ! Vous sautez de terrasse en terrasse, Nadja serrant contre elle les quelques pages qu'elle a pu arracher." }
+          - { qui: nadja, dit: "Dans une ruelle, à bout de souffle, elle déplie les pages. « C'est peu… mais c'est assez. Des caisses de cristaux vers le nord. Signées d'une rune violette. »" }
+        effets: [{ objet: grand-livre-rouge, affinite: { nadja: 7 }, quete: { id: q-nadja, etape: acheteurs }, flag: concorde-vend-aux-cendres, reputation: { concorde: -5 } }]
+        suite: fin
+      fin:
+        repliques:
+          - { qui: nadja, dit: "« Merci. » Nadja range les pages contre son cœur. « Personne n'avait jamais pris de risque pour moi. Personne. » Elle détourne les yeux. « Je n'aime pas avoir des dettes. Celle-là, je la garderai. »" }
+        fin: true
+
+  - id: nd-terrasse
+    pnj: nadja
+    titre: "Nadja — Les comptes d'une nuit"
+    type: individuel
+    lieu: qarzim-oasis
+    decor: qarzim-oasis
+    romance: true
+    disponible_si: { flag: nadja-rencontree, affinite_palier: { nadja: amoureuse } }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: nadja, dit: "Sur la terrasse de l'Oasis, Nadja a sorti son carnet. Elle ne compte pas : elle dessine. Votre visage." }
+          - { qui: nadja, expression: gene, dit: "Elle referme le carnet trop vite. « Ne dis rien. J'ai calculé tous les risques de cette… chose entre nous. Ils sont énormes. » Elle soupire. « Et je m'en fiche. C'est nouveau. »" }
+        choix:
+          - texte: "« Alors prenons le risque. Ensemble. »"
+            effets: [{ affinite: { nadja: 6 } }]
+            aller: oui
+      oui:
+        repliques:
+          - { qui: nadja, expression: joie, dit: "Elle sourit, pour de vrai, sans calcul. Les voiles de la terrasse ondulent dans la brise du soir, et le carnet tombe, oublié, sur les dalles…" }
+          - { dit: "(Fondu au noir.)" }
+        fin: true
+
+  # ── Séraphine ─────────────────────────────────────────────────
+  - id: sr-contes
+    pnj: seraphine
+    titre: "Séraphine — Les contes de l'autre monde"
+    type: individuel
+    lieu: qarzim-residence
+    decor: qarzim-residence
+    disponible_si: { flag: seraphine-recrutee }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: seraphine, dit: "Séraphine vous attend dans le jardin de la Résidence, pieds nus dans l'herbe, un carnet sur les genoux. « Raconte-moi ton monde. Pas les guerres. Les petites choses. Ce que vous mangiez le matin. Les histoires qu'on racontait aux enfants. »" }
+          - { qui: seraphine, dit: "Elle hésite. « Toi, tu as eu une autre vie, avant. Tu t'en souviens ? »", si: { origine: reincarne } }
+        choix:
+          - texte: "Lui raconter un conte de votre enfance."
+            effets: [{ affinite: { seraphine: 6 } }]
+            aller: conte
+          - texte: "Lui décrire une ville de votre monde, avec ses lumières qui ne s'éteignent jamais."
+            effets: [{ affinite: { seraphine: 5 } }]
+            aller: ville
+          - texte: "« Ce n'est pas si intéressant, tu sais. »"
+            effets: [{ affinite: { seraphine: -1 } }]
+            aller: decue
+      conte:
+        repliques:
+          - { qui: seraphine, expression: joie, dit: "Elle note tout, les yeux brillants, et vous fait répéter la fin trois fois. « Il faut que je l'écrive avant de l'oublier. Un jour, je ferai un livre. « Contes de l'autre côté du Voile ». »" }
+        fin: true
+      ville:
+        repliques:
+          - { qui: seraphine, dit: "« Des lumières partout, la nuit ? Sans magie ? » Elle reste silencieuse un long moment. « Chez vous, personne n'a besoin d'Appelés. C'est peut-être ça, un monde heureux. »" }
+        fin: true
+      decue:
+        repliques:
+          - { qui: seraphine, dit: "Elle referme son carnet. « Tout est intéressant, quand on ne l'a jamais vu. » Elle sourit poliment, mais quelque chose s'est éteint." }
+        fin: true
+
+  - id: sr-anneau
+    pnj: seraphine
+    titre: "Séraphine — L'anneau d'Aldric"
+    type: individuel
+    lieu: qarzim-bazar
+    decor: qarzim-bazar
+    quete: q-seraphine
+    disponible_si: { flag: seraphine-recrutee, affinite_palier: { seraphine: proche } }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: seraphine, dit: "Séraphine vous entraîne au fond du Bazar, chez un prêteur sur gages. Elle tremble. « Un marchand m'a écrit. Il a vu passer un anneau gravé d'un griffon. Celui de mon frère. »" }
+          - { dit: "Le prêteur sort l'anneau d'un coffret. Un griffon d'argent, une pierre bleue. Et, à l'intérieur, une inscription : « À A., de S. — reviens-moi »." }
+          - { qui: seraphine, expression: tristesse, dit: "« C'est moi qui le lui ai offert. » Sa voix se brise. « Il l'avait au doigt le jour où il a disparu. »" }
+        choix:
+          - texte: "Demander au prêteur d'où il vient. (Charisme, difficulté 20)"
+            test: { carac: CHA, difficulte: 20, reussite: piste, echec: rachat }
+          - texte: "Racheter l'anneau pour Séraphine. (100 or)"
+            si: { or_min: 100 }
+            effets: [{ or: -100, affinite: { seraphine: 4 } }]
+            aller: piste
+      piste:
+        repliques:
+          - { dit: "Le prêteur finit par parler : l'anneau a été vendu par un marchand du nord, qui l'avait lui-même échangé contre de l'eau… à un homme en armure noire, sur le Mur d'Aube, il y a deux ans." }
+          - { qui: seraphine, dit: "« Deux ans. » Séraphine serre l'anneau. « Il y a deux ans, il était vivant. » Elle vous regarde, et pour la première fois depuis longtemps, elle sourit à travers ses larmes. « Merci. »" }
+        effets: [{ affinite: { seraphine: 10 }, quete: { id: q-seraphine, etape: rumeurs }, flag: aldric-vivant-indice, xp: 100 }]
+        fin: true
+      rachat:
+        repliques:
+          - { dit: "Le prêteur ne dira rien de plus. Mais Séraphine repart avec l'anneau au doigt." }
+          - { qui: seraphine, dit: "« Il est vivant quelque part. Je le sens. » Elle serre votre main. « Tu m'aideras à le retrouver ? »" }
+        effets: [{ affinite: { seraphine: 8 }, quete: { id: q-seraphine, etape: rumeurs } }]
+        fin: true
+
+  - id: sr-jardin
+    pnj: seraphine
+    titre: "Séraphine — Le jardin de nuit"
+    type: individuel
+    lieu: qarzim-residence
+    decor: qarzim-residence
+    romance: true
+    disponible_si: { flag: seraphine-recrutee, affinite_palier: { seraphine: amoureuse } }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: seraphine, expression: gene, dit: "Dans le jardin, sous les palmiers, Séraphine a fait apporter deux coupes d'eau fraîche et un plateau de dattes. « Pas de garde. Pas de protocole. Ce soir, je ne suis pas princesse. » Elle rougit. « Je suis juste… moi. Avec toi. »" }
+        choix:
+          - texte: "« Alors ce soir, je ne suis pas un Appelé. Juste moi. »"
+            effets: [{ affinite: { seraphine: 6 } }]
+            aller: oui
+      oui:
+        repliques:
+          - { qui: seraphine, expression: joie, dit: "Elle rit, se lève, et vous tend la main pour une danse sans musique, pieds nus dans l'herbe. Au loin, Qarzim s'endort, et les étoiles du désert veillent sur vous…" }
+          - { dit: "(Fondu au noir.)" }
+        fin: true
+
+  # ── Aveline (suite de « Le Serment brisé ») ───────────────────
+  - id: av-archives
+    pnj: aveline
+    titre: "Aveline — La lettre de Valgrane"
+    type: individuel
+    lieu: qarzim-residence
+    decor: qarzim-residence
+    quete: q-aveline
+    disponible_si: { quete_etape: { q-aveline: archives }, flag: seraphine-recrutee, affinite_min: { aveline: 45 } }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: aveline, dit: "Aveline vous attend dans la bibliothèque de la Résidence, une lettre jaunie entre les mains. « Séraphine l'a fait sortir des archives royales. En secret. Elle a risqué gros. »" }
+          - { qui: aveline, expression: colere, dit: "« C'est l'ordre de repli de Valgrane. Signé de mon père, oui. Mais regarde : le sceau du bas. Ce n'est pas celui de la Couronne. C'est celui de l'Ordre de la Lumière. »" }
+          - { qui: aveline, dit: "« Mon père n'a pas ouvert les portes. On lui a ordonné de se replier. L'Ordre a donné l'ordre… puis l'a laissé accuser. »" }
+        choix:
+          - texte: "« Nous irons jusqu'au bout. Même s'il faut regarder l'Ordre en face. »"
+            effets: [{ affinite: { aveline: 8 } }]
+            aller: fin
+          - texte: "« Prends ton temps. On ne renverse pas l'Ordre sur une lettre. »"
+            effets: [{ affinite: { aveline: 4 } }]
+            aller: fin
+      fin:
+        repliques:
+          - { qui: aveline, dit: "Elle replie la lettre et vous la confie. « Garde-la. Si on me fouille, on ne la trouvera pas. » Elle vous regarde. « Je te fais confiance. Plus qu'à moi-même. »" }
+        effets: [{ objet: lettre-valgrane, quete: { id: q-aveline, etape: verite }, flag: ordre-valgrane-indice, xp: 100 }]
+        fin: true

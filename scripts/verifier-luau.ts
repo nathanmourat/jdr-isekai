@@ -75,6 +75,8 @@ function visiter(n: ts.Node) {
   else if (ts.isIdentifier(n) && n.text === 'structuredClone') signaler(n, 'non disponible en Luau (utiliser copieProfonde)');
   else if (ts.isCallExpression(n) && n.arguments.some((a) => ts.isIdentifier(a) && ['Boolean', 'Number', 'String'].includes(a.text))) signaler(n, 'Boolean/Number/String passés en fonction : absents en Luau (écrire une fonction fléchée)');
   else if (ts.isCallExpression(n) && ts.isPropertyAccessExpression(n.expression) && ['map', 'flatMap'].includes(n.expression.name.text) && avecTrous(types.getTypeAtLocation(n))) signaler(n, 'liste pouvant contenir undefined : en Luau, une liste à trous n\'a pas de longueur fiable');
+  // liste écrite à la main avec des valeurs peut-être absentes : [c.race, c.classe…] perd sa longueur en Luau
+  else if (ts.isArrayLiteralExpression(n) && avecTrous(types.getTypeAtLocation(n))) signaler(n, 'liste écrite avec des valeurs peut-être absentes : en Luau, une liste à trous n\'a pas de longueur fiable');
   else if (ts.isBinaryExpression(n) && n.operatorToken.kind === ts.SyntaxKind.CommaToken) signaler(n, 'opérateur virgule : mal traduit en Luau dans une condition (écrire des instructions séparées)');
   else if (n.kind === ts.SyntaxKind.RegularExpressionLiteral) signaler(n, 'expression régulière non disponible en Luau');
   else if (ts.isCallExpression(n) && ts.isPropertyAccessExpression(n.expression) && n.expression.name.text === 'sort') signaler(n, 'tri non stable en Luau (utiliser trier de outils.ts)');

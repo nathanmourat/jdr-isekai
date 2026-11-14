@@ -1,0 +1,14 @@
+# Personnages non jouables des chapitres 2 à 6 (hors compagnons, qui sont dans content/compagnons/).
+pnj:
+  # ── Chapitre 2 : Marche des Sables
+  - { id: ouzram, nom: "Maître Ouzram Telli", titre: "Armurier du Grand Bazar", description: "Vieil homme sec au turban safran, lunettes d'or, mains couvertes de petites brûlures de forge.", accueil: "Entrez, entrez ! Une lame de Qarzim ne rouille jamais, et mes prix ne mentent qu'à moitié." }
+  - { id: ziyane, nom: "Mère Ziyane", titre: "Aubergiste de l'Oasis Bleue", description: "Femme ronde au rire sonore, foulard indigo, bracelets qui tintent à chaque geste.", accueil: "De l'eau fraîche, un lit sous les voiles, et pas de questions. Bienvenue à l'Oasis Bleue." }
+  - { id: ibrek, nom: "Ibrek Sall", titre: "Intendant de la Guilde à Qarzim", description: "Jeune vulpin aux oreilles rousses, lunettes rondes, registre toujours ouvert. Il connaît les tarifs de tous les contrats par cœur.", accueil: "Comptoir de la Rose des Vents ! Les contrats sont au tableau ; le matériel, c'est ici." }
+  - { id: hassad, nom: "Prévôt Hassad Meriyem", titre: "Prévôt de la Concorde", description: "Homme mince en soie blanche, barbe taillée au cordeau, une bague-cristal violette à chaque main. Courtois, glacial." }
+  - { id: vashti, nom: "Conseillère Vashti Orren", titre: "Conseillère de la Concorde", description: "Femme élégante aux yeux maquillés de khôl, toujours un éventail à la main. Elle sourit trop." }
+  - { id: sorha, nom: "L'Ancienne Sorha", titre: "Doyenne de la tribu Lunecroc", description: "Vieille ourvalis aux oreilles grises, aveugle d'un œil, appuyée sur un bâton gravé de loups. La grand-mère de Kaya." }
+  - { id: tavek, nom: "Tavek Lunecroc", titre: "Chef de guerre lunecroc", description: "Grand ourvalis aux oreilles noires, peintures de guerre rouges, griffes de fer aux poings. Le cousin de Kaya." }
+  - { id: kezir, nom: "Kezir", titre: "Maître de la Main de Sable", description: "Silhouette voilée de noir, voix douce, yeux dorés. Personne n'a jamais vu son visage." }
+  - { id: vask, nom: "Capitaine Orlen Vask", titre: "Mercenaire de la Concorde", description: "Cuirasse dorée cabossée, crâne rasé, cicatrice du menton à l'oreille." }
+  - { id: faelis, nom: "Faelis Brumevent", titre: "Marchande elfe", description: "Elfe sylvaine aux cheveux d'argent tressés de feuilles, longue cape vert sombre. Elle vend des herbes, et des secrets." }
+  - { id: archiviste, nom: "Maître Corvin", titre: "Archiviste royal", description: "Petit homme voûté aux doigts tachés d'encre, qui parle aux livres plus qu'aux gens." }

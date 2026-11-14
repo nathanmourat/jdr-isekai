@@ -11,8 +11,11 @@ import { preparerModeles } from "./modeles";
 import { construireInterieurs } from "./interieurs";
 import { animerVille } from "./vie";
 import { habillerLesHeros } from "./tenues";
+import { construireRegions } from "./regions";
 
 construireMonde();
+// les autres régions (chapitres 2 à 6), loin de Lysmont
+task.spawn(construireRegions);
 // les modèles 3D sont créés en arrière-plan (cela prend quelques secondes) : le jeu démarre sans attendre
 task.spawn(preparerModeles);
 task.spawn(construireInterieurs);

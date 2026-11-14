@@ -1,0 +1,315 @@
+# Chapitre 2 — quêtes de classe, étape 1 (scènes individuelles : seul le héros de cette classe les voit).
+# Le drapeau personnel « classe-1 » marque l'étape faite ; l'étape 2 viendra au chapitre 4, la 3e (l'ultime) au chapitre 5.
+scenes:
+  - id: cl-lame-runique-1
+    titre: "Lame runique — La rune perdue"
+    type: individuel
+    lieu: qarzim-bazar
+    decor: qarzim-bazar
+    quete: q-classe-lame-runique
+    disponible_si: { classe: lame-runique, flag: sables-ouverts, pas_flag: classe-1 }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "Au fond du Bazar, un marchand de curiosités vend un morceau de colonne de sel. Une rune y est gravée : un cercle fendu, entouré de sept traits." }
+          - { dit: "Votre lame vibre quand vous approchez la main. Les runes que vous gravez en combat ont toujours été les vôtres… mais celle-ci, votre lame la connaît." }
+        choix:
+          - texte: "Recopier la rune et la graver sur votre lame. (Intelligence, difficulté 20)"
+            test: { carac: INT, difficulte: 20, reussite: gravee, echec: brulure }
+          - texte: "Acheter le fragment de colonne. (60 or)"
+            si: { or_min: 60 }
+            effets: [{ or: -60 }]
+            aller: gravee
+      gravee:
+        repliques:
+          - { dit: "La rune s'imprime dans l'acier comme si elle l'attendait. Pendant une seconde, vous voyez mille sceaux s'allumer le long de la lame, puis s'éteindre." }
+          - { dit: "Le marchand murmure : « Les nains de Karak-Dûm savent forger ces runes-là. On dit qu'ils les tiennent des tout premiers Appelés. »" }
+        effets: [{ flag: heros:classe-1, quete: { id: q-classe-lame-runique, etape: etape2 }, xp: 200 }]
+        fin: true
+      brulure:
+        repliques:
+          - { dit: "La rune vous brûle la main avant de s'imprimer dans l'acier, de travers. Elle tiendra. Elle n'aime pas qu'on la force." }
+        effets: [{ flag: heros:classe-1, quete: { id: q-classe-lame-runique, etape: etape2 }, xp: 120 }]
+        fin: true
+
+  - id: cl-arcaniste-1
+    titre: "Arcaniste — Le feu du désert"
+    type: individuel
+    lieu: qarzim-porte
+    decor: qarzim-porte
+    quete: q-classe-arcaniste
+    disponible_si: { classe: arcaniste, flag: sables-ouverts, pas_flag: classe-1 }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "Un ermite aux yeux brûlés par le soleil mendie à la Porte des Caravanes. Quand vous passez, des étincelles bleues courent au bout de vos doigts. Il sourit." }
+          - { dit: "« Tu sens la foudre des tempêtes, toi. Viens. Je vais te montrer comment on la boit. »" }
+        choix:
+          - texte: "Le suivre dans le désert, au cœur d'une tempête sèche."
+            aller: tempete
+      tempete:
+        repliques:
+          - { dit: "Au milieu des dunes, l'air crépite. L'ermite lève les bras ; un éclair tombe… dans ses mains, sans le blesser. « À toi. »" }
+        choix:
+          - texte: "Attraper l'éclair. (Esprit, difficulté 21)"
+            test: { carac: ESP, difficulte: 21, reussite: reussi, echec: foudroye }
+      reussi:
+        repliques:
+          - { dit: "La foudre vous traverse sans vous brûler. Vous la sentez couler, comme une rivière, puis se ranger quelque part en vous, à côté du feu et du givre." }
+          - { dit: "« Il te manque le feu de la terre, maintenant. Celui des volcans. Va voir les nains, à Grisfer. »" }
+        effets: [{ flag: heros:classe-1, quete: { id: q-classe-arcaniste, etape: etape2 }, xp: 200 }]
+        fin: true
+      foudroye:
+        repliques:
+          - { dit: "L'éclair vous jette dans le sable, les cheveux fumants. Mais quelque chose est resté. Une étincelle qui ne s'éteint pas." }
+        effets: [{ flag: heros:classe-1, quete: { id: q-classe-arcaniste, etape: etape2 }, xp: 120 }]
+        fin: true
+
+  - id: cl-invocateur-1
+    titre: "Invocateur — Le pacte des bêtes"
+    type: individuel
+    lieu: campement-lunecroc
+    decor: campement-lunecroc
+    quete: q-classe-invocateur
+    disponible_si: { classe: invocateur, flag: sables-ouverts, pas_flag: classe-1 }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "La nuit, au campement, un fennec translucide s'assoit devant votre tente. Un esprit. Il vous regarde comme on regarde un voleur." }
+          - { qui: sorha, dit: "L'Ancienne Sorha vous chuchote : « Tes créatures obéissent parce que tu les tires du Voile. Lui, il veut savoir si tu sais demander. »" }
+        choix:
+          - texte: "S'asseoir devant lui et lui parler, longtemps. (Charisme, difficulté 19)"
+            test: { carac: CHA, difficulte: 19, reussite: pacte, echec: fuite }
+          - texte: "Tenter de l'invoquer de force."
+            aller: force
+      pacte:
+        repliques:
+          - { dit: "Le fennec écoute toute la nuit. À l'aube, il pose une patte sur votre main. Vos créatures, désormais, vous semblent… plus chaudes. Plus présentes." }
+        effets: [{ flag: heros:classe-1, quete: { id: q-classe-invocateur, etape: etape2 }, xp: 200 }]
+        fin: true
+      fuite:
+        repliques:
+          - { dit: "Le fennec repart dans la nuit. Mais au loin, il se retourne une fois. Ce n'est pas un non. C'est un « pas encore »." }
+        effets: [{ flag: heros:classe-1, quete: { id: q-classe-invocateur, etape: etape2 }, xp: 120 }]
+        fin: true
+      force:
+        repliques:
+          - { dit: "L'esprit se tord, vous mord la main, et disparaît. Sorha secoue la tête. « On ne met pas un vent en cage. » Vous avez compris la leçon, à vos dépens." }
+        effets: [{ flag: heros:classe-1, quete: { id: q-classe-invocateur, etape: etape2 }, xp: 80 }]
+        fin: true
+
+  - id: cl-ombre-1
+    titre: "Ombre — La Main et l'Ombre"
+    type: individuel
+    lieu: qarzim-porte
+    decor: qarzim-porte
+    quete: q-classe-ombre
+    disponible_si: { classe: ombre, flag: sables-ouverts, pas_flag: classe-1 }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "Un grain de sable sur votre oreiller, un soir. Puis un mot, glissé sous la porte : « Les toits. Minuit. Seul. »" }
+          - { dit: "Sur les toits, trois silhouettes voilées de la Main de Sable vous attendent. « Tu as le talent. Nous avons l'or. Montre-nous ce que vaut une Ombre de l'autre monde. »" }
+        choix:
+          - texte: "Accepter l'épreuve : leur voler leurs insignes sans être vu. (Agilité, difficulté 21)"
+            test: { carac: AGI, difficulte: 21, reussite: vol, echec: combat }
+          - texte: "Refuser et combattre."
+            aller: combat
+      vol:
+        repliques:
+          - { dit: "À l'aube, les trois assassins se réveillent sans leurs insignes, posés en rang sur le toit… avec un mot : « Non merci. »" }
+          - { dit: "Une voix, derrière vous, que vous n'avez pas entendue venir : « Pas mal. Kezir avait un maître, autrefois. Il vit dans l'Archipel. Si tu veux devenir meilleur que lui… »" }
+        effets: [{ flag: heros:classe-1, quete: { id: q-classe-ombre, etape: etape2 }, xp: 220 }]
+        fin: true
+      combat:
+        combat: { rencontre: assassins-banquet, victoire: fini, defaite: fini }
+      fini:
+        repliques:
+          - { dit: "Les assassins disparaissent dans la nuit. L'un d'eux a laissé tomber un mot : « Le maître de Kezir vit dans l'Archipel des Brumes. »" }
+        effets: [{ flag: heros:classe-1, quete: { id: q-classe-ombre, etape: etape2 }, xp: 160 }]
+        fin: true
+
+  - id: cl-gardien-1
+    titre: "Gardien — Le serment du bouclier"
+    type: individuel
+    lieu: qarzim-oasis
+    decor: qarzim-oasis
+    quete: q-classe-gardien
+    disponible_si: { classe: gardien, flag: sables-ouverts, pas_flag: classe-1 }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: ziyane, dit: "Mère Ziyane vous indique un vieil homme au fond de l'auberge. « Il vient tous les soirs boire de l'eau, rien d'autre. On dit qu'il était paladin de l'Ordre. »" }
+          - { dit: "Le vieil homme a un bouclier rond posé contre sa chaise. Pas de blason : on l'a gratté. « Tu portes la lumière de l'Ordre, toi aussi. Sais-tu seulement ce qu'elle protège ? »" }
+        choix:
+          - texte: "« Les gens. Pas l'Ordre. »"
+            aller: gens
+          - texte: "« L'Ordre protège les gens. C'est la même chose. »"
+            aller: ordre
+      gens:
+        repliques:
+          - { dit: "Le vieil homme sourit pour la première fois. Il vous tend son bouclier. « Tiens-le contre moi. » Il frappe, une fois, de toutes ses forces." }
+        choix:
+          - texte: "Tenir. (Vitalité, difficulté 20)"
+            test: { carac: VIT, difficulte: 20, reussite: tenu, echec: tombe }
+      ordre:
+        repliques:
+          - { dit: "« J'ai cru ça aussi. Jusqu'à Valgrane. » Il se tait, puis vous tend son bouclier. « Tiens-le. Si tu tiens, je te dirai le reste. »" }
+        choix:
+          - texte: "Tenir. (Vitalité, difficulté 20)"
+            test: { carac: VIT, difficulte: 20, reussite: tenu, echec: tombe }
+      tenu:
+        repliques:
+          - { dit: "Vous tenez. Le vieil homme hoche la tête. « Le vrai serment du bouclier ne se prête pas au temple. Il se prête sur une passe, face à l'ennemi. Il y a une passe, dans les Mille Marches, à Grisfer… »" }
+        effets: [{ flag: heros:classe-1, quete: { id: q-classe-gardien, etape: etape2 }, xp: 200 }]
+        fin: true
+      tombe:
+        repliques:
+          - { dit: "Vous voilà assis par terre. Le vieil homme vous aide à vous relever. « Tu t'es relevé. C'est le début. » Il vous parle d'une passe, dans les Mille Marches, à Grisfer." }
+        effets: [{ flag: heros:classe-1, quete: { id: q-classe-gardien, etape: etape2 }, xp: 120 }]
+        fin: true
+
+  - id: cl-alchimiste-1
+    titre: "Alchimiste — L'atelier d'airain"
+    type: individuel
+    lieu: qarzim-bazar
+    decor: qarzim-bazar
+    quete: q-classe-alchimiste
+    disponible_si: { classe: alchimiste, flag: sables-ouverts, pas_flag: classe-1 }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "Au fond du Bazar, un atelier sent l'huile et le métal chaud. Sur l'établi, les plans d'un automate de la taille d'un homme : un « golem d'airain ». Il manque la page du cœur." }
+          - { dit: "Le vieux vulpin qui tient l'atelier soupire. « Mon maître a emporté la page du cœur dans sa tombe. Il disait que seul un cœur de forge nain pouvait faire battre l'airain. »" }
+        choix:
+          - texte: "Reconstituer la page manquante à partir des autres. (Intelligence, difficulté 21)"
+            test: { carac: INT, difficulte: 21, reussite: plans, echec: bricolage }
+          - texte: "Racheter les plans tels quels. (80 or)"
+            si: { or_min: 80 }
+            effets: [{ or: -80 }]
+            aller: bricolage
+      plans:
+        repliques:
+          - { dit: "À l'aube, la page est là, recopiée de votre main : les engrenages, les soupapes, et au centre, un cercle vide marqué « cœur de forge — Karak-Dûm »." }
+        effets: [{ flag: heros:classe-1, quete: { id: q-classe-alchimiste, etape: etape2 }, xp: 200, objet: bombe-feu }]
+        fin: true
+      bricolage:
+        repliques:
+          - { dit: "Les plans sous le bras, vous savez ce qu'il vous faut : un cœur de forge, et la seule forge qui en fabrique est à Karak-Dûm, dans les Monts Grisfer." }
+        effets: [{ flag: heros:classe-1, quete: { id: q-classe-alchimiste, etape: etape2 }, xp: 140 }]
+        fin: true
+
+  - id: cl-archer-1
+    titre: "Archer — Le chant des ancêtres"
+    type: individuel
+    lieu: campement-lunecroc
+    decor: campement-lunecroc
+    quete: q-classe-archer
+    disponible_si: { classe: archer, flag: sables-ouverts, pas_flag: classe-1 }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: sorha, dit: "L'Ancienne Sorha pose une plume blanche sur votre arc. « Les ancêtres guident les flèches de ceux qui écoutent le vent. Ferme les yeux. Tire sur le chacal qui rôde là-bas, sans le regarder. »" }
+        choix:
+          - texte: "Fermer les yeux et tirer. (Esprit, difficulté 20)"
+            test: { carac: ESP, difficulte: 20, reussite: touche, echec: rate }
+      touche:
+        repliques:
+          - { dit: "Vous entendez la flèche chanter. Puis un jappement, au loin : touché. Sorha rit doucement. « Les ancêtres t'aiment bien. »" }
+          - { qui: sorha, dit: "« Il y a, dans l'Archipel des Brumes, une cible que le vent déplace sans cesse. Celui qui la touche entend les ancêtres pour toujours. »" }
+        effets: [{ flag: heros:classe-1, quete: { id: q-classe-archer, etape: etape2 }, xp: 200 }]
+        fin: true
+      rate:
+        repliques:
+          - { dit: "La flèche se plante dans le sable. Sorha hausse les épaules. « Le vent n'a pas encore appris ton nom. Il l'apprendra. » Elle vous parle de la cible des vents, dans l'Archipel des Brumes." }
+        effets: [{ flag: heros:classe-1, quete: { id: q-classe-archer, etape: etape2 }, xp: 120 }]
+        fin: true
+
+  - id: cl-guerisseur-1
+    titre: "Guérisseur — Le souffle des vivants"
+    type: individuel
+    lieu: mines-ether
+    decor: mines-ether
+    quete: q-classe-guerisseur
+    disponible_si: { classe: guerisseur, flag: sables-ouverts, pas_flag: classe-1 }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "Aux mines, des mineurs toussent une poussière violette. Les guérisseurs de la Concorde passent devant eux sans s'arrêter : « Ce ne sont que des journaliers. »" }
+          - { dit: "Un enfant vous tire par la manche. Son père ne respire presque plus." }
+        choix:
+          - texte: "Soigner les mineurs toute la nuit. (Esprit, difficulté 21)"
+            test: { carac: ESP, difficulte: 21, reussite: sauves, echec: epuise }
+      sauves:
+        repliques:
+          - { dit: "Au matin, les mineurs respirent. Vous, à peine. Mais dans votre lumière, il y a quelque chose de nouveau : un souffle qui ne vient pas de vous." }
+          - { dit: "Un vieux mineur vous prend la main. « Ma grand-mère disait qu'il y a une source, dans l'Archipel, où la lumière soigne même les morts. Vous devriez la trouver. »" }
+        effets: [{ flag: heros:classe-1, quete: { id: q-classe-guerisseur, etape: etape2 }, xp: 220, reputation: { ourvalis: 3 } }]
+        fin: true
+      epuise:
+        repliques:
+          - { dit: "Vous en sauvez beaucoup. Pas tous. Le père de l'enfant s'éteint au lever du soleil, votre main sur son front." }
+          - { dit: "Un vieux mineur vous parle d'une source sacrée, dans l'Archipel des Brumes. « Pour la prochaine fois. Il y a toujours une prochaine fois. »" }
+        effets: [{ flag: heros:classe-1, quete: { id: q-classe-guerisseur, etape: etape2 }, xp: 140 }]
+        fin: true
+
+  - id: cl-berserker-1
+    titre: "Berserker — Le sang qui chante"
+    type: individuel
+    lieu: qarzim-porte
+    decor: qarzim-porte
+    quete: q-classe-berserker
+    disponible_si: { classe: berserker, flag: sables-ouverts, pas_flag: classe-1 }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "Dans les fosses de combat, derrière la Porte des Caravanes, un vieux sang-dragon aux écailles grises défie la foule. « Qui a du feu dans les veines ? Personne ? »" }
+        choix:
+          - texte: "Descendre dans la fosse."
+            aller: fosse
+      fosse:
+        repliques:
+          - { dit: "Le vieux combattant vous regarde, renifle. « Toi. Tu as le sang. Montre-moi qu'il chante. »" }
+        choix:
+          - texte: "Encaisser ses coups sans reculer. (Vitalité, difficulté 20)"
+            test: { carac: VIT, difficulte: 20, reussite: chante, echec: tombe }
+          - texte: "Frapper de toutes vos forces. (Force, difficulté 21)"
+            test: { carac: FOR, difficulte: 21, reussite: chante, echec: tombe }
+      chante:
+        repliques:
+          - { dit: "Le sang monte. Vos yeux brûlent. Pendant une seconde, vous voyez des ailes dans votre ombre. Le vieux sang-dragon recule, ravi. « Il chante ! »" }
+          - { dit: "« Va au Nid des Wyrms, dans l'Archipel. Écoute les vieux dragons. Ton sang apprendra la chanson entière. »" }
+        effets: [{ flag: heros:classe-1, quete: { id: q-classe-berserker, etape: etape2 }, xp: 200, or: 50 }]
+        fin: true
+      tombe:
+        repliques:
+          - { dit: "Vous voilà dans la poussière. La foule rit. Le vieux sang-dragon ne rit pas. « Il chante faux, mais il chante. » Il vous parle du Nid des Wyrms." }
+        effets: [{ flag: heros:classe-1, quete: { id: q-classe-berserker, etape: etape2 }, xp: 120 }]
+        fin: true
+
+  - id: cl-barde-1
+    titre: "Barde — La chanson perdue"
+    type: individuel
+    lieu: qarzim-oasis
+    decor: qarzim-oasis
+    quete: q-classe-barde
+    disponible_si: { classe: barde, flag: sables-ouverts, pas_flag: classe-1 }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: ziyane, dit: "« Les Dunes chantantes ? » Mère Ziyane hausse les épaules. « Les bardes de passage essaient tous de noter leur chant. Ils repartent tous fous. »" }
+          - { dit: "La nuit venue, vous montez sur la terrasse. Au loin, les dunes chantent. Une mélodie impossible, qui change à chaque souffle." }
+        choix:
+          - texte: "Jouer avec elles, au lieu de les noter. (Charisme, difficulté 20)"
+            test: { carac: CHA, difficulte: 20, reussite: accord, echec: fausse }
+      accord:
+        repliques:
+          - { dit: "Votre instrument trouve la note. Puis une autre. Les dunes vous répondent, comme un chœur. À l'aube, vous avez trois couplets. Il en manque un : le dernier." }
+          - { dit: "Un vieux caravanier, en bas, a tout entendu. « Le dernier couplet, ce sont les sirènes de l'Archipel qui le chantent. Tout le monde sait ça. »" }
+        effets: [{ flag: heros:classe-1, quete: { id: q-classe-barde, etape: etape2 }, xp: 200 }]
+        fin: true
+      fausse:
+        repliques:
+          - { dit: "Une fausse note, et les dunes se taisent, vexées. Mais vous avez entendu assez pour savoir : il manque un couplet, que chantent les sirènes de l'Archipel." }
+        effets: [{ flag: heros:classe-1, quete: { id: q-classe-barde, etape: etape2 }, xp: 120 }]
+        fin: true

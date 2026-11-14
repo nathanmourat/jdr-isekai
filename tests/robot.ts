@@ -94,7 +94,8 @@ export function explorerDonjon(contenu: Contenu, r: Robot) {
     // on fait tous les combats et coffres atteignables, puis on sort
     const restants = d.evenements.filter((e) => ['combat', 'coffre'].includes(e.type) && !dj.faits.includes(e.id));
     const atteignables = restants.filter((e) => plusCourtChemin(contenu, dj.id, dj.x, dj.y, [[e.x, e.y]], aCle) !== null);
-    const cibles = atteignables.length > 0 ? atteignables : d.evenements.filter((e) => e.type === 'sortie');
+    // après 3 défaites, on renonce : direction la sortie (porte de secours)
+    const cibles = atteignables.length > 0 && (dj.defaites ?? 0) < 3 ? atteignables : d.evenements.filter((e) => e.type === 'sortie');
     const chemin = plusCourtChemin(contenu, dj.id, dj.x, dj.y, cibles.map((e) => [e.x, e.y] as [number, number]), aCle);
     if (!chemin || chemin.length === 0) throw new Error('Donjon : aucun chemin');
     const [nx, ny] = chemin[0];

@@ -170,7 +170,7 @@ function verifierReferences(c: Contenu): string[] {
       const lien = (cible: string | undefined, quoi: string) => { if (cible && !s.noeuds[cible]) e.push(`${ou} › nœud ${nid} › ${quoi} vers « ${cible} » introuvable`); };
       lien(n.suite, 'suite');
       if (n.combat) { lien(n.combat.victoire, 'victoire'); lien(n.combat.defaite, 'défaite'); if (!c.rencontres[n.combat.rencontre]) e.push(`${ou} › nœud ${nid} › rencontre « ${n.combat.rencontre} » introuvable`); }
-      if (n.donjon) { lien(n.donjon.sortie, 'sortie de donjon'); if (!c.donjons[n.donjon.id]) e.push(`${ou} › nœud ${nid} › donjon « ${n.donjon.id} » introuvable`); }
+      if (n.donjon) { lien(n.donjon.sortie, 'sortie de donjon'); if (n.donjon.abandon) lien(n.donjon.abandon, 'abandon de donjon'); if (!c.donjons[n.donjon.id]) e.push(`${ou} › nœud ${nid} › donjon « ${n.donjon.id} » introuvable`); }
       if (n.parole_a) {
         if (!n.parole_a.reponses.some((r) => !r.si)) e.push(`${ou} › nœud ${nid} › parole_a : il faut au moins une réponse sans « si » (pour tous les héros)`);
         if (n.parole_a.question.qui !== 'narrateur' && !c.pnj[n.parole_a.question.qui] && !c.compagnons[n.parole_a.question.qui]) e.push(`${ou} › nœud ${nid} › parole_a : personnage « ${n.parole_a.question.qui} » introuvable`);
@@ -219,7 +219,8 @@ function verifierReferences(c: Contenu): string[] {
       if ([et.combat ? 1 : 0, et.test ? 1 : 0, et.choix.length ? 1 : 0].reduce((a, b) => a + b, 0) > 1) e.push(`${ou} › une étape ne peut avoir qu'une seule chose : un choix, un test ou un combat`);
       for (const ch of et.choix) for (const eff of ch.effets) verifierConsequence(c, ou, eff, e);
     });
-    if (ct.etapes.length && ct.etapes[ct.etapes.length - 1].lieu !== 'guilde') e.push(`Contrat ${ct.id} › la dernière étape doit se passer à la Guilde (retour pour la récompense)`);
+    const derniere = ct.etapes.length ? ct.etapes[ct.etapes.length - 1].lieu : 'guilde';
+    if (derniere !== 'guilde' && !derniere.startsWith('guilde-')) e.push(`Contrat ${ct.id} › la dernière étape doit se passer à la Guilde (retour pour la récompense)`);
   }
   return e;
 }

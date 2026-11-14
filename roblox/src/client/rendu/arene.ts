@@ -7,7 +7,7 @@
 import { Players, ReplicatedStorage, TweenService, UserInputService, Workspace } from "@rbxts/services";
 import { equiperPersonnage, type EquipementPorte } from "shared/equipement3d";
 import { CONTENU } from "shared/donnees";
-import { LIEU_DU_DECOR, positionLieu } from "shared/geo";
+import { LIEU_DU_DECOR, ORIGINES, positionLieu, regionDuLieu, trouverLieu } from "shared/geo";
 import type { Combat, Combattant, EvenementCombat } from "shared/moteur";
 import { jouer } from "../sons";
 
@@ -72,11 +72,12 @@ function choisirRepere(combat: Combat, enDonjon: boolean): CFrame {
 		construireSalleCrypte(o);
 		return new CFrame(o);
 	}
-	const lieux = CONTENU.regions.aubeclaire.lieux;
-	const lieu = lieux.find((l) => l.id === (LIEU_DU_DECOR[combat.fond] ?? "lysmont-place"));
-	const place = lieux.find((l) => l.id === "lysmont-place");
+	// le combat se déroule au lieu qui correspond au décor ; la caméra regarde depuis le centre de la région
+	const lieu = trouverLieu(LIEU_DU_DECOR[combat.fond] ?? "lysmont-place");
+	const place = trouverLieu("lysmont-place");
 	const pLieu = lieu ? positionLieu(lieu) : new Vector3();
-	const pPlace = place ? positionLieu(place) : new Vector3();
+	const region = lieu ? regionDuLieu(lieu.id) : "aubeclaire";
+	const pPlace = region === "aubeclaire" ? (place ? positionLieu(place) : new Vector3()) : ORIGINES[region] ?? new Vector3();
 	let o: Vector3;
 	let versCamera: Vector3;
 	if (lieu?.id === "arene") {

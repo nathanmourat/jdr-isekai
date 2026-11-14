@@ -41,7 +41,7 @@ describe('Ville de Lysmont, PNJ et boutique', () => {
   it('toute scène liée à un PNJ a ce PNJ dans son lieu', () => {
     for (const s of Object.values(c.scenes)) {
       if (!s.pnj || !s.lieu) continue;
-      const lieu = c.regions.aubeclaire.lieux.find((l) => l.id === s.lieu)!;
+      const lieu = Object.values(c.regions).flatMap((r) => r.lieux).find((l) => l.id === s.lieu)!;
       expect(lieu.pnj.map((p) => p.id), `scène ${s.id}`).toContain(s.pnj);
     }
   });

@@ -1,0 +1,437 @@
+# Chapitre 2 — « Les Routes du Sud » : quête principale (scènes de groupe, choix votés).
+scenes:
+  # ─────────────────────────────────────────────────────────────
+  - id: ch2-depart
+    pnj: seraphine
+    titre: "Le départ"
+    type: groupe
+    lieu: chateau
+    decor: chateau-trone
+    quete: q-ch2-routes
+    disponible_si: { flag: chapitre-1-fini, pas_flag: ch2-depart-fait, date_min: { annee: 1015, mois: 1, jour: 1 } }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "Germinal 1015. Trois ans ont passé depuis l'Appel. Les cicatrices de la Nuit des Lanternes se sont refermées ; pas celles des souvenirs." }
+          - { qui: seraphine, dit: "La princesse Séraphine [[t'attend||vous attend]] dans la salle des cartes, en tenue de voyage, les cheveux noués comme un soldat. « Enfin ! Mon père m'envoie à Qarzim. Officiellement : signer un traité de commerce avec la Concorde. »" }
+          - { qui: seraphine, dit: "« Officieusement : la Concorde vend des cristaux d'éther à tout le monde… y compris, dit-on, à des gens qui portent des sceaux violets. » Elle pose la main sur la carte du sud. « J'ai demandé [[un Appelé||des Appelés]] pour m'escorter. Je veux [[toi||vous]]. »" }
+          - { qui: aveline, dit: "Aveline se tient près de la porte, bras croisés. « Ordre du roi : j'accompagne la princesse. Et… [[toi||vous]] aussi, apparemment. » Elle ne cache pas tout à fait son sourire." }
+          - { qui: kaya, dit: "La porte s'ouvre à la volée. Kaya, sac au dos, oreilles dressées : « Qarzim ? Vous allez dans le désert sans guide ? Vous allez mourir de soif avant midi. J'en suis ! »" }
+        choix:
+          - texte: "« Une mission diplomatique ? Nous serons des modèles de politesse. »"
+            effets: [{ affinite: { seraphine: 3 }, reputation: { couronne: 3 } }]
+            aller: politesse
+          - texte: "« Si la Concorde aide les Cendres, je veux le savoir. Le traité, je m'en moque. »"
+            effets: [{ affinite: { seraphine: 4, aveline: 2 }, flag: enquete-concorde }]
+            aller: enquete
+          - texte: "« Kaya, c'est chez toi, là-bas ? Tu seras notre guide. »"
+            effets: [{ affinite: { kaya: 5 } }]
+            aller: kaya
+      politesse:
+        repliques:
+          - { qui: seraphine, expression: joie, dit: "Séraphine éclate de rire. « Des modèles de politesse. Vous. Je garde la phrase pour la raconter à mon père. »" }
+        suite: preparatifs
+      enquete:
+        repliques:
+          - { qui: seraphine, dit: "« Exactement ce que je voulais entendre. » Elle baisse la voix. « Et pas un mot à la cour. La moitié des nobles a des parts dans les caravanes de la Concorde. »" }
+        suite: preparatifs
+      kaya:
+        repliques:
+          - { qui: kaya, expression: joie, dit: "Kaya bombe le torse. « Chez moi, c'est le désert entier. Enfin… c'était. » Son sourire vacille une seconde. « La Concorde nous a pris nos terres. Mais je connais chaque dune. »" }
+        suite: preparatifs
+      preparatifs:
+        repliques:
+          - { qui: rowena, dit: "Dame Rowena vous a fait parvenir un mot : « La Guilde a un comptoir à Qarzim. Montrez-vous là-bas, l'intendant Ibrek vous trouvera du travail. Et ramenez la princesse entière. »" }
+          - { dit: "Trois jours plus tard, la caravane de la princesse quitte Lysmont par la porte du sud. Devant vous, la Route des Caravanes, et au bout, la Marche des Sables." }
+        effets:
+          - { flag: [ch2-depart-fait, seraphine-recrutee, kaya-recrutee], recruter: seraphine, quete: { id: q-ch2-routes, etape: caravane }, journal: "Germinal 1015 : {groupe} partent pour Qarzim avec la princesse Séraphine, Aveline et Kaya." }
+          - { recruter: kaya }
+        fin: true
+
+  # ─────────────────────────────────────────────────────────────
+  - id: ch2-caravane
+    titre: "La Route des Caravanes"
+    type: groupe
+    lieu: route-des-caravanes
+    decor: route-des-caravanes
+    quete: q-ch2-routes
+    disponible_si: { quete_etape: { q-ch2-routes: caravane } }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "Dix jours de route. L'herbe d'Aubeclaire devient poussière, puis sable. Le soleil tape comme un marteau sur une enclume." }
+          - { qui: nadja, dit: "La caravane appartient à une courtière : une femme en voiles ocre, un carnet à la main, qui compte les tonneaux d'eau à voix haute. « Nadja Kesh. Chaque gorgée que vous buvez est notée. Princesse comprise. »" }
+          - { qui: kaya, dit: "Kaya s'arrête net, nez au vent. « Ça sent le cuir et le sang. Des gens nous attendent derrière ces rochers. »" }
+        choix:
+          - texte: "Préparer une contre-embuscade. (Esprit, difficulté 20)"
+            test: { carac: ESP, difficulte: 20, reussite: contre, echec: surpris }
+          - texte: "Continuer et laisser venir : la caravane est bien gardée."
+            aller: surpris
+      contre:
+        repliques:
+          - { dit: "Vous contournez les rochers. Les pillards, le dos tourné, guettent la caravane… et ne vous voient pas venir." }
+        effets: [{ xp: 40 }]
+        suite: combat
+      surpris:
+        repliques:
+          - { dit: "Des cris. Des flèches. Des silhouettes au chèche turquoise dévalent la dune, cimeterres au clair." }
+        suite: combat
+      combat:
+        combat: { rencontre: caravane-pillards, victoire: victoire, defaite: defaite }
+      victoire:
+        repliques:
+          - { dit: "Le dernier pillard lâche son arme. Un jeune, à peine seize ans, qui tremble sous son chèche." }
+          - { qui: nadja, dit: "Nadja enjambe un corps sans le regarder et rouvre son carnet. « Deux chameaux blessés, un tonneau percé. » Elle lève les yeux vers vous. « Et zéro mort de notre côté. Pas mal, pour des étrangers. »" }
+        effets: [{ reputation: { concorde: 3 }, affinite: { nadja: 3 } }]
+        suite: prisonnier
+      defaite:
+        repliques:
+          - { dit: "Vous reprenez connaissance sous une toile tendue. Les gardes de la caravane ont repoussé les pillards à grand-peine." }
+          - { qui: nadja, dit: "« Trois chameaux, deux tonneaux et ma réputation. » Nadja soupire. « La prochaine fois, laissez-moi négocier. »" }
+        suite: prisonnier
+      prisonnier:
+        repliques:
+          - { qui: kaya, dit: "Kaya tient le jeune pillard par le col. « Il dit qu'on les a payés. Pas pour voler : pour retarder la princesse. »" }
+        choix:
+          - texte: "L'emmener à Qarzim : la garde de la ville le fera parler."
+            effets: [{ flag: prisonnier-pillard }]
+            aller: arrivee
+          - texte: "Le laisser partir avec de l'eau. Ce n'est qu'un gamin."
+            effets: [{ flag: [prisonnier-pillard, pillard-epargne], affinite: { kaya: 2, seraphine: 3 } }]
+            aller: arrivee
+      arrivee:
+        repliques:
+          - { dit: "Au coucher du soleil, Qarzim apparaît : des coupoles bleues, des tours de terre ocre, et au-dessus de la ville, une lueur violette qui ne vient pas du ciel." }
+          - { qui: nadja, dit: "« Les cristaux d'éther. » Nadja range son carnet. « Toute la ville en brille. Si vous avez besoin de quelque chose à Qarzim — n'importe quoi — demandez Nadja Kesh, à la Porte des Caravanes. Pour un prix honnête. » Elle sourit. « Enfin, presque. »" }
+        effets:
+          - { flag: [sables-ouverts, nadja-rencontree], recruter: nadja, quete: { id: q-ch2-routes, etape: palais }, xp: 120, journal: "{groupe} arrivent à Qarzim avec la caravane de Nadja Kesh, après une embuscade de pillards." }
+        fin: true
+
+  # ─────────────────────────────────────────────────────────────
+  - id: ch2-palais
+    pnj: hassad
+    titre: "Le Prévôt de la Concorde"
+    type: groupe
+    lieu: qarzim-palais
+    decor: qarzim-palais
+    quete: q-ch2-routes
+    disponible_si: { quete_etape: { q-ch2-routes: palais } }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "Le Palais de la Concorde est un rêve de marbre et de cristal. Des fontaines coulent dans des vasques violettes. Ici, même l'air sent l'argent." }
+          - { qui: hassad, dit: "Le Prévôt Hassad s'incline juste assez. « Princesse. Et les fameux Appelés. » Ses bagues-cristaux scintillent. « La Concorde est honorée. Elle serait plus honorée encore si le traité ne parlait pas des mines. »" }
+          - { qui: vashti, dit: "Une conseillère à l'éventail sourit derrière lui. « Les mines sont une affaire de Qarzim, Altesse. Les loups du désert les réclament, mais les loups réclament toujours. »" }
+          - { qui: kaya, expression: colere, dit: "Kaya serre les poings. Ses oreilles se couchent en arrière." }
+        suite: question
+      question:
+        parole_a:
+          regle: { race: [ourvalis, vulpin, demi-demon, sang-dragon] }
+          question: { qui: hassad, dit: "Le Prévôt se tourne vers {nom}. « Et vous, {pseudo} ? Les Appelés sont-ils venus défendre les traités… ou les tribus ? »" }
+          reponses:
+            - { texte: "« Je suis ourvalis, Prévôt. Les « loups du désert », c'est moi. Choisissez mieux vos mots. »", si: { race: ourvalis }, effets: [{ affinite: { kaya: 6 }, reputation: { ourvalis: 8, concorde: -5 } }], aller: reponse }
+            - { texte: "« Les vulpins commercent avec vous depuis des siècles. Ne me faites pas croire que vous ignorez qui vit sur ces terres. »", si: { race: vulpin }, effets: [{ reputation: { ourvalis: 4, concorde: -2 }, affinite: { nadja: 2 } }], aller: reponse }
+            - { texte: "« On m'a souvent traité de monstre. Je sais reconnaître quand on parle des autres comme ça. »", si: { race: [demi-demon, sang-dragon] }, effets: [{ affinite: { kaya: 4, seraphine: 2 } }], aller: reponse }
+            - { texte: "« Nous défendons la princesse. Le reste dépendra de ce que nous verrons. »", effets: [{ affinite: { seraphine: 3 } }], aller: reponse }
+            - { texte: "« Les tribus vivaient ici avant vos mines. Ça compte, non ? »", effets: [{ reputation: { ourvalis: 5, concorde: -4 }, affinite: { kaya: 4 } }], aller: reponse }
+            - { texte: "« Nous sommes là pour le traité. Et pour le buffet. »", effets: [{ affinite: { seraphine: 2 } }], aller: reponse }
+      reponse:
+        repliques:
+          - { qui: hassad, dit: "Le Prévôt sourit sans que ses yeux bougent. « Intéressant. » Il fait un signe : un serviteur vous tend à chacun un petit cristal violet, serti d'argent. « Un présent de la Concorde. Que la lumière de l'éther éclaire vos chemins. »" }
+          - { qui: seraphine, dit: "Séraphine murmure sans remuer les lèvres : « Ne le portez pas sur vous. J'ai un mauvais pressentiment. »" }
+        choix:
+          - texte: "Accepter le cristal avec un grand sourire."
+            effets: [{ objet: cristal-ether, reputation: { concorde: 5 }, flag: cadeau-hassad }]
+            aller: fin
+          - texte: "Refuser poliment : « Nous ne pouvons accepter un tel présent. »"
+            effets: [{ reputation: { concorde: -3 }, affinite: { seraphine: 3, kaya: 2 } }]
+            aller: fin
+          - texte: "Accepter, et l'examiner discrètement. (Intelligence, difficulté 20)"
+            test: { carac: INT, difficulte: 20, reussite: examen, echec: fin }
+      examen:
+        repliques:
+          - { dit: "Dans la lumière, le cristal palpite. Lentement. Comme une veine. À l'intérieur, une minuscule déchirure violette se referme et se rouvre." }
+        effets: [{ objet: cristal-ether, flag: [cristal-palpite, cadeau-hassad], xp: 50 }]
+        suite: fin
+      fin:
+        repliques:
+          - { dit: "Les négociations dureront des mois : la Concorde est patiente, et sa patience coûte cher. La princesse s'installe à la Résidence d'Aubeclaire." }
+          - { qui: seraphine, dit: "« Le grand banquet de la Résidence aura lieu le 10 Ardent de l'an prochain. Tout Qarzim y sera. » Elle soupire. « D'ici là, faites-vous connaître : la Guilde, les tribus, le Bazar. J'ai besoin d'yeux partout. »" }
+        effets:
+          - { quete: { id: q-ch2-routes, etape: complot }, journal: "{groupe} rencontrent le Prévôt Hassad. La Concorde offre des cristaux d'éther en cadeau." }
+        fin: true
+
+  # ─────────────────────────────────────────────────────────────
+  - id: ch2-complot
+    pnj: seraphine
+    titre: "Le banquet"
+    type: groupe
+    lieu: qarzim-residence
+    decor: qarzim-residence
+    quete: q-ch2-routes
+    disponible_si: { quete_etape: { q-ch2-routes: complot }, date_min: { annee: 1016, mois: 6, jour: 10 } }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "10 Ardent 1016. La Résidence d'Aubeclaire brille de mille lanternes. Musiciens, plats d'argent, marchands de la Concorde en soie : tout Qarzim est là." }
+          - { qui: seraphine, dit: "Séraphine, en robe blanche et or, sourit à tout le monde. Mais sous la table, elle [[te||vous]] glisse un mot : « Vashti n'a pas quitté mon verre des yeux. »" }
+          - { qui: vashti, dit: "La conseillère Vashti lève sa coupe. « À l'amitié entre Aubeclaire et la Concorde ! » Les serviteurs remplissent les verres de la princesse." }
+        suite: poison
+      poison:
+        parole_a:
+          regle: { classe: [alchimiste, guerisseur, ombre] }
+          question: { qui: seraphine, dit: "Séraphine porte la coupe à ses lèvres, puis s'arrête et la tend discrètement à {nom}. « {pseudo}… Il y a quelque chose de bizarre avec ce vin, non ? »" }
+          reponses:
+            - { texte: "« Ne bois pas ! L'odeur d'amande… c'est du venin de scorpion bleu. »", si: { classe: alchimiste }, effets: [{ affinite: { seraphine: 6 }, flag: poison-decouvert }], aller: assassins }
+            - { texte: "« Je sens une fièvre dans ce liquide. Comme une malédiction. Pose ça. »", si: { classe: guerisseur }, effets: [{ affinite: { seraphine: 6 }, flag: poison-decouvert }], aller: assassins }
+            - { texte: "« Le serviteur qui t'a servie vient de disparaître. Mauvais signe. »", si: { classe: ombre }, effets: [{ affinite: { seraphine: 6 }, flag: poison-decouvert }], aller: assassins }
+            - { texte: "« Dans le doute… » (lui prendre la coupe et la renverser sur la nappe)", effets: [{ affinite: { seraphine: 4 }, flag: poison-decouvert }], aller: assassins }
+            - { texte: "« Il est très bon. Pourquoi ? »", effets: [{ affinite: { seraphine: 1 } }], aller: assassins }
+            - { texte: "« Laisse-moi goûter d'abord. » (héroïque, mais imprudent)", effets: [{ affinite: { seraphine: 5 } }], aller: assassins }
+      assassins:
+        repliques:
+          - { dit: "La coupe renversée fume en rongeant la nappe. Un silence glacé tombe sur la salle." }
+          - { dit: "Puis les serviteurs lâchent leurs plateaux. Sous les tuniques, des poignards courbes. Des voiles noirs. La Main de Sable." }
+          - { qui: aveline, expression: colere, dit: "« Protégez la princesse ! » Aveline renverse une table pour faire barrage." }
+        combat: { rencontre: assassins-banquet, victoire: poursuite, defaite: blessee }
+      blessee:
+        repliques:
+          - { dit: "Un poignard a effleuré le bras de Séraphine. La garde de la Résidence repousse les assassins, qui s'enfuient par les toits." }
+        effets: [{ affinite: { seraphine: -2 }, flag: seraphine-blessee }]
+        suite: poursuite
+      poursuite:
+        repliques:
+          - { dit: "Une silhouette voilée de noir vous observe depuis la coupole d'en face. Elle s'incline, moqueuse, et s'éloigne de toit en toit." }
+          - { qui: kaya, dit: "« C'est le chef ! Je le sens d'ici. » Kaya bondit déjà vers la fenêtre." }
+        choix:
+          - texte: "Le poursuivre sur les toits de Qarzim."
+            aller: toits
+          - texte: "Rester auprès de la princesse : c'est peut-être une diversion."
+            effets: [{ affinite: { seraphine: 4, aveline: 3 } }]
+            aller: diversion
+      diversion:
+        repliques:
+          - { dit: "Bien vu : un deuxième groupe d'assassins surgit des cuisines. Vous les attendiez." }
+        suite: toits
+      toits:
+        repliques:
+          - { qui: kezir, dit: "Sur la plus haute terrasse, l'homme voilé vous attend, deux lames à la main. « Kezir. On m'a payé pour une princesse. Les Appelés seront un bonus. »" }
+        combat: { rencontre: kezir-toits, victoire: preuve, defaite: fuite-kezir }
+      fuite-kezir:
+        repliques:
+          - { dit: "Kezir vous laisse au sol et disparaît dans la nuit. Mais dans sa fuite, il a perdu quelque chose." }
+        suite: preuve
+      preuve:
+        repliques:
+          - { dit: "Sur la terrasse, un insigne de bronze : une main tenant un grain de sable. Et, enroulée autour, une lettre de paiement… scellée du sceau personnel de la conseillère Vashti Orren." }
+          - { dit: "Au dos de la lettre, une rune violette griffonnée à la hâte. La même que sur le sceau cendré de la Crypte.", si: { flag: sceau-trouve } }
+        effets: [{ objet: insigne-main-de-sable, xp: 150 }]
+        choix:
+          - texte: "Dénoncer Vashti devant le Conseil de la Concorde, preuve à l'appui."
+            effets: [{ flag: vashti-denoncee, reputation: { concorde: -10, couronne: 10 }, affinite: { seraphine: 4 } }]
+            aller: denonce
+          - texte: "Donner la lettre à Nadja : elle saura quoi en faire, sans bruit."
+            effets: [{ flag: preuve-nadja, affinite: { nadja: 8 } }]
+            aller: nadja
+          - texte: "Aller voir le Prévôt Hassad en privé : qu'il nous doive une faveur."
+            effets: [{ flag: hassad-redevable, reputation: { concorde: 8 } }]
+            aller: hassad
+      denonce:
+        repliques:
+          - { qui: vashti, dit: "Devant le Conseil, Vashti pâlit, puis rit. « Une lettre ? N'importe qui peut voler un sceau. » Mais personne ne rit avec elle. Elle est arrêtée le soir même… et retrouvée morte dans sa cellule à l'aube." }
+          - { qui: seraphine, dit: "« Quelqu'un ne voulait pas qu'elle parle. » Séraphine fixe la fenêtre. « Quelqu'un de plus haut. »" }
+        suite: fin
+      nadja:
+        repliques:
+          - { qui: nadja, dit: "Nadja lit la lettre deux fois, puis la plie avec un soin infini. « Vashti me doit maintenant beaucoup plus que je ne lui dois. » Pour la première fois, son sourire est vrai. « Merci. »" }
+        suite: fin
+      hassad:
+        repliques:
+          - { qui: hassad, dit: "Le Prévôt brûle la lettre à la flamme d'une bougie sans la lire jusqu'au bout. « La Concorde n'oublie jamais une dette. » Le lendemain, Vashti a quitté Qarzim. Personne ne sait où." }
+        suite: fin
+      fin:
+        repliques:
+          - { qui: seraphine, dit: "Plus tard, sur la terrasse de la Résidence, Séraphine tient son verre d'eau à deux mains. « Merci. Vraiment. » Elle hésite. « Le Grand Bazar ouvre le premier jour de Brumaire. Les gens y parlent. On y apprendra peut-être qui a payé Vashti. »" }
+        effets:
+          - { quete: { id: q-ch2-routes, etape: bazar }, journal: "10 Ardent 1016 : tentative d'assassinat contre la princesse Séraphine à Qarzim. La Main de Sable était payée par la conseillère Vashti." }
+        fin: true
+
+  # ─────────────────────────────────────────────────────────────
+  - id: ch2-bazar
+    titre: "Le Grand Bazar"
+    type: groupe
+    lieu: qarzim-bazar
+    decor: qarzim-bazar
+    quete: q-ch2-routes
+    disponible_si: { quete_etape: { q-ch2-routes: bazar }, date_min: { annee: 1016, mois: 7, jour: 1 } }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "1er Brumaire 1016. Le Grand Bazar de Qarzim s'éveille : des caravanes de tout le continent, des tapis volants (qui ne volent pas), des épices en montagnes, des cris dans dix langues." }
+          - { dit: "Et partout, des cristaux d'éther : en colliers, en lampes, en poudre « contre la fatigue ». Les marchands de la Concorde les vendent par caisses entières." }
+          - { qui: faelis, dit: "Sous une tente verte, une elfe aux cheveux d'argent vend des herbes. Elle vous fixe longuement. « Des Appelés. Ici. Avec ça plein les poches. » Elle désigne les cristaux d'un geste dégoûté." }
+        choix:
+          - texte: "« Vous savez quelque chose sur ces cristaux ? »"
+            aller: faelis
+          - texte: "Montrer le sceau cendré à l'elfe."
+            si: { objet: sceau-cendre }
+            aller: sceau
+      sceau:
+        repliques:
+          - { dit: "À l'instant où le sceau sort du sac, tous les cristaux de la tente se mettent à vibrer. Un bourdonnement monte, aigu, et des lueurs violettes dansent sur les toiles." }
+          - { qui: faelis, expression: surprise, dit: "L'elfe recule, livide. « Rangez ça. Tout de suite. » Elle respire mieux quand le sceau a disparu. « Ils se reconnaissent. Ils viennent du même endroit. »" }
+        effets: [{ flag: cristaux-resonnent, xp: 60 }]
+        suite: faelis
+      faelis:
+        repliques:
+          - { qui: faelis, dit: "« Je m'appelle Faelis. Je viens de Sylvenoire. » Elle baisse la voix. « Chez nous, on enseigne que le Voile n'est pas une idée. C'est une chose. Une peau entre les mondes. Et une peau qu'on gratte… finit par saigner. »" }
+          - { qui: faelis, dit: "« Ces cristaux ne poussent pas dans la roche. Ce sont des éclats. Des éclats du Voile, tombés lors de la Déchirure. Chaque cristal qu'on arrache affaiblit ce qui reste. »" }
+        choix:
+          - texte: "« Comment pouvez-vous en être sûre ? » (Intelligence, difficulté 21)"
+            test: { carac: INT, difficulte: 21, reussite: preuve, echec: doute }
+          - texte: "« Si c'est vrai, la Concorde doit l'apprendre. »"
+            aller: concorde
+      preuve:
+        repliques:
+          - { dit: "Faelis déroule un vieux parchemin : un dessin de cristal, des runes elfiques, et une phrase traduite à la main. « Ce que nous avons déchiré, la terre l'a gardé en éclats. »" }
+          - { qui: faelis, dit: "« Ce parchemin est une copie. L'original est gravé dans les Ruines de Sel, au sud. Les elfes y sont venus il y a mille ans, pour réparer leur faute. Ils ont échoué. »" }
+        effets: [{ flag: indice-dechirure, xp: 80 }]
+        suite: concorde
+      doute:
+        repliques:
+          - { qui: faelis, dit: "« Vous ne me croyez pas ? » Elle hausse les épaules. « Allez voir les Ruines de Sel, au sud. Les anciens y ont tout écrit. Si les tempêtes vous laissent passer. »" }
+        suite: concorde
+      concorde:
+        repliques:
+          - { qui: faelis, dit: "« La Concorde le sait. Elle s'en moque. Un cristal vaut plus qu'un village. » Elle range ses herbes. « Les grandes tempêtes viendront au printemps. Les Ruines de Sel ne se montrent qu'après, quand le vent a déplacé les dunes. »" }
+          - { qui: nadja, dit: "Nadja, qui écoutait depuis l'étal voisin, s'approche. « Une carte des Ruines, ça se trouve. Ça se paie, mais ça se trouve. » Elle hésite. « Et si l'elfe dit vrai… je travaille pour les gens qui vendent la fin du monde au détail. »" }
+        effets:
+          - { quete: { id: q-ch2-routes, etape: tempete }, flag: carte-ruines, journal: "Grand Bazar de 1016 : une elfe de Sylvenoire affirme que les cristaux d'éther sont des éclats du Voile." }
+        fin: true
+
+  # ─────────────────────────────────────────────────────────────
+  - id: ch2-tempete
+    titre: "La tempête et les Ruines de Sel"
+    type: groupe
+    lieu: ruines-de-sel
+    decor: ruines-de-sel
+    quete: q-ch2-routes
+    disponible_si: { quete_etape: { q-ch2-routes: tempete }, date_min: { annee: 1017, mois: 4, jour: 1 } }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "Solaire 1017. Grâce à la carte de Nadja, vous êtes à deux jours des Ruines de Sel quand le ciel devient jaune." }
+          - { qui: kaya, expression: peur, dit: "Kaya renifle l'air, puis attrape la bride du premier chameau. « La grande tempête ! Il faut un abri. Maintenant ! »" }
+          - { dit: "Un mur de sable haut comme une montagne avale l'horizon. Vous courez. Devant vous, des colonnes blanches sortent des dunes : les Ruines." }
+        choix:
+          - texte: "Se réfugier dans les Ruines."
+            aller: entree
+      entree:
+        repliques:
+          - { dit: "Un escalier de sel cristallisé descend sous la cité morte. Le vent hurle au-dessus de vos têtes. En bas, des yeux turquoise s'allument dans le noir." }
+        donjon: { id: ruines-de-sel, sortie: sortie, abandon: abandon }
+      abandon:
+        repliques:
+          - { dit: "Épuisés, vous remontez l'escalier de sel. Le Roi de Sel n'a pas bougé de son trône : il attendra encore mille ans." }
+          - { dit: "Mais vous avez vu la fresque. Les elfes en cercle, le ciel déchiré, les éclats violets qui tombent… et la phrase gravée en dessous, que Séraphine a recopiée en tremblant." }
+          - { qui: seraphine, dit: "« « Ce que nous avons déchiré, la terre l'a gardé en éclats. » » Elle range sa copie. « Il faut quelqu'un pour lire ça. Quelqu'un de Sylvenoire. »" }
+        effets:
+          - { flag: ruines-explorees, xp: 100, quete: { id: q-ch2-routes, etape: revolte }, journal: "Solaire 1017 : dans les Ruines de Sel, {groupe} découvrent une fresque elfique sur la Déchirure." }
+        fin: true
+      sortie:
+        repliques:
+          - { dit: "Quand vous remontez, la tempête est passée. Le désert a changé de forme : les dunes ont avancé de cent pas." }
+          - { dit: "Dans votre sac, la tablette d'argile pèse plus lourd qu'elle ne devrait. Les mots elfiques gravés dessus brillent faiblement quand on les touche." }
+          - { qui: seraphine, dit: "Séraphine la retourne entre ses mains. « Il faut quelqu'un pour lire ça. Quelqu'un de Sylvenoire. » Elle sourit faiblement. « On dirait que nos routes ne font que commencer. »" }
+        effets:
+          - { flag: ruines-explorees, xp: 200, quete: { id: q-ch2-routes, etape: revolte }, journal: "Solaire 1017 : dans les Ruines de Sel, {groupe} trouvent une tablette elfique qui parle de la Déchirure." }
+        fin: true
+
+  # ─────────────────────────────────────────────────────────────
+  - id: ch2-revolte
+    pnj: sorha
+    titre: "La révolte des Lunecroc"
+    type: groupe
+    lieu: campement-lunecroc
+    decor: campement-lunecroc
+    quete: q-ch2-routes
+    disponible_si: { quete_etape: { q-ch2-routes: revolte }, date_min: { annee: 1017, mois: 12, jour: 1 } }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "Aurore 1017. Au campement Lunecroc, les tambours de guerre résonnent depuis trois nuits." }
+          - { qui: sorha, dit: "L'Ancienne Sorha vous reçoit sous sa tente, appuyée sur son bâton gravé de loups. « Mon petit-fils Tavek veut attaquer les mines d'éther demain. Les mercenaires de la Concorde l'attendent. Ce sera un massacre. »" }
+          - { qui: kaya, expression: tristesse, dit: "Kaya regarde ses pieds. « Tavek a toujours été le plus courageux. Et le plus têtu. Il dit que si on ne reprend pas la terre maintenant, il n'y aura plus de terre à reprendre. »" }
+          - { qui: tavek, dit: "Le chef de guerre entre sans s'annoncer, griffes de fer aux poings. « Les Appelés de la princesse. Vous êtes venus nous dire d'être sages ? »" }
+          - { dit: "Un messager couvert de poussière apporte une lettre : la Concorde promet « une prime généreuse » à quiconque aidera à protéger les mines.", si: { flag: hassad-redevable } }
+        choix:
+          - texte: "Soutenir la tribu Lunecroc : vous attaquerez les mines avec Tavek."
+            effets: [{ flag: soutien-lunecroc, reputation: { ourvalis: 20, concorde: -20 }, affinite: { kaya: 10, seraphine: -3 } }]
+            aller: attaque
+          - texte: "Défendre les mines : la paix avec la Concorde avant tout."
+            effets: [{ flag: [soutien-concorde, heros:trahison-lunecroc], reputation: { concorde: 20, ourvalis: -25 }, affinite: { kaya: -15 } }]
+            aller: defense
+          - texte: "Négocier une trêve entre Tavek et la Concorde. (Charisme, difficulté 22)"
+            test: { carac: CHA, difficulte: 22, reussite: treve, echec: treve-ratee }
+      attaque:
+        repliques:
+          - { dit: "À l'aube, les guerriers lunecroc dévalent la falaise en hurlant. Vous êtes en tête. Aux mines, le capitaine Orlen Vask vous attend, cuirasse dorée au soleil." }
+          - { qui: vask, dit: "« Des Appelés avec des loups. La Concorde va adorer cette histoire. » Il lève son fendoir. « Feu à volonté ! »" }
+        combat: { rencontre: revolte-vask, victoire: mines-prises, defaite: repli }
+      mines-prises:
+        repliques:
+          - { dit: "Vask s'enfuit à travers le désert. Les mercenaires jettent leurs lances. Sur la plus haute galerie, Tavek plante le bâton de Sorha dans la roche violette." }
+          - { qui: tavek, dit: "« Cette terre est à nous. » Il se tourne vers vous, et pour la première fois, il s'incline. « Merci, Appelés. Les Lunecroc ne l'oublieront jamais. »" }
+        effets: [{ flag: mines-lunecroc, reputation: { ourvalis: 10 } }]
+        suite: fin
+      repli:
+        repliques:
+          - { dit: "La charge se brise sur les boucliers dorés. Vous couvrez la retraite des blessés, pas à pas, jusqu'à la falaise." }
+          - { qui: tavek, dit: "Tavek saigne mais vit. « Vous êtes restés. Jusqu'au bout. » Il serre la main de Kaya. « On reviendra. »" }
+        suite: fin
+      defense:
+        repliques:
+          - { dit: "Vous prenez position sur les galeries des mines, aux côtés des mercenaires. Quand la charge lunecroc arrive, Kaya n'est pas avec vous." }
+          - { qui: tavek, dit: "Tavek vous voit et s'arrête net. « Toi aussi ? » Il crache dans le sable. « Alors tu mourras avec l'or de la Concorde. »" }
+        combat: { rencontre: revolte-tavek, victoire: mines-tenues, defaite: mines-perdues }
+      mines-tenues:
+        repliques:
+          - { dit: "Tavek recule, blessé, et ordonne la retraite. La Concorde garde ses mines. Le Prévôt vous fera envoyer une bourse d'or." }
+          - { qui: kaya, expression: colere, dit: "Le soir, Kaya vous attend à la porte de l'auberge. Elle ne dit rien. Elle vous regarde seulement, longtemps. Puis elle s'en va." }
+        effets: [{ or: 200, flag: mines-concorde }]
+        suite: fin
+      mines-perdues:
+        repliques:
+          - { dit: "Les Lunecroc prennent les mines. Tavek vous épargne, avec mépris. « Va dire à tes marchands ce qui arrive quand on vole la terre des loups. »" }
+        effets: [{ flag: mines-lunecroc }]
+        suite: fin
+      treve:
+        repliques:
+          - { dit: "Vous parlez toute la nuit. À Tavek, à Sorha, puis au Prévôt Hassad, venu en personne sous un dais de soie." }
+          - { qui: hassad, dit: "« Un tiers des mines rendu aux Lunecroc. Et la Concorde achète leur protection, au lieu de payer des mercenaires. » Le Prévôt plisse les yeux. « Vous feriez de redoutables marchands. »" }
+          - { qui: sorha, expression: joie, dit: "L'Ancienne Sorha pose sa main ridée sur votre front. « Le vent se souviendra de ton nom. »" }
+        effets: [{ flag: treve-sables, reputation: { ourvalis: 15, concorde: 5 }, affinite: { kaya: 8, seraphine: 5, nadja: 3 }, xp: 200 }]
+        suite: fin
+      treve-ratee:
+        repliques:
+          - { qui: tavek, dit: "Tavek vous coupe la parole. « Des mots. Toujours des mots. » Il sort de la tente. La guerre aura lieu, avec ou sans vous." }
+        choix:
+          - texte: "Alors combattre avec les Lunecroc."
+            effets: [{ flag: soutien-lunecroc, reputation: { ourvalis: 15, concorde: -15 }, affinite: { kaya: 6 } }]
+            aller: attaque
+          - texte: "Rester à l'écart : ce n'est pas votre guerre."
+            effets: [{ affinite: { kaya: -5 } }]
+            aller: ecart
+      ecart:
+        repliques:
+          - { dit: "La bataille dure une journée. Les Lunecroc reprennent une galerie, en perdent deux. Au soir, chacun compte ses morts, et rien n'a changé." }
+        suite: fin
+      fin:
+        repliques:
+          - { qui: seraphine, dit: "Quelques jours plus tard, une lettre royale arrive à Qarzim : le traité est signé, ou presque. Séraphine la lit, puis la jette sur la table. « Mon père veut que je rentre. Moi, je veux savoir ce que dit cette tablette. »" }
+          - { qui: aveline, dit: "Aveline déplie une carte. « Sylvenoire. La forêt des elfes, à l'ouest d'Aubeclaire. Personne n'y entre sans invitation. » Elle hausse les épaules. « Il faudra donc une invitation. »" }
+          - { dit: "La Marche des Sables a changé. Vous aussi. Derrière vous, les dunes effacent vos traces ; devant vous, une forêt qui se souvient." }
+        effets:
+          - { terminer_quete: q-ch2-routes, xp: 300 }
+          - { fin_chapitre: 2 }
+        fin: true

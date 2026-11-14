@@ -72,6 +72,9 @@ export interface EtatDonjon {
   sortie: string;
   messages: string[];
   vus: string[];
+  /** Défaites dans ce donjon (après 3, on peut ressortir par la porte de secours : nœud `abandon` de la scène). */
+  defaites?: number;
+  abandon?: string;
 }
 
 export interface TempsLibre {
@@ -297,7 +300,9 @@ export function conditionHeros(contenu: Contenu, etat: EtatPartie, c: Condition 
   for (const [f, v] of entrees(c.reputation_min ?? {})) if ((etat.reputation[f] ?? 0) < v) return false;
   if (c.date_min && etat.jour < versJour(contenu, c.date_min)) return false;
   if (c.ou && !c.ou.some((x) => conditionHeros(contenu, etat, x, h))) return false;
-  const besoinHeros = [c.race, c.classe, c.origine, c.don, c.affinite_min, c.affinite_palier, c.carac_min, c.objet, c.rang_guilde_min].some((x) => vrai(x)) || c.niveau_min !== undefined || c.or_min !== undefined;
+  // (pas de liste [c.race, c.classe…] ici : en Luau, une liste avec des trous peut sembler vide)
+  const besoinHeros = vrai(c.race) || vrai(c.classe) || vrai(c.origine) || vrai(c.don) || vrai(c.affinite_min) || vrai(c.affinite_palier)
+    || vrai(c.carac_min) || vrai(c.objet) || vrai(c.rang_guilde_min) || c.niveau_min !== undefined || c.or_min !== undefined;
   if (!besoinHeros) return true;
   if (!h) return false;
   const races = liste(c.race); if (races && !races.includes(h.race)) return false;
@@ -313,7 +318,7 @@ export function conditionHeros(contenu: Contenu, etat: EtatPartie, c: Condition 
   for (const [k, v] of entrees(c.carac_min ?? {})) if (ca[k as Carac] < (v ?? 0)) return false;
   if (c.niveau_min !== undefined && h.niveau < c.niveau_min) return false;
   if (c.or_min !== undefined && h.or < c.or_min) return false;
-  if (vrai(c.objet) && !(h.inventaire[c.objet] > 0)) return false;
+  if (vrai(c.objet) && !((h.inventaire[c.objet] ?? 0) > 0)) return false;
   if (vrai(c.rang_guilde_min) && ordreRangs.indexOf(rangGuilde(contenu, etat.pointsGuilde[h.id] ?? 0)) < ordreRangs.indexOf(c.rang_guilde_min)) return false;
   return true;
 }
@@ -617,6 +622,7 @@ function entrerNoeud(contenu: Contenu, etat: EtatPartie, cle: string, noeudId: s
   } else if (n.donjon) {
     const d = contenu.donjons[n.donjon.id];
     etat.donjon = { id: d.id, x: d.depart.x, y: d.depart.y, faits: [], sceneCle: cle, sortie: n.donjon.sortie, messages: [`Le groupe entre dans : ${d.nom}.`], vus: [] };
+    if (vrai(n.donjon.abandon)) etat.donjon.abandon = n.donjon.abandon;
     reveler(etat, d.depart.x, d.depart.y);
   } else if (n.fin) {
     terminerScene(contenu, etat, cle);
@@ -905,10 +911,12 @@ function apresCombat(contenu: Contenu, etat: EtatPartie, cle: string) {
     if (!victoire) {
       // défaite ou fuite : le groupe se retrouve à l'entrée (mort douce) ; les combats déjà gagnés restent gagnés
       const d = etat.donjon;
+      const defaites = (d.defaites ?? 0) + (combat.resultat === 'defaite' ? 1 : 0);
       const msg = combat.resultat === 'defaite'
         ? [...(contexte.bilan ?? []), 'Vous reprenez connaissance près de l\'escalier d\'entrée. Les ennemis vaincus ne se relèveront pas.']
         : ['Le groupe se replie vers l\'entrée.'];
-      etat.donjon = { ...d, x: contenu.donjons[d.id].depart.x, y: contenu.donjons[d.id].depart.y, messages: msg };
+      if (defaites >= 3 && vrai(d.abandon)) msg.push('Le groupe est épuisé. Vous pouvez renoncer et remonter par l\'escalier d\'entrée : l\'histoire continuera sans ce que vous cherchiez ici.');
+      etat.donjon = { ...d, x: contenu.donjons[d.id].depart.x, y: contenu.donjons[d.id].depart.y, messages: msg, defaites };
     }
   } else if (contexte.origine === 'contrat' && vrai(contexte.contrat) && etat.contrats[cle]?.id === contexte.contrat) {
     // contrat à étapes : la victoire fait passer à l'étape suivante ; sinon on pourra réessayer
@@ -958,13 +966,22 @@ function deplacerDonjon(contenu: Contenu, etat: EtatPartie, dx: number, dy: numb
     else refuser('Passage bloqué');
     return;
   }
-  if (t.startsWith('porte-verrouillee') && !listeHeros(etat).some((h) => vrai(h.inventaire['cle-crypte']))) {
+  if (t.startsWith('porte-verrouillee') && !listeHeros(etat).some((h) => entrees(h.inventaire).some(([o, n]) => o.startsWith('cle-') && n > 0))) {
     dj.messages = ['Une lourde porte de bronze, verrouillée. Il faudrait une clé.'];
     return;
   }
   dj.x = nx; dj.y = ny;
   dj.messages = [];
   reveler(etat, nx, ny);
+  // porte de secours : après 3 défaites, la sortie s'ouvre même sans l'objectif, vers le nœud « abandon »
+  const sortieFermee = ev?.type !== 'sortie' ? d.evenements.find((e) => e.type === 'sortie' && e.x === nx && e.y === ny) : undefined;
+  if (sortieFermee && (dj.defaites ?? 0) >= 3 && vrai(dj.abandon)) {
+    const cle = dj.sceneCle;
+    const abandon = dj.abandon!;
+    etat.donjon = null;
+    if (etat.scenes[cle]) entrerNoeud(contenu, etat, cle, abandon);
+    return;
+  }
   if (!ev) return;
   const heros = participantsGroupe(etat);
   switch (ev.type) {
@@ -1314,7 +1331,7 @@ export function appliquer(contenu: Contenu, etatAvant: EtatPartie, action: Actio
     case 'cadeau': {
       const h = herosDuJoueur(etat, action.joueur);
       if (!etat.compagnonsRencontres.includes(action.compagnon)) refuser('Vous ne connaissez pas encore ce personnage');
-      if (!(h.inventaire[action.objet] > 0)) refuser('Vous n\'avez pas cet objet');
+      if (!((h.inventaire[action.objet] ?? 0) > 0)) refuser('Vous n\'avez pas cet objet');
       const a = affinite(etat, h.id, action.compagnon);
       if (!peutOffrir(contenu, a, etat.jour)) refuser(`Un cadeau tous les ${contenu.config.affinite.jours_entre_cadeaux} jours au plus`);
       h.inventaire[action.objet]--;
@@ -1339,7 +1356,7 @@ export function appliquer(contenu: Contenu, etatAvant: EtatPartie, action: Actio
     case 'equiper': {
       const h = herosDuJoueur(etat, action.joueur);
       const o = contenu.objets[action.objet] ?? refuser('Objet inconnu');
-      if (!(h.inventaire[o.id] > 0)) refuser('Vous n\'avez pas cet objet');
+      if (!((h.inventaire[o.id] ?? 0) > 0)) refuser('Vous n\'avez pas cet objet');
       const probleme = problemeEquipement(contenu, h, o);
       if (probleme !== undefined) refuser(probleme);
       const emplacement = o.emplacement!;
@@ -1373,10 +1390,10 @@ export function appliquer(contenu: Contenu, etatAvant: EtatPartie, action: Actio
     case 'vendre': {
       const h = herosDuJoueur(etat, action.joueur);
       const o = contenu.objets[action.objet] ?? refuser('Objet inconnu');
-      if (!(h.inventaire[o.id] > 0)) refuser('Vous n\'avez pas cet objet');
+      if (!((h.inventaire[o.id] ?? 0) > 0)) refuser('Vous n\'avez pas cet objet');
       if (o.type === 'quete') refuser('On ne vend pas un objet de quête');
       const n = quantiteValide(action.quantite);
-      if (h.inventaire[o.id] < n) refuser(`Vous n'en avez que ${h.inventaire[o.id]}`);
+      if ((h.inventaire[o.id] ?? 0) < n) refuser(`Vous n'en avez que ${h.inventaire[o.id]}`);
       const gain = prixVente(contenu, h, o.id) * n;
       h.inventaire[o.id] -= n;
       h.or += gain;
@@ -1400,7 +1417,7 @@ export function appliquer(contenu: Contenu, etatAvant: EtatPartie, action: Actio
     }
     case 'utiliser': {
       const h = herosDuJoueur(etat, action.joueur);
-      if (!(h.inventaire[action.objet] > 0)) refuser('Vous n\'avez pas cet objet');
+      if (!((h.inventaire[action.objet] ?? 0) > 0)) refuser('Vous n\'avez pas cet objet');
       if (action.objet === 'potion-soin' || action.objet === 'potion-soin-petite') refuser('Les potions se boivent en combat (les PV remontent au maximum après chaque combat)');
       refuser('Cet objet ne s\'utilise pas hors combat');
       break;

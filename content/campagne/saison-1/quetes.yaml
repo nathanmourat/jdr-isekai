@@ -80,4 +80,6 @@ quetes:
     resume: "Le père d'Aveline a été exécuté pour trahison après la chute de Valgrane. Elle n'y a jamais cru."
     etapes:
       - { id: confidence, objectif: "Gagner la confiance d'Aveline (palier « Proche »)." }
-      - { id: archives, objectif: "Trouver un moyen d'accéder aux archives militaires de Valgrane (suite au chapitre 2)." }
+      - { id: archives, objectif: "Trouver un moyen d'accéder aux archives militaires de Valgrane (avec l'aide de Séraphine, au chapitre 2)." }
+      - { id: verite, objectif: "Découvrir pourquoi l'Ordre a scellé le dossier de Valgrane (chapitre 4)." }
+      - { id: rehabilitation, objectif: "Faire réhabiliter Gauvain de Castelroc (chapitre 5)." }

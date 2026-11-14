@@ -1,0 +1,47 @@
+# Nadja Kesh — la marchande rusée (chapitre 2).
+compagnon:
+  id: nadja
+  nom: "Nadja Kesh"
+  titre: "Courtière de caravanes"
+  age: 27
+  genre: f
+  personnalite: "Cupide en apparence, sarcastique, négociatrice redoutable. Loyale envers qui l'a méritée, et elle tient ses comptes à la pièce près."
+  passe: "La maison Kesh a fait faillite quand Nadja avait seize ans. Sa dette appartient à la Concorde, qui l'emploie comme intermédiaire, « à contrecœur »."
+  objectif: "Racheter sa liberté… et, un jour, faire tomber la Concorde."
+  chapitre_arrivee: 2
+  quete: q-nadja
+  lignes_rouges:
+    - { flag: nadja-simple-marchande, description: "« Je ne suis pas un étal du Bazar. Ne me parle pas comme à un comptoir. »", penalite: -15 }
+    - { flag: client-vole, description: "« Tu m'as volé un client. Dans le désert, ça se paie. »", penalite: -25 }
+    - { flag: livre-vendu, description: "« Tu as rendu le Grand Livre à la Concorde. Tu m'as revendue avec. »", penalite: -60, definitive: true }
+  cadeaux:
+    prefere: [epices-de-qarzim, perle-du-desert]
+    apprecie: [the-a-la-menthe, livre-ancien]
+    deteste: [fleur-des-champs, croc-de-loup]
+  combat:
+    caracteristiques: { FOR: 7, AGI: 13, INT: 12, VIT: 9, ESP: 9, CHA: 10 }
+    attaque: { stat: AGI, element: physique, portee: distance, puissance: 8 }
+    armure: 3
+    rang: arriere
+    competences:
+      - id: nadja-fumigene
+        nom: Fumigène de contrebande
+        description: "Un nuage de fumée qui protège tout le groupe."
+        recharge: 4
+        cible: tous_allies
+        effets: [{ type: etat, etat: bonus_defense, duree: 2, valeur: 0.2 }]
+        ia: { priorite: 3, quand: allie_blesse }
+      - id: nadja-lame-de-poche
+        nom: Lame de poche
+        description: "Un couteau de lancer enduit d'un poison du Bazar."
+        recharge: 2
+        cible: ennemi
+        effets:
+          - { type: degats, puissance: 10, stat: AGI }
+          - { type: etat, etat: poison, duree: 3, valeur: 5 }
+        ia: { priorite: 2 }
+  bonus_paliers:
+    alliee: { id: aura-precision, nom: "Œil du marchand", description: "Elle repère les failles : +5 % de précision pour le groupe.", parametres: { valeur: 0.05 } }
+    proche: { id: aura-defense, nom: "Coups fourrés", description: "+8 % de défense pour tout le groupe.", parametres: { valeur: 0.08 } }
+    amoureuse: { id: aura-degats, nom: "Bon placement", description: "+8 % de dégâts pour tout le groupe.", parametres: { valeur: 0.08 } }
+    engagee: { id: attaque-combinee, nom: "Affaire conclue", description: "Attaque combinée avec son héros : +25 % de dégâts.", parametres: { degats: 0.25 } }

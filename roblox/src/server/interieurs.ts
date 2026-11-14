@@ -8,7 +8,9 @@
  */
 import { Workspace } from "@rbxts/services";
 import { CONTENU } from "shared/donnees";
-import { positionLieu } from "shared/geo";
+import { positionLieu, regionDuLieu, STYLES, tousLesLieux, trouverLieu } from "shared/geo";
+import type { LieuDef } from "shared/moteur";
+import { genre } from "./regions";
 import { banniere, bloc, C, tonneau, VERTICAL } from "./decor";
 import { COSTUMES, humanoide, type Costume } from "./modeles";
 
@@ -175,7 +177,10 @@ const GARDE: Costume = { peau: rgb(220, 185, 150), haut: rgb(170, 175, 190), bas
 // ───────────────────────────── Salles ─────────────────────────────
 
 function construireSalle(lieu: string, base: Vector3) {
-	const pnjDuLieu = CONTENU.regions.aubeclaire.lieux.find((l) => l.id === lieu)?.pnj.map((x) => x.id) ?? [];
+	const def = trouverLieu(lieu);
+	const pnjDuLieu = def?.pnj.map((x) => x.id) ?? [];
+	// lieux des autres régions : salle générique selon le genre du lieu (auberge, guilde, boutique…)
+	if (def && regionDuLieu(lieu) !== "aubeclaire") return salleRegionale(def, base, pnjDuLieu);
 	switch (lieu) {
 		case "guilde": {
 			const m = salle(lieu, base, 60, 44, 18, { sol: rgb(120, 90, 60), mur: rgb(214, 200, 170), matSol: Enum.Material.WoodPlanks, matMur: Enum.Material.Plaster });
@@ -342,15 +347,87 @@ function construireSalle(lieu: string, base: Vector3) {
 	}
 }
 
+/** Couleurs des salles selon la région. */
+const SALLES: Record<string, { sol: Color3; mur: Color3; matSol: Enum.Material; matMur: Enum.Material }> = {
+	desert: { sol: rgb(170, 120, 80), mur: rgb(225, 195, 150), matSol: Enum.Material.CeramicTiles, matMur: Enum.Material.Sandstone },
+	foret: { sol: rgb(110, 80, 55), mur: rgb(130, 95, 62), matSol: Enum.Material.WoodPlanks, matMur: Enum.Material.Wood },
+	montagne: { sol: rgb(95, 92, 90), mur: rgb(120, 115, 110), matSol: Enum.Material.Slate, matMur: Enum.Material.Cobblestone },
+	archipel: { sol: rgb(130, 95, 65), mur: rgb(150, 110, 75), matSol: Enum.Material.WoodPlanks, matMur: Enum.Material.WoodPlanks },
+	rempart: { sol: rgb(150, 145, 135), mur: rgb(175, 170, 160), matSol: Enum.Material.Cobblestone, matMur: Enum.Material.Cobblestone },
+	cendres: { sol: rgb(40, 34, 42), mur: rgb(55, 46, 60), matSol: Enum.Material.Basalt, matMur: Enum.Material.Basalt },
+};
+
+/** Salle d'un lieu des chapitres 2 à 6 : meubles selon le genre, PNJ du lieu, points d'interaction. */
+function salleRegionale(l: LieuDef, base: Vector3, pnjDuLieu: string[]) {
+	const style = STYLES[regionDuLieu(l.id)] ?? "desert";
+	const couleurs = SALLES[style] ?? SALLES.desert;
+	const g = genre(l);
+	const grande = g === "palais" || g === "guilde" || g === "auberge" || g === "temple";
+	const m = salle(l.id, base, grande ? 50 : 34, grande ? 38 : 26, grande ? 16 : 12, couleurs);
+	const fond = base.add(new Vector3(0, 0, grande ? -14 : -8));
+	if (g === "guilde") {
+		comptoir(m, fond.add(new Vector3(6, 0, 2)), 16);
+		point(m, fond.add(new Vector3(10, 2, 5)), l.id, "boutique", "Acheter", "Comptoir de la Guilde");
+		const tableau = bloc(new Vector3(0.6, 9, 14), base.add(new Vector3(-24.2, 7, -4)), rgb(110, 80, 50), { parent: m, matiere: Enum.Material.Wood });
+		void tableau;
+		for (let i = 0; i < 8; i++) bloc(new Vector3(0.2, 2.2, 1.8), base.add(new Vector3(-23.8, 4.5 + (i % 3) * 2.8, -9.5 + i * 1.5)), rgb(235, 225, 195), { parent: m });
+		point(m, base.add(new Vector3(-21, 2, -4)), l.id, "contrats", "Consulter", "Tableau des contrats");
+		bloc(new Vector3(2, 4, 2), base.add(new Vector3(18, 2, -6)), C.bois, { parent: m, matiere: Enum.Material.Wood });
+		const livre = bloc(new Vector3(2.4, 0.4, 1.8), base.add(new Vector3(18, 4.3, -6)), rgb(120, 60, 160), { parent: m, neon: true });
+		lumiereInterieure(livre, rgb(170, 110, 255), 12);
+		point(m, base.add(new Vector3(18, 2, -3)), l.id, "grimoire", "Lire", "Fusions de la Guilde");
+		for (const [x, z] of [[-10, 8], [8, 8]] as const) tableBancs(m, base.add(new Vector3(x, 0, z)));
+	} else if (g === "auberge") {
+		comptoir(m, fond.add(new Vector3(4, 0, 2)), 18);
+		point(m, fond.add(new Vector3(9, 2, 5)), l.id, "boutique", "Commander", "Comptoir de l'auberge");
+		cheminee(m, base.add(new Vector3(-23.5, 0, -6)), CFrame.Angles(0, math.rad(-90), 0));
+		for (const [x, z] of [[-10, 4], [6, 6], [-8, 12]] as const) tableBancs(m, base.add(new Vector3(x, 0, z)), 7);
+		// le lit : dormir fait passer les mois, si tout le monde est d'accord
+		bloc(new Vector3(5, 1.6, 8), base.add(new Vector3(18, 0.8, 10)), C.bois, { parent: m, matiere: Enum.Material.WoodPlanks });
+		bloc(new Vector3(4.6, 0.8, 7.4), base.add(new Vector3(18, 2, 10)), rgb(230, 225, 210), { parent: m, matiere: Enum.Material.Fabric });
+		bloc(new Vector3(4.6, 0.3, 4.5), base.add(new Vector3(18, 2.5, 11.3)), rgb(60, 110, 160), { parent: m, matiere: Enum.Material.Fabric });
+		point(m, base.add(new Vector3(14, 2, 10)), l.id, "auberge", "Dormir", "Le lit de l'auberge");
+	} else if (g === "boutique") {
+		comptoir(m, fond, 16);
+		etagere(m, fond.add(new Vector3(-8, 0, -3.5)));
+		etagere(m, fond.add(new Vector3(8, 0, -3.5)));
+		point(m, fond.add(new Vector3(0, 2, 3)), l.id, "boutique", "Acheter", l.nom);
+	} else if (g === "palais") {
+		tapis(m, base, new Vector2(8, 30), rgb(150, 30, 40));
+		bloc(new Vector3(14, 2, 6), fond.add(new Vector3(0, 1, -2)), couleurs.mur.Lerp(new Color3(1, 1, 1), 0.3), { parent: m, matiere: Enum.Material.Marble });
+		bloc(new Vector3(4, 7, 1.6), fond.add(new Vector3(0, 5.5, -4)), C.or, { parent: m, matiere: Enum.Material.Metal });
+		for (const x of [-18, 18]) banniere(base.add(new Vector3(x, 0, -17)), C.toitBleu, m);
+		if (l.boutique.size() > 0) point(m, fond.add(new Vector3(10, 2, 4)), l.id, "boutique", "Acheter", l.nom);
+	} else if (g === "temple") {
+		tapis(m, base, new Vector2(6, 30), rgb(130, 40, 50));
+		const autel = bloc(new Vector3(6, 3, 3), fond.add(new Vector3(0, 1.5, -2)), rgb(255, 230, 160), { parent: m, neon: true });
+		lumiereInterieure(autel, rgb(255, 230, 170), 36);
+		for (const x of [-9, 9]) for (let r = 0; r < 4; r++) bloc(new Vector3(8, 1, 2), base.add(new Vector3(x, 1.6, 8 - r * 5)), C.bois, { parent: m, matiere: Enum.Material.WoodPlanks });
+		if (l.boutique.size() > 0) point(m, base.add(new Vector3(14, 2, 10)), l.id, "boutique", "Faire une offrande", l.nom);
+	} else {
+		tableBancs(m, base.add(new Vector3(0, 0, -2)));
+		tapis(m, base.add(new Vector3(0, 0, 6)), new Vector2(10, 8), rgb(140, 60, 50));
+		if (l.boutique.size() > 0) {
+			comptoir(m, fond, 12);
+			point(m, fond.add(new Vector3(0, 2, 3)), l.id, "boutique", "Acheter", l.nom);
+		}
+	}
+	// les PNJ du lieu, en arc de cercle face à la porte (leur visibilité suit la partie : client/rendu/marqueurs.ts)
+	pnjDuLieu.forEach((id, k) => {
+		const x = (k - (pnjDuLieu.size() - 1) / 2) * 5;
+		pnj(m, l.id, id, fond.add(new Vector3(x, 0, 4 - math.abs(x) * 0.15)), base.add(new Vector3(0, 0, 10)));
+	});
+}
+
 /** Construit toutes les salles (une par lieu, sauf la place de Lysmont qui reste en extérieur). */
 export function construireInterieurs() {
 	dossier = new Instance("Folder");
 	dossier.Name = "Interieurs";
 	dossier.Parent = Workspace;
 	let i = 0;
-	for (const l of CONTENU.regions.aubeclaire.lieux) {
+	for (const l of tousLesLieux()) {
 		if (l.id === "lysmont-place" || l.etape_seulement === true) continue;
-		const base = new Vector3(-1200 + i * 320, HAUTEUR, 1400);
+		const base = new Vector3(-1200 + (i % 16) * 320, HAUTEUR, 1400 + math.floor(i / 16) * 320);
 		i++;
 		const [ok, err] = pcall(() => construireSalle(l.id, base));
 		if (!ok) warn(`[Velmaris] Intérieur de ${l.id} : ${tostring(err)}`);

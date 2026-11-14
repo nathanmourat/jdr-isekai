@@ -101,6 +101,19 @@ export interface LieuDef {
 	etape_seulement?: boolean;
 	/** on peut y dormir (le lit fait passer les mois) */
 	auberge?: boolean;
+	/** ville qui contient ce lieu */
+	ville?: string;
+	gerant?: string;
+}
+
+export interface RegionDef {
+	id: string;
+	nom: string;
+	description?: string;
+	chapitre?: number;
+	disponible_si?: Condition;
+	villes?: { id: string; nom: string; position: { x: number; y: number } }[];
+	lieux: LieuDef[];
 }
 
 export interface EtapeContratDef {
@@ -194,7 +207,7 @@ export interface Contenu {
 	quetes: Record<string, { id: string; titre: string; type: string; resume: string; etapes: { id: string; objectif: string; scene?: string; lieu?: string }[] }>;
 	compagnons: Record<string, CompagnonDef>;
 	pnj: Record<string, { id: string; nom: string; titre: string; description: string }>;
-	regions: Record<string, { id: string; nom: string; lieux: LieuDef[] }>;
+	regions: Record<string, RegionDef>;
 	contrats: Record<string, ContratDef>;
 	activites: Record<string, { id: string; nom: string; description: string; disponible_si?: Condition; choix_compagnon?: boolean }>;
 	donjons: Record<string, { id: string; nom: string; carte: string[]; legende: Record<string, string>; depart: { x: number; y: number } }>;
@@ -435,6 +448,7 @@ export function lieuAvecCombat(contenu: Contenu, etat: EtatPartie, lieu: string,
 export function palierCompagnon(contenu: Contenu, etat: EtatPartie, herosId: string, compagnon: string): { id: string; nom: string; index: number };
 export function prixAchat(contenu: Contenu, h: Heros, objet: string): number;
 export function prixVente(contenu: Contenu, h: Heros, objet: string): number;
+export function estGuilde(lieu: string): boolean;
 export const COULEURS_RARETE: Record<string, string>;
 export const NOMS_RARETE: Record<string, string>;
 export const POUVOIRS: Record<string, string>;

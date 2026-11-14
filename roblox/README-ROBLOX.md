@@ -267,6 +267,23 @@ Dans **ReplicatedStorage**, crée un dossier **`ObjetsDuGroupe`** et mets-y un M
 ### Si le jeu rame
 Dans **Studio → Workspace → StreamingEnabled**, le streaming peut alléger les téléphones. **Je ne l'ai pas activé** : les marqueurs et les intérieurs ont besoin que tous les bâtiments soient chargés chez chaque joueur. Si vous l'activez, testez bien l'entrée dans les bâtiments éloignés.
 
+## Saison 1 complète : les nouvelles régions (mise à jour du 14/11)
+
+Chaque région des chapitres 2 à 6 est construite par le code (`src/server/regions.ts`), **loin des autres** :
+- la Marche des Sables au sud, Sylvenoire à l'ouest, Grisfer à l'est ;
+- l'Archipel au sud-ouest, le Mur d'Aube et les Terres Cendrées au nord.
+
+On y va par la **carte → « Y aller »** (téléportation). Chaque région a son style : terrain, matériaux, bâtiments et végétation. Chaque lieu a son bâtiment selon son genre (auberge, comptoir de la Guilde, boutique, palais, temple, campement, mine, ruines…) et sa salle intérieure. Les PNJ apparaissent quand l'histoire le permet.
+
+### Liste de contrôle — chapitre 2 (Marche des Sables)
+- [ ] Fin du chapitre 1 → dormir à l'auberge → au château, Séraphine lance « Le départ ».
+- [ ] La carte affiche une nouvelle section « Marche des Sables » ; « Y aller » vers la Route des Caravanes téléporte dans le désert.
+- [ ] Qarzim : porte, Grand Bazar (étals colorés), Oasis Bleue (coupole et bassin), Comptoir de la Guilde (bannières), Palais (coupole), Résidence.
+- [ ] Comptoir de la Guilde de Qarzim : le tableau propose les contrats de la région, le pupitre les fusions.
+- [ ] Oasis Bleue : le lit permet de dormir (les mois passent).
+- [ ] Les combats du chapitre se déroulent dans le désert (route, canyon, mines, résidence).
+- [ ] Ruines de Sel : le donjon se joue comme la Crypte. Après 3 défaites, on peut ressortir par l'escalier (porte de secours).
+
 ## Publier sur Roblox (quand tout marche)
 
 1. **Fichier → Publier sur Roblox**, si ce n'est pas déjà fait.

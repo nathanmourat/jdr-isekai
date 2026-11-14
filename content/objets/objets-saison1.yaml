@@ -1,0 +1,16 @@
+# Objets ajoutés par les chapitres 2 à 6 de la saison 1 (hors équipement : voir equipements.yaml).
+objets:
+  # ── Chapitre 2 : Marche des Sables ──
+  - { id: potion-soin-grande, nom: "Grande potion de soin", description: "Une fiole épaisse, rouge sombre : elle referme les plaies en un instant.", utilite: "À boire en combat (bouton du sac). Pour les héros aguerris.", type: consommable, prix: 90, cible: allie, effets: [{ type: soin, puissance: 60, stat: VIT }] }
+  - { id: potion-mana-grande, nom: "Grande potion de mana", description: "Un liquide bleu qui pétille sur la langue.", utilite: "À boire en combat : rend 45 points de mana.", type: consommable, prix: 70, cible: soi, effets: [{ type: mana, valeur: 45 }] }
+  - { id: eau-d-oasis, nom: "Gourde d'eau d'oasis", description: "Une eau fraîche tirée du puits de l'Oasis Bleue.", utilite: "À boire en combat : soigne un peu et retire les effets négatifs.", type: consommable, prix: 20, cible: allie, effets: [{ type: purifier }, { type: soin, puissance: 14, stat: VIT }] }
+  - { id: viande-grillee, nom: "Brochettes d'agneau grillé", description: "Épicées, juteuses, encore fumantes.", type: cadeau, prix: 10 }
+  - { id: the-a-la-menthe, nom: "Boîte de thé à la menthe", description: "Un thé fin du Grand Bazar, dans une boîte en cuivre ciselé.", type: cadeau, prix: 18 }
+  - { id: epices-de-qarzim, nom: "Sachet d'épices de Qarzim", description: "Safran, cumin et poivre des dunes. Cela vaut presque son poids en or.", type: cadeau, prix: 30 }
+  - { id: carnet-de-contes, nom: "Carnet de contes", description: "Des contes de toutes les régions, recopiés à la main par un conteur du Bazar.", type: cadeau, prix: 22 }
+  - { id: perle-du-desert, nom: "Perle du désert", description: "Une perle de verre de sable, chaude au toucher, qui change de couleur au soleil.", type: cadeau, prix: 45, mystere: true }
+  - { id: cristal-ether, nom: "Cristal d'éther", description: "Un cristal violet qui bourdonne doucement, comme s'il respirait.", utilite: "Matériau : se revend très cher… mais à qui profite ce commerce ?", type: materiau, prix: 35 }
+  - { id: tablette-dechirure, nom: "Tablette de la Déchirure", description: "Une tablette d'argile couverte d'écriture elfique très ancienne. On y parle d'un rituel, d'un Voile, et d'une faute.", type: quete }
+  - { id: lettre-valgrane, nom: "Lettre scellée de Valgrane", description: "Un ordre de repli daté de 1003, signé du commandant de Valgrane… et contresigné d'un sceau de l'Ordre.", type: quete }
+  - { id: grand-livre-rouge, nom: "Copie du Grand Livre rouge", description: "Les comptes secrets de la Concorde : qui achète les cristaux, qui doit de l'argent à qui.", type: quete }
+  - { id: insigne-main-de-sable, nom: "Insigne de la Main de Sable", description: "Une main de bronze tenant un grain de sable : la marque des assassins de Qarzim.", type: quete }

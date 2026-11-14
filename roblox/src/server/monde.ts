@@ -3,7 +3,7 @@
  * terrain Roblox (herbe, collines, rivière, chemins de terre), lumière de fin d'après-midi, maisons à colombages,
  * lanternes, arbres, villageois. Chaque lieu a sa silhouette et une invite « Entrer ».
  */
-import { Lighting, Players, Workspace } from "@rbxts/services";
+import { CollectionService, Lighting, Players, Workspace } from "@rbxts/services";
 import { CONTENU } from "shared/donnees";
 import type { LieuDef } from "shared/moteur";
 import { positionLieu } from "shared/geo";
@@ -372,7 +372,7 @@ function villageois(centrePlace: Vector3) {
  * Lieu d'étape (quête ou contrat) : pas de bâtiment, une balise lumineuse avec une invite.
  * Chaque joueur ne la voit que pendant l'étape qui y mène (client/rendu/marqueurs.ts).
  */
-function balise(l: LieuDef) {
+export function balise(l: LieuDef) {
 	const pos = positionLieu(l);
 	const m = new Instance("Model");
 	m.Name = `etape-${l.id}`;
@@ -381,6 +381,7 @@ function balise(l: LieuDef) {
 	const socle = bloc(new Vector3(6, 1, 6), pos.add(new Vector3(0, 0.5, 0)), C.pierre, { parent: m, matiere: Enum.Material.Cobblestone });
 	void socle;
 	const colonne = bloc(new Vector3(1.6, 10, 1.6), pos.add(new Vector3(0, 6, 0)), C.or, { parent: m, neon: true, nom: "Entree" });
+	CollectionService.AddTag(colonne, "EntreeLieu");
 	colonne.Transparency = 0.35;
 	colonne.CanCollide = false;
 	colonne.SetAttribute("Lieu", l.id);
@@ -439,6 +440,7 @@ export function construireMonde() {
 
 		// point d'entrée : invite « Entrer » (les marqueurs ⭐ ● ⚔ sont ajoutés par chaque joueur)
 		const ancre = bloc(new Vector3(4, 6, 4), porte.add(new Vector3(0, 3, 0)), C.or, { parent: modele, nom: "Entree" });
+		CollectionService.AddTag(ancre, "EntreeLieu");
 		ancre.Transparency = 1;
 		ancre.CanCollide = false;
 		ancre.SetAttribute("Lieu", l.id);

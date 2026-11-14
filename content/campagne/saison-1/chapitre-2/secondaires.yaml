@@ -1,0 +1,316 @@
+# Chapitre 2 — quêtes secondaires (Marche des Sables). Chaque étape est une courte scène dans un lieu de la carte.
+scenes:
+  # ── La Grande Mère des chacals ────────────────────────────────
+  - id: sq-chacals-guilde
+    pnj: ibrek
+    titre: "La Grande Mère des chacals : l'affaire"
+    type: groupe
+    lieu: guilde-qarzim
+    decor: guilde
+    quete: q-matriarche
+    disponible_si: { flag: sables-ouverts, pas_flag: matriarche-acceptee }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: ibrek, dit: "Ibrek remonte ses lunettes sur son museau roux. « Sept chameaux en un mois, dans le Canyon des Chacals. Les caravaniers parlent d'une matriarche blanche, grande comme un poney. Personne ne veut le contrat : il paie mal. »" }
+          - { qui: kaya, dit: "Kaya ricane. « Il paie mal, mais il paie en gloire. »", si: { flag: kaya-recrutee } }
+        choix:
+          - texte: "« On prend. »"
+            effets: [{ flag: matriarche-acceptee, quete: { id: q-matriarche, etape: canyon } }]
+            aller: fin
+      fin:
+        repliques:
+          - { qui: ibrek, dit: "« Le canyon est au sud-est. Prenez de l'eau, et ne faites pas confiance à l'écho. »" }
+        fin: true
+  - id: sq-chacals-canyon
+    titre: "La Grande Mère des chacals : le canyon"
+    type: groupe
+    lieu: canyon-des-chacals
+    decor: canyon-des-chacals
+    quete: q-matriarche
+    disponible_si: { quete_etape: { q-matriarche: canyon } }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "Les parois rouges se resserrent. Des jappements résonnent de partout et de nulle part à la fois." }
+        choix:
+          - texte: "Avancer en silence et repérer la meute. (Agilité, difficulté 20)"
+            test: { carac: AGI, difficulte: 20, reussite: discret, echec: repere }
+          - texte: "Avancer d'un pas ferme : qu'ils viennent."
+            aller: repere
+      discret:
+        repliques:
+          - { dit: "Vous repérez les guetteurs avant qu'ils ne vous voient. La tanière est au fond du canyon, sous un surplomb." }
+        effets: [{ xp: 40, quete: { id: q-matriarche, etape: taniere } }]
+        fin: true
+      repere:
+        repliques:
+          - { dit: "Une meute surgit des rochers !" }
+        combat: { rencontre: chacals-dunes, victoire: apres, defaite: apres }
+      apres:
+        repliques:
+          - { dit: "Les survivants fuient vers le fond du canyon, sous un surplomb. Vous savez où aller." }
+        effets: [{ quete: { id: q-matriarche, etape: taniere } }]
+        fin: true
+  - id: sq-chacals
+    titre: "La Grande Mère des chacals : la tanière"
+    type: groupe
+    lieu: canyon-des-chacals
+    decor: canyon-des-chacals
+    quete: q-matriarche
+    disponible_si: { quete_etape: { q-matriarche: taniere } }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "Sous le surplomb, une chacale énorme, au pelage presque blanc, se dresse devant ses petits. Ses yeux sont fatigués. Ses côtes saillent." }
+          - { qui: kaya, dit: "Kaya fronce les sourcils. « Elle a faim. Les mines ont fait fuir tout le gibier du canyon. »", si: { flag: kaya-recrutee } }
+        choix:
+          - texte: "Combattre la matriarche."
+            aller: combat
+          - texte: "Lui laisser de la viande et la chasser loin des routes. (Esprit, difficulté 22)"
+            test: { carac: ESP, difficulte: 22, reussite: paix, echec: combat }
+      combat:
+        combat: { rencontre: chacals-matriarche, victoire: victoire, defaite: defaite }
+      victoire:
+        repliques:
+          - { dit: "La Grande Mère tombe. Ses petits s'enfuient dans les rochers." }
+        effets: [{ flag: matriarche-tuee, quete: { id: q-matriarche, etape: retour } }]
+        fin: true
+      defaite:
+        repliques:
+          - { dit: "La matriarche vous laisse au sol et emporte ses petits vers le désert profond. Elle ne reviendra pas." }
+        effets: [{ quete: { id: q-matriarche, etape: retour } }]
+        fin: true
+      paix:
+        repliques:
+          - { dit: "La chacale renifle la viande, vous fixe longuement… puis s'éloigne vers le sud avec toute sa meute. Les routes seront tranquilles." }
+          - { qui: kaya, expression: joie, dit: "Kaya vous regarde avec un respect nouveau. « Tu parles aux bêtes, maintenant ? »", si: { flag: kaya-recrutee } }
+        effets: [{ flag: matriarche-epargnee, affinite: { kaya: 5 }, reputation: { ourvalis: 5 }, xp: 120, quete: { id: q-matriarche, etape: retour } }]
+        fin: true
+  - id: sq-chacals-retour
+    pnj: ibrek
+    titre: "La Grande Mère des chacals : le retour"
+    type: groupe
+    lieu: guilde-qarzim
+    decor: guilde
+    quete: q-matriarche
+    rend_quete: true
+    disponible_si: { quete_etape: { q-matriarche: retour } }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: ibrek, dit: "« Le canyon est sûr ? Parfait. » Ibrek trempe sa plume. « Je note : contrat rempli, avec… mention. »" }
+        effets: [{ terminer_quete: q-matriarche, xp: 250, or: 90, points_guilde: 120 }]
+        fin: true
+
+  # ── Les puits asséchés ────────────────────────────────────────
+  - id: sq-puits-ziyane
+    pnj: ziyane
+    titre: "Les puits asséchés : l'inquiétude de Ziyane"
+    type: groupe
+    lieu: qarzim-oasis
+    decor: qarzim-oasis
+    quete: q-puits
+    disponible_si: { flag: sables-ouverts, pas_flag: puits-acceptes }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: ziyane, dit: "Mère Ziyane trempe la main dans le bassin de l'auberge. « Il baisse. Chaque semaine, un doigt de moins. Le vieux canal de l'Oasis passe par les puits du sud… et mon grand-père disait qu'il n'était jamais à sec. »" }
+        choix:
+          - texte: "« Nous irons voir. »"
+            effets: [{ flag: puits-acceptes, quete: { id: q-puits, etape: puits } }]
+            aller: fin
+      fin:
+        repliques:
+          - { qui: ziyane, dit: "« Que les puits vous soient doux. » Elle vous remplit les gourdes, gratuitement." }
+        effets: [{ objet: eau-d-oasis }]
+        fin: true
+  - id: sq-puits-canal
+    titre: "Les puits asséchés : le vieux canal"
+    type: groupe
+    lieu: puits-asseches
+    decor: puits-asseches
+    quete: q-puits
+    disponible_si: { quete_etape: { q-puits: puits } }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "Les puits sont à sec. Mais dans le canal, les traces sont fraîches : des pelles, des roues de chariot… et un barrage de planches neuves qui détourne l'eau vers l'est." }
+          - { dit: "Vers l'est. Vers les mines d'éther." }
+        effets: [{ quete: { id: q-puits, etape: mines } }]
+        fin: true
+  - id: sq-puits-mines
+    titre: "Les puits asséchés : l'eau des mines"
+    type: groupe
+    lieu: mines-ether
+    decor: mines-ether
+    quete: q-puits
+    disponible_si: { quete_etape: { q-puits: mines } }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "Aux mines, l'eau du canal sert à laver le minerai violet. Des bassins entiers, troubles, gaspillés, puis rejetés dans le sable." }
+          - { qui: vask, dit: "Un capitaine en cuirasse dorée s'approche. « Propriété de la Concorde. Circulez. »" }
+        choix:
+          - texte: "Détruire le barrage cette nuit, en silence."
+            aller: sabotage
+          - texte: "Exiger que l'eau soit rendue à Qarzim."
+            aller: combat
+          - texte: "Acheter les gardes pour qu'ils « oublient » le barrage. (100 or)"
+            si: { or_min: 100 }
+            effets: [{ or: -100 }]
+            aller: achat
+      sabotage:
+        repliques:
+          - { dit: "Les planches cèdent dans un grand fracas d'eau. Le canal se remplit. Au loin, des cris : on vous a vus." }
+        combat: { rencontre: mercenaires-mines, victoire: fini, defaite: fini }
+      combat:
+        repliques:
+          - { qui: vask, dit: "« Exiger ? » Le capitaine rit. « Gardes ! »" }
+        combat: { rencontre: mercenaires-mines, victoire: force, defaite: fini }
+      force:
+        repliques:
+          - { dit: "Les mercenaires battus démontent eux-mêmes le barrage, sous vos yeux." }
+        suite: fini
+      achat:
+        repliques:
+          - { dit: "L'or change de main. Au matin, le barrage a « mystérieusement » disparu." }
+        effets: [{ reputation: { concorde: -3 } }]
+        suite: fini
+      fini:
+        effets: [{ flag: eau-rendue, reputation: { concorde: -5 }, quete: { id: q-puits, etape: retour } }]
+        fin: true
+  - id: sq-puits-retour
+    pnj: ziyane
+    titre: "Les puits asséchés : le retour"
+    type: groupe
+    lieu: qarzim-oasis
+    decor: qarzim-oasis
+    quete: q-puits
+    rend_quete: true
+    disponible_si: { quete_etape: { q-puits: retour } }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: ziyane, expression: joie, dit: "Le bassin déborde presque. Mère Ziyane pleure et rit en même temps. « Vous dormirez ici quand vous voudrez. Et la première nuit, c'est la maison qui offre ! »" }
+        effets: [{ terminer_quete: q-puits, xp: 260, or: 60, objet: [eau-d-oasis, eau-d-oasis] }]
+        fin: true
+
+  # ── La caravane fantôme ───────────────────────────────────────
+  - id: sq-fantome-rumeur
+    pnj: ouzram
+    titre: "La caravane fantôme : une vieille histoire"
+    type: groupe
+    lieu: qarzim-bazar
+    decor: qarzim-bazar
+    quete: q-caravane-fantome
+    disponible_si: { flag: sables-ouverts, pas_flag: fantome-acceptee }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: ouzram, dit: "Maître Ouzram cesse de polir une lame. « Il y a vingt ans, la caravane de mon frère, Belkhir, s'est perdue dans les Dunes chantantes. Certaines nuits, des caravaniers voient des lanternes là-bas… et entendent des clochettes de chameaux. »" }
+          - { qui: ouzram, dit: "« Je ne crois pas aux fantômes. Mais je voudrais savoir. »" }
+        choix:
+          - texte: "« Nous irons voir, Maître Ouzram. »"
+            effets: [{ flag: fantome-acceptee, quete: { id: q-caravane-fantome, etape: dunes } }]
+            aller: fin
+      fin:
+        fin: true
+  - id: sq-fantome-dunes
+    titre: "La caravane fantôme : les Dunes chantantes"
+    type: groupe
+    lieu: dunes-chantantes
+    decor: dunes-chantantes
+    quete: q-caravane-fantome
+    disponible_si: { quete_etape: { q-caravane-fantome: dunes } }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "La nuit tombe. Les dunes chantent, une note longue et triste. Puis, au loin : des clochettes. Des lanternes. Une file de chameaux translucides avance lentement." }
+          - { dit: "À la tête de la caravane, un homme sans visage, couvert de sel, lève la main. Les chameaux s'arrêtent. Les chacals sortent de l'ombre." }
+        combat: { rencontre: caravane-fantome, victoire: belkhir, defaite: belkhir }
+      belkhir:
+        repliques:
+          - { dit: "Les lanternes s'éteignent une à une. Dans le sable, à la place du chef de caravane, une boîte de cuivre gravée du nom « Belkhir Telli », et une poignée de cendres." }
+          - { dit: "Une voix, très faible, dans le chant des dunes : « …l'oasis… ramenez-moi à l'oasis… »" }
+        effets: [{ quete: { id: q-caravane-fantome, etape: oasis } }]
+        fin: true
+  - id: sq-fantome-oasis
+    titre: "La caravane fantôme : l'oasis perdue"
+    type: groupe
+    lieu: oasis-perdue
+    decor: oasis-perdue
+    quete: q-caravane-fantome
+    rend_quete: true
+    disponible_si: { quete_etape: { q-caravane-fantome: oasis } }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "L'oasis perdue n'est que trois palmiers morts. Vous dispersez les cendres de Belkhir au pied du plus grand." }
+          - { dit: "Le lendemain, vous ne l'avez pas rêvé : une pousse verte est sortie du sable. Les dunes, au loin, ne chantent plus." }
+          - { qui: ouzram, dit: "De retour au Bazar, Maître Ouzram écoute toute l'histoire sans un mot. Puis il vous tend une lame qu'il gardait sous son comptoir. « Elle était à mon frère. Elle sera mieux dans vos mains que dans les miennes. »" }
+        effets: [{ terminer_quete: q-caravane-fantome, xp: 300, objet: crocs-jumeaux-du-canyon }]
+        fin: true
+
+  # ── Le repaire des pillards ───────────────────────────────────
+  - id: sq-pillards-prisonnier
+    pnj: nadja
+    titre: "Le repaire des pillards : le prisonnier"
+    type: groupe
+    lieu: qarzim-porte
+    decor: qarzim-porte
+    quete: q-pillards
+    disponible_si: { flag: prisonnier-pillard, pas_flag: pillards-commences }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "Le jeune pillard de la Route des Caravanes a été retrouvé à la Porte, mendiant de l'eau.", si: { flag: pillard-epargne } }
+          - { dit: "Le jeune pillard de la Route des Caravanes croupit dans la geôle de la Porte.", si: { pas_flag: pillard-epargne } }
+          - { qui: nadja, dit: "Nadja s'accroupit devant lui. « Qui vous a payés pour retarder la princesse ? »" }
+        choix:
+          - texte: "Le convaincre gentiment. (Charisme, difficulté 19)"
+            test: { carac: CHA, difficulte: 19, reussite: parle, echec: menace }
+          - texte: "Le menacer."
+            aller: menace
+      parle:
+        repliques:
+          - { dit: "Le garçon fond en larmes. « Un homme en soie est venu au repaire. Avec une bague violette. Il a payé en cristaux. » Il vous dit où trouver le repaire : entre deux rochers en forme de crocs, à l'est." }
+        effets: [{ flag: pillards-commences, quete: { id: q-pillards, etape: repaire }, affinite: { nadja: 2 } }]
+        fin: true
+      menace:
+        repliques:
+          - { dit: "Le garçon se recroqueville et parle, terrorisé. Le repaire est à l'est, entre deux rochers en forme de crocs." }
+        effets: [{ flag: pillards-commences, quete: { id: q-pillards, etape: repaire } }]
+        fin: true
+  - id: sq-pillards-repaire
+    titre: "Le repaire des pillards : l'assaut"
+    type: groupe
+    lieu: repaire-pillards
+    decor: repaire-pillards
+    quete: q-pillards
+    disponible_si: { quete_etape: { q-pillards: repaire } }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "Des tentes rapiécées, un feu, des chameaux volés. Et des pillards qui vous attendaient." }
+        combat: { rencontre: pillards-camp, victoire: fouille, defaite: fouille }
+      fouille:
+        repliques:
+          - { dit: "Dans la tente du chef, un coffret plein de cristaux d'éther… et un reçu, signé d'un « H. » orné d'une bague." }
+        effets: [{ objet: cristal-ether, or: 80, quete: { id: q-pillards, etape: retour } }]
+        fin: true
+  - id: sq-pillards-retour
+    pnj: nadja
+    titre: "Le repaire des pillards : la preuve"
+    type: groupe
+    lieu: qarzim-porte
+    decor: qarzim-porte
+    quete: q-pillards
+    rend_quete: true
+    disponible_si: { quete_etape: { q-pillards: retour } }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: nadja, dit: "Nadja regarde le reçu longtemps. « Un « H. ». Ça ne prouve rien… et ça dit tout. » Elle le glisse dans son carnet. « Quelqu'un, très haut à la Concorde, ne voulait pas de ce traité. »" }
+        effets: [{ terminer_quete: q-pillards, xp: 240, affinite: { nadja: 4 }, flag: recu-hassad }]
+        fin: true

@@ -1,0 +1,134 @@
+# Région du chapitre 2 : la Marche des Sables (niveaux 8 à 15). Positions en pixels sur la carte (1920 × 1080).
+# La région s'ouvre quand la caravane quitte Lysmont (scène « Le départ », Germinal 1015).
+regions:
+  - id: marche-des-sables
+    nom: "Marche des Sables"
+    description: "Désert, cités-oasis et canyons rouges. La Concorde de Qarzim y règne par l'or ; les Ourvalis et les Vulpins y vivent depuis toujours."
+    carte: marche-des-sables
+    chapitre: 2
+    position_monde: { x: 1080, y: 860 }
+    disponible_si: { flag: ch2-depart-fait }
+    villes:
+      - id: qarzim
+        nom: "Qarzim"
+        description: "La cité marchande de la Concorde : coupoles bleues, Grand Bazar, et des cristaux violets à tous les étals."
+        plan: qarzim-plan
+        position: { x: 960, y: 520 }
+    lieux:
+      - id: qarzim-porte
+        nom: "Porte des Caravanes"
+        description: "La grande porte ocre de Qarzim, où s'arrêtent les caravanes et leurs chameaux."
+        decor: qarzim-porte
+        ville: qarzim
+        position: { x: 960, y: 560 }
+        position_plan: { x: 640, y: 600 }
+        disponible_si: { flag: sables-ouverts }
+        pnj: [{ id: nadja, si: { flag: nadja-rencontree } }]
+      - id: qarzim-bazar
+        nom: "Grand Bazar"
+        description: "Des milliers d'étals sous des toiles colorées. On y vend tout : épices, armes… et cristaux d'éther."
+        decor: qarzim-bazar
+        ville: qarzim
+        position: { x: 900, y: 500 }
+        position_plan: { x: 400, y: 380 }
+        disponible_si: { flag: sables-ouverts }
+        pnj: [{ id: ouzram }, { id: nadja, si: { flag: nadja-rencontree } }, { id: seraphine, si: { flag: seraphine-recrutee } }]
+        gerant: ouzram
+        # équipement du palier II : communs et versions « de maître » (peu communs)
+        boutique: [
+          potion-soin, potion-soin-grande, potion-mana, potion-mana-grande, antidote, eau-d-oasis, bombe-feu, bombe-fumee, ration,
+          viande-grillee, the-a-la-menthe, epices-de-qarzim, carnet-de-contes, perle-du-desert,
+          epee-ii, deux-mains-ii, masse-ii, dague-ii, arc-ii, arbalete-ii, baton-ii, sceptre-ii, orbe-ii, instrument-ii,
+          lourde-ii, intermediaire-ii, legere-ii, bouclier-ii, anneau-ii, amulette-ii, talisman-ii, carquois-ii, sacoche-ii,
+          epee-ii-maitre, deux-mains-ii-maitre, masse-ii-maitre, dague-ii-maitre, arc-ii-maitre, arbalete-ii-maitre,
+          baton-ii-maitre, sceptre-ii-maitre, orbe-ii-maitre, instrument-ii-maitre, lourde-ii-maitre, intermediaire-ii-maitre,
+          legere-ii-maitre, bouclier-ii-maitre, anneau-ii-maitre, amulette-ii-maitre, talisman-ii-maitre, carquois-ii-maitre,
+          sacoche-ii-maitre,
+        ]
+      - id: qarzim-oasis
+        nom: "Auberge de l'Oasis Bleue"
+        description: "Une auberge fraîche autour d'un bassin d'eau claire. On y dort sous des voiles qui ondulent."
+        decor: qarzim-oasis
+        ville: qarzim
+        auberge: true
+        position: { x: 1010, y: 540 }
+        position_plan: { x: 860, y: 430 }
+        disponible_si: { flag: sables-ouverts }
+        pnj: [{ id: ziyane }, { id: kaya, si: { flag: kaya-recrutee } }, { id: nadja, si: { flag: nadja-rencontree } }]
+        gerant: ziyane
+        boutique: [ration, eau-d-oasis, viande-grillee, the-a-la-menthe]
+      - id: guilde-qarzim
+        nom: "Comptoir de la Guilde (Qarzim)"
+        description: "Le bureau de la Guilde de la Rose des Vents à Qarzim : un tableau de contrats et un intendant qui ne dort jamais."
+        decor: guilde
+        ville: qarzim
+        position: { x: 1040, y: 500 }
+        position_plan: { x: 1000, y: 560 }
+        disponible_si: { flag: sables-ouverts }
+        pnj: [{ id: ibrek }, { id: kaya, si: { flag: kaya-recrutee } }]
+        gerant: ibrek
+        # objets nommés du palier II (rares) pour les membres de la Guilde
+        boutique: [
+          potion-soin-grande, potion-mana-grande, antidote,
+          rondache-des-caravaniers, fendeuse-de-qarzim, pendentif-de-verre-sable, orbe-des-mirages, talisman-de-l-esprit-du-puits,
+          baton-des-chacals-d-ombre, anneau-du-vulpin-rieur, crocs-jumeaux-du-canyon, ecu-de-l-oasis, epee-du-serment-des-sables,
+          sacoche-du-marchand-d-epices, arbalete-a-ether-de-la-concorde, carquois-du-vent-du-sud, arc-de-corne-d-ourvalis,
+          talisman-du-puits-sacre, sceptre-de-l-eau-vive, croc-de-lion-des-sables, espadon-du-soleil-brulant,
+          anneau-des-contes-du-bazar, flute-des-dunes-chantantes,
+        ]
+      - id: qarzim-palais
+        nom: "Palais de la Concorde"
+        description: "Un palais de marbre blanc et de cristal, où les marchands les plus riches du désert décident de tout."
+        decor: qarzim-palais
+        ville: qarzim
+        position: { x: 960, y: 440 }
+        position_plan: { x: 640, y: 150 }
+        disponible_si: { flag: sables-ouverts }
+        pnj: [{ id: hassad }, { id: nadja, si: { flag: nadja-rencontree } }]
+      - id: qarzim-residence
+        nom: "Résidence d'Aubeclaire"
+        description: "La maison des ambassadeurs d'Aubeclaire : jardin à l'ombre des palmiers, drapeaux bleus et blancs."
+        decor: qarzim-residence
+        ville: qarzim
+        position: { x: 880, y: 450 }
+        position_plan: { x: 240, y: 220 }
+        disponible_si: { flag: sables-ouverts }
+        pnj: [{ id: seraphine, si: { flag: seraphine-recrutee } }, { id: aveline, si: { flag: aveline-rencontree } }]
+      # ── Hors de la ville
+      - id: route-des-caravanes
+        nom: "Route des Caravanes"
+        description: "La piste qui relie Aubeclaire à Qarzim, entre les dunes et les rochers."
+        decor: route-des-caravanes
+        position: { x: 1260, y: 230 }
+        disponible_si: { flag: ch2-depart-fait }
+      - id: campement-lunecroc
+        nom: "Campement Lunecroc"
+        description: "Les tentes de la tribu de Kaya, au pied d'une falaise rouge. Les feux y brûlent toute la nuit."
+        decor: campement-lunecroc
+        position: { x: 430, y: 760 }
+        disponible_si: { flag: sables-ouverts }
+        pnj: [{ id: sorha }, { id: kaya, si: { flag: kaya-recrutee } }]
+      - id: mines-ether
+        nom: "Mines d'éther"
+        description: "Des puits creusés dans la roche violette, gardés par les mercenaires de la Concorde."
+        decor: mines-ether
+        position: { x: 1500, y: 700 }
+        disponible_si: { flag: sables-ouverts }
+      - id: canyon-des-chacals
+        nom: "Canyon des Chacals"
+        description: "Un canyon étroit aux parois rouges, où résonnent les jappements."
+        decor: canyon-des-chacals
+        position: { x: 1320, y: 880 }
+        disponible_si: { flag: sables-ouverts }
+      - id: ruines-de-sel
+        nom: "Ruines de Sel"
+        description: "Une cité engloutie par le sel : des colonnes blanches qui sortent des dunes comme des os."
+        decor: ruines-de-sel
+        position: { x: 700, y: 910 }
+        disponible_si: { quete_etape: { q-ch2-routes: tempete } }
+      # ── Lieux d'étape
+      - { id: oasis-perdue, nom: "Oasis perdue", description: "Trois palmiers morts et un bassin vide, au milieu de nulle part.", decor: oasis-perdue, position: { x: 300, y: 320 }, etape_seulement: true }
+      - { id: dunes-chantantes, nom: "Dunes chantantes", description: "Des dunes qui chantent quand le vent souffle, comme un chœur lointain.", decor: dunes-chantantes, position: { x: 1650, y: 380 }, etape_seulement: true }
+      - { id: puits-asseches, nom: "Puits asséchés", description: "Une ligne de puits à sec, le long d'un ancien canal.", decor: puits-asseches, position: { x: 1120, y: 980 }, etape_seulement: true }
+      - { id: repaire-pillards, nom: "Repaire des pillards", description: "Des tentes rapiécées cachées entre deux rochers en forme de crocs.", decor: repaire-pillards, position: { x: 1700, y: 600 }, etape_seulement: true }
+      - { id: toits-de-qarzim, nom: "Toits de Qarzim", description: "Un dédale de terrasses, de cordes à linge et de coupoles.", decor: toits-de-qarzim, ville: qarzim, position: { x: 940, y: 470 }, position_plan: { x: 820, y: 230 }, etape_seulement: true }

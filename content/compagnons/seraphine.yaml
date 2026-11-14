@@ -1,0 +1,47 @@
+# Séraphine d'Aubeclaire — la princesse (rencontrée au chapitre 1, compagne à partir du chapitre 2).
+compagnon:
+  id: seraphine
+  nom: "Séraphine d'Aubeclaire"
+  titre: "Princesse, envoyée de la Couronne"
+  age: 24
+  genre: f
+  personnalite: "Vive, curieuse, rebelle sous l'étiquette. Elle adore les histoires « de l'autre monde » et déteste qu'on la ménage."
+  passe: "Seconde de la lignée d'Aubeclaire, elle porte le deuil de son frère Aldric, disparu en 1009 lors d'une patrouille sur le Mur d'Aube."
+  objectif: "Retrouver Aldric, et réformer une Couronne qui traite les Appelés comme des armes."
+  chapitre_arrivee: 2
+  quete: q-seraphine
+  lignes_rouges:
+    - { flag: servilite-aveugle, description: "« Vous avez obéi au roi contre son propre peuple. Je croyais que vous valiez mieux. »", penalite: -25 }
+    - { flag: seraphine-trophee, description: "« Je ne suis pas un trophée, ni une alliance à signer. »", penalite: -30 }
+  cadeaux:
+    prefere: [carnet-de-contes, livre-ancien]
+    apprecie: [gateau-lysmont, perle-du-desert, fleur-des-champs]
+    deteste: [bijou-dore]
+  combat:
+    caracteristiques: { FOR: 8, AGI: 12, INT: 10, VIT: 9, ESP: 10, CHA: 11 }
+    attaque: { stat: AGI, element: physique, portee: melee, puissance: 8 }
+    armure: 4
+    rang: avant
+    competences:
+      - id: seraphine-ordre
+        nom: Ordre de bataille
+        description: "Un ordre clair, une voix qui porte : le groupe frappe plus fort."
+        recharge: 4
+        cible: tous_allies
+        effets:
+          - { type: etat, etat: bonus_degats, duree: 2, valeur: 0.15 }
+          - { type: etat, etat: bonus_initiative, duree: 2, valeur: 0.2 }
+        ia: { priorite: 3, quand: debut_combat }
+      - id: seraphine-estoc
+        nom: Estoc royal
+        description: "Une botte d'escrime enseignée par les maîtres d'armes du château."
+        recharge: 2
+        cible: ennemi
+        portee: melee
+        effets: [{ type: degats, puissance: 12, stat: AGI }]
+        ia: { priorite: 2 }
+  bonus_paliers:
+    alliee: { id: aura-precision, nom: "Commandement", description: "+5 % de précision pour le groupe.", parametres: { valeur: 0.05 } }
+    proche: { id: aura-degats, nom: "Étendard royal", description: "+8 % de dégâts pour tout le groupe.", parametres: { valeur: 0.08 } }
+    amoureuse: { id: aura-defense, nom: "Garde de la princesse", description: "+10 % de défense pour tout le groupe.", parametres: { valeur: 0.1 } }
+    engagee: { id: attaque-combinee, nom: "Valse des lames", description: "Attaque combinée avec son héros : +25 % de dégâts.", parametres: { degats: 0.25 } }

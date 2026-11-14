@@ -4,6 +4,7 @@
  * Même contenu que la version web (src/ui/panneaux et src/ui/vues/Lieu.svelte).
  */
 import { CONTENU } from "shared/donnees";
+import { tousLesLieux } from "shared/geo";
 import { ficheObjet, type ActionObjet } from "./objets";
 import {
 	affinite,
@@ -25,6 +26,7 @@ import {
 	palierCompagnon,
 	prixAchat,
 	prixVente,
+	estGuilde,
 	problemeEquipement,
 	exemplaires,
 	prochaineEtape,
@@ -35,6 +37,7 @@ import {
 	xpPourNiveau,
 	type Carac,
 	type Heros,
+	type RegionDef,
 } from "shared/moteur";
 import { agir, commander, jeu, monHeros } from "../partie";
 import { affichage, type Panneau } from "../local";
@@ -61,7 +64,7 @@ const ONGLETS: [Panneau, string][] = [
 ];
 
 function lieux() {
-	return CONTENU.regions.aubeclaire.lieux;
+	return tousLesLieux();
 }
 function nomLieu(id: string | undefined): string | undefined {
 	return id !== undefined ? lieux().find((l) => l.id === id)?.nom ?? id : undefined;
@@ -235,7 +238,7 @@ function vueLieu(parent: Frame, id: string, fermer: () => void, redessiner: () =
 			bouton(c, e.bouton ?? "Continuer", () => agir({ type: "etape_contrat" }), { principal: true });
 		}
 	}
-	if (id === "guilde" && voir("contrats")) {
+	if (estGuilde(id) && voir("contrats")) {
 		const rang = rangGuilde(CONTENU, etat.pointsGuilde[h.id] ?? 0);
 		const c = carte(parent, `Tableau des contrats (ton rang : ${rang})`);
 		if (enCours) {
@@ -252,7 +255,7 @@ function vueLieu(parent: Frame, id: string, fermer: () => void, redessiner: () =
 			bouton(c, enCours ? "Termine d'abord ton contrat en cours" : ok ? "Accepter (en solo)" : `Rang ${ct.rang_min} requis`, () => agir({ type: "contrat", contrat: ct.id }), { actif: ok, hauteur: 32, taille: 14 });
 		}
 	}
-	if (id === "guilde" && voir("grimoire")) {
+	if (estGuilde(id) && voir("grimoire")) {
 		const g = carte(parent, "📖 Fusions que la Guilde peut t'enseigner");
 		texte(g, "Uniquement les fusions de ta classe et de tes compétences. Elles vont dans ton grimoire personnel : les autres joueurs ne le voient pas.", 13, { couleur: COULEURS.texte2 });
 		const fusions = fusionsPossibles(CONTENU, h);
@@ -291,7 +294,7 @@ function vueLieu(parent: Frame, id: string, fermer: () => void, redessiner: () =
 			});
 		}
 	}
-	if (section === "tout" && groupe.size() === 0 && perso.size() === 0 && id !== "guilde" && lieu.boutique.size() === 0) {
+	if (section === "tout" && groupe.size() === 0 && perso.size() === 0 && !estGuilde(id) && lieu.boutique.size() === 0) {
 		texte(parent, "Rien de particulier à faire ici pour le moment.", 14, { couleur: COULEURS.texte2 });
 	}
 }
@@ -333,10 +336,15 @@ function vueCarte(parent: Frame, allerA: (lieu: string) => void) {
 	const etat = jeu.etat!;
 	const h = monHeros()!;
 	const tous = listeHeros(etat).map((x) => x.id);
-	texte(parent, CONTENU.regions.aubeclaire.nom, 22, { gras: true, couleur: COULEURS.or });
 	texte(parent, "⭐ quête principale · ● autre chose à faire · ⚔ combat possible", 13, { couleur: COULEURS.texte2 });
 	const etapes = lieuxDesEtapes(CONTENU, etat, h.id);
-	for (const l of lieux()) {
+	// une section par région ouverte, dans l'ordre des chapitres
+	const regions: RegionDef[] = [];
+	for (const [, r] of pairs(CONTENU.regions)) if (conditionScene(CONTENU, etat, r.disponible_si, tous)) regions.push(r);
+	regions.sort((a, b) => (a.chapitre ?? 1) < (b.chapitre ?? 1));
+	for (const region of regions) {
+	texte(parent, region.nom, 20, { gras: true, couleur: COULEURS.or });
+	for (const l of region.lieux) {
 		if (l.etape_seulement === true ? !etapes.includes(l.id) : !conditionScene(CONTENU, etat, l.disponible_si, tous)) continue;
 		const scenes = scenesDisponibles(CONTENU, etat, l.id, h.id);
 		const principale = scenes.some((s) => s.quete !== undefined && CONTENU.quetes[s.quete]?.type === "principale");
@@ -347,7 +355,8 @@ function vueCarte(parent: Frame, allerA: (lieu: string) => void) {
 		texte(li, `${ici}${marque}<b>${l.nom}</b>${combat}`, 15, { largeur: new UDim(1, -100) });
 		bouton(li, "Y aller", () => allerA(l.id), { hauteur: 32, taille: 14 });
 	}
-	texte(parent, "« Y aller » te téléporte devant l'entrée. Tu peux aussi marcher : approche-toi d'une porte et appuie sur E.", 13, { couleur: COULEURS.texte2 });
+	}
+	texte(parent, "« Y aller » te téléporte devant l'entrée (même dans une autre région). Tu peux aussi marcher : approche-toi d'une porte et appuie sur E.", 13, { couleur: COULEURS.texte2 });
 }
 
 // ───────────────────────────── Personnage ─────────────────────────────

@@ -43,3 +43,14 @@ ambiance:
   - { id: tn-lina, lieu: quartier-tanneurs, texte: "La petite Lina est rentrée saine et sauve. Quel soulagement !", si: { flag: lina-sauvee } }
   - { id: ar-tournoi, lieu: arene, texte: "Le tournoi des écuyers, ça, c'est du spectacle !" }
   - { id: ch-cour, lieu: chateau, qui: garde, texte: "La cour reçoit sur rendez-vous. Ou sur convocation du roi." }
+  # ─── Marche des Sables (Qarzim)
+  - { id: q-chaleur, lieu: qarzim-porte, texte: "Quelle chaleur… Même les chameaux se plaignent.", moment: jour, si: { flag: sables-ouverts } }
+  - { id: q-cristaux, lieu: qarzim-bazar, qui: marchand, texte: "Cristaux d'éther ! Contre la fatigue, contre la tristesse, contre tout !", si: { flag: sables-ouverts } }
+  - { id: q-concorde, lieu: qarzim-bazar, texte: "La Concorde fixe les prix, et nous, on paie.", si: { flag: sables-ouverts } }
+  - { id: q-lunecroc, lieu: qarzim-porte, texte: "Les Lunecroc ont perdu leurs terres pour les mines. Pauvres gens.", si: { flag: sables-ouverts, pas_flag: mines-lunecroc } }
+  - { id: q-lunecroc-ok, lieu: qarzim-porte, texte: "Les loups du désert ont repris une part des mines ! On n'avait jamais vu ça.", si: { flag: mines-lunecroc } }
+  - { id: q-princesse, lieu: qarzim-residence, qui: garde, texte: "La princesse est sous bonne garde. On ne la touchera pas deux fois.", si: { flag: vashti-denoncee } }
+  - { id: q-banquet, lieu: qarzim-residence, texte: "Un banquet à la Résidence d'Aubeclaire, en Ardent ! Tout le monde y sera.", si: { flag: sables-ouverts, quete_etape: { q-ch2-routes: complot } } }
+  - { id: q-ruines, lieu: qarzim-oasis, qui: client, texte: "On dit que les Appelés sont revenus vivants des Ruines de Sel. Personne ne revient des Ruines.", si: { flag: ruines-explorees } }
+  - { id: q-oasis, lieu: qarzim-oasis, qui: client, texte: "L'eau de l'Oasis Bleue est revenue. Mère Ziyane offre la tournée !", si: { flag: eau-rendue } }
+  - { id: q-nuit, lieu: qarzim-porte, texte: "La nuit, le désert est froid comme une tombe. Gardez une couverture.", moment: nuit, si: { flag: sables-ouverts } }

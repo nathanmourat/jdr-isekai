@@ -43,4 +43,4 @@ compagnon:
     alliee: { id: garde-partagee, nom: "Garde partagée", description: "25 % de chances d'intercepter un coup destiné à son héros.", parametres: { chance: 0.25 } }
     proche: { id: aura-defense, nom: "Formation serrée", description: "+10 % de défense pour tout le groupe.", parametres: { valeur: 0.1 } }
     amoureuse: { id: contre-attaque, nom: "Riposte", description: "25 % de chances de contre-attaquer quand elle est frappée.", parametres: { chance: 0.25 } }
-    engagee: { id: attaque-combinee, nom: "Charge des Deux Serments", description: "Attaque combinée avec son héros (à venir).", parametres: {} }
+    engagee: { id: attaque-combinee, nom: "Charge des Deux Serments", description: "Attaque combinée avec son héros : +25 % de dégâts.", parametres: { degats: 0.25 } }

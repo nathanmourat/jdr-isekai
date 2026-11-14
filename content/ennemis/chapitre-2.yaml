@@ -1,0 +1,367 @@
+# Ennemis du chapitre 2 (Marche des Sables, niveaux 8 à 15).
+# Fichier généré par scripts/contenu/bestiaire.py à partir de scripts/contenu/ch2_ennemis.py : modifier la source, puis relancer.
+ennemis:
+  - id: chacal
+    nom: "Chacal des dunes"
+    description: "Chacal fauve aux grandes oreilles, chasse en meute."
+    niveau: 8
+    categorie: bete
+    caracteristiques: { FOR: 7, AGI: 13, INT: 7, VIT: 11, ESP: 7, CHA: 4 }
+    pv: 78
+    armure: 4
+    attaque: { stat: AGI, element: physique, portee: melee, puissance: 9 }
+    attaques:
+      - { nom: "Morsure", phrase: "mord {cible} au mollet", effet: entaille }
+      - { nom: "Assaut de meute", phrase: "bondit sur {cible} en jappant", effet: entaille }
+    competences:
+      - id: hurlement-de-meute
+        nom: Hurlement de meute
+        description: "Toute la meute frappe plus fort."
+        recharge: 4
+        cible: tous_allies
+        effets: [{ type: etat, etat: bonus_degats, duree: 2, valeur: 0.2 }]
+        ia: { priorite: 3, quand: debut_combat }
+    recompenses: { xp: 79, or: 8, objets: [{ id: croc-de-loup, chance: 0.3 }] }
+
+  - id: scorpion-des-sables
+    nom: "Scorpion des sables"
+    description: "Scorpion ocre de la taille d'un chien, dard noir."
+    niveau: 10
+    categorie: bete
+    caracteristiques: { FOR: 8, AGI: 13, INT: 8, VIT: 12, ESP: 8, CHA: 4 }
+    pv: 132
+    armure: 6
+    attaque: { stat: AGI, element: poison, portee: melee, puissance: 7 }
+    attaques:
+      - { nom: "Coup de dard", phrase: "plante son dard dans {cible}", effet: poison }
+      - { nom: "Pinces", phrase: "serre {cible} dans ses pinces", effet: impact }
+    resistances: { feu: 0.25, glace: -0.25 }
+    competences:
+      - id: venin-de-scorpion
+        nom: Venin de scorpion
+        description: "Un venin brûlant."
+        recharge: 3
+        cible: ennemi
+        portee: melee
+        effets:
+          - { type: degats, puissance: 10, stat: AGI, element: poison }
+          - { type: etat, etat: poison, duree: 2, valeur: 4 }
+        ia: { priorite: 3 }
+    recompenses: { xp: 158, or: 15, objets: [{ id: antidote, chance: 0.3 }] }
+
+  - id: pillard-du-desert
+    nom: "Pillard du désert"
+    description: "Pillard au chèche turquoise, cimeterre à la main."
+    niveau: 9
+    categorie: humanoide
+    caracteristiques: { FOR: 15, AGI: 10, INT: 7, VIT: 12, ESP: 7, CHA: 4 }
+    pv: 121
+    armure: 5
+    attaque: { stat: FOR, element: physique, portee: melee, puissance: 9 }
+    attaques:
+      - { nom: "Coup de cimeterre", phrase: "taillade {cible} de son cimeterre", effet: entaille }
+      - { nom: "Sable aux yeux", phrase: "jette du sable au visage de {cible}", effet: impact }
+    competences:
+      - id: charge-du-pillard
+        nom: Charge du pillard
+        description: "Une charge au cimeterre."
+        recharge: 3
+        cible: ennemi
+        portee: melee
+        effets: [{ type: degats, puissance: 14, stat: FOR }]
+        ia: { priorite: 2 }
+    recompenses: { xp: 135, or: 14, objets: [{ id: potion-soin, chance: 0.2 }, { id: ration, chance: 0.3 }] }
+
+  - id: archer-pillard
+    nom: "Archer pillard"
+    description: "Archer du désert, perché sur les rochers."
+    niveau: 10
+    categorie: humanoide
+    sprite: pillard-du-desert
+    rang: arriere
+    caracteristiques: { FOR: 8, AGI: 15, INT: 8, VIT: 12, ESP: 8, CHA: 4 }
+    pv: 93
+    armure: 5
+    attaque: { stat: AGI, element: physique, portee: distance, puissance: 9 }
+    attaques:
+      - { nom: "Flèche", phrase: "décoche une flèche sur {cible}", effet: impact }
+      - { nom: "Tir rapide", phrase: "tire deux fois vers {cible}", effet: impact }
+    recompenses: { xp: 111, or: 10 }
+
+  - id: lame-de-sable
+    nom: "Lame de Sable"
+    description: "Assassin de la Main de Sable : voile noir, deux poignards courbes."
+    niveau: 11
+    categorie: humanoide
+    sprite: bandit
+    caracteristiques: { FOR: 8, AGI: 16, INT: 8, VIT: 13, ESP: 8, CHA: 4 }
+    pv: 143
+    armure: 6
+    attaque: { stat: AGI, element: physique, portee: melee, puissance: 9 }
+    attaques:
+      - { nom: "Poignard courbe", phrase: "glisse un poignard sous la garde de {cible}", effet: entaille }
+      - { nom: "Lame empoisonnée", phrase: "entaille {cible} d'une lame luisante", effet: poison }
+    competences:
+      - id: disparition
+        nom: Disparition
+        description: "Se fond dans l'ombre."
+        recharge: 4
+        cible: soi
+        effets: [{ type: etat, etat: furtif, duree: 2 }]
+        ia: { priorite: 3, quand: soi_blesse }
+      - id: frappe-dans-le-dos
+        nom: Frappe dans le dos
+        description: "Un coup vicieux, souvent critique."
+        recharge: 2
+        cible: ennemi
+        portee: melee
+        effets: [{ type: degats, puissance: 15, stat: AGI, critique_garanti: true }]
+        ia: { priorite: 3 }
+    recompenses: { xp: 182, or: 16 }
+
+  - id: kezir
+    nom: "Kezir, Main de Sable"
+    description: "Le maître des assassins de Qarzim. Il ne combat jamais à la loyale, et s'enfuit quand il perd."
+    niveau: 12
+    categorie: humanoide
+    boss: true
+    fuit_sous_pourcent: 0.2
+    sprite: bandit
+    caracteristiques: { FOR: 8, AGI: 19, INT: 8, VIT: 15, ESP: 8, CHA: 4 }
+    pv: 373
+    armure: 9
+    attaque: { stat: AGI, element: physique, portee: melee, puissance: 13 }
+    attaques:
+      - { nom: "Danse des poignards", phrase: "tourne autour de {cible} en frappant", effet: entaille }
+      - { nom: "Lame de sable", phrase: "frappe {cible} d'une lame chargée de sable", effet: entaille }
+    competences:
+      - id: nuage-de-sable
+        nom: Nuage de sable
+        description: "Aveugle tout le groupe."
+        recharge: 4
+        cible: tous_ennemis
+        effets: [{ type: etat, etat: affaibli, duree: 2, valeur: 0.2, chance: 0.6 }]
+        ia: { priorite: 3, quand: debut_combat }
+      - id: coup-du-scorpion
+        nom: Coup du scorpion
+        description: "Deux poignards enduits de venin."
+        recharge: 2
+        cible: ennemi
+        portee: melee
+        effets:
+          - { type: degats, puissance: 12, stat: AGI, coups: 2 }
+          - { type: etat, etat: poison, duree: 3, valeur: 6 }
+        ia: { priorite: 3 }
+    recompenses: { xp: 1247, or: 120, objets: [{ id: potion-soin, chance: 1.0 }] }
+
+  - id: mercenaire-concorde
+    nom: "Mercenaire de la Concorde"
+    description: "Soldat payé par les marchands : cuirasse dorée, lance et bouclier rond."
+    niveau: 12
+    categorie: humanoide
+    sprite: bandit
+    caracteristiques: { FOR: 18, AGI: 11, INT: 8, VIT: 14, ESP: 8, CHA: 4 }
+    pv: 208
+    armure: 7
+    attaque: { stat: FOR, element: physique, portee: melee, puissance: 11 }
+    attaques:
+      - { nom: "Coup de lance", phrase: "embroche presque {cible}", effet: entaille }
+      - { nom: "Coup de bouclier", phrase: "repousse {cible} avec son bouclier", effet: impact }
+    competences:
+      - id: mur-de-boucliers
+        nom: Mur de boucliers
+        description: "Les mercenaires serrent les rangs."
+        recharge: 4
+        cible: tous_allies
+        effets: [{ type: etat, etat: bonus_defense, duree: 2, valeur: 0.2 }]
+        ia: { priorite: 2, quand: debut_combat }
+    recompenses: { xp: 291, or: 24 }
+
+  - id: mage-de-cristal
+    nom: "Mage de cristal"
+    description: "Mage de la Concorde : il puise dans un cristal d'éther pour lancer ses sorts."
+    niveau: 12
+    categorie: humanoide
+    sprite: cultiste
+    rang: arriere
+    caracteristiques: { FOR: 8, AGI: 11, INT: 17, VIT: 14, ESP: 8, CHA: 4 }
+    pv: 154
+    armure: 6
+    attaque: { stat: INT, element: arcane, portee: distance, puissance: 10 }
+    attaques:
+      - { nom: "Éclat d'éther", phrase: "projette un éclat violet sur {cible}", effet: rune }
+      - { nom: "Rayon de cristal", phrase: "frappe {cible} d'un rayon de lumière", effet: rune }
+    competences:
+      - id: surcharge-d-ether
+        nom: Surcharge d'éther
+        description: "Le cristal explose de lumière sur tout le groupe."
+        recharge: 3
+        cible: tous_ennemis
+        effets: [{ type: degats, puissance: 11, stat: INT, element: arcane }]
+        ia: { priorite: 3 }
+    recompenses: { xp: 208, or: 18, objets: [{ id: cristal-ether, chance: 0.4 }] }
+
+  - id: guerrier-lunecroc
+    nom: "Guerrier lunecroc"
+    description: "Guerrier ourvalis de la tribu Lunecroc : peintures de guerre, griffes de fer."
+    niveau: 13
+    categorie: humanoide
+    sprite: pillard-du-desert
+    caracteristiques: { FOR: 8, AGI: 18, INT: 8, VIT: 14, ESP: 8, CHA: 4 }
+    pv: 165
+    armure: 7
+    attaque: { stat: AGI, element: physique, portee: melee, puissance: 10 }
+    attaques:
+      - { nom: "Griffes de fer", phrase: "lacère {cible} de ses griffes de fer", effet: entaille }
+      - { nom: "Bond", phrase: "bondit sur {cible}", effet: impact }
+    recompenses: { xp: 234, or: 20 }
+
+  - id: momie-de-sel
+    nom: "Momie de sel"
+    description: "Momie couverte de bandelettes durcies par le sel, yeux turquoise."
+    niveau: 13
+    categorie: mort-vivant
+    caracteristiques: { FOR: 19, AGI: 12, INT: 8, VIT: 15, ESP: 8, CHA: 4 }
+    pv: 223
+    armure: 8
+    attaque: { stat: FOR, element: physique, portee: melee, puissance: 11 }
+    attaques:
+      - { nom: "Poing de sel", phrase: "abat un poing durci de sel sur {cible}", effet: impact }
+      - { nom: "Étreinte", phrase: "agrippe {cible} de ses bras décharnés", effet: impact }
+    resistances: { poison: 1.0, glace: 0.25, feu: -0.25, sacre: -0.5 }
+    competences:
+      - id: malediction-de-sel
+        nom: Malédiction de sel
+        description: "Le sel ronge la peau et dessèche."
+        recharge: 3
+        cible: ennemi
+        effets:
+          - { type: degats, puissance: 12, stat: FOR, element: ombre }
+          - { type: etat, etat: affaibli, duree: 2, valeur: 0.2 }
+        ia: { priorite: 3 }
+    recompenses: { xp: 328, or: 26 }
+
+  - id: chacal-alpha
+    nom: "Grande Mère des chacals"
+    description: "La matriarche du canyon : énorme, pelage presque blanc, cicatrices partout."
+    niveau: 11
+    categorie: bete
+    boss: true
+    sprite: chacal
+    caracteristiques: { FOR: 8, AGI: 18, INT: 8, VIT: 15, ESP: 8, CHA: 4 }
+    pv: 315
+    armure: 8
+    attaque: { stat: AGI, element: physique, portee: melee, puissance: 12 }
+    attaques:
+      - { nom: "Crocs de la matriarche", phrase: "referme ses mâchoires sur {cible}", effet: entaille }
+      - { nom: "Charge", phrase: "renverse {cible} d'un coup d'épaule", effet: impact }
+    competences:
+      - id: appel-de-la-meute
+        nom: Appel de la meute
+        description: "Toute la meute s'enrage."
+        recharge: 4
+        cible: tous_allies
+        effets: [{ type: etat, etat: bonus_degats, duree: 3, valeur: 0.25 }]
+        ia: { priorite: 4, quand: debut_combat }
+    recompenses: { xp: 1094, or: 110 }
+
+  - id: roi-de-sel
+    nom: "Le Roi de Sel"
+    description: "Un ancien roi du désert, couronné d'un cristal d'éther fendu. Il garde les Ruines depuis mille ans."
+    niveau: 15
+    categorie: mort-vivant
+    boss: true
+    sprite: momie-de-sel
+    caracteristiques: { FOR: 9, AGI: 12, INT: 22, VIT: 17, ESP: 9, CHA: 4 }
+    pv: 617
+    armure: 11
+    attaque: { stat: INT, element: arcane, portee: melee, puissance: 13 }
+    attaques:
+      - { nom: "Sceptre de sel", phrase: "abat son sceptre sur {cible}", effet: impact }
+      - { nom: "Regard d'éther", phrase: "fixe {cible} de ses yeux d'éther", effet: rune }
+    resistances: { poison: 1.0, ombre: 0.25, sacre: -0.4, feu: -0.2 }
+    competences:
+      - id: tempete-de-sel
+        nom: Tempête de sel
+        description: "Une tempête de sel cristallin sur tout le groupe."
+        recharge: 3
+        cible: tous_ennemis
+        effets:
+          - { type: degats, puissance: 13, stat: INT, element: arcane }
+          - { type: etat, etat: affaibli, duree: 2, valeur: 0.15, chance: 0.5 }
+        ia: { priorite: 4 }
+      - id: eveil-des-gardes
+        nom: Éveil des gardes
+        description: "Le Roi se régénère grâce au cristal de sa couronne."
+        recharge: 5
+        cible: soi
+        effets: [{ type: soin, puissance: 22, stat: INT }]
+        ia: { priorite: 4, quand: soi_blesse }
+    recompenses: { xp: 1743, or: 150, objets: [{ id: tablette-dechirure, chance: 1.0 }] }
+
+  - id: capitaine-vask
+    nom: "Capitaine Orlen Vask"
+    description: "Le chef des mercenaires de la Concorde. Cuirasse dorée, ordres secs, aucun scrupule."
+    niveau: 14
+    categorie: humanoide
+    boss: true
+    fuit_sous_pourcent: 0.2
+    sprite: bandit
+    caracteristiques: { FOR: 21, AGI: 12, INT: 8, VIT: 17, ESP: 8, CHA: 4 }
+    pv: 464
+    armure: 10
+    attaque: { stat: FOR, element: physique, portee: melee, puissance: 13 }
+    attaques:
+      - { nom: "Fendoir doré", phrase: "abat son fendoir sur {cible}", effet: entaille }
+      - { nom: "Ordre de tir", phrase: "désigne {cible} à ses archers", effet: impact }
+    competences:
+      - id: coup-de-commandement
+        nom: Coup de commandement
+        description: "Ses hommes frappent plus fort."
+        recharge: 4
+        cible: tous_allies
+        effets: [{ type: etat, etat: bonus_degats, duree: 2, valeur: 0.25 }]
+        ia: { priorite: 3, quand: debut_combat }
+    recompenses: { xp: 1571, or: 140 }
+
+  - id: tavek
+    nom: "Tavek Lunecroc"
+    description: "Le cousin de Kaya, chef de guerre de la révolte. Rapide, furieux, désespéré."
+    niveau: 14
+    categorie: humanoide
+    boss: true
+    fuit_sous_pourcent: 0.25
+    sprite: pillard-du-desert
+    caracteristiques: { FOR: 8, AGI: 21, INT: 8, VIT: 17, ESP: 8, CHA: 4 }
+    pv: 464
+    armure: 10
+    attaque: { stat: AGI, element: physique, portee: melee, puissance: 13 }
+    attaques:
+      - { nom: "Griffes du chef", phrase: "lacère {cible} des deux mains", effet: entaille }
+      - { nom: "Hurlement", phrase: "pousse un hurlement qui glace {cible}", effet: impact }
+    competences:
+      - id: furie-lunecroc
+        nom: Furie lunecroc
+        description: "Trois coups de griffes enragés."
+        recharge: 3
+        cible: ennemi
+        portee: melee
+        effets: [{ type: degats, puissance: 9, stat: AGI, coups: 3 }]
+        ia: { priorite: 3 }
+    recompenses: { xp: 1571, or: 140 }
+
+rencontres:
+  - { id: caravane-pillards, nom: "Embuscade sur la route des caravanes", fond: desert, ennemis: [{ id: pillard-du-desert }, { id: pillard-du-desert }, { id: archer-pillard, rang: arriere }], renforts: [pillard-du-desert] }
+  - { id: chacals-dunes, nom: "Meute de chacals", fond: desert, ennemis: [{ id: chacal }, { id: chacal }, { id: chacal }], renforts: [chacal] }
+  - { id: chacals-matriarche, nom: "La Grande Mère des chacals", fond: canyon, fuite_possible: false, ennemis: [{ id: chacal-alpha }, { id: chacal }], renforts: [chacal] }
+  - { id: scorpions-sables, nom: "Nid de scorpions", fond: desert, ennemis: [{ id: scorpion-des-sables }, { id: scorpion-des-sables }], renforts: [scorpion-des-sables] }
+  - { id: pillards-camp, nom: "Le camp des pillards", fond: canyon, ennemis: [{ id: pillard-du-desert }, { id: pillard-du-desert }, { id: archer-pillard, rang: arriere }], renforts: [archer-pillard] }
+  - { id: assassins-banquet, nom: "Les assassins du banquet", fond: palais, fuite_possible: false, ennemis: [{ id: lame-de-sable }, { id: lame-de-sable }], renforts: [lame-de-sable] }
+  - { id: kezir-toits, nom: "Kezir, sur les toits", fond: ville-desert, fuite_possible: false, ennemis: [{ id: kezir }, { id: lame-de-sable }], renforts: [lame-de-sable] }
+  - { id: mercenaires-mines, nom: "Les gardes des mines", fond: mine, ennemis: [{ id: mercenaire-concorde }, { id: mage-de-cristal, rang: arriere }], renforts: [mercenaire-concorde] }
+  - { id: ruines-momies, nom: "Gardiens des Ruines", fond: ruines, ennemis: [{ id: momie-de-sel }, { id: momie-de-sel }], renforts: [momie-de-sel] }
+  - { id: ruines-scorpions, nom: "Scorpions des Ruines", fond: ruines, ennemis: [{ id: scorpion-des-sables }, { id: scorpion-des-sables }], renforts: [scorpion-des-sables] }
+  - { id: ruines-roi, nom: "Le Roi de Sel", fond: ruines, fuite_possible: false, ennemis: [{ id: roi-de-sel }, { id: momie-de-sel }], renforts: [momie-de-sel] }
+  - { id: revolte-vask, nom: "Les mercenaires de Vask", fond: mine, fuite_possible: false, ennemis: [{ id: capitaine-vask }, { id: mercenaire-concorde }, { id: mage-de-cristal, rang: arriere }], renforts: [mercenaire-concorde] }
+  - { id: revolte-tavek, nom: "Tavek et ses guerriers", fond: desert, fuite_possible: false, ennemis: [{ id: tavek }, { id: guerrier-lunecroc }], renforts: [guerrier-lunecroc] }
+  - { id: caravane-fantome, nom: "La caravane fantôme", fond: desert, ennemis: [{ id: momie-de-sel }, { id: chacal }, { id: chacal }], renforts: [chacal] }

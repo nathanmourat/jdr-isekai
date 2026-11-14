@@ -1,0 +1,46 @@
+# Kaya Lunecroc — l'aventurière femme-loup (rencontrée au chapitre 1, compagne à partir du chapitre 2).
+compagnon:
+  id: kaya
+  nom: "Kaya Lunecroc"
+  titre: "Aventurière ourvalis"
+  age: 25
+  genre: f
+  personnalite: "Énergique, compétitive, franche jusqu'à la gaffe. Gourmande de viande grillée, mauvaise perdante, loyale à la vie à la mort."
+  passe: "Sa tribu, les Lunecroc, a été chassée de ses terres par la Concorde de Qarzim, qui y a ouvert des mines d'éther. Elle est partie à Lysmont pour devenir quelqu'un."
+  objectif: "Devenir rang S à la Guilde, pour rendre sa fierté à sa tribu."
+  chapitre_arrivee: 2
+  quete: q-kaya
+  lignes_rouges:
+    - { flag: mepris-ourvalis, description: "« Des bêtes, hein ? C'est comme ça que tu nous vois ? »", penalite: -30 }
+    - { flag: triche-guilde, description: "« Tricher à la Guilde. Tu sais combien de temps j'ai sué pour mon rang ? »", penalite: -20 }
+    - { flag: trahison-lunecroc, description: "« Tu as vendu ma tribu à la Concorde. Ne me parle plus. »", penalite: -50, definitive: true }
+  cadeaux:
+    prefere: [viande-grillee, croc-de-loup]
+    apprecie: [kit-entretien-armes, gateau-lysmont]
+    deteste: [bijou-dore, the-a-la-menthe]
+  combat:
+    caracteristiques: { FOR: 11, AGI: 14, INT: 6, VIT: 11, ESP: 8, CHA: 10 }
+    attaque: { stat: AGI, element: physique, portee: melee, puissance: 9 }
+    armure: 5
+    rang: avant
+    competences:
+      - id: kaya-croc
+        nom: Croc lunaire
+        description: "Une double entaille de son épée, rapide comme un loup."
+        recharge: 2
+        cible: ennemi
+        portee: melee
+        effets: [{ type: degats, puissance: 8, stat: AGI, coups: 2 }]
+        ia: { priorite: 2 }
+      - id: kaya-hurlement
+        nom: Hurlement de la meute
+        description: "Un hurlement qui galvanise le groupe."
+        recharge: 4
+        cible: tous_allies
+        effets: [{ type: etat, etat: bonus_initiative, duree: 3, valeur: 0.25 }]
+        ia: { priorite: 3, quand: debut_combat }
+  bonus_paliers:
+    alliee: { id: aura-precision, nom: "Flair", description: "Elle sent les pièges et les feintes : +5 % de précision pour le groupe.", parametres: { valeur: 0.05 } }
+    proche: { id: aura-degats, nom: "Instinct de meute", description: "+8 % de dégâts pour tout le groupe.", parametres: { valeur: 0.08 } }
+    amoureuse: { id: contre-attaque, nom: "Riposte du loup", description: "25 % de chances de contre-attaquer quand elle est frappée.", parametres: { chance: 0.25 } }
+    engagee: { id: attaque-combinee, nom: "Chasse à deux", description: "Attaque combinée avec son héros : +25 % de dégâts.", parametres: { degats: 0.25 } }
