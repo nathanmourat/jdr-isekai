@@ -6,7 +6,7 @@
  * Rien ne change dans le moteur ni dans la sauvegarde (aucun effet sur Roblox).
  */
 import type { Contenu } from '../contenu/types';
-import { nomFaction, objetConnu, type EtatPartie } from '../moteur/partie';
+import { nomFaction, objetConnu, pvHorsCombat, type EtatPartie } from '../moteur/partie';
 import { cles, entrees } from '../moteur/outils';
 
 export interface Gain {
@@ -37,6 +37,9 @@ export function calculerGains(contenu: Contenu, avant: EtatPartie, apres: EtatPa
       const nom = def ? (def.mystere && !objetConnu(contenu, apres, o) ? '???' : def.nom) : o;
       g.push({ heros: id, texte: `${qui}${signe(d)} ${nom}`, sorte: d > 0 ? 'gain' : 'perte', objet: o });
     }
+    // PV gardés entre les combats : soins (repas, Temple, potion, temps qui passe) et blessures
+    const dPv = pvHorsCombat(contenu, h) - pvHorsCombat(contenu, a);
+    if (dPv && h.niveau === a.niveau) g.push({ heros: id, texte: `${qui}${signe(dPv)} PV`, sorte: dPv > 0 ? 'gain' : 'perte' });
     const dOr = h.or - a.or;
     if (dOr) g.push({ heros: id, texte: `${qui}${signe(dOr)} or`, sorte: dOr > 0 ? 'gain' : 'perte' });
     if (h.niveau > a.niveau) g.push({ heros: id, texte: `${qui}niveau ${h.niveau} !`, sorte: 'info' });

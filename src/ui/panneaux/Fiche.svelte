@@ -1,5 +1,6 @@
 <script lang="ts">
   import { jeu } from '../jeu.svelte';
+  import { partSoinObjet } from '../../moteur/partie';
   import { santeHeros } from '../sante';
   import { caracsTotales, competencesConnues, competencesEquipees, manaMax, pvMax, xpPourNiveau, age } from '../../moteur/personnage';
   import { prixVente, prochainExamen, rangHeros } from '../../moteur/partie';
@@ -52,6 +53,7 @@
         <p><strong>PV : {sante.pv} / {sante.pvMax}</strong>{#if h.blessure} <span class="badge rouge">blessé : −{c.config.mort_douce.blessure_pv_pourcent} % jusqu'au repos (auberge, Temple)</span>{/if}</p>
         <div class="jauge pv"><div style={`width:${(sante.pv / sante.pvMax) * 100}%`}></div></div>
         <p><strong>Mana : {sante.mana} / {sante.manaMax}</strong> <span class="discret">(plein au début de chaque combat)</span></p>
+        <p class="discret">Les PV sont gardés d'un combat à l'autre. Pour les récupérer : +{c.config.soins.regen_jour_pourcent} % par jour qui passe, un repas à l'auberge, une ration ou une potion (boutons du sac), les soins du Temple, ou une nuit au lit de l'auberge (tous les PV).</p>
         <div class="jauge mana"><div style="width:100%"></div></div>
       </div>
       <label class="discret">Changer de portrait <input type="file" accept="image/*" onchange={portrait} /></label>
@@ -143,6 +145,8 @@
       <div class="ligne item">
         <ObjetInfo id={o} nombre={n} />
         {#if c.objets[o].type === 'equipement'}{@const refus = problemeEquipement(c, h, c.objets[o])}{@const malus = avertissementEquipement(c, h, c.objets[o])}<button class="petit" disabled={refus !== undefined} title={refus ?? malus ?? ''} onclick={() => jeu.agir({ type: 'equiper', objet: o })}>Équiper</button>{#if refus}<small class="refus-equip">{refus}</small>{:else if malus}<small class="malus-equip">{malus}</small>{/if}{/if}
+        {#if o === 'ration' && sante.pv < sante.pvMax}<button class="petit" onclick={() => jeu.agir({ type: 'se_soigner', moyen: 'ration' })}>Manger (+{c.config.soins.ration_pourcent} % PV)</button>{/if}
+        {#if c.objets[o].effets?.some((e) => e.type === 'soin') && sante.pv < sante.pvMax}<button class="petit" onclick={() => jeu.agir({ type: 'se_soigner', moyen: 'objet', objet: o })}>Boire (+{Math.round(partSoinObjet(c.objets[o].effets!.find((e) => e.type === 'soin')!) * 100)} % PV)</button>{/if}
         {#if c.objets[o].type !== 'quete'}<button class="petit" onclick={() => jeu.agir({ type: 'vendre', objet: o })}>Vendre ({prixVente(c, h, o)} or)</button>{/if}
       </div>
     {:else}<p class="discret">Inventaire vide.</p>{/each}

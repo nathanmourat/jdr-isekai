@@ -1,6 +1,7 @@
 /**
  * PV et mana d'un héros hors combat (test 3, point 12), calculés par le moteur comme au début d'un combat :
- * PV max, moins la blessure d'un K.O. (mort douce) tant qu'il ne s'est pas reposé. Le mana est toujours plein.
+ * les PV sont gardés d'un combat à l'autre (heros.pv) ; le max tient compte de la blessure d'un K.O. (mort douce).
+ * On les récupère avec le temps, le repos, un repas, une ration, une potion ou les soins du Temple. Le mana est toujours plein.
  */
 import type { Contenu } from '../contenu/types';
 import { combattantHeros } from '../moteur/combat';
@@ -12,7 +13,7 @@ export interface Sante { pv: number; pvMax: number; mana: number; manaMax: numbe
 export function santeHeros(contenu: Contenu, h: Heros): Sante {
   const x = combattantHeros(contenu, h, true, h.grimoire ?? {});
   const sain = h.blessure ? combattantHeros(contenu, { ...h, blessure: false }, true, h.grimoire ?? {}) : x;
-  return { pv: x.pvMax, pvMax: sain.pvMax, mana: x.manaMax, manaMax: sain.manaMax };
+  return { pv: h.pv === undefined ? x.pvMax : Math.min(x.pvMax, h.pv), pvMax: sain.pvMax, mana: x.manaMax, manaMax: sain.manaMax };
 }
 
 /** Seuil de confirmation avant un combat (part des PV max). */

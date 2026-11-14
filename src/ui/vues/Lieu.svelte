@@ -11,7 +11,7 @@
   import { candidatsExamen, conditionHeros, conditionScene, etapeContrat, listeHeros, objetConnu, palierCompagnon, prochainExamen, rangHeros, scenesDisponibles } from '../../moteur/partie';
   import ObjetInfo from '../ObjetInfo.svelte';
   import { activiteChangee, signatureActivite } from '../activite';
-  import { alertesSante } from '../sante';
+  import { alertesSante, santeHeros } from '../sante';
   import { flechesDuLieu } from '../chemins';
   import { absentsDuGroupe, aideNiveau, couleurNiveau, estExaminateur, estGuilde, marqueurPnj, trouverLieu, niveauGroupe, niveauScene, sceneAvecCombat, type Marqueur } from '../../moteur/guide';
   import NiveauConseille from '../NiveauConseille.svelte';
@@ -311,6 +311,16 @@
         {/if}
 
         {#if lieu.auberge && piece === 'chambre' && !litOuvert && !etat.repos}<div class="item"><button onclick={() => (litOuvert = true)}>🛏 Aller au lit</button></div>{/if}
+        {#if lieu.auberge && piece === 'salle'}
+          {@const s = santeHeros(c, h)}
+          <div class="item soin"><button disabled={s.pv >= s.pvMax || h.or < c.config.soins.repas.prix} onclick={() => jeu.agir({ type: 'se_soigner', moyen: 'repas', lieu: id })}>🍲 Repas chaud ({c.config.soins.repas.prix} or) : +{c.config.soins.repas.pourcent} % de PV</button>
+            <small class="discret">{s.pv}/{s.pvMax} PV{s.pv >= s.pvMax ? ' : en pleine forme' : ''}</small></div>
+        {/if}
+        {#if id.startsWith('temple')}
+          {@const s = santeHeros(c, h)}
+          <div class="item soin"><button disabled={(s.pv >= s.pvMax && !h.blessure) || h.or < c.config.soins.temple.prix} onclick={() => jeu.agir({ type: 'se_soigner', moyen: 'temple', lieu: id })}>✨ Soins des prêtres ({c.config.soins.temple.prix} or) : tous les PV{h.blessure ? ' et la blessure' : ''}</button>
+            <small class="discret">{s.pv}/{s.pvMax} PV{s.pv >= s.pvMax && !h.blessure ? ' : en pleine forme' : ''}</small></div>
+        {/if}
 
         <div class="grille colonnes">
           {#if scenesSurPlace.length && piece === 'salle'}

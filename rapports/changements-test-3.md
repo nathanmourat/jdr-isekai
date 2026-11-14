@@ -75,6 +75,22 @@ Captures avant et après dans `rapports/captures-test-3/` (ordinateur, télépho
 **Ce qui a changé** : chaque héros du groupe a deux mini-barres (PV en vert, mana en bleu) dans la barre du haut, repliées avec elle. La fiche « Personnage » affiche les PV et le mana en clair. Avant un combat, si un héros présent a moins de 50 % de ses PV, une confirmation s'affiche : « Attention : <pseudo> n'a que X/Y PV. Se soigner : auberge, Temple ou potion. »
 **⚠️ Question pour le groupe** (voir à la fin) : dans le moteur actuel, **les PV ne sont pas gardés d'un combat à l'autre**. Chaque combat commence avec tous les PV, sauf −10 % si le héros est blessé (K.O.) et −15 % sans ration. La confirmation ne se déclenche donc presque jamais.
 
+### C3 bis. PV gardés et récupération (décision du 15/11)
+**Ce qui a changé** : les PV restent ceux de la fin du combat. Un héros K.O. se relève avec 20 % de ses PV.
+On les récupère :
+- **avec le temps** : +10 % des PV max par jour qui passe ;
+- **en se reposant** : le lit de l'auberge (et le temps libre) rend tous les PV ;
+- **en mangeant** : un repas chaud à l'auberge (3 or, +30 %), ou une ration du sac (+15 %, bouton « Manger » de la fiche) ;
+- **avec une potion hors combat** (bouton « Boire » de la fiche) : petite +25 %, normale +47 %, grande +94 % ;
+- **en payant les prêtres du Temple** : 15 or, tous les PV, et la blessure est guérie.
+
+Les examens de rang se passent toujours avec tous ses PV, et on retrouve ensuite les PV d'avant. Une notification « +12 PV » s'affiche. Les réglages sont dans `content/config/campagne.yaml` (`soins`).
+**À vérifier**
+- [ ] Après un combat difficile, la barre de PV du haut reste basse.
+- [ ] Repas au Chaudron Fêlé (cadre « Détails » du lieu) : −3 or, +PV.
+- [ ] Soins au Temple du Seuil : −15 or, PV pleins.
+- [ ] Contrat à deux combats : jouable sans se soigner entre les deux ?
+
 ## Lot D : flèches de chemin (point 2)
 **Ce qui a changé** : sur le décor d'une zone de chemin, une flèche dorée qui pulse mène à la zone suivante. Elle affiche le nom de la zone et la couleur du niveau conseillé.
 - **Aucun nouveau format** : le chemin se déduit de l'ordre des étapes de la quête ou du contrat en cours (par exemple Combe-aux-Saules → Lisière de la Combe → Vieux saule creux). Les lieux en ville (Guilde, auberge) ne comptent pas.
@@ -129,6 +145,6 @@ Captures avant et après dans `rapports/captures-test-3/` (ordinateur, télépho
 Tout est noté dans `roblox/README-ROBLOX.md`, section « À reprendre — test 3 » : action `pret_dialogue`, champs `prets` / `resultatVote` / `reponseParole`, sexe du héros et format v8, action `changer_sexe`, accords `{{…}}`, 9 choix payants. Le dossier `roblox/` n'a pas été modifié en dehors de cette note. `npm run roblox:parite` échouera jusqu'à la régénération du moteur Luau.
 
 ## Questions pour le groupe
-1. **PV entre les combats (C3)** : aujourd'hui, chaque combat repart avec tous les PV (sauf blessure et ration). Voulez-vous **garder les PV d'un combat à l'autre** (il faudra se soigner à l'auberge, au Temple ou avec une potion), ou laisser comme aujourd'hui ? Le premier choix change l'équilibrage des contrats à plusieurs combats.
+1. ~~PV entre les combats~~ : **décidé, les PV sont gardés** (voir C3 bis). À surveiller au prochain test : les contrats à plusieurs combats sont plus durs.
 2. **Flags importants (C1)** : faut-il notifier certains événements d'histoire (« La princesse vous doit une faveur »…) ? Il faudrait les marquer dans le YAML.
 3. **Sprites féminins** : à brancher quand le graphiste livrera les planches `f/`.

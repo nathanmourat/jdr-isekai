@@ -38,6 +38,8 @@ export interface Heros {
   inventaire: Record<string, number>;
   or: number;
   blessure: boolean;
+  /** PV actuels hors combat (gardés d'un combat à l'autre) ; absent = PV pleins. */
+  pv?: number;
   atout: string | null;
   origineEnfance: string | null;
   contacts: string[];

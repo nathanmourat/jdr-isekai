@@ -147,6 +147,14 @@ config:
   mort_douce:
     perte_or_pourcent: 10
     blessure_pv_pourcent: 10
+  # PV gardés d'un combat à l'autre (après le test 3) et façons de les récupérer
+  soins:
+    regen_jour_pourcent: 10        # chaque jour qui passe rend 10 % des PV max
+    pv_apres_ko_pourcent: 20       # un héros K.O. se relève avec 20 % de ses PV
+    repas: { prix: 3, pourcent: 30 }   # repas chaud dans une auberge
+    ration_pourcent: 15            # manger une ration de voyage hors combat
+    temple: { prix: 15 }           # soins des prêtres : tous les PV et la blessure
+    # le lit de l'auberge (et le temps libre) rend tous les PV ; une potion hors combat rend puissance/64 des PV max
 
   graphismes:
     taille_tuile: 32

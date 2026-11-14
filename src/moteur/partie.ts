@@ -6,7 +6,7 @@
  * Ainsi, chaque joueur obtient exactement le même état en rejouant la même liste d'actions.
  */
 import type { Contenu } from '../contenu/types';
-import type { Choix, Condition, Consequence, Noeud, Scene } from '../contenu/schemas';
+import type { Choix, Condition, Consequence, Lieu, Noeud, Scene } from '../contenu/schemas';
 import { affiniteVide, modifierAffinite, palier, paliersAtteints, pardonner, peutOffrir, reactionCadeau, verifierLignesRouges, type Affinite } from './affinite';
 import {
   annulerTour, avancer, combattantCompagnon, combattantHeros, demarrerCombat, jouerAction, recompensesCombat,
@@ -169,6 +169,7 @@ export type Action =
   | { type: 'continuer'; joueur: string; cle: string }
   | { type: 'pret_dialogue'; joueur: string; cle: string }
   | { type: 'changer_sexe'; joueur: string; sexe: 'm' | 'f' }
+  | { type: 'se_soigner'; joueur: string; moyen: 'repas' | 'temple' | 'ration' | 'objet'; lieu?: string; objet?: string }
   | { type: 'quitter_scene'; joueur: string; cle: string }
   | { type: 'combat'; joueur: string; cle: string; action: ActionCombat }
   | { type: 'second_depart'; joueur: string; cle: string }
@@ -548,6 +549,8 @@ function appliquerConsequence(contenu: Contenu, etat: EtatPartie, eff: Consequen
 function avancerTemps(contenu: Contenu, etat: EtatPartie, jours: number) {
   const avant = etat.jour;
   etat.jour += jours;
+  // récupération passive : chaque jour qui passe rend une part des PV
+  if (jours > 0) for (const h of listeHeros(etat)) soignerHeros(contenu, h, (contenu.config.soins.regen_jour_pourcent * jours) / 100);
   for (const f of fetesEntre(contenu, avant, etat.jour)) etat.journal.push({ jour: f.jour, chapitre: etat.chapitre, texte: `${formaterDate(contenu, f.jour)} — ${f.nom}.` });
   etat.chapitre = Math.max(etat.chapitre, chapitreDe(contenu, etat.jour));
 }
@@ -961,6 +964,12 @@ function lancerCombat(contenu: Contenu, etat: EtatPartie, rencontre: string, cle
     }
   }
   const combat = demarrerCombat(contenu, rencontre, allies, etat.rng, `${cle}:${etat.numeroAction}`);
+  // les PV sont gardés d'un combat à l'autre (un examen de rang se passe toujours avec tous ses PV)
+  if (contexte.origine !== 'examen') for (const x of combat.combattants) {
+    if (x.type !== 'heros' || !vrai(x.herosId)) continue;
+    const pv = etat.heros[x.herosId].pv;
+    if (pv !== undefined) x.pv = Math.max(1, Math.min(x.pvMax, pv));
+  }
   if (lieuHorsVille(contenu, lieu)) {
     // en route : chaque héros mange une ration ; sans ration, il commence le combat fatigué
     for (const x of combat.combattants) {
@@ -985,6 +994,11 @@ function terminerCombat(contenu: Contenu, etat: EtatPartie, cle: string) {
   // potions réellement consommées
   for (const c of combat.combattants.filter((x) => x.type === 'heros')) {
     const h = etat.heros[c.herosId!];
+    if (contexte.origine !== 'examen') {
+      const ko = c.pv <= 0 || c.ko;
+      h.pv = ko ? Math.max(1, Math.round(c.pvMax * contenu.config.soins.pv_apres_ko_pourcent / 100)) : Math.max(1, c.pv);
+      if (h.pv >= pvMaxHorsCombat(contenu, h)) delete h.pv;
+    }
     const utilisees = c.compteurs.potionsUtilisees ?? 0;
     if (vrai(utilisees)) h.inventaire['potion-soin-petite'] = Math.max(0, (h.inventaire['potion-soin-petite'] ?? 0) - utilisees);
     // autres objets du sac consommés pendant le combat (potions de soin et de mana, antidotes, bombes…)
@@ -1219,7 +1233,7 @@ function resoudreTempsLibre(contenu: Contenu, etat: EtatPartie) {
   tl.resultats = resultats;
   journal(contenu, etat, `${tl.titre} (${tl.mois} mois passent).`);
   avancerTemps(contenu, etat, tl.jusqua - etat.jour);
-  for (const h of listeHeros(etat)) h.blessure = false;
+  for (const h of listeHeros(etat)) { h.blessure = false; delete h.pv; }
 }
 
 // ───────────────────────────── Application d'une action ─────────────────────────────
@@ -1369,6 +1383,47 @@ export function appliquer(contenu: Contenu, etatAvant: EtatPartie, action: Actio
       if (h.sexeChoisi !== false && etat.jour >= 30) refuser('Le sexe du héros ne peut plus changer après le premier mois de jeu');
       h.sexe = action.sexe;
       h.sexeChoisi = true;
+      break;
+    }
+    case 'se_soigner': {
+      const h = herosDuJoueur(etat, action.joueur);
+      if (etat.combats[h.id] || etat.combats.groupe) refuser('Pas pendant un combat');
+      const max = pvMaxHorsCombat(contenu, h);
+      const pv = h.pv ?? max;
+      const cfg = contenu.config.soins;
+      const lieu = vrai(action.lieu) ? trouverLieuPartie(contenu, action.lieu) : null;
+      if (action.moyen === 'temple') {
+        if (!lieu || !lieu.id.startsWith('temple')) refuser('Il faut être dans un temple');
+        if (pv >= max && !h.blessure) refuser(`${h.nom} est déjà en pleine forme`);
+        if (h.or < cfg.temple.prix) refuser(`Pas assez d'or : les soins coûtent ${cfg.temple.prix} or (vous en avez ${h.or})`);
+        h.or -= cfg.temple.prix;
+        etat.mouvementsOr.push({ heros: h.id, montant: -cfg.temple.prix, raison: 'soins' });
+        h.blessure = false;
+        delete h.pv;
+        etat.dernieresNouvelles.push(`Les prêtres soignent ${h.nom} : tous les PV sont rendus${pv < max ? '' : ' et la blessure est guérie'}.`);
+        break;
+      }
+      if (pv >= max) refuser(`${h.nom} est déjà en pleine forme`);
+      let part = 0;
+      if (action.moyen === 'repas') {
+        if (!lieu || !vrai(lieu.auberge)) refuser('Il faut être dans une auberge');
+        if (h.or < cfg.repas.prix) refuser(`Pas assez d'or : le repas coûte ${cfg.repas.prix} or (vous en avez ${h.or})`);
+        h.or -= cfg.repas.prix;
+        etat.mouvementsOr.push({ heros: h.id, montant: -cfg.repas.prix, raison: 'repas' });
+        part = cfg.repas.pourcent / 100;
+      } else if (action.moyen === 'ration') {
+        if ((h.inventaire[RATION.objet] ?? 0) <= 0) refuser('Plus de ration dans le sac');
+        h.inventaire[RATION.objet]--;
+        part = cfg.ration_pourcent / 100;
+      } else {
+        const o = vrai(action.objet) ? contenu.objets[action.objet] : undefined;
+        const soin = o?.effets?.find((e) => e.type === 'soin');
+        if (!o || !soin || (h.inventaire[o.id] ?? 0) <= 0) refuser('Objet impossible à utiliser');
+        h.inventaire[o!.id]--;
+        part = partSoinObjet(soin!);
+      }
+      const gagne = soignerHeros(contenu, h, part);
+      etat.dernieresNouvelles.push(`${h.nom} récupère ${gagne} PV (${h.pv ?? max}/${max}).`);
       break;
     }
     case 'pret_dialogue': {
@@ -1874,6 +1929,40 @@ export function joueursAttendusDialogue(etat: EtatPartie, cle: string): string[]
     const jx = etat.joueurs[x];
     return jx.present && vrai(jx.herosId) && es.heros.includes(jx.herosId!) && !prets.includes(x);
   });
+}
+
+/** PV max d'un héros hors combat (blessure comprise), calculés comme au début d'un combat. */
+export function pvMaxHorsCombat(contenu: Contenu, h: Heros): number {
+  return combattantHeros(contenu, h, true, h.grimoire ?? {}).pvMax;
+}
+
+/** PV actuels d'un héros hors combat. */
+export function pvHorsCombat(contenu: Contenu, h: Heros): number {
+  const max = pvMaxHorsCombat(contenu, h);
+  return h.pv === undefined ? max : Math.min(max, h.pv);
+}
+
+/** Rend une part (0 à 1) des PV max ; renvoie les PV gagnés. */
+function soignerHeros(contenu: Contenu, h: Heros, part: number): number {
+  if (h.pv === undefined || part <= 0) return 0;
+  const max = pvMaxHorsCombat(contenu, h);
+  const avant = Math.min(max, h.pv);
+  const apres = Math.min(max, avant + Math.max(1, Math.round(max * part)));
+  if (apres >= max) delete h.pv; else h.pv = apres;
+  return apres - avant;
+}
+
+/** Hors combat, une potion rend une part des PV max selon sa puissance (petite 25 %, normale 47 %, grande 94 %). */
+export function partSoinObjet(soin: { puissance?: number }): number {
+  return Math.min(1, (soin.puissance ?? 16) / 64);
+}
+
+function trouverLieuPartie(contenu: Contenu, id: string): Lieu | null {
+  for (const r of valeurs(contenu.regions)) {
+    const l = r.lieux.find((x) => x.id === id);
+    if (l) return l;
+  }
+  return null;
 }
 
 function resoudreVote(contenu: Contenu, etat: EtatPartie) {

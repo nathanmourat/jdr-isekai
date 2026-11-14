@@ -656,6 +656,14 @@ export const zConfig = z.object({
     toucher_par_rang: z.number().default(0.01),
   }).default({ seuils: [5, 15, 30, 50, 80], degats_par_rang: 0.02, toucher_par_rang: 0.01 }),
   mort_douce: z.object({ perte_or_pourcent: z.number(), blessure_pv_pourcent: z.number() }),
+  /** PV gardés d'un combat à l'autre, et comment les récupérer (après le test 3). */
+  soins: z.object({
+    regen_jour_pourcent: z.number().default(10),
+    pv_apres_ko_pourcent: z.number().default(20),
+    repas: z.object({ prix: z.number(), pourcent: z.number() }).default({ prix: 3, pourcent: 30 }),
+    ration_pourcent: z.number().default(15),
+    temple: z.object({ prix: z.number() }).default({ prix: 15 }),
+  }).default({ regen_jour_pourcent: 10, pv_apres_ko_pourcent: 20, repas: { prix: 3, pourcent: 30 }, ration_pourcent: 15, temple: { prix: 15 } }),
   graphismes: z.record(z.string(), z.number()),
 });
 export type Config = z.infer<typeof zConfig>;
