@@ -17,12 +17,12 @@ classe:
     - id: assassinat
       nom: Assassinat
       description: "Critiques et exécutions."
-      competences: [{ niveau: 5, competence: coup-de-grace }]
+      competences: [{ niveau: 5, competence: coup-de-grace }, { niveau: 12, competence: danse-des-lames }, { niveau: 20, competence: execution-silencieuse }]
     - id: toxines
       nom: Toxines
       description: "Poisons et affaiblissements."
-      competences: [{ niveau: 5, competence: nuage-toxique }]
-  ultime: { nom: "Mille Coupures", description: "6 frappes réparties sur les ennemis, chacune avec une chance de critique." }
+      competences: [{ niveau: 5, competence: nuage-toxique }, { niveau: 12, competence: venin-paralysant }, { niveau: 20, competence: peste-noire }]
+  ultime: { nom: "Mille Coupures", description: "6 frappes réparties sur les ennemis, chacune avec une chance de critique.", competence: mille-coupures }
   point_fort: "Élimine une cible prioritaire en un ou deux tours."
   point_faible: "Peu de PV ; faible contre les groupes nombreux."
   competences_detail:
@@ -62,3 +62,54 @@ classe:
         - { type: degats, puissance: 4, stat: AGI, element: poison }
         - { type: etat, etat: poison, duree: 3, valeur: 3, cumul_max: 3 }
       ia: { priorite: 3, quand: plusieurs_ennemis }
+    # ── Saison 1 : compétences de branche des niveaux 12 et 20, et l'ultime (débloqué par la quête de classe, niveau 30)
+    - id: danse-des-lames
+      nom: Danse des lames
+      description: "Trois frappes rapides sur la même cible."
+      cout: 10
+      recharge: 2
+      cible: ennemi
+      portee: melee
+      effets: [{ type: degats, puissance: 9, stat: AGI, element: physique, coups: 3 }]
+      ia: { priorite: 3 }
+    - id: execution-silencieuse
+      nom: Exécution silencieuse
+      description: "Un coup mortel, toujours critique, qui achève une cible affaiblie."
+      cout: 14
+      recharge: 4
+      cible: ennemi
+      portee: melee
+      effets: [{ type: degats, puissance: 22, stat: AGI, element: physique, critique_garanti: true, executer_sous_pourcent: 0.3 }]
+      ia: { priorite: 5, quand: cible_faible }
+    - id: venin-paralysant
+      nom: Venin paralysant
+      description: "Un poison qui engourdit les muscles."
+      cout: 10
+      recharge: 3
+      cible: ennemi
+      portee: melee
+      effets:
+        - { type: degats, puissance: 14, stat: AGI, element: poison }
+        - { type: etat, etat: immobilise, duree: 1, chance: 0.55 }
+        - { type: etat, etat: poison, duree: 3, valeur: 6, cumul_max: 3 }
+      ia: { priorite: 3 }
+    - id: peste-noire
+      nom: Peste noire
+      description: "Un nuage de toxines sur tous les ennemis, qui s'affaiblissent."
+      cout: 14
+      recharge: 4
+      cible: tous_ennemis
+      effets:
+        - { type: degats, puissance: 9, stat: AGI, element: poison }
+        - { type: etat, etat: poison, duree: 3, valeur: 7, cumul_max: 3 }
+        - { type: etat, etat: affaibli, duree: 2, valeur: 0.15 }
+      ia: { priorite: 4, quand: plusieurs_ennemis }
+    - id: mille-coupures
+      nom: "Ultime — Mille Coupures"
+      description: "L'Ombre disparaît et frappe partout à la fois : six coups sur les ennemis, chacun avec une chance de critique."
+      cout: 20
+      recharge: 6
+      cible: ennemi_aleatoire
+      portee: melee
+      effets: [{ type: degats, puissance: 12, stat: AGI, element: physique, coups: 6 }]
+      ia: { priorite: 6 }

@@ -17,12 +17,12 @@ classe:
     - id: furie
       nom: Furie
       description: "Dégâts et vol de vie."
-      competences: [{ niveau: 5, competence: frenesie }]
+      competences: [{ niveau: 5, competence: frenesie }, { niveau: 12, competence: carnage }, { niveau: 20, competence: rage-du-wyrm }]
     - id: ecailles
       nom: Écailles
       description: "Réduction de dégâts quand il est blessé."
-      competences: [{ niveau: 5, competence: peau-d-ecailles }]
-  ultime: { nom: "Forme du Wyrm", description: "Se transforme pendant 3 tours : souffle de feu et carapace d'écailles." }
+      competences: [{ niveau: 5, competence: peau-d-ecailles }, { niveau: 12, competence: ecailles-d-airain }, { niveau: 20, competence: souffle-brulant }]
+  ultime: { nom: "Forme du Wyrm", description: "Se transforme pendant 3 tours : souffle de feu et carapace d'écailles.", competence: forme-du-wyrm }
   point_fort: "Les plus gros dégâts en mêlée ; dangereux quand il est blessé."
   point_faible: "Se met en danger lui-même ; faible face à la magie et au contrôle."
   competences_detail:
@@ -61,3 +61,53 @@ classe:
         - { type: etat, etat: bonus_defense, duree: 3, valeur: 0.4 }
         - { type: etat, etat: regeneration, duree: 3, valeur: 0.04 }
       ia: { priorite: 3, quand: soi_blesse }
+    # ── Saison 1 : compétences de branche des niveaux 12 et 20, et l'ultime (débloqué par la quête de classe, niveau 30)
+    - id: carnage
+      nom: Carnage
+      description: "Un tourbillon de coups sur tous les ennemis, au prix de quelques PV."
+      cout: 10
+      recharge: 2
+      cible: tous_ennemis
+      portee: melee
+      effets: [{ type: degats, puissance: 17, stat: FOR, element: physique, cout_pv_pourcent: 0.05 }]
+      ia: { priorite: 4, quand: plusieurs_ennemis }
+    - id: rage-du-wyrm
+      nom: Rage du wyrm
+      description: "Le sang de dragon bout : énorme coup unique, d'autant plus fort que le Berserker est blessé."
+      cout: 14
+      recharge: 3
+      cible: ennemi
+      portee: melee
+      effets: [{ type: degats, puissance: 32, stat: FOR, element: feu, cout_pv_pourcent: 0.08 }]
+      ia: { priorite: 4 }
+    - id: ecailles-d-airain
+      nom: Écailles d'airain
+      description: "Des écailles couvrent sa peau : bouclier et défense."
+      cout: 10
+      recharge: 4
+      cible: soi
+      effets:
+        - { type: bouclier, pourcent_pv: 0.25 }
+        - { type: etat, etat: bonus_defense, duree: 3, valeur: 0.3 }
+      ia: { priorite: 3, quand: soi_blesse }
+    - id: souffle-brulant
+      nom: Souffle brûlant
+      description: "Un souffle de flammes sur tous les ennemis."
+      cout: 14
+      recharge: 3
+      cible: tous_ennemis
+      effets:
+        - { type: degats, puissance: 16, stat: VIT, element: feu }
+        - { type: etat, etat: brulure, duree: 2, valeur: 6, chance: 0.6 }
+      ia: { priorite: 4, quand: plusieurs_ennemis }
+    - id: forme-du-wyrm
+      nom: "Ultime — Forme du Wyrm"
+      description: "Se transforme en wyrm : carapace d'écailles, régénération et souffle de feu sur tous les ennemis."
+      cout: 20
+      recharge: 7
+      cible: tous_ennemis
+      effets:
+        - { type: degats, puissance: 26, stat: FOR, element: feu }
+        - { type: etat, etat: bonus_defense, duree: 3, valeur: 0.4, cible: soi }
+        - { type: etat, etat: regeneration, duree: 3, valeur: 0.06, cible: soi }
+      ia: { priorite: 6 }

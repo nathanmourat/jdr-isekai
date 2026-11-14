@@ -17,12 +17,12 @@ classe:
     - id: bastion
       nom: Bastion
       description: "Défense pure."
-      competences: [{ niveau: 5, competence: mur-de-foi }]
+      competences: [{ niveau: 5, competence: mur-de-foi }, { niveau: 12, competence: egide-sacree }, { niveau: 20, competence: citadelle-de-lumiere }]
     - id: croise
       nom: Croisé
       description: "Riposte et dégâts sacrés."
-      competences: [{ niveau: 5, competence: jugement-sacre }]
-  ultime: { nom: "Bastion éternel", description: "Pendant 2 tours, aucun allié ne peut tomber sous 1 PV." }
+      competences: [{ niveau: 5, competence: jugement-sacre }, { niveau: 12, competence: marteau-de-l-aube }, { niveau: 20, competence: colere-divine }]
+  ultime: { nom: "Bastion éternel", description: "Pendant 2 tours, aucun allié ne peut tomber sous 1 PV.", competence: bastion-eternel }
   point_fort: "Rend le groupe très solide ; seul, il gagne en tenant longtemps."
   point_faible: "Dégâts faibles, combats longs, peu mobile."
   competences_detail:
@@ -61,3 +61,52 @@ classe:
       portee: melee
       effets: [{ type: degats, puissance: 14, stat: FOR, element: sacre }]
       ia: { priorite: 2 }
+    # ── Saison 1 : compétences de branche des niveaux 12 et 20, et l'ultime (débloqué par la quête de classe, niveau 30)
+    - id: egide-sacree
+      nom: Égide sacrée
+      description: "Un bouclier de lumière sur tout le groupe."
+      cout: 11
+      recharge: 4
+      cible: tous_allies
+      effets: [{ type: bouclier, pourcent_pv: 0.15 }]
+      ia: { priorite: 4, quand: allie_blesse }
+    - id: citadelle-de-lumiere
+      nom: Citadelle de lumière
+      description: "Le Gardien attire tous les coups et protège le groupe."
+      cout: 13
+      recharge: 5
+      cible: tous_allies
+      effets:
+        - { type: etat, etat: bonus_defense, duree: 3, valeur: 0.3 }
+        - { type: etat, etat: regeneration, duree: 3, valeur: 0.04 }
+      ia: { priorite: 4, quand: allie_blesse }
+    - id: marteau-de-l-aube
+      nom: Marteau de l'aube
+      description: "Un coup sacré qui peut étourdir de peur."
+      cout: 10
+      recharge: 2
+      cible: ennemi
+      portee: melee
+      effets:
+        - { type: degats, puissance: 21, stat: FOR, element: sacre }
+        - { type: etat, etat: peur, duree: 1, chance: 0.4 }
+      ia: { priorite: 3 }
+    - id: colere-divine
+      nom: Colère divine
+      description: "La lumière frappe tous les ennemis ; les démons et les morts-vivants la craignent."
+      cout: 14
+      recharge: 3
+      cible: tous_ennemis
+      effets: [{ type: degats, puissance: 18, stat: FOR, element: sacre }]
+      ia: { priorite: 4, quand: plusieurs_ennemis }
+    - id: bastion-eternel
+      nom: "Ultime — Bastion éternel"
+      description: "Pendant 2 tours, le groupe est presque intouchable : énorme bouclier, défense et régénération."
+      cout: 20
+      recharge: 7
+      cible: tous_allies
+      effets:
+        - { type: bouclier, pourcent_pv: 0.35 }
+        - { type: etat, etat: bonus_defense, duree: 2, valeur: 0.5 }
+        - { type: etat, etat: regeneration, duree: 2, valeur: 0.06 }
+      ia: { priorite: 6, quand: allie_blesse }

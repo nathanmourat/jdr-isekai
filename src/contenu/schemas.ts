@@ -110,7 +110,8 @@ export const zClasse = z.object({
   passif: z.object({ id: z.string(), nom: z.string(), description: z.string(), parametres: z.record(z.string(), z.number()).default({}) }),
   competences: z.array(z.string()).min(2),
   branches: z.array(z.object({ id: z.string(), nom: z.string(), description: z.string(), competences: z.array(z.object({ niveau: z.number().int(), competence: z.string() })) })).length(2),
-  ultime: z.object({ nom: z.string(), description: z.string() }),
+  /** Ultime : `competence` = id d'une compétence de competences_detail, débloquée par la quête de classe (étape 3) au niveau `niveau_ultime`. */
+  ultime: z.object({ nom: z.string(), description: z.string(), competence: z.string().optional() }),
   point_fort: z.string(),
   point_faible: z.string(),
   competences_detail: z.array(zCompetence),
@@ -311,6 +312,8 @@ export const zConsequence = z.object({
   /** Un goût d'un compagnon est découvert en discutant : { compagnon: objet }. */
   reveler_gout: z.record(z.string(), z.string()).optional(),
   miser: z.number().int().min(1).optional(),
+  /** Quête de classe terminée : l'ultime de la classe est débloqué (utilisable dès le niveau `niveau_ultime`). */
+  debloquer_ultime: z.boolean().optional(),
   /** Pari gagné : rend la mise multipliée (2 = la mise et autant en gain). */
   gain_pari: z.number().min(0).optional(),
   /** Pari perdu : la mise est définitivement perdue. */
@@ -440,7 +443,14 @@ export const zVille = z.object({
 export const zRegion = z.object({
   id: z.string(),
   nom: z.string(),
+  description: z.string().default(''),
   carte: z.string(),
+  /** Chapitre où la région s'ouvre (ordre sur la carte du monde). */
+  chapitre: z.number().int().default(1),
+  /** Position sur la carte du monde (1920 × 1080). */
+  position_monde: z.object({ x: z.number(), y: z.number() }).optional(),
+  /** La région n'apparaît sur la carte du monde que si cette condition est vraie. */
+  disponible_si: zCondition.optional(),
   villes: z.array(zVille).default([]),
   lieux: z.array(zLieu),
 });
@@ -547,6 +557,8 @@ export const zActivite = z.object({
     soigne_blessure: z.boolean().default(false),
     /** Points de maîtrise donnés à chaque compétence équipée (pour 6 mois). */
     maitrise: z.number().default(0),
+    /** Réputation gagnée (pour 6 mois), ex. { troupes: 6 } pour le domaine. */
+    reputation: z.record(z.string(), z.number()).default({}),
   }),
   choix_compagnon: z.boolean().default(false),
 });

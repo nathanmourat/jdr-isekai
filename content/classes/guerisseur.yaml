@@ -17,12 +17,12 @@ classe:
     - id: sanctuaire
       nom: Sanctuaire
       description: "Soins de groupe."
-      competences: [{ niveau: 5, competence: priere-de-groupe }]
+      competences: [{ niveau: 5, competence: priere-de-groupe }, { niveau: 12, competence: cercle-de-vie }, { niveau: 20, competence: benediction-de-l-aube }]
     - id: jugement
       nom: Jugement
       description: "Dégâts sacrés, soin en frappant."
-      competences: [{ niveau: 5, competence: chatiment }]
-  ultime: { nom: "Second Souffle", description: "Relève tous les alliés K.O. à 40 % de leurs PV." }
+      competences: [{ niveau: 5, competence: chatiment }, { niveau: 12, competence: lance-de-lumiere }, { niveau: 20, competence: aube-vengeresse }]
+  ultime: { nom: "Second Souffle", description: "Relève tous les alliés K.O. à 40 % de leurs PV.", competence: second-souffle }
   point_fort: "Rend le groupe presque increvable."
   point_faible: "Dégâts très faibles ; seul, il gagne en tenant, pas en tuant."
   competences_detail:
@@ -60,3 +60,55 @@ classe:
         - { type: degats, puissance: 13, stat: ESP, element: sacre }
         - { type: soin, puissance: 6, stat: ESP, cible: soi }
       ia: { priorite: 2 }
+    # ── Saison 1 : compétences de branche des niveaux 12 et 20, et l'ultime (débloqué par la quête de classe, niveau 30)
+    - id: cercle-de-vie
+      nom: Cercle de vie
+      description: "Un cercle de lumière qui soigne tout le groupe chaque tour."
+      cout: 11
+      recharge: 4
+      cible: tous_allies
+      effets:
+        - { type: soin, puissance: 9, stat: ESP }
+        - { type: etat, etat: regeneration, duree: 3, valeur: 0.05 }
+      ia: { priorite: 4, quand: allie_blesse }
+    - id: benediction-de-l-aube
+      nom: Bénédiction de l'aube
+      description: "Purifie tout le groupe et le protège."
+      cout: 13
+      recharge: 4
+      cible: tous_allies
+      effets:
+        - { type: purifier }
+        - { type: soin, puissance: 14, stat: ESP }
+        - { type: bouclier, pourcent_pv: 0.1 }
+      ia: { priorite: 5, quand: allie_blesse }
+    - id: lance-de-lumiere
+      nom: Lance de lumière
+      description: "Une lance sacrée transperce la cible."
+      cout: 10
+      recharge: 2
+      cible: ennemi
+      effets:
+        - { type: degats, puissance: 21, stat: ESP, element: sacre }
+        - { type: etat, etat: expose, duree: 2, valeur: 0.15 }
+      ia: { priorite: 3 }
+    - id: aube-vengeresse
+      nom: Aube vengeresse
+      description: "La lumière brûle tous les ennemis et soigne le Guérisseur."
+      cout: 14
+      recharge: 3
+      cible: tous_ennemis
+      effets:
+        - { type: degats, puissance: 16, stat: ESP, element: sacre }
+        - { type: soin, puissance: 10, stat: ESP, cible: soi }
+      ia: { priorite: 4, quand: plusieurs_ennemis }
+    - id: second-souffle
+      nom: "Ultime — Second Souffle"
+      description: "Relève tous les alliés K.O. à 40 % de leurs PV et soigne tout le groupe."
+      cout: 22
+      recharge: 8
+      cible: tous_allies
+      effets:
+        - { type: relever, pourcent_pv: 0.4, cible: tous_allies }
+        - { type: soin, puissance: 18, stat: ESP }
+      ia: { priorite: 7, quand: allie_ko }

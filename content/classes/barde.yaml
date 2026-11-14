@@ -17,12 +17,12 @@ classe:
     - id: virtuose
       nom: Virtuose
       description: "Bonus de groupe."
-      competences: [{ niveau: 5, competence: hymne-de-guerison }]
+      competences: [{ niveau: 5, competence: hymne-de-guerison }, { niveau: 12, competence: chant-de-l-aube }, { niveau: 20, competence: hymne-heroique }]
     - id: dissonance
       nom: Dissonance
       description: "Dégâts sonores et contrôle."
-      competences: [{ niveau: 5, competence: accord-dissonant }]
-  ultime: { nom: "Symphonie du dernier acte", description: "Tout le groupe rejoue immédiatement un tour complet." }
+      competences: [{ niveau: 5, competence: accord-dissonant }, { niveau: 12, competence: cri-de-la-banshee }, { niveau: 20, competence: requiem }]
+  ultime: { nom: "Symphonie du dernier acte", description: "Tout le groupe rejoue immédiatement un tour complet.", competence: symphonie-du-dernier-acte }
   point_fort: "Rend tout le groupe meilleur ; le meilleur en dialogue."
   point_faible: "Peu de dégâts personnels ; le soutien le plus fragile."
   competences_detail:
@@ -63,3 +63,58 @@ classe:
         - { type: degats, puissance: 8, stat: CHA, element: arcane }
         - { type: etat, etat: malus_defense, duree: 2, valeur: 0.2 }
       ia: { priorite: 3, quand: plusieurs_ennemis }
+    # ── Saison 1 : compétences de branche des niveaux 12 et 20, et l'ultime (débloqué par la quête de classe, niveau 30)
+    - id: chant-de-l-aube
+      nom: Chant de l'aube
+      description: "Une mélodie qui soigne et purifie tout le groupe."
+      cout: 11
+      recharge: 3
+      cible: tous_allies
+      effets:
+        - { type: soin, puissance: 11, stat: CHA }
+        - { type: purifier }
+      ia: { priorite: 4, quand: allie_blesse }
+    - id: hymne-heroique
+      nom: Hymne héroïque
+      description: "Tout le groupe frappe plus fort, plus vite et plus juste."
+      cout: 14
+      recharge: 5
+      cible: tous_allies
+      effets:
+        - { type: etat, etat: bonus_degats, duree: 3, valeur: 0.3 }
+        - { type: etat, etat: bonus_precision, duree: 3, valeur: 0.1 }
+        - { type: etat, etat: bonus_initiative, duree: 3, valeur: 0.2 }
+      ia: { priorite: 5, quand: debut_combat }
+    - id: cri-de-la-banshee
+      nom: Cri de la banshee
+      description: "Une note insoutenable : dégâts et peur sur tous les ennemis."
+      cout: 11
+      recharge: 3
+      cible: tous_ennemis
+      effets:
+        - { type: degats, puissance: 13, stat: CHA, element: arcane }
+        - { type: etat, etat: peur, duree: 1, chance: 0.35 }
+      ia: { priorite: 4, quand: plusieurs_ennemis }
+    - id: requiem
+      nom: Requiem
+      description: "Un chant funèbre qui brise la volonté de tous les ennemis."
+      cout: 14
+      recharge: 4
+      cible: tous_ennemis
+      effets:
+        - { type: degats, puissance: 15, stat: CHA, element: ombre }
+        - { type: etat, etat: affaibli, duree: 2, valeur: 0.25 }
+        - { type: etat, etat: malus_defense, duree: 2, valeur: 0.2 }
+      ia: { priorite: 4, quand: plusieurs_ennemis }
+    - id: symphonie-du-dernier-acte
+      nom: "Ultime — Symphonie du dernier acte"
+      description: "La dernière note emporte tout : le groupe est soigné, purifié et galvanisé comme jamais."
+      cout: 22
+      recharge: 7
+      cible: tous_allies
+      effets:
+        - { type: soin, puissance: 16, stat: CHA }
+        - { type: purifier }
+        - { type: etat, etat: bonus_degats, duree: 3, valeur: 0.45 }
+        - { type: etat, etat: bonus_initiative, duree: 3, valeur: 0.4 }
+      ia: { priorite: 6 }

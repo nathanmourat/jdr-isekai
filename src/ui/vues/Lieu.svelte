@@ -10,7 +10,7 @@
   import { jeu } from '../jeu.svelte';
   import { conditionHeros, conditionScene, etapeContrat, listeHeros, objetConnu, palierCompagnon, rangGuilde, scenesDisponibles } from '../../moteur/partie';
   import ObjetInfo from '../ObjetInfo.svelte';
-  import { absentsDuGroupe, aideNiveau, couleurNiveau, marqueurPnj, niveauGroupe, niveauScene, sceneAvecCombat, type Marqueur } from '../../moteur/guide';
+  import { absentsDuGroupe, aideNiveau, couleurNiveau, estGuilde, marqueurPnj, trouverLieu, niveauGroupe, niveauScene, sceneAvecCombat, type Marqueur } from '../../moteur/guide';
   import NiveauConseille from '../NiveauConseille.svelte';
   import { avantPlanDecor, imageDecor, imagePnjDecor, positionsImage, TAILLE_PNJ_DECOR } from '../../rendu/assets';
   import { portraitPersonnage } from '../outils';
@@ -24,22 +24,22 @@
   const c = jeu.contenu!;
   const etat = $derived(jeu.etat!);
   const h = $derived(jeu.monHeros!);
-  const lieu = $derived(c.regions.aubeclaire.lieux.find((l) => l.id === id)!);
+  const lieu = $derived(trouverLieu(c, id)!.lieu);
   const tous = $derived(listeHeros(etat).map((x) => x.id));
   const pnj = $derived(lieu.pnj.filter((p) => conditionScene(c, etat, p.si, tous)));
   const scenes = $derived(scenesDisponibles(c, etat, id, h.id));
   /** Scènes qui ne passent par aucun personnage présent : on les lance depuis « Sur place ». */
   const scenesSurPlace = $derived(scenes.filter((s) => !s.pnj || !pnj.some((p) => p.id === s.pnj)));
-  const contrats = $derived(id === 'guilde' ? Object.values(c.contrats).filter((ct) => conditionHeros(c, etat, ct.disponible_si, h)) : []);
+  const contrats = $derived(estGuilde(id) ? Object.values(c.contrats).filter((ct) => conditionHeros(c, etat, ct.disponible_si, h)) : []);
   const rang = $derived(rangGuilde(c, etat.pointsGuilde[h.id] ?? 0));
   const ordre = ['F', 'E', 'D', 'C', 'B', 'A', 'S'];
   const nomPnj = (p: string) => c.compagnons[p]?.nom ?? c.pnj[p]?.nom ?? p;
-  const fusions = $derived(id === 'guilde' ? fusionsPossibles(c, h) : []);
+  const fusions = $derived(estGuilde(id) ? fusionsPossibles(c, h) : []);
   const absents = $derived(absentsDuGroupe(etat));
   /** Contrat en cours du héros, et son étape si elle se joue ici. */
   const contratEnCours = $derived(etapeContrat(c, etat, h.id));
   const etapeIci = $derived(contratEnCours && contratEnCours.etape.lieu === id ? contratEnCours : null);
-  const nomLieu = (l: string) => c.regions.aubeclaire.lieux.find((x) => x.id === l)?.nom ?? l;
+  const nomLieu = (l: string) => trouverLieu(c, l)?.lieu.nom ?? l;
 
   // ───────────── Ce qui est ouvert sous le décor ─────────────
   let pnjChoisi = $state<string | null>(null);
@@ -73,14 +73,16 @@
   /** Objets mystérieux pas encore identifiés, que le héros possède ou que les boutiques accessibles vendent. */
   const mysteres = $derived.by(() => {
     const vus = new Set<string>(Object.entries(h.inventaire).filter(([, n]) => n > 0).map(([o]) => o));
-    for (const l of c.regions.aubeclaire.lieux) if (conditionScene(c, etat, l.disponible_si, tous)) for (const o of l.boutique) vus.add(o);
+    for (const l of Object.values(c.regions).flatMap((r) => r.lieux)) if (conditionScene(c, etat, l.disponible_si, tous)) for (const o of l.boutique) vus.add(o);
     return [...vus].filter((o) => c.objets[o]?.mystere && !objetConnu(c, etat, o)).sort();
   });
   async function montrerPanneaux() { await tick(); panneaux?.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }
 
   // ───────────── Le décor : PNJ et zones cliquables ─────────────
   const decor = $derived(piece === 'chambre' ? 'auberge-chambre' : lieu.decor);
-  const positions = $derived(positionsImage(`decors/${decor}`) ?? {});
+  /** Décor sans fichier de positions (nouvelles régions, en attendant le graphiste) : zones par défaut. */
+  const DEFAUTS: Record<string, { x: number; y: number }> = { tableau: { x: 1060, y: 300 }, escalier: { x: 1130, y: 420 }, porte: { x: 120, y: 470 }, lit: { x: 640, y: 470 } };
+  const positions = $derived(positionsImage(`decors/${decor}`) ?? DEFAUTS);
   const avantPlan = $derived(avantPlanDecor(decor));
   /** Le gérant tient la boutique : s'il est absent (ou non défini), la boutique reste accessible directement. */
   const gerantPresent = $derived(!!lieu.gerant && pnj.some((p) => p.id === lieu.gerant));
@@ -275,7 +277,7 @@
           {/each}
         </div>
       {/if}
-      {#if id === 'guilde'}
+      {#if estGuilde(id)}
         <details class="carte-ui">
           <summary><strong>📖 Fusions que la Guilde peut vous enseigner</strong> ({fusions.length})</summary>
           <p class="discret">Uniquement les fusions de votre classe et de vos compétences. Ce que vous apprenez va dans votre grimoire personnel : les autres joueurs ne le voient pas.</p>

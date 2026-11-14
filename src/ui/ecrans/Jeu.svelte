@@ -17,6 +17,7 @@
   import Histoire from '../panneaux/Histoire.svelte';
   import FicheRapide from '../panneaux/FicheRapide.svelte';
   import Notifications from '../Notifications.svelte';
+  import { trouverLieu } from '../../moteur/guide';
   import PiecesAnimees from '../PiecesAnimees.svelte';
 
   const c = jeu.contenu!;
@@ -28,7 +29,7 @@
   /** Ouvre un lieu ; s'il est dans une ville, on reviendra ensuite sur le plan de cette ville. */
   function ouvrirLieu(id: string) {
     lieu = id;
-    ville = c.regions.aubeclaire.lieux.find((l) => l.id === id)?.ville ?? null;
+    ville = trouverLieu(c, id)?.lieu.ville ?? null;
   }
   let aideDateOuverte = $state(false);
 

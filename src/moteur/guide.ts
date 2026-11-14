@@ -3,11 +3,25 @@
  * Lecture seule : ne modifie jamais l'état.
  */
 import type { Contenu } from '../contenu/types';
-import type { Scene } from '../contenu/schemas';
+import type { Lieu, Scene } from '../contenu/schemas';
 import { conditionHeros, etapeContrat, listeHeros, scenesDisponibles, sceneEstDisponible, type EtatPartie } from './partie';
 import { niveauMoyen } from './personnage';
 import { entrees, valeurs, vrai } from './outils';
 import { versJour } from './temps';
+
+/** Un bureau de la Guilde (Lysmont, ou ses comptoirs dans les autres régions : `guilde-…`) : contrats et fusions. */
+export function estGuilde(lieu: string): boolean {
+  return lieu === 'guilde' || lieu.startsWith('guilde-');
+}
+
+/** Lieu de n'importe quelle région, et l'id de sa région. */
+export function trouverLieu(contenu: Contenu, id: string): { lieu: Lieu; region: string } | null {
+  for (const r of valeurs(contenu.regions)) {
+    const l = r.lieux.find((x) => x.id === id);
+    if (l) return { lieu: l, region: r.id };
+  }
+  return null;
+}
 
 /** Vrai si un des nœuds de la scène lance un combat ou un donjon. */
 export function sceneAvecCombat(s: Scene): boolean {
@@ -19,7 +33,7 @@ export function lieuAvecCombat(contenu: Contenu, etat: EtatPartie, lieu: string,
   if (scenesDisponibles(contenu, etat, lieu, herosId).some((s) => sceneAvecCombat(s))) return true;
   const ec = vrai(herosId) ? etapeContrat(contenu, etat, herosId) : null;
   if (ec && ec.etape.lieu === lieu && vrai(ec.etape.combat)) return true;
-  if (lieu === 'guilde' && vrai(herosId)) {
+  if (estGuilde(lieu) && vrai(herosId)) {
     const h = etat.heros[herosId];
     return !!h && valeurs(contenu.contrats).some((ct) => conditionHeros(contenu, etat, ct.disponible_si, h));
   }

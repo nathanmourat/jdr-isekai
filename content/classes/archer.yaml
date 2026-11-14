@@ -17,12 +17,12 @@ classe:
     - id: tireur-elite
       nom: Tireur d'élite
       description: "Une cible, perforation."
-      competences: [{ niveau: 5, competence: tir-perforant }]
+      competences: [{ niveau: 5, competence: tir-perforant }, { niveau: 12, competence: tir-du-faucon }, { niveau: 20, competence: fleche-de-l-oubli }]
     - id: chaman-des-vents
       nom: Chaman des vents
       description: "Esprits et soutien léger."
-      competences: [{ niveau: 5, competence: souffle-des-ancetres }]
-  ultime: { nom: "Pluie des Ancêtres", description: "Pendant 2 tours, une pluie de flèches frappe tous les ennemis à chaque début de tour." }
+      competences: [{ niveau: 5, competence: souffle-des-ancetres }, { niveau: 12, competence: vent-guerisseur }, { niveau: 20, competence: tornade-d-esprits }]
+  ultime: { nom: "Pluie des Ancêtres", description: "Pendant 2 tours, une pluie de flèches frappe tous les ennemis à chaque début de tour.", competence: pluie-des-ancetres }
   point_fort: "Dégâts réguliers et fiables, depuis la deuxième ligne."
   point_faible: "Fragile au contact ; peu d'outils défensifs."
   competences_detail:
@@ -61,3 +61,48 @@ classe:
         - { type: soin, puissance: 6, stat: ESP }
         - { type: etat, etat: bonus_initiative, duree: 3, valeur: 0.3 }
       ia: { priorite: 2, quand: allie_blesse }
+    # ── Saison 1 : compétences de branche des niveaux 12 et 20, et l'ultime (débloqué par la quête de classe, niveau 30)
+    - id: tir-du-faucon
+      nom: Tir du faucon
+      description: "Une flèche guidée par l'esprit du faucon : critique assuré."
+      cout: 10
+      recharge: 2
+      cible: ennemi
+      effets: [{ type: degats, puissance: 20, stat: AGI, element: physique, critique_garanti: true }]
+      ia: { priorite: 3 }
+    - id: fleche-de-l-oubli
+      nom: Flèche de l'oubli
+      description: "Une flèche qui traverse la cible et la marque pour tout le groupe."
+      cout: 14
+      recharge: 3
+      cible: ennemi
+      effets:
+        - { type: degats, puissance: 28, stat: AGI, element: arcane }
+        - { type: etat, etat: marque, duree: 3, valeur: 0.25 }
+      ia: { priorite: 4 }
+    - id: vent-guerisseur
+      nom: Vent guérisseur
+      description: "Le vent des ancêtres soigne tout le groupe."
+      cout: 10
+      recharge: 3
+      cible: tous_allies
+      effets: [{ type: soin, puissance: 11, stat: ESP }]
+      ia: { priorite: 4, quand: allie_blesse }
+    - id: tornade-d-esprits
+      nom: Tornade d'esprits
+      description: "Une tornade d'esprits frappe tous les ennemis à plusieurs reprises."
+      cout: 14
+      recharge: 3
+      cible: tous_ennemis
+      effets: [{ type: degats, puissance: 7, stat: AGI, element: arcane, coups: 3 }]
+      ia: { priorite: 4, quand: plusieurs_ennemis }
+    - id: pluie-des-ancetres
+      nom: "Ultime — Pluie des Ancêtres"
+      description: "Une pluie de flèches d'esprit s'abat sur tous les ennemis, encore et encore."
+      cout: 20
+      recharge: 6
+      cible: tous_ennemis
+      effets:
+        - { type: degats, puissance: 11, stat: AGI, element: arcane, coups: 4 }
+        - { type: etat, etat: marque, duree: 2, valeur: 0.15 }
+      ia: { priorite: 6, quand: plusieurs_ennemis }

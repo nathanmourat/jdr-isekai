@@ -17,12 +17,12 @@ classe:
     - id: meute
       nom: Meute
       description: "Plusieurs petites invocations."
-      competences: [{ niveau: 5, competence: feux-follets }]
+      competences: [{ niveau: 5, competence: feux-follets }, { niveau: 12, competence: meute-spectrale }, { niveau: 20, competence: chasse-sauvage }]
     - id: colosse
       nom: Colosse
       description: "Une grosse invocation."
-      competences: [{ niveau: 5, competence: eveil-du-colosse }]
-  ultime: { nom: "Porte du Bestiaire", description: "Invoque une créature légendaire pendant 3 tours." }
+      competences: [{ niveau: 5, competence: eveil-du-colosse }, { niveau: 12, competence: rempart-vivant }, { niveau: 20, competence: titan-de-pierre }]
+  ultime: { nom: "Porte du Bestiaire", description: "Invoque une créature légendaire pendant 3 tours.", competence: porte-du-bestiaire }
   point_fort: "Agit plusieurs fois par tour grâce à ses invocations, qui encaissent à sa place."
   point_faible: "Très faible si ses invocations sont détruites ; vulnérable au silence."
   competences_detail:
@@ -62,3 +62,50 @@ classe:
       cible: soi
       effets: [{ type: invocation, creature: colosse, duree: 4 }]
       ia: { priorite: 4 }
+    # ── Saison 1 : compétences de branche des niveaux 12 et 20, et l'ultime (débloqué par la quête de classe, niveau 30)
+    - id: meute-spectrale
+      nom: Meute spectrale
+      description: "Appelle deux loups spectraux pour 3 tours."
+      cout: 11
+      recharge: 4
+      cible: soi
+      effets:
+        - { type: invocation, creature: loup-spectral, duree: 3 }
+        - { type: invocation, creature: loup-spectral, duree: 3 }
+      ia: { priorite: 4 }
+    - id: chasse-sauvage
+      nom: Chasse sauvage
+      description: "Les esprits de la meute fondent sur tous les ennemis."
+      cout: 14
+      recharge: 3
+      cible: tous_ennemis
+      effets: [{ type: degats, puissance: 17, stat: INT, element: arcane }]
+      ia: { priorite: 4, quand: plusieurs_ennemis }
+    - id: rempart-vivant
+      nom: Rempart vivant
+      description: "Une carapace de pierre protège tout le groupe ; les créatures sont soignées."
+      cout: 11
+      recharge: 4
+      cible: tous_allies
+      effets:
+        - { type: bouclier, pourcent_pv: 0.12 }
+        - { type: soigner_invocations, pourcent: 0.3 }
+      ia: { priorite: 3, quand: allie_blesse }
+    - id: titan-de-pierre
+      nom: Titan de pierre
+      description: "Réveille un colosse pour 4 tours et un gardien de pierre à ses côtés."
+      cout: 16
+      recharge: 6
+      cible: soi
+      effets:
+        - { type: invocation, creature: colosse, duree: 4 }
+        - { type: invocation, creature: golem-de-pierre, duree: 4 }
+      ia: { priorite: 5 }
+    - id: porte-du-bestiaire
+      nom: "Ultime — Porte du Bestiaire"
+      description: "Ouvre la Porte : un wyrm ancestral combat pour le groupe pendant 3 tours."
+      cout: 22
+      recharge: 7
+      cible: soi
+      effets: [{ type: invocation, creature: wyrm-ancestral, duree: 3 }]
+      ia: { priorite: 6 }

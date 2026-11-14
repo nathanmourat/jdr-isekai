@@ -17,12 +17,12 @@ classe:
     - id: runes-de-guerre
       nom: Runes de guerre
       description: "Dégâts et enchaînements."
-      competences: [{ niveau: 5, competence: frappe-ecarlate }]
+      competences: [{ niveau: 5, competence: frappe-ecarlate }, { niveau: 12, competence: rune-d-embrasement }, { niveau: 20, competence: tempete-de-lames }]
     - id: runes-de-sceau
       nom: Runes de sceau
       description: "Affaiblissements et silence."
-      competences: [{ niveau: 5, competence: sceau-de-silence }]
-  ultime: { nom: "Lame des Mille Sceaux", description: "Consomme toutes les charges et frappe tous les ennemis ; chaque charge ajoute un effet." }
+      competences: [{ niveau: 5, competence: sceau-de-silence }, { niveau: 12, competence: sceau-d-entrave }, { niveau: 20, competence: grand-sceau-de-rupture }]
+  ultime: { nom: "Lame des Mille Sceaux", description: "Consomme toutes les charges et frappe tous les ennemis ; chaque charge ajoute un effet.", competence: lame-des-mille-sceaux }
   point_fort: "Polyvalent, efficace contre les ennemis physiques comme magiques."
   point_faible: "Lent à démarrer : il doit accumuler ses charges."
   competences_detail:
@@ -65,3 +65,56 @@ classe:
         - { type: degats, puissance: 9, stat: INT, element: arcane }
         - { type: etat, etat: silence, duree: 2, chance: 0.7 }
       ia: { priorite: 3 }
+    # ── Saison 1 : compétences de branche des niveaux 12 et 20, et l'ultime (débloqué par la quête de classe, niveau 30)
+    - id: rune-d-embrasement
+      nom: Rune d'embrasement
+      description: "Grave une rune de feu sur la lame : un coup brûlant qui peut embraser la cible."
+      cout: 9
+      recharge: 2
+      cible: ennemi
+      portee: melee
+      effets:
+        - { type: degats, puissance: 20, stat: FOR, element: feu }
+        - { type: etat, etat: brulure, duree: 3, valeur: 6, chance: 0.6 }
+      ia: { priorite: 3 }
+    - id: tempete-de-lames
+      nom: Tempête de lames
+      description: "Les runes se détachent de la lame et tournoient : frappe tous les ennemis."
+      cout: 13
+      recharge: 3
+      cible: tous_ennemis
+      portee: melee
+      effets: [{ type: degats, puissance: 18, stat: FOR, element: arcane }]
+      ia: { priorite: 4, quand: plusieurs_ennemis }
+    - id: sceau-d-entrave
+      nom: Sceau d'entrave
+      description: "Un sceau qui cloue l'ennemi au sol et l'affaiblit."
+      cout: 9
+      recharge: 3
+      cible: ennemi
+      effets:
+        - { type: degats, puissance: 14, stat: INT, element: arcane }
+        - { type: etat, etat: immobilise, duree: 1, chance: 0.6 }
+        - { type: etat, etat: affaibli, duree: 2, valeur: 0.2 }
+      ia: { priorite: 3 }
+    - id: grand-sceau-de-rupture
+      nom: Grand sceau de rupture
+      description: "Brise les protections de tous les ennemis : dégâts arcaniques et défense réduite."
+      cout: 13
+      recharge: 4
+      cible: tous_ennemis
+      effets:
+        - { type: degats, puissance: 15, stat: INT, element: arcane }
+        - { type: etat, etat: malus_defense, duree: 2, valeur: 0.25 }
+      ia: { priorite: 4, quand: plusieurs_ennemis }
+    - id: lame-des-mille-sceaux
+      nom: "Ultime — Lame des Mille Sceaux"
+      description: "Consomme toutes les charges de rune et frappe tous les ennemis, plus fort à chaque charge, en les réduisant au silence."
+      cout: 20
+      recharge: 6
+      cible: tous_ennemis
+      portee: melee
+      effets:
+        - { type: degats, puissance: 30, stat: FOR, element: arcane }
+        - { type: etat, etat: silence, duree: 1, chance: 0.6 }
+      ia: { priorite: 6, quand: plusieurs_ennemis }

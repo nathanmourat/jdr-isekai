@@ -484,9 +484,13 @@ export function demarrerCombat(
   // Effets de début de combat
   for (const c of [...combat.combattants]) {
     if (c.passif?.id === 'lien-d-ame') invoquer(contenu, combat, c, 'loup-spectral', null);
-    if (c.bonusCompagnon.some((b) => b.id === 'aura-defense')) {
-      const v = c.bonusCompagnon.find((b) => b.id === 'aura-defense')!.parametres.valeur ?? 0.1;
-      for (const a of allies) ajouterEtat(combat, a, { id: 'bonus_defense', duree: 999, valeur: v, source: c.id, cumul: 1 });
+    // Bonus de compagnon de début de combat : une aura sur tout le groupe
+    const auras: [string, EtatId][] = [['aura-defense', 'bonus_defense'], ['aura-degats', 'bonus_degats'], ['aura-precision', 'bonus_precision'], ['regeneration-groupe', 'regeneration']];
+    for (const [bonus, etatAura] of auras) {
+      const b = c.bonusCompagnon.find((x) => x.id === bonus);
+      if (b === undefined) continue;
+      const v = b.parametres.valeur ?? 0.1;
+      for (const a of allies) ajouterEtat(combat, a, { id: etatAura, duree: 999, valeur: v, source: c.id, cumul: 1 });
     }
   }
   avancer(contenu, combat, rng);
@@ -595,6 +599,9 @@ function multiplicateurDegatsSource(combat: Combat, s: Combattant, cible: Combat
   if (s.type === 'heros' || s.type === 'compagnon') m *= 1 + 0.01 * (s.caracs.CHA - 10);
   // ennemis : difficulté du groupe ; invocations des héros : niveau du maître et puissance de son arme
   if (s.camp === 'ennemis' || s.type === 'invocation') m *= s.compteurs.multDegats ?? 1;
+  // compagne « engagée » : attaque combinée avec son héros (dégâts augmentés)
+  const combinee = s.bonusCompagnon.find((b) => b.id === 'attaque-combinee');
+  if (combinee !== undefined) m *= 1 + (combinee.parametres.degats ?? 0.25);
   if (s.passif?.id === 'sang-de-dragon') {
     const manque = 1 - s.pv / s.pvMax;
     const max = s.passif.parametres.max ?? 0.4;
@@ -975,7 +982,9 @@ function appliquerEffets(contenu: Contenu, combat: Combat, rng: Rng, s: Combatta
         inv.pv = Math.min(inv.pvMax, inv.pv + Math.round(inv.pvMax * ef.pourcent));
       }
     } else if (ef.type === 'relever') {
-      for (const cible of resoudreCibles(combat, rng, s, 'allie_ko', cibleChoisie, 'distance')) {
+      // relever : l'allié K.O. choisi, ou tous les alliés K.O. (cible « tous_allies », ultime du Guérisseur)
+      const aRelever = ef.cible === 'tous_allies' ? combat.combattants.filter((x) => x.camp === s.camp && x.ko && !x.parti) : resoudreCibles(combat, rng, s, 'allie_ko', cibleChoisie, 'distance');
+      for (const cible of aRelever) {
         if (cible.ko) { cible.ko = false; cible.pv = Math.round(cible.pvMax * ef.pourcent_pv); log(combat, { type: 'soin', cible: cible.id, texte: `${cible.nom} se relève !` }); }
       }
     }

@@ -17,12 +17,12 @@ classe:
     - id: pyro-foudre
       nom: Pyromancie et foudre
       description: "Dégâts purs."
-      competences: [{ niveau: 5, competence: eclair-en-chaine }]
+      competences: [{ niveau: 5, competence: eclair-en-chaine }, { niveau: 12, competence: meteore }, { niveau: 20, competence: tempete-foudroyante }]
     - id: cryo-terre
       nom: Cryo et terre
       description: "Contrôle et protection."
-      competences: [{ niveau: 5, competence: mur-de-glace }]
-  ultime: { nom: "Convergence des Quatre", description: "Dégâts massifs sur tous les ennemis, exposés aux 4 éléments." }
+      competences: [{ niveau: 5, competence: mur-de-glace }, { niveau: 12, competence: prison-de-givre }, { niveau: 20, competence: seisme }]
+  ultime: { nom: "Convergence des Quatre", description: "Dégâts massifs sur tous les ennemis, exposés aux 4 éléments.", competence: convergence-des-quatre }
   point_fort: "Le meilleur pour nettoyer les groupes d'ennemis."
   point_faible: "Très fragile ; s'épuise en mana dans les longs combats."
   competences_detail:
@@ -61,3 +61,53 @@ classe:
       cible: tous_allies
       effets: [{ type: etat, etat: bonus_defense, duree: 2, valeur: 0.25 }]
       ia: { priorite: 2, quand: debut_combat }
+    # ── Saison 1 : compétences de branche des niveaux 12 et 20, et l'ultime (débloqué par la quête de classe, niveau 30)
+    - id: meteore
+      nom: Météore
+      description: "Un bloc de roche en feu s'abat sur la cible."
+      cout: 10
+      recharge: 2
+      cible: ennemi
+      effets:
+        - { type: degats, puissance: 24, stat: INT, element: feu }
+        - { type: etat, etat: brulure, duree: 2, valeur: 6, chance: 0.5 }
+      ia: { priorite: 3 }
+    - id: tempete-foudroyante
+      nom: Tempête foudroyante
+      description: "La foudre frappe tous les ennemis, deux fois."
+      cout: 14
+      recharge: 3
+      cible: tous_ennemis
+      effets: [{ type: degats, puissance: 10, stat: INT, element: foudre, coups: 2 }]
+      ia: { priorite: 4, quand: plusieurs_ennemis }
+    - id: prison-de-givre
+      nom: Prison de givre
+      description: "Enferme la cible dans la glace."
+      cout: 10
+      recharge: 3
+      cible: ennemi
+      effets:
+        - { type: degats, puissance: 15, stat: INT, element: glace }
+        - { type: etat, etat: immobilise, duree: 2, chance: 0.65 }
+      ia: { priorite: 3 }
+    - id: seisme
+      nom: Séisme
+      description: "Le sol se fend sous tous les ennemis, qui perdent l'équilibre."
+      cout: 14
+      recharge: 3
+      cible: tous_ennemis
+      effets:
+        - { type: degats, puissance: 17, stat: INT, element: physique }
+        - { type: etat, etat: malus_defense, duree: 2, valeur: 0.2 }
+      ia: { priorite: 4, quand: plusieurs_ennemis }
+    - id: convergence-des-quatre
+      nom: "Ultime — Convergence des Quatre"
+      description: "Feu, glace, foudre et terre se rejoignent : dégâts massifs sur tous les ennemis, exposés aux éléments."
+      cout: 22
+      recharge: 6
+      cible: tous_ennemis
+      effets:
+        - { type: degats, puissance: 16, stat: INT, element: feu }
+        - { type: degats, puissance: 16, stat: INT, element: foudre }
+        - { type: etat, etat: expose, duree: 2, valeur: 0.2 }
+      ia: { priorite: 6, quand: plusieurs_ennemis }

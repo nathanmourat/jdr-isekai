@@ -89,11 +89,12 @@ export function explorerDonjon(contenu: Contenu, r: Robot) {
     const dj = r.etat.donjon;
     if (!dj) return;
     const d = contenu.donjons[dj.id];
-    const aCle = listeHeros(r.etat).some((h) => h.inventaire['cle-crypte'] > 0);
-    const aSceau = listeHeros(r.etat).some((h) => h.inventaire['sceau-cendre'] > 0);
-    const cibles = aSceau
-      ? d.evenements.filter((e) => e.type === 'sortie')
-      : d.evenements.filter((e) => ['combat', 'coffre'].includes(e.type) && !dj.faits.includes(e.id));
+    // une clé (objet « cle-… ») ouvre les portes verrouillées
+    const aCle = listeHeros(r.etat).some((h) => Object.keys(h.inventaire).some((o) => o.startsWith('cle-') && h.inventaire[o] > 0));
+    // on fait tous les combats et coffres atteignables, puis on sort
+    const restants = d.evenements.filter((e) => ['combat', 'coffre'].includes(e.type) && !dj.faits.includes(e.id));
+    const atteignables = restants.filter((e) => plusCourtChemin(contenu, dj.id, dj.x, dj.y, [[e.x, e.y]], aCle) !== null);
+    const cibles = atteignables.length > 0 ? atteignables : d.evenements.filter((e) => e.type === 'sortie');
     const chemin = plusCourtChemin(contenu, dj.id, dj.x, dj.y, cibles.map((e) => [e.x, e.y] as [number, number]), aCle);
     if (!chemin || chemin.length === 0) throw new Error('Donjon : aucun chemin');
     const [nx, ny] = chemin[0];

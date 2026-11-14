@@ -49,6 +49,8 @@ export interface Heros {
   grimoire: Record<string, Technique>;
   /** Points de maîtrise par compétence (utilisations en combat et entraînement) ; le rang s'en déduit. */
   maitrise: Record<string, number>;
+  /** Ultime débloqué par la quête de classe (absent dans les anciennes sauvegardes). */
+  ultime?: boolean;
 }
 
 export interface OptionsCreation {
@@ -226,6 +228,8 @@ export function competencesConnues(contenu: Contenu, h: Heros): string[] {
   const res = [...cl.competences];
   const b = cl.branches.find((x) => x.id === h.branche);
   if (b) for (const c of b.competences) if (h.niveau >= c.niveau) res.push(c.competence);
+  const s = contenu.config.saisons[0];
+  if (h.ultime === true && vrai(cl.ultime.competence) && h.niveau >= s.niveau_ultime) res.push(cl.ultime.competence!);
   return res;
 }
 

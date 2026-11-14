@@ -127,6 +127,7 @@ function verifierReferences(c: Contenu): string[] {
     if (total !== cfg.personnage.total_caracteristiques) e.push(`Classe ${cl.id} › total des caractéristiques = ${total} (doit être ${cfg.personnage.total_caracteristiques})`);
     for (const id of cl.competences) if (!c.competences[id]) e.push(`Classe ${cl.id} › compétence « ${id} » introuvable`);
     for (const b of cl.branches) for (const x of b.competences) if (!c.competences[x.competence]) e.push(`Classe ${cl.id} › branche ${b.id} › compétence « ${x.competence} » introuvable`);
+    if (cl.ultime.competence && !c.competences[cl.ultime.competence]) e.push(`Classe ${cl.id} › ultime › compétence « ${cl.ultime.competence} » introuvable`);
     for (const comp of cl.competences_detail) for (const ef of comp.effets) if (ef.type === 'invocation' && !c.ennemis[ef.creature]) e.push(`Compétence ${comp.id} › créature « ${ef.creature} » introuvable dans les ennemis`);
   }
   const lieuxConnus = new Set(Object.values(c.regions).flatMap((r) => r.lieux.map((l) => l.id)));

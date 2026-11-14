@@ -87,3 +87,26 @@ ennemis:
       - { nom: "Carreau", phrase: "tire un carreau sur {cible}", effet: impact }
       - { nom: "Rafale de billes", phrase: "crible {cible} de billes d'acier", effet: impact }
     recompenses: { xp: 0 }
+  # Ultime de l'Invocateur (Porte du Bestiaire) : invoqué au niveau 30 ou plus, donc déjà puissant.
+  - id: wyrm-ancestral
+    nom: Wyrm ancestral
+    niveau: 1
+    categorie: bete
+    invocation: true
+    sprite: wyrmling
+    caracteristiques: { FOR: 16, AGI: 10, INT: 12, VIT: 14, ESP: 8, CHA: 6 }
+    pv: 90
+    armure: 8
+    attaque: { stat: FOR, element: feu, portee: melee, puissance: 12 }
+    attaques:
+      - { nom: "Crocs de braise", phrase: "referme ses crocs brûlants sur {cible}", effet: feu }
+      - { nom: "Coup de queue", phrase: "balaie {cible} d'un coup de queue écailleuse", effet: impact }
+    competences:
+      - id: souffle-ancestral
+        nom: Souffle ancestral
+        description: "Un torrent de flammes sur tous les ennemis."
+        recharge: 2
+        cible: tous_ennemis
+        effets: [{ type: degats, puissance: 16, stat: INT, element: feu }]
+        ia: { priorite: 5 }
+    recompenses: { xp: 0 }

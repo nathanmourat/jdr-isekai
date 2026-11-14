@@ -337,6 +337,12 @@ function appliquerConsequence(contenu: Contenu, etat: EtatPartie, eff: Consequen
     else etat.flags[f] = true;
   }
   if (vrai(eff.retirer_flag)) delete etat.flags[eff.retirer_flag];
+  if (eff.debloquer_ultime === true) for (const h of hs) {
+    if (h.ultime === true) continue;
+    h.ultime = true;
+    const u = contenu.classes[h.classe].ultime;
+    messages.push(`${h.nom} débloque son ultime : ${u.nom}${h.niveau < contenu.config.saisons[0].niveau_ultime ? ` (utilisable au niveau ${contenu.config.saisons[0].niveau_ultime})` : ''} !`);
+  }
   for (const [f, v] of entrees(eff.reputation ?? {})) {
     etat.reputation[f] = Math.max(-100, Math.min(100, (etat.reputation[f] ?? 0) + v));
     messages.push(`Réputation ${nomFaction(f)} ${v > 0 ? '+' : ''}${v}`);
@@ -475,7 +481,7 @@ export function prochaineDateHistoire(contenu: Contenu, etat: EtatPartie): { jou
       if (jour > etat.jour) return { jour, raison: e!.objectif };
     }
   }
-  if (aFlag(etat, `chapitre-${etat.chapitre}-fini`)) {
+  if (aFlag(etat, `chapitre-${etat.chapitre}-fini`) && etat.chapitre < contenu.config.saisons[0].chapitres) {
     const s = contenu.config.saisons[0];
     const jour = versJour(contenu, { annee: s.annee_debut + etat.chapitre * s.annees_par_chapitre });
     if (jour > etat.jour) return { jour, raison: `Début du chapitre ${etat.chapitre + 1}` };
@@ -502,12 +508,16 @@ function reposImpossible(etat: EtatPartie): string | null {
 function commencerRepos(contenu: Contenu, etat: EtatPartie) {
   const r = etat.repos!;
   etat.repos = null;
-  etat.tempsLibre = { titre: `Repos au Chaudron Fêlé (${r.mois} mois)`, jusqua: r.jusqua, mois: r.mois, choix: {}, resultats: null };
+  etat.tempsLibre = { titre: `Repos à l'auberge (${r.mois} mois)`, jusqua: r.jusqua, mois: r.mois, choix: {}, resultats: null };
   etat.dernieresNouvelles.push(`Tout le monde est d'accord : ${r.mois} mois vont passer. Chacun choisit ses activités.`);
 }
 
 export function nomFaction(f: string): string {
-  return ({ couronne: 'Couronne', guilde: 'Guilde', concorde: 'Concorde', ordre: 'Ordre' } as Record<string, string>)[f] ?? f;
+  return ({
+    couronne: 'Couronne', guilde: 'Guilde', concorde: 'Concorde', ordre: 'Ordre',
+    ourvalis: 'Tribus ourvalis', elfes: 'Elfes de Sylvenoire', nains: 'Nains de Grisfer', dragons: 'Dragons et Archipel',
+    troupes: 'Troupes des domaines', legion: 'Légion Cendrée',
+  } as Record<string, string>)[f] ?? f;
 }
 
 /** « [[tu…||vous…]] » : la première forme pour un héros seul, la seconde pour un groupe. */
@@ -1029,6 +1039,11 @@ function resoudreTempsLibre(contenu: Contenu, etat: EtatPartie) {
       }
       if (vrai(g.affinite_tous)) for (const co of etat.compagnonsRencontres) modifierAffinite(contenu, affinite(etat, h.id, co), g.affinite_tous, { ageHeros: age(h, versDate(contenu, tl.jusqua).annee) });
       if (g.soigne_blessure) { h.blessure = false; r.push(`${a.nom} : blessures guéries`); }
+      for (const [fac, v] of entrees(g.reputation ?? {})) {
+        const gain = Math.max(1, Math.round(v * f));
+        etat.reputation[fac] = Math.max(-100, Math.min(100, (etat.reputation[fac] ?? 0) + gain));
+        r.push(`${a.nom} : ${nomFaction(fac)} +${gain}`);
+      }
       if (vrai(g.maitrise)) {
         // l'entraînement fait progresser la maîtrise de toutes les compétences équipées
         const points = Math.max(1, Math.round(g.maitrise * f));

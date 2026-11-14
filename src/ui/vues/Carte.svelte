@@ -7,17 +7,28 @@
   import { conditionScene, listeHeros } from '../../moteur/partie';
   import { formaterDate } from '../../moteur/temps';
   import { imageCarte, imagePlan, positionsImage } from '../../rendu/assets';
-  import { aideNiveau, couleurNiveau, lieuAvecCombat, lieuxDesEtapes, marqueurLieu, niveauDuLieu, niveauGroupe, prochaineEtape, type Marqueur } from '../../moteur/guide';
+  import { aideNiveau, couleurNiveau, lieuAvecCombat, lieuxDesEtapes, marqueurLieu, niveauDuLieu, niveauGroupe, prochaineEtape, trouverLieu, type Marqueur } from '../../moteur/guide';
   import NiveauConseille from '../NiveauConseille.svelte';
 
   let { choisir, ville = $bindable(null) }: { choisir: (id: string) => void; ville?: string | null } = $props();
   const c = jeu.contenu!;
   const etat = $derived(jeu.etat!);
-  const region = c.regions.aubeclaire;
   const tous = $derived(listeHeros(etat).map((h) => h.id));
   const moi = $derived(jeu.monHeros?.id ?? null);
   /** Lieux où mène une étape en cours (quête ou contrat) : ils clignotent. */
   const etapes = $derived(lieuxDesEtapes(c, etat, moi));
+  // ───────────── Régions : une carte par région ; on change de région par les onglets du haut ─────────────
+  const regions = $derived(Object.values(c.regions).filter((r) => conditionScene(c, etat, r.disponible_si, tous)).sort((a, b) => a.chapitre - b.chapitre));
+  let regionChoisie = $state<string | null>(null);
+  /** Région affichée : celle choisie, sinon celle de la prochaine étape, sinon la plus récente. */
+  const region = $derived.by(() => {
+    if (regionChoisie && regions.some((r) => r.id === regionChoisie)) return c.regions[regionChoisie];
+    const e = prochaineEtape(c, etat, moi);
+    const r = e?.lieu ? trouverLieu(c, e.lieu)?.region : undefined;
+    if (r && regions.some((x) => x.id === r)) return c.regions[r];
+    return regions[regions.length - 1] ?? c.regions.aubeclaire;
+  });
+  function changerRegion(id: string) { regionChoisie = id; ville = null; }
   const lieux = $derived(region.lieux.filter((l) => conditionScene(c, etat, l.disponible_si, tous) && (!l.etape_seulement || etapes.includes(l.id))));
   const horsVille = $derived(lieux.filter((l) => !l.ville));
   const villes = $derived(region.villes.filter((v) => lieux.some((l) => l.ville === v.id)));
@@ -55,19 +66,37 @@
   const niveauEtape = $derived(etape?.lieu ? niveauDuLieu(c, etat, etape.lieu, moi) : null);
   function allerEtape() {
     if (!etape?.lieu) return;
+    const r = trouverLieu(c, etape.lieu)?.region;
+    if (r) regionChoisie = r;
     choisir(etape.lieu);
   }
+  /** L'étape mène-t-elle à un lieu ouvert, dans n'importe quelle région ? */
+  const etapeAccessible = $derived.by(() => {
+    if (!etape?.lieu) return false;
+    const t = trouverLieu(c, etape.lieu);
+    return !!t && regions.some((r) => r.id === t.region) && conditionScene(c, etat, t.lieu.disponible_si, tous) && (!t.lieu.etape_seulement || etapes.includes(t.lieu.id));
+  });
+  /** Région qui a une étape en cours (pour signaler l'onglet). */
+  const regionAvecEtape = (id: string) => c.regions[id].lieux.some((l) => etapes.includes(l.id));
 </script>
 
 <section>
+  {#if regions.length > 1 && !villeOuverte}
+    <div class="onglets-regions" role="tablist" aria-label="Régions">
+      {#each regions as r (r.id)}
+        <button role="tab" aria-selected={r.id === region.id} class:actif={r.id === region.id} onclick={() => changerRegion(r.id)}>{r.nom}{#if regionAvecEtape(r.id)} <span class="leg principale">●</span>{/if}</button>
+      {/each}
+    </div>
+  {/if}
   <h2>{villeOuverte ? villeOuverte.nom : region.nom}</h2>
+  {#if !villeOuverte && region.description}<p class="discret">{region.description}</p>{/if}
   {#if etape}
     <div class="etape carte-ui">
       <span>➤ <strong>Prochaine étape :</strong> {etape.objectif}{#if etape.nomLieu && !etape.objectif.includes(etape.nomLieu)}{' '}<span class="discret">({etape.nomLieu})</span>{/if}{#if niveauEtape !== null}{' '}<NiveauConseille niveau={niveauEtape} aide />{/if}</span>
-      {#if etape.lieu && etape.disponible && lieux.some((l) => l.id === etape.lieu)}
+      {#if etape.lieu && etape.disponible && etapeAccessible}
         <button class="principal petit" onclick={allerEtape}>Y aller</button>
       {:else if etape.attenteJour !== null}
-        <small class="discret">Pas avant : {formaterDate(c, etape.attenteJour)}. Pour faire passer les mois, dormez au Chaudron Fêlé (Ville de Lysmont).</small>
+        <small class="discret">Pas avant : {formaterDate(c, etape.attenteJour)}. Pour faire passer les mois, dormez dans une auberge (le Chaudron Fêlé à Lysmont, ou l'auberge de la région).</small>
         {#if lieux.some((l) => l.auberge)}<button class="petit" onclick={() => choisir(lieux.find((l) => l.auberge)!.id)}>Aller à l'auberge</button>{/if}
       {:else if !etape.disponible}
         <small class="discret">Pas encore possible : suivez les autres pistes en attendant.</small>
@@ -113,6 +142,8 @@
 </section>
 
 <style>
+  .onglets-regions { display: flex; gap: 0.3rem; flex-wrap: wrap; margin-bottom: 0.4rem; }
+  .onglets-regions .actif { border-color: var(--or); background: #3b2f18; }
   .etape { display: flex; justify-content: space-between; align-items: center; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 0.6rem; border-color: var(--or); }
   .epee { color: #ff9b8a; }
   .niv { font-weight: 700; }

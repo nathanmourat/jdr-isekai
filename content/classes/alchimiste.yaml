@@ -17,12 +17,12 @@ classe:
     - id: grenadier
       nom: Grenadier
       description: "Bombes et dégâts de zone."
-      competences: [{ niveau: 5, competence: grenade-incendiaire }]
+      competences: [{ niveau: 5, competence: grenade-incendiaire }, { niveau: 12, competence: bombe-a-fragmentation }, { niveau: 20, competence: feu-gregeois }]
     - id: mecaniste
       nom: Mécaniste
       description: "Tourelles et élixirs."
-      competences: [{ niveau: 5, competence: elixir-de-combat }]
-  ultime: { nom: "Golem d'airain", description: "Se protège dans une armure-golem pendant 3 tours, avec des compétences améliorées." }
+      competences: [{ niveau: 5, competence: elixir-de-combat }, { niveau: 12, competence: tourelle-amelioree }, { niveau: 20, competence: nuee-de-drones }]
+  ultime: { nom: "Golem d'airain", description: "Se protège dans une armure-golem pendant 3 tours, avec des compétences améliorées.", competence: golem-d-airain }
   point_fort: "Très polyvalent ; le meilleur artisan hors combat."
   point_faible: "Dépend de ses ressources, qu'il doit fabriquer entre les quêtes."
   competences_detail:
@@ -64,3 +64,53 @@ classe:
         - { type: etat, etat: bonus_degats, duree: 3, valeur: 0.3 }
         - { type: soin, puissance: 8, stat: INT }
       ia: { priorite: 3, quand: debut_combat }
+    # ── Saison 1 : compétences de branche des niveaux 12 et 20, et l'ultime (débloqué par la quête de classe, niveau 30)
+    - id: bombe-a-fragmentation
+      nom: Bombe à fragmentation
+      description: "Des éclats de métal sur tous les ennemis."
+      cout: 11
+      recharge: 2
+      cible: tous_ennemis
+      effets: [{ type: degats, puissance: 14, stat: INT, element: physique }]
+      ia: { priorite: 4, quand: plusieurs_ennemis }
+    - id: feu-gregeois
+      nom: Feu grégeois
+      description: "Un liquide qui brûle même sur l'eau : tous les ennemis s'embrasent."
+      cout: 14
+      recharge: 4
+      cible: tous_ennemis
+      effets:
+        - { type: degats, puissance: 13, stat: INT, element: feu }
+        - { type: etat, etat: brulure, duree: 3, valeur: 7, chance: 0.7 }
+      ia: { priorite: 4, quand: plusieurs_ennemis }
+    - id: tourelle-amelioree
+      nom: Tourelle améliorée
+      description: "Deux tourelles pour 4 tours."
+      cout: 11
+      recharge: 5
+      cible: soi
+      effets:
+        - { type: invocation, creature: tourelle, duree: 4 }
+        - { type: invocation, creature: tourelle, duree: 4 }
+      ia: { priorite: 4 }
+    - id: nuee-de-drones
+      nom: Nuée de drones
+      description: "De petits automates soignent le groupe et le protègent."
+      cout: 13
+      recharge: 4
+      cible: tous_allies
+      effets:
+        - { type: soin, puissance: 12, stat: INT }
+        - { type: bouclier, pourcent_pv: 0.1 }
+      ia: { priorite: 4, quand: allie_blesse }
+    - id: golem-d-airain
+      nom: "Ultime — Golem d'airain"
+      description: "Se glisse dans une armure-golem : énorme protection, dégâts augmentés et salve de canons sur tous les ennemis."
+      cout: 20
+      recharge: 7
+      cible: soi
+      effets:
+        - { type: bouclier, pourcent_pv: 0.5 }
+        - { type: etat, etat: bonus_degats, duree: 3, valeur: 0.4 }
+        - { type: degats, puissance: 20, stat: INT, element: feu }
+      ia: { priorite: 6 }
