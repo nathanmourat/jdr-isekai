@@ -12,7 +12,10 @@ import { construireInterieurs } from "./interieurs";
 import { animerVille } from "./vie";
 import { habillerLesHeros } from "./tenues";
 import { construireRegions } from "./regions";
+import { preparerCollisions } from "./collisions";
 
+// joueurs et PNJ ne se bloquent plus entre eux (groupes de collision)
+preparerCollisions();
 construireMonde();
 // un royaume à grande échelle : on voit loin et on marche un peu plus vite
 const reglerJoueur = (j: Player) => {

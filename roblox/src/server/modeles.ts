@@ -7,6 +7,7 @@
  * Le groupe peut remplacer n'importe quel modèle : mettre un Model nommé comme l'ennemi (ex. « loup-gris »)
  * dans ServerStorage > ModelesDuGroupe ; il est alors utilisé à la place (voir README-ROBLOX.md).
  */
+import { GROUPE_PNJ, mettreDansGroupe } from "./collisions";
 import { Players, ReplicatedStorage, ServerStorage } from "@rbxts/services";
 import { CONTENU } from "shared/donnees";
 import { arme, piece, souder } from "shared/construction";
@@ -72,6 +73,8 @@ export function humanoide(nom: string, c: Costume): Model {
 	const m = Players.CreateHumanoidModelFromDescriptionAsync(d, Enum.HumanoidRigType.R15);
 	m.Name = nom;
 	preparerHumanoide(m);
+	// les PNJ (villageois, gardes, personnages des intérieurs…) ne bloquent pas les joueurs
+	mettreDansGroupe(m, GROUPE_PNJ);
 	const tete = m.FindFirstChild("Head") as BasePart | undefined;
 	if (tete && c.cornes) {
 		for (const cote of [-1, 1]) {

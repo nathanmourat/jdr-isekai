@@ -329,6 +329,8 @@ Le monde est trois fois plus grand (1,8 stud par pixel de la carte au lieu de 0,
 - [ ] La caméra recule jusqu'à 420 studs (molette) ; on marche un peu plus vite (24 au lieu de 16).
 - [ ] Les combats « sur place » se déroulent devant la porte des bâtiments, pas à l'intérieur des murs.
 - [ ] Performance : si Studio rame au démarrage, dis-le-moi (nombre de pièces à réduire).
+- [ ] À deux joueurs (Test → Clients et serveurs) : on passe à travers l'autre joueur et à travers les villageois, sans se bloquer dans les portes ni dans les salles intérieures. On ne traverse toujours pas les murs.
+- [ ] Les villageois et les gardes contournent les maisons et passent par les portes des remparts (ils ne restent pas coincés contre un mur). S'il y en a un qui tourne en rond, note l'endroit.
 
 ### Liste de contrôle — examens de rang et maîtrises d'équipement (test 2, changements 10 et 11)
 - [ ] Dans n'importe quel comptoir de la Guilde, le panneau « 🎖 Rang de Guilde » montre le rang suivant, ce qu'il manque (points, niveau) et le bouton de l'examen quand tout est prêt.

@@ -6,7 +6,7 @@
  *  - bulles de phrases d'ambiance (content/monde/ambiance.yaml), selon l'avancée de la partie ;
  *  - marché sur la place (étals, marchands), poules, chats et chevaux.
  */
-import { CollectionService, Lighting, TweenService, Workspace } from "@rbxts/services";
+import { CollectionService, Lighting, PathfindingService, TweenService, Workspace } from "@rbxts/services";
 import { piece, souder } from "shared/construction";
 import { CONTENU } from "shared/donnees";
 import { positionLieu } from "shared/geo";
@@ -180,10 +180,10 @@ function animer(modele: Model) {
 	});
 }
 
-/** Va jusqu'à un point (MoveTo s'arrête seul au bout de 8 s : on relance jusqu'à l'arrivée). */
-function allerA(h: Humanoid, racine: BasePart, but: Vector3) {
-	for (let essai = 0; essai < 12; essai++) {
-		if (!racine.Parent) return;
+/** Marche en ligne droite jusqu'à un point (MoveTo s'arrête seul au bout de 8 s : on relance jusqu'à l'arrivée). */
+function marcherTout(h: Humanoid, racine: BasePart, but: Vector3, essais: number): boolean {
+	for (let essai = 0; essai < essais; essai++) {
+		if (!racine.Parent) return false;
 		h.MoveTo(but);
 		let fini = false;
 		const lien = h.MoveToFinished.Connect(() => (fini = true));
@@ -191,8 +191,40 @@ function allerA(h: Humanoid, racine: BasePart, but: Vector3) {
 		while (!fini && os.clock() - debut < 8) task.wait(0.25);
 		lien.Disconnect();
 		const ecart = new Vector3(but.X - racine.Position.X, 0, but.Z - racine.Position.Z).Magnitude;
-		if (ecart < 4) return;
+		if (ecart < 4) return true;
 	}
+	return false;
+}
+
+/**
+ * Va jusqu'à un point en contournant les obstacles (maisons, remparts, étals) avec PathfindingService :
+ * le chemin est calculé, suivi point par point, et recalculé s'il est bloqué en route.
+ * Si aucun chemin n'est trouvé, le personnage tente la ligne droite.
+ */
+function allerA(h: Humanoid, racine: BasePart, but: Vector3) {
+	for (let calcul = 0; calcul < 3; calcul++) {
+		if (!racine.Parent) return;
+		const chemin = PathfindingService.CreatePath({ AgentRadius: 2.5, AgentHeight: 6, AgentCanJump: false, WaypointSpacing: 10 });
+		const [ok] = pcall(() => chemin.ComputeAsync(racine.Position, but));
+		if (!ok || chemin.Status !== Enum.PathStatus.Success) break;
+		const points = chemin.GetWaypoints();
+		let bloque = false;
+		const lien = chemin.Blocked.Connect(() => (bloque = true));
+		let arrive = true;
+		for (const p of points) {
+			if (bloque || !racine.Parent) {
+				arrive = false;
+				break;
+			}
+			if (!marcherTout(h, racine, p.Position, 2)) {
+				arrive = false;
+				break;
+			}
+		}
+		lien.Disconnect();
+		if (arrive) return;
+	}
+	marcherTout(h, racine, but, 6);
 }
 
 function pointDePlace(): Vector3 {

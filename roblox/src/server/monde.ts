@@ -8,6 +8,7 @@ import { CONTENU } from "shared/donnees";
 import type { LieuDef } from "shared/moteur";
 import { GRANDEUR, positionLieu } from "shared/geo";
 import { arbre, banniere, bloc, buisson, C, dossierParDefaut, fleurs, lanterne, lumiere, maison, rocher, sapin, toit, tonneau, VERTICAL } from "./decor";
+import { GROUPE_PNJ, mettreDansGroupe } from "./collisions";
 import { agrandir, ajouterOuverture, type Contour, croisement, dansContour, enceinte, forteresse, pointAgrandi } from "./royaume";
 
 let dossier: Folder;
@@ -353,6 +354,7 @@ function villageois(centrePlace: Vector3) {
 			d.RightLegColor = bas;
 			const m = Players.CreateHumanoidModelFromDescriptionAsync(d, Enum.HumanoidRigType.R15);
 			m.Name = "Villageois";
+			mettreDansGroupe(m, GROUPE_PNJ);
 			const h = m.FindFirstChildOfClass("Humanoid");
 			if (h) h.DisplayDistanceType = Enum.HumanoidDisplayDistanceType.None;
 			const racine = m.FindFirstChild("HumanoidRootPart") as BasePart;
