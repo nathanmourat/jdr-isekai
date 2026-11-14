@@ -352,6 +352,14 @@ Le monde est trois fois plus grand (1,8 stud par pixel de la carte au lieu de 0,
 - [ ] Rang S : donné par l'épreuve de l'Arène au chapitre 5.
 - [ ] Dans le sac et les boutiques, un objet non maîtrisé par ta classe affiche un avertissement orange (malus), un objet interdit un message rouge.
 
+### À reprendre — test 3 de la version web (15/11, écrit par la session web)
+Le moteur a changé : régénérer `moteur.lua` (`npm run roblox:moteur`, puis `npm run roblox:parite`), puis adapter l'interface Roblox.
+- **Nouvelle action `pret_dialogue`** (`{ joueur, cle }`) : dans une scène de groupe, « Continuer » envoie `pret_dialogue` ; la scène avance quand tous les joueurs présents (avec un héros dans la scène) sont prêts. Fonction `joueursAttendusDialogue(etat, cle)` pour afficher « Prêts : 2/3 » et les pseudos attendus. L'action `continuer` existe toujours (solo, et « Passer quand même » du meneur après 20 secondes).
+- **`EtatScene` a trois champs facultatifs** : `prets` (joueurs prêts), `resultatVote` (`{ choix: [{ texte, joueurs }], retenu }`, montré 3 secondes : qui a choisi quoi, « Choix du groupe : … ») et `reponseParole` (« <pseudo> a répondu : … »). Pas de changement de format de sauvegarde.
+- **Synchronisation** : une action peut arriver au milieu du journal (camarade plus lent). La version web rejoue alors tout (`src/sync/rejeu.ts`). Vérifier que le serveur Roblox applique les actions dans l'ordre où il les reçoit (il est seul à écrire le journal : normalement pas concerné).
+- **Contenu** : 9 choix payants ont `visible_si_bloque: true` (grisés s'il manque de l'or) ; « Payer un verre » retire 2 or. Régénérer le contenu (`npm run roblox:contenu`).
+- Interface (à refaire à la manière de Roblox, si utile) : notifications de gain de 3 secondes (`src/ui/gains.ts` compare l'état avant et après), PV/mana du groupe hors combat (`src/ui/sante.ts`), confirmation avant un combat si un héros a moins de 50 % de ses PV.
+
 ## Publier sur Roblox (quand tout marche)
 
 1. **Fichier → Publier sur Roblox**, si ce n'est pas déjà fait.

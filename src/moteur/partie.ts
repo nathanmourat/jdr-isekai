@@ -44,6 +44,12 @@ export interface EtatScene {
   noeudFin?: string;
   /** Pari partagé en cours : réponse de chaque joueur (true = « Je mise »). Résolu quand tous ont répondu. */
   pari?: Record<string, boolean> | null;
+  /** Joueurs prêts à passer à la réplique suivante (« Continuer » d'une scène de groupe, test 3) : on avance quand tous les présents le sont. */
+  prets?: string[];
+  /** Résultat du dernier vote, montré quelques secondes : qui a choisi quoi, et le choix retenu (index dans `choix`). */
+  resultatVote?: { choix: { texte: string; joueurs: string[] }[]; retenu: number } | null;
+  /** Dernière réponse à un `parole_a` : « <pseudo> a répondu : … ». */
+  reponseParole?: { joueur: string; texte: string } | null;
 }
 
 /** Contrat en cours d'un héros : numéro de l'étape à jouer, et ce qui vient de se passer. */
@@ -161,6 +167,7 @@ export type Action =
   | { type: 'parier'; joueur: string; cle: string; mise: boolean }
   | { type: 'trancher'; joueur: string; cle: string }
   | { type: 'continuer'; joueur: string; cle: string }
+  | { type: 'pret_dialogue'; joueur: string; cle: string }
   | { type: 'quitter_scene'; joueur: string; cle: string }
   | { type: 'combat'; joueur: string; cle: string; action: ActionCombat }
   | { type: 'second_depart'; joueur: string; cle: string }
@@ -674,6 +681,9 @@ function entrerNoeud(contenu: Contenu, etat: EtatPartie, cle: string, noeudId: s
   es.messages = [];
   es.parole = null;
   es.pari = null;
+  es.prets = [];
+  es.resultatVote = null;
+  es.reponseParole = null;
   for (const eff of n.effets) appliquerConsequence(contenu, etat, eff, es.heros, es.messages);
   if (n.pari) {
     // Pari partagé : chaque joueur présent répond ; un joueur absent ne mise pas
@@ -720,6 +730,7 @@ function repondreParole(contenu: Contenu, etat: EtatPartie, cle: string, index: 
   for (const eff of rep.effets) appliquerConsequence(contenu, etat, eff, [p.heros], msgs);
   entrerNoeud(contenu, etat, cle, rep.aller);
   etat.scenes[cle].messages.unshift(...msgs);
+  etat.scenes[cle].reponseParole = { joueur: etat.heros[p.heros].joueurId, texte: remplacerVariables(contenu, etat, rep.texte, es.heros, p.heros) };
 }
 
 // ───────────────────────────── Pari partagé ─────────────────────────────
@@ -1311,16 +1322,17 @@ export function appliquer(contenu: Contenu, etatAvant: EtatPartie, action: Actio
     }
     case 'continuer': {
       if (action.cle !== 'groupe' && j.herosId !== action.cle) refuser('Ce n\'est pas votre scène');
-      if (etat.combats[action.cle]) refuser('Un combat est en cours');
-      const n = noeudCourant(contenu, etat, action.cle) ?? refuser('Rien à continuer');
-      if (!vrai(n.suite)) refuser('Il faut faire un choix');
-      if (action.cle === 'groupe' && etat.donjon) refuser('Le groupe explore un donjon');
-      // aiguillage : premier nœud dont la condition est vraie, sinon la suite
-      let dest = n.suite!;
-      for (const a of n.aiguillage ?? []) {
-        if (conditionScene(contenu, etat, a.si, etat.scenes[action.cle].heros)) { dest = a.aller; break; }
-      }
-      entrerNoeud(contenu, etat, action.cle, dest);
+      avancerScene(contenu, etat, action.cle);
+      break;
+    }
+    case 'pret_dialogue': {
+      // scène de groupe : on passe à la suite quand chaque joueur présent a cliqué « Continuer » (test 3, point 8)
+      if (action.cle !== 'groupe' && j.herosId !== action.cle) refuser('Ce n\'est pas votre scène');
+      const es = etat.scenes[action.cle] ?? refuser('Aucune scène');
+      verifierAvancee(contenu, etat, action.cle);
+      es.prets ??= [];
+      if (!es.prets.includes(action.joueur)) es.prets.push(action.joueur);
+      if (joueursAttendusDialogue(etat, action.cle).length === 0) avancerScene(contenu, etat, action.cle);
       break;
     }
     case 'quitter_scene': {
@@ -1789,6 +1801,35 @@ function declencherEtapes(contenu: Contenu, etat: EtatPartie, correspond: (d: { 
   }
 }
 
+function verifierAvancee(contenu: Contenu, etat: EtatPartie, cle: string): Noeud {
+  if (etat.combats[cle]) refuser('Un combat est en cours');
+  const n = noeudCourant(contenu, etat, cle) ?? refuser('Rien à continuer');
+  if (!vrai(n.suite)) refuser('Il faut faire un choix');
+  if (cle === 'groupe' && etat.donjon) refuser('Le groupe explore un donjon');
+  return n;
+}
+
+/** Passe au nœud suivant (aiguillage : premier nœud dont la condition est vraie, sinon la suite). */
+function avancerScene(contenu: Contenu, etat: EtatPartie, cle: string) {
+  const n = verifierAvancee(contenu, etat, cle);
+  let dest = n.suite!;
+  for (const a of n.aiguillage ?? []) {
+    if (conditionScene(contenu, etat, a.si, etat.scenes[cle].heros)) { dest = a.aller; break; }
+  }
+  entrerNoeud(contenu, etat, cle, dest);
+}
+
+/** Joueurs présents (avec un héros dans la scène) qui n'ont pas encore cliqué « Continuer ». Les absents ne comptent pas. */
+export function joueursAttendusDialogue(etat: EtatPartie, cle: string): string[] {
+  const es = etat.scenes[cle];
+  if (!es) return [];
+  const prets = es.prets ?? [];
+  return etat.ordreJoueurs.filter((x) => {
+    const jx = etat.joueurs[x];
+    return jx.present && vrai(jx.herosId) && es.heros.includes(jx.herosId!) && !prets.includes(x);
+  });
+}
+
 function resoudreVote(contenu: Contenu, etat: EtatPartie) {
   const es = etat.scenes.groupe;
   const comptes = new Map<number, string[]>();
@@ -1797,7 +1838,12 @@ function resoudreVote(contenu: Contenu, etat: EtatPartie) {
   for (const [idx, v] of comptes) {
     if (v.length > max || (v.length === max && vrai(etat.meneur) && v.includes(etat.meneur))) { meilleur = idx; max = v.length; }
   }
+  // ce que chacun a choisi, gardé quelques secondes à l'écran (test 3, point 7)
+  const n = noeudCourant(contenu, etat, 'groupe');
+  const resultat = n ? { choix: n.choix.map((ch, i) => ({ texte: remplacerVariables(contenu, etat, ch.texte, es.heros), joueurs: comptes.get(i) ?? [] })), retenu: meilleur } : null;
   resoudreChoix(contenu, etat, 'groupe', meilleur, comptes.get(meilleur) ?? []);
+  const apres = etat.scenes.groupe;
+  if (apres && resultat) apres.resultatVote = resultat;
 }
 
 export function prixAchat(contenu: Contenu, h: Heros, objet: string): number {

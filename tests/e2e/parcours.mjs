@@ -135,6 +135,9 @@ async function combattre(nom) {
       await page.getByRole('button', { name: 'Continuer', exact: true }).click();
       return;
     }
+    // « Proposer mon action » et les conseils de l'IA sont dans un petit panneau qu'on ouvre depuis la barre (test 3)
+    const ouvrirPanneau = page.locator('button.proposer[aria-expanded="false"]');
+    if (await ouvrirPanneau.isVisible()) { await ouvrirPanneau.click(); continue; }
     const proposer = page.getByRole('button', { name: /Proposer mon action/ });
     if (await proposer.isVisible()) {
       if (!libreTeste) {
@@ -149,7 +152,9 @@ async function combattre(nom) {
         const valider = page.getByRole('button', { name: 'Valider' });
         if (await valider.isVisible()) await valider.click();
         else await page.locator('.reponse .carte-prop button').first().click();
-        await page.getByRole('button', { name: /Suivre le script/ }).click();
+        // le panneau se ferme une fois l'action jouée ; le mode « script » est repris au tour suivant
+        const script = page.getByRole('button', { name: /Suivre le script/ });
+        if (await script.isVisible()) await script.click();
         continue;
       }
       // sinon : on suit le script (le mode est mémorisé par héros : on y revient si besoin)

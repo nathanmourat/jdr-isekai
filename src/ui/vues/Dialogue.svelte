@@ -1,7 +1,7 @@
 <script lang="ts">
   /** Scène de dialogue : décor, portrait, répliques une par une, choix (votés en groupe), tests de caractéristique. */
   import { jeu } from '../jeu.svelte';
-  import { choixVisibles, conditionScene, joueursDuPari, miseDuChoix, noeudAffiche, partMinimaleDePari, partsDeMise, remplacerVariables } from '../../moteur/partie';
+  import { choixVisibles, conditionScene, joueursAttendusDialogue, joueursDuPari, miseDuChoix, noeudAffiche, partMinimaleDePari, partsDeMise, remplacerVariables } from '../../moteur/partie';
   import { imageDecor } from '../../rendu/assets';
   import { NOMS_CARACS, nomPersonnage, portraitHeros, portraitPersonnage } from '../outils';
 
@@ -30,6 +30,41 @@
   const mesJoueurs = $derived(groupe ? jeu.joueursLocaux.filter((j) => presents.includes(j)) : [jeu.joueurActif]);
   const fini = $derived(es.noeud === '__fin__');
   const combatEnAttente = $derived(!!etat.combats[cle === 'groupe' ? 'groupe' : cle]);
+
+  // ───────────── Coop : « Continuer » quand tout le monde est prêt (test 3, point 8) ─────────────
+  const attendus = $derived(groupe ? joueursAttendusDialogue(etat, cle) : []);
+  const prets = $derived(groupe ? presents.filter((j) => (es.prets ?? []).includes(j)) : []);
+  const jeSuisPret = $derived(groupe && mesJoueurs.length > 0 && mesJoueurs.every((j) => (es.prets ?? []).includes(j)));
+  function continuer() {
+    if (!groupe) { void jeu.agir({ type: 'continuer', joueur: jeu.joueurActif, cle }); return; }
+    // tous les joueurs de cet appareil se déclarent prêts ; la scène avance quand tous les présents le sont
+    for (const j of mesJoueurs) if (!(es.prets ?? []).includes(j)) void jeu.agir({ type: 'pret_dialogue', joueur: j, cle });
+  }
+  /** Le meneur peut passer quand même si quelqu'un ne clique pas, après 20 secondes d'attente. */
+  const ATTENTE_FORCER_MS = 20000;
+  let peutForcer = $state(false);
+  $effect(() => {
+    void es.noeud;
+    peutForcer = false;
+    if (!jeSuisPret || !attendus.length) return;
+    const t = setTimeout(() => (peutForcer = true), ATTENTE_FORCER_MS);
+    return () => clearTimeout(t);
+  });
+  const jeSuisMeneur = $derived(!!etat.meneur && jeu.joueursLocaux.includes(etat.meneur));
+
+  // ───────────── Résultat d'un vote ou d'une réponse, montré 3 secondes (test 3, point 7) ─────────────
+  const DUREE_RESULTAT_MS = 3000;
+  let resultatVisible = $state(false);
+  let cleResultat = '';
+  $effect(() => {
+    const k = es.resultatVote || es.reponseParole ? `${es.sceneId}:${es.noeud}` : '';
+    if (!k || k === cleResultat) return;
+    cleResultat = k;
+    resultatVisible = true;
+    const t = setTimeout(() => (resultatVisible = false), DUREE_RESULTAT_MS);
+    return () => clearTimeout(t);
+  });
+  const pseudo = (j: string) => etat.joueurs[j]?.pseudo ?? '?';
 
   function texte(t: string) { return remplacerVariables(c, etat, t, es.heros); }
   /** Prix d'un choix payant (or retiré par ses effets), affiché sur le bouton s'il n'est pas déjà écrit (test 3, point 13). */
@@ -105,6 +140,22 @@
       </div>
     {/if}
 
+    {#if resultatVisible && (es.resultatVote || es.reponseParole)}
+      <div class="resultat-vote" aria-live="polite">
+        {#if es.reponseParole}
+          <p><strong>{pseudo(es.reponseParole.joueur)} a répondu :</strong> « {es.reponseParole.texte} »</p>
+        {/if}
+        {#if es.resultatVote}
+          <ul>
+            {#each es.resultatVote.choix as ch, i (i)}
+              {#if ch.joueurs.length}<li class:retenu={i === es.resultatVote.retenu}>{ch.texte} <span class="qui-vote">— {ch.joueurs.map(pseudo).join(', ')}</span></li>{/if}
+            {/each}
+          </ul>
+          <p class="choix-groupe">Choix du groupe : {es.resultatVote.choix[es.resultatVote.retenu]?.texte}</p>
+        {/if}
+        <button class="petit" onclick={() => (resultatVisible = false)}>OK</button>
+      </div>
+    {/if}
     {#if toutVu}
       {#if fini}
         <button class="principal" onclick={() => jeu.agir({ type: 'quitter_scene', cle })}>Terminer la scène</button>
@@ -176,13 +227,29 @@
           </p>
         {/if}
       {:else if noeud?.suite}
-        <button class="principal" onclick={() => jeu.agir({ type: 'continuer', joueur: groupe ? mesJoueurs[0] ?? jeu.joueurActif : jeu.joueurActif, cle })}>Continuer</button>
+        {#if groupe && presents.length > 1}
+          <div class="ligne attente-prets">
+            <button class="principal" disabled={jeSuisPret} onclick={continuer}>{jeSuisPret ? 'Prêt ✔' : 'Continuer'}</button>
+            <span class="discret">Prêts : {prets.length}/{presents.length}{#if attendus.length} · en attente de {attendus.map(pseudo).join(', ')}…{/if}</span>
+            {#if peutForcer && jeSuisMeneur}<button class="petit" onclick={() => jeu.agir({ type: 'continuer', joueur: etat.meneur!, cle })}>Passer quand même (meneur)</button>{/if}
+          </div>
+        {:else}
+          <button class="principal" onclick={continuer}>Continuer</button>
+        {/if}
       {/if}
     {/if}
   </div>
 </section>
 
 <style>
+  .attente-prets { align-items: center; gap: 0.6rem; flex-wrap: wrap; }
+  .resultat-vote { border: 1px solid var(--or); border-radius: var(--rayon); padding: 0.5rem 0.7rem; margin: 0.4rem 0; background: #2a2333e6; animation: apparait 0.15s ease-out; }
+  .resultat-vote ul { margin: 0.2rem 0; padding-left: 1.1rem; }
+  .resultat-vote li { margin: 0.15rem 0; color: var(--texte-2); }
+  .resultat-vote li.retenu { color: var(--or-2); font-weight: 700; }
+  .qui-vote { font-size: 0.85rem; }
+  .choix-groupe { margin: 0.3rem 0; font-weight: 700; color: var(--or-2); }
+  @keyframes apparait { from { opacity: 0; } }
   .badge.rouge { color: var(--rouge); border-color: #7a2f2a; }
   .scene { position: absolute; inset: 0; overflow: hidden; display: grid; grid-template-rows: auto 1fr auto; background: #07060a; }
   .decor { position: absolute; inset: 0; background: var(--decor) center / contain no-repeat; }

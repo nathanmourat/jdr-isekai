@@ -238,6 +238,7 @@
     </Tiroir>
   {/if}
 
+  {#if jeu.info && !jeu.erreur}<p class="info-envoi flottant" role="status">⏳ {jeu.info}</p>{/if}
   {#if jeu.erreur}<p class="erreur flottant" role="alert">{jeu.erreur} <button class="petit" onclick={() => (jeu.erreur = null)}>OK</button></p>{/if}
   <!-- notifications empilées en haut à droite (gains de 3 s, puis messages), sans bloquer les clics -->
   <div class="pile-notifs"><Gains /><Notifications /></div>
@@ -285,6 +286,7 @@
   .icone .pastille { position: absolute; top: -4px; right: -4px; }
   .languette { position: absolute; top: 0; left: 50%; translate: -50% 0; z-index: 70; min-width: 64px; min-height: 28px; padding: 0 1rem; border-radius: 0 0 10px 10px; border-top: none; background: #0d0b14cc; font-size: 0.9rem; }
   .bandeau-repos { position: absolute; z-index: 65; top: 3.4rem; left: 50%; translate: -50% 0; width: min(720px, calc(100% - 1rem)); display: flex; justify-content: space-between; align-items: center; gap: 0.6rem; flex-wrap: wrap; border-color: var(--or); padding: 0.5rem 0.8rem; }
+  .info-envoi { background: #2a2333f2; border: 1px solid var(--or); border-radius: var(--rayon); padding: 0.4rem 0.8rem; margin: 0; }
   .flottant { position: fixed; top: 3.6rem; left: 50%; translate: -50% 0; z-index: 95; max-width: 90vw; box-shadow: var(--ombre); }
   /* téléphone : une barre sur une seule ligne (la date reste dans la fiche rapide du héros) */
   @media (max-width: 640px), (max-height: 500px) {

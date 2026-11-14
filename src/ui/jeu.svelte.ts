@@ -4,10 +4,11 @@
  */
 import type { Contenu } from '../contenu/charger';
 import { contenuNavigateur } from '../contenu/navigateur';
-import { appliquer, ErreurAction, jourPeutPasser, rejouer, type Action, type EtatPartie } from '../moteur/partie';
+import { appliquer, ErreurAction, jourPeutPasser, type Action, type EtatPartie } from '../moteur/partie';
 import { creerSauvegarde } from '../sauvegarde/migrations';
 import { genererId, type Canal } from '../sync/types';
 import { calculerGains, type Gain } from './gains';
+import { synchroniser } from '../sync/rejeu';
 
 type SansJoueur = Action extends infer A ? (A extends Action ? Omit<A, 'joueur'> & { joueur?: string } : never) : never;
 
@@ -127,20 +128,18 @@ class Jeu {
     this.actions = [];
   }
 
-  /** Applique les actions nouvelles (celles qui dépassent la liste connue). */
+  /**
+   * Met l'état à jour avec le journal partagé. Si une action est arrivée au milieu du journal (réseau plus lent
+   * chez un camarade), tout est rejoué depuis le départ : aucune action n'est jamais perdue (test 3, point 10).
+   */
   private recevoir(toutes: Action[]) {
     if (!this.contenu || !this.depart) return;
-    if (toutes.length < this.actions.length) {
-      // liste raccourcie (import, réinitialisation) : on rejoue tout
-      this.actions = [];
-      this.etat = this.depart;
-    }
+    if (toutes.length === this.actions.length && toutes.every((a, i) => a === this.actions[i])) return;
     const nouvelles = toutes.slice(this.actions.length);
-    if (!nouvelles.length) return;
     // une action d'un joueur (pas le simple passage d'un jour) compte comme du jeu actif
     if (nouvelles.some((a) => a.type !== 'jour_passe' && a.type !== 'presence')) this.derniereActivite = Date.now();
     const avant = this.etat;
-    const { etat } = rejouer(this.contenu, this.etat ?? this.depart, nouvelles);
+    const { etat } = synchroniser(this.contenu, this.depart, this.etat, this.actions, toutes);
     // notifications de gain : pas au chargement d'une partie (on ne rejoue pas les anciens gains)
     if (avant && this.actions.length > 0) {
       const nouveaux = calculerGains(this.contenu, avant, etat).map((g) => ({ ...g, id: ++this.numeroGain }));
@@ -150,7 +149,15 @@ class Jeu {
     this.etat = etat;
   }
 
-  /** Vérifie l'action avec le moteur, puis l'envoie. Renvoie false (et affiche l'erreur) si elle est refusée. */
+  /** Délai avant d'annoncer une connexion lente, et nombre d'essais d'envoi. */
+  static readonly ATTENTE_ENVOI_MS = 5000;
+  static readonly ESSAIS_ENVOI = 3;
+
+  /**
+   * Vérifie l'action avec le moteur, puis l'envoie. Renvoie false (et affiche l'erreur) si elle est refusée.
+   * L'écran n'avance PAS ici : il avance quand l'action revient du journal partagé (recevoir), pour tout le monde.
+   * Si l'envoi échoue, il est retenté automatiquement (3 essais), avec un message clair.
+   */
   async envoyer(action: Action): Promise<boolean> {
     if (!this.contenu || !this.etat || !this.canal) return false;
     try {
@@ -161,10 +168,26 @@ class Jeu {
     }
     this.erreur = null;
     const canal = this.canal;
+    const essayer = async () => {
+      for (let essai = 1; ; essai++) {
+        const lent = setTimeout(() => { this.info = 'Connexion lente : votre action est en cours d’envoi…'; }, Jeu.ATTENTE_ENVOI_MS);
+        try {
+          await canal.envoyer(action);
+          clearTimeout(lent);
+          if (essai > 1 || this.info?.startsWith('Connexion lente')) this.info = null;
+          return;
+        } catch (e) {
+          clearTimeout(lent);
+          if (essai >= Jeu.ESSAIS_ENVOI) throw new Error(`Action non envoyée (${(e as Error).message}). Vérifiez la connexion, puis réessayez.`);
+          this.info = `Envoi impossible, nouvel essai (${essai + 1}/${Jeu.ESSAIS_ENVOI})…`;
+          await new Promise((ok) => setTimeout(ok, 1500 * essai));
+        }
+      }
+    };
     // les envois sont faits l'un après l'autre, dans l'ordre
-    const p = this.envoiEnCours.then(() => canal.envoyer(action));
+    const p = this.envoiEnCours.then(essayer);
     this.envoiEnCours = p.catch(() => undefined);
-    try { await p; return true; } catch (e) { this.erreur = (e as Error).message; return false; }
+    try { await p; return true; } catch (e) { this.info = null; this.erreur = (e as Error).message; return false; }
   }
 
   /** Raccourci : action au nom du joueur actif (ou d'un autre joueur de cet appareil). */
