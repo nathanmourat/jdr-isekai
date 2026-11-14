@@ -9,6 +9,7 @@ python bestiary.py       # 28 monstres du bestiaire (1024×512)
 python npcs.py           # PNJ détourés 80×128 (dessinés nativement, plus de pixels)
 python run_decors2.py    # 20 décors 1280×720 dessinés nativement + JSON + premiers plans
 python plan_lysmont.py   # plan de Lysmont
+python fonds.py          # 32 fonds de combat 1280×720 (sol dans le tiers inférieur)
 ```
 
 Nouveautés par rapport à la V3 :
