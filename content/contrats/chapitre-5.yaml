@@ -1,0 +1,62 @@
+# Contrats de guilde du chapitre 5 (missions de guerre), au comptoir de la Guilde de Fort-Aube. Dernière étape : retour au comptoir.
+contrats:
+  - id: c-ronde-diablotins
+    titre: "Diablotins sur le chemin de ronde"
+    description: "Chaque nuit, des nuées de diablotins harcèlent les sentinelles du chemin de ronde. Il faut leur faire passer l'envie."
+    rang_min: B
+    niveau: 28
+    rencontre: mur-diablotins
+    duree_jours: 3
+    disponible_si: { flag: ch5-depart-fait }
+    recompenses: { or: 520, xp: 3200, points_guilde: 300 }
+    etapes:
+      - { lieu: chemin-de-ronde, objectif: "Monter la garde sur le chemin de ronde.", texte: "La nuit tombe. Les sentinelles allument les braseros, une par une. Au nord, des points rouges dansent dans le noir.", bouton: "Attendre la nuée" }
+      - { lieu: chemin-de-ronde, objectif: "Repousser les diablotins.", texte: "La nuée arrive en ricanant, des fourches plein les mains.", combat: mur-diablotins }
+      - { lieu: guilde-fort, objectif: "Revenir au comptoir de Fort-Aube.", texte: "Valka hoche la tête. « Les sentinelles ont dormi deux heures cette nuit. Un luxe. Merci. »", bouton: "Toucher la récompense" }
+
+  - id: c-tour-de-guet
+    titre: "La patrouille de la tour de l'est"
+    description: "Une patrouille de la Légion utilise une vieille tour du Mur comme abri. Il faut la déloger avant qu'elle ne s'y installe."
+    rang_min: B
+    niveau: 30
+    rencontre: mur-legion
+    duree_jours: 4
+    disponible_si: { flag: ch5-depart-fait }
+    recompenses: { or: 580, xp: 3600, points_guilde: 340, objets: [potion-soin-supreme] }
+    etapes:
+      - lieu: tour-de-guet
+        objectif: "Approcher de la tour de guet."
+        texte: "De la fumée sort des meurtrières. Quelqu'un fait cuire quelque chose qui sent le soufre."
+        choix:
+          - { texte: "Enfumer la tour par le bas.", resultat: "Les légionnaires sortent en toussant, furieux." }
+          - { texte: "Monter par l'extérieur, de pierre en pierre.", resultat: "Vous tombez sur eux par le toit. Effet de surprise garanti." }
+      - { lieu: tour-de-guet, objectif: "Chasser la patrouille.", texte: "Les légionnaires forment un mur de boucliers.", combat: mur-legion }
+      - { lieu: guilde-fort, objectif: "Revenir au comptoir de Fort-Aube.", texte: "« Une tour de moins pour eux, dit Valka. Il en reste quarante-sept. Revenez demain. »", bouton: "Toucher la récompense" }
+
+  - id: c-capitaine
+    titre: "Tête de la Légion"
+    description: "Un capitaine de la Légion a installé un camp avancé dans la plaine cendrée. Sans lui, ses troupes reculeront."
+    rang_min: A
+    niveau: 33
+    rencontre: mur-capitaine
+    duree_jours: 4
+    disponible_si: { flag: mur-tombe }
+    recompenses: { or: 700, xp: 4300, points_guilde: 420 }
+    etapes:
+      - { lieu: plaine-cendree, objectif: "Trouver le camp avancé.", texte: "Des tentes noires, des étendards en os, et une grande tente au centre, gardée.", bouton: "S'infiltrer" }
+      - { lieu: plaine-cendree, objectif: "Vaincre le capitaine.", texte: "Le capitaine sort de sa tente, son épée à deux mains sur l'épaule. « Enfin, de la distraction. »", combat: mur-capitaine }
+      - { lieu: guilde-fort, objectif: "Revenir au comptoir de Fort-Aube.", texte: "Valka plante une épingle sur la carte, là où était le camp. « Ils ont reculé de deux lieues. Excellent. »", bouton: "Toucher la récompense" }
+
+  - id: c-colosse
+    titre: "Le colosse égaré"
+    description: "Un colosse de siège s'est remis en marche tout seul, près de la Brèche. Personne ne le pousse, mais il avance quand même."
+    rang_min: A
+    niveau: 32
+    rencontre: chute-colosse
+    duree_jours: 3
+    disponible_si: { flag: mur-tombe }
+    recompenses: { or: 680, xp: 4100, points_guilde: 400, objets: [potion-mana-grande] }
+    etapes:
+      - { lieu: breche-du-mur, objectif: "Aller à la Brèche.", texte: "Le sol tremble à intervalles réguliers. Un pas. Un autre. Le colosse avance vers le Mur, très lentement, les yeux éteints.", bouton: "Lui barrer la route" }
+      - { lieu: breche-du-mur, objectif: "Arrêter le colosse.", texte: "Ses yeux s'allument quand vous approchez.", combat: chute-colosse }
+      - { lieu: guilde-fort, objectif: "Revenir au comptoir de Fort-Aube.", texte: "« Les nains veulent les morceaux, dit Valka. Pour faire des enclumes. » Elle sourit. « Vous voyez ? Rien ne se perd. »", bouton: "Toucher la récompense" }

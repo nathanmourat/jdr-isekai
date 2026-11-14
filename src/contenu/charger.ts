@@ -169,6 +169,8 @@ function verifierReferences(c: Contenu): string[] {
     for (const [nid, n] of Object.entries(s.noeuds)) {
       const lien = (cible: string | undefined, quoi: string) => { if (cible && !s.noeuds[cible]) e.push(`${ou} › nœud ${nid} › ${quoi} vers « ${cible} » introuvable`); };
       lien(n.suite, 'suite');
+      for (const a of n.aiguillage ?? []) { lien(a.aller, 'aiguillage'); verifierCondition(c, ou, a.si, e); }
+      if ((n.aiguillage ?? []).length > 0 && !n.suite) e.push(`${ou} › nœud ${nid} › un aiguillage demande une « suite » (le nœud par défaut)`);
       if (n.combat) { lien(n.combat.victoire, 'victoire'); lien(n.combat.defaite, 'défaite'); if (!c.rencontres[n.combat.rencontre]) e.push(`${ou} › nœud ${nid} › rencontre « ${n.combat.rencontre} » introuvable`); }
       if (n.donjon) { lien(n.donjon.sortie, 'sortie de donjon'); if (n.donjon.abandon) lien(n.donjon.abandon, 'abandon de donjon'); if (!c.donjons[n.donjon.id]) e.push(`${ou} › nœud ${nid} › donjon « ${n.donjon.id} » introuvable`); }
       if (n.parole_a) {

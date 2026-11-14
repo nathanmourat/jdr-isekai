@@ -1,0 +1,283 @@
+# Chapitre 5 — quêtes de classe, étape 3 : l'ultime (scènes individuelles).
+# Il faut avoir fait l'étape 2 (drapeau personnel « classe-2 ») ; l'ultime est débloqué ici, utilisable au niveau 30.
+scenes:
+  - id: cl-lame-runique-3
+    titre: "Lame runique — La Lame des Mille Sceaux"
+    type: individuel
+    lieu: breche-du-mur
+    decor: breche-du-mur
+    quete: q-classe-lame-runique
+    disponible_si: { classe: lame-runique, flag: classe-2, pas_flag: classe-3, ou: [{ flag: mur-tombe }] }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "Dans la Brèche, au milieu des pierres noircies, votre lame se met à vibrer toute seule. Les runes gravées depuis Qarzim s'allument une à une, et une huitième apparaît, que vous n'avez jamais gravée : un cercle fermé, entier." }
+          - { dit: "La rune des Mille Sceaux. Elle n'apparaît que sur un champ de bataille, disait Durna. Le Mur est tombé ici. Mille sceaux brisés en un jour." }
+        choix:
+          - texte: "Graver la rune pendant qu'elle brille, d'un seul trait. (Intelligence, difficulté 32)"
+            test: { carac: INT, difficulte: 32, reussite: reussi, echec: rate }
+          - texte: "Laisser la lame graver la rune à travers votre main. (Vitalité, difficulté 32)"
+            test: { carac: VIT, difficulte: 32, reussite: reussi, echec: rate }
+      reussi:
+        repliques:
+          - { dit: "Le trait est parfait. Toutes les runes de la lame s'allument ensemble, et pendant une seconde, elles forment un seul sceau, immense, qui illumine la Brèche." }
+          - { dit: "Vous savez maintenant ce que fait la Lame des Mille Sceaux. Toutes les charges, d'un coup. Tous les ennemis, d'un coup." }
+        effets: [{ flag: heros:classe-3, debloquer_ultime: true, terminer_quete: q-classe-lame-runique, xp: 2000 }]
+        fin: true
+      rate:
+        repliques:
+          - { dit: "Le trait dérape, la rune vous brûle jusqu'au coude. Mais elle tient. Elle est un peu de travers. Comme vous." }
+        effets: [{ flag: heros:classe-3, debloquer_ultime: true, terminer_quete: q-classe-lame-runique, xp: 1500 }]
+        fin: true
+
+  - id: cl-arcaniste-3
+    titre: "Arcaniste — La Convergence des Quatre"
+    type: individuel
+    lieu: plaine-cendree
+    decor: plaine-cendree
+    quete: q-classe-arcaniste
+    disponible_si: { classe: arcaniste, flag: classe-2, pas_flag: classe-3, ou: [{ flag: mur-tombe }] }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "Dans la plaine cendrée, le ciel est couleur de braise, et l'air sent l'ombre. Le quatrième élément. Celui qui vous manquait." }
+          - { dit: "Le feu du volcan, la foudre du désert, le givre de vos débuts : les trois tournent en vous. L'ombre des Cendres s'approche, curieuse, comme un chat." }
+        choix:
+          - texte: "L'appeler, et la faire tourner avec les trois autres. (Intelligence, difficulté 32)"
+            test: { carac: INT, difficulte: 32, reussite: reussi, echec: rate }
+          - texte: "La laisser entrer d'elle-même, sans la forcer. (Esprit, difficulté 32)"
+            test: { carac: ESP, difficulte: 32, reussite: reussi, echec: rate }
+      reussi:
+        repliques:
+          - { dit: "Les quatre éléments tournent ensemble, de plus en plus vite, jusqu'à ne plus former qu'une seule lumière, blanche, insupportable. La Convergence des Quatre. Elle vous obéit." }
+        effets: [{ flag: heros:classe-3, debloquer_ultime: true, terminer_quete: q-classe-arcaniste, xp: 2000 }]
+        fin: true
+      rate:
+        repliques:
+          - { dit: "L'ombre résiste, vous brûle, vous glace, vous foudroie. Puis elle se range, avec les autres. Elle n'est pas domptée. Elle a décidé de rester." }
+        effets: [{ flag: heros:classe-3, debloquer_ultime: true, terminer_quete: q-classe-arcaniste, xp: 1500 }]
+        fin: true
+
+  - id: cl-invocateur-3
+    titre: "Invocateur — La Porte du Bestiaire"
+    type: individuel
+    lieu: camp-des-allies
+    decor: camp-des-allies
+    quete: q-classe-invocateur
+    disponible_si: { classe: invocateur, flag: classe-2, pas_flag: classe-3, ou: [{ flag: mur-tombe }] }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "Au camp, la nuit, le fennec du désert et l'esprit-dragon de l'Archipel apparaissent ensemble devant votre tente. Ils ne disent rien. Ils attendent." }
+          - { dit: "Derrière eux, une porte se dessine dans l'air, faite de griffes, d'ailes et d'écailles : la Porte du Bestiaire. Elle s'ouvre seulement si toutes vos créatures veulent la franchir avec vous." }
+        choix:
+          - texte: "Leur demander, une par une, si elles veulent venir. (Charisme, difficulté 32)"
+            test: { carac: CHA, difficulte: 32, reussite: reussi, echec: rate }
+          - texte: "Ouvrir la porte avec votre propre énergie. (Esprit, difficulté 32)"
+            test: { carac: ESP, difficulte: 32, reussite: reussi, echec: rate }
+      reussi:
+        repliques:
+          - { dit: "Toutes répondent oui. La Porte s'ouvre, et derrière, une créature immense, ancienne, légendaire, vous regarde. Elle viendra, quand vous l'appellerez. Pour trois tours. Ce sera assez." }
+        effets: [{ flag: heros:classe-3, debloquer_ultime: true, terminer_quete: q-classe-invocateur, xp: 2000 }]
+        fin: true
+      rate:
+        repliques:
+          - { dit: "La Porte s'entrouvre seulement. Mais la créature derrière a vu votre visage. Elle viendra. En traînant les pattes, peut-être, mais elle viendra." }
+        effets: [{ flag: heros:classe-3, debloquer_ultime: true, terminer_quete: q-classe-invocateur, xp: 1500 }]
+        fin: true
+
+  - id: cl-ombre-3
+    titre: "Ombre — Les Mille Coupures"
+    type: individuel
+    lieu: breche-du-mur
+    decor: breche-du-mur
+    quete: q-classe-ombre
+    disponible_si: { classe: ombre, flag: classe-2, pas_flag: classe-3, ou: [{ flag: mur-tombe }] }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "Pendant la chute du Mur, vous avez tout perdu de vue : vos alliés, vos armes, le ciel. Il ne restait que des ombres, et vous au milieu." }
+          - { dit: "Le vieux maître de Port-Vérane l'avait dit : on ne l'apprend pas. On la trouve, au milieu d'une bataille, quand on a tout perdu. Ce soir, dans la Brèche, vous la cherchez encore." }
+        choix:
+          - texte: "Fermer les yeux et frapper six fois, sans réfléchir. (Agilité, difficulté 32)"
+            test: { carac: AGI, difficulte: 32, reussite: reussi, echec: rate }
+          - texte: "Attendre, immobile, jusqu'à devenir une ombre parmi les ombres. (Esprit, difficulté 32)"
+            test: { carac: ESP, difficulte: 32, reussite: reussi, echec: rate }
+      reussi:
+        repliques:
+          - { dit: "Six coups. Vous ne les avez pas vus. Six pierres de la Brèche tombent en morceaux, parfaitement coupées. Les Mille Coupures. Elles étaient là depuis le début." }
+        effets: [{ flag: heros:classe-3, debloquer_ultime: true, terminer_quete: q-classe-ombre, xp: 2000 }]
+        fin: true
+      rate:
+        repliques:
+          - { dit: "Cinq coups seulement, et le sixième vous échappe. Mais vous avez compris le principe. Le sixième viendra au bon moment." }
+        effets: [{ flag: heros:classe-3, debloquer_ultime: true, terminer_quete: q-classe-ombre, xp: 1500 }]
+        fin: true
+
+  - id: cl-gardien-3
+    titre: "Gardien — Le Bastion éternel"
+    type: individuel
+    lieu: chemin-de-ronde
+    decor: chemin-de-ronde
+    quete: q-classe-gardien
+    disponible_si: { classe: gardien, flag: classe-2, pas_flag: classe-3, ou: [{ flag: mur-tombe }] }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "Sur le chemin de ronde, à l'endroit exact où vous avez tenu pendant la chute du Mur, le vieux paladin de Qarzim vous attend. Il a l'air plus vieux que jamais." }
+          - { dit: "« Le dernier serment. Celui du Bastion éternel. On jure que personne ne tombera tant qu'on est debout. Et on ne se relève jamais tout à fait de l'avoir juré. » Il vous regarde. « Tu es sûr ? »" }
+        choix:
+          - texte: "Prêter le serment, à genoux, devant les noms des défenseurs du Mur. (Charisme, difficulté 32)"
+            test: { carac: CHA, difficulte: 32, reussite: reussi, echec: rate }
+          - texte: "Tenir votre bouclier levé jusqu'à l'aube, sans un mot. (Vitalité, difficulté 32)"
+            test: { carac: VIT, difficulte: 32, reussite: reussi, echec: rate }
+      reussi:
+        repliques:
+          - { dit: "Quand vous vous relevez, votre bouclier brille d'une lumière qui ne s'éteint plus. Le vieux paladin pleure sans honte. « Le Bastion éternel. Le dernier qui l'a juré, c'était moi. Je suis content de te le passer. »" }
+        effets: [{ flag: heros:classe-3, debloquer_ultime: true, terminer_quete: q-classe-gardien, xp: 2000 }]
+        fin: true
+      rate:
+        repliques:
+          - { dit: "À l'aube, vos bras tremblent, votre voix aussi. Mais le serment est pris. Le vieux paladin pose la main sur votre épaule. « Personne ne le jure parfaitement. On le tient, c'est tout. »" }
+        effets: [{ flag: heros:classe-3, debloquer_ultime: true, terminer_quete: q-classe-gardien, xp: 1500 }]
+        fin: true
+
+  - id: cl-alchimiste-3
+    titre: "Alchimiste — Le Golem d'airain"
+    type: individuel
+    lieu: camp-des-allies
+    decor: camp-des-allies
+    quete: q-classe-alchimiste
+    disponible_si: { classe: alchimiste, flag: classe-2, pas_flag: classe-3, ou: [{ flag: mur-tombe }] }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "Au camp des alliés, les forgerons nains vous ont prêté un coin de forge. Le golem d'airain est là, terminé, le cœur de forge de Durna battant dans sa poitrine. Il ne bouge pas." }
+          - { dit: "Il ne lui manque que la vie. Et aucun plan ne dit comment la donner." }
+        choix:
+          - texte: "Trouver la formule qui manque, en mélangeant tout ce que vous savez. (Intelligence, difficulté 32)"
+            test: { carac: INT, difficulte: 32, reussite: reussi, echec: rate }
+          - texte: "Lui donner un peu de vous : votre sang dans la dernière fiole. (Vitalité, difficulté 32)"
+            test: { carac: VIT, difficulte: 32, reussite: reussi, echec: rate }
+      reussi:
+        repliques:
+          - { dit: "La fiole se vide dans le cœur de forge. Le golem ouvre les yeux, deux lumières bleues. Il se penche, et pose sa main de métal sur votre tête, très doucement. Il vous protégera." }
+        effets: [{ flag: heros:classe-3, debloquer_ultime: true, terminer_quete: q-classe-alchimiste, xp: 2000 }]
+        fin: true
+      rate:
+        repliques:
+          - { dit: "La fiole explose. Le golem ne s'allume pas… puis, au matin, vous le trouvez assis à côté de vous, qui vous regarde dormir. Vous ne savez pas ce qui a marché. Lui non plus." }
+        effets: [{ flag: heros:classe-3, debloquer_ultime: true, terminer_quete: q-classe-alchimiste, xp: 1500 }]
+        fin: true
+
+  - id: cl-archer-3
+    titre: "Archer — La Pluie des Ancêtres"
+    type: individuel
+    lieu: chemin-de-ronde
+    decor: chemin-de-ronde
+    quete: q-classe-archer
+    disponible_si: { classe: archer, flag: classe-2, pas_flag: classe-3, ou: [{ flag: mur-tombe }] }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "Sur le chemin de ronde, le vent du nord souffle fort. Vous avez tiré dix mille flèches depuis le début de la guerre. Ce soir, vous n'en avez plus qu'une." }
+          - { dit: "La plume blanche de Sorha frémit. Une voix, très loin : « Appelle-nous. »" }
+        choix:
+          - texte: "Tirer votre dernière flèche vers le ciel, en appelant les ancêtres. (Agilité, difficulté 32)"
+            test: { carac: AGI, difficulte: 32, reussite: reussi, echec: rate }
+          - texte: "Écouter le vent jusqu'à entendre leurs voix. (Esprit, difficulté 32)"
+            test: { carac: ESP, difficulte: 32, reussite: reussi, echec: rate }
+      reussi:
+        repliques:
+          - { dit: "La flèche monte, monte, et se divise. Dix, cent, mille flèches de lumière retombent sur la plaine, tirées par des archers que vous ne voyez pas, mais dont vous entendez les rires. La Pluie des Ancêtres." }
+        effets: [{ flag: heros:classe-3, debloquer_ultime: true, terminer_quete: q-classe-archer, xp: 2000 }]
+        fin: true
+      rate:
+        repliques:
+          - { dit: "La flèche retombe seule, mais une plume de lumière flotte avec elle. Les ancêtres ont entendu. La prochaine fois, ils viendront tous." }
+        effets: [{ flag: heros:classe-3, debloquer_ultime: true, terminer_quete: q-classe-archer, xp: 1500 }]
+        fin: true
+
+  - id: cl-guerisseur-3
+    titre: "Guérisseur — Le Second Souffle"
+    type: individuel
+    lieu: fort-aube-porte
+    decor: fort-aube-porte
+    quete: q-classe-guerisseur
+    disponible_si: { classe: guerisseur, flag: classe-2, pas_flag: classe-3, ou: [{ flag: mur-tombe }] }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "Après la chute du Mur, il y a eu trop de blessés, et vous n'avez pas pu tous les sauver. Ce soir, à la porte de Fort-Aube, on vous amène un soldat qui ne respire plus depuis une minute." }
+          - { dit: "Néréa l'a dit : celui qui a bu à la source peut ramener quelqu'un. Une fois. Vous sentez le souffle de la source, quelque part en vous." }
+        choix:
+          - texte: "Lui donner votre souffle. (Esprit, difficulté 32)"
+            test: { carac: ESP, difficulte: 32, reussite: reussi, echec: rate }
+          - texte: "Poser vos mains sur son cœur et ne pas lâcher. (Vitalité, difficulté 32)"
+            test: { carac: VIT, difficulte: 32, reussite: reussi, echec: rate }
+      reussi:
+        repliques:
+          - { dit: "Le soldat tousse. Il ouvre les yeux. Autour de vous, tous les blessés de la cour respirent plus fort, comme si un vent chaud était passé sur eux. Le Second Souffle. Il n'était pas pour un seul." }
+        effets: [{ flag: heros:classe-3, debloquer_ultime: true, terminer_quete: q-classe-guerisseur, xp: 2000 }]
+        fin: true
+      rate:
+        repliques:
+          - { dit: "Il revient. Lui seul, de justesse. Vous tombez à genoux, vidé. Mais vous avez senti comment faire. La prochaine fois, ce sera pour tous." }
+        effets: [{ flag: heros:classe-3, debloquer_ultime: true, terminer_quete: q-classe-guerisseur, xp: 1500 }]
+        fin: true
+
+  - id: cl-berserker-3
+    titre: "Berserker — La Forme du Wyrm"
+    type: individuel
+    lieu: plaine-cendree
+    decor: plaine-cendree
+    quete: q-classe-berserker
+    disponible_si: { classe: berserker, flag: classe-2, pas_flag: classe-3, ou: [{ flag: mur-tombe }] }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "Dans la plaine cendrée, après la bataille, votre sang chante encore. La dernière note de la chanson des wyrms. Vous la sentez au bout de la langue, comme du feu." }
+          - { dit: "Au-dessus de vous, un dragon de l'Archipel tourne en cercle. Il attend, lui aussi." }
+        choix:
+          - texte: "Laisser monter la dernière note, jusqu'au bout. (Force, difficulté 32)"
+            test: { carac: FOR, difficulte: 32, reussite: reussi, echec: rate }
+          - texte: "Chanter avec le dragon, au lieu de crier. (Esprit, difficulté 32)"
+            test: { carac: ESP, difficulte: 32, reussite: reussi, echec: rate }
+      reussi:
+        repliques:
+          - { dit: "Vos os craquent. Des écailles poussent sur vos bras, des ailes dans votre ombre, du feu dans votre gorge. Pendant trois battements de cœur, vous êtes un wyrm. Puis vous redevenez vous. La Forme du Wyrm. Elle reviendra quand vous l'appellerez." }
+        effets: [{ flag: heros:classe-3, debloquer_ultime: true, terminer_quete: q-classe-berserker, xp: 2000 }]
+        fin: true
+      rate:
+        repliques:
+          - { dit: "Les écailles poussent, puis tombent. Vous restez à genoux, fumant. Le dragon, au-dessus, souffle une flamme de joie. Il a vu. Ça viendra." }
+        effets: [{ flag: heros:classe-3, debloquer_ultime: true, terminer_quete: q-classe-berserker, xp: 1500 }]
+        fin: true
+
+  - id: cl-barde-3
+    titre: "Barde — La Symphonie du dernier acte"
+    type: individuel
+    lieu: fort-aube-cantine
+    decor: fort-aube-cantine
+    quete: q-classe-barde
+    disponible_si: { classe: barde, flag: classe-2, pas_flag: classe-3, ou: [{ flag: mur-tombe }] }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "À la Gamelle, la veille de la contre-offensive, personne ne dort. Les soldats boivent en silence. Quelqu'un vous tend votre instrument. « Joue quelque chose. N'importe quoi. »" }
+          - { dit: "Les quatre couplets sont là, dans votre tête : les dunes, les sirènes, et deux que vous avez écrits vous-même. Il manque juste la façon de les jouer ensemble." }
+        choix:
+          - texte: "Jouer les quatre couplets ensemble, en même temps. (Charisme, difficulté 32)"
+            test: { carac: CHA, difficulte: 32, reussite: reussi, echec: rate }
+          - texte: "Laisser les soldats chanter, et les accompagner. (Esprit, difficulté 32)"
+            test: { carac: ESP, difficulte: 32, reussite: reussi, echec: rate }
+      reussi:
+        repliques:
+          - { dit: "La musique remplit la Gamelle, puis la cour, puis le camp entier. Des milliers de voix la reprennent. Tout le monde se lève, sans savoir pourquoi, prêt à tout recommencer. La Symphonie du dernier acte." }
+        effets: [{ flag: heros:classe-3, debloquer_ultime: true, terminer_quete: q-classe-barde, xp: 2000 }]
+        fin: true
+      rate:
+        repliques:
+          - { dit: "Vous ratez une note sur trois. Mais personne ne s'en rend compte : tout le monde chante trop fort. La Symphonie existe. Vous l'avez entendue." }
+        effets: [{ flag: heros:classe-3, debloquer_ultime: true, terminer_quete: q-classe-barde, xp: 1500 }]
+        fin: true

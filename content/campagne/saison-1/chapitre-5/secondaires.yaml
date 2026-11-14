@@ -1,0 +1,240 @@
+# Chapitre 5 — quêtes secondaires (scènes courtes, une par étape).
+scenes:
+  # ── La soupe de Mère Brisac
+  - id: sq-convoi-brisac
+    pnj: mere-brisac
+    titre: "La soupe de Mère Brisac"
+    type: groupe
+    lieu: fort-aube-cantine
+    decor: fort-aube-cantine
+    quete: q-convoi
+    disponible_si: { flag: ch5-depart-fait, pas_flag: convoi-commence }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: mere-brisac, dit: "Mère Brisac frappe sa louche contre la marmite vide. « Trois jours. Trois jours que le convoi du village de Hautepierre devait arriver. Des pommes de terre, des oignons, du lard. Sans ça, je fais de la soupe à l'eau chaude. »" }
+          - { qui: mere-brisac, dit: "« Le village a été évacué la semaine dernière. Les charrettes devaient partir les dernières. » Elle baisse la voix. « Les éclaireurs ont vu des diablotins par là-bas. »" }
+        choix:
+          - texte: "« Nous ramènerons votre convoi. »"
+            effets: [{ flag: convoi-commence, quete: { id: q-convoi, etape: village } }]
+            aller: fin
+      fin:
+        repliques:
+          - { qui: mere-brisac, dit: "« Et si les charretiers ont faim, donnez-leur ça. » Elle vous fourre des quignons de pain dans les poches. « Personne ne se bat le ventre vide. Même pas les charretiers. »" }
+        fin: true
+  - id: sq-convoi-village
+    titre: "Le village évacué"
+    type: groupe
+    lieu: village-evacue
+    decor: village-evacue
+    quete: q-convoi
+    disponible_si: { quete_etape: { q-convoi: village } }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "Le village est vide. Sur la place, trois charrettes renversées, des pommes de terre partout. Les charretiers sont réfugiés dans le clocher. Autour, des diablotins ricanent en jonglant avec des oignons." }
+        choix:
+          - texte: "Chasser les diablotins."
+            aller: combat
+      combat:
+        combat: { rencontre: mur-diablotins, victoire: convoi, defaite: convoi-dur }
+      convoi-dur:
+        repliques:
+          - { dit: "Les diablotins vous repoussent… jusqu'à ce que les charretiers descendent du clocher avec des fourches. À vous tous, vous mettez la nuée en fuite." }
+        suite: convoi
+      convoi:
+        repliques:
+          - { dit: "On relève les charrettes, on ramasse les pommes de terre une à une. Les charretiers rient nerveusement. L'un d'eux pleure un peu. Personne ne se moque de lui." }
+        effets: [{ quete: { id: q-convoi, etape: retour }, xp: 1500 }]
+        fin: true
+  - id: sq-convoi-retour
+    pnj: mere-brisac
+    titre: "La soupe du soir"
+    type: groupe
+    lieu: fort-aube-cantine
+    decor: fort-aube-cantine
+    quete: q-convoi
+    rend_quete: true
+    disponible_si: { quete_etape: { q-convoi: retour } }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: mere-brisac, dit: "Le soir, la Gamelle sent l'oignon et le lard. Mille soldats font la queue, le bol à la main. Mère Brisac vous sert en premier, double portion." }
+          - { qui: mere-brisac, dit: "« Vous savez ce qui gagne une guerre ? Pas les épées. La soupe. » Elle vous tend une petite bourse. « Les officiers m'ont donné ça pour vous. Moi, je vous donne une place à ma table pour toujours. »" }
+        effets: [{ terminer_quete: q-convoi, or: 600, xp: 1500, reputation: { troupes: 8 }, objet: potion-soin-supreme }]
+        fin: true
+
+  # ── L'armure du premier maréchal
+  - id: sq-armure-tolvan
+    pnj: tolvan
+    titre: "L'armure du premier maréchal"
+    type: groupe
+    lieu: fort-aube-armurerie
+    decor: fort-aube-armurerie
+    quete: q-armure-corvin
+    disponible_si: { flag: ch5-depart-fait, pas_flag: armure-commencee }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: tolvan, dit: "Tolvan pose la main sur un mannequin vide, au fond de l'Armurerie. « Ici, il y avait l'armure du premier maréchal du Mur. Six cents ans qu'elle protège ceux qui la portent. Le maréchal de Valgrane l'avait empruntée, en 1003. »" }
+          - { qui: tolvan, dit: "« Elle est restée là-bas. Dans les ruines. Je suis trop vieux pour aller la chercher, et les jeunes ont peur des ruines. » Il vous regarde par-dessus sa loupe. « Vous n'avez peur de rien, vous, paraît-il. »" }
+        choix:
+          - texte: "« Nous irons à Valgrane. »"
+            effets: [{ flag: armure-commencee, quete: { id: q-armure-corvin, etape: valgrane } }]
+            aller: fin
+      fin:
+        fin: true
+  - id: sq-armure-valgrane
+    titre: "Les ruines de Valgrane"
+    type: groupe
+    lieu: valgrane-ruines
+    decor: valgrane-ruines
+    quete: q-armure-corvin
+    disponible_si: { quete_etape: { q-armure-corvin: valgrane } }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "Dans la caserne effondrée de Valgrane, l'armure est là, debout sur son mannequin, comme si elle montait la garde depuis vingt ans. Autour d'elle, des gelées de cendre violette se sont installées." }
+          - { qui: aveline, dit: "Aveline s'arrête net devant la porte nord, à moitié écroulée. « C'est ici que mon père a tenu. » Elle pose la main sur la pierre. Puis elle dégaine. « Allons chercher cette armure. »", si: { flag: aveline-rencontree } }
+        choix:
+          - texte: "Nettoyer la caserne."
+            aller: combat
+      combat:
+        combat: { rencontre: mur-gelees, victoire: armure, defaite: armure-dur }
+      armure-dur:
+        repliques:
+          - { dit: "Les gelées vous chassent de la caserne. Mais l'une d'elles a renversé le mannequin, et l'armure a roulé jusqu'à la porte. Vous la traînez dehors." }
+        suite: armure
+      armure:
+        repliques:
+          - { dit: "L'armure est bosselée, noircie, mais intacte. Sous le plastron, quelqu'un a gravé au couteau : « Gauvain de Castelroc a tenu la porte. Que personne ne l'oublie. »" }
+          - { qui: aveline, expression: tristesse, dit: "Aveline lit l'inscription trois fois. Elle ne dit rien. Elle la recopie dans son carnet, très lentement.", si: { flag: aveline-rencontree } }
+        effets: [{ objet: armure-de-corvin, flag: inscription-castelroc, quete: { id: q-armure-corvin, etape: retour }, xp: 1600 }]
+        fin: true
+  - id: sq-armure-retour
+    pnj: tolvan
+    titre: "Le retour de l'armure"
+    type: groupe
+    lieu: fort-aube-armurerie
+    decor: fort-aube-armurerie
+    quete: q-armure-corvin
+    rend_quete: true
+    disponible_si: { quete_etape: { q-armure-corvin: retour } }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: tolvan, dit: "Tolvan pose l'armure sur son mannequin et recule de trois pas. Il retire sa loupe. Il a les yeux mouillés. « Bienvenue chez toi, vieille amie. »" }
+          - { qui: tolvan, dit: "« Elle sera portée par le prochain maréchal du Mur. Et vous, prenez ce que vous voulez dans mon arrière-boutique. Enfin… pas tout. »" }
+        effets: [{ terminer_quete: q-armure-corvin, retirer_objet: armure-de-corvin, or: 700, xp: 1600, reputation: { couronne: 5 } }]
+        fin: true
+
+  # ── Un espion à Fort-Aube
+  - id: sq-espion-valka
+    pnj: valka
+    titre: "Un espion à Fort-Aube"
+    type: groupe
+    lieu: guilde-fort
+    decor: guilde
+    quete: q-espion
+    disponible_si: { flag: mur-tombe, pas_flag: espion-commence }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: valka, dit: "La Sergente Valka ferme la toile de la tente derrière vous. « Trois fois, la Légion a attaqué là où nos troupes venaient de partir. Trois fois. Quelqu'un les renseigne. »" }
+          - { qui: valka, dit: "« Une sentinelle a vu des signaux lumineux, la nuit, depuis la vieille tour de guet de l'est. Une tour vide depuis dix ans. Allez voir. Discrètement. »" }
+        choix:
+          - texte: "« Nous y serons cette nuit. »"
+            effets: [{ flag: espion-commence, quete: { id: q-espion, etape: tour } }]
+            aller: fin
+      fin:
+        fin: true
+  - id: sq-espion-tour
+    titre: "La tour de guet"
+    type: groupe
+    lieu: tour-de-guet
+    decor: tour-de-guet
+    quete: q-espion
+    disponible_si: { quete_etape: { q-espion: tour } }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "Minuit. En haut de la tour abandonnée, un homme en manteau de marchand agite une lanterne vers le nord. En bas, une patrouille de la Légion attend sa réponse." }
+        choix:
+          - texte: "Monter en silence et l'arrêter. (Agilité, difficulté 31)"
+            test: { carac: AGI, difficulte: 31, reussite: pris, echec: combat }
+          - texte: "S'occuper d'abord de la patrouille."
+            aller: combat
+      combat:
+        combat: { rencontre: mur-legion, victoire: pris, defaite: pris-dur }
+      pris-dur:
+        repliques:
+          - { dit: "La patrouille vous repousse et s'enfuit vers le nord. Mais l'espion, lui, a glissé dans l'escalier en voulant fuir. Il est là, la cheville tordue." }
+        suite: pris
+      pris:
+        repliques:
+          - { dit: "L'espion tremble. Dans sa poche, une lettre chiffrée et une bourse pleine de pièces d'obsidienne. Sur sa bague, le sceau de la Concorde de Qarzim." }
+          - { qui: nadja, dit: "Nadja lui prend la bague, la retourne entre ses doigts. « Bonsoir, cousin. » Elle sourit. « Tu vas beaucoup m'aider. »", si: { flag: nadja-rencontree } }
+        effets: [{ objet: lettre-de-l-espion, flag: espion-pris, quete: { id: q-espion, etape: retour }, xp: 1700 }]
+        fin: true
+  - id: sq-espion-retour
+    pnj: valka
+    titre: "Le rapport"
+    type: groupe
+    lieu: guilde-fort
+    decor: guilde
+    quete: q-espion
+    rend_quete: true
+    disponible_si: { quete_etape: { q-espion: retour } }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: valka, dit: "Valka lit la lettre déchiffrée, et ses oreilles se couchent. « La Concorde vend nos positions à la Légion. Contre de l'obsidienne. » Elle froisse la lettre. « Les marchands. Toujours les marchands. »" }
+          - { qui: valka, dit: "« Bon travail. La Guilde s'en souviendra. Moi aussi. »" }
+        effets: [{ terminer_quete: q-espion, retirer_objet: lettre-de-l-espion, or: 650, xp: 1700, points_guilde: 300, reputation: { concorde: -15, troupes: 5 } }]
+        fin: true
+
+  # ── La meute de braise
+  - id: sq-chiens-camp
+    titre: "La meute de braise"
+    type: groupe
+    lieu: camp-des-allies
+    decor: camp-des-allies
+    quete: q-chiens
+    disponible_si: { flag: mur-tombe, pas_flag: chiens-commence }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "Au camp des alliés, une sentinelle naine montre des traces de pattes brûlées dans la boue. « Trois sentinelles en une semaine. On n'entend rien. On trouve juste… des traces fumantes. »" }
+          - { dit: "Un vieil archer elfe, plus loin : « Des chiens des enfers. Ils chassent en meute, la nuit. Il faut les traquer jusque dans la plaine, ou ils reviendront. »" }
+        choix:
+          - texte: "Partir sur les traces de la meute."
+            effets: [{ flag: chiens-commence, quete: { id: q-chiens, etape: plaine } }]
+            aller: fin
+      fin:
+        fin: true
+  - id: sq-chiens-plaine
+    titre: "La chasse dans la plaine"
+    type: groupe
+    lieu: plaine-cendree
+    decor: plaine-cendree
+    quete: q-chiens
+    rend_quete: true
+    disponible_si: { quete_etape: { q-chiens: plaine } }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "Dans la plaine cendrée, les traces mènent à un vieux cratère. Des yeux de braise s'allument dans le noir. La meute vous attendait." }
+        choix:
+          - texte: "Affronter la meute."
+            aller: combat
+      combat:
+        combat: { rencontre: mur-chiens, victoire: fin, defaite: fin-dur }
+      fin-dur:
+        repliques:
+          - { dit: "Les chiens vous renversent… mais un hurlement de loup répond aux leurs, puis dix. Les guerriers Lunecroc du camp vous ont suivis. La meute s'enfuit pour de bon." }
+        suite: fin
+      fin:
+        repliques:
+          - { dit: "Au cratère, sous des cendres chaudes, les sentinelles disparues : vivantes, attachées, à moitié mortes de soif. Les chiens les gardaient pour plus tard." }
+        effets: [{ terminer_quete: q-chiens, or: 600, xp: 1800, reputation: { nains: 5, elfes: 5, ourvalis: 5 } }]
+        fin: true

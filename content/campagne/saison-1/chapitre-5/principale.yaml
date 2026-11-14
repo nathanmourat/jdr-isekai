@@ -1,0 +1,305 @@
+# Chapitre 5 — « La Guerre des Cendres » : quête principale (scènes de groupe, choix votés).
+# Les nœuds à « aiguillage » choisissent la suite tout seuls, selon les choix passés (alliances, réputation).
+scenes:
+  # ─────────────────────────────────────────────────────────────
+  - id: ch5-depart
+    pnj: edmund-iv
+    titre: "Le conseil de guerre"
+    type: groupe
+    lieu: chateau
+    decor: chateau-trone
+    quete: q-ch5-guerre
+    disponible_si: { flag: chapitre-4-fini, pas_flag: ch5-depart-fait, date_min: { annee: 1024, mois: 1, jour: 1 } }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "Germinal 1024. Douze ans depuis l'Appel. La salle du trône est devenue une salle de guerre : des cartes partout, des capitaines qui crient, et le roi Edmund au milieu, qui ne crie plus." }
+          - { qui: edmund-iv, dit: "« Depuis que vous avez lu les Registres sur la place, le peuple ne fait plus confiance au Temple. Mais il vous fait confiance, à vous. Les volontaires affluent. »", si: { flag: secret-revele } }
+          - { qui: edmund-iv, dit: "« Le Grand Prieur a tenu parole : plus aucun Appel. Le peuple ne sait rien. Je prie pour que ce silence ne nous coûte rien. »", si: { flag: appels-suspendus } }
+          - { qui: edmund-iv, dit: "« Le Grand Prieur prépare le nouvel Appel. Dans un an, des dizaines de héros. » Il se frotte les yeux. « J'espère que nous serons encore là pour les accueillir. »", si: { flag: nouvel-appel } }
+          - { qui: edmund-iv, dit: "« La Légion attaquera le Mur d'Aube au printemps prochain. Vous avez apporté les nains, les elfes, les dragons. Je vous demande maintenant d'aller là-bas, et de tenir. »" }
+          - { qui: seraphine, dit: "Séraphine pose la main sur la carte, au nord. « Et si Aldric est de l'autre côté du Mur… je veux être là quand il reviendra. Quel que soit le côté où il revient. »", si: { flag: seraphine-recrutee } }
+        choix:
+          - texte: "« Nous partons pour le Mur. Envoyez les troupes de nos domaines avec nous. »"
+            effets: [{ reputation: { troupes: 5 } }]
+            aller: route
+          - texte: "« Nous partons. Et que la Couronne s'occupe des réfugiés : le Mur ne doit pas être le seul à tenir. »"
+            effets: [{ reputation: { couronne: 5 } }]
+            aller: route
+      route:
+        repliques:
+          - { dit: "Trois semaines de route vers le nord. Les villages se vident à mesure que vous montez : des familles entières descendent vers le sud avec leurs charrettes. Elles vous saluent comme on salue des gens qu'on ne reverra pas." }
+        effets:
+          - { flag: ch5-depart-fait, or: 500, quete: { id: q-ch5-guerre, etape: fort }, journal: "Germinal 1024 : le roi Edmund envoie {groupe} défendre le Mur d'Aube." }
+        fin: true
+
+  # ─────────────────────────────────────────────────────────────
+  - id: ch5-fort
+    pnj: marechale
+    titre: "Fort-Aube"
+    type: groupe
+    lieu: fort-aube-etat-major
+    decor: fort-aube-etat-major
+    quete: q-ch5-guerre
+    disponible_si: { quete_etape: { q-ch5-guerre: fort } }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: marechale, dit: "La Maréchale Corvin ne lève pas les yeux de sa carte. « Les Appelés. On m'a dit que vous arriviez. On m'a dit beaucoup de choses. » Elle plante une figurine noire au-delà du Mur. « Quarante mille. Voilà ce qu'ils sont. Nous sommes dix mille. »" }
+          - { qui: marechale, dit: "« Les nains ont promis de renforcer les portes. Les elfes, de tenir les tours. Les dragons… » Elle a un petit rire. « Je n'ai jamais commandé de dragons. »" }
+          - { qui: bardrek, dit: "Une voix tonne depuis la porte. « Les nains de Karak-Dûm sont arrivés ! Trois mille marteaux ! Où sont les tonneaux ? »", si: { flag: nains-allies } }
+          - { qui: vaelor, dit: "Le capitaine Vaelor entre sans bruit. « Les archers d'Ithrael sont dans les tours. La Reine-Sève vous salue. »", si: { flag: elfes-allies } }
+          - { qui: ysoria, dit: "Ysoria s'assoit sur la table, sur la carte, sur les figurines. « Mes cousins dorment sur les collines. Quand vous voudrez du feu, appelez. » La Maréchale la regarde, longtemps. Puis elle sourit, pour la première fois.", si: { flag: ysoria-recrutee } }
+        choix:
+          - texte: "« Mettez-nous là où ce sera le plus dur. »"
+            effets: [{ reputation: { troupes: 5 } }]
+            aller: poste
+          - texte: "« Nous allons d'abord inspecter le Mur, pierre par pierre. » (Intelligence, difficulté 30)"
+            test: { carac: INT, difficulte: 30, reussite: faille, echec: poste }
+      faille:
+        repliques:
+          - { dit: "Au troisième jour d'inspection, vous trouvez une fissure dans les fondations, sous la tour centrale. Fraîche. Quelqu'un a creusé de l'autre côté." }
+          - { qui: marechale, dit: "La Maréchale pâlit. « Ils ne vont pas escalader le Mur. Ils vont le faire tomber. » Elle frappe la table. « Bien vu, Appelés. Nous aurons au moins le temps de reculer les réserves. »" }
+        effets: [{ flag: faille-reperee, reputation: { troupes: 10 } }]
+        suite: poste
+      poste:
+        repliques:
+          - { qui: marechale, dit: "« Le chemin de ronde, au-dessus de la porte centrale. C'est là qu'ils frapperont. C'est là que vous serez. » Elle vous regarde enfin. « Ils attaqueront au printemps. D'ici là, entraînez-vous. Mangez. Dormez. Et écrivez à ceux que vous aimez. »" }
+        effets:
+          - { xp: 1500, quete: { id: q-ch5-guerre, etape: chute }, journal: "{groupe} arrivent à Fort-Aube. La Maréchale Corvin leur confie le chemin de ronde de la porte centrale." }
+        fin: true
+
+  # ─────────────────────────────────────────────────────────────
+  - id: ch5-chute
+    titre: "La chute du Mur d'Aube"
+    type: groupe
+    lieu: chemin-de-ronde
+    decor: chemin-de-ronde
+    quete: q-ch5-guerre
+    disponible_si: { quete_etape: { q-ch5-guerre: chute }, date_min: { annee: 1025, mois: 2, jour: 1 } }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "Floréal 1025. À l'aube, l'horizon devient noir. Puis il avance. Quarante mille soldats, des chiens de flammes, des diablotins par nuées, et au milieu, poussés par des centaines de démons, des colosses d'obsidienne hauts comme des tours." }
+          - { qui: marechale, dit: "La Maréchale lève son épée. « Pour le royaume. Pour ceux qui dorment derrière nous. Tenez ! »" }
+          - { dit: "Le premier colosse arrive au pied du Mur, juste sous vous. Il lève ses poings." }
+        choix:
+          - texte: "Sauter sur le colosse avant qu'il frappe le Mur."
+            aller: colosse
+      colosse:
+        combat: { rencontre: chute-colosse, victoire: tremblement, defaite: tremblement }
+      tremblement:
+        repliques:
+          - { dit: "Le colosse s'effondre. Mais sous vos pieds, le sol gronde. Une explosion, très loin dessous, dans les fondations. La tour centrale vacille… et s'écroule, entraînant cent pas de Mur avec elle." }
+          - { dit: "Le Mur d'Aube, debout depuis six siècles, a une brèche. La Légion s'y engouffre en hurlant. À sa tête, un démon aux cornes immenses, épée entourée de flammes violettes. Vous le reconnaissez." }
+          - { qui: narrateur, dit: "« Les Appelés ! » Vorthak éclate de rire. « Douze ans que j'attends ça ! À la Fête des Lanternes, vous étiez des enfants. Montrez-moi ce que vous êtes devenus ! »" }
+        choix:
+          - texte: "Barrer la brèche à Vorthak."
+            aller: vorthak
+      vorthak:
+        combat: { rencontre: chute-vorthak, victoire: vorthak-vaincu, defaite: vorthak-fuite }
+      vorthak-fuite:
+        repliques:
+          - { dit: "Vorthak vous renverse et passe… mais trois dragons tombent du ciel sur la brèche dans un torrent de feu. Le seigneur de guerre recule, brûlé, en jurant." }
+        suite: allies
+      vorthak-vaincu:
+        repliques:
+          - { dit: "Vorthak tombe à genoux dans les décombres. Il rit encore, avec du sang noir aux lèvres. « Le Souverain… avait raison… vous êtes ses meilleurs enfants. » Il ne se relève pas." }
+        effets: [{ flag: vorthak-mort }]
+        suite: allies
+      allies:
+        repliques:
+          - { dit: "La bataille dure jusqu'au soir. Ce qui la décide, ce sont ceux qui sont venus pour vous." }
+          - { dit: "Les nains de Karak-Dûm referment la brèche avec un mur de boucliers qui ne recule pas d'un pouce.", si: { flag: nains-allies } }
+          - { dit: "Les archers d'Ithrael tirent depuis les tours, si vite que le ciel se couvre de flèches.", si: { flag: elfes-allies } }
+          - { dit: "Les dragons de l'Archipel brûlent les arrières de la Légion. Ysoria, en forme de dragonne d'or, plonge sur les colosses.", si: { flag: dragons-allies } }
+          - { dit: "Les guerriers Lunecroc chargent sur le flanc, en hurlant à la lune, Kaya en tête.", si: { reputation_min: { ourvalis: 20 } } }
+        aiguillage:
+          - { si: { reputation_min: { troupes: 40 } }, aller: troupes-tiennent }
+        suite: troupes-reculent
+      troupes-tiennent:
+        repliques:
+          - { dit: "Les soldats de vos domaines tiennent la porte centrale. Des paysans qui ont appris à tenir une lance sur vos terres, et qui ne lâchent rien." }
+          - { qui: marechale, dit: "La Maréchale Corvin, blessée au bras, s'appuie sur votre épaule. « Vos gens… Je n'ai jamais vu des miliciens tenir comme ça. » Elle sourit, épuisée. « Vous les avez bien formés. »" }
+        suite: elfes
+      troupes-reculent:
+        repliques:
+          - { dit: "La porte centrale cède. La Maréchale Corvin se jette dans l'ouverture avec sa garde, pour donner aux autres le temps de reculer." }
+          - { qui: marechale, dit: "« Tenez la seconde ligne ! » C'est la dernière chose qu'elle dit. Quand vous reprenez la porte, une heure plus tard, vous la trouvez sous ses soldats, l'épée toujours à la main." }
+        effets: [{ pnj_mort: marechale }]
+        suite: elfes
+      elfes:
+        aiguillage:
+          - { si: { reputation_min: { elfes: 35 } }, aller: vaelor-vit }
+        suite: vaelor-meurt
+      vaelor-vit:
+        repliques:
+          - { qui: vaelor, dit: "Vaelor descend de sa tour, l'arc vide, sans une égratignure. « Mes archers vous ont couverts toute la journée. La Reine sera fière. »", si: { flag: elfes-allies } }
+        suite: soir
+      vaelor-meurt:
+        repliques:
+          - { dit: "La tour des archers elfes est tombée avec le Mur. Vaelor est resté à son poste jusqu'au bout, pour couvrir la retraite de ses hommes. On retrouve son arc dans les décombres. Pas lui." }
+        effets: [{ pnj_mort: vaelor }]
+        suite: soir
+      soir:
+        repliques:
+          - { dit: "Au soir, la Légion recule au-delà de la plaine. Le Mur a une brèche, mais le royaume tient. Pour combien de temps, personne ne le sait." }
+          - { qui: elianne, expression: tristesse, dit: "Elianne soigne les blessés toute la nuit, les mains couvertes de sang jusqu'aux coudes. À l'aube, elle s'endort assise contre un mur, une prière à moitié dite sur les lèvres.", si: { flag: elianne-recrutee } }
+        effets:
+          - { flag: mur-tombe, xp: 3000, quete: { id: q-ch5-guerre, etape: rang-s }, journal: "Floréal 1025 : le Mur d'Aube tombe. {groupe} et leurs alliés repoussent la Légion Cendrée au prix de lourdes pertes." }
+        fin: true
+
+  # ─────────────────────────────────────────────────────────────
+  - id: ch5-rang-s
+    titre: "L'épreuve du rang S"
+    type: groupe
+    lieu: arene
+    decor: arene
+    quete: q-ch5-guerre
+    disponible_si: { quete_etape: { q-ch5-guerre: rang-s }, date_min: { annee: 1026, mois: 1, jour: 1 } }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "Germinal 1026. L'Arène de Lysmont est pleine à craquer. Il n'y a pas eu d'épreuve du rang S depuis trente ans. La dernière s'est mal terminée." }
+          - { qui: rowena, dit: "Dame Rowena se lève dans la tribune. « Le rang S n'est pas un rang. C'est une promesse : celui qui le porte se battra jusqu'au bout, pour tout le monde. » Elle regarde la foule. « La Guerre a besoin de promesses. »" }
+          - { qui: kaya, expression: joie, dit: "Kaya sautille d'un pied sur l'autre. « Ça y est. Ça y est. Mon père aurait… » Elle s'arrête, se mord la lèvre. « Il serait là, dans les tribunes, à hurler plus fort que tout le monde. »", si: { flag: kaya-recrutee } }
+          - { dit: "Une porte s'ouvre au fond de l'arène. Un guerrier en armure d'argent s'avance, sans blason, le visage caché par un masque lisse. Le Champion. Il salue, une seule fois." }
+        choix:
+          - texte: "Saluer le Champion, et entrer dans l'arène."
+            aller: combat
+      combat:
+        combat: { rencontre: epreuve-rang-s, victoire: victoire, defaite: defaite }
+      defaite:
+        repliques:
+          - { dit: "Le Champion vous désarme une dernière fois. Puis il tend la main pour vous relever, et retire son masque. C'est un vieil homme, aux yeux très doux." }
+          - { qui: rowena, dit: "« L'épreuve n'a jamais été de gagner », dit Rowena dans le silence. « C'était de vous relever, encore et encore. Vous vous êtes relevés dix fois. » Elle sourit. « Rang S. »" }
+        suite: rang
+      victoire:
+        repliques:
+          - { dit: "Le Champion pose un genou à terre. Il retire son masque : c'est un vieil homme aux yeux très doux, qui sourit. « Enfin. Trente ans que j'attendais quelqu'un pour me battre. Je vais pouvoir prendre ma retraite. »" }
+        suite: rang
+      rang:
+        repliques:
+          - { dit: "Rowena descend dans l'arène et accroche à votre poitrine une broche d'or noir : le rang S. La foule hurle si fort que les oiseaux s'envolent de tout Lysmont." }
+          - { qui: kaya, dit: "Kaya reçoit la sienne en tremblant. Elle la regarde, longtemps. Puis elle hurle à la lune, en plein jour, et dix mille personnes hurlent avec elle.", si: { flag: kaya-recrutee } }
+        effets:
+          - { flag: rang-s-obtenu, points_guilde: 3000, xp: 2500, objet: insigne-rang-s, quete: { id: q-ch5-guerre, etape: aldric }, journal: "Germinal 1026 : {groupe} passent l'épreuve du rang S à l'Arène de Lysmont." }
+        fin: true
+
+  # ─────────────────────────────────────────────────────────────
+  - id: ch5-aldric
+    titre: "Le Prince Noir"
+    type: groupe
+    lieu: valgrane-ruines
+    decor: valgrane-ruines
+    quete: q-ch5-guerre
+    disponible_si: { quete_etape: { q-ch5-guerre: aldric }, date_min: { annee: 1026, mois: 6, jour: 1 } }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "Ardent 1026. Les éclaireurs l'ont vu trois fois : un chevalier en armure noire, cape bleue, qui erre dans les ruines de Valgrane, la nuit. Cette nuit, il vous attend sur la place, au milieu des cendres." }
+          - { qui: aldric, dit: "« Petite sœur. » Sa voix est celle d'un homme, avec un écho, comme si un autre parlait en même temps. « Tu as grandi. » Il lève l'épée des princes d'Aubeclaire, devenue noire. « Le Souverain m'a montré la vérité. L'Ordre. Les Appels. Notre père qui savait tout. »", si: { flag: seraphine-recrutee } }
+          - { qui: aldric, dit: "« Les Appelés. » Sa voix est celle d'un homme, avec un écho, comme si un autre parlait en même temps. Il lève l'épée des princes d'Aubeclaire, devenue noire. « Le Souverain m'a montré la vérité. L'Ordre. Les Appels. Mon père qui savait tout. »", si: { pas_flag: seraphine-recrutee } }
+          - { qui: aldric, dit: "« Le Souverain veut vous voir. Il dit que vous êtes ses enfants. Venez avec moi, et la guerre s'arrêtera ce soir. »" }
+        choix:
+          - texte: "« Nous viendrons. Mais pas en prisonniers. »"
+            aller: combat
+          - texte: "« Aldric, souviens-toi de qui tu es ! » (Esprit, difficulté 31)"
+            test: { carac: ESP, difficulte: 31, reussite: souvenir, echec: combat }
+      souvenir:
+        repliques:
+          - { qui: aldric, dit: "Le prince se fige. La lueur violette vacille dans ses yeux. « Je… Séraphine… les pommiers du château… » Puis l'écho reprend le dessus. « TAIS-TOI. »" }
+        effets: [{ flag: aldric-ebranle }]
+        suite: combat
+      combat:
+        combat: { rencontre: aldric-combat, victoire: vaincu, defaite: retraite }
+      retraite:
+        repliques:
+          - { dit: "Aldric vous jette dans les cendres. Il lève son épée… et s'arrête, la main tremblante. « Pas… comme ça. » Il disparaît vers le nord, en titubant." }
+          - { qui: seraphine, expression: tristesse, dit: "Séraphine regarde l'endroit où il a disparu. « Il s'est arrêté. Vous avez vu ? Il s'est arrêté. »", si: { flag: seraphine-recrutee } }
+        effets: [{ flag: aldric-enfui }]
+        suite: apres
+      vaincu:
+        repliques:
+          - { dit: "Aldric tombe à genoux. Son épée noire se brise en deux sur les pavés. La lueur violette s'éteint dans ses yeux, et pendant une seconde, c'est un jeune homme perdu qui vous regarde." }
+        choix:
+          - texte: "Le ramener à Lysmont, enchaîné, pour que les prêtres tentent de le guérir."
+            effets: [{ flag: [aldric-vivant, aldric-captif], reputation: { couronne: 10 } }]
+            aller: captif
+          - texte: "Le laisser partir. « Retourne vers ton Souverain, et dis-lui que nous arrivons. »"
+            effets: [{ flag: [aldric-vivant, aldric-libre] }]
+            aller: libre
+          - texte: "L'achever. Il a choisi les Cendres."
+            effets: [{ flag: aldric-mort, pnj_mort: aldric, affinite: { seraphine: -30 } }]
+            aller: mort
+      captif:
+        repliques:
+          - { qui: aldric, dit: "Pendant le voyage, Aldric parle peu. Une nuit, il vous dit, très bas : « Le Souverain… Orvan… Il était comme vous. Un Appelé. Le premier. Ils l'ont abandonné de l'autre côté du Voile. Il veut… que vous compreniez. »" }
+          - { qui: seraphine, dit: "Séraphine dort à côté de sa cellule, toutes les nuits. Elle lui lit les histoires que leur mère leur lisait.", si: { flag: seraphine-recrutee } }
+        effets: [{ flag: orvan-premier-appele }]
+        suite: apres
+      libre:
+        repliques:
+          - { qui: aldric, dit: "Aldric se relève, ramasse les deux moitiés de son épée. « Il sait déjà que vous arrivez. » Il hésite. « Orvan était un Appelé. Le premier. L'Ordre l'a abandonné de l'autre côté du Voile. Demandez-leur. » Il disparaît dans la nuit." }
+        effets: [{ flag: orvan-premier-appele }]
+        suite: apres
+      mort:
+        repliques:
+          - { dit: "La lame tombe. Le prince Aldric d'Aubeclaire meurt dans les ruines de Valgrane, là où tout a commencé pour tant de gens." }
+          - { qui: seraphine, expression: colere, dit: "Séraphine ne crie pas. Elle ne pleure pas. Elle ramasse la cape bleue, la plie avec soin, et s'en va sans un mot.", si: { flag: seraphine-recrutee } }
+        suite: apres
+      apres:
+        effets:
+          - { xp: 2500, quete: { id: q-ch5-guerre, etape: contre-offensive }, journal: "Ardent 1026 : à Valgrane, {groupe} affrontent le prince Aldric, corrompu par les Cendres." }
+        fin: true
+
+  # ─────────────────────────────────────────────────────────────
+  - id: ch5-contre-offensive
+    titre: "La contre-offensive"
+    type: groupe
+    lieu: plaine-cendree
+    decor: plaine-cendree
+    quete: q-ch5-guerre
+    disponible_si: { quete_etape: { q-ch5-guerre: contre-offensive }, date_min: { annee: 1026, mois: 12, jour: 1 } }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "Aurore 1026, la fin de l'hiver. Pour la première fois en six siècles, une armée du royaume franchit le Mur d'Aube vers le nord. Sous vos bottes, la plaine cendrée craque comme de la neige gelée." }
+          - { qui: marechale, dit: "La Maréchale Corvin, le bras en écharpe, chevauche à côté de vous. « Six cents ans qu'on attend derrière ce Mur. Aujourd'hui, c'est eux qui attendent. »", si: { pas_flag: mort:marechale } }
+          - { qui: bardrek, dit: "Bardrek, sur un bélier de guerre, chante une chanson naine de onze couplets, très faux. Personne n'ose l'arrêter.", si: { flag: nains-allies } }
+          - { dit: "Au milieu de la plaine, un camp de la Légion. Des tentes noires, des cages, et un capitaine qui hurle des ordres." }
+        choix:
+          - texte: "Charger le camp."
+            aller: camp
+      camp:
+        combat: { rencontre: contre-offensive, victoire: cages, defaite: cages-dur }
+      cages-dur:
+        repliques:
+          - { dit: "Le capitaine vous repousse, mais la charge des alliés balaie le camp derrière vous. Quand la poussière retombe, la Légion a fui." }
+        suite: cages
+      cages:
+        repliques:
+          - { dit: "Dans les cages, des prisonniers : des soldats du royaume, des elfes, des Ourvalis. Et dans une caisse marquée du sceau de la Concorde, enveloppé de couvertures brûlées, un œuf rouge et or, chaud comme une forge." }
+          - { qui: ysoria, expression: joie, dit: "Ysoria tombe à genoux devant la caisse. Elle ne dit rien. Elle pose la joue contre l'œuf, et ferme les yeux. Dans l'œuf, quelque chose cogne doucement. Deux fois.", si: { flag: ysoria-recrutee } }
+          - { qui: nadja, dit: "Nadja, derrière, recopie le sceau de la Concorde dans son Grand Livre rouge, avec un sourire de loup. « Pris la main dans le sac. »", si: { flag: nadja-rencontree } }
+          - { dit: "Au-delà du camp, au bout de la plaine, se dresse une porte noire, haute comme une montagne, enchaînée à un colosse d'obsidienne. La porte des Terres Cendrées." }
+        effets: [{ flag: [oeuf-repris, concorde-prise] }]
+        choix:
+          - texte: "Attaquer le Gardien de la Brèche."
+            aller: gardien
+      gardien:
+        combat: { rencontre: breche-gardien, victoire: porte, defaite: porte-dur }
+      porte-dur:
+        repliques:
+          - { dit: "Le Gardien vous écrase… puis s'immobilise. Les dragons ont fait fondre ses chaînes. Il s'écroule de lui-même, et la porte s'entrouvre." }
+        suite: porte
+      porte:
+        repliques:
+          - { dit: "La porte des Terres Cendrées s'ouvre en grinçant. Derrière, un ciel couleur de braise, des montagnes noires, et très loin, une tour plus haute que toutes les autres : la Citadelle d'Obsidienne." }
+          - { qui: ilysse, dit: "Ilyssë regarde le ciel, les yeux brillants. « Le Voile est presque transparent, ici. Je vois… des choses de l'autre côté. » Elle frissonne. « Orvan nous attend. Et il sait que nous venons. »", si: { flag: ilysse-recrutee } }
+          - { qui: morra, dit: "Morra serre sa faux. « Lyss est dans cette tour. » Elle sourit, féroce. « J'arrive, petite sœur. »", si: { flag: morra-recrutee } }
+          - { dit: "La guerre n'est pas finie. Elle ne fait que changer de côté." }
+        effets:
+          - { flag: terres-cendrees-ouvertes, terminer_quete: q-ch5-guerre, xp: 3000, journal: "Aurore 1026 : la contre-offensive de {groupe} ouvre la porte des Terres Cendrées." }
+          - { fin_chapitre: 5 }
+        fin: true

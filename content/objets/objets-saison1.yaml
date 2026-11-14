@@ -32,3 +32,8 @@ objets:
   - { id: registre-des-appels, nom: "Estampage du Registre des Appels", description: "Une copie, frottée au charbon, des tables de pierre où les nains ont noté chaque Appel depuis l'an 430… et ce qu'il a coûté.", type: quete }
   - { id: oeuf-de-braise, nom: "Œuf de braise", description: "Un œuf de dragon, gros comme une tête, brûlant comme une forge. Il bat doucement.", type: quete }
   - { id: carte-marine, nom: "Carte marine de Corsa", description: "La seule carte qui montre le chemin du Nid des Wyrms entre les récifs.", type: quete }
+  # ── Chapitre 5 : le Mur d'Aube
+  - { id: insigne-rang-s, nom: "Broche du rang S", description: "Une broche d'or noir en forme d'étoile à sept branches. Il n'en existe que douze au monde.", type: quete }
+  - { id: cle-de-braise, nom: "Clé de braise", description: "Une clé forgée par Durna Martelfeu dans le souffle d'Ysoria. Elle est toujours chaude. Elle ouvre les chaînes d'obsidienne.", type: quete }
+  - { id: armure-de-corvin, nom: "Armure du premier maréchal", description: "Une armure bosselée aux armes du premier maréchal du Mur. Tolvan dit qu'elle porte chance.", type: quete }
+  - { id: lettre-de-l-espion, nom: "Lettre chiffrée", description: "Une lettre codée trouvée sur l'espion de la tour de guet. Les chiffres ressemblent à ceux de la Concorde.", type: quete }

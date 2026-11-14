@@ -59,7 +59,7 @@ if (graine === 'equipement') {
 }
 if (graine === 'contrats') scenarioContrats();
 if (graine !== 'contrats') for (const s of ['ch1-appel', 'ch1-examen', 'sq-tournoi', 'sq-loups', 'ch1-crypte', 'sq-tanneurs', 'ch1-lanternes', 'ch1-serment']) jouerSceneGroupe(c, r, s);
-// graine « saison » : les chapitres 2, 3 et 4 en plus (Marche des Sables, Sylvenoire, Grisfer et l'Archipel)
+// graine « saison » : les chapitres 2 à 5 en plus (Marche des Sables, Sylvenoire, Grisfer et l'Archipel, Mur d'Aube)
 if (graine === 'saison') {
   finirTempsLibre(c, r);
   jouer(c, r, { type: 'chapitre_suivant', joueur: 'j1' });
@@ -75,6 +75,11 @@ if (graine === 'saison') {
   jouer(c, r, { type: 'chapitre_suivant', joueur: 'j1' });
   dormirHistoire(c, r);
   for (const s of ['ch4-depart', 'ch4-karak', 'sq-forge-retour', 'ch4-marches', 'ch4-port', 'sq-phare-retour', 'ch4-nid', 'ch4-deserteur', 'ch4-conseil']) jouerSceneGroupe(c, r, s);
+  // chapitre 5 : le Mur d'Aube (aiguillages selon la réputation)
+  finirTempsLibre(c, r);
+  jouer(c, r, { type: 'chapitre_suivant', joueur: 'j1' });
+  dormirHistoire(c, r);
+  for (const s of ['ch5-depart', 'ch5-fort', 'sq-convoi-retour', 'ch5-chute', 'sq-espion-retour', 'ch5-rang-s', 'ch5-aldric', 'sq-chiens-plaine', 'ch5-contre-offensive']) jouerSceneGroupe(c, r, s);
 }
 finirTempsLibre(c, r);
 

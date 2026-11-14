@@ -366,6 +366,12 @@ export const zNoeud = z.object({
   effets: z.array(zConsequence).default([]),
   choix: z.array(zChoix).default([]),
   suite: z.string().optional(),
+  /**
+   * Aiguillage automatique (sans vote) : au moment de « Continuer », le groupe va au premier nœud dont la condition
+   * est vraie pour au moins un héros de la scène ; sinon, à `suite` (obligatoire avec un aiguillage).
+   * Sert aux conséquences des choix passés (morts de PNJ, fins de saison…).
+   */
+  aiguillage: z.array(z.object({ si: zCondition, aller: z.string() })).default([]),
   combat: z.object({ rencontre: z.string(), victoire: z.string(), defaite: z.string() }).optional(),
   /** `abandon` : nœud suivant si le groupe renonce après 3 défaites (porte de secours). */
   donjon: z.object({ id: z.string(), sortie: z.string(), abandon: z.string().optional() }).optional(),

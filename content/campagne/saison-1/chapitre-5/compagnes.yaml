@@ -1,0 +1,240 @@
+# Chapitre 5 — scènes des compagnes : la dernière étape de leur quête personnelle (palier « Engagée » possible ensuite).
+scenes:
+  - id: av-rehabilitation
+    pnj: aveline
+    titre: "Aveline — Gauvain de Castelroc"
+    type: individuel
+    lieu: fort-aube-porte
+    decor: fort-aube-porte
+    quete: q-aveline
+    disponible_si: { quete_etape: { q-aveline: rehabilitation }, flag: mur-tombe, affinite_min: { aveline: 60 } }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: aveline, dit: "Une lettre est arrivée de Lysmont, scellée du sceau royal. Aveline la tient sans l'ouvrir depuis une heure. « Lis-la, toi. Je n'y arrive pas. »" }
+          - { dit: "« Par décision du roi Edmund IV, le chevalier Gauvain de Castelroc, qui tint la porte nord de Valgrane en l'an 1003 et sauva trois mille âmes, est lavé de toute accusation. Son nom sera gravé sur le Mur d'Aube, parmi ceux de ses défenseurs. »" }
+          - { qui: aveline, dit: "« Le peuple connaît la vérité. Il l'a exigé. »", si: { flag: secret-revele } }
+          - { qui: aveline, dit: "« Le roi l'a fait sans dire pourquoi. Je sais pourquoi. Ça me suffit. »", si: { flag: secret-garde } }
+        choix:
+          - texte: "La prendre dans vos bras."
+            effets: [{ affinite: { aveline: 10 } }]
+            aller: fin
+          - texte: "« Ton père serait fier de toi, Aveline. »"
+            effets: [{ affinite: { aveline: 8 } }]
+            aller: fin
+      fin:
+        repliques:
+          - { qui: aveline, expression: joie, dit: "Elle pleure, puis elle rit, puis elle pleure encore. « Vingt-deux ans. » Elle s'essuie les yeux avec sa manche, comme une enfant. « Je n'ai plus rien à prouver. » Elle vous regarde. « Alors maintenant… je peux choisir ce que je veux vraiment. »" }
+        effets: [{ terminer_quete: q-aveline, flag: castelroc-rehabilite, xp: 1500 }]
+        fin: true
+
+  - id: el-choix
+    pnj: elianne
+    titre: "Elianne — La foi et la vérité"
+    type: individuel
+    lieu: guilde-fort
+    decor: guilde
+    quete: q-elianne
+    disponible_si: { quete_etape: { q-elianne: choix }, flag: mur-tombe, affinite_min: { elianne: 60 } }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: elianne, dit: "Elianne a soigné quatre cents blessés depuis la chute du Mur. Ce soir, une lettre de l'Ordre lui demande de rentrer à Lysmont. « On me propose de devenir prieure. Moi. » Elle rit, sans joie." }
+          - { qui: elianne, dit: "« Je pourrais changer l'Ordre de l'intérieur. Ou le quitter, et soigner les gens ici, sans voile, sans mensonges. » Elle vous regarde. « Qu'est-ce que tu ferais ? »" }
+        choix:
+          - texte: "« Deviens prieure. Fais de l'Ordre ce qu'il aurait dû être. »"
+            effets: [{ affinite: { elianne: 8 }, flag: elianne-prieure }]
+            aller: prieure
+          - texte: "« Quitte-le. Ta lumière n'a pas besoin d'eux. »"
+            effets: [{ affinite: { elianne: 8 }, flag: elianne-libre }]
+            aller: libre
+      prieure:
+        repliques:
+          - { qui: elianne, dit: "« Prieure. » Elle pèse le mot. « Ils vont détester ça. Une prieure qui dit la vérité. » Elle sourit pour de bon. « Après la guerre. Pas avant. Ma place est ici. »" }
+        suite: fin
+      libre:
+        repliques:
+          - { qui: elianne, dit: "Elle déchire la lettre, lentement, en tout petits morceaux, et les jette au vent du nord. « Voilà. » Elle respire. « Je me sens légère. Comme si j'avais posé un sac que je portais depuis l'enfance. »" }
+        suite: fin
+      fin:
+        repliques:
+          - { qui: elianne, dit: "« Merci d'avoir cherché la vérité avec moi. Elle faisait mal. Elle fait toujours mal. Mais elle est à nous, maintenant. »" }
+        effets: [{ terminer_quete: q-elianne, xp: 1500 }]
+        fin: true
+
+  - id: il-recoudre
+    pnj: ilysse
+    titre: "Ilyssë — Recoudre le Voile"
+    type: individuel
+    lieu: camp-des-allies
+    decor: camp-des-allies
+    quete: q-ilysse
+    disponible_si: { quete_etape: { q-ilysse: recoudre }, flag: mur-tombe, affinite_min: { ilysse: 60 } }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: ilysse, dit: "Ilyssë n'a pas dormi depuis trois jours. Autour d'elle, des pages couvertes de schémas, de fils dessinés, de cercles. « J'ai trouvé. » Elle a les yeux rouges et la voix qui tremble. « J'ai trouvé comment on recoud le Voile. »" }
+          - { qui: ilysse, dit: "« Il faut quelqu'un qui vient de l'autre côté. Quelqu'un dont le passage a déchiré le Voile. Il tient le fil. Et il faut le cœur du Voile : là où la première déchirure a été faite. »" }
+          - { qui: ilysse, dit: "Elle pose le doigt sur la carte, au nord. « La Citadelle d'Obsidienne. Orvan s'y est installé exactement au-dessus. Évidemment. »" }
+        choix:
+          - texte: "« Alors nous irons recoudre le Voile dans la Citadelle. »"
+            effets: [{ affinite: { ilysse: 8 } }]
+            aller: fin
+          - texte: "« Et si on recoud le Voile… on ne pourra plus jamais rentrer chez nous ? »"
+            effets: [{ affinite: { ilysse: 6 } }]
+            aller: rentrer
+      rentrer:
+        repliques:
+          - { qui: ilysse, dit: "Ilyssë se tait longtemps. « Avant de le recoudre, on pourrait l'ouvrir une dernière fois. Proprement. Une porte, juste le temps de passer. » Elle détourne les yeux. « Si certains d'entre vous veulent partir. »" }
+        effets: [{ flag: porte-du-retour-possible }]
+        suite: fin
+      fin:
+        repliques:
+          - { qui: ilysse, expression: joie, dit: "Elle range ses pages, et pour la première fois depuis trois jours, elle s'allonge dans l'herbe. « Cinquante ans de bannissement pour ça. » Elle sourit au ciel. « Ça valait le coup. »" }
+        effets: [{ terminer_quete: q-ilysse, flag: voile-recousable, xp: 1500 }]
+        fin: true
+
+  - id: ky-rang-s
+    pnj: kaya
+    titre: "Kaya — Le hurlement des ancêtres"
+    type: individuel
+    lieu: fort-aube-cantine
+    decor: fort-aube-cantine
+    quete: q-kaya
+    disponible_si: { quete_etape: { q-kaya: rang-s }, flag: rang-s-obtenu, affinite_min: { kaya: 60 } }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: kaya, dit: "Kaya porte sa broche du rang S sur son cœur, et elle la touche toutes les cinq minutes pour vérifier qu'elle est toujours là. « La tribu a écrit. Sorha dit que les ancêtres ont hurlé toute la nuit de l'épreuve. Les vieux ont pleuré. »" }
+          - { qui: kaya, dit: "Elle se tait. Ses oreilles se baissent. « J'ai eu ce que je voulais. Depuis que je suis petite. Et maintenant… » Elle vous regarde. « Maintenant, je ne veux plus que ça. Je te veux, toi, dans ma meute. Pour toujours. »" }
+        choix:
+          - texte: "« Je suis déjà dans ta meute, Kaya. »"
+            effets: [{ affinite: { kaya: 10 } }]
+            aller: fin
+          - texte: "Hurler à la lune avec elle."
+            effets: [{ affinite: { kaya: 10 } }]
+            aller: fin
+      fin:
+        repliques:
+          - { qui: kaya, expression: joie, dit: "Kaya hurle. Vous hurlez. Toute la Gamelle s'arrête, puis les soldats Lunecroc reprennent, puis tout le camp. Mère Brisac lève les yeux au ciel. Elle sourit." }
+        effets: [{ terminer_quete: q-kaya, flag: kaya-rang-s, xp: 1500 }]
+        fin: true
+
+  - id: nd-liberte
+    pnj: nadja
+    titre: "Nadja — Le prix de la liberté"
+    type: individuel
+    lieu: fort-aube-cantine
+    decor: fort-aube-cantine
+    quete: q-nadja
+    disponible_si: { quete_etape: { q-nadja: liberte }, flag: concorde-prise, affinite_min: { nadja: 60 } }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: nadja, dit: "Nadja pose le Grand Livre rouge sur la table de la Gamelle. « Trente ans de trafic. Les caisses du camp. Le sceau. Les lettres. Tout y est. » Elle tapote la couverture. « Envoyé en copie au roi, à la Reine-Sève et à Bardrek. Ce matin. »" }
+          - { qui: nadja, dit: "« La Concorde est finie. Le Prévôt Hassad a fui vers les îles du Levant. Et devine quoi ? » Elle sort un parchemin. « Ma dette a disparu avec eux. Plus personne pour la réclamer. »" }
+        choix:
+          - texte: "« Tu es libre, Nadja. »"
+            effets: [{ affinite: { nadja: 10 } }]
+            aller: fin
+          - texte: "« Et maintenant, que fait une marchande libre ? »"
+            effets: [{ affinite: { nadja: 8 } }]
+            aller: suite
+      suite:
+        repliques:
+          - { qui: nadja, dit: "« Elle ouvre sa propre maison de commerce. Honnête. Enfin… honnête à quatre-vingts pour cent. » Elle sourit. « Et elle cherche un associé. Pour la vie. Les contrats à vie, c'est très rentable. »" }
+        suite: fin
+      fin:
+        repliques:
+          - { qui: nadja, expression: joie, dit: "Pour la première fois, Nadja ne compte rien. Elle reste assise, les mains à plat sur le Grand Livre, et elle respire. « Libre. C'est un drôle de mot. Je vais m'y habituer. »" }
+        effets: [{ terminer_quete: q-nadja, flag: concorde-tombee, reputation: { concorde: -30 }, xp: 1500 }]
+        fin: true
+
+  - id: sr-aldric
+    pnj: seraphine
+    titre: "Séraphine — Mon frère"
+    type: individuel
+    lieu: fort-aube-etat-major
+    decor: fort-aube-etat-major
+    quete: q-seraphine
+    disponible_si: { quete_etape: { q-seraphine: aldric }, quete_terminee: q-ch5-guerre, affinite_min: { seraphine: 60 } }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: seraphine, dit: "Une lettre de Lysmont : les prêtres ont soigné Aldric. La lueur violette est partie. Il dort beaucoup, il parle peu. Le premier mot qu'il a dit, c'est son prénom à elle. « Séraphine. »", si: { flag: aldric-captif } }
+          - { qui: seraphine, dit: "Séraphine relit la lettre en souriant et en pleurant en même temps. « Il est vivant. Il est revenu. Pas entier. Mais revenu. »", si: { flag: aldric-captif } }
+          - { qui: seraphine, dit: "Séraphine regarde vers le nord. « Il est quelque part là-bas. Il s'est arrêté, à Valgrane. Il s'est arrêté deux fois. » Elle serre la cape bleue. « Il reviendra. Je le sais. »", si: { flag: aldric-libre } }
+          - { qui: seraphine, dit: "Séraphine regarde vers le nord. « Il est quelque part là-bas. Il s'est arrêté, à Valgrane. » Elle serre les poings. « La prochaine fois, je le ramènerai. »", si: { flag: aldric-enfui } }
+          - { qui: seraphine, expression: tristesse, dit: "Séraphine a enterré la cape bleue de son frère sous un pommier, derrière le Mur. Elle y vient tous les soirs. Ce soir, elle vous a demandé de venir.", si: { flag: aldric-mort } }
+          - { qui: seraphine, dit: "« Je voulais une Couronne qui ne traite pas les héros comme des armes. » Elle vous prend la main. « Aldric était une arme, pour Orvan. Je ne laisserai plus jamais personne faire ça. À personne. »" }
+        choix:
+          - texte: "« Alors construisons ce royaume-là, ensemble. »"
+            effets: [{ affinite: { seraphine: 10 } }]
+            aller: fin
+          - texte: "La serrer contre vous, sans rien dire."
+            effets: [{ affinite: { seraphine: 8 } }]
+            aller: fin
+      fin:
+        repliques:
+          - { qui: seraphine, dit: "« Quand tout ça sera fini, mon père voudra me marier à un prince. » Elle rit. « Il va être très déçu. »" }
+        effets: [{ terminer_quete: q-seraphine, xp: 1500 }]
+        fin: true
+
+  - id: ys-eclosion
+    pnj: ysoria
+    titre: "Ysoria — L'éclosion"
+    type: individuel
+    lieu: fort-aube-cantine
+    decor: fort-aube-cantine
+    quete: q-ysoria
+    disponible_si: { quete_etape: { q-ysoria: eclosion }, flag: oeuf-repris, affinite_min: { ysoria: 60 } }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: ysoria, dit: "Ysoria a couvé l'œuf dans la cheminée de la Gamelle pendant six semaines. Mère Brisac a protesté, puis abandonné. Cette nuit, la coquille craque." }
+          - { dit: "Une petite tête rouge et or sort de l'œuf. Deux yeux de braise, immenses. Le dragonneau éternue une flamme minuscule, regarde Ysoria… puis vous. Et rampe dans vos mains." }
+          - { qui: ysoria, expression: joie, dit: "Ysoria a les larmes aux yeux, ce qui fait de la vapeur. « Il t'a choisi en deuxième. Chez les dragons, c'est… c'est la famille. » Elle renifle. « Maintenant, il faut décider. Les dragons doivent-ils revenir dans le monde ? Ou retourner dormir dans l'Archipel ? »" }
+        choix:
+          - texte: "« Qu'ils reviennent. Le monde a besoin de vous. »"
+            effets: [{ affinite: { ysoria: 10 }, flag: dragons-reviennent, reputation: { dragons: 15 } }]
+            aller: reviennent
+          - texte: "« Qu'ils restent dans l'Archipel, en paix. Le monde ne vous mérite pas encore. »"
+            effets: [{ affinite: { ysoria: 8 }, flag: dragons-dorment }]
+            aller: dorment
+      reviennent:
+        repliques:
+          - { qui: ysoria, dit: "« Alors nous reviendrons. » Elle gratte doucement la tête du petit. « Il volera au-dessus des villes, et les enfants lui feront signe. Ce sera bien. »" }
+        suite: fin
+      dorment:
+        repliques:
+          - { qui: ysoria, dit: "« En paix. » Elle hoche la tête, lentement. « Tu as peut-être raison. Mais moi, je resterai avec toi. Il faut bien qu'un dragon surveille les humains. »" }
+        suite: fin
+      fin:
+        repliques:
+          - { qui: ysoria, dit: "« Il faut lui donner un nom. » Elle vous regarde, très sérieuse. « Un nom de dragon. Long. Avec beaucoup de syllabes. » Le dragonneau éternue. Vous l'appelez Atchoum. Ysoria est scandalisée pendant trois jours." }
+        effets: [{ terminer_quete: q-ysoria, xp: 1500 }]
+        fin: true
+
+  - id: mo-cle
+    pnj: durna
+    titre: "Morra — La clé de braise"
+    type: individuel
+    lieu: karak-forge
+    decor: karak-forge
+    quete: q-morra
+    disponible_si: { quete_etape: { q-morra: cle }, flag: ysoria-recrutee, affinite_min: { morra: 60 } }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: durna, dit: "Maîtresse Durna a préparé un moule en forme de clé. « Le feu d'un dragon. Plus vieux que les Cendres. » Elle regarde Ysoria, qui croise les bras. « Si madame veut bien. »" }
+          - { qui: ysoria, dit: "Ysoria regarde Morra, longuement. « Une démone. » Puis elle hausse les épaules. « Une démone qui veut sauver sa petite sœur. Les dragons comprennent ça. » Elle souffle dans la forge." }
+          - { dit: "La forge devient blanche. Durna frappe, frappe, frappe, en hurlant une chanson naine. Quand elle plonge la clé dans l'eau, la vapeur remplit toute la forge." }
+        choix:
+          - texte: "Tendre la clé à Morra."
+            effets: [{ affinite: { morra: 10 } }]
+            aller: fin
+      fin:
+        repliques:
+          - { qui: morra, expression: tristesse, dit: "Morra prend la clé dans ses deux mains, comme quelque chose de fragile. Elle ne dit rien pendant longtemps. Puis : « Trois cents ans que personne ne m'a rien donné. » Elle vous regarde. « Je ne sais pas comment on dit merci. Je vais apprendre. »" }
+        effets: [{ objet: cle-de-braise, flag: cle-de-braise-forgee, quete: { id: q-morra, etape: lyss }, xp: 1500 }]
+        fin: true

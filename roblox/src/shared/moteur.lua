@@ -3389,6 +3389,10 @@ ____exports.zNoeud = z:object({
     effets = z:array(____exports.zConsequence):default({}),
     choix = z:array(____exports.zChoix):default({}),
     suite = z:string():optional(),
+    aiguillage = z:array(z:object({
+        si = ____exports.zCondition,
+        aller = z:string()
+    })):default({}),
     combat = z:object({
         rencontre = z:string(),
         victoire = z:string(),
@@ -10247,7 +10251,14 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 if action.cle == "groupe" and etat.donjon then
                     refuser("Le groupe explore un donjon")
                 end
-                entrerNoeud(contenu, etat, action.cle, n.suite)
+                local dest = n.suite
+                for ____, a in ipairs(n.aiguillage or ({})) do
+                    if ____exports.conditionScene(contenu, etat, a.si, etat.scenes[action.cle].heros) then
+                        dest = a.aller
+                        break
+                    end
+                end
+                entrerNoeud(contenu, etat, action.cle, dest)
                 break
             end
         end

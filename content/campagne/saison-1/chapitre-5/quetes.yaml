@@ -1,0 +1,62 @@
+# Chapitre 5 — « La Guerre des Cendres » (1024 → 1027), le Mur d'Aube, niveaux 28 à 34.
+quetes:
+  - id: q-ch5-guerre
+    titre: "Chapitre 5 — La Guerre des Cendres"
+    type: principale
+    chapitre: 5
+    niveau: 27
+    region: mur-d-aube
+    resume: "La Légion Cendrée va attaquer le Mur d'Aube. Toutes les alliances que vous avez nouées vont être mises à l'épreuve."
+    etapes:
+      - { id: depart, objectif: "Se présenter au château de Lysmont pour le conseil de guerre (Germinal 1024).", scene: ch5-depart, lieu: chateau }
+      - { id: fort, objectif: "Rejoindre la Maréchale à l'État-major de Fort-Aube.", scene: ch5-fort, lieu: fort-aube-etat-major, niveau: 28 }
+      - { id: chute, objectif: "Défendre le chemin de ronde pendant l'assaut (Floréal 1025).", scene: ch5-chute, lieu: chemin-de-ronde, niveau: 29 }
+      - { id: rang-s, objectif: "Passer l'épreuve du rang S à l'Arène de Lysmont (Germinal 1026).", scene: ch5-rang-s, lieu: arene, niveau: 30 }
+      - { id: aldric, objectif: "Suivre la piste du chevalier noir jusqu'aux ruines de Valgrane (Ardent 1026).", scene: ch5-aldric, lieu: valgrane-ruines, niveau: 31 }
+      - { id: contre-offensive, objectif: "Mener la contre-offensive dans la plaine cendrée (Aurore 1026).", scene: ch5-contre-offensive, lieu: plaine-cendree, niveau: 33 }
+      - { id: fin, objectif: "Chapitre terminé." }
+
+  # ── Quêtes secondaires
+  - id: q-convoi
+    titre: "La soupe de Mère Brisac"
+    type: secondaire
+    chapitre: 5
+    niveau: 28
+    region: mur-d-aube
+    resume: "Le convoi de vivres de la Gamelle n'est pas arrivé. Sans soupe, dit Mère Brisac, le Mur tombera avant la Légion."
+    etapes:
+      - { id: brisac, objectif: "Écouter Mère Brisac, à la Gamelle.", scene: sq-convoi-brisac, lieu: fort-aube-cantine }
+      - { id: village, objectif: "Retrouver le convoi au village évacué.", scene: sq-convoi-village, lieu: village-evacue, niveau: 28 }
+      - { id: retour, objectif: "Ramener le convoi à la Gamelle.", scene: sq-convoi-retour, lieu: fort-aube-cantine }
+  - id: q-armure-corvin
+    titre: "L'armure du premier maréchal"
+    type: secondaire
+    chapitre: 5
+    niveau: 29
+    region: mur-d-aube
+    resume: "L'armure du premier maréchal du Mur est restée à Valgrane en 1003. Tolvan jure qu'elle porte chance."
+    etapes:
+      - { id: tolvan, objectif: "Écouter Tolvan, à l'Armurerie du Mur.", scene: sq-armure-tolvan, lieu: fort-aube-armurerie }
+      - { id: valgrane, objectif: "Chercher l'armure dans les ruines de Valgrane.", scene: sq-armure-valgrane, lieu: valgrane-ruines, niveau: 29 }
+      - { id: retour, objectif: "Rapporter l'armure à Tolvan.", scene: sq-armure-retour, lieu: fort-aube-armurerie }
+  - id: q-espion
+    titre: "Un espion à Fort-Aube"
+    type: secondaire
+    chapitre: 5
+    niveau: 30
+    region: mur-d-aube
+    resume: "Quelqu'un envoie des signaux lumineux depuis une tour abandonnée du Mur. La Légion sait trop de choses."
+    etapes:
+      - { id: valka, objectif: "Écouter la Sergente Valka, au comptoir de la Guilde.", scene: sq-espion-valka, lieu: guilde-fort }
+      - { id: tour, objectif: "Surprendre l'espion à la tour de guet abandonnée.", scene: sq-espion-tour, lieu: tour-de-guet, niveau: 30 }
+      - { id: retour, objectif: "Faire votre rapport à Valka.", scene: sq-espion-retour, lieu: guilde-fort }
+  - id: q-chiens
+    titre: "La meute de braise"
+    type: secondaire
+    chapitre: 5
+    niveau: 31
+    region: mur-d-aube
+    resume: "Depuis la chute du Mur, une meute de chiens des enfers rôde autour du camp des alliés et emporte les sentinelles."
+    etapes:
+      - { id: camp, objectif: "Enquêter au camp des alliés.", scene: sq-chiens-camp, lieu: camp-des-allies }
+      - { id: plaine, objectif: "Traquer la meute dans la plaine cendrée.", scene: sq-chiens-plaine, lieu: plaine-cendree, niveau: 31 }

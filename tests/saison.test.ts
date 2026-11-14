@@ -15,6 +15,7 @@ export const SCENES_SAISON: Record<number, string[]> = {
   2: ['ch2-depart', 'ch2-caravane', 'sq-pillards-retour', 'ch2-palais', 'sq-matriarche-fin', 'ch2-complot', 'ch2-bazar', 'sq-puits-retour', 'ch2-tempete', 'ch2-revolte'],
   3: ['ch3-domaines', 'ch3-lisiere', 'sq-follets-retour', 'ch3-reine', 'sq-domaine-milice', 'ch3-bibliotheque', 'ch3-nuitlongue', 'ch3-verdict'],
   4: ['ch4-depart', 'ch4-karak', 'sq-forge-retour', 'ch4-marches', 'ch4-port', 'sq-phare-retour', 'ch4-nid', 'ch4-deserteur', 'ch4-conseil'],
+  5: ['ch5-depart', 'ch5-fort', 'sq-convoi-retour', 'ch5-chute', 'sq-espion-retour', 'ch5-rang-s', 'ch5-aldric', 'sq-chiens-plaine', 'ch5-contre-offensive'],
 };
 
 /** Joue un chapitre ; à la fin, passe au chapitre suivant (auberge). */
@@ -47,7 +48,7 @@ describe('Saison 1 jouée par le robot', () => {
     for (const h of listeHeros(r.etat)) expect(h.niveau).toBeGreaterThanOrEqual(6);
   });
 
-  it('chapitres 3 et 4 : Sylvenoire, puis Grisfer et l\'Archipel', () => {
+  it('chapitres 3 à 5 : Sylvenoire, Grisfer et l\'Archipel, puis la guerre au Mur d\'Aube', () => {
     const r = groupeDeDeux(c, 'saison3');
     jouerPrologues(c, r);
     for (const n of [1, 2, 3]) jouerChapitre(r, n);
@@ -68,5 +69,13 @@ describe('Saison 1 jouée par le robot', () => {
     expect(r.etat.flags['secret-revele'] || r.etat.flags['secret-garde']).toBe(true);
     expect(r.etat.quetes['q-forge-froide']?.terminee).toBe(true);
     expect(r.etat.chapitre).toBe(5);
+    // chapitre 5 : la Guerre des Cendres
+    jouerChapitre(r, 5);
+    expect(r.etat.quetes['q-ch5-guerre'].terminee).toBe(true);
+    expect(r.etat.flags['mur-tombe'] && r.etat.flags['rang-s-obtenu'] && r.etat.flags['terres-cendrees-ouvertes']).toBe(true);
+    // l'aiguillage a décidé du sort de la Maréchale et de Vaelor selon la réputation
+    expect(r.etat.flags['mort:marechale']).toBe((r.etat.reputation.troupes ?? 0) < 40 ? true : undefined);
+    expect(r.etat.flags['aldric-vivant'] || r.etat.flags['aldric-mort'] || r.etat.flags['aldric-enfui']).toBe(true);
+    expect(r.etat.chapitre).toBe(6);
   });
 });

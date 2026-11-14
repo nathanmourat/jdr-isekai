@@ -23,7 +23,7 @@ regions:
         position: { x: 980, y: 540 }
         position_plan: { x: 640, y: 620 }
         disponible_si: { flag: sylvenoire-ouverte }
-        pnj: [{ id: vaelor }, { id: ilysse, si: { flag: ilysse-recrutee } }]
+        pnj: [{ id: vaelor, si: { pas_flag: mort:vaelor } }, { id: ilysse, si: { flag: ilysse-recrutee } }]
       - id: ithrael-cour
         nom: "Cour de la Reine-Sève"
         description: "Une salle vivante, aux murs de branches tressées, où la Reine écoute plus qu'elle ne parle."

@@ -78,3 +78,13 @@ ambiance:
   - { id: a-tobby, lieu: port-taverne, qui: client, texte: "Le petit Tobby est rentré du Phare ! Le vieux Brann n'a jamais été aussi gentil.", si: { quete_terminee: q-phare } }
   - { id: a-epaves, lieu: port-marche, qui: marchand, texte: "Tout ce que la mer rapporte ! Ne demandez pas d'où ça vient.", si: { flag: ch4-depart-fait } }
   - { id: a-nuit, lieu: port-quais, texte: "La brume monte la nuit. Les cloches des navires sonnent toutes seules.", moment: nuit, si: { flag: ch4-depart-fait } }
+  # ─── Mur d'Aube (Fort-Aube)
+  - { id: m-attente, lieu: fort-aube-porte, qui: garde, texte: "Quarante mille, qu'ils disent. On verra bien combien rentrent chez eux.", si: { flag: ch5-depart-fait, pas_flag: mur-tombe } }
+  - { id: m-breche, lieu: fort-aube-porte, qui: garde, texte: "Le Mur a une brèche, mais nous, on est toujours debout.", si: { flag: mur-tombe } }
+  - { id: m-soupe, lieu: fort-aube-cantine, qui: client, texte: "La soupe de Mère Brisac, c'est la seule chose qui ne change pas dans cette guerre.", si: { flag: ch5-depart-fait } }
+  - { id: m-marechale, lieu: fort-aube-etat-major, qui: garde, texte: "La Maréchale ne dort jamais. On dit qu'elle se repose en regardant les cartes.", si: { flag: ch5-depart-fait, pas_flag: mort:marechale } }
+  - { id: m-marechale-morte, lieu: fort-aube-porte, texte: "Ils ont gravé le nom de la Maréchale sur la porte. Elle l'a tenue jusqu'au bout.", si: { flag: mort:marechale } }
+  - { id: m-armes, lieu: fort-aube-armurerie, qui: marchand, texte: "Chaque armure a un nom ! Celle-ci, c'est Berthe. Elle a sauvé six soldats.", si: { flag: ch5-depart-fait } }
+  - { id: m-dragons, lieu: camp-des-allies, texte: "Un dragon dort sur la colline. Il ronfle. Personne n'ose le réveiller.", si: { flag: dragons-allies } }
+  - { id: m-rang-s, lieu: fort-aube-cantine, qui: client, texte: "Ce sont eux, les rangs S ! J'ai vu l'épreuve. Incroyable.", si: { flag: rang-s-obtenu } }
+  - { id: m-nuit, lieu: fort-aube-porte, texte: "La nuit, on voit les feux de la Légion, au nord. Des milliers.", moment: nuit, si: { flag: ch5-depart-fait } }

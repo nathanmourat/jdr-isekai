@@ -42,14 +42,14 @@ export function genre(l: LieuDef): string {
 	const a = (mot: string) => id.find(mot, 1, true)[0] !== undefined;
 	if (l.auberge === true) return "auberge";
 	if (id === "guilde" || id.sub(1, 7) === "guilde-") return "guilde";
-	if (a("palais") || a("residence") || a("citadelle") || a("trone") || a("forteresse") || a("donjon-")) return "palais";
+	if (a("palais") || a("residence") || a("citadelle") || a("trone") || a("forteresse") || a("donjon-") || a("etat-major")) return "palais";
 	if (a("temple") || a("sanctuaire") || a("autel") || a("bibliotheque") || a("clairiere")) return "temple";
 	if (a("campement") || a("camp")) return "camp";
 	if (a("mine") || a("forge")) return "mine";
-	if (a("ruines") || a("phare")) return "ruines";
-	if (a("canyon") || a("falaise") || a("nid") || a("crete")) return "rochers";
+	if (a("ruines") || a("phare") || a("breche") || a("tour-de-guet")) return "ruines";
+	if (a("canyon") || a("falaise") || a("nid") || a("crete") || a("plaine-cendree") || a("coulee")) return "rochers";
 	if (a("port") || a("quai")) return "port";
-	if (a("porte") || a("route") || a("mur")) return "porte";
+	if (a("porte") || a("route") || a("mur") || a("ronde") || a("rempart")) return "porte";
 	if (l.boutique.size() > 0) return "boutique";
 	return "maison";
 }

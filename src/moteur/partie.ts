@@ -1220,7 +1220,12 @@ export function appliquer(contenu: Contenu, etatAvant: EtatPartie, action: Actio
       const n = noeudCourant(contenu, etat, action.cle) ?? refuser('Rien à continuer');
       if (!vrai(n.suite)) refuser('Il faut faire un choix');
       if (action.cle === 'groupe' && etat.donjon) refuser('Le groupe explore un donjon');
-      entrerNoeud(contenu, etat, action.cle, n.suite!);
+      // aiguillage : premier nœud dont la condition est vraie, sinon la suite
+      let dest = n.suite!;
+      for (const a of n.aiguillage ?? []) {
+        if (conditionScene(contenu, etat, a.si, etat.scenes[action.cle].heros)) { dest = a.aller; break; }
+      }
+      entrerNoeud(contenu, etat, action.cle, dest);
       break;
     }
     case 'quitter_scene': {

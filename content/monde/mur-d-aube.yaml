@@ -1,0 +1,116 @@
+# Région du chapitre 5 : le Mur d'Aube (niveaux 28 à 34). Positions en pixels sur la carte (1920 × 1080).
+regions:
+  - id: mur-d-aube
+    nom: "Mur d'Aube"
+    description: "La grande muraille du nord, qui sépare le royaume des Terres Cendrées depuis six siècles. La guerre y commence."
+    carte: mur-d-aube
+    chapitre: 5
+    position_monde: { x: 960, y: 140 }
+    disponible_si: { flag: ch5-depart-fait }
+    villes:
+      - id: fort-aube
+        nom: "Fort-Aube"
+        description: "La forteresse au cœur du Mur : casernes, forges, hôpital, et dix mille soldats qui attendent."
+        plan: fort-aube-plan
+        position: { x: 960, y: 620 }
+    lieux:
+      - id: fort-aube-porte
+        nom: "Porte de Fort-Aube"
+        description: "Une porte fortifiée sous une herse de fer. Des chariots de vivres font la queue, jour et nuit."
+        decor: fort-aube-porte
+        ville: fort-aube
+        position: { x: 960, y: 690 }
+        position_plan: { x: 640, y: 620 }
+        disponible_si: { flag: ch5-depart-fait }
+        pnj: [{ id: aveline, si: { flag: aveline-rencontree } }, { id: morra, si: { flag: morra-recrutee } }]
+      - id: fort-aube-etat-major
+        nom: "L'État-major"
+        description: "Une grande salle de pierre, une table couverte de cartes et de figurines. On y décide qui vivra."
+        decor: fort-aube-etat-major
+        ville: fort-aube
+        position: { x: 960, y: 580 }
+        position_plan: { x: 640, y: 160 }
+        disponible_si: { flag: ch5-depart-fait }
+        pnj: [{ id: marechale, si: { pas_flag: mort:marechale } }, { id: seraphine, si: { flag: seraphine-recrutee } }]
+      - id: fort-aube-cantine
+        nom: "La Gamelle"
+        description: "La cantine des soldats, devenue auberge. Soupe chaude, pain dur, lits de camp et chansons de marche."
+        decor: fort-aube-cantine
+        ville: fort-aube
+        auberge: true
+        position: { x: 1030, y: 630 }
+        position_plan: { x: 900, y: 430 }
+        disponible_si: { flag: ch5-depart-fait }
+        pnj: [{ id: mere-brisac }, { id: kaya, si: { flag: kaya-recrutee } }, { id: nadja, si: { flag: nadja-rencontree } }, { id: ysoria, si: { flag: ysoria-recrutee } }]
+        gerant: mere-brisac
+        boutique: [ration, potion-soin-grande, potion-soin-supreme, gateau-lysmont]
+      - id: fort-aube-armurerie
+        nom: "L'Armurerie du Mur"
+        description: "Des râteliers à perte de vue, des armures alignées comme des soldats. Tolvan connaît chaque pièce par son nom."
+        decor: fort-aube-armurerie
+        ville: fort-aube
+        position: { x: 890, y: 620 }
+        position_plan: { x: 380, y: 400 }
+        disponible_si: { flag: ch5-depart-fait }
+        pnj: [{ id: tolvan }]
+        gerant: tolvan
+        boutique: [
+          potion-soin-supreme, potion-mana-grande, antidote, bombe-feu, bombe-fumee, epee-v, epee-v-maitre, deux-mains-v,
+          deux-mains-v-maitre, masse-v, masse-v-maitre, dague-v, dague-v-maitre, arc-v, arc-v-maitre, arbalete-v,
+          arbalete-v-maitre, baton-v, baton-v-maitre, sceptre-v, sceptre-v-maitre, orbe-v, orbe-v-maitre, instrument-v,
+          instrument-v-maitre, lourde-v, lourde-v-maitre, intermediaire-v, intermediaire-v-maitre, legere-v, legere-v-maitre,
+          bouclier-v, bouclier-v-maitre, anneau-v, anneau-v-maitre, amulette-v, amulette-v-maitre, talisman-v, talisman-v-maitre,
+          carquois-v, carquois-v-maitre, sacoche-v, sacoche-v-maitre,
+        ]
+      - id: guilde-fort
+        nom: "Comptoir de la Guilde (Fort-Aube)"
+        description: "Une tente de commandement aux couleurs de la Guilde, plantée contre le rempart. Les contrats sont des missions de guerre."
+        decor: guilde
+        ville: fort-aube
+        position: { x: 1040, y: 690 }
+        position_plan: { x: 1020, y: 600 }
+        disponible_si: { flag: ch5-depart-fait }
+        pnj: [{ id: valka }, { id: elianne, si: { flag: elianne-recrutee } }]
+        gerant: valka
+        boutique: [
+          potion-soin-supreme, potion-mana-grande, pavois-du-mur-d-aube, medaillon-de-garde-du-mur, talisman-des-ames-gardiennes,
+          anneau-de-l-eclaireur-du-mur, bouclier-de-l-aube, sacoche-de-l-artificier-du-mur, carquois-des-fleches-benites,
+          medaillon-de-la-sur-de-garde, talisman-de-sang-dragon, anneau-de-l-hymne-du-mur, sceau-lame-des-sentinelles,
+          baton-des-trois-tempetes, orbe-du-pacte-brise, lame-sans-reflet, sceptre-de-la-sainte-garde, canon-de-poing-a-cristal,
+          arc-de-l-etoile-du-mur, sceptre-de-la-lumiere-premiere, fleau-des-cendres, harpe-de-l-aube,
+        ]
+      # ── Hors de la ville
+      - id: chemin-de-ronde
+        nom: "Le chemin de ronde"
+        description: "Le sommet du Mur : un chemin de pierre large comme une route, des créneaux, et au nord, à perte de vue, les Terres Cendrées."
+        decor: chemin-de-ronde
+        position: { x: 960, y: 420 }
+        disponible_si: { flag: ch5-depart-fait }
+      - id: camp-des-allies
+        nom: "Le camp des alliés"
+        description: "Des tentes elfes, des forges naines, des feux de camp ourvalis, et des dragons qui dorment sur les collines."
+        decor: camp-des-allies
+        position: { x: 1380, y: 700 }
+        disponible_si: { flag: ch5-depart-fait }
+        pnj: [{ id: bardrek, si: { flag: nains-allies } }, { id: vaelor, si: { flag: elfes-allies, pas_flag: mort:vaelor } }, { id: ilysse, si: { flag: ilysse-recrutee } }]
+      - id: breche-du-mur
+        nom: "La Brèche"
+        description: "Là où le Mur s'est effondré : un trou large de cent pas, des pierres noircies, et le vent des Cendres qui s'y engouffre."
+        decor: breche-du-mur
+        position: { x: 760, y: 380 }
+        disponible_si: { flag: mur-tombe }
+      - id: plaine-cendree
+        nom: "La plaine cendrée"
+        description: "De l'autre côté du Mur, une plaine grise où rien ne pousse. Le ciel y est toujours couleur de braise."
+        decor: plaine-cendree
+        position: { x: 1000, y: 180 }
+        disponible_si: { flag: mur-tombe }
+      - id: valgrane-ruines
+        nom: "Ruines de Valgrane"
+        description: "La ville tombée en 1003. Des maisons vides, des cendres jusqu'aux chevilles, et une porte nord qui tient encore debout."
+        decor: valgrane-ruines
+        position: { x: 420, y: 300 }
+        disponible_si: { flag: ch5-depart-fait }
+      # ── Lieux d'étape
+      - { id: tour-de-guet, nom: "Tour de guet abandonnée", description: "Une tour du Mur, vide depuis des années. Quelqu'un y a allumé un feu récemment.", decor: tour-de-guet, position: { x: 1560, y: 360 }, etape_seulement: true }
+      - { id: village-evacue, nom: "Village évacué", description: "Un village au pied du Mur, vidé en une nuit. Les soupes refroidissent encore sur les tables.", decor: village-evacue, position: { x: 1240, y: 880 }, etape_seulement: true }

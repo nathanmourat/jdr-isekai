@@ -301,6 +301,16 @@ On y va par la **carte → « Y aller »** (téléportation). Chaque région a s
 - [ ] Porte de Karak-Dûm : Morra déserte (si on l'avait épargnée), sinon un déserteur.
 - [ ] Temple du Seuil : le choix « révéler / garder le secret » de l'Ordre, puis fin du chapitre.
 
+### Liste de contrôle — chapitre 5 (Mur d'Aube)
+- [ ] Fin du chapitre 4 → dormir → au château : « Le conseil de guerre ».
+- [ ] La carte affiche « Mur d'Aube » (au nord) : Fort-Aube (porte, État-major, la Gamelle avec lit, Armurerie de Tolvan au palier V, comptoir de la Guilde), chemin de ronde, camp des alliés, ruines de Valgrane.
+- [ ] Chute du Mur : colosse de siège puis Vorthak ; selon la réputation des troupes et des elfes, la Maréchale ou Vaelor peuvent mourir (ils disparaissent alors des décors).
+- [ ] La Brèche et la plaine cendrée apparaissent sur la carte après la chute.
+- [ ] Arène de Lysmont : épreuve du rang S (broche dans le sac).
+- [ ] Ruines de Valgrane : combat contre Aldric, puis le choix le ramener / le laisser partir / l'achever.
+- [ ] Contre-offensive : camp de la Légion, puis le Gardien de la Brèche ; fin du chapitre.
+- [ ] Quête de classe étape 3 : l'ultime est débloqué (utilisable au niveau 30).
+
 ## Publier sur Roblox (quand tout marche)
 
 1. **Fichier → Publier sur Roblox**, si ce n'est pas déjà fait.

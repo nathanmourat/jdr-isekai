@@ -1,0 +1,295 @@
+# Ennemis du chapitre 5 (Mur d'Aube, la Guerre des Cendres, niveaux 28 à 34).
+# Fichier généré par scripts/contenu/bestiaire.py à partir de scripts/contenu/ch5_ennemis.py : modifier la source, puis relancer.
+ennemis:
+  - id: diablotin
+    nom: "Diablotin"
+    description: "Un petit démon rouge ailé, armé d'une fourche, qui ricane en permanence. Ils arrivent toujours par dizaines."
+    niveau: 28
+    categorie: demon
+    rang: arriere
+    caracteristiques: { FOR: 12, AGI: 27, INT: 12, VIT: 21, ESP: 12, CHA: 6 }
+    pv: 359
+    armure: 11
+    attaque: { stat: AGI, element: feu, portee: distance, puissance: 16 }
+    attaques:
+      - { nom: "Fourche", phrase: "pique {cible} de sa fourche", effet: entaille }
+      - { nom: "Boule de feu", phrase: "lance une petite boule de feu sur {cible}", effet: feu }
+    resistances: { feu: 0.5, sacre: -0.4 }
+    recompenses: { xp: 519, or: 28 }
+
+  - id: gelee-cendree
+    nom: "Gelée cendrée"
+    description: "Une gelée de cendre violette, avec des braises à l'intérieur. Elle étouffe ce qu'elle touche."
+    niveau: 29
+    categorie: bete
+    caracteristiques: { FOR: 12, AGI: 17, INT: 12, VIT: 30, ESP: 12, CHA: 6 }
+    pv: 446
+    armure: 14
+    attaque: { stat: VIT, element: ombre, portee: melee, puissance: 16 }
+    attaques:
+      - { nom: "Étouffement", phrase: "s'enroule autour de {cible}", effet: ombre }
+      - { nom: "Projection de cendre", phrase: "projette de la cendre brûlante sur {cible}", effet: feu }
+    resistances: { physique: 0.1, ombre: 0.3, feu: 0.3, sacre: -0.4, glace: -0.2 }
+    competences:
+      - id: nuage-de-cendre
+        nom: Nuage de cendre
+        description: "La gelée éclate en un nuage qui pique les yeux."
+        recharge: 3
+        cible: tous_ennemis
+        effets:
+          - { type: degats, puissance: 11, stat: VIT, element: ombre }
+          - { type: etat, etat: affaibli, duree: 2, valeur: 0.15, chance: 0.4 }
+        ia: { priorite: 3 }
+    recompenses: { xp: 781, or: 44 }
+
+  - id: chien-des-enfers
+    nom: "Chien des enfers"
+    description: "Un molosse noir à crinière de flammes. Il traque les vivants à l'odeur."
+    niveau: 31
+    categorie: demon
+    caracteristiques: { FOR: 13, AGI: 34, INT: 13, VIT: 26, ESP: 13, CHA: 6 }
+    pv: 529
+    armure: 18
+    attaque: { stat: AGI, element: feu, portee: melee, puissance: 16 }
+    attaques:
+      - { nom: "Crocs ardents", phrase: "mord {cible} d'une gueule enflammée", effet: feu }
+      - { nom: "Bond", phrase: "se jette sur {cible}", effet: entaille }
+    resistances: { feu: 0.6, ombre: 0.2, glace: -0.3, sacre: -0.3 }
+    competences:
+      - id: hurlement-infernal
+        nom: Hurlement infernal
+        description: "Un hurlement qui glace le sang."
+        recharge: 4
+        cible: tous_ennemis
+        effets: [{ type: etat, etat: peur, duree: 1, chance: 0.3 }]
+        ia: { priorite: 2, quand: debut_combat }
+    recompenses: { xp: 1208, or: 62 }
+
+  - id: legionnaire-cendre
+    nom: "Légionnaire cendré"
+    description: "Un soldat de la Légion en armure noire, bouclier rond et lance. Il avance au pas, comme une machine."
+    niveau: 30
+    categorie: demon
+    sprite: chevalier-cendre
+    caracteristiques: { FOR: 30, AGI: 18, INT: 12, VIT: 24, ESP: 12, CHA: 6 }
+    pv: 542
+    armure: 14
+    attaque: { stat: FOR, element: physique, portee: melee, puissance: 16 }
+    attaques:
+      - { nom: "Lance noire", phrase: "transperce {cible} de sa lance", effet: entaille }
+      - { nom: "Mur de boucliers", phrase: "repousse {cible} d'un coup de bouclier", effet: impact }
+    resistances: { feu: 0.3, ombre: 0.3, sacre: -0.3 }
+    recompenses: { xp: 822, or: 45 }
+
+  - id: pretre-des-cendres
+    nom: "Prêtre des Cendres"
+    description: "Un cultiste en robe noire, couronné d'os. Il chante, et les démons blessés se relèvent."
+    niveau: 30
+    categorie: humanoide
+    sprite: cultiste
+    rang: arriere
+    caracteristiques: { FOR: 12, AGI: 18, INT: 30, VIT: 24, ESP: 12, CHA: 6 }
+    pv: 542
+    armure: 14
+    attaque: { stat: INT, element: ombre, portee: distance, puissance: 16 }
+    attaques:
+      - { nom: "Trait d'ombre", phrase: "lance un trait d'ombre sur {cible}", effet: ombre }
+      - { nom: "Malédiction", phrase: "maudit {cible}", effet: ombre }
+    resistances: { ombre: 0.4, sacre: -0.4 }
+    competences:
+      - id: chant-de-cendre
+        nom: Chant de cendre
+        description: "Un chant qui referme les plaies des démons."
+        recharge: 4
+        cible: tous_allies
+        effets: [{ type: soin, puissance: 14, stat: INT }]
+        ia: { priorite: 3, quand: allie_blesse }
+    recompenses: { xp: 822, or: 45 }
+
+  - id: capitaine-cendre
+    nom: "Capitaine de la Légion"
+    description: "Un officier démon en armure à pointes, cape déchirée, épée à deux mains entourée de runes violettes."
+    niveau: 33
+    categorie: demon
+    sprite: chevalier-cendre
+    caracteristiques: { FOR: 38, AGI: 19, INT: 13, VIT: 29, ESP: 13, CHA: 6 }
+    pv: 1080
+    armure: 22
+    attaque: { stat: FOR, element: physique, portee: melee, puissance: 20 }
+    attaques:
+      - { nom: "Lame runique", phrase: "abat une lame aux runes violettes sur {cible}", effet: ombre }
+      - { nom: "Coup d'épaule", phrase: "renverse {cible} d'un coup d'épaule", effet: impact }
+    resistances: { feu: 0.3, ombre: 0.4, sacre: -0.3 }
+    competences:
+      - id: ordre-de-charge
+        nom: Ordre de charge
+        description: "« En avant ! » Ses soldats frappent plus fort."
+        recharge: 4
+        cible: tous_allies
+        effets: [{ type: etat, etat: bonus_degats, duree: 3, valeur: 0.2 }]
+        ia: { priorite: 3, quand: debut_combat }
+    recompenses: { xp: 1896, or: 99 }
+
+  - id: colosse-de-siege
+    nom: "Colosse de siège"
+    description: "Un golem d'obsidienne haut comme une tour, veiné de lave, que la Légion pousse contre le Mur. Il ne s'arrête jamais."
+    niveau: 32
+    categorie: construction
+    sprite: golem-d-obsidienne
+    caracteristiques: { FOR: 37, AGI: 18, INT: 13, VIT: 28, ESP: 13, CHA: 6 }
+    pv: 1154
+    armure: 21
+    attaque: { stat: FOR, element: physique, portee: melee, puissance: 19 }
+    attaques:
+      - { nom: "Poing d'obsidienne", phrase: "écrase {cible} d'un poing noir", effet: impact }
+      - { nom: "Coulée de lave", phrase: "laisse couler de la lave sur {cible}", effet: feu }
+    resistances: { physique: 0.3, poison: 1.0, feu: 0.5, glace: -0.3, foudre: -0.2 }
+    competences:
+      - id: secousse
+        nom: Secousse
+        description: "Il frappe le sol : tout tremble."
+        recharge: 3
+        cible: tous_ennemis
+        effets: [{ type: degats, puissance: 14, stat: FOR }]
+        ia: { priorite: 3 }
+    recompenses: { xp: 1810, or: 96 }
+
+  - id: vorthak-seigneur
+    nom: "Vorthak, Seigneur de guerre"
+    description: "L'émissaire de la Fête des Lanternes est revenu. Il a grandi, ses cornes aussi. Il commande l'assaut du Mur d'Aube."
+    niveau: 31
+    categorie: demon
+    boss: true
+    sprite: chevalier-cendre
+    caracteristiques: { FOR: 37, AGI: 18, INT: 13, VIT: 28, ESP: 13, CHA: 6 }
+    pv: 1848
+    armure: 22
+    attaque: { stat: FOR, element: ombre, portee: melee, puissance: 20 }
+    attaques:
+      - { nom: "Lame cendrée", phrase: "abat sa lame noire sur {cible}", effet: ombre }
+      - { nom: "Flammes violettes", phrase: "enveloppe {cible} de flammes violettes", effet: ombre }
+    resistances: { feu: 0.5, ombre: 0.5, sacre: -0.25 }
+    competences:
+      - id: vague-violette
+        nom: Vague violette
+        description: "Une vague de flammes violettes balaie le rempart."
+        recharge: 3
+        cible: tous_ennemis
+        effets:
+          - { type: degats, puissance: 15, stat: FOR, element: ombre }
+          - { type: etat, etat: brulure, duree: 2, valeur: 10, chance: 0.5 }
+        ia: { priorite: 4 }
+      - id: rage-du-seigneur
+        nom: Rage du seigneur
+        description: "Ses blessures le rendent fou."
+        recharge: 5
+        cible: soi
+        effets: [{ type: etat, etat: bonus_degats, duree: 3, valeur: 0.25 }]
+        ia: { priorite: 4, quand: soi_blesse }
+    recompenses: { xp: 5178, or: 310 }
+
+  - id: champion-de-la-guilde
+    nom: "Le Champion de l'épreuve"
+    description: "Un guerrier masqué, en armure d'argent sans blason. Personne ne connaît son visage : il est l'épreuve du rang S depuis cent ans."
+    niveau: 31
+    categorie: humanoide
+    boss: true
+    sprite: bandit
+    caracteristiques: { FOR: 13, AGI: 37, INT: 13, VIT: 28, ESP: 13, CHA: 6 }
+    pv: 1479
+    armure: 22
+    attaque: { stat: AGI, element: physique, portee: melee, puissance: 20 }
+    attaques:
+      - { nom: "Lame d'argent", phrase: "frappe {cible} d'une lame d'argent", effet: entaille }
+      - { nom: "Feinte", phrase: "trompe {cible} d'une feinte parfaite", effet: entaille }
+    resistances: { physique: 0.1 }
+    competences:
+      - id: mille-lames
+        nom: Mille lames
+        description: "Une pluie de coups, si rapides qu'on ne les voit pas."
+        recharge: 3
+        cible: ennemi
+        effets: [{ type: degats, puissance: 9, stat: AGI, coups: 3 }]
+        ia: { priorite: 3 }
+      - id: garde-parfaite
+        nom: Garde parfaite
+        description: "Il ne laisse plus aucune ouverture."
+        recharge: 4
+        cible: soi
+        effets: [{ type: etat, etat: bonus_defense, duree: 2, valeur: 0.3 }]
+        ia: { priorite: 3, quand: soi_blesse }
+    recompenses: { xp: 5178, or: 310 }
+
+  - id: aldric-prince-noir
+    nom: "Aldric, le Prince Noir"
+    description: "Le frère de Séraphine, disparu en 1009. Armure noire, cape bleue en lambeaux, et des yeux où brûle une lueur violette."
+    niveau: 33
+    categorie: humanoide
+    boss: true
+    sprite: chevalier-cendre
+    caracteristiques: { FOR: 39, AGI: 19, INT: 13, VIT: 30, ESP: 13, CHA: 6 }
+    pv: 1960
+    armure: 23
+    attaque: { stat: FOR, element: ombre, portee: melee, puissance: 21 }
+    attaques:
+      - { nom: "Épée royale corrompue", phrase: "frappe {cible} de l'épée des princes d'Aubeclaire", effet: ombre }
+      - { nom: "Revers de cape", phrase: "aveugle {cible} d'un revers de cape", effet: impact }
+    resistances: { ombre: 0.4, sacre: -0.2 }
+    competences:
+      - id: serment-brise
+        nom: Serment brisé
+        description: "Il crie un serment de chevalier, à l'envers. L'ombre répond."
+        recharge: 3
+        cible: tous_ennemis
+        effets:
+          - { type: degats, puissance: 14, stat: FOR, element: ombre }
+          - { type: etat, etat: malus_defense, duree: 2, valeur: 0.15, chance: 0.5 }
+        ia: { priorite: 4 }
+      - id: ombre-protectrice
+        nom: Ombre protectrice
+        description: "L'ombre se referme sur ses blessures."
+        recharge: 5
+        cible: soi
+        effets: [{ type: soin, puissance: 30, stat: VIT }]
+        ia: { priorite: 4, quand: soi_blesse }
+    recompenses: { xp: 5687, or: 330 }
+
+  - id: gardien-de-la-breche
+    nom: "Le Gardien de la Brèche"
+    description: "Un colosse d'obsidienne enchaîné à la porte des Terres Cendrées. Il garde le passage depuis la première Déchirure."
+    niveau: 34
+    categorie: construction
+    boss: true
+    sprite: golem-d-obsidienne
+    caracteristiques: { FOR: 40, AGI: 19, INT: 14, VIT: 30, ESP: 14, CHA: 6 }
+    pv: 2150
+    armure: 24
+    attaque: { stat: FOR, element: physique, portee: melee, puissance: 21 }
+    attaques:
+      - { nom: "Chaîne d'obsidienne", phrase: "fouette {cible} de ses chaînes", effet: impact }
+      - { nom: "Poing de lave", phrase: "écrase {cible} d'un poing de lave", effet: feu }
+    resistances: { physique: 0.3, poison: 1.0, feu: 0.5, glace: -0.2, sacre: -0.2 }
+    competences:
+      - id: tremblement
+        nom: Tremblement des Cendres
+        description: "Le sol se fend : de la lave jaillit sous le groupe."
+        recharge: 3
+        cible: tous_ennemis
+        effets:
+          - { type: degats, puissance: 15, stat: FOR, element: feu }
+          - { type: etat, etat: brulure, duree: 2, valeur: 10, chance: 0.5 }
+        ia: { priorite: 4 }
+    recompenses: { xp: 5948, or: 340 }
+
+rencontres:
+  - { id: mur-diablotins, nom: "Nuée de diablotins", fond: rempart, ennemis: [{ id: diablotin }, { id: diablotin }, { id: diablotin }], renforts: [diablotin] }
+  - { id: mur-gelees, nom: "Les gelées cendrées", fond: breche, ennemis: [{ id: gelee-cendree }, { id: gelee-cendree }, { id: diablotin, rang: arriere }], renforts: [gelee-cendree] }
+  - { id: mur-chiens, nom: "Les chiens des enfers", fond: plaine-cendree, ennemis: [{ id: chien-des-enfers }, { id: chien-des-enfers }], renforts: [chien-des-enfers] }
+  - { id: mur-legion, nom: "Une patrouille de la Légion", fond: rempart, ennemis: [{ id: legionnaire-cendre }, { id: legionnaire-cendre }, { id: pretre-des-cendres, rang: arriere }], renforts: [legionnaire-cendre] }
+  - { id: mur-capitaine, nom: "Le capitaine de la Légion", fond: camp, ennemis: [{ id: capitaine-cendre }, { id: legionnaire-cendre }], renforts: [legionnaire-cendre] }
+  - { id: chute-colosse, nom: "Le colosse de siège", fond: breche, fuite_possible: false, ennemis: [{ id: colosse-de-siege }, { id: diablotin, rang: arriere }], renforts: [diablotin] }
+  - { id: chute-vorthak, nom: "Vorthak, Seigneur de guerre", fond: rempart, fuite_possible: false, ennemis: [{ id: vorthak-seigneur }, { id: legionnaire-cendre }], renforts: [legionnaire-cendre] }
+  - { id: epreuve-rang-s, nom: "L'épreuve du rang S", fond: arene, fuite_possible: false, ennemis: [{ id: champion-de-la-guilde }] }
+  - { id: aldric-combat, nom: "Aldric, le Prince Noir", fond: plaine-cendree, fuite_possible: false, ennemis: [{ id: aldric-prince-noir }, { id: chien-des-enfers }], renforts: [chien-des-enfers] }
+  - { id: contre-offensive, nom: "La contre-offensive", fond: plaine-cendree, fuite_possible: false, ennemis: [{ id: capitaine-cendre }, { id: pretre-des-cendres, rang: arriere }], renforts: [legionnaire-cendre] }
+  - { id: breche-gardien, nom: "Le Gardien de la Brèche", fond: breche, fuite_possible: false, ennemis: [{ id: gardien-de-la-breche }, { id: gelee-cendree }], renforts: [gelee-cendree] }

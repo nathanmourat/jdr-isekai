@@ -92,6 +92,11 @@ export const LIEU_DU_DECOR: Record<string, string> = {
 	port: "port-quais",
 	epave: "phare-noye",
 	nid: "nid-des-wyrms",
+	// chapitre 5 : Mur d'Aube
+	rempart: "chemin-de-ronde",
+	breche: "breche-du-mur",
+	camp: "camp-des-allies",
+	"plaine-cendree": "plaine-cendree",
 };
 
 /** Hauteur à laquelle est dessiné le donjon (au-dessus du monde). */
