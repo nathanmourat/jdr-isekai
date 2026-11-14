@@ -9,6 +9,7 @@
   import { imageCarte, imagePlan, positionsImage } from '../../rendu/assets';
   import { aideNiveau, couleurNiveau, lieuAvecCombat, lieuxDesEtapes, marqueurLieu, niveauDuLieu, niveauGroupe, prochaineEtape, trouverLieu, type Marqueur } from '../../moteur/guide';
   import NiveauConseille from '../NiveauConseille.svelte';
+  import Cadre169 from '../Cadre169.svelte';
 
   let { choisir, ville = $bindable(null) }: { choisir: (id: string) => void; ville?: string | null } = $props();
   const c = jeu.contenu!;
@@ -80,78 +81,96 @@
   const regionAvecEtape = (id: string) => c.regions[id].lieux.some((l) => etapes.includes(l.id));
 </script>
 
-<section>
-  {#if regions.length > 1 && !villeOuverte}
-    <div class="onglets-regions" role="tablist" aria-label="Régions">
-      {#each regions as r (r.id)}
-        <button role="tab" aria-selected={r.id === region.id} class:actif={r.id === region.id} onclick={() => changerRegion(r.id)}>{r.nom}{#if regionAvecEtape(r.id)} <span class="leg principale">●</span>{/if}</button>
-      {/each}
-    </div>
-  {/if}
-  <h2>{villeOuverte ? villeOuverte.nom : region.nom}</h2>
-  {#if !villeOuverte && region.description}<p class="discret">{region.description}</p>{/if}
-  {#if etape}
-    <div class="etape carte-ui">
-      <span>➤ <strong>Prochaine étape :</strong> {etape.objectif}{#if etape.nomLieu && !etape.objectif.includes(etape.nomLieu)}{' '}<span class="discret">({etape.nomLieu})</span>{/if}{#if niveauEtape !== null}{' '}<NiveauConseille niveau={niveauEtape} aide />{/if}</span>
-      {#if etape.lieu && etape.disponible && etapeAccessible}
-        <button class="principal petit" onclick={allerEtape}>Y aller</button>
-      {:else if etape.attenteJour !== null}
-        <small class="discret">Pas avant : {formaterDate(c, etape.attenteJour)}. Pour faire passer les mois, dormez dans une auberge (le Chaudron Fêlé à Lysmont, ou l'auberge de la région).</small>
-        {#if lieux.some((l) => l.auberge)}<button class="petit" onclick={() => choisir(lieux.find((l) => l.auberge)!.id)}>Aller à l'auberge</button>{/if}
-      {:else if !etape.disponible}
-        <small class="discret">Pas encore possible : suivez les autres pistes en attendant.</small>
-      {/if}
-    </div>
-  {/if}
+<section class="vue-carte">
+  <Cadre169>
+    {#if villeOuverte}
+      <div class="carte">
+        <img class="pixel" src={imagePlan(villeOuverte.plan, villeOuverte.nom)} alt={`Plan : ${villeOuverte.nom}`} />
+        {#each lieuxVille as l, i (l.id)}
+          {@const m = marqueurLieu(c, etat, l.id, moi)}
+          <button class={`lieu ${m ?? ''}`} class:etape={etapes.includes(l.id)} data-lieu={l.id} aria-label={l.nom} title={infobulle(l.id, l.nom)} style={positionPlan(l, i)} onclick={() => choisir(l.id)}>
+            {#if m}<span class="symbole">{symbole(m)}</span>{/if}
+            <span class="point"></span>
+            <span class="nom">{#if lieuAvecCombat(c, etat, l.id, moi)}<span class="epee" title="Combat possible ici">⚔ </span>{/if}{l.nom}{#if niveauDuLieu(c, etat, l.id, moi) !== null} <span class={`niv ${couleurLieu(l.id)}`}>niv. {niveauDuLieu(c, etat, l.id, moi)}</span>{/if}</span>
+          </button>
+        {/each}
+      </div>
+    {:else}
+      <div class="carte">
+        <img class="pixel" src={imageCarte(region.carte)} alt={`Carte : ${region.nom}`} />
+        {#each villes as v (v.id)}
+          {@const m = marqueurVille(v.id)}
+          <button class={`lieu ville ${m ?? ''}`} class:etape={lieux.some((l) => l.ville === v.id && etapes.includes(l.id))} data-ville={v.id} aria-label={v.nom} style={`left:${(v.position.x / 1920) * 100}%; top:${(v.position.y / 1080) * 100}%`} onclick={() => (ville = v.id)}>
+            {#if m}<span class="symbole">{symbole(m)}</span>{/if}
+            <span class="point"></span>
+            <span class="nom">{#if combatVille(v.id)}<span class="epee" title="Combat possible dans la ville">⚔ </span>{/if}{v.nom}</span>
+          </button>
+        {/each}
+        {#each horsVille as l (l.id)}
+          {@const m = marqueurLieu(c, etat, l.id, moi)}
+          <button class={`lieu ${m ?? ''}`} class:etape={etapes.includes(l.id)} data-lieu={l.id} aria-label={l.nom} title={infobulle(l.id, l.nom)} style={`left:${(l.position.x / 1920) * 100}%; top:${(l.position.y / 1080) * 100}%`} onclick={() => choisir(l.id)}>
+            {#if m}<span class="symbole">{symbole(m)}</span>{/if}
+            <span class="point"></span>
+            <span class="nom">{#if lieuAvecCombat(c, etat, l.id, moi)}<span class="epee" title="Combat possible ici">⚔ </span>{/if}{l.nom}{#if niveauDuLieu(c, etat, l.id, moi) !== null} <span class={`niv ${couleurLieu(l.id)}`}>niv. {niveauDuLieu(c, etat, l.id, moi)}</span>{/if}</span>
+          </button>
+        {/each}
+      </div>
+    {/if}
+  </Cadre169>
 
-  {#if villeOuverte}
-    <p class="ligne"><button onclick={() => (ville = null)}>← Retour à la carte</button> <span class="discret">{villeOuverte.description}</span></p>
-    <div class="carte">
-      <img class="pixel" src={imagePlan(villeOuverte.plan, villeOuverte.nom)} alt={`Plan : ${villeOuverte.nom}`} />
-      {#each lieuxVille as l, i (l.id)}
-        {@const m = marqueurLieu(c, etat, l.id, moi)}
-        <button class={`lieu ${m ?? ''}`} class:etape={etapes.includes(l.id)} data-lieu={l.id} aria-label={l.nom} title={infobulle(l.id, l.nom)} style={positionPlan(l, i)} onclick={() => choisir(l.id)}>
-          {#if m}<span class="symbole">{symbole(m)}</span>{/if}
-          <span class="point"></span>
-          <span class="nom">{#if lieuAvecCombat(c, etat, l.id, moi)}<span class="epee" title="Combat possible ici">⚔ </span>{/if}{l.nom}{#if niveauDuLieu(c, etat, l.id, moi) !== null} <span class={`niv ${couleurLieu(l.id)}`}>niv. {niveauDuLieu(c, etat, l.id, moi)}</span>{/if}</span>
-        </button>
-      {/each}
+  <!-- informations par-dessus l'image : région, retour, prochaine étape -->
+  <div class="hud">
+    {#if regions.length > 1 && !villeOuverte}
+      <div class="onglets-regions" role="tablist" aria-label="Régions">
+        {#each regions as r (r.id)}
+          <button role="tab" aria-selected={r.id === region.id} class:actif={r.id === region.id} onclick={() => changerRegion(r.id)}>{r.nom}{#if regionAvecEtape(r.id)} <span class="leg principale">●</span>{/if}</button>
+        {/each}
+      </div>
+    {/if}
+    <div class="ligne titre-carte">
+      {#if villeOuverte}<button class="petit" onclick={() => (ville = null)}>← Retour à la carte</button>{/if}
+      <h2>{villeOuverte ? villeOuverte.nom : region.nom}</h2>
     </div>
-  {:else}
-    <div class="carte">
-      <img class="pixel" src={imageCarte(region.carte)} alt={`Carte : ${region.nom}`} />
-      {#each villes as v (v.id)}
-        {@const m = marqueurVille(v.id)}
-        <button class={`lieu ville ${m ?? ''}`} class:etape={lieux.some((l) => l.ville === v.id && etapes.includes(l.id))} data-ville={v.id} aria-label={v.nom} style={`left:${(v.position.x / 1920) * 100}%; top:${(v.position.y / 1080) * 100}%`} onclick={() => (ville = v.id)}>
-          {#if m}<span class="symbole">{symbole(m)}</span>{/if}
-          <span class="point"></span>
-          <span class="nom">{#if combatVille(v.id)}<span class="epee" title="Combat possible dans la ville">⚔ </span>{/if}{v.nom}</span>
-        </button>
-      {/each}
-      {#each horsVille as l (l.id)}
-        {@const m = marqueurLieu(c, etat, l.id, moi)}
-        <button class={`lieu ${m ?? ''}`} class:etape={etapes.includes(l.id)} data-lieu={l.id} aria-label={l.nom} title={infobulle(l.id, l.nom)} style={`left:${(l.position.x / 1920) * 100}%; top:${(l.position.y / 1080) * 100}%`} onclick={() => choisir(l.id)}>
-          {#if m}<span class="symbole">{symbole(m)}</span>{/if}
-          <span class="point"></span>
-          <span class="nom">{#if lieuAvecCombat(c, etat, l.id, moi)}<span class="epee" title="Combat possible ici">⚔ </span>{/if}{l.nom}{#if niveauDuLieu(c, etat, l.id, moi) !== null} <span class={`niv ${couleurLieu(l.id)}`}>niv. {niveauDuLieu(c, etat, l.id, moi)}</span>{/if}</span>
-        </button>
-      {/each}
-    </div>
-  {/if}
-  <p class="discret">Cliquez sur un lieu. <span class="leg principale">!</span> quête principale · <span class="leg secondaire">!</span> quête secondaire · <span class="leg rendre">?</span> quête à rendre · ⚔ combat possible · un point qui clignote = prochaine étape d'une quête ou d'un contrat.</p>
+    {#if etape}
+      <div class="bandeau-etape carte-ui">
+        <span>➤ <strong>Prochaine étape :</strong> {etape.objectif}{#if etape.nomLieu && !etape.objectif.includes(etape.nomLieu)}{' '}<span class="discret">({etape.nomLieu})</span>{/if}{#if niveauEtape !== null}{' '}<NiveauConseille niveau={niveauEtape} aide />{/if}</span>
+        {#if etape.lieu && etape.disponible && etapeAccessible}
+          <button class="principal petit" onclick={allerEtape}>Y aller</button>
+        {:else if etape.attenteJour !== null}
+          <small class="discret">Pas avant : {formaterDate(c, etape.attenteJour)}. Pour faire passer les mois, dormez dans une auberge (le Chaudron Fêlé à Lysmont, ou l'auberge de la région).</small>
+          {#if lieux.some((l) => l.auberge)}<button class="petit" onclick={() => choisir(lieux.find((l) => l.auberge)!.id)}>Aller à l'auberge</button>{/if}
+        {:else if !etape.disponible}
+          <small class="discret">Pas encore possible : suivez les autres pistes en attendant.</small>
+        {/if}
+      </div>
+    {/if}
+  </div>
+  <details class="legende carte-ui">
+    <summary>Légende</summary>
+    <p>{#if villeOuverte}{villeOuverte.description} {:else if region.description}{region.description} {/if}Cliquez sur un lieu. <span class="leg principale">!</span> quête principale · <span class="leg secondaire">!</span> quête secondaire · <span class="leg rendre">?</span> quête à rendre · ⚔ combat possible · un point qui clignote = prochaine étape d'une quête ou d'un contrat.</p>
+  </details>
 </section>
-
 <style>
-  .onglets-regions { display: flex; gap: 0.3rem; flex-wrap: wrap; margin-bottom: 0.4rem; }
+  .vue-carte { position: absolute; inset: 0; }
+  .hud { position: absolute; z-index: 20; top: calc(max(0.3rem, env(safe-area-inset-top)) + 3rem); left: max(0.5rem, env(safe-area-inset-left)); width: min(460px, 44%); display: grid; gap: 0.4rem; pointer-events: none; }
+  @media (max-aspect-ratio: 1 / 1) { .hud { width: calc(100% - 1rem); top: calc(max(0.2rem, env(safe-area-inset-top)) + 3.5rem + 56.25vw); } }
+  @media (max-height: 500px) { .bandeau-etape { font-size: 0.8rem; padding: 0.3rem 0.5rem; } .titre-carte h2 { font-size: 1rem; } }
+  .hud > * { pointer-events: auto; justify-self: start; }
+  .titre-carte h2 { margin: 0; text-shadow: 0 2px 6px #000, 0 0 2px #000; }
+  .legende { position: absolute; z-index: 20; left: max(0.5rem, env(safe-area-inset-left)); bottom: max(0.5rem, env(safe-area-inset-bottom)); width: min(460px, calc(100% - 1rem)); padding: 0.4rem 0.7rem; background: #1d1928e6; font-size: 0.85rem; }
+  .legende summary { cursor: pointer; min-height: 32px; display: flex; align-items: center; }
+  .legende p { margin: 0.3rem 0 0; }
+  .onglets-regions { display: flex; gap: 0.3rem; flex-wrap: wrap; }
+  .onglets-regions button { background: #1d1928e6; }
   .onglets-regions .actif { border-color: var(--or); background: #3b2f18; }
-  .etape { display: flex; justify-content: space-between; align-items: center; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 0.6rem; border-color: var(--or); }
+  .bandeau-etape { display: flex; justify-content: space-between; align-items: center; gap: 0.6rem; flex-wrap: wrap; border-color: var(--or); padding: 0.5rem 0.7rem; background: #1d1928e6; font-size: 0.92rem; }
   .epee { color: #ff9b8a; }
   .niv { font-weight: 700; }
   .niv-vert { color: var(--vert); }
   .niv-orange { color: #f2a33a; }
   .niv-rouge { color: var(--rouge); }
-  .carte { position: relative; border-radius: var(--rayon); overflow: hidden; border: 1px solid var(--bord); }
-  .carte img { display: block; width: 100%; height: auto; }
+  .carte { position: absolute; inset: 0; overflow: hidden; }
+  .carte img { display: block; width: 100%; height: 100%; }
   /* Zone cliquable FIXE de 44 × 44 px, centrée sur le point par des marges (jamais par transform : le style
      « bouton enfoncé » du site décalait le bouton au moment de l'appui, et le clic tombait à côté).
      Le point, le symbole et le nom sont décoratifs : ils ne captent pas le clic et seuls eux sont animés. */

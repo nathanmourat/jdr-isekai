@@ -23,7 +23,7 @@ async function preparer(page) {
   await page.getByRole('button', { name: /Lame runique/ }).click();
   await page.getByRole('button', { name: /^Œil du Seuil/ }).click();
   await page.getByRole('button', { name: 'Créer mon héros' }).click();
-  await page.getByRole('button', { name: 'Carte', exact: true }).waitFor();
+  await page.locator('[data-lieu="temple-du-seuil"]').waitFor(); // la carte est la scène elle-même
   // l'Appel : on clique sur le Grand Prieur dans le décor du Temple
   await page.locator('[data-lieu="temple-du-seuil"]').click();
   await page.locator('[data-pnj="aureliath"]').click();

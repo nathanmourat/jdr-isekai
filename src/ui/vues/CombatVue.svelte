@@ -106,6 +106,9 @@
   const dispo = $derived(acteur && monTour ? actionsDisponibles(c, combat, acteur.id) : null);
   let selection = $state<{ type: 'attaque' } | { type: 'competence'; comp: Competence } | { type: 'potion' } | { type: 'pacifier' } | { type: 'sac'; item: string; cible: string } | null>(null);
   let scene: SceneCombat | null = null;
+  /** Panneau d'actions replié, volet du journal ouvert (affichage seulement, propre à cet appareil). */
+  let actionsReduites = $state(false);
+  let journalOuvert = $state(false);
 
   const cibles = $derived.by((): string[] => {
     if (!dispo || !acteur || !selection) return [];
@@ -195,13 +198,8 @@
 </script>
 
 <section class="combat">
-  <div class="ligne entete">
-    <h2>⚔ {combat.nom}</h2>
-    <span class="discret">Tour {combat.tour}</span>
-    <label class="option"><input type="checkbox" checked={jeu.animationsRapides} onchange={(e) => jeu.changerAnimationsRapides((e.target as HTMLInputElement).checked)} /> Animations rapides</label>
-  </div>
   <div class="arene">
-    <PhaserHote scene="combat" surPret={(s) => (scene = s as SceneCombat)} />
+    <PhaserHote plein scene="combat" surPret={(s) => (scene = s as SceneCombat)} />
     {#if suspense}
       <div class="suspense" class:fini={!!suspense.resultat} aria-live="polite">
         <p class="qui">{suspense.nom} — {suspense.action}</p>
@@ -216,8 +214,44 @@
     {/if}
   </div>
 
-  <div class="bas">
-    <div class="carte-ui panneau-actions">
+  <!-- en-tête par-dessus la scène : nom du combat, tour, options -->
+  <div class="hud-combat">
+    <h2>⚔ {combat.nom} <span class="discret">· Tour {combat.tour}</span></h2>
+    <div class="ligne">
+      <label class="option"><input type="checkbox" checked={jeu.animationsRapides} onchange={(e) => jeu.changerAnimationsRapides((e.target as HTMLInputElement).checked)} /> Animations rapides</label>
+      <button class="petit" aria-expanded={journalOuvert} onclick={() => (journalOuvert = !journalOuvert)}>📜 Journal{journalOuvert ? ' ▸' : ' ◂'}</button>
+    </div>
+  </div>
+
+  {#if journalOuvert}
+    <aside class="cote carte-ui" aria-label="Combattants et journal du combat">
+      <h3>Combattants</h3>
+
+        {#each [...herosCamp, ...ennemis] as x (x.id)}
+          <div class="combattant" class:ko={x.ko} class:ennemi={x.camp === 'ennemis'}>
+            <span>{x.nom}{#if x.camp === 'ennemis'} <small class="niveau">Niv. {x.niveau}</small>{/if}</span>
+            <div class="barres">
+              <div class="barre" title={`${x.pv}/${x.pvMax} PV`}><div style={`width:${(x.pv / x.pvMax) * 100}%`}></div></div>
+              {#if utiliseMana(x)}<div class="barre mana" title={`${x.mana}/${x.manaMax} mana`}><div style={`width:${(x.mana / x.manaMax) * 100}%`}></div></div>{/if}
+            </div>
+            <small class="discret">{x.pv}/{x.pvMax} PV{#if utiliseMana(x)} · <span class="mana-txt">{x.mana}/{x.manaMax} mana</span>{/if}{x.bouclier ? ` +${x.bouclier}` : ''}{x.etats.length ? ` · ${etatsDe(x)}` : ''}</small>
+          </div>
+        {/each}
+      <h3>Journal du combat</h3>
+      <div class="journal" aria-live="polite">
+        {#each journal as e, i (vu.evenements.length - i)}<p class:fort={e.type === 'ko' || e.type === 'fin'} class:poison={e.etat === 'poison'}>{e.texte}</p>{/each}
+      </div>
+    </aside>
+  {/if}
+
+  <!-- actions et propositions du combat libre : panneau en bas, qui se replie -->
+  <div class="panneau-bas" class:reduit={actionsReduites}>
+    <button class="entete-panneau" aria-expanded={!actionsReduites} onclick={() => (actionsReduites = !actionsReduites)}>
+      <span>{#if combat.resultat && termine}{combat.resultat === 'victoire' ? '🏆 Victoire !' : combat.resultat === 'defaite' ? 'Défaite…' : 'Fuite'}{:else if acteur && monTour && termine}À vous : {acteur.nom} <span class="stats">{acteur.pv}/{acteur.pvMax} PV · {acteur.mana}/{acteur.manaMax} mana</span>{:else if acteur && termine}Au tour de {acteur.nom}{:else}Le tour se déroule…{/if}</span>
+      <span class="bascule">{actionsReduites ? '▴ Actions' : '▾ Réduire'}</span>
+    </button>
+    {#if !actionsReduites}
+      <div class="panneau-actions">
       {#if !termine}
         <p class="discret">Le tour se déroule…</p>
       {:else if combat.resultat}
@@ -268,35 +302,42 @@
         <p>C'est au tour de <strong>{acteur.nom}</strong> ({etat.joueurs[acteur.joueurId ?? '']?.pseudo ?? '?'})…</p>
       {/if}
       {#if peutSecondDepart}<button class="petit" onclick={() => jeu.agir({ type: 'second_depart', cle })}>⟲ Second départ (rejouer le tour)</button>{/if}
-    </div>
-
-    <div class="carte-ui etats">
-      <h3>Combattants</h3>
-      {#each [...herosCamp, ...ennemis] as x (x.id)}
-        <div class="combattant" class:ko={x.ko} class:ennemi={x.camp === 'ennemis'}>
-          <span>{x.nom}{#if x.camp === 'ennemis'} <small class="niveau">Niv. {x.niveau}</small>{/if}</span>
-          <div class="barres">
-            <div class="barre" title={`${x.pv}/${x.pvMax} PV`}><div style={`width:${(x.pv / x.pvMax) * 100}%`}></div></div>
-            {#if utiliseMana(x)}<div class="barre mana" title={`${x.mana}/${x.manaMax} mana`}><div style={`width:${(x.mana / x.manaMax) * 100}%`}></div></div>{/if}
-          </div>
-          <small class="discret">{x.pv}/{x.pvMax} PV{#if utiliseMana(x)} · <span class="mana-txt">{x.mana}/{x.manaMax} mana</span>{/if}{x.bouclier ? ` +${x.bouclier}` : ''}{x.etats.length ? ` · ${etatsDe(x)}` : ''}</small>
-        </div>
-      {/each}
-    </div>
-
-    <div class="carte-ui journal" aria-live="polite">
-      <h3>Journal du combat</h3>
-      {#each journal as e, i (vu.evenements.length - i)}<p class:fort={e.type === 'ko' || e.type === 'fin'} class:poison={e.etat === 'poison'}>{e.texte}</p>{/each}
-    </div>
+      </div>
+    {/if}
   </div>
 </section>
 
 <style>
-  .entete { justify-content: space-between; }
-  .entete h2 { margin: 0; }
   .option { display: flex; align-items: center; gap: 0.3rem; font-size: 0.9rem; color: var(--texte-2); }
   .option input { width: auto; }
-  .arene { position: relative; }
+  .combat { position: absolute; inset: 0; }
+  .arene { position: absolute; inset: 0; }
+  .hud-combat { position: absolute; z-index: 20; top: calc(max(0.3rem, env(safe-area-inset-top)) + 3rem); left: max(0.5rem, env(safe-area-inset-left)); right: max(0.5rem, env(safe-area-inset-right)); display: flex; justify-content: space-between; align-items: center; gap: 0.4rem; flex-wrap: wrap; pointer-events: none; }
+  .hud-combat > * { pointer-events: auto; }
+  .hud-combat h2 { margin: 0; font-size: clamp(1rem, 2.4vw, 1.3rem); text-shadow: 0 2px 6px #000, 0 0 2px #000; }
+  .hud-combat .option { background: #1d1928e6; border-radius: 8px; padding: 0.2rem 0.5rem; min-height: 36px; }
+  .hud-combat button { background: #1d1928e6; min-height: 36px; }
+  .cote { position: absolute; z-index: 30; top: calc(max(0.3rem, env(safe-area-inset-top)) + 6rem); right: max(0.5rem, env(safe-area-inset-right)); width: min(340px, calc(100% - 1rem)); max-height: calc(100% - 13rem); overflow-y: auto; overscroll-behavior: contain; padding: 0.7rem; background: #14111cf0; }
+  .cote h3 { margin: 0 0 0.4rem; }
+  .cote h3 + .journal, .cote .journal { margin-bottom: 0; }
+  /* panneau d'actions en bas : se replie en une ligne ; déplié, au plus 45 % de l'écran avec défilement interne */
+  .panneau-bas { position: absolute; z-index: 40; left: 50%; translate: -50% 0; bottom: max(0.4rem, env(safe-area-inset-bottom)); width: min(980px, calc(100% - 0.8rem)); display: flex; flex-direction: column;
+    background: #14111cf0; border: 1px solid var(--or); border-radius: var(--rayon); box-shadow: var(--ombre); backdrop-filter: blur(3px); }
+  .panneau-bas.reduit { border-color: var(--bord); }
+  .entete-panneau { display: flex; justify-content: space-between; align-items: center; gap: 0.6rem; min-height: 44px; padding: 0.3rem 0.8rem; background: none; border: none; text-align: left; font-family: 'Cinzel', serif; color: var(--or-2); }
+  .entete-panneau:hover:not(:disabled) { background: #ffffff0a; }
+  .bascule { font-family: 'Source Sans 3', system-ui, sans-serif; font-size: 0.9rem; white-space: nowrap; }
+  .panneau-actions { max-height: 45dvh; overflow-y: auto; overscroll-behavior: contain; padding: 0 0.8rem 0.8rem; border-top: 1px solid var(--bord); }
+  /* le titre du panneau (« À vous… », « Victoire ! ») est déjà dans l'en-tête */
+  .panneau-actions > h3:first-child { display: none; }
+  .stats { font-family: 'Source Sans 3', system-ui, sans-serif; font-size: 0.85rem; color: var(--texte-2); }
+  /* téléphone en paysage : peu de hauteur, le panneau reste petit pour laisser voir le combat */
+  @media (max-height: 500px) {
+    .panneau-actions { max-height: 34dvh; }
+    .hud-combat h2 { font-size: 0.95rem; }
+    .hud-combat .option { display: none; }
+    .entete-panneau { min-height: 40px; }
+  }
   .suspense { position: absolute; left: 50%; top: 12%; transform: translateX(-50%); width: min(340px, 86%); background: rgba(20, 17, 28, 0.94); border: 2px solid var(--or); border-radius: var(--rayon); padding: 0.7rem 0.9rem; text-align: center; box-shadow: var(--ombre); z-index: 5; }
   .suspense p { margin: 0.2em 0; }
   .suspense .qui { color: var(--or-2); font-weight: 700; }
@@ -313,8 +354,6 @@
   .roue span { height: 1.4em; line-height: 1.4em; color: var(--texte-2); }
   @keyframes tourner { to { transform: translateY(-4.2em); } }
   @keyframes eclat { 50% { transform: scale(1.3); } }
-  .bas { display: grid; gap: 0.6rem; grid-template-columns: 1.4fr 1fr 1fr; margin-top: 0.6rem; }
-  @media (max-width: 900px) { .bas { grid-template-columns: 1fr; } }
   .actions { display: flex; flex-wrap: wrap; gap: 0.4rem; }
   .actions small, .ligne button small { display: block; color: var(--texte-2); font-size: 0.75rem; }
   .consigne { color: var(--or-2); }
@@ -335,6 +374,6 @@
   .journal p { margin: 0.15em 0; font-size: 0.88rem; }
   .journal .fort { color: var(--or-2); font-weight: 600; }
   .journal .poison { color: #8fe38f; }
-  .journal { max-height: 280px; overflow: auto; }
+
   @media (prefers-reduced-motion: reduce) { .roue, .jauge > div { animation-duration: 0.01s; } }
 </style>

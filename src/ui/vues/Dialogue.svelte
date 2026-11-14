@@ -15,6 +15,8 @@
   const repliques = $derived(noeud ? noeud.repliques.filter((r) => conditionScene(c, etat, r.si, es.heros)) : []);
   const decor = $derived(noeud?.decor ?? scene.decor);
   let vues = $state(1);
+  /** Boîte de dialogue réduite, pour regarder l'image (affichage seulement). */
+  let reduite = $state(false);
   let derniereCle = '';
   $effect(() => {
     const k = `${es.sceneId}:${es.noeud}`;
@@ -61,7 +63,11 @@
   <div class="decor pixel" role="img" aria-label={`Décor : ${scene.titre}`}></div>
   <div class="bandeau"><h2>{scene.titre}</h2>{#if groupe}<span class="badge">scène de groupe</span>{/if}</div>
 
-  <div class="boite carte-ui">
+  {#if reduite}
+    <button class="rouvrir" aria-expanded="false" onclick={() => (reduite = false)}>▴ Afficher le dialogue</button>
+  {/if}
+  <div class="boite carte-ui" class:cachee={reduite}>
+    <button class="reduire" aria-label="Réduire le dialogue pour voir l'image" title="Réduire" onclick={() => (reduite = true)}>▾</button>
     {#if es.dernierTest && vues === 1}
       <p class="test" class:reussi={es.dernierTest.reussi}>
         Test de {NOMS_CARACS[es.dernierTest.carac]} ({etat.heros[es.dernierTest.heros]?.nom}) : dé {es.dernierTest.jet} + {es.dernierTest.total - es.dernierTest.jet} = <strong>{es.dernierTest.total}</strong>
@@ -165,11 +171,14 @@
 </section>
 
 <style>
-  .scene { position: relative; border-radius: var(--rayon); overflow: hidden; border: 1px solid var(--bord); min-height: 70dvh; display: grid; grid-template-rows: auto 1fr auto; }
-  .decor { position: absolute; inset: 0; background: var(--decor) center / cover no-repeat; }
-  .bandeau { position: relative; display: flex; gap: 0.6rem; align-items: center; padding: 0.6rem 1rem; background: linear-gradient(rgba(10,8,14,0.85), transparent); }
+  .scene { position: absolute; inset: 0; overflow: hidden; display: grid; grid-template-rows: auto 1fr auto; background: #07060a; }
+  .decor { position: absolute; inset: 0; background: var(--decor) center / contain no-repeat; }
+  .bandeau { position: relative; display: flex; gap: 0.6rem; align-items: center; padding: 0.6rem 1rem; padding-top: calc(max(0.3rem, env(safe-area-inset-top)) + 3rem); background: linear-gradient(rgba(10,8,14,0.85), transparent); }
   .bandeau h2 { margin: 0; text-shadow: 0 2px 4px #000; }
-  .boite { position: relative; grid-row: 3; margin: 0.8rem; background: rgba(20,17,28,0.92); backdrop-filter: blur(2px); }
+  .boite { position: relative; grid-row: 3; justify-self: center; width: min(1100px, calc(100% - 1rem)); margin: 0.5rem; margin-bottom: max(0.5rem, env(safe-area-inset-bottom)); max-height: 52dvh; overflow-y: auto; overscroll-behavior: contain; background: rgba(20,17,28,0.88); backdrop-filter: blur(2px); padding-right: 3rem; }
+  .boite.cachee { display: none; }
+  .reduire { position: absolute; top: 0.4rem; right: 0.4rem; min-width: 44px; min-height: 40px; padding: 0; }
+  .rouvrir { position: absolute; z-index: 5; left: 50%; translate: -50% 0; bottom: max(0.6rem, env(safe-area-inset-bottom)); min-height: 44px; background: #14111cf0; border-color: var(--or); }
   .replique { display: flex; gap: 0.9rem; align-items: flex-start; cursor: pointer; }
   .portrait { width: clamp(72px, 14vw, 140px); aspect-ratio: 1; border-radius: 8px; border: 2px solid var(--or); object-fit: cover; object-position: top; background: var(--fond); flex: none; }
   .qui { margin: 0; color: var(--or-2); font-weight: 700; font-family: 'Cinzel', serif; }

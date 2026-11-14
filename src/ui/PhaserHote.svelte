@@ -6,7 +6,8 @@
   import { SceneDonjon } from '../rendu/SceneDonjon';
   import { jeu } from './jeu.svelte';
 
-  let { scene, surPret }: { scene: 'combat' | 'donjon'; surPret: (s: SceneCombat | SceneDonjon) => void } = $props();
+  /** `plein` : le cadre remplit tout l'espace (écran de jeu plein écran) ; Phaser garde le 16:9 et centre l'image. */
+  let { scene, surPret, plein = false }: { scene: 'combat' | 'donjon'; surPret: (s: SceneCombat | SceneDonjon) => void; plein?: boolean } = $props();
   let cadre: HTMLDivElement;
   let game: Phaser.Game | null = null;
 
@@ -32,8 +33,9 @@
   onDestroy(() => game?.destroy(true));
 </script>
 
-<div class="cadre" bind:this={cadre}></div>
+<div class="cadre" class:plein bind:this={cadre}></div>
 
 <style>
   .cadre { width: 100%; min-width: 0; aspect-ratio: 16 / 9; max-height: 70dvh; background: #0d0b12; border-radius: var(--rayon); overflow: hidden; border: 1px solid var(--bord); }
+  .cadre.plein { position: absolute; inset: 0; width: 100%; height: 100%; aspect-ratio: auto; max-height: none; border: none; border-radius: 0; background: #07060a; }
 </style>
