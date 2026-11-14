@@ -6,7 +6,7 @@ import Phaser from 'phaser';
 import type { Contenu } from '../contenu/charger';
 import type { EtatPartie } from '../moteur/partie';
 import { caseDonjon } from '../moteur/partie';
-import { prechargerTout } from './sprites';
+import { echelleCase, prechargerTout } from './sprites';
 
 const tuilesJson = import.meta.glob('/assets/tuiles/*.json', { import: 'default', eager: true }) as Record<string, Correspondance>;
 
@@ -240,12 +240,12 @@ export class SceneDonjon extends Phaser.Scene {
     const m = opts.meneur;
     const cle = m ? `personnages/heros/${m.classe}/exploration` : '';
     if (m && this.textures.exists(cle)) {
-      const s = this.add.sprite(0, 0, cle, 0).setScale(opts.echelle);
+      const s = this.add.sprite(0, 0, cle, 0).setScale(opts.echelle * echelleCase(this, cle, this.tailles.tailleExploration));
       if (m.teinte) s.setTint(Phaser.Display.Color.HexStringToColor(m.teinte).color);
       items.push(s);
       const cleCalque = `personnages/races/${m.race}/calque-exploration`;
       if (this.textures.exists(cleCalque)) {
-        const c = this.add.sprite(0, 0, cleCalque, 0).setScale(opts.echelle);
+        const c = this.add.sprite(0, 0, cleCalque, 0).setScale(opts.echelle * echelleCase(this, cleCalque, this.tailles.tailleExploration));
         if (m.teinte) c.setTint(Phaser.Display.Color.HexStringToColor(m.teinte).color);
         items.push(c);
       }

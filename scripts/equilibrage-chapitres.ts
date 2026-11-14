@@ -13,6 +13,7 @@ import { parse } from 'yaml';
 import type { Objet } from '../src/contenu/schemas';
 import { contenuDisque, RACINE } from '../src/contenu/node';
 import { pc, tauxVictoire, type HerosSimule } from '../src/moteur/simulation';
+import { aptitudeEquipement } from '../src/moteur/equipement';
 
 const c = contenuDisque();
 const rapide = process.argv.includes('--rapide');
@@ -42,7 +43,8 @@ function equipement(classe: string, palier: string, niveau: number): HerosSimule
   for (const emp of ['arme', 'armure', 'accessoire'] as const) {
     const choix = Object.values(c.objets)
       .filter((o) => o.type === 'equipement' && o.palier === palier && o.emplacement === emp && o.rarete === 'peu-commun' && (o.niveau ?? 1) <= niveau)
-      .filter((o) => !o.classes?.length || o.classes.includes(classe))
+      // un joueur choisit un objet que sa classe maîtrise (sinon : malus de non-maîtrise)
+      .filter((o) => aptitudeEquipement(c, classe, o) === 'maitrise')
       .sort((a, b) => interet(classe, b) - interet(classe, a) || a.id.localeCompare(b.id))[0];
     if (choix) res[emp] = choix.id;
   }

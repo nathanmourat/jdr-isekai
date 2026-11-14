@@ -87,6 +87,7 @@ Si une demande est floue ou contradictoire : poser la question plutôt que devin
 ## Textures (livrées par le groupe sur les branches `textures-v2` puis `textures-v3`)
 - Le groupe envoie ses images par GitHub (« Upload files » sur la branche `textures-v2`). Les récupérer avec `git fetch origin textures-v2`, les copier dans `assets/`, puis lancer `npm run assets:manquants -- --cocher`.
 - Toutes les classes partagent la **même trajectoire de corps** image par image : c'est ce qui permet à un seul calque de race de s'adapter aux 10 classes (`assets/personnages/races/NOTE-CALQUES.md`).
+- **Textures HD (branche `textures-hd`, fusionnée le 14/11)** : héros, calques de race et 31 monstres en cases deux fois plus grandes (combat 128, exploration 64), décors et PNJ redessinés à la même taille. Le code déduit la taille des cases de la largeur de l'image et affiche à la taille logique (`echelleCase` dans `src/rendu/sprites.ts`). Générateurs : `outils/textures/hd/`. Les monstres des chapitres 5 et 6 et les décors des chapitres 2 à 6 restent provisoires.
 - Tileset : la correspondance est dans `assets/tuiles/<nom>.json`. Le bestiaire est dans `assets/ennemis/BESTIAIRE.md` : 21 monstres prêts pour les chapitres 2 à 6, avec les niveaux conseillés.
 - Les invocations utilisent la planche du monstre du même nom, retournée côté héros.
 - Chemins : compagnons dans `personnages/compagnes/<id>/`, PNJ dans `personnages/pnj/<id>/`, portraits par défaut dans `personnages/races/<race>/portrait-defaut.png`.

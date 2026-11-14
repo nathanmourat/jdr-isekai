@@ -5,7 +5,7 @@
 import Phaser from 'phaser';
 import type { Combat, Combattant, EvenementCombat } from '../moteur/combat';
 import { urlAsset } from './assets';
-import { calqueProvisoire, cheminCombat, creerAnimations, LIGNES_ENNEMIS, LIGNES_HEROS, prechargerTout, textureProvisoire } from './sprites';
+import { calqueProvisoire, cheminCombat, creerAnimations, echelleCase, LIGNES_ENNEMIS, LIGNES_HEROS, prechargerTout, textureProvisoire } from './sprites';
 
 const L = 960, H = 540;
 
@@ -177,8 +177,9 @@ export class SceneCombat extends Phaser.Scene {
     const anime = creerAnimations(this, chemin, lignes);
     const cleTexture = anime ? chemin : textureProvisoire(this, c.refId, c.nom, taille, versDroite, c.boss);
     const sprite = this.add.sprite(0, 0, cleTexture).setOrigin(0.5, 1);
-    const echelle = opts.echelle * (c.echelle || 1) * (anime ? 1 : 1);
-    sprite.setScale(echelle);
+    // taille logique (64, ou 128 pour un boss) quelle que soit la résolution de la planche (HD : cases deux fois plus grandes)
+    const echelle = opts.echelle * (c.echelle || 1);
+    sprite.setScale(echelle * (anime ? echelleCase(this, chemin, taille) : 1));
     if (anime) sprite.play(`${chemin}:attente`);
     // une planche d'ennemi (tournée vers la gauche) utilisée côté héros : on la retourne
     if (anime && versDroite && chemin.startsWith('ennemis/')) sprite.setFlipX(true);
@@ -189,7 +190,7 @@ export class SceneCombat extends Phaser.Scene {
       const calqueAnime = anime && creerAnimations(this, cheminCalque, LIGNES_HEROS);
       const cleCalque = calqueAnime ? cheminCalque : calqueProvisoire(this, c.race, taille, versDroite);
       if (cleCalque) {
-        calque = this.add.sprite(0, 0, cleCalque).setOrigin(0.5, 1).setScale(echelle);
+        calque = this.add.sprite(0, 0, cleCalque).setOrigin(0.5, 1).setScale(echelle * (calqueAnime ? echelleCase(this, cheminCalque, taille) : 1));
         if (calqueAnime) calque.play(`${cheminCalque}:attente`);
       }
     }

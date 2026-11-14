@@ -88,6 +88,9 @@ async function jouerScene(captureNom) {
     // un personnage interroge un joueur : on choisit la première réponse proposée
     const reponse = page.locator('button.reponse').first();
     if (await reponse.isVisible()) { await reponse.click(); continue; }
+    // pari partagé : chaque joueur local mise
+    const mise = page.getByRole('button', { name: 'Je mise', exact: true });
+    if (await mise.first().isVisible()) { await mise.first().click(); continue; }
     if (await page.getByRole('button', { name: /Au combat/ }).isVisible()) { await page.getByRole('button', { name: /Au combat/ }).click(); continue; }
     if (await page.locator('.combat').isVisible()) { await combattre(captureNom); continue; }
     const suite = page.getByText(/Cliquer pour continuer/);
@@ -164,6 +167,8 @@ etape('examen de la Guilde avec combat');
 await page.getByRole('button', { name: 'Carte', exact: true }).click();
 await page.getByRole('button', { name: /Ville de Lysmont/ }).click();
 await page.getByRole('button', { name: /Le Chaudron Fêlé/ }).click();
+// le lit est dans la chambre, à l'étage (escalier ou porte de la chambre)
+await page.getByRole('button', { name: /Monter à la chambre/ }).first().click();
 await page.getByRole('button', { name: /Le lit/ }).click();
 await page.getByRole('button', { name: '6 mois', exact: true }).click();
 const accepter = page.getByRole('button', { name: /^Accepter/ }).first();

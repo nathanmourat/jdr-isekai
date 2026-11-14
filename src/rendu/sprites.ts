@@ -6,6 +6,18 @@ import Phaser from 'phaser';
 import { assetsPresents, couleur, urlAsset } from './assets';
 
 export const COLONNES = 8;
+/** Planches d'exploration : 4 colonnes × 4 lignes (bas, gauche, droite, haut). */
+export const COLONNES_EXPLORATION = 4;
+
+/**
+ * Facteur d'échelle pour afficher une planche à sa taille « logique » quelle que soit sa résolution :
+ * une planche HD (cases de 128 au lieu de 64) est affichée à la même taille, avec deux fois plus de détails.
+ */
+export function echelleCase(scene: Phaser.Scene, cle: string, tailleLogique: number): number {
+  if (!scene.textures.exists(cle)) return 1;
+  const largeur = scene.textures.get(cle).get(0).width;
+  return largeur > 0 ? tailleLogique / largeur : 1;
+}
 /** Lignes des planches de combat : [nom, nombre d'images]. */
 export const LIGNES_HEROS: [string, number][] = [['attente', 4], ['attaque', 6], ['sort', 4], ['touche', 2], ['ko', 3], ['victoire', 4]];
 export const LIGNES_ENNEMIS: [string, number][] = [['attente', 4], ['attaque', 6], ['touche', 2], ['ko', 3]];
@@ -28,11 +40,10 @@ export function prechargerTout(scene: Phaser.Scene, tailleCombat: number, taille
   for (const chemin of assetsPresents()) {
     const url = urlAsset(chemin)!;
     if (scene.textures.exists(chemin) || scene.textures.exists(`brut:${chemin}`)) continue;
-    if (chemin.endsWith('/combat') || chemin.endsWith('/calque-combat')) {
-      // la taille des cases se déduit de la largeur de l'image (8 colonnes) au chargement
+    if (chemin.endsWith('/combat') || chemin.endsWith('/calque-combat') || chemin.endsWith('/exploration') || chemin.endsWith('/calque-exploration')) {
+      // la taille des cases se déduit de la largeur de l'image (8 colonnes en combat, 4 en exploration) au chargement :
+      // les planches normales et HD (deux fois plus de pixels) marchent toutes les deux
       scene.load.image(`brut:${chemin}`, url);
-    } else if (chemin.endsWith('/exploration') || chemin.endsWith('/calque-exploration')) {
-      scene.load.spritesheet(chemin, url, { frameWidth: tailleExploration, frameHeight: tailleExploration });
     } else if (chemin.startsWith('effets/')) {
       scene.load.spritesheet(chemin, url, { frameWidth: tailleCombat, frameHeight: tailleCombat });
     } else {
@@ -45,7 +56,8 @@ export function prechargerTout(scene: Phaser.Scene, tailleCombat: number, taille
       const brut = `brut:${chemin}`;
       if (!scene.textures.exists(brut) || scene.textures.exists(chemin)) continue;
       const img = scene.textures.get(brut).getSourceImage() as HTMLImageElement;
-      const taille = Math.round(img.width / COLONNES) || tailleCombat;
+      const exploration = chemin.endsWith('exploration');
+      const taille = Math.round(img.width / (exploration ? COLONNES_EXPLORATION : COLONNES)) || (exploration ? tailleExploration : tailleCombat);
       scene.textures.addSpriteSheet(chemin, img, { frameWidth: taille, frameHeight: taille });
     }
     void tailleBoss;

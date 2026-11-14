@@ -31,8 +31,9 @@
 | Format | **PNG**, fond **transparent** (sauf décors et cartes) |
 | Pixel art | **Sans anti-crénelage ni flou** : bords nets. Le jeu agrandit l'image ×2 ou ×3 sans lissage. |
 | Taille d'une tuile | **32 × 32 px** |
-| Sprite d'exploration | Cases de **32 × 32 px** |
-| Sprite de combat | Cases de **64 × 64 px** (boss : **128 × 128 px**) |
+| Sprite d'exploration | Cases de **32 × 32 px**, ou **64 × 64 px** en HD (planche de 4 × 4 cases) |
+| Sprite de combat | Cases de **64 × 64 px** (boss : **128 × 128 px**), ou deux fois plus en HD (planche de 8 colonnes) |
+| Version HD (14/11) | Le jeu lit la taille des cases dans la largeur de l'image (8 colonnes en combat, 4 en exploration) et affiche le personnage à la même taille : une planche HD montre simplement deux fois plus de détails. Un héros HD et son calque de race doivent avoir la même résolution. |
 | Planche d'animation | Les images d'une animation sont **alignées horizontalement**, sans espace ; une ligne par animation (§ 4) |
 | Portrait | **512 × 512 px**, buste centré, fond transparent |
 | Décor de scène | **1280 × 720 px** (16:9). Les éléments importants doivent rester dans la zone centrale de 960 × 720, car l'image est rognée sur mobile. |
