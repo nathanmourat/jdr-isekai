@@ -332,6 +332,19 @@ Le monde est trois fois plus grand (1,8 stud par pixel de la carte au lieu de 0,
 - [ ] À deux joueurs (Test → Clients et serveurs) : on passe à travers l'autre joueur et à travers les villageois, sans se bloquer dans les portes ni dans les salles intérieures. On ne traverse toujours pas les murs.
 - [ ] Les villageois et les gardes contournent les maisons et passent par les portes des remparts (ils ne restent pas coincés contre un mur). S'il y en a un qui tourne en rond, note l'endroit.
 
+### Liste de contrôle — une ville habitée (relief, rues courbes, maisons, faubourg, 14/11)
+- [ ] Le **château** est sur une butte (16 studs) : on y monte à pied par la pente, les tours d'angle ne dépassent pas dans le vide.
+- [ ] Le **Temple du Seuil** est sur sa colline, au nord, hors des remparts ; la route y va en contournant la butte du château par l'ouest et sort par une porte fortifiée au nord-ouest.
+- [ ] Les **rues sont courbes** et suivent le terrain ; les rues de la ville sont pavées au milieu ; des **réverbères** les bordent (allumés la nuit).
+- [ ] Des **maisons sont alignées le long des rues**, façade vers la rue, sans chevaucher une rue, un bâtiment ou les remparts. Quelques puits.
+- [ ] Une maison sur trois a une invite **« Entrer »** (nom du foyer : « Maison des Aubertin », « Au Pain Chaud », « Forge du Marteau Gris », « Ferme des Blés »…). On y entre (fondu au noir), la barre du haut affiche son nom, sans bouton « Que faire ici ? ». Les habitants se **saluent** (touche E : une phrase dans une bulle). « Sortir » ramène **devant la porte, côté rue**.
+- [ ] Au sud, la **grande route** sort par la porte sud et mène au **village de Hautepierre** : fermes le long de la route, **champs de blé**, meules, épouvantails, **3 moulins** sur de petites buttes ; d'autres champs et un moulin près de la Combe-aux-Saules.
+- [ ] Les **ailes des moulins tournent** (seulement ceux à moins de 600 studs de la caméra).
+- [ ] Les villageois (24) et les gardes (4) vont aussi jusqu'aux portes des maisons et rentrent chez eux la nuit ; aucun ne part vers une autre région.
+- [ ] Les chevaux sont devant le châtelet, sur la butte (pas en l'air ni dans la pente).
+- [ ] Dans les autres régions : rues courbes, **palais sur une butte** (sauf l'arbre-palais de Sylvenoire), une maison sur quatre habitée.
+- [ ] Le jeu ne rame pas plus qu'avant en arrivant sur la place (sinon, me dire le nombre d'images par seconde : Maj + F5).
+
 ### Liste de contrôle — examens de rang et maîtrises d'équipement (test 2, changements 10 et 11)
 - [ ] Dans n'importe quel comptoir de la Guilde, le panneau « 🎖 Rang de Guilde » montre le rang suivant, ce qu'il manque (points, niveau) et le bouton de l'examen quand tout est prêt.
 - [ ] Rangs E, D et A : un combat contre un examinateur (A : Dame Rowena en personne). En cas d'échec, on retente le lendemain.

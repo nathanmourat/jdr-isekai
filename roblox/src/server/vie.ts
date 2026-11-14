@@ -323,7 +323,7 @@ function etal(position: Vector3, regard: Vector3, couleur: Color3, nom: string) 
 
 function marche() {
 	// étals en cercle autour de la fontaine, en évitant l'axe des chemins vers les portes
-	const directions = portes.map((p) => {
+	const directions = portes.filter((p) => !p.lieu.match("^maison%-")[0]).map((p) => {
 		const d = p.position.sub(centrePlace);
 		return math.atan2(d.Z, d.X);
 	});
@@ -404,7 +404,7 @@ function animaux() {
 		for (const [x, c] of [[-30, rgb(110, 75, 45)], [-36, rgb(60, 45, 35)]] as const) {
 			const cheval = quadrupede("Cheval", c, 1.9);
 			// devant le châtelet d'entrée de la forteresse
-			cheval.PivotTo(new CFrame(positionLieu(chateau).add(new Vector3(x * 2.4, 0.4, 56))).mul(CFrame.Angles(0, math.rad(90), 0)));
+			cheval.PivotTo(new CFrame(positionLieu(chateau).add(new Vector3(x * 2.4, 0.4, 42))).mul(CFrame.Angles(0, math.rad(90), 0)));
 			cheval.Parent = dossier;
 		}
 	}
@@ -424,16 +424,18 @@ export function animerVille() {
 		// les balises des lieux d'étape (hors de la ville) ne sont pas des portes de maisons
 		if (e.IsA("BasePart") && e.Name === "Entree" && e.Parent?.GetAttribute("Etape") === undefined) {
 			const lieu = e.GetAttribute("Lieu") as string;
-			if (lieu !== "lysmont-place") portes.push({ lieu, position: new Vector3(e.Position.X, 0, e.Position.Z) });
+			// seulement les portes de Lysmont et de son faubourg (pas celles des autres régions)
+			const position = e.Position.sub(new Vector3(0, 3, 0));
+			if (lieu !== "lysmont-place" && position.sub(centrePlace).Magnitude < 950) portes.push({ lieu, position });
 		}
 	}
 	task.spawn(cycleJourNuit);
 	task.spawn(() => pcall(marche));
 	task.spawn(() => pcall(animaux));
-	// 12 villageois et 3 gardes, apparus un par un pour ne pas ralentir le démarrage
+	// 24 villageois et 4 gardes, apparus un par un pour ne pas ralentir le démarrage
 	task.spawn(() => {
-		for (let i = 0; i < 15; i++) {
-			const garde = i < 3;
+		for (let i = 0; i < 28; i++) {
+			const garde = i < 4;
 			task.spawn(() => promeneur(garde ? GARDE : TENUES[i % TENUES.size()], garde));
 			task.wait(0.6);
 		}

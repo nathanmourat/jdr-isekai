@@ -36,6 +36,12 @@ export function majMarqueurs(visible: boolean) {
 	const etapes = etat && h ? lieuxDesEtapes(CONTENU, etat, h.id) : [];
 	for (const ancre of entrees()) {
 		const id = ancre.GetAttribute("Lieu") as string;
+		// maisons habitées : pas de marqueur, l'invite « Entrer » reste toujours active
+		if (id.match("^maison%-")[0]) {
+			const i = ancre.FindFirstChildOfClass("ProximityPrompt");
+			if (i) i.Enabled = visible && etat !== undefined;
+			continue;
+		}
 		const lieu = trouverLieu(id);
 		const invite = ancre.FindFirstChildOfClass("ProximityPrompt");
 		let etiquette = panneaux.get(id);
@@ -176,7 +182,10 @@ export function entrerDans(lieu: string) {
 /** Ramène le personnage devant la porte du lieu, dehors. */
 export function sortirDe(lieu: string) {
 	const ancre = entrees().find((a) => a.GetAttribute("Lieu") === lieu);
-	if (ancre) fondu(() => placer(new CFrame(ancre.Position.add(new Vector3(0, 1, 6)), ancre.Position.add(new Vector3(0, 1, 12)))));
+	if (!ancre) return;
+	// les maisons habitées sont tournées vers leur rue : leur ancre regarde dehors ; les autres portes donnent sur +Z
+	const dehors = ancre.GetAttribute("Oriente") === true ? ancre.CFrame.LookVector : new Vector3(0, 0, 1);
+	fondu(() => placer(new CFrame(ancre.Position.add(dehors.mul(6)).add(new Vector3(0, 1, 0)), ancre.Position.add(dehors.mul(12)).add(new Vector3(0, 1, 0)))));
 }
 
 /** Téléporte le personnage devant l'entrée d'un lieu. */
@@ -187,11 +196,47 @@ export function allerAuLieu(id: string) {
 	if (ancre && racine) racine.CFrame = new CFrame(ancre.Position.add(new Vector3(0, 1, 6)), ancre.Position);
 }
 
+// ───────────────────────────── Habitants ─────────────────────────────
+
+const hasardBulles = new Random();
+/** Bulle au-dessus d'un habitant qu'on salue (une de ses phrases, tirée au hasard ; seul ce joueur la voit). */
+function bulle(sur: BasePart, phrases: string) {
+	const liste = phrases.split("|").filter((p) => p !== "");
+	if (liste.size() === 0) return;
+	sur.FindFirstChild("Bulle")?.Destroy();
+	const gui = new Instance("BillboardGui");
+	gui.Name = "Bulle";
+	gui.Size = new UDim2(0, 260, 0, 60);
+	gui.StudsOffset = new Vector3(0, 4.2, 0);
+	gui.MaxDistance = 60;
+	gui.Adornee = sur;
+	const t = new Instance("TextLabel");
+	t.Size = UDim2.fromScale(1, 1);
+	t.BackgroundColor3 = Color3.fromRGB(250, 246, 236);
+	t.BackgroundTransparency = 0.05;
+	t.TextColor3 = Color3.fromRGB(40, 32, 24);
+	t.Font = Enum.Font.Gotham;
+	t.TextSize = 15;
+	t.TextWrapped = true;
+	t.Text = liste[hasardBulles.NextInteger(0, liste.size() - 1)];
+	const coin = new Instance("UICorner");
+	coin.CornerRadius = new UDim(0, 10);
+	coin.Parent = t;
+	t.Parent = gui;
+	gui.Parent = sur;
+	task.delay(5, () => gui.Destroy());
+}
+
 /** Appelle `gerer(lieu, action)` quand le joueur appuie sur E : entrer, sortir, parler, contrats, boutique, grimoire, tout. */
 export function surInteraction(gerer: (lieu: string, action: string, pnj?: string) => void) {
 	ProximityPromptService.PromptTriggered.Connect((invite) => {
 		const lieu = invite.GetAttribute("Lieu");
 		const action = invite.GetAttribute("Action");
+		if (action === "habitant") {
+			const phrases = invite.GetAttribute("Phrases");
+			if (invite.Parent?.IsA("BasePart") && typeIs(phrases, "string")) bulle(invite.Parent, phrases);
+			return;
+		}
 		const pnj = invite.Parent?.Parent?.GetAttribute("Pnj");
 		if (typeIs(lieu, "string")) gerer(lieu, typeIs(action, "string") ? action : "entrer", typeIs(pnj, "string") ? pnj : undefined);
 	});

@@ -63,9 +63,19 @@ export function trouverLieu(id: string): LieuDef | undefined {
 	return undefined;
 }
 
+/**
+ * Décalages propres à la 3D (en studs) : le château domine la ville sur sa butte (Y = 16),
+ * le temple est sur sa colline, un peu plus au nord, hors des remparts (Y = 8).
+ */
+export const DECALAGE_3D: Record<string, Vector3> = {
+	chateau: new Vector3(0, 16, 0),
+	"temple-du-seuil": new Vector3(0, 8, -60),
+};
+
 export function positionLieu(l: LieuDef): Vector3 {
 	const o = ORIGINES[regionDuLieu(l.id)] ?? new Vector3();
-	return o.add(new Vector3((l.position.x - CENTRE_CARTE.x) * ECHELLE, 0, (l.position.y - CENTRE_CARTE.y) * ECHELLE));
+	const d = DECALAGE_3D[l.id] ?? new Vector3();
+	return o.add(new Vector3((l.position.x - CENTRE_CARTE.x) * ECHELLE, 0, (l.position.y - CENTRE_CARTE.y) * ECHELLE)).add(d);
 }
 
 /** Lieu du monde où l'on se bat, selon le décor de la rencontre (combat « sur place »). */

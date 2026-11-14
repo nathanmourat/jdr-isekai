@@ -10,7 +10,7 @@ import { Workspace } from "@rbxts/services";
 import { CONTENU } from "shared/donnees";
 import { positionLieu, regionDuLieu, STYLES, tousLesLieux, trouverLieu } from "shared/geo";
 import type { LieuDef } from "shared/moteur";
-import { genre } from "./regions";
+import { genre } from "./genres";
 import { banniere, bloc, C, tonneau, VERTICAL } from "./decor";
 import { COSTUMES, humanoide, type Costume } from "./modeles";
 
@@ -36,9 +36,24 @@ const COSTUMES_PNJ: Record<string, Costume> = {
 /** Noms des PNJ propres à la version Roblox (absents du contenu). */
 const NOMS_FIGURANTS: Record<string, string> = { "maitre-armes": "Maître d'armes" };
 
-let dossier: Folder;
+let dossier: Folder | undefined;
 
-function lumiereInterieure(p: BasePart, couleur = rgb(255, 200, 140), portee = 30) {
+/** Dossier « Interieurs » du Workspace (créé à la première demande). */
+export function dossierInterieurs(): Folder {
+	if (dossier === undefined) {
+		const existant = Workspace.FindFirstChild("Interieurs");
+		if (existant && existant.IsA("Folder")) dossier = existant;
+		else {
+			const f = new Instance("Folder");
+			f.Name = "Interieurs";
+			f.Parent = Workspace;
+			dossier = f;
+		}
+	}
+	return dossier;
+}
+
+export function lumiereInterieure(p: BasePart, couleur = rgb(255, 200, 140), portee = 30) {
 	const l = new Instance("PointLight");
 	l.Color = couleur;
 	l.Range = portee;
@@ -47,7 +62,7 @@ function lumiereInterieure(p: BasePart, couleur = rgb(255, 200, 140), portee = 3
 	l.Parent = p;
 }
 
-function invite(ancre: BasePart, lieu: string, action: string, texteAction: string, objet: string, distance = 10) {
+export function invite(ancre: BasePart, lieu: string, action: string, texteAction: string, objet: string, distance = 10) {
 	const i = new Instance("ProximityPrompt");
 	i.ActionText = texteAction;
 	i.ObjectText = objet;
@@ -61,7 +76,7 @@ function invite(ancre: BasePart, lieu: string, action: string, texteAction: stri
 }
 
 /** Point d'interaction invisible (tableau, comptoir, porte…). */
-function point(parent: Instance, position: Vector3, lieu: string, action: string, texteAction: string, objet: string) {
+export function point(parent: Instance, position: Vector3, lieu: string, action: string, texteAction: string, objet: string) {
 	const p = bloc(new Vector3(3, 4, 3), position, C.or, { parent, nom: `Point-${action}` });
 	p.Transparency = 1;
 	p.CanCollide = false;
@@ -70,10 +85,10 @@ function point(parent: Instance, position: Vector3, lieu: string, action: string
 }
 
 /** Salle : sol, murs, plafond, porte de sortie (face +Z) et point d'arrivée. Renvoie le modèle. */
-function salle(lieu: string, base: Vector3, l: number, p: number, h: number, couleurs: { sol: Color3; mur: Color3; matSol: Enum.Material; matMur: Enum.Material }): Model {
+export function salle(lieu: string, base: Vector3, l: number, p: number, h: number, couleurs: { sol: Color3; mur: Color3; matSol: Enum.Material; matMur: Enum.Material }): Model {
 	const m = new Instance("Model");
 	m.Name = lieu;
-	m.Parent = dossier;
+	m.Parent = dossierInterieurs();
 	const opt = (matiere: Enum.Material) => ({ parent: m, matiere });
 	bloc(new Vector3(l, 1, p), base.add(new Vector3(0, -0.5, 0)), couleurs.sol, opt(couleurs.matSol));
 	bloc(new Vector3(l, 1, p), base.add(new Vector3(0, h + 0.5, 0)), couleurs.mur.Lerp(new Color3(0, 0, 0), 0.4), opt(Enum.Material.Wood));
@@ -103,7 +118,7 @@ function salle(lieu: string, base: Vector3, l: number, p: number, h: number, cou
 
 // ───────────────────────────── Mobilier ─────────────────────────────
 
-function tableBancs(m: Model, pos: Vector3, longueur = 8) {
+export function tableBancs(m: Model, pos: Vector3, longueur = 8) {
 	bloc(new Vector3(longueur, 0.5, 4), pos.add(new Vector3(0, 3, 0)), C.boisClair, { parent: m, matiere: Enum.Material.WoodPlanks });
 	for (const [x, z] of [[-1, -1], [1, -1], [-1, 1], [1, 1]] as const) bloc(new Vector3(0.5, 3, 0.5), pos.add(new Vector3((x * (longueur - 1)) / 2, 1.5, z * 1.5)), C.bois, { parent: m, matiere: Enum.Material.Wood });
 	for (const z of [-3, 3]) bloc(new Vector3(longueur, 0.4, 1.4), pos.add(new Vector3(0, 1.8, z)), C.bois, { parent: m, matiere: Enum.Material.WoodPlanks });
@@ -111,12 +126,12 @@ function tableBancs(m: Model, pos: Vector3, longueur = 8) {
 	bloc(new Vector3(0.8, 1, 0.8), pos.add(new Vector3(1.5, 3.75, -0.5)), rgb(200, 190, 170), { parent: m, forme: "cylindre", rotation: VERTICAL });
 }
 
-function comptoir(m: Model, pos: Vector3, longueur: number) {
+export function comptoir(m: Model, pos: Vector3, longueur: number) {
 	bloc(new Vector3(longueur, 4, 2.5), pos.add(new Vector3(0, 2, 0)), C.bois, { parent: m, matiere: Enum.Material.WoodPlanks });
 	bloc(new Vector3(longueur + 0.6, 0.4, 3), pos.add(new Vector3(0, 4.2, 0)), C.boisClair, { parent: m, matiere: Enum.Material.Wood });
 }
 
-function etagere(m: Model, pos: Vector3, rotation = new CFrame()) {
+export function etagere(m: Model, pos: Vector3, rotation = new CFrame()) {
 	const f = new CFrame(pos).mul(rotation);
 	bloc(new Vector3(8, 9, 1.5), f.mul(new CFrame(0, 4.5, 0)).Position, C.bois, { parent: m, rotation: rotation, matiere: Enum.Material.WoodPlanks });
 	const couleurs = [rgb(140, 40, 40), rgb(40, 80, 140), rgb(60, 110, 50), rgb(150, 120, 50), rgb(90, 50, 110)];
@@ -127,7 +142,7 @@ function etagere(m: Model, pos: Vector3, rotation = new CFrame()) {
 	}
 }
 
-function cheminee(m: Model, pos: Vector3, rotation = new CFrame()) {
+export function cheminee(m: Model, pos: Vector3, rotation = new CFrame()) {
 	const f = new CFrame(pos).mul(rotation);
 	bloc(new Vector3(8, 8, 3), f.mul(new CFrame(0, 4, 0)).Position, C.pierre, { parent: m, rotation, matiere: Enum.Material.Cobblestone });
 	bloc(new Vector3(5, 4, 1.6), f.mul(new CFrame(0, 2, -0.8)).Position, rgb(25, 20, 20), { parent: m, rotation });
@@ -139,7 +154,7 @@ function cheminee(m: Model, pos: Vector3, rotation = new CFrame()) {
 	lumiereInterieure(braises, rgb(255, 140, 60), 26);
 }
 
-function tapis(m: Model, pos: Vector3, taille: Vector2, couleur: Color3) {
+export function tapis(m: Model, pos: Vector3, taille: Vector2, couleur: Color3) {
 	bloc(new Vector3(taille.X, 0.12, taille.Y), pos.add(new Vector3(0, 0.06, 0)), couleur, { parent: m, matiere: Enum.Material.Fabric });
 }
 
@@ -158,7 +173,7 @@ function pnj(m: Model, lieu: string, id: string, position: Vector3, regard: Vect
 }
 
 /** Figurant (client, garde, artisan) : simple personnage décoratif, sans interaction. */
-function figurant(m: Model, costume: Costume, position: Vector3, regard: Vector3) {
+export function figurant(m: Model, costume: Costume, position: Vector3, regard: Vector3) {
 	const [ok, modele] = pcall(() => humanoide("figurant", costume));
 	if (!ok) return;
 	const p = modele as Model;
@@ -166,7 +181,7 @@ function figurant(m: Model, costume: Costume, position: Vector3, regard: Vector3
 	p.Parent = m;
 }
 
-const TENUES: Costume[] = [
+export const TENUES: Costume[] = [
 	{ peau: rgb(225, 190, 160), haut: rgb(120, 60, 50), bas: rgb(70, 60, 50) },
 	{ peau: rgb(200, 160, 120), haut: rgb(70, 100, 140), bas: rgb(60, 55, 50) },
 	{ peau: rgb(235, 205, 180), haut: rgb(150, 130, 80), bas: rgb(90, 70, 50) },
@@ -421,9 +436,7 @@ function salleRegionale(l: LieuDef, base: Vector3, pnjDuLieu: string[]) {
 
 /** Construit toutes les salles (une par lieu, sauf la place de Lysmont qui reste en extérieur). */
 export function construireInterieurs() {
-	dossier = new Instance("Folder");
-	dossier.Name = "Interieurs";
-	dossier.Parent = Workspace;
+	dossierInterieurs();
 	let i = 0;
 	for (const l of tousLesLieux()) {
 		if (l.id === "lysmont-place" || l.etape_seulement === true) continue;
@@ -437,7 +450,7 @@ export function construireInterieurs() {
 	if (place) {
 		const m = new Instance("Model");
 		m.Name = "lysmont-place";
-		m.Parent = dossier;
+		m.Parent = dossierInterieurs();
 		const centre = positionLieu(place);
 		// au sud de la fontaine (agrandie), face à la place
 		place.pnj.forEach((p, k) => pnj(m, place.id, p.id, centre.add(new Vector3(-10 + k * 5, 0, 26)), centre.add(new Vector3(0, 0, 50))));

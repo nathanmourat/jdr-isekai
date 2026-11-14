@@ -3,6 +3,7 @@
  * compagnons, carte, partie) ; le panneau d'un lieu s'ouvre quand on entre dans un bâtiment.
  * Même contenu que la version web (src/ui/panneaux et src/ui/vues/Lieu.svelte).
  */
+import { Workspace } from "@rbxts/services";
 import { CONTENU } from "shared/donnees";
 import { tousLesLieux } from "shared/geo";
 import { ficheObjet, type ActionObjet } from "./objets";
@@ -69,7 +70,12 @@ function lieux() {
 	return tousLesLieux();
 }
 function nomLieu(id: string | undefined): string | undefined {
-	return id !== undefined ? lieux().find((l) => l.id === id)?.nom ?? id : undefined;
+	if (id === undefined) return undefined;
+	// maisons habitées (construites par le serveur) : leur nom est un attribut de la salle
+	const salle = Workspace.FindFirstChild("Interieurs")?.FindFirstChild(id);
+	const nom = salle?.GetAttribute("Nom");
+	if (typeIs(nom, "string")) return nom;
+	return lieux().find((l) => l.id === id)?.nom ?? id;
 }
 
 /** Barre du haut : date, héros, prochaine étape et menu. */
@@ -88,7 +94,7 @@ export function barreHaut(parent: Frame, redessiner: () => void, allerA: (lieu: 
 	if (affichage.dans !== undefined) {
 		const ld = ligne(c, 8);
 		texte(ld, `📍 Tu es dans : <b>${nomLieu(affichage.dans)}</b>`, 15, { largeur: new UDim(0, 320) });
-		bouton(ld, "Que faire ici ?", () => {
+		if (!affichage.dans.match("^maison%-")[0]) bouton(ld, "Que faire ici ?", () => {
 			affichage.lieu = affichage.dans;
 			affichage.section = "tout";
 			affichage.panneau = undefined;

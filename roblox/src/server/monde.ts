@@ -8,8 +8,10 @@ import { CONTENU } from "shared/donnees";
 import type { LieuDef } from "shared/moteur";
 import { GRANDEUR, positionLieu } from "shared/geo";
 import { arbre, banniere, bloc, buisson, C, dossierParDefaut, fleurs, lanterne, lumiere, maison, rocher, sapin, toit, tonneau, VERTICAL } from "./decor";
+import { maisonHabitee, type Metier } from "./maisons";
+import { auSol, champ, charrette, epouvantail, meule, moulin, plateforme, puits, reverberes, routeCourbe } from "./paysage";
 import { GROUPE_PNJ, mettreDansGroupe } from "./collisions";
-import { agrandir, ajouterOuverture, type Contour, croisement, dansContour, enceinte, forteresse, pointAgrandi } from "./royaume";
+import { agrandir, ajouterOuverture, type Contour, dansContour, enceinte, forteresse, pointAgrandi } from "./royaume";
 
 let dossier: Folder;
 const terrain = Workspace.Terrain;
@@ -173,17 +175,6 @@ function construire(l: LieuDef, centre: Vector3, parent: Model, k: number): Vect
 }
 
 // ───────────────────────────── Terrain, chemins, végétation ─────────────────────────────
-
-function chemin(de: Vector3, a: Vector3) {
-	const d = a.sub(de);
-	const longueur = d.Magnitude;
-	if (longueur < 1) return;
-	const milieu = de.add(a).div(2);
-	terrain.FillBlock(CFrame.lookAt(milieu, a).add(new Vector3(0, -0.4, 0)), new Vector3(20, 1.2, longueur), Enum.Material.Ground);
-	// pavés au milieu de la rue (en ville)
-	terrain.FillBlock(CFrame.lookAt(milieu, a).add(new Vector3(0, -0.35, 0)), new Vector3(12, 1.2, longueur), Enum.Material.Pavement);
-	for (let t = 0; t <= longueur; t += 12) zonesLibres.push({ centre: de.add(d.Unit.mul(t)), rayon: 16 });
-}
 
 /** Couleurs des matériaux du terrain : une palette chaude et peinte, plus douce que celle par défaut. */
 function couleursTerrain() {
@@ -400,42 +391,147 @@ export function balise(l: LieuDef) {
 	invite.Parent = colonne;
 }
 
-// ───────────────────────────── Remparts et quartiers ─────────────────────────────
+// ───────────────────────────── Remparts, rues et quartiers ─────────────────────────────
 
 /** Remparts de Lysmont : une ellipse qui entoure la place, les rues, le château et l'arène (le temple reste dehors, sur sa colline). */
-const MURS: Contour = { centre: new Vector3(40, 0, -10), rx: 390, rz: 330 };
+const MURS: Contour = { centre: new Vector3(40, 0, -15), rx: 390, rz: 345 };
 const dansLesMurs = (p: Vector3, marge = 0) => dansContour(MURS, p, marge);
 
-/** Quartiers de maisons à colombages entre les rues, à l'intérieur des remparts, tournées vers la place. */
-function quartiers(centrePlace: Vector3, interdits: { centre: Vector3; rayon: number }[]) {
-	const graine = new Random(1015);
-	const ville = new Instance("Model");
-	ville.Name = "Quartiers";
-	ville.Parent = dossier;
-	const toits = [C.toitRouge, C.toitBleu, C.ardoise, C.toitRouge];
-	const murs = [C.enduit, Color3.fromRGB(214, 200, 170), Color3.fromRGB(225, 210, 175), Color3.fromRGB(200, 186, 160)];
-	let n = 0;
-	for (let x = MURS.centre.X - MURS.rx; x <= MURS.centre.X + MURS.rx && n < 64; x += 44) {
-		for (let z = MURS.centre.Z - MURS.rz; z <= MURS.centre.Z + MURS.rz && n < 64; z += 44) {
-			const pos = new Vector3(x + graine.NextNumber(-8, 8), 0, z + graine.NextNumber(-8, 8));
-			if (!dansLesMurs(pos, 40)) continue;
-			if (pos.sub(centrePlace).Magnitude < 90) continue; // la grande place reste dégagée
-			if (interdits.some((zl) => zl.centre.sub(pos).Magnitude < zl.rayon + 20)) continue;
-			const modele = new Instance("Model");
-			modele.Name = "Maison";
-			modele.Parent = ville;
-			const k = graine.NextNumber(1.7, 2.4);
-			maison(pos, graine.NextInteger(11, 15), graine.NextInteger(9, 12), graine.NextInteger(8, 11), toits[n % toits.size()], modele, {
-				murs: murs[graine.NextInteger(0, murs.size() - 1)],
-				cheminee: graine.NextNumber() < 0.6,
-			});
-			agrandir(modele, pos, k);
-			// la façade (côté +Z) regarde la place
-			const versPlace = centrePlace.sub(pos);
-			modele.PivotTo(new CFrame(pos).mul(CFrame.Angles(0, math.atan2(versPlace.X, versPlace.Z), 0)));
-			zonesLibres.push({ centre: pos, rayon: 16 * k });
-			n++;
+/** Obstacles pour placer maisons, champs et moulins (lieux, buttes, maisons déjà posées…). */
+const obstacles: { centre: Vector3; rayon: number }[] = [];
+/** Points des rues (pour ne pas bâtir dessus). */
+const pointsRues: { p: Vector3; demi: number }[] = [];
+/** Rues de la ville et routes du faubourg, pour y aligner des maisons. */
+const rues: { points: Vector3[]; largeur: number; dedans: boolean }[] = [];
+
+/** Vrai si rien n'est déjà posé là (`rayonRue` : distance à garder avec les rues, la demi-profondeur pour une maison). */
+function libre(pos: Vector3, rayon: number, rayonRue = rayon * 0.8): boolean {
+	if (obstacles.some((o) => o.centre.sub(new Vector3(pos.X, o.centre.Y, pos.Z)).Magnitude < o.rayon + rayon)) return false;
+	return !pointsRues.some((r) => new Vector3(r.p.X - pos.X, 0, r.p.Z - pos.Z).Magnitude < r.demi + rayonRue);
+}
+
+/** Trace une rue courbe (pavée en ville) et la mémorise. Renvoie ses points. */
+function rue(de: Vector3, a: Vector3, largeur: number, graine: number, dedans: boolean, courbure = 0.14): Vector3[] {
+	const points = routeCourbe(de, a, largeur, Enum.Material.Ground, graine, courbure, dedans ? Enum.Material.Pavement : undefined);
+	for (const p of points) {
+		pointsRues.push({ p, demi: largeur / 2 + 2 });
+		zonesLibres.push({ centre: p, rayon: largeur / 2 + 6 });
+	}
+	if (points.size() > 1) rues.push({ points, largeur, dedans });
+	return points;
+}
+
+/** Angle où une route traverse les remparts (le premier point dehors), pour y percer une porte. */
+function sortieDesMurs(points: Vector3[]): number | undefined {
+	for (let i = 1; i < points.size(); i++) {
+		if (dansLesMurs(points[i - 1]) !== dansLesMurs(points[i])) {
+			const p = points[i];
+			return math.atan2((p.Z - MURS.centre.Z) / MURS.rz, (p.X - MURS.centre.X) / MURS.rx);
 		}
+	}
+	return undefined;
+}
+
+/** Bord de la grande place, en direction d'un point (les rues partent de là, la place reste pavée). */
+function bordDePlace(centrePlace: Vector3, vers: Vector3): Vector3 {
+	const d = new Vector3(vers.X - centrePlace.X, 0, vers.Z - centrePlace.Z);
+	return d.Magnitude < 1 ? centrePlace : centrePlace.add(d.Unit.mul(60));
+}
+
+const TOITS = [C.toitRouge, C.toitBleu, C.ardoise, C.toitRouge];
+const MURS_MAISONS = [C.enduit, Color3.fromRGB(214, 200, 170), Color3.fromRGB(225, 210, 175), Color3.fromRGB(200, 186, 160)];
+const METIERS_VILLE: Metier[] = ["famille", "boulanger", "famille", "forgeron", "famille", "tisserand"];
+const METIERS_HAMEAU: Metier[] = ["ferme", "famille", "ferme"];
+
+/**
+ * Maisons alignées le long des rues, des deux côtés, la façade tournée vers la rue.
+ * Une maison sur trois est habitée : on peut y entrer (maisons.ts).
+ */
+function bordsDeRues(parent: Instance, graine: Random, dedans: boolean, max: number) {
+	let n = 0;
+	let habitees = 0;
+	for (const r of rues) {
+		if (r.dedans !== dedans) continue;
+		let cumul = 20;
+		for (let i = 1; i < r.points.size() && n < max; i++) {
+			const seg = r.points[i].sub(r.points[i - 1]);
+			cumul += new Vector3(seg.X, 0, seg.Z).Magnitude;
+			if (cumul < 34) continue;
+			cumul = 0;
+			const d = new Vector3(seg.X, 0, seg.Z);
+			if (d.Magnitude < 0.1) continue;
+			const normale = new Vector3(-d.Z, 0, d.X).Unit;
+			for (const cote of [-1, 1]) {
+				if (n >= max) break;
+				const k = graine.NextNumber(1.6, 2.2);
+				const l = graine.NextInteger(11, 14);
+				const pr = graine.NextInteger(9, 11);
+				const rayon = (math.max(l, pr) * k) / 2 + 2;
+				const pos = auSol(r.points[i].add(normale.mul(cote * (r.largeur / 2 + (pr * k) / 2 + 5))));
+				if (dedans ? !dansLesMurs(pos, rayon + 14) : dansLesMurs(pos, -(rayon + 18))) continue;
+				if (!libre(pos, rayon, (pr * k) / 2 + 1)) continue;
+				const modele = new Instance("Model");
+				modele.Name = "Maison";
+				modele.Parent = parent;
+				maison(pos, l, pr, graine.NextInteger(8, 11), dedans ? TOITS[n % TOITS.size()] : C.toitRouge, modele, {
+					murs: MURS_MAISONS[graine.NextInteger(0, MURS_MAISONS.size() - 1)],
+					cheminee: graine.NextNumber() < 0.7,
+				});
+				agrandir(modele, pos, k);
+				// la façade (côté +Z) regarde la rue
+				const versRue = normale.mul(-cote);
+				const rotation = CFrame.Angles(0, math.atan2(versRue.X, versRue.Z), 0);
+				modele.PivotTo(new CFrame(pos).mul(rotation));
+				obstacles.push({ centre: pos, rayon });
+				zonesLibres.push({ centre: pos, rayon: rayon + 4 });
+				n++;
+				if (n % 3 === 1) {
+					const metiers = dedans ? METIERS_VILLE : METIERS_HAMEAU;
+					const porte = pos.add(new CFrame(Vector3.zero).mul(rotation).PointToWorldSpace(new Vector3(0, 0, (pr * k) / 2 + 2.5)));
+					maisonHabitee(porte, metiers[habitees % metiers.size()], modele, versRue);
+					habitees++;
+				} else if (graine.NextNumber() < 0.25) {
+					charrette(pos.add(normale.mul(-cote * ((pr * k) / 2 + 3))).add(d.Unit.mul(rayon * 0.8)), math.atan2(d.X, d.Z), modele);
+				} else if (graine.NextNumber() < 0.3) {
+					tonneau(auSol(pos.add(normale.mul(-cote * ((pr * k) / 2 + 2))).add(d.Unit.mul(rayon * 0.6))), modele);
+				}
+			}
+		}
+	}
+}
+
+/** Champs, meules, épouvantails et moulins autour d'un point de la campagne. */
+function campagne(parent: Instance, centre: Vector3, rayon: number, nbChamps: number, nbMoulins: number, graine: Random) {
+	let poses = 0;
+	for (let essai = 0; essai < nbChamps * 12 && poses < nbChamps; essai++) {
+		const a = graine.NextNumber(0, 2 * math.pi);
+		const r = graine.NextNumber(rayon * 0.3, rayon);
+		const pos = auSol(centre.add(new Vector3(math.cos(a) * r, 0, math.sin(a) * r)));
+		const l = graine.NextInteger(56, 80);
+		const p = graine.NextInteger(36, 50);
+		const rc = math.max(l, p) / 2 + 4;
+		if (dansLesMurs(pos, -(rc + 30)) || !libre(pos, rc)) continue;
+		const angle = graine.NextNumber(-0.35, 0.35);
+		champ(pos, l, p, angle, parent, poses % 2 === 0);
+		if (poses % 3 === 0) epouvantail(pos, parent);
+		if (poses % 2 === 1) meule(pos.add(new Vector3(l / 2 + 8, 0, 0)), parent);
+		obstacles.push({ centre: pos, rayon: rc });
+		zonesLibres.push({ centre: pos, rayon: rc + 6 });
+		poses++;
+	}
+	const vent = new Vector3(1, 0, -0.4);
+	let moulins = 0;
+	for (let essai = 0; essai < 40 && moulins < nbMoulins; essai++) {
+		const a = graine.NextNumber(0, 2 * math.pi);
+		const r = graine.NextNumber(rayon * 0.4, rayon * 1.05);
+		const pos = centre.add(new Vector3(math.cos(a) * r, 0, math.sin(a) * r));
+		if (dansLesMurs(pos, -60) || !libre(pos, 24)) continue;
+		// le moulin est posé sur une petite butte
+		plateforme(pos, 18, 18, 5, 14);
+		moulin(pos, vent, parent);
+		obstacles.push({ centre: pos, rayon: 24 });
+		zonesLibres.push({ centre: pos, rayon: 30 });
+		moulins++;
 	}
 }
 
@@ -465,8 +561,27 @@ export function construireMonde() {
 	apparition.Duration = 0;
 	apparition.Parent = dossier;
 
-	const ouvertures: number[] = [math.pi / 2]; // porte sud, vers la campagne
-	const batiments: { centre: Vector3; rayon: number }[] = [];
+	// les buttes d'abord (le château domine la ville, le temple est sur sa colline)
+	const chateau = region.lieux.find((l) => l.id === "chateau");
+	if (chateau) {
+		// la butte porte toute la forteresse (180 × 150 studs, tours d'angle comprises)
+		const c = positionLieu(chateau);
+		plateforme(new Vector3(c.X, 0, c.Z - 45), 214, 184, c.Y, 26);
+		obstacles.push({ centre: new Vector3(c.X, 0, c.Z - 45), rayon: 135 });
+	}
+	const temple = region.lieux.find((l) => l.id === "temple-du-seuil");
+	if (temple) {
+		const c = positionLieu(temple);
+		plateforme(new Vector3(c.X, 0, c.Z), 98, 78, c.Y, 16);
+		obstacles.push({ centre: c, rayon: 70 });
+	}
+
+	const graine = new Random(1012);
+	const ouvertures: number[] = [];
+	const ville = new Instance("Model");
+	ville.Name = "Quartiers";
+	ville.Parent = dossier;
+	let numeroRue = 0;
 	for (const l of region.lieux) {
 		if (l.etape_seulement === true) {
 			balise(l);
@@ -479,15 +594,23 @@ export function construireMonde() {
 		const k = AGRANDISSEMENT[l.id] ?? GRANDEUR.maison;
 		const rayon = l.id === "chateau" ? 120 : l.id === "combe-aux-saules" ? 34 * k : 26 * k;
 		zonesLibres.push({ centre, rayon });
-		batiments.push({ centre, rayon });
+		obstacles.push({ centre, rayon });
 		const porteBase = construire(l, centre, modele, k);
 		agrandir(modele, centre, k);
 		const porte = pointAgrandi(porteBase, centre, k);
 		arbresAutour(l, centre, k);
-		if (l.id !== "lysmont-place") {
-			chemin(centrePlace, porte);
-			// la route sort des remparts : une porte fortifiée à cet endroit
-			ajouterOuverture(ouvertures, croisement(MURS, centrePlace, porte));
+		if (l.id === "temple-du-seuil") {
+			// la route du temple contourne la butte du château par l'ouest et sort par la porte nord-ouest
+			const w1 = new Vector3(-172, 0, -90);
+			const w2 = new Vector3(-176, 0, -250);
+			rue(bordDePlace(centrePlace, w1), w1, 18, 2000 + numeroRue++, true, 0.08);
+			rue(w1, w2, 18, 2000 + numeroRue++, true, 0.03);
+			const points = rue(w2, porte, 14, 2000 + numeroRue++, false, 0.1);
+			ajouterOuverture(ouvertures, sortieDesMurs([w2, ...points]));
+		} else if (l.id !== "lysmont-place") {
+			// une rue courbe depuis la place ; si elle sort des remparts, une porte fortifiée à cet endroit
+			const points = rue(bordDePlace(centrePlace, porte), porte, dansLesMurs(porte) ? 18 : 14, 2000 + numeroRue++, dansLesMurs(porte));
+			ajouterOuverture(ouvertures, sortieDesMurs(points));
 		}
 
 		// point d'entrée : invite « Entrer » (les marqueurs ⭐ ● ⚔ sont ajoutés par chaque joueur)
@@ -508,7 +631,21 @@ export function construireMonde() {
 		invite.SetAttribute("Lieu", l.id);
 		invite.Parent = ancre;
 	}
-	// remparts de la ville, avec une porte fortifiée sur chaque route qui sort
+	// ruelles entre quartiers (elles relient les rues principales)
+	const parId = (id: string) => region.lieux.find((x) => x.id === id);
+	for (const [a, b] of [["taverne", "boutique"], ["guilde", "quartier-tanneurs"], ["guilde", "arene"], ["boutique", "quartier-tanneurs"]] as const) {
+		const la = parId(a);
+		const lb = parId(b);
+		if (la && lb) rue(positionLieu(la).add(new Vector3(0, 0, 70)), positionLieu(lb).add(new Vector3(0, 0, 70)), 12, 3000 + numeroRue++, true, 0.22);
+	}
+	// la grande route du sud : de la place à la porte sud, puis jusqu'au village de Hautepierre
+	const porteSud = MURS.centre.add(new Vector3(0, 0, MURS.rz));
+	const hameau = new Vector3(70, 0, 820);
+	rue(bordDePlace(centrePlace, porteSud), porteSud, 18, 4000, true, 0.08);
+	ajouterOuverture(ouvertures, math.pi / 2);
+	rue(porteSud, hameau, 14, 4001, false, 0.22);
+
+	// remparts de la ville, posés sur le terrain, avec une porte fortifiée sur chaque route qui sort
 	const murs = new Instance("Model");
 	murs.Name = "Remparts";
 	murs.Parent = dossier;
@@ -517,7 +654,26 @@ export function construireMonde() {
 		const a = (i / 90) * 2 * math.pi;
 		zonesLibres.push({ centre: MURS.centre.add(new Vector3(math.cos(a) * MURS.rx, 0, math.sin(a) * MURS.rz)), rayon: 22 });
 	}
-	quartiers(centrePlace, zonesLibres.filter(() => true));
+	// la ville : maisons le long des rues, réverbères, puits
+	bordsDeRues(ville, graine, true, 80);
+	for (const r of rues) if (r.dedans) reverberes(r.points, r.largeur, ville);
+	for (const p of [new Vector3(-150, 0, 160), new Vector3(150, 0, 110)]) {
+		if (libre(p, 6)) {
+			puits(p, ville);
+			obstacles.push({ centre: p, rayon: 6 });
+		}
+	}
+	// le faubourg : le village de Hautepierre, ses fermes, ses champs de blé et ses moulins
+	const faubourg = new Instance("Model");
+	faubourg.Name = "Hautepierre";
+	faubourg.Parent = dossier;
+	puits(hameau, faubourg);
+	obstacles.push({ centre: hameau, rayon: 10 });
+	bordsDeRues(faubourg, graine, false, 18);
+	campagne(faubourg, hameau.add(new Vector3(0, 0, -60)), 420, 14, 3, graine);
+	// et autour de la ferme de la Combe-aux-Saules
+	const combe = parId("combe-aux-saules");
+	if (combe) campagne(faubourg, positionLieu(combe), 220, 5, 1, graine);
 	vegetation();
 	task.spawn(() => villageois(centrePlace));
 }

@@ -241,7 +241,7 @@ export function forteresse(centre: Vector3, parent: Instance, pierres = PIERRES_
 	const P = 150;
 	const H = 36;
 	const avant = centre.Z + 30; // façade de la courtine avant
-	const c0 = new Vector3(centre.X, 0, avant - P / 2);
+	const c0 = new Vector3(centre.X, centre.Y, avant - P / 2);
 	const coin = (x: number, z: number) => c0.add(new Vector3((x * L) / 2, 0, (z * P) / 2));
 	// sol de la cour
 	bloc(new Vector3(L - 6, 1, P - 6), c0.add(new Vector3(0, 0.5, 0)), C.pierre, { matiere: Enum.Material.Cobblestone, parent });
@@ -256,7 +256,7 @@ export function forteresse(centre: Vector3, parent: Instance, pierres = PIERRES_
 	for (const [x, z] of [[-1, -1], [1, -1], [-1, 1], [1, 1]] as const) grandeTour(coin(x, z), 13, H + 22, parent, pierres);
 	for (const x of [-1, 1]) grandeTour(c0.add(new Vector3((x * L) / 2, 0, 0)), 9, H + 12, parent, pierres);
 	// châtelet d'entrée, face à la ville
-	const porte = new Vector3(centre.X, 0, avant);
+	const porte = new Vector3(centre.X, centre.Y, avant);
 	chatelet(porte, new Vector3(0, 0, 1), largeurPorte, H, parent, pierres);
 	// logis royal (grande salle) et donjon au fond de la cour
 	logis(c0.add(new Vector3(-30, 0, -20)), 70, 34, 30, parent, pierres);

@@ -10,7 +10,10 @@ import { CONTENU } from "shared/donnees";
 import { ECHELLE, GRANDEUR, ORIGINES, positionLieu, STYLES } from "shared/geo";
 import type { LieuDef, RegionDef } from "shared/moteur";
 import { arbre, bloc, buisson, C, fleurs, lumiere, nuit, rocher, sapin, toit, tonneau, VERTICAL } from "./decor";
+import { maisonHabitee, type Metier } from "./maisons";
 import { balise } from "./monde";
+import { plateforme, routeCourbe } from "./paysage";
+import { genre } from "./genres";
 import { agrandir, ajouterOuverture, type Contour, croisement, dansContour, enceinte, type Pierres, pointAgrandi } from "./royaume";
 
 const terrain = Workspace.Terrain;
@@ -56,23 +59,7 @@ const PALETTES: Record<string, Palette> = {
 	cendres: { sol: Enum.Material.Basalt, sol2: Enum.Material.CrackedLava, chemin: Enum.Material.Ground, mur: rgb(45, 38, 48), matMur: Enum.Material.Basalt, toit: rgb(30, 25, 32), matToit: Enum.Material.Slate, accent: rgb(200, 60, 255), tissus: [rgb(90, 20, 30), rgb(40, 30, 50)] },
 };
 
-/** Genre d'un lieu, d'après son id et ses propriétés. */
-export function genre(l: LieuDef): string {
-	const id = l.id;
-	const a = (mot: string) => id.find(mot, 1, true)[0] !== undefined;
-	if (l.auberge === true) return "auberge";
-	if (id === "guilde" || id.sub(1, 7) === "guilde-") return "guilde";
-	if (a("palais") || a("residence") || a("citadelle") || a("trone") || a("forteresse") || a("donjon-") || a("etat-major")) return "palais";
-	if (a("temple") || a("sanctuaire") || a("autel") || a("bibliotheque") || a("clairiere")) return "temple";
-	if (a("campement") || a("camp")) return "camp";
-	if (a("mine") || a("forge")) return "mine";
-	if (a("ruines") || a("phare") || a("breche") || a("tour-de-guet") || a("puits")) return "ruines";
-	if (a("canyon") || a("falaise") || a("nid") || a("crete") || a("plaine-cendree") || a("coulee") || a("petrifiee") || a("lac-de-lave") || a("col-")) return "rochers";
-	if (a("port") || a("quai")) return "port";
-	if (a("porte") || a("route") || a("mur") || a("ronde") || a("rempart")) return "porte";
-	if (l.boutique.size() > 0) return "boutique";
-	return "maison";
-}
+export { genre } from "./genres";
 
 // ───────────────────────────── Bâtiments ─────────────────────────────
 
@@ -359,20 +346,24 @@ function construireRegion(region: RegionDef, dossier: Folder) {
 		const modele = new Instance("Model");
 		modele.Name = l.id;
 		modele.Parent = dossier;
-		const centre = positionLieu(l);
-		libres.push(centre);
 		const g = genre(l);
+		// le palais domine sa ville, sur une butte (sauf l'arbre-palais de Sylvenoire)
+		const surButte = g === "palais" && style !== "foret";
+		const sol = positionLieu(l);
+		if (surButte) pcall(() => plateforme(sol.add(new Vector3(0, 0, -12)), 112, 92, 10, 22));
+		const centre = surButte ? sol.add(new Vector3(0, 10, 0)) : sol;
+		libres.push(centre);
 		K = GRANDEUR_GENRE[g] ?? GRANDEUR.maison;
 		const [ok, porte] = pcall(() => (BATIMENTS[g] ?? BATIMENTS.maison)(centre, modele, p, style));
 		if (!ok) warn(`[Velmaris] Lieu ${l.id} : ${tostring(porte)}`);
 		agrandir(modele, centre, K);
 		const entree = ok ? pointAgrandi(porte as Vector3, centre, K) : centre;
 		K = 1;
-		// rue jusqu'au centre de la ville
+		// rue jusqu'au centre de la ville : légèrement courbe, elle suit le terrain (et monte sur la butte du palais)
 		const d = centreVille.sub(entree);
 		if (d.Magnitude > 4) {
-			terrain.FillBlock(CFrame.lookAt(entree.add(d.div(2)), centreVille).add(new Vector3(0, -0.4, 0)), new Vector3(16, 1.2, d.Magnitude), p.chemin);
-			for (let t = 0; t <= d.Magnitude; t += 30) libres.push(entree.add(d.Unit.mul(t)));
+			const [okR, points] = pcall(() => routeCourbe(centreVille, entree, 16, p.chemin, 7000 + libres.size(), 0.12));
+			if (okR) for (let i = 0; i < points.size(); i += 4) libres.push(points[i]);
 		}
 		if (contour) ajouterOuverture(ouvertures, croisement(contour, centreVille, entree));
 		// point d'entrée : invite « Entrer »
@@ -408,6 +399,7 @@ function construireRegion(region: RegionDef, dossier: Folder) {
 		deco.Name = `${region.id}-maisons`;
 		deco.Parent = dossier;
 		const graine = new Random(region.id.size() * 31);
+		const metiers: Metier[] = style === "desert" || style === "archipel" ? ["famille", "tisserand", "boulanger"] : ["famille", "forgeron", "boulanger", "tisserand"];
 		let n = 0;
 		for (let x = -contour.rx; x <= contour.rx && n < 34; x += 50) {
 			for (let z = -contour.rz; z <= contour.rz && n < 34; z += 50) {
@@ -422,7 +414,14 @@ function construireRegion(region: RegionDef, dossier: Folder) {
 				if (okM) {
 					agrandir(m, pos, K);
 					const versCentre = centreVille.sub(pos);
-					m.PivotTo(new CFrame(pos).mul(CFrame.Angles(0, math.atan2(versCentre.X, versCentre.Z), 0)));
+					const rotation = CFrame.Angles(0, math.atan2(versCentre.X, versCentre.Z), 0);
+					m.PivotTo(new CFrame(pos).mul(rotation));
+					// une maison sur quatre est habitée : on peut y entrer
+					if (n % 4 === 1) {
+						const porte = pos.add(rotation.mul(new Vector3(0, 0, (9 * K) / 2 + 2.5)));
+						const k = n;
+						pcall(() => maisonHabitee(porte, metiers[k % metiers.size()], m, versCentre));
+					}
 				}
 				K = 1;
 				libres.push(pos);
