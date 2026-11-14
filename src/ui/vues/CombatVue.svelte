@@ -10,6 +10,7 @@
   import { utiliseMana, type SceneCombat } from '../../rendu/SceneCombat';
   import { actionsDisponibles, estimerAction, NOMS_ETATS, type ActionCombat, type Combat, type Combattant, type EvenementCombat } from '../../moteur/combat';
   import type { Competence } from '../../contenu/schemas';
+  import { etapeContrat } from '../../moteur/partie';
 
   let { cle }: { cle: string } = $props();
   const c = jeu.contenu!;
@@ -119,7 +120,20 @@
     return [];
   });
 
+  /**
+   * Décor du lieu où le combat a commencé (fond de secours si le vrai fond de combat n'existe pas encore) :
+   * décor de la scène qui a lancé le combat, sinon décor du lieu de l'étape de contrat en cours.
+   */
+  const decorLieu = $derived.by((): string | null => {
+    const ctx = entree.contexte;
+    const sc = ctx.sceneCle ? etat.scenes[ctx.sceneCle] : undefined;
+    if (sc) return c.scenes[sc.sceneId]?.decor ?? null;
+    const etape = etat.heros[cle] ? etapeContrat(c, etat, cle) : null;
+    if (etape) return Object.values(c.regions).flatMap((r) => r.lieux).find((l) => l.id === etape.etape.lieu)?.decor ?? null;
+    return null;
+  });
   $effect(() => {
+    void decorLieu;
     scene?.afficher(vu, {
       echelle: c.config.graphismes.echelle_combat ?? 3,
       tailleCombat: c.config.graphismes.taille_sprite_combat ?? 64,
@@ -128,6 +142,8 @@
       ciblesCliquables: termine ? cibles : [],
       actif: termine ? combat.enAttente : null,
       surClic: (id) => { if (termine && cibles.includes(id)) viser(id); },
+      contenu: c,
+      decorLieu,
     });
   });
   $effect(() => { void combat.enAttente; selection = null; });

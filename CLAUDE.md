@@ -62,6 +62,10 @@ Si une demande est floue ou contradictoire : poser la question plutôt que devin
 - `npm run roblox:parite` échoue tant que `roblox/src/shared/moteur.lua` n'est pas régénéré par la session Roblox (c'était déjà le cas avant le test 2).
 - Tests navigateur (Playwright, installé sur le PC du groupe **hors** `package.json` : `npm i --no-save playwright` puis `npx playwright install chromium`), contre `npm run build` + `npx vite preview --port 4173` : `tests/e2e/carte.mjs` (un seul clic par lieu, ordinateur et mobile : **passe le 14/11**) et `tests/e2e/captures-hd.mjs` (`npx tsx …` : un combat par classe avec calque de race, Temple et Guilde, dans `rapports/captures-hd/`). Les boucles de scène doivent cliquer « Continuer ». L'aperçu se lance avec `.claude/launch.json` (non versionné).
 
+## Fonds de combat (14/11)
+- **Un combat a toujours un décor.** Chaîne de secours (`src/rendu/fonds.ts`, `choisirFond`) : 1. vrai fond `assets/combat/fonds/<fond>.png` ; 2. décor équivalent de `content/config/fonds.yaml` (clé `fonds_combat`, validée par zod : `decor` et `type` extérieur / intérieur) ; 3. décor du lieu où le combat commence (scène ou étape de contrat) ; 4. fond générique `plaine` ou `crypte` ; 5. dégradé, signalé seulement dans la console. Un décor de lieu utilisé comme fond est assombri de 18 % et reçoit une bande de sol sous la ligne des pieds.
+- Tout nouveau `fond:` d'une rencontre doit avoir son image ou une ligne dans `fonds.yaml` : `tests/fonds.test.ts` le vérifie. `npm run assets:manquants` liste les vrais fonds de combat manquants.
+
 ## Version Roblox (décisions du 13/11)
 - **Portage complet** sur Roblox, en **3D simple** (style Roblox, décors générés par le code). Code dans `roblox/` (roblox-ts + Rojo).
 - **Compagnes = amitié seulement** sur Roblox (expérience tout public). La version web garde la romance. Règles Roblox : romance seulement en 17+ avec pièce d'identité.

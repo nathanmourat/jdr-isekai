@@ -4,7 +4,8 @@
  */
 import Phaser from 'phaser';
 import type { Combat, Combattant, EvenementCombat } from '../moteur/combat';
-import { urlAsset } from './assets';
+import type { Contenu } from '../contenu/types';
+import { choisirFond } from './fonds';
 import { calqueProvisoire, cheminCombat, creerAnimations, echelleCase, LIGNES_ENNEMIS, LIGNES_HEROS, prechargerTout, textureProvisoire } from './sprites';
 
 const L = 960, H = 540;
@@ -59,13 +60,19 @@ export interface OptionsCombat {
   tailleBoss: number;
   tailleExploration: number;
   ciblesCliquables: string[];
+  /** Contenu du jeu (table des fonds de combat). */
+  contenu: Contenu;
+  /** Décor du lieu où le combat a commencé : fond de secours si le fond de combat n'existe pas encore. */
+  decorLieu: string | null;
   actif: string | null;
   surClic: (id: string) => void;
 }
 
 export class SceneCombat extends Phaser.Scene {
   private vues = new Map<string, Vue>();
-  private fond: Phaser.GameObjects.Image | Phaser.GameObjects.Graphics | null = null;
+  /** Image de fond, voile sombre et bande de sol (détruits ensemble quand le fond change). */
+  private calquesFond: Phaser.GameObjects.GameObject[] = [];
+  private contenu: Contenu | null = null;
   private fondCle = '';
   private nbEvenements = 0;
   private combatId = '';
@@ -127,7 +134,8 @@ export class SceneCombat extends Phaser.Scene {
     this.dernier = { combat, opts };
     this.majZoom();
     if (combat.id !== this.combatId) this.reinitialiser(combat);
-    this.dessinerFond(combat.fond);
+    this.contenu = opts.contenu;
+    this.dessinerFond(combat.fond, opts.decorLieu);
     const positions = this.positions(combat, opts.echelle);
     for (const c of combat.combattants) {
       if (c.parti && !this.vues.has(c.id)) continue;
@@ -165,23 +173,40 @@ export class SceneCombat extends Phaser.Scene {
     this.nbEvenements = Math.max(0, combat.evenements.length - 12);
   }
 
-  private dessinerFond(fond: string) {
-    if (this.fondCle === fond) return;
-    this.fond?.destroy();
-    this.fondCle = fond;
-    const cle = `combat/fonds/${fond}`;
-    if (this.textures.exists(cle)) {
-      const img = this.add.image(L / 2, H / 2, cle).setDepth(-10);
+  /**
+   * Fond du combat : un combat a toujours un décor (chaîne de secours de `src/rendu/fonds.ts`).
+   * Un décor de lieu utilisé comme fond est assombri et reçoit une bande de sol, pour que les combattants ressortent
+   * et ne semblent pas flotter. Le dégradé n'est qu'un dernier recours, signalé seulement dans la console.
+   */
+  private dessinerFond(fond: string, decorLieu: string | null) {
+    const cleFond = `${fond}|${decorLieu ?? ''}`;
+    if (this.fondCle === cleFond) return;
+    for (const o of this.calquesFond) o.destroy();
+    this.calquesFond = [];
+    this.fondCle = cleFond;
+    const source = this.contenu ? choisirFond(this.contenu, fond, decorLieu, (chemin) => this.textures.exists(chemin)) : null;
+    if (source) {
+      const img = this.add.image(L / 2, H / 2, source.chemin).setDepth(-10);
+      // remplir le cadre sans déformer l'image (le surplus est coupé)
       img.setScale(Math.max(L / img.width, H / img.height));
-      this.fond = img;
+      this.calquesFond.push(img);
+      if (source.decor) {
+        // décor de lieu : assombri de 18 %, puis une bande de sol douce sous la ligne des pieds
+        this.calquesFond.push(this.add.rectangle(L / 2, H / 2, L, H, 0x000000, 0.18).setDepth(-9));
+        const sol = this.add.graphics().setDepth(-8);
+        const haut = H * 0.62 - 12;
+        sol.fillGradientStyle(0x1a140f, 0x1a140f, 0x1a140f, 0x1a140f, 0, 0, 0.5, 0.5).fillRect(0, haut, L, H - haut);
+        this.calquesFond.push(sol);
+      }
+      if (source.etape > 1) console.info(`[combat] fond « ${fond} » : pas encore de assets/combat/fonds/${fond}.png, remplacé par ${source.chemin}`);
     } else {
       const g = this.add.graphics().setDepth(-10);
       const ciel = Phaser.Display.Color.HSLToColor(((fond.length * 47) % 360) / 360, 0.35, 0.22).color;
       g.fillGradientStyle(ciel, ciel, 0x0d0b12, 0x0d0b12, 1).fillRect(0, 0, L, H);
       g.fillStyle(0x2a2233, 1).fillRect(0, H * 0.66, L, H * 0.34);
       g.lineStyle(2, 0x3b3146, 1).lineBetween(0, H * 0.66, L, H * 0.66);
-      this.fond = g;
-      if (!urlAsset(cleFondManquant(fond))) this.add.text(L / 2, H - 14, `fond provisoire — assets/combat/fonds/${fond}.png`, { fontFamily: 'Source Sans 3', fontSize: '12px', color: '#8f86a0' }).setOrigin(0.5).setDepth(-9);
+      this.calquesFond.push(g);
+      console.warn(`[combat] aucun décor trouvé pour le fond « ${fond} » : dégradé provisoire (ajoutez assets/combat/fonds/${fond}.png)`);
     }
   }
 
@@ -370,7 +395,4 @@ export class SceneCombat extends Phaser.Scene {
 /** Vrai si le combattant dépense du mana (héros, compagnons) ; les ennemis ont une réserve illimitée. */
 export function utiliseMana(c: Combattant): boolean {
   return c.manaMax > 0 && c.manaMax < 999;
-}
-function cleFondManquant(fond: string) {
-  return `combat/fonds/${fond}`;
 }

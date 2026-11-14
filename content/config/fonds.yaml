@@ -1,0 +1,55 @@
+# ─────────────────────────────────────────────────────────────
+#  Fonds de combat : un combat a TOUJOURS un décor.
+#  Chaque rencontre (content/ennemis/*.yaml) a un `fond:`. Pour l'afficher, le jeu essaie dans l'ordre :
+#    1. le vrai fond de combat : assets/combat/fonds/<fond>.png ;
+#    2. le décor équivalent donné ici (`decor`, le premier qui existe dans assets/decors/) ;
+#    3. le décor du lieu où le combat commence ;
+#    4. un fond générique selon `type` : exterieur → plaine, interieur → crypte ;
+#    5. un dégradé, en tout dernier recours (signalé seulement dans la console).
+#  Quand le graphiste livre un vrai fond de combat, il suffit de le copier dans assets/combat/fonds/ :
+#  il passe en priorité, sans rien changer ici.
+#  `npm test` vérifie que chaque fond cité par une rencontre trouve une vraie image à l'étape 1 ou 2.
+# ─────────────────────────────────────────────────────────────
+
+fonds_combat:
+  # vrais fonds déjà livrés
+  plaine:          { type: exterieur }
+  crypte:          { type: interieur }
+  # forêts et campagne
+  foret:           { decor: combe-lisiere, type: exterieur }
+  foret-profonde:  { decor: combe-taniere, type: exterieur }
+  nid:             { decor: combe-taniere, type: exterieur }
+  clairiere:       { decor: combe-aux-saules, type: exterieur }
+  marais:          { decor: combe-ruisseau, type: exterieur }
+  camp:            { decor: champs-du-nord, type: exterieur }
+  # ville
+  arene:           { decor: arene, type: exterieur }
+  rues-nuit:       { decor: lysmont-lanternes-nuit, type: exterieur }
+  # souterrains
+  mine:            { decor: grotte-des-mineurs, type: interieur }
+  mine-naine:      { decor: grotte-des-mineurs, type: interieur }
+  forge:           { decor: grotte-des-mineurs, type: interieur }
+  lac-de-lave:     { decor: grotte-des-mineurs, type: interieur }
+  ruines:          { decor: crypte-entree, type: exterieur }
+  # fortifications et routes
+  rempart:         { decor: route-du-nord, type: exterieur }
+  breche:          { decor: route-du-nord, type: exterieur }
+  marches:         { decor: route-du-nord, type: exterieur }
+  # désert
+  desert:          { decor: champs-du-nord, type: exterieur }
+  ville-desert:    { decor: champs-du-nord, type: exterieur }
+  # montagnes et terres cendrées
+  montagne:        { decor: collines-lune-sauge, type: exterieur }
+  sommet:          { decor: collines-lune-sauge, type: exterieur }
+  canyon:          { decor: collines-lune-sauge, type: exterieur }
+  plaine-cendree:  { decor: collines-lune-sauge, type: exterieur }
+  cendres:         { decor: collines-lune-sauge, type: exterieur }
+  voile:           { decor: collines-lune-sauge, type: exterieur }
+  # palais et grandes salles
+  citadelle:       { decor: chateau-trone, type: interieur }
+  palais:          { decor: chateau-trone, type: interieur }
+  bibliotheque:    { decor: chateau-trone, type: interieur }
+  # côtes
+  port:            { decor: gue-de-valmont, type: exterieur }
+  plage:           { decor: gue-de-valmont, type: exterieur }
+  epave:           { decor: gue-de-valmont, type: exterieur }

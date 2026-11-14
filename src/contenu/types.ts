@@ -2,7 +2,7 @@
  * Type du contenu chargé, sans dépendance à zod ni à YAML : le moteur l'importe sur le web comme sur Roblox.
  */
 import type {
-  Activite, Ambiance, Classe, Compagnon, Competence, Config, Contrat, Don, Donjon, Ennemi, Objet, Pnj, Quete, Race, Region, Rencontre, Scene,
+  Activite, Ambiance, FondCombat, Classe, Compagnon, Competence, Config, Contrat, Don, Donjon, Ennemi, Objet, Pnj, Quete, Race, Region, Rencontre, Scene,
 } from './schemas';
 
 export interface Contenu {
@@ -23,4 +23,6 @@ export interface Contenu {
   contrats: Record<string, Contrat>;
   activites: Record<string, Activite>;
   ambiance: Record<string, Ambiance>;
+  /** Fonds de combat : décor équivalent et type (content/config/fonds.yaml). Affichage seulement : le moteur ne s'en sert pas. */
+  fondsCombat: Record<string, FondCombat>;
 }

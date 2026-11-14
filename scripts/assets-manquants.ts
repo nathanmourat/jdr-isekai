@@ -5,7 +5,7 @@
  */
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { RACINE } from '../src/contenu/node';
+import { contenuDisque, RACINE } from '../src/contenu/node';
 
 const chemin = join(RACINE, 'docs', 'LISTE-TEXTURES.md');
 const lignes = readFileSync(chemin, 'utf8').split('\n');
@@ -30,3 +30,12 @@ for (const [p, liste] of Object.entries(manquants)) {
   console.log('');
 }
 if (process.argv.includes('--cocher')) { writeFileSync(chemin, sortie.join('\n')); console.log('Cases mises à jour dans docs/LISTE-TEXTURES.md'); }
+
+// Vrais fonds de combat encore manquants (le jeu affiche en attendant un décor équivalent : content/config/fonds.yaml)
+const fondsCites = [...new Set(Object.values(contenuDisque().rencontres).map((r) => r.fond))].sort();
+const fondsManquants = fondsCites.filter((f) => !['png', 'webp', 'jpg', 'jpeg'].some((ext) => existsSync(join(RACINE, 'assets', 'combat', 'fonds', `${f}.${ext}`))));
+console.log(`Fonds de combat présents : ${fondsCites.length - fondsManquants.length} / ${fondsCites.length}`);
+if (fondsManquants.length) {
+  console.log(`${fondsManquants.length} fond(s) de combat à dessiner (1280 × 720, le sol dans le tiers inférieur) :`);
+  for (const f of fondsManquants) console.log(`  - assets/combat/fonds/${f}.png`);
+}

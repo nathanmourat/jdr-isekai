@@ -580,6 +580,14 @@ export const zActivite = z.object({
 });
 export type Activite = z.infer<typeof zActivite>;
 
+/** Fond de combat (content/config/fonds.yaml) : décor de lieu équivalent, en attendant le vrai fond, et type pour le fond générique. */
+export const zFondCombat = z.object({
+  decor: z.union([z.string(), z.array(z.string()).min(1)]).optional(),
+  type: z.enum(['exterieur', 'interieur']).default('exterieur'),
+});
+export type FondCombat = z.infer<typeof zFondCombat>;
+export const zFondsCombat = z.record(z.string(), zFondCombat);
+
 export const zDifficulte = z.object({ puissance: z.number(), pv: z.number(), degats: z.number(), ennemis_en_plus: z.number().int() });
 
 export const zConfig = z.object({
