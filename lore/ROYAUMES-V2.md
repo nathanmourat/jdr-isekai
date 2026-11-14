@@ -8,8 +8,8 @@
 | # | Royaume / État | État |
 |---|---|---|
 | 1 | Royaume d'Aubeclaire | ✅ validé le 14/11 |
-| 2 | Concorde de Qarzim (Marche des Sables) | en discussion |
-| 3 | Sylvenoire (elfes) | à faire |
+| 2 | Concorde de Qarzim (Marche des Sables) | ✅ validé le 15/11 |
+| 3 | Sylvenoire (elfes) | en discussion |
 | 4 | Monts Grisfer (nains) | à faire |
 | 5 | Archipel des Brumes | à faire |
 | 6 | État démoniaque | à faire |
@@ -73,3 +73,53 @@ Le plus grand royaume humain, au centre de Velmaris. Une **façade noble et lumi
 - Les chefs des Maisons Clairmont et Ventaile.
 - La date et le récit de la guerre des Racines et du massacre.
 - Les provinces de chaque Maison sur la carte.
+
+---
+
+## 2. La Concorde de Qarzim — « tout a un prix » ✅
+
+### En bref
+Une **ligue marchande** de cités-oasis au cœur d'un **désert mystique et mortel**. Pour les visiteurs et les riches : **épices, fêtes, soieries et Grand Bazar**. Pour les pauvres : **dettes, servitude et sable**.
+
+### Ce qui vient de la V1
+- Fondée en **851 AV** par l'union des cités du désert ; capitale **Qarzim**, **Grand Bazar** (Brumaire 1-7), donjon des **Ruines de Sel**.
+- Dirigeant connu : le **Prévôt Hassad**.
+- Elle **extrait les cristaux d'éther** (fragments de Sérène en V2) : chaque extraction affaiblit le Voile.
+- Elle a **chassé les Ourvalis** de leurs terres (la tribu Lunecroc de **Kaya**).
+- **Nadja Kesh** (compagne) est endettée envers elle depuis la faillite de sa famille.
+- Chapitre 2 : complot contre Séraphine, tempête de sable, révolte des Ourvalis.
+
+### Le pouvoir : une ploutocratie
+- **Le Conseil des Sept Bourses** : une famille marchande par cité-oasis. Les voix s'y **achètent** : plus on est riche, plus on pèse.
+- **Le Prévôt** est élu par le Conseil pour diriger, et il reste en place **tant qu'il rapporte**.
+- **Les contrats sont sacrés** : **Oraëlle**, la déesse des pactes, est la patronne officielle de la Concorde. Rompre un contrat est puni plus durement qu'un meurtre.
+- **La servitude pour dettes** est légale, et les dettes passent aux enfants.
+- **Pas d'armée nationale** : des **compagnies de mercenaires** et des gardes de caravane, payés au contrat.
+
+### Le désert : mystique et mortel
+- **Des dangers partout** : **vers des sables** géants, **tempêtes de sable** qui effacent les pistes en une nuit, **monstres** (chacals, scorpions géants, salamandres), **pillards** des dunes.
+- **Pourquoi il est si étrange** : les **cristaux d'éther** y sont nombreux. L'éther concentré déforme les créatures, fait **chanter les dunes**, et crée des **mirages qui montrent le passé** (ou ce qui aurait pu être). Des cités englouties, comme les Ruines de Sel, refont parfois surface.
+- **Les Routes de la Concorde** : un **réseau de routes fiables**, balisées, gardées par des mercenaires et ponctuées de **caravansérails**. Mais pour les emprunter, **il faut payer le péage**. Hors des routes, c'est presque la mort assurée : ce sont les pauvres, les fugitifs… et les Ourvalis qui s'y risquent.
+
+### Peuples et religion
+- **Humains du désert** (familles marchandes, caravaniers, porteurs d'eau).
+- **Vulpins** : intermédiaires indispensables, respectés tant qu'ils restent utiles.
+- **Ourvalis** : chassés de leurs terres ancestrales, où se trouvent… les **mines de cristaux**. Ils survivent hors des routes et préparent la révolte.
+- **Religion** : on prie surtout **Oraëlle** (les pactes) et **Fenna-aux-Dés** (la chance). L'Ordre est toléré et choyé : c'est le **plus gros client** des cristaux, qui servent à ses Appels. La Concorde et l'Ordre partagent donc un secret.
+
+### Relations
+
+| Avec | Relation | Pourquoi |
+|---|---|---|
+| **Aubeclaire** | **Partenaire économique** | Commerce vital ; Aubeclaire s'endette (Maison Dorvalle) |
+| **Domaine nocturne** | **Allié économique** | Un **pacte** ancien : les vampires ont aidé la Concorde pendant un conflit (proposition : la **guerre des Puits**, contre les seigneurs pillards, quand les vampires tenaient le désert la nuit). Depuis, banques et contrats communs. |
+| **Monts Grisfer** | **Bonne entente** | Métal et machines naines contre épices, soieries et cristaux |
+| **Sylvenoire** | Neutre | Peu d'échanges ; les elfes désapprouvent en silence l'extraction des cristaux |
+| **État de la Lumière** | Neutre | Neutre en politique, même si l'Ordre est son meilleur client |
+| **État démoniaque** | Neutre | On ne parle pas d'eux… et on ne se demande pas où vont certaines cargaisons |
+| **Archipel des Brumes** | **Conflit** | La Concorde **ne reconnaît pas leurs valeurs** : des pirates qui ne respectent aucun contrat. Piraterie sur les routes maritimes, représailles, primes sur les capitaines. |
+
+### À créer plus tard
+- Les noms des **sept cités-oasis** et de leurs familles.
+- Le récit de la **guerre des Puits** et du pacte avec les vampires.
+- Les tarifs et les légendes des **Routes de la Concorde** (péages, caravansérails célèbres).
