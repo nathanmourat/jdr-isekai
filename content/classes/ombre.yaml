@@ -7,6 +7,9 @@ classe:
   attaque: { stat: AGI, element: physique, portee: melee, puissance: 10 }
   rang_prefere: avant
   armure: 4
+  # Familles d'équipement que la classe utilise bien. Hors de cette liste : l'objet s'équipe, avec un malus.
+  # `interdits` : familles que la classe ne peut pas porter du tout (rare).
+  maitrises: { armes: [dague], armures: [intermediaire], interdits: [] }
   passif:
     id: dans-le-dos
     nom: Dans le dos

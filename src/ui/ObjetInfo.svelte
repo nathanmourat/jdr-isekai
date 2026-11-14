@@ -7,7 +7,7 @@
    * Un objet mystérieux affiche « ??? » tant qu'il n'a pas été acheté ou identifié.
    */
   import { jeu } from './jeu.svelte';
-  import { COULEURS_RARETE, NOMS_RARETE, problemeEquipement, texteEffets } from '../moteur/equipement';
+  import { COULEURS_RARETE, messageEquipement, NOMS_RARETE, texteEffets } from '../moteur/equipement';
   import { goutConnu, objetConnu, prixVente } from '../moteur/partie';
   import { urlAsset } from '../rendu/assets';
   import type { Objet } from '../contenu/schemas';
@@ -20,7 +20,7 @@
   const connu = $derived(objetConnu(c, etat, id));
   const couleur = $derived(o.rarete ? COULEURS_RARETE[o.rarete] : undefined);
   const icone = $derived(urlAsset(`icones/objets/${id}`));
-  const probleme = $derived(h && o.type === 'equipement' ? problemeEquipement(c, h, o) : undefined);
+  const probleme = $derived(h && o.type === 'equipement' ? messageEquipement(c, h, o) : undefined);
 
   const TYPES: Record<string, string> = { consommable: 'Objet à utiliser', cadeau: 'Cadeau', equipement: 'Équipement', quete: 'Objet de quête', materiau: 'Matériau' };
   const EMPLACEMENTS: Record<string, string> = { arme: 'arme', armure: 'armure', accessoire: 'accessoire' };
@@ -89,7 +89,7 @@
 <span class="objet" role="group" bind:this={ancre} onpointerenter={surPointeur} onpointerleave={fermer} onpointerdown={surAppui} onpointerup={(e) => { if (e.pointerType !== 'mouse' && !ouvert && minuteur) { clearTimeout(minuteur); minuteur = null; } }} onpointercancel={fermer}>
   {#if icone}<img class="pixel icone" src={icone} alt="" />{/if}
   <strong class="nom" style:color={couleur}>{o.nom}</strong>{#if nombre !== undefined}<span> × {nombre}</span>{/if}
-  {#if probleme}<span class="badge refus">{probleme.startsWith('Interdit') ? 'Interdit' : probleme.startsWith('Non maîtrisé') ? 'Non maîtrisé' : '!'}</span>{/if}
+  {#if probleme}<span class={`badge ${probleme.startsWith('Non maîtrisé') ? 'attention' : 'refus'}`}>{probleme.startsWith('Interdit') ? 'Interdit' : probleme.startsWith('Non maîtrisé') ? 'Non maîtrisé' : probleme.startsWith('Réservé') ? 'Réservé' : probleme}</span>{/if}
   <button type="button" class="info" aria-label={`Détails : ${o.nom}`} aria-expanded={ouvert} onclick={(e) => { e.stopPropagation(); if (ouvert) fermer(); else ouvrir(); }} onblur={fermer}>i</button>
   {#if ouvert}
     <span class="bulle" role="tooltip" style={position}>
@@ -124,5 +124,5 @@
   .gout { color: #ff9bb8; }
   .pouvoir { color: #f2b53a; font-style: italic; }
   .refus { color: #e0605a; border-color: #e0605a; }
-  .attention { color: #f2a33a; }
+  .attention { color: #f2a33a; border-color: #7a5a20; }
 </style>

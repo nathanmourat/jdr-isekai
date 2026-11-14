@@ -94,14 +94,105 @@ export function bonusEquipement(contenu: Contenu, h: Heros): BonusEquipement {
   return b;
 }
 
-/** Raison pour laquelle le héros ne peut pas équiper l'objet (undefined : il peut). */
+// ───────────────────────────── Maîtrises d'équipement ─────────────────────────────
+
+/**
+ * Tout se ramasse et s'achète, mais une classe n'est pas douée avec tout :
+ *  - 'maitrise'     : la classe utilise bien cet objet ;
+ *  - 'non-maitrise' : l'objet s'équipe, avec un malus (voir MALUS_EQUIPEMENT) ;
+ *  - 'interdit'     : famille interdite à la classe (rare, listée dans son YAML) ;
+ *  - 'reserve'      : objet légendaire ou mythique propre à d'autres classes.
+ */
+export type Aptitude = 'maitrise' | 'non-maitrise' | 'interdit' | 'reserve';
+
+/** Malus d'un objet non maîtrisé, par emplacement. Réglés par `npm run equilibrage:equipements`. */
+export const MALUS_EQUIPEMENT = {
+  /** arme : puissance totale × 0,7 (−30 % de dégâts, compétences comprises) et −15 points de chance de toucher */
+  arme: { puissance: 0.7, precision: -0.15 },
+  /** armure : la moitié de son armure est perdue, et −2 en Agilité (moins d'esquive, d'initiative et de précision) */
+  armure: { armure: 0.5, agilite: -2 },
+  /** accessoire spécialisé (bouclier, carquois, sacoche) : ses bonus sont réduits de moitié */
+  accessoire: { bonus: 0.5 },
+};
+
+const NOMS_CATEGORIES: Record<string, string> = {
+  epee: 'les épées', 'deux-mains': 'les armes à deux mains', masse: 'les masses', dague: 'les dagues', arc: 'les arcs', arbalete: 'les arbalètes',
+  baton: 'les bâtons', sceptre: 'les sceptres', orbe: 'les orbes', instrument: 'les instruments', lourde: 'les armures lourdes',
+  intermediaire: 'les armures intermédiaires', legere: 'les tenues légères', bouclier: 'les boucliers', carquois: 'les carquois', sacoche: 'les sacoches',
+};
+function nomCategorie(o: Objet): string {
+  return NOMS_CATEGORIES[o.categorie ?? ''] ?? 'cet objet';
+}
+
+/** Ce que la classe sait faire de cet objet. */
+export function aptitudeEquipement(contenu: Contenu, classeId: string, o: Objet): Aptitude {
+  if (o.type !== 'equipement' || o.emplacement === undefined) return 'maitrise';
+  const cl = contenu.classes[classeId];
+  const pourSaClasse = o.classes === undefined || o.classes.length === 0 || o.classes.includes(classeId);
+  // légendaires et mythiques propres à une classe : ils restent réservés
+  if (!pourSaClasse && (o.rarete === 'legendaire' || o.rarete === 'mythique')) return 'reserve';
+  if (cl === undefined) return pourSaClasse ? 'maitrise' : 'non-maitrise';
+  const cat = o.categorie;
+  if (vrai(cat) && cl.maitrises.interdits.includes(cat)) return 'interdit';
+  if (vrai(cat) && o.emplacement === 'arme') return cl.maitrises.armes.includes(cat) ? 'maitrise' : 'non-maitrise';
+  if (vrai(cat) && o.emplacement === 'armure') return cl.maitrises.armures.includes(cat) ? 'maitrise' : 'non-maitrise';
+  // accessoires et objets sans famille : on suit la liste de classes du catalogue
+  return pourSaClasse ? 'maitrise' : 'non-maitrise';
+}
+
+/** Malus d'un objet non maîtrisé, en français (« −30 % de dégâts, −15 points de chance de toucher »). */
+export function texteMalus(o: Objet): string {
+  if (o.emplacement === 'arme') return `−${Math.round((1 - MALUS_EQUIPEMENT.arme.puissance) * 100)} % de dégâts, −${Math.round(-MALUS_EQUIPEMENT.arme.precision * 100)} points de chance de toucher`;
+  if (o.emplacement === 'armure') return `armure réduite de moitié, ${MALUS_EQUIPEMENT.armure.agilite} en Agilité (moins d'esquive)`;
+  return 'bonus réduits de moitié';
+}
+
+/** Avertissement à afficher AVANT l'achat et l'équipement quand la classe ne maîtrise pas l'objet (undefined : rien à signaler). */
+export function avertissementEquipement(contenu: Contenu, h: Heros, o: Objet): string | undefined {
+  if (aptitudeEquipement(contenu, h.classe, o) !== 'non-maitrise') return undefined;
+  return `Non maîtrisé par ${contenu.classes[h.classe]?.nom ?? h.classe} : ${texteMalus(o)}`;
+}
+
+/** Raison pour laquelle le héros ne peut pas équiper l'objet (undefined : il peut, peut-être avec un malus). */
 export function problemeEquipement(contenu: Contenu, h: Heros, o: Objet): string | undefined {
   if (o.type !== 'equipement' || o.emplacement === undefined) return "Cet objet ne s'équipe pas";
   if (o.niveau !== undefined && h.niveau < o.niveau) return `Niveau ${o.niveau} requis`;
-  if (o.classes !== undefined && o.classes.length > 0 && !o.classes.includes(h.classe)) {
-    return `Réservé à : ${o.classes.map((c) => contenu.classes[c]?.nom ?? c).join(', ')}`;
-  }
+  const aptitude = aptitudeEquipement(contenu, h.classe, o);
+  if (aptitude === 'interdit') return `Interdit : ${contenu.classes[h.classe]?.nom ?? h.classe} ne peut pas porter ${nomCategorie(o)}`;
+  if (aptitude === 'reserve') return `Réservé à : ${(o.classes ?? []).map((c) => contenu.classes[c]?.nom ?? c).join(', ')}`;
   return undefined;
+}
+
+/** Problème bloquant ou, à défaut, avertissement de non-maîtrise : le message à montrer au joueur. */
+export function messageEquipement(contenu: Contenu, h: Heros, o: Objet): string | undefined {
+  return problemeEquipement(contenu, h, o) ?? avertissementEquipement(contenu, h, o);
+}
+
+/** Bonus de caractéristique d'un objet porté, malus de non-maîtrise compris (accessoire : moitié ; armure : Agilité). */
+export function bonusCaracPorte(contenu: Contenu, classeId: string, o: Objet, carac: string): number {
+  let v = (o.bonus?.caracs as Record<string, number | undefined> | undefined)?.[carac] ?? 0;
+  if (aptitudeEquipement(contenu, classeId, o) !== 'non-maitrise') return v;
+  if (o.emplacement === 'accessoire' && v > 0) v = Math.floor(v * MALUS_EQUIPEMENT.accessoire.bonus);
+  if (o.emplacement === 'armure' && carac === 'AGI') v += MALUS_EQUIPEMENT.armure.agilite;
+  return v;
+}
+
+/** Armure et puissance apportées par un objet porté, malus de non-maîtrise compris. */
+export function bonusArmurePuissance(contenu: Contenu, classeId: string, o: Objet): { armure: number; puissance: number } {
+  let armure = o.bonus?.armure ?? 0;
+  let puissance = o.bonus?.puissance ?? 0;
+  if (aptitudeEquipement(contenu, classeId, o) === 'non-maitrise') {
+    if (o.emplacement === 'armure') armure = Math.floor(armure * MALUS_EQUIPEMENT.armure.armure);
+    if (o.emplacement === 'accessoire') { armure = Math.floor(armure * MALUS_EQUIPEMENT.accessoire.bonus); puissance = Math.floor(puissance * MALUS_EQUIPEMENT.accessoire.bonus); }
+  }
+  return { armure, puissance };
+}
+
+/** Vrai si le héros porte une arme que sa classe ne maîtrise pas. */
+export function armeNonMaitrisee(contenu: Contenu, h: Heros): boolean {
+  const id = h.equipement.arme;
+  const o = vrai(id) ? contenu.objets[id] : undefined;
+  return o !== undefined && aptitudeEquipement(contenu, h.classe, o) === 'non-maitrise';
 }
 
 /** Nombre d'exemplaires d'un objet dans la partie (inventaires et équipement de tous les héros). */

@@ -9,7 +9,7 @@
   import { AIDE_CARACS } from '../../moteur/fiche';
   import CompetenceInfo from '../CompetenceInfo.svelte';
   import ObjetInfo from '../ObjetInfo.svelte';
-  import { problemeEquipement } from '../../moteur/equipement';
+  import { avertissementEquipement, problemeEquipement } from '../../moteur/equipement';
 
   const c = jeu.contenu!;
   const etat = $derived(jeu.etat!);
@@ -129,7 +129,7 @@
     {#each inventaire as [o, n] (o)}
       <div class="ligne item">
         <ObjetInfo id={o} nombre={n} />
-        {#if c.objets[o].type === 'equipement'}{@const refus = problemeEquipement(c, h, c.objets[o])}<button class="petit" disabled={refus !== undefined} title={refus ?? ''} onclick={() => jeu.agir({ type: 'equiper', objet: o })}>Équiper</button>{/if}
+        {#if c.objets[o].type === 'equipement'}{@const refus = problemeEquipement(c, h, c.objets[o])}{@const malus = avertissementEquipement(c, h, c.objets[o])}<button class="petit" disabled={refus !== undefined} title={refus ?? malus ?? ''} onclick={() => jeu.agir({ type: 'equiper', objet: o })}>Équiper</button>{#if refus}<small class="refus-equip">{refus}</small>{:else if malus}<small class="malus-equip">{malus}</small>{/if}{/if}
         {#if c.objets[o].type !== 'quete'}<button class="petit" onclick={() => jeu.agir({ type: 'vendre', objet: o })}>Vendre ({prixVente(c, h, o)} or)</button>{/if}
       </div>
     {:else}<p class="discret">Inventaire vide.</p>{/each}
@@ -137,6 +137,8 @@
 </section>
 
 <style>
+  .malus-equip { color: #f2a33a; }
+  .refus-equip { color: var(--rouge); }
   .fiche { display: grid; gap: 0.8rem; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
   .identite { display: flex; gap: 1rem; grid-column: 1 / -1; flex-wrap: wrap; }
   .identite img { width: 140px; height: 140px; border-radius: 10px; border: 2px solid var(--or); object-fit: cover; }

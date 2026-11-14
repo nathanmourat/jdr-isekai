@@ -107,6 +107,11 @@ export const zClasse = z.object({
   attaque: z.object({ stat: zCarac, element: zElement.default('physique'), portee: z.enum(['melee', 'distance']), puissance: z.number().default(8) }),
   rang_prefere: z.enum(['avant', 'arriere']),
   armure: z.number().default(0),
+  /**
+   * Familles d'équipement (champ `categorie` des objets) que la classe maîtrise. Une arme ou une armure d'une autre
+   * famille s'équipe avec un malus ; une famille de `interdits` ne s'équipe pas du tout.
+   */
+  maitrises: z.object({ armes: z.array(z.string()).min(1), armures: z.array(z.string()).min(1), interdits: z.array(z.string()).default([]) }),
   passif: z.object({ id: z.string(), nom: z.string(), description: z.string(), parametres: z.record(z.string(), z.number()).default({}) }),
   competences: z.array(z.string()).min(2),
   branches: z.array(z.object({ id: z.string(), nom: z.string(), description: z.string(), competences: z.array(z.object({ niveau: z.number().int(), competence: z.string() })) })).length(2),
