@@ -5203,8 +5203,8 @@ function multiplicateurDegatsSource(combat, s, cible, element)
     ) then
         m = m * (1 + 0.05)
     end
-    if combat.tour > 30 then
-        m = m * (1 + 0.1 * (combat.tour - 30))
+    if combat.tour > 80 then
+        m = m * (1 + 0.1 * (combat.tour - 80))
     end
     return m
 end

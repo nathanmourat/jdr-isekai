@@ -100,7 +100,7 @@ ennemi('chasseur-concorde', 'Chasseur de dragons', "Mercenaire de la Concorde é
     - { type: degats, puissance: 10, stat: FOR }
     - { type: etat, etat: immobilise, duree: 1, chance: 0.6 }
   ia: { priorite: 3 }"""),
-ennemi('vask-chasseur', 'Orlen Vask, chasseur de dragons', "Le capitaine des mercenaires de la Concorde est revenu. Il vend maintenant des œufs de dragon au plus offrant.", 27, 'boss', 'humanoide', sprite='bandit', facteur_pv=0.65, fuit=0.15,
+ennemi('vask-chasseur', 'Orlen Vask, chasseur de dragons', "Le capitaine des mercenaires de la Concorde est revenu. Il vend maintenant des œufs de dragon au plus offrant.", 27, 'boss', 'humanoide', sprite='bandit', facteur_pv=0.55, fuit=0.15,
   attaques=[("Lance-harpon", "tire un harpon sur {cible}", 'entaille'), ("Fendoir doré", "abat son fendoir sur {cible}", 'entaille')],
   resistances={'feu': 0.5},
   competences="""- id: ordre-de-chasse

@@ -248,7 +248,7 @@ ennemis:
     fuit_sous_pourcent: 0.15
     sprite: bandit
     caracteristiques: { FOR: 33, AGI: 16, INT: 12, VIT: 26, ESP: 12, CHA: 6 }
-    pv: 1227
+    pv: 1038
     armure: 19
     attaque: { stat: FOR, element: physique, portee: melee, puissance: 18 }
     attaques:
