@@ -128,9 +128,9 @@ Description : femme de 24 ans, chevalière, cheveux châtain cuivré en tresse c
 
 | Fait | N° | Fichier (dans `assets/`) | Dimensions | Contenu |
 |---|---|---|---|---|
-| [ ] | 49 | `combat/fonds/foret.png` | 1280 × 720 | Sous-bois de la Combe-aux-Saules. |
-| [ ] | 50 | `combat/fonds/rues-nuit.png` | 1280 × 720 | Rues de Lysmont la nuit, lanternes et incendie. |
-| [ ] | 51 | `combat/fonds/arene.png` | 1280 × 720 | Sable de l'arène, gradins flous au fond. |
+| [x] | 49 | `combat/fonds/foret.png` | 1280 × 720 | Sous-bois de la Combe-aux-Saules. |
+| [x] | 50 | `combat/fonds/rues-nuit.png` | 1280 × 720 | Rues de Lysmont la nuit, lanternes et incendie. |
+| [x] | 51 | `combat/fonds/arene.png` | 1280 × 720 | Sable de l'arène, gradins flous au fond. |
 
 ### 2.4 Ennemis du chapitre 1
 
@@ -395,6 +395,40 @@ Toutes ces images sont des créations originales du groupe, générées par scri
 | [x] | V6 | `effets/entaille.png`, `impact`, `feu`, `glace`, `foudre`, `soin`, `poison`, `rune`, `bouclier`, `bonus`, `malus`, `critique`, `sacre`, `ombre`, `invocation` | 512 × 64 | Effets de combat : 8 images de 64 × 64, effet centré. Sans l'image, le jeu dessine l'effet lui-même. |
 
 Un PNJ sans `decor.png` est remplacé par une silhouette provisoire ; un PNJ sans position dans le JSON est placé automatiquement au sol.
+
+## Fonds de combat de toute la saison (branche `textures-fonds`, livrés le 14/11)
+
+Les 32 fonds cités par les rencontres de `content/ennemis/` sont livrés (1280 × 720, sol dans le tiers inférieur, bande dégagée pour les combattants). `plaine`, `crypte`, `foret`, `rues-nuit` et `arene` sont listés plus haut ; voici les 27 autres. Générateur : `outils/textures/hd/fonds.py`. Un nouveau `fond:` sans image emprunte en attendant un décor (`content/config/fonds.yaml`).
+
+| Fait | N° | Fichier | Taille | Description |
+|---|---|---|---|---|
+| [x] | F-bibliotheque | `combat/fonds/bibliotheque.png` | 1280 × 720 | Fond de combat (le sol dans le tiers inférieur). |
+| [x] | F-breche | `combat/fonds/breche.png` | 1280 × 720 | Fond de combat (le sol dans le tiers inférieur). |
+| [x] | F-camp | `combat/fonds/camp.png` | 1280 × 720 | Fond de combat (le sol dans le tiers inférieur). |
+| [x] | F-canyon | `combat/fonds/canyon.png` | 1280 × 720 | Fond de combat (le sol dans le tiers inférieur). |
+| [x] | F-cendres | `combat/fonds/cendres.png` | 1280 × 720 | Fond de combat (le sol dans le tiers inférieur). |
+| [x] | F-citadelle | `combat/fonds/citadelle.png` | 1280 × 720 | Fond de combat (le sol dans le tiers inférieur). |
+| [x] | F-clairiere | `combat/fonds/clairiere.png` | 1280 × 720 | Fond de combat (le sol dans le tiers inférieur). |
+| [x] | F-desert | `combat/fonds/desert.png` | 1280 × 720 | Fond de combat (le sol dans le tiers inférieur). |
+| [x] | F-epave | `combat/fonds/epave.png` | 1280 × 720 | Fond de combat (le sol dans le tiers inférieur). |
+| [x] | F-foret-profonde | `combat/fonds/foret-profonde.png` | 1280 × 720 | Fond de combat (le sol dans le tiers inférieur). |
+| [x] | F-forge | `combat/fonds/forge.png` | 1280 × 720 | Fond de combat (le sol dans le tiers inférieur). |
+| [x] | F-lac-de-lave | `combat/fonds/lac-de-lave.png` | 1280 × 720 | Fond de combat (le sol dans le tiers inférieur). |
+| [x] | F-marais | `combat/fonds/marais.png` | 1280 × 720 | Fond de combat (le sol dans le tiers inférieur). |
+| [x] | F-marches | `combat/fonds/marches.png` | 1280 × 720 | Fond de combat (le sol dans le tiers inférieur). |
+| [x] | F-mine | `combat/fonds/mine.png` | 1280 × 720 | Fond de combat (le sol dans le tiers inférieur). |
+| [x] | F-mine-naine | `combat/fonds/mine-naine.png` | 1280 × 720 | Fond de combat (le sol dans le tiers inférieur). |
+| [x] | F-montagne | `combat/fonds/montagne.png` | 1280 × 720 | Fond de combat (le sol dans le tiers inférieur). |
+| [x] | F-nid | `combat/fonds/nid.png` | 1280 × 720 | Fond de combat (le sol dans le tiers inférieur). |
+| [x] | F-palais | `combat/fonds/palais.png` | 1280 × 720 | Fond de combat (le sol dans le tiers inférieur). |
+| [x] | F-plage | `combat/fonds/plage.png` | 1280 × 720 | Fond de combat (le sol dans le tiers inférieur). |
+| [x] | F-plaine-cendree | `combat/fonds/plaine-cendree.png` | 1280 × 720 | Fond de combat (le sol dans le tiers inférieur). |
+| [x] | F-port | `combat/fonds/port.png` | 1280 × 720 | Fond de combat (le sol dans le tiers inférieur). |
+| [x] | F-rempart | `combat/fonds/rempart.png` | 1280 × 720 | Fond de combat (le sol dans le tiers inférieur). |
+| [x] | F-ruines | `combat/fonds/ruines.png` | 1280 × 720 | Fond de combat (le sol dans le tiers inférieur). |
+| [x] | F-sommet | `combat/fonds/sommet.png` | 1280 × 720 | Fond de combat (le sol dans le tiers inférieur). |
+| [x] | F-ville-desert | `combat/fonds/ville-desert.png` | 1280 × 720 | Fond de combat (le sol dans le tiers inférieur). |
+| [x] | F-voile | `combat/fonds/voile.png` | 1280 × 720 | Fond de combat (le sol dans le tiers inférieur). |
 
 ## Récapitulatif
 

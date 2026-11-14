@@ -6,7 +6,8 @@ import { choisirFond } from '../src/rendu/fonds';
 
 const c = contenuDisque();
 /** Une image est présente dans assets/ (chemin sans extension). */
-const existe = (chemin: string) => ['png', 'webp', 'jpg', 'jpeg'].some((ext) => existsSync(join(RACINE, 'assets', `${chemin}.${ext}`)));
+const existe = (chemin: string) => existeVraiment(chemin);
+const existeVraiment = (chemin: string) => ['png', 'webp', 'jpg', 'jpeg'].some((ext) => existsSync(join(RACINE, 'assets', `${chemin}.${ext}`)));
 const fondsCites = [...new Set(Object.values(c.rencontres).map((r) => r.fond))].sort();
 
 describe('Fonds de combat : un combat a toujours un décor', () => {
@@ -19,6 +20,10 @@ describe('Fonds de combat : un combat a toujours un décor', () => {
     expect(sansImage, `fonds sans image (ajoutez assets/combat/fonds/<fond>.png ou une ligne dans content/config/fonds.yaml)`).toEqual([]);
   });
 
+  it('depuis la livraison des vrais fonds (branche textures-fonds), chaque fond cité a son propre fichier : étape 1', () => {
+    const empruntes = fondsCites.filter((f) => choisirFond(c, f, null, existe)?.etape !== 1);
+    expect(empruntes, 'fonds qui empruntent encore un décor (ajoutez assets/combat/fonds/<fond>.png)').toEqual([]);
+  });
   it('chaque décor de content/config/fonds.yaml existe dans assets/decors/', () => {
     for (const [fond, def] of Object.entries(c.fondsCombat)) {
       const decors = def.decor === undefined ? [] : Array.isArray(def.decor) ? def.decor : [def.decor];
@@ -27,6 +32,8 @@ describe('Fonds de combat : un combat a toujours un décor', () => {
   });
 
   it('ordre de la chaîne : vrai fond, décor équivalent, décor du lieu, fond générique', () => {
+    // comme avant la livraison des vrais fonds : seuls plaine et crypte existaient
+    const existe = (ch: string) => (!ch.startsWith('combat/fonds/') || ch === 'combat/fonds/plaine' || ch === 'combat/fonds/crypte') && existeVraiment(ch);
     expect(choisirFond(c, 'plaine', 'guilde', existe)).toEqual({ chemin: 'combat/fonds/plaine', decor: false, etape: 1 });
     expect(choisirFond(c, 'foret', 'guilde', existe)).toEqual({ chemin: 'decors/combe-lisiere', decor: true, etape: 2 });
     expect(choisirFond(c, 'fond-inconnu', 'guilde', existe)).toEqual({ chemin: 'decors/guilde', decor: true, etape: 3 });
