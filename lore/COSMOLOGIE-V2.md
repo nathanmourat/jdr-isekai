@@ -1,6 +1,7 @@
-# Cosmologie de Velmaris — V2 (brouillon à valider)
+# Cosmologie de Velmaris — V2 (validée le 14/11)
 
-> Document de travail pour la **V2** du jeu. **La V1 ne change pas** : rien ici n'est encore intégré.
+> Document de travail pour la **V2** du jeu, **validé par le groupe le 14/11**. **La V1 ne change pas** : rien ici n'est encore intégré.
+> Les petits clins d'œil possibles dans la V1 (noms, fêtes, reliques) sont également validés.
 > Idée de départ du groupe (les 3 dragons primordiaux, les 4 dieux supérieurs, les 12 dieux, l'Interdit, l'Éveil et l'Élévation), mise en forme et reliée au monde existant.
 > Tous les noms sont **originaux** et peuvent être changés.
 
@@ -128,6 +129,10 @@ Aucune n'est entièrement vraie, et aucune n'est entièrement fausse. Elles serv
 | **Demi-démons et Légion Cendrée** | « Morghast a été **enchaîné injustement**. Le Voile est une **prison** pour les dieux et pour nous. » | Ils ont raison sur la prison, mais oublient ce que coûterait sa destruction |
 | **Demi-elfes** | Ils connaissent deux versions qui se contredisent… et n'en croient aucune. | — |
 
+### 5.4 Sérène, objet de discorde (validé)
+
+Sérène n'est pas seulement un mystère : c'est une **source de conflits entre les peuples**. Selon sa version de la Rupture et les dieux qu'il vénère, chaque peuple voit en elle une **protectrice** (l'Ordre de la Lumière Sereine), une **geôlière** (la Légion Cendrée, les cultes des Cendres), une **erreur à réparer** (les elfes), une **rouille à briser** (les nains) ou une **énigme** (les dragons). Ces désaccords nourrissent les alliances, les guerres et les choix des joueurs. Ce point sera développé avec les peuples et les États.
+
 > **Nouveaux peuples** : chaque peuple ajouté plus tard reçoit sa version de la Rupture, un **alignement** (Création, Destruction, Chaos, Ordre ou neutre) et ses **alliances**. Le tableau est fait pour s'allonger.
 
 ---
@@ -172,6 +177,7 @@ N'importe qui peut dépasser ses limites **par lui-même**, sans l'aide d'un die
 | **Éveil** | Le corps et l'âme débordent leur limite : le mana change de nature, une **technique propre** apparaît | Les grands guerriers, les mages accomplis, certains héros | Une étape de progression (par exemple au moment des **ultimes**, niveau 30, après la quête de classe) |
 | **Élévation** | Le mortel s'approche d'un dieu : il **devient une source** d'éther | Une poignée d'êtres dans l'histoire | L'étape ultime, liée au **palier X** et aux **armes mythiques** (les Reliques du Voile) |
 
+- **Décisions du groupe (14/11)** : l'**Éveil** arrive au **niveau 30** (avec les ultimes) ; l'**Élévation** correspond au **palier X**. Une **étape intermédiaire** sera sans doute ajoutée entre les deux (nom et niveau à définir). Si les saisons suivantes montent à 50, 60 ou 70, de nouveaux paliers pourront s'ajouter.
 - Les **grands adversaires** suivent le même chemin : un boss « éveillé » ou « élevé » est un événement.
 - **Orvan**, le Premier Appelé, a atteint l'**Élévation** dans les Cendres, en puisant dans le pouvoir de Morghast. C'est ce qui a fait de lui le **Souverain des Cendres**.
 
@@ -187,6 +193,11 @@ N'importe qui peut dépasser ses limites **par lui-même**, sans l'aide d'un die
 | **La Forge et les Ancêtres** | Durnhal, Morghast « le Briseur », les Ancêtres | Monts Grisfer | Jugé hérétique par l'Ordre |
 | **Le Hurlement** | La Lune-Mère, Ourlah, les Ancêtres dans le vent | Ourvalis | Tradition orale, pas de temples |
 | **Les cultes des Cendres** | Morghast et Xyrrha, la « libération » des dieux | Clandestins, près du Mur d'Aube et dans les villes | Les **cultistes** de la V1 (attaque de Lysmont) |
+
+---
+
+### États religieux (piste validée)
+Certains **États** seront **religieux**. Il y aura au moins un **État démoniaque** (lié à la Destruction, au Chaos ou aux Cendres) et un **État de la Lumière** (lié à l'Ordre ou à Sérène). Ils seront développés avec les peuples et les royaumes.
 
 ---
 
