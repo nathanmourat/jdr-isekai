@@ -85,13 +85,17 @@ scenes:
           - { qui: kaya, dit: "Une jeune femme aux oreilles de loup argentées [[te||vous]] dévisage, adossée à un pilier. « Pff. [[Il a l'air tout mou||Ils ont l'air tout mous]]. Je parie dix pièces [[qu'il tombe||qu'ils tombent]] au premier coup. »" }
           - { qui: kaya, dit: "Elle vous fixe un instant de plus, puis son regard s'adoucit. « …Un Ourvalis ? Hé. Bonne chance, alors. »", si: { race: ourvalis } }
           - { qui: rowena, dit: "« L'examen est simple : [[tu affrontes||vous affrontez]] notre golem d'entraînement. S'il [[te||vous]] met au tapis, [[reviens||revenez]] dans un an. »" }
-        choix:
-          - texte: "Entrer dans l'arène d'entraînement."
-            aller: conseil
-          # Pari : la mise sort vraiment du porte-monnaie de ceux qui choisissent cette réponse (voir `miser`).
-          - texte: "« Kaya, c'est ça ? Je double ta mise : vingt pièces que tu perds. »"
-            effets: [{ flag: pari-kaya, miser: 20 }]
-            aller: conseil
+        suite: pari
+      # Pari partagé : chaque joueur dit s'il mise. Les 20 pièces sont réparties entre ceux qui misent
+      # (à trois : 7 + 7 + 6). En cas de victoire, chacun récupère le double de sa part (voir `gain_pari`).
+      pari:
+        repliques:
+          - { qui: kaya, dit: "Kaya fait sauter une pièce dans sa main. « Allez, soyons joueurs. Vingt pièces, pour [[toi||tout le groupe]], que [[tu ne tiens||vous ne tenez]] pas debout jusqu'au bout. [[Tu suis||Qui suit]] ? »" }
+        pari: { mise: 20, gain: 2, flag: pari-kaya, aller: conseil, personne: sans-pari }
+      sans-pari:
+        repliques:
+          - { qui: kaya, dit: "« Personne ne parie ? Tss. Prudent[[||s]], en plus d'être mou[[||s]]. » Elle range sa pièce, presque déçue." }
+        suite: conseil
       conseil:
         parole_a:
           regle: { classe: [lame-runique, gardien, berserker, ombre, archer] }

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { contenuDisque } from '../src/contenu/node';
-import { appliquer, noeudCourant, nouvellePartie, remplacerVariables } from '../src/moteur/partie';
+import { appliquer, noeudCourant, nouvellePartie, partsDeMise, remplacerVariables } from '../src/moteur/partie';
 import { fusionsPossibles } from '../src/moteur/fusions';
 import { lireSauvegarde } from '../src/sauvegarde/fichier';
 import { finirCombats, groupeDeDeux, jouer, jouerPrologues, jouerSceneGroupe, nouvellePartieDeTest } from './robot';
@@ -65,7 +65,7 @@ describe('Dialogues adaptés au groupe', () => {
     expect(textes).toHaveLength(3);
     // même graine = même joueur interrogé
     const a = groupeDeDeux(c, 'graine-x'); const b = groupeDeDeux(c, 'graine-x');
-    for (const r of [a, b]) { jouerPrologues(c, r); jouerSceneGroupe(c, r, 'ch1-appel'); jouer(c, r, { type: 'lancer_scene', joueur: 'j1', scene: 'ch1-examen' }); for (const j of ['j1', 'j2']) jouer(c, r, { type: 'choisir', joueur: j, cle: 'groupe', index: 0 }); }
+    for (const r of [a, b]) { jouerPrologues(c, r); jouerSceneGroupe(c, r, 'ch1-appel'); jouer(c, r, { type: 'lancer_scene', joueur: 'j1', scene: 'ch1-examen' }); jouer(c, r, { type: 'continuer', joueur: 'j1', cle: 'groupe' }); for (const j of ['j1', 'j2']) jouer(c, r, { type: 'parier', joueur: j, cle: 'groupe', mise: false }); jouer(c, r, { type: 'continuer', joueur: 'j1', cle: 'groupe' }); }
     expect(a.etat.scenes.groupe.parole).toEqual(b.etat.scenes.groupe.parole);
     expect(a.etat.scenes.groupe.parole!.reponses).toHaveLength(3);
   });
@@ -81,36 +81,79 @@ describe('Dialogues adaptés au groupe', () => {
   });
 });
 
-describe('Paris en pièces', () => {
-  function examen(orJ1: number) {
-    const r = groupeDeDeux(c, 'pari');
+describe('Paris en pièces (mise partagée)', () => {
+  /** Lance l'examen de la Guilde et avance jusqu'à la proposition de pari de Kaya. */
+  function examen(orJ1: number, r = groupeDeDeux(c, 'pari')) {
     jouerPrologues(c, r);
     jouerSceneGroupe(c, r, 'ch1-appel');
     r.etat.heros.h1.or = orJ1;
     jouer(c, r, { type: 'lancer_scene', joueur: 'j1', scene: 'ch1-examen' });
+    jouer(c, r, { type: 'continuer', joueur: 'j1', cle: 'groupe' });
+    expect(r.etat.scenes.groupe.noeud).toBe('pari');
     return r;
   }
 
-  it('miser retire vraiment l\'or de celui qui parie, pas des autres', () => {
+  it('la mise est répartie sans virgule, le reste aux premiers joueurs', () => {
+    expect(partsDeMise(20, 3)).toEqual([7, 7, 6]);
+    expect(partsDeMise(20, 1)).toEqual([20]);
+    expect(partsDeMise(20, 6)).toEqual([4, 4, 3, 3, 3, 3]);
+    expect(partsDeMise(20, 0)).toEqual([]);
+  });
+
+  it('seul celui qui mise paie, et il paie toute la mise', () => {
     const r = examen(50);
     const orH2 = r.etat.heros.h2.or;
-    jouer(c, r, { type: 'choisir', joueur: 'j1', cle: 'groupe', index: 1 }); // « Je double ta mise »
-    jouer(c, r, { type: 'choisir', joueur: 'j2', cle: 'groupe', index: 0 }); // égalité : le meneur (j1) l'emporte
+    jouer(c, r, { type: 'parier', joueur: 'j1', cle: 'groupe', mise: true });
+    expect(r.etat.scenes.groupe.noeud).toBe('pari'); // on attend la réponse de j2
+    jouer(c, r, { type: 'parier', joueur: 'j2', cle: 'groupe', mise: false });
     expect(r.etat.heros.h1.or).toBe(30);
     expect(r.etat.heros.h2.or).toBe(orH2);
     expect(r.etat.mises).toEqual({ h1: 20 });
     expect(r.etat.mouvementsOr).toEqual([{ heros: 'h1', montant: -20, raison: 'mise' }]);
+    expect(r.etat.flags['pari-kaya']).toBe(true);
   });
 
-  it('on ne peut pas miser plus que ce qu\'on a', () => {
-    const r = examen(12);
-    expect(() => appliquer(c, r.etat, { type: 'choisir', joueur: 'j1', cle: 'groupe', index: 1 })).toThrow(/Pas assez d'or pour miser 20 pièces \(vous en avez 12\)/);
-  });
-
-  it('pari gagné : la mise et le gain reviennent ; pari perdu : la mise est perdue', () => {
+  it('à deux, chacun paie sa moitié', () => {
     const r = examen(50);
-    jouer(c, r, { type: 'choisir', joueur: 'j1', cle: 'groupe', index: 1 });
-    jouer(c, r, { type: 'choisir', joueur: 'j2', cle: 'groupe', index: 0 });
+    const orH2 = r.etat.heros.h2.or;
+    jouer(c, r, { type: 'parier', joueur: 'j1', cle: 'groupe', mise: true });
+    jouer(c, r, { type: 'parier', joueur: 'j2', cle: 'groupe', mise: true });
+    expect(r.etat.heros.h1.or).toBe(40);
+    expect(r.etat.heros.h2.or).toBe(orH2 - 10);
+    expect(r.etat.mises).toEqual({ h1: 10, h2: 10 });
+  });
+
+  it('personne ne mise : la scène continue par la réplique « personne ne parie »', () => {
+    const r = examen(50);
+    jouer(c, r, { type: 'parier', joueur: 'j1', cle: 'groupe', mise: false });
+    jouer(c, r, { type: 'parier', joueur: 'j2', cle: 'groupe', mise: false });
+    expect(r.etat.scenes.groupe.noeud).toBe('sans-pari');
+    expect(r.etat.mises).toEqual({});
+    expect(r.etat.flags['pari-kaya']).toBeUndefined();
+  });
+
+  it('on ne peut pas miser sans avoir de quoi payer sa part, ni répondre deux fois', () => {
+    const r = examen(4);
+    expect(() => appliquer(c, r.etat, { type: 'parier', joueur: 'j1', cle: 'groupe', mise: true })).toThrow(/Pas assez d'or pour miser : il faut au moins 10 pièces \(vous en avez 4\)/);
+    jouer(c, r, { type: 'parier', joueur: 'j1', cle: 'groupe', mise: false });
+    expect(() => appliquer(c, r.etat, { type: 'parier', joueur: 'j1', cle: 'groupe', mise: true })).toThrow(/déjà répondu/);
+  });
+
+  it('celui qui ne peut pas payer sa part finale se retire, et les autres se partagent la mise', () => {
+    const r = examen(12); // 12 pièces : assez pour une moitié (10), pas pour la mise entière
+    r.etat.heros.h2.or = 50;
+    jouer(c, r, { type: 'parier', joueur: 'j1', cle: 'groupe', mise: true });
+    jouer(c, r, { type: 'parier', joueur: 'j2', cle: 'groupe', mise: false });
+    // j1 est seul à miser : sa part serait de 20, il ne peut pas → personne ne parie
+    expect(r.etat.heros.h1.or).toBe(12);
+    expect(r.etat.scenes.groupe.noeud).toBe('sans-pari');
+  });
+
+  it('pari gagné : chacun récupère le double de sa part ; pari perdu : la part est perdue', () => {
+    const r = examen(50);
+    const orH2 = r.etat.heros.h2.or;
+    jouer(c, r, { type: 'parier', joueur: 'j1', cle: 'groupe', mise: true });
+    jouer(c, r, { type: 'parier', joueur: 'j2', cle: 'groupe', mise: true });
     const p = r.etat.scenes.groupe.parole!;
     jouer(c, r, { type: 'repondre', joueur: r.etat.heros[p.heros].joueurId, cle: 'groupe', index: p.reponses[0] });
     // on termine le combat en forçant son résultat, pour tester les deux issues
@@ -119,17 +162,25 @@ describe('Paris en pièces', () => {
     gagne.combats.groupe.combat.resultat = 'victoire';
     gagne.combats.groupe.contexte.bilan = [];
     const apresVictoire = appliquer(c, gagne, { type: 'fin_combat', joueur: 'j1', cle: 'groupe' });
-    expect(apresVictoire.heros.h1.or).toBe(30 + 40);
+    expect(apresVictoire.heros.h1.or).toBe(40 + 20);
+    expect(apresVictoire.heros.h2.or).toBe(orH2 - 10 + 20);
     expect(apresVictoire.mises).toEqual({});
-    expect(apresVictoire.mouvementsOr).toEqual([{ heros: 'h1', montant: 40, raison: 'pari gagné' }]);
+    expect(apresVictoire.mouvementsOr).toEqual([{ heros: 'h1', montant: 20, raison: 'pari gagné' }, { heros: 'h2', montant: 20, raison: 'pari gagné' }]);
 
     const perdu = JSON.parse(JSON.stringify(r.etat)) as typeof r.etat;
     perdu.combats.groupe.combat.resultat = 'defaite';
     perdu.combats.groupe.contexte.bilan = [];
     const apresDefaite = appliquer(c, perdu, { type: 'fin_combat', joueur: 'j1', cle: 'groupe' });
-    expect(apresDefaite.heros.h1.or).toBe(30);
+    expect(apresDefaite.heros.h1.or).toBe(40);
     expect(apresDefaite.mises).toEqual({});
     finirCombats(c, r);
+  });
+
+  it('un joueur qui s\'absente ne mise pas : le pari se résout sans lui', () => {
+    const r = examen(50);
+    jouer(c, r, { type: 'parier', joueur: 'j1', cle: 'groupe', mise: true });
+    jouer(c, r, { type: 'presence', joueur: 'j2', present: false });
+    expect(r.etat.mises).toEqual({ h1: 20 });
   });
 });
 

@@ -1,7 +1,7 @@
 <script lang="ts">
   /** Scène de dialogue : décor, portrait, répliques une par une, choix (votés en groupe), tests de caractéristique. */
   import { jeu } from '../jeu.svelte';
-  import { choixVisibles, conditionScene, miseDuChoix, noeudAffiche, remplacerVariables } from '../../moteur/partie';
+  import { choixVisibles, conditionScene, joueursDuPari, miseDuChoix, noeudAffiche, partMinimaleDePari, partsDeMise, remplacerVariables } from '../../moteur/partie';
   import { imageDecor } from '../../rendu/assets';
   import { NOMS_CARACS, nomPersonnage, portraitHeros, portraitPersonnage } from '../outils';
 
@@ -41,6 +41,16 @@
     const hj = etat.heros[etat.joueurs[j]?.herosId ?? ''];
     if (!mise || !hj || hj.or >= mise) return '';
     return `Pas assez d'or : il faut ${mise} pièces pour miser, ${hj.nom} n'en a que ${hj.or}.`;
+  }
+  // Pari partagé : chaque joueur dit s'il mise ; la mise est répartie entre ceux qui misent
+  const pari = $derived(noeud?.pari && es.pari ? { def: noeud.pari, reponses: es.pari, joueurs: joueursDuPari(etat, cle) } : null);
+  const partMin = $derived(pari ? partMinimaleDePari(etat, cle, pari.def.mise) : 0);
+  /** Exemple de répartition si tout le monde mise (« 7 + 7 + 6 »). */
+  const exemplePari = $derived(pari ? partsDeMise(pari.def.mise, pari.joueurs.length).join(' + ') : '');
+  function blocagePari(j: string): string {
+    const hj = etat.heros[etat.joueurs[j]?.herosId ?? ''];
+    if (!pari || !hj || hj.or >= partMin) return '';
+    return `Pas assez d'or : il faut au moins ${partMin} pièces pour sa part, ${hj.nom} n'en a que ${hj.or}.`;
   }
   function votants(index: number) { return Object.entries(es.votes).filter(([, v]) => v === index).map(([j]) => etat.joueurs[j]?.pseudo); }
   function aVote(j: string) { return es.votes[j] !== undefined; }
@@ -102,6 +112,26 @@
             <p class="discret">Seul {joueurInterroge?.pseudo} peut répondre. En attente de sa réponse…</p>
             <ul class="discret">{#each parole.reponses as i (i)}<li>{texteParole(parole.def.reponses[i].texte)}</li>{/each}</ul>
           {/if}
+        </div>
+      {:else if pari}
+        <div class="pari">
+          <p class="consigne">🪙 Pari : <strong>{pari.def.mise} pièces</strong> pour le groupe. La mise est partagée entre ceux qui misent{#if pari.joueurs.length > 1} (si tout le monde mise : {exemplePari}){/if}. Pari gagné : chacun récupère {pari.def.gain} fois sa part. Pari perdu : la part est perdue.</p>
+          {#each pari.joueurs as j (j)}
+            {@const hj = etat.heros[etat.joueurs[j].herosId ?? '']}
+            <div class="option">
+              <span class="libelle">{etat.joueurs[j].pseudo} <span class="discret">({hj?.nom}, {hj?.or} or)</span>
+                {#if pari.reponses[j] !== undefined} — <strong>{pari.reponses[j] ? 'mise' : 'ne mise pas'}</strong>{/if}
+                {#if jeu.joueursLocaux.includes(j) && pari.reponses[j] === undefined && blocagePari(j)}<br /><small class="aide-mise">{blocagePari(j)}</small>{/if}</span>
+              {#if pari.reponses[j] === undefined}
+                {#if jeu.joueursLocaux.includes(j)}
+                  <div class="ligne">
+                    <button class="petit principal" disabled={!!blocagePari(j)} title={blocagePari(j)} onclick={() => jeu.agir({ type: 'parier', joueur: j, cle, mise: true })}>Je mise</button>
+                    <button class="petit" onclick={() => jeu.agir({ type: 'parier', joueur: j, cle, mise: false })}>Je ne mise pas</button>
+                  </div>
+                {:else}<span class="discret">réfléchit…</span>{/if}
+              {/if}
+            </div>
+          {/each}
         </div>
       {:else if choix.length}
         <div class="choix">

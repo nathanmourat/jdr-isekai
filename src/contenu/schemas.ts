@@ -346,6 +346,13 @@ export type ParoleA = z.infer<typeof zParoleA>;
 export const zNoeud = z.object({
   decor: z.string().optional(),
   parole_a: zParoleA.optional(),
+  /**
+   * Pari partagé : chaque joueur répond « Je mise » ou « Je ne mise pas ». La mise totale est répartie entre ceux
+   * qui misent (division entière, le reste aux premiers joueurs). `aller` : nœud suivant si quelqu'un mise
+   * (le drapeau `flag` est alors posé) ; `personne` : nœud suivant si personne ne mise.
+   * Le gain ou la perte se règle ensuite avec les effets `gain_pari` et `perte_pari`.
+   */
+  pari: z.object({ mise: z.number().int().min(1), gain: z.number().min(1).default(2), flag: z.string().optional(), aller: z.string(), personne: z.string() }).optional(),
   repliques: z.array(zReplique).default([]),
   effets: z.array(zConsequence).default([]),
   choix: z.array(zChoix).default([]),

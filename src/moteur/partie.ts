@@ -42,6 +42,8 @@ export interface EtatScene {
   parole?: { heros: string; reponses: number[] } | null;
   /** Dernier nœud joué quand la scène est terminée : ses répliques restent à lire avant de quitter. */
   noeudFin?: string;
+  /** Pari partagé en cours : réponse de chaque joueur (true = « Je mise »). Résolu quand tous ont répondu. */
+  pari?: Record<string, boolean> | null;
 }
 
 /** Contrat en cours d'un héros : numéro de l'étape à jouer, et ce qui vient de se passer. */
@@ -142,6 +144,8 @@ export type Action =
   | { type: 'choisir'; joueur: string; cle: string; index: number }
   /** Réponse du joueur à qui un personnage s'adresse (index dans la liste des réponses proposées). */
   | { type: 'repondre'; joueur: string; cle: string; index: number }
+  /** Pari partagé : chaque joueur dit s'il mise (la mise totale est répartie entre ceux qui misent). */
+  | { type: 'parier'; joueur: string; cle: string; mise: boolean }
   | { type: 'trancher'; joueur: string; cle: string }
   | { type: 'continuer'; joueur: string; cle: string }
   | { type: 'quitter_scene'; joueur: string; cle: string }
@@ -563,7 +567,14 @@ function entrerNoeud(contenu: Contenu, etat: EtatPartie, cle: string, noeudId: s
   es.votes = {};
   es.messages = [];
   es.parole = null;
+  es.pari = null;
   for (const eff of n.effets) appliquerConsequence(contenu, etat, eff, es.heros, es.messages);
+  if (n.pari) {
+    // Pari partagé : chaque joueur présent répond ; un joueur absent ne mise pas
+    es.pari = {};
+    if (joueursDuPari(etat, cle).length === 0) resoudrePari(contenu, etat, cle);
+    return;
+  }
   if (n.parole_a) {
     // Un personnage s'adresse à un joueur précis : on choisit lequel (règle, puis hasard à graine)
     const pa = n.parole_a;
@@ -601,6 +612,70 @@ function repondreParole(contenu: Contenu, etat: EtatPartie, cle: string, index: 
   const msgs: string[] = [`${etat.heros[p.heros].nom} répond : ${remplacerVariables(contenu, etat, rep.texte, es.heros, p.heros)}`];
   for (const eff of rep.effets) appliquerConsequence(contenu, etat, eff, [p.heros], msgs);
   entrerNoeud(contenu, etat, cle, rep.aller);
+  etat.scenes[cle].messages.unshift(...msgs);
+}
+
+// ───────────────────────────── Pari partagé ─────────────────────────────
+
+/** Joueurs qui doivent répondre au pari de la scène : présents, avec un héros dans la scène, dans l'ordre de la partie. */
+export function joueursDuPari(etat: EtatPartie, cle: string): string[] {
+  const es = etat.scenes[cle];
+  if (!es) return [];
+  return etat.ordreJoueurs.filter((j) => {
+    const x = etat.joueurs[j];
+    return x.present && vrai(x.herosId) && es.heros.includes(x.herosId);
+  });
+}
+
+/**
+ * Répartit une mise entre des parieurs, sans virgule : division entière, puis les pièces qui restent
+ * sont données une par une aux premiers (ordre de la liste). Exemple : 20 à 3 → 7, 7, 6.
+ */
+export function partsDeMise(total: number, nombre: number): number[] {
+  const res: number[] = [];
+  if (nombre <= 0) return res;
+  const base = Math.floor(total / nombre);
+  const reste = total - base * nombre;
+  for (let i = 0; i < nombre; i++) res.push(base + (i < reste ? 1 : 0));
+  return res;
+}
+
+/** Part la plus petite possible (tout le monde mise) : en dessous, un héros ne peut pas miser. */
+export function partMinimaleDePari(etat: EtatPartie, cle: string, total: number): number {
+  const n = Math.max(1, joueursDuPari(etat, cle).length);
+  return Math.floor(total / n);
+}
+
+function resoudrePari(contenu: Contenu, etat: EtatPartie, cle: string) {
+  const es = etat.scenes[cle];
+  const n = noeudCourant(contenu, etat, cle)!;
+  const pari = n.pari!;
+  const reponses = es.pari ?? {};
+  // parieurs dans l'ordre de la partie ; celui qui ne peut pas payer sa part se retire, et on recalcule
+  let parieurs = joueursDuPari(etat, cle).filter((j) => reponses[j] === true).map((j) => etat.heros[etat.joueurs[j].herosId!]);
+  const msgs: string[] = [];
+  let parts: number[] = [];
+  for (let garde = 0; garde < 10 && parieurs.length > 0; garde++) {
+    parts = partsDeMise(pari.mise, parieurs.length);
+    const fauche = parieurs.findIndex((h, i) => h.or < parts[i]);
+    if (fauche < 0) break;
+    msgs.push(`${parieurs[fauche].nom} n'a pas assez d'or pour sa part et se retire du pari.`);
+    parieurs = parieurs.filter((_, i) => i !== fauche);
+  }
+  es.pari = null;
+  if (parieurs.length === 0) {
+    msgs.push('Personne ne parie.');
+    entrerNoeud(contenu, etat, cle, pari.personne);
+  } else {
+    parieurs.forEach((h, i) => {
+      h.or -= parts[i];
+      etat.mises[h.id] = (etat.mises[h.id] ?? 0) + parts[i];
+      etat.mouvementsOr.push({ heros: h.id, montant: -parts[i], raison: 'mise' });
+      msgs.push(`${h.nom} mise ${parts[i]} pièce${parts[i] > 1 ? 's' : ''} d'or.`);
+    });
+    if (vrai(pari.flag)) etat.flags[pari.flag] = true;
+    entrerNoeud(contenu, etat, cle, pari.aller);
+  }
   etat.scenes[cle].messages.unshift(...msgs);
 }
 
@@ -938,6 +1013,11 @@ export function appliquer(contenu: Contenu, etatAvant: EtatPartie, action: Actio
     }
     case 'presence':
       j.present = action.present;
+      // un joueur qui s'absente ne mise pas : un pari qui n'attendait plus que lui se résout
+      for (const [k, es] of entrees(etat.scenes)) {
+        if (!es.pari || !noeudCourant(contenu, etat, k)?.pari) continue;
+        if (joueursDuPari(etat, k).every((x) => es.pari![x] !== undefined)) resoudrePari(contenu, etat, k);
+      }
       break;
     case 'creer_heros': {
       if (vrai(j.herosId)) refuser('Vous avez déjà un héros');
@@ -1012,6 +1092,20 @@ export function appliquer(contenu: Contenu, etatAvant: EtatPartie, action: Actio
       if (j.herosId !== p.heros) refuser(`C'est à ${etat.heros[p.heros].nom} de répondre`);
       if (!p.reponses.includes(action.index)) refuser('Réponse impossible');
       repondreParole(contenu, etat, action.cle, action.index);
+      break;
+    }
+    case 'parier': {
+      const es = etat.scenes[action.cle] ?? refuser('Aucune scène');
+      const n = noeudCourant(contenu, etat, action.cle);
+      if (!n || !n.pari || !es.pari) refuser('Aucun pari en cours');
+      const attendus = joueursDuPari(etat, action.cle);
+      if (!attendus.includes(action.joueur)) refuser('Vous ne participez pas à ce pari');
+      if (es.pari![action.joueur] !== undefined) refuser('Vous avez déjà répondu');
+      const hj = herosDuJoueur(etat, action.joueur);
+      const minimum = partMinimaleDePari(etat, action.cle, n!.pari!.mise);
+      if (action.mise && hj.or < minimum) refuser(`Pas assez d'or pour miser : il faut au moins ${minimum} pièces (vous en avez ${hj.or})`);
+      es.pari![action.joueur] = action.mise === true;
+      if (attendus.every((x) => es.pari![x] !== undefined)) resoudrePari(contenu, etat, action.cle);
       break;
     }
     case 'trancher': {

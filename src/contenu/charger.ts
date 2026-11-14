@@ -175,7 +175,8 @@ function verifierReferences(c: Contenu): string[] {
         if (n.parole_a.question.qui !== 'narrateur' && !c.pnj[n.parole_a.question.qui] && !c.compagnons[n.parole_a.question.qui]) e.push(`${ou} › nœud ${nid} › parole_a : personnage « ${n.parole_a.question.qui} » introuvable`);
         for (const r of n.parole_a.reponses) { lien(r.aller, 'réponse'); if (r.si) verifierCondition(c, ou, r.si, e); for (const eff of r.effets) verifierConsequence(c, `${ou} › nœud ${nid}`, eff, e); }
       }
-      if (!n.fin && !n.suite && !n.combat && !n.donjon && !n.parole_a && n.choix.length === 0) e.push(`${ou} › nœud ${nid} › impasse : ni choix, ni suite, ni combat, ni « fin: true »`);
+      if (n.pari) { lien(n.pari.aller, 'pari (aller)'); lien(n.pari.personne, 'pari (personne)'); }
+      if (!n.fin && !n.suite && !n.combat && !n.donjon && !n.parole_a && !n.pari && n.choix.length === 0) e.push(`${ou} › nœud ${nid} › impasse : ni choix, ni suite, ni combat, ni « fin: true »`);
       for (const r of n.repliques) {
         if (r.qui !== 'narrateur' && r.qui !== 'heros' && r.qui !== 'meneur' && !c.pnj[r.qui] && !c.compagnons[r.qui]) e.push(`${ou} › nœud ${nid} › personnage « ${r.qui} » introuvable`);
         if (r.si) verifierCondition(c, ou, r.si, e);

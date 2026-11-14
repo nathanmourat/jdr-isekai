@@ -5,7 +5,7 @@
 import type { Contenu } from '../src/contenu/charger';
 import { choisirActionIA } from '../src/moteur/combat';
 import {
-  appliquer, caseDonjon, choixVisibles, listeHeros, noeudCourant, nouvellePartie, sceneEstDisponible,
+  appliquer, caseDonjon, choixVisibles, joueursDuPari, listeHeros, noeudCourant, nouvellePartie, partMinimaleDePari, sceneEstDisponible,
   type Action, type EtatPartie,
 } from '../src/moteur/partie';
 import { creerRng } from '../src/moteur/rng';
@@ -59,6 +59,16 @@ export function finirScene(contenu: Contenu, r: Robot, cle: string, joueurs: str
     // un personnage interroge un héros : seul son joueur répond (première réponse proposée)
     const parole = r.etat.scenes[cle]?.parole;
     if (parole) { jouer(contenu, r, { type: 'repondre', joueur: r.etat.heros[parole.heros].joueurId, cle, index: parole.reponses[0] }); continue; }
+    // pari partagé : le robot ne mise pas (choixPrefere = 0) ou mise (choixPrefere ≥ 1), s'il en a les moyens
+    if (r.etat.scenes[cle]?.pari && n.pari) {
+      const minimum = partMinimaleDePari(r.etat, cle, n.pari.mise);
+      for (const j of joueursDuPari(r.etat, cle)) {
+        if (!r.etat.scenes[cle]?.pari || r.etat.scenes[cle].pari![j] !== undefined) continue;
+        const h = r.etat.heros[r.etat.joueurs[j].herosId!];
+        jouer(contenu, r, { type: 'parier', joueur: j, cle, mise: choixPrefere >= 1 && h.or >= minimum });
+      }
+      continue;
+    }
     const visibles = choixVisibles(contenu, r.etat, cle).filter((c) => c.possible);
     if (visibles.length) {
       const c = visibles[Math.min(choixPrefere, visibles.length - 1)];
