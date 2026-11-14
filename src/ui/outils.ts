@@ -25,7 +25,9 @@ export function portraitPersonnage(contenu: Contenu, qui: string, expression = '
 
 export function portraitHeros(contenu: Contenu, h: Heros): string {
   if (h.portrait) return h.portrait;
-  return imagePortrait([`personnages/races/${h.race}/portrait-defaut`, `personnages/heros/${h.classe}/portrait-defaut`], `${h.race}-${h.classe}`, h.nom);
+  // héroïne : version féminine du portrait si elle existe, sinon le portrait actuel (repli automatique)
+  const f = h.sexe === 'f' ? [`personnages/races/${h.race}/portrait-defaut-f`, `personnages/heros/${h.classe}/f/portrait-defaut`] : [];
+  return imagePortrait([...f, `personnages/races/${h.race}/portrait-defaut`, `personnages/heros/${h.classe}/portrait-defaut`], `${h.race}-${h.classe}`, h.nom);
 }
 
 export const NOMS_CARACS: Record<string, string> = { FOR: 'Force', AGI: 'Agilité', INT: 'Intelligence', VIT: 'Vitalité', ESP: 'Esprit', CHA: 'Charisme' };

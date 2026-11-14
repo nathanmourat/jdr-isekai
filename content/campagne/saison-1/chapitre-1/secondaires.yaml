@@ -234,7 +234,7 @@ scenes:
             aller: retard
       piste:
         repliques:
-          - { dit: "Les cultistes sont en plein rituel et ne [[t'ont pas entendu||vous ont pas entendus]]. Lina est vivante, dans la cage du fond." }
+          - { dit: "Les cultistes sont en plein rituel et ne [[t'ont pas {{entendu|entendue}}||vous ont pas {{groupe:entendus|entendues|entendus}}]]. Lina est vivante, dans la cage du fond." }
         combat: { rencontre: tanneurs-cultistes, victoire: sauvee, defaite: echec }
       retard:
         repliques:

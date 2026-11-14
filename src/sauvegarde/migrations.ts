@@ -7,7 +7,7 @@
  * Les anciennes parties restent ainsi jouables après une mise à jour.
  */
 import { VERSION_ETAT, type Action, type EtatPartie } from '../moteur/partie';
-import { cles, copieProfonde } from '../moteur/outils';
+import { cles, copieProfonde, valeurs } from '../moteur/outils';
 
 export const FORMAT = 'velmaris-sauvegarde';
 
@@ -73,6 +73,14 @@ export const migrations: Record<number, Migration> = {
     d.rangs ??= {};
     d.examensRates ??= {};
     s.version = 7;
+    return s;
+  },
+  // v7 → v8 (test 3) : sexe du héros. Les héros sont recréés en rejouant les actions : sans sexe dans
+  // l'action de création, le héros est un homme et `sexeChoisi` est faux (le jeu demande au joueur).
+  7: (s) => {
+    const d = s.depart as { heros?: Record<string, { sexe?: string; sexeChoisi?: boolean }> };
+    for (const h of valeurs(d.heros ?? {})) { h.sexe ??= 'm'; h.sexeChoisi ??= false; }
+    s.version = 8;
     return s;
   },
 };

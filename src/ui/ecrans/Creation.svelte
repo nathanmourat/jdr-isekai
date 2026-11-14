@@ -11,6 +11,8 @@
   let pseudo = $state('');
   let nom = $state('');
   let origine = $state<'invoque' | 'reincarne'>('invoque');
+  /** Sexe du héros (test 3) : accords des textes et portrait féminin s'il existe. */
+  let sexe = $state<'m' | 'f'>('m');
   let age = $state(20);
   let race = $state('humain');
   let classe = $state('lame-runique');
@@ -41,7 +43,7 @@
     erreurLocale = null;
     if (!nom.trim()) { erreurLocale = 'Donnez un nom à votre héros.'; return; }
     if (!don) { erreurLocale = 'Choisissez un don.'; return; }
-    const ok = await jeu.agir({ type: 'creer_heros', heros: { nom, classe, race, don, origine, age: origine === 'invoque' ? age : undefined, libres: libresObj } });
+    const ok = await jeu.agir({ type: 'creer_heros', heros: { nom, classe, race, don, origine, sexe, age: origine === 'invoque' ? age : undefined, libres: libresObj } });
     if (ok && portrait) await jeu.agir({ type: 'portrait', image: portrait });
   }
   async function choisirPortrait(e: Event) {
@@ -119,6 +121,12 @@
       <section class="carte-ui">
         <h2>1. Identité</h2>
         <label>Nom du héros <input bind:value={nom} maxlength="30" placeholder="ex. Kael" /></label>
+        <fieldset class="sexe">
+          <legend>Votre héros est…</legend>
+          <label class="choix"><input type="radio" bind:group={sexe} value="m" /> <strong>un homme</strong></label>
+          <label class="choix"><input type="radio" bind:group={sexe} value="f" /> <strong>une femme</strong></label>
+          <small class="discret">L'histoire s'accorde (« accueilli » ou « accueillie », « Messire » ou « Dame »…).</small>
+        </fieldset>
         <fieldset>
           <legend>Arrivée dans ce monde</legend>
           <label class="choix"><input type="radio" bind:group={origine} value="invoque" /> <strong>Invoqué</strong> — appelé adulte par l'Ordre, au printemps 1012.</label>
@@ -128,7 +136,7 @@
           <label class="choix"><input type="radio" bind:group={origine} value="reincarne" /> <strong>Réincarné</strong> — né en 994 dans ce monde ; vous jouerez un court prologue d'enfance (6, 10, 14 et 17 ans) avant le chapitre 1.</label>
         </fieldset>
         <div class="portrait">
-          <img class="pixel" alt="Portrait" src={portrait ?? imagePortrait([`personnages/races/${race}/portrait-defaut`], race, c.races[race].nom)} />
+          <img class="pixel" alt="Portrait" src={portrait ?? imagePortrait([...(sexe === 'f' ? [`personnages/races/${race}/portrait-defaut-f`] : []), `personnages/races/${race}/portrait-defaut`], race, c.races[race].nom)} />
           <label>Portrait personnel (facultatif)<input type="file" accept="image/*" onchange={choisirPortrait} /></label>
         </div>
       </section>

@@ -19,6 +19,10 @@ export interface Heros {
   race: string;
   don: string;
   origine: 'invoque' | 'reincarne';
+  /** Sexe du héros (test 3) : accords des textes ({{masculin|féminin}}) et portrait féminin s'il existe. */
+  sexe: 'm' | 'f';
+  /** Faux pour un héros d'une ancienne partie (format 7) : on demande le choix au joueur à sa prochaine connexion. */
+  sexeChoisi?: boolean;
   anneeNaissance: number;
   niveau: number;
   xp: number;
@@ -62,6 +66,7 @@ export interface OptionsCreation {
   race: string;
   don: string;
   origine: 'invoque' | 'reincarne';
+  sexe?: 'm' | 'f';
   age?: number;
   /** Pour l'humain : où mettre +2 et −2 (répartition libre). */
   libres?: { plus: Partial<Caracs>; moins: Partial<Caracs> };
@@ -119,6 +124,8 @@ export function creerHeros(contenu: Contenu, o: OptionsCreation): Heros {
     race: o.race,
     don: o.don,
     origine: o.origine,
+    sexe: o.sexe === 'f' ? 'f' : 'm',
+    sexeChoisi: o.sexe === 'm' || o.sexe === 'f',
     anneeNaissance: o.anneeCampagne - age,
     niveau: 1,
     xp: 0,

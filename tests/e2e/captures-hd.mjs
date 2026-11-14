@@ -37,7 +37,7 @@ function sauvegardeCombat(classe, race, contrat) {
   const actions = [];
   const jouer = (a) => { etat = appliquer(c, etat, a); actions.push(a); };
   jouer({ type: 'rejoindre', joueur: 'j1', pseudo: 'Testeur' });
-  jouer({ type: 'creer_heros', joueur: 'j1', heros: { nom: c.classes[classe].nom, classe, race, don: 'oeil-du-seuil', origine: 'invoque', age: 24 } });
+  jouer({ type: 'creer_heros', joueur: 'j1', heros: { nom: c.classes[classe].nom, classe, race, don: 'oeil-du-seuil', origine: 'invoque', age: 24, sexe: 'm' } });
   jouer({ type: 'contrat', joueur: 'j1', contrat });
   for (let k = 0; k < 10 && !etat.combats.h1; k++) {
     const x = etapeContrat(c, etat, 'h1');

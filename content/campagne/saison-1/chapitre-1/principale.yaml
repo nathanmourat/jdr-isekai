@@ -14,7 +14,7 @@ scenes:
         repliques:
           - { dit: "Printemps 1012. Un cercle de lumière bleue embrase le sol du Temple du Seuil. Des chants montent, des vitraux vibrent… puis le silence." }
           - { dit: "Au centre du cercle, des silhouettes se relèvent, hagardes : les invoqués. À la lisière de la lumière, d'autres jeunes gens, attirés ici par une résonance qu'ils ne savent pas nommer : les réincarnés.", si: { origine: reincarne } }
-          - { qui: aureliath, dit: "« Bienvenue à Velmaris, [[Appelé||Appelés]]. Je suis Auréliath, Grand Prieur de l'Ordre de la Lumière Sereine. [[N'aie||N'ayez]] crainte : la Lumière [[t'a choisi||vous a choisis]]. »" }
+          - { qui: aureliath, dit: "« Bienvenue à Velmaris, [[{{Appelé|Appelée}}||{{groupe:Appelés|Appelées|Appelés}}]]. Je suis Auréliath, Grand Prieur de l'Ordre de la Lumière Sereine. [[N'aie||N'ayez]] crainte : la Lumière [[t'a {{choisi|choisie}}||vous a {{groupe:choisis|choisies|choisis}}]]. »" }
           - { qui: aureliath, dit: "« Le Souverain des Cendres s'est éveillé au nord. Le Mur d'Aube faiblit. Le royaume a besoin de héros. »" }
           - { qui: aveline, expression: neutre, dit: "Une jeune femme en armure argentée s'avance, la main sur le pommeau. « Capitaine Aveline de Castelroc. Je suis chargée de [[ta||votre]] sécurité. » Son regard s'attarde sur [[toi||vous]], méfiant." }
         choix:
@@ -81,8 +81,8 @@ scenes:
       debut:
         repliques:
           - { dit: "Le hall de la Guilde de la Rose des Vents sent la bière, le cuir et la sueur. Des dizaines de regards se tournent vers vous." }
-          - { qui: rowena, dit: "« Ah. [[Un Appelé||Les Appelés]]. » Dame Rowena mâchonne sa pipe éteinte. « Ici, [[ton don ne vaut rien tant que tu n'as pas prouvé que tu sais||votre don ne vaut rien tant que vous n'avez pas prouvé que vous savez]] tenir debout. »" }
-          - { qui: kaya, dit: "Une jeune femme aux oreilles de loup argentées [[te||vous]] dévisage, adossée à un pilier. « Pff. [[Il a l'air tout mou||Ils ont l'air tout mous]]. Je parie dix pièces [[qu'il tombe||qu'ils tombent]] au premier coup. »" }
+          - { qui: rowena, dit: "« Ah. [[{{Un Appelé|Une Appelée}}||{{groupe:Les Appelés|Les Appelées|Les Appelés}}]]. » Dame Rowena mâchonne sa pipe éteinte. « Ici, [[ton don ne vaut rien tant que tu n'as pas prouvé que tu sais||votre don ne vaut rien tant que vous n'avez pas prouvé que vous savez]] tenir debout. »" }
+          - { qui: kaya, dit: "Une jeune femme aux oreilles de loup argentées [[te||vous]] dévisage, adossée à un pilier. « Pff. [[{{Il a l'air tout mou|Elle a l'air toute molle}}||{{groupe:Ils ont l'air tout mous|Elles ont l'air toutes molles|Ils ont l'air tout mous}}]]. Je parie dix pièces [[{{qu'il tombe|qu'elle tombe}}||{{groupe:qu'ils tombent|qu'elles tombent|qu'ils tombent}}]] au premier coup. »" }
           - { qui: kaya, dit: "Elle vous fixe un instant de plus, puis son regard s'adoucit. « …Un Ourvalis ? Hé. Bonne chance, alors. »", si: { race: ourvalis } }
           - { qui: rowena, dit: "« L'examen est simple : [[tu affrontes||vous affrontez]] notre golem d'entraînement. S'il [[te||vous]] met au tapis, [[reviens||revenez]] dans un an. »" }
         suite: pari
@@ -123,7 +123,7 @@ scenes:
         suite: ellipse
       defaite:
         repliques:
-          - { qui: rowena, dit: "« Bon. Le golem [[t'a laminé||vous a laminés]]. » Elle soupire. « Mais [[tu t'es relevé||vous vous êtes relevés]]. C'est ce que je cherche. Rang F, à l'essai. »" }
+          - { qui: rowena, dit: "« Bon. Le golem [[t'a {{laminé|laminée}}||vous a {{groupe:laminés|laminées|laminés}}]]. » Elle soupire. « Mais [[tu t'es {{relevé|relevée}}||vous vous êtes {{groupe:relevés|relevées|relevés}}]]. C'est ce que je cherche. Rang F, à l'essai. »" }
           - { qui: kaya, dit: "Kaya empoche les vingt pièces avec un grand sourire. « Sans rancune. »", si: { flag: pari-kaya } }
         effets:
           - { perte_pari: true }
@@ -148,7 +148,7 @@ scenes:
       debut:
         repliques:
           - { dit: "L'automne est là. Des paysans ont vu des lueurs violettes sous les ruines de la Crypte de la Fontaine. Rowena [[t'a||vous a]] confié l'affaire." }
-          - { qui: aveline, dit: "Aveline [[t'attend||vous attend]] à l'entrée, en armure complète. « Ordre du roi : je [[t'accompagne||vous accompagne]]. Et… je n'allais pas [[te laisser descendre seul||vous laisser descendre seuls]]. »" }
+          - { qui: aveline, dit: "Aveline [[t'attend||vous attend]] à l'entrée, en armure complète. « Ordre du roi : je [[t'accompagne||vous accompagne]]. Et… je n'allais pas [[te laisser descendre {{seul|seule}}||vous laisser descendre {{groupe:seuls|seules|seuls}}]]. »" }
           - { dit: "L'escalier s'enfonce dans le noir. Une odeur d'eau croupie et de vieille pierre monte des profondeurs." }
         choix:
           - texte: "Descendre dans la crypte."

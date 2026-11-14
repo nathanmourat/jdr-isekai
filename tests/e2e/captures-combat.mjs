@@ -22,7 +22,7 @@ const depart = nouvellePartie(c, 'combat3', 'Combat lisible', 'combat3');
 let etat = depart; const actions = [];
 const jouer = (a) => { etat = appliquer(c, etat, a); actions.push(a); };
 jouer({ type: 'rejoindre', joueur: 'j1', pseudo: 'Testeur' });
-jouer({ type: 'creer_heros', joueur: 'j1', heros: { nom: 'Kaya Lune-Croc', classe: 'arcaniste', race: 'vulpin', don: 'oeil-du-seuil', origine: 'invoque', age: 24 } });
+jouer({ type: 'creer_heros', joueur: 'j1', heros: { nom: 'Kaya Lune-Croc', classe: 'arcaniste', race: 'vulpin', don: 'oeil-du-seuil', origine: 'invoque', age: 24, sexe: 'm' } });
 jouer({ type: 'contrat', joueur: 'j1', contrat: 'c-gobelins' });
 for (let k = 0; k < 10 && !etat.combats.h1; k++) { const x = etapeContrat(c, etat, 'h1'); jouer({ type: 'etape_contrat', joueur: 'j1', choix: x.etape.choix.length ? 0 : undefined }); }
 const fichier = join(tmpdir(), 'velmaris-combat-test3.json');

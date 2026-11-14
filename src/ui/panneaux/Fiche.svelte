@@ -40,7 +40,12 @@
     <img class="pixel" src={portraitHeros(c, h)} alt={`Portrait de ${h.nom}`} />
     <div>
       <h2>{h.nom}</h2>
-      <p>{ra.nom} · {cl.nom} · {h.origine === 'invoque' ? 'Invoqué' : 'Réincarné'} · {age(h, versDate(c, etat.jour).annee)} ans</p>
+      <p>{h.sexe === 'f' ? 'Femme' : 'Homme'} · {ra.nom} · {cl.nom} · {h.origine === 'invoque' ? (h.sexe === 'f' ? 'Invoquée' : 'Invoqué') : (h.sexe === 'f' ? 'Réincarnée' : 'Réincarné')} · {age(h, versDate(c, etat.jour).annee)} ans</p>
+      {#if h.sexeChoisi === false || etat.jour < 30}
+        <p class="discret">Sexe du héros (modifiable jusqu'à la fin du premier mois) :
+          <button class="petit" class:principal={h.sexe === 'm'} onclick={() => jeu.agir({ type: 'changer_sexe', sexe: 'm' })}>Homme</button>
+          <button class="petit" class:principal={h.sexe === 'f'} onclick={() => jeu.agir({ type: 'changer_sexe', sexe: 'f' })}>Femme</button></p>
+      {/if}
       <p class="discret">Niveau {h.niveau} — XP {h.xp} / {xpPourNiveau(c, h.niveau)} · Rang de guilde {rangHeros(etat, h.id)}{#if prochainExamen(c, etat, h.id)?.pret} <span class="badge or">examen du rang {prochainExamen(c, etat, h.id)!.rang} possible</span>{/if} · {h.or} or{h.blessure ? ' · blessé' : ''}</p>
 
       <div class="sante">

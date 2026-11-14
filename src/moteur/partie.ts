@@ -23,7 +23,7 @@ import { competencesConnues as connuesDe } from './personnage';
 import { exemplaires, problemeEquipement } from './equipement';
 import { anneeDepart, chapitreDe, fetesEntre, formaterDate, joursParMois, versDate, versJour } from './temps';
 
-export const VERSION_ETAT = 7;
+export const VERSION_ETAT = 8;
 export const MAX_JOUEURS = 6;
 
 export interface Joueur { id: string; pseudo: string; herosId: string | null; present: boolean }
@@ -168,6 +168,7 @@ export type Action =
   | { type: 'trancher'; joueur: string; cle: string }
   | { type: 'continuer'; joueur: string; cle: string }
   | { type: 'pret_dialogue'; joueur: string; cle: string }
+  | { type: 'changer_sexe'; joueur: string; sexe: 'm' | 'f' }
   | { type: 'quitter_scene'; joueur: string; cle: string }
   | { type: 'combat'; joueur: string; cle: string; action: ActionCombat }
   | { type: 'second_depart'; joueur: string; cle: string }
@@ -615,6 +616,39 @@ export function nomFaction(f: string): string {
 }
 
 /** « [[tu…||vous…]] » : la première forme pour un héros seul, la seconde pour un groupe. */
+/**
+ * Accords selon le sexe (test 3) :
+ *  - `{{accueilli|accueillie}}` : le héros concerné (celui qu'on interroge, sinon le seul héros de la scène, sinon le meneur) ;
+ *  - `{{groupe:accueillis|accueillies|accueillis}}` : tout le groupe (masculin pluriel | féminin pluriel | groupe mixte ;
+ *    la 3e forme est facultative : sans elle, le groupe mixte prend la 1re).
+ */
+function accorderSexe(texte: string, concerne: Heros | null, groupe: Heros[]): string {
+  let res = '';
+  let reste = texte;
+  for (let garde = 0; garde < 200; garde++) {
+    const i = reste.indexOf('{{');
+    if (i < 0) break;
+    const j = reste.indexOf('}}', i);
+    if (j < 0) break;
+    let corps = reste.slice(i + 2, j);
+    let choix: string;
+    if (corps.startsWith('groupe:')) {
+      corps = corps.slice(7);
+      const m = corps.split('|');
+      const femmes = groupe.filter((h) => h.sexe === 'f').length;
+      if (groupe.length > 0 && femmes === groupe.length) choix = m[1] ?? m[0];
+      else if (femmes > 0) choix = m[2] ?? m[0];
+      else choix = m[0];
+    } else {
+      const m = corps.split('|');
+      choix = concerne && concerne.sexe === 'f' ? (m[1] ?? m[0]) : m[0];
+    }
+    res += reste.slice(0, i) + choix;
+    reste = reste.slice(j + 2);
+  }
+  return res + reste;
+}
+
 function accorder(texte: string, seul: boolean): string {
   let res = '';
   let reste = texte;
@@ -634,8 +668,11 @@ function accorder(texte: string, seul: boolean): string {
  * @param interroge héros à qui un personnage s'adresse : {pseudo} = pseudo de son joueur, {nom} = son nom
  */
 export function remplacerVariables(contenu: Contenu, etat: EtatPartie, texteBrut: string, heros: string[], interroge?: string): string {
-  let texte = accorder(texteBrut, heros.length <= 1);
   const hi = vrai(interroge) ? etat.heros[interroge] : null;
+  const herosScene = heros.map((h) => etat.heros[h]).filter((x): x is Heros => vrai(x));
+  const herosMeneur = vrai(etat.meneur) && vrai(etat.joueurs[etat.meneur]?.herosId) ? etat.heros[etat.joueurs[etat.meneur].herosId!] ?? null : null;
+  const concerne = hi ?? (herosScene.length === 1 ? herosScene[0] : herosMeneur ?? herosScene[0] ?? null);
+  let texte = accorder(accorderSexe(texteBrut, concerne, herosScene), heros.length <= 1);
   if (hi) texte = texte.replaceAll('{pseudo}', etat.joueurs[hi.joueurId]?.pseudo ?? hi.nom).replaceAll('{nom}', hi.nom);
   const noms = heros.map((h) => etat.heros[h]?.nom).filter((n): n is string => vrai(n));
   const listeNoms = noms.length <= 1 ? noms[0] ?? 'le héros' : `${noms.slice(0, -1).join(', ')} et ${noms[noms.length - 1]}`;
@@ -1323,6 +1360,15 @@ export function appliquer(contenu: Contenu, etatAvant: EtatPartie, action: Actio
     case 'continuer': {
       if (action.cle !== 'groupe' && j.herosId !== action.cle) refuser('Ce n\'est pas votre scène');
       avancerScene(contenu, etat, action.cle);
+      break;
+    }
+    case 'changer_sexe': {
+      // au premier choix (ancienne partie), pendant le prologue ou avant la fin du premier mois de jeu
+      const h = herosDuJoueur(etat, action.joueur);
+      if (action.sexe !== 'm' && action.sexe !== 'f') refuser('Choix impossible');
+      if (h.sexeChoisi !== false && etat.jour >= 30) refuser('Le sexe du héros ne peut plus changer après le premier mois de jeu');
+      h.sexe = action.sexe;
+      h.sexeChoisi = true;
       break;
     }
     case 'pret_dialogue': {

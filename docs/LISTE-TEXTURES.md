@@ -430,6 +430,25 @@ Les 32 fonds cités par les rencontres de `content/ennemis/` sont livrés (1280 
 | [x] | F-ville-desert | `combat/fonds/ville-desert.png` | 1280 × 720 | Fond de combat (le sol dans le tiers inférieur). |
 | [x] | F-voile | `combat/fonds/voile.png` | 1280 × 720 | Fond de combat (le sol dans le tiers inférieur). |
 
+## Héroïnes (test 3, 15/11) : versions féminines
+Le joueur choisit maintenant le sexe de son héros. Tant qu'une image féminine manque, le jeu reprend automatiquement l'image actuelle (aucun blocage).
+
+| Fait | Fichier | Taille | Description |
+|---|---|---|---|
+| [ ] | `personnages/races/humain/portrait-defaut-f.png` | 512 × 512 | Portrait par défaut d'une héroïne humain, même style que `portrait-defaut.png`. |
+| [ ] | `personnages/races/elfe/portrait-defaut-f.png` | 512 × 512 | Portrait par défaut d'une héroïne elfe, même style que `portrait-defaut.png`. |
+| [ ] | `personnages/races/demi-elfe/portrait-defaut-f.png` | 512 × 512 | Portrait par défaut d'une héroïne demi-elfe, même style que `portrait-defaut.png`. |
+| [ ] | `personnages/races/nain/portrait-defaut-f.png` | 512 × 512 | Portrait par défaut d'une héroïne nain, même style que `portrait-defaut.png`. |
+| [ ] | `personnages/races/ourvalis/portrait-defaut-f.png` | 512 × 512 | Portrait par défaut d'une héroïne ourvalis, même style que `portrait-defaut.png`. |
+| [ ] | `personnages/races/vulpin/portrait-defaut-f.png` | 512 × 512 | Portrait par défaut d'une héroïne vulpin, même style que `portrait-defaut.png`. |
+| [ ] | `personnages/races/demi-demon/portrait-defaut-f.png` | 512 × 512 | Portrait par défaut d'une héroïne demi-demon, même style que `portrait-defaut.png`. |
+| [ ] | `personnages/races/sang-dragon/portrait-defaut-f.png` | 512 × 512 | Portrait par défaut d'une héroïne sang-dragon, même style que `portrait-defaut.png`. |
+| [ ] | `personnages/heros/<classe>/f/combat.png` | comme `combat.png` | Planche de combat féminine de la classe (mêmes cases, même trajectoire de corps image par image, pour que les calques de race restent alignés). Classes : alchimiste, arcaniste, archer, barde, berserker, gardien, guerisseur, invocateur, lame-runique, ombre. |
+| [ ] | `personnages/heros/<classe>/f/exploration.png` | comme `exploration.png` | Planche d'exploration féminine de la classe. |
+| [ ] | `personnages/heros/<classe>/f/portrait-defaut.png` | 512 × 512 | (facultatif) Portrait féminin propre à la classe. |
+
+Ordre de recherche du portrait d'une héroïne : `races/<race>/portrait-defaut-f` → `heros/<classe>/f/portrait-defaut` → `races/<race>/portrait-defaut` → `heros/<classe>/portrait-defaut`. Les planches `f/` des sprites sont prévues mais pas encore lues par le jeu : à brancher quand elles arriveront.
+
 ## Récapitulatif
 
 - **211 lignes** dans la liste ci-dessus (une ligne = un fichier, sauf la dernière section où une ligne regroupe 2 variantes).

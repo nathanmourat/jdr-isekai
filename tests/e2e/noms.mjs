@@ -27,7 +27,7 @@ const depart = nouvellePartie(c, 'noms', 'Noms longs', 'noms');
 let etat = depart; const actions = [];
 const jouer = (a) => { etat = appliquer(c, etat, a); actions.push(a); };
 jouer({ type: 'rejoindre', joueur: 'j1', pseudo: 'Testeur' });
-jouer({ type: 'creer_heros', joueur: 'j1', heros: { nom: long, classe: 'ombre', race: 'ourvalis', don: 'oeil-du-seuil', origine: 'invoque', age: 24 } });
+jouer({ type: 'creer_heros', joueur: 'j1', heros: { nom: long, classe: 'ombre', race: 'ourvalis', don: 'oeil-du-seuil', origine: 'invoque', age: 24, sexe: 'm' } });
 const fichierCarte = join(tmpdir(), 'velmaris-noms-carte.json');
 writeFileSync(fichierCarte, JSON.stringify(creerSauvegarde(depart, actions.slice(), new Date().toISOString())));
 jouer({ type: 'contrat', joueur: 'j1', contrat: 'c-gobelins' });
