@@ -1,0 +1,326 @@
+# Chapitre 4 — scènes des compagnes (individuelles). Ysoria et Morra arrivent ; les autres avancent dans leur quête.
+scenes:
+  # ── Ysoria ──────────────────────────────────────────────────
+  - id: ys-ecailles
+    pnj: ysoria
+    titre: "Ysoria — Les coutumes humaines"
+    type: individuel
+    lieu: port-taverne
+    decor: port-taverne
+    disponible_si: { flag: ysoria-recrutee }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: ysoria, dit: "Ysoria a commandé « tout ». Le vieux Brann a pris ça au pied de la lettre. Elle mange avec les mains, sur une table couverte de plats, sous les regards horrifiés des pirates." }
+          - { qui: ysoria, dit: "« Pourquoi les humains mettent-ils leur nourriture dans des petites assiettes ? C'est inefficace. » Elle vous tend une cuisse de poulet entière. « Mange. Tu es trop petit. »" }
+        choix:
+          - texte: "Manger avec les mains, comme elle."
+            effets: [{ affinite: { ysoria: 6 } }]
+            aller: fin
+          - texte: "Lui expliquer patiemment à quoi sert une fourchette."
+            effets: [{ affinite: { ysoria: 3 } }]
+            aller: fourchette
+      fourchette:
+        repliques:
+          - { qui: ysoria, dit: "Elle examine la fourchette longtemps, très sérieuse. Puis elle la plie en forme de bague et la met à son doigt. « C'est joli. Ça brille. Merci. »" }
+        suite: fin
+      fin:
+        repliques:
+          - { qui: ysoria, expression: joie, dit: "Le soir, elle dort sur le comptoir, au milieu des pièces d'or de la caisse, roulée en boule. Brann n'ose pas la réveiller pour récupérer sa recette." }
+        fin: true
+
+  - id: ys-oeuf
+    pnj: corail
+    titre: "Ysoria — La piste de l'œuf"
+    type: individuel
+    lieu: port-marche
+    decor: port-marche
+    quete: q-ysoria
+    disponible_si: { flag: ysoria-recrutee, affinite_palier: { ysoria: proche } }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: ysoria, dit: "Ysoria entre au Marché aux épaves et toutes les conversations s'arrêtent. Elle va droit à Corail. « Tu vends tout ce que la mer rapporte. As-tu vendu un œuf ? Rouge et or, gros comme ça, chaud comme une forge ? »" }
+          - { qui: corail, dit: "Corail pâlit, ce qui est difficile pour une sang-dragon. « Je… Je ne l'ai pas vendu. Je l'ai vu passer. Il y a trois ans. Sur un navire de la Concorde, vers le nord. Vers le Mur d'Aube. »" }
+          - { qui: corail, dit: "« Le capitaine disait qu'un acheteur l'attendait de l'autre côté du Mur. Un acheteur qui paie en obsidienne. »" }
+        choix:
+          - texte: "Poser la main sur l'épaule d'Ysoria. « Nous le retrouverons. »"
+            effets: [{ affinite: { ysoria: 8 } }]
+            aller: fin
+          - texte: "« De l'autre côté du Mur… La Légion a ton œuf. »"
+            effets: [{ affinite: { ysoria: 5 } }]
+            aller: fin
+      fin:
+        repliques:
+          - { qui: ysoria, expression: colere, dit: "La température monte dans tout le marché. Les bougies fondent. Puis Ysoria ferme les yeux, et l'air redevient frais. « Le Souverain a mon œuf. » Sa voix est très calme. « Alors j'irai le chercher dans sa Citadelle, et je brûlerai tout ce qui sera entre lui et moi. »" }
+        effets: [{ affinite: { ysoria: 4 }, quete: { id: q-ysoria, etape: eclosion }, flag: oeuf-chez-legion, xp: 300 }]
+        fin: true
+
+  - id: ys-vol
+    titre: "Ysoria — Au-dessus des nuages"
+    type: individuel
+    lieu: nid-des-wyrms
+    decor: nid-des-wyrms
+    romance: true
+    disponible_si: { flag: ysoria-recrutee, affinite_palier: { ysoria: amoureuse } }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: ysoria, dit: "« Monte. » Ysoria a repris sa vraie forme : une dragonne d'or, immense. Elle baisse le cou jusqu'au sol. « Aucun humain n'est jamais monté sur mon dos. Tu seras le premier. Ne le dis à personne. »" }
+          - { dit: "Elle s'envole. L'Archipel rétrécit sous vous, puis les nuages, puis il n'y a plus que le ciel, immense, et le soleil couchant sur ses écailles." }
+        choix:
+          - texte: "« C'est le plus beau cadeau qu'on m'ait jamais fait. »"
+            effets: [{ affinite: { ysoria: 6 } }]
+            aller: fin
+      fin:
+        repliques:
+          - { qui: ysoria, expression: gene, dit: "Plus tard, au sommet du Nid, elle a repris forme humaine. Elle se blottit contre vous, brûlante. « Chez les dragons, on choisit une fois. Pour mille ans. » Elle ferme les yeux. « J'ai choisi. »" }
+          - { dit: "(Fondu au noir.)" }
+        fin: true
+
+  # ── Morra ───────────────────────────────────────────────────
+  - id: mo-pain
+    pnj: morra
+    titre: "Morra — Le pain chaud"
+    type: individuel
+    lieu: karak-porte
+    decor: karak-porte
+    disponible_si: { flag: morra-recrutee }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: morra, dit: "Morra est assise sur les marches de la Porte, un pain entier dans les mains. Elle le regarde comme on regarde un trésor. « Dans les Cendres, on mange de la cendre. Littéralement. Ça, c'est… » Elle mord dedans. Elle ferme les yeux." }
+          - { qui: morra, dit: "« Ne me regarde pas comme ça. Une démone a le droit d'aimer le pain. »" }
+        choix:
+          - texte: "S'asseoir à côté d'elle et partager le pain."
+            effets: [{ affinite: { morra: 6 } }]
+            aller: fin
+          - texte: "« Tu sais qu'il y a aussi des gâteaux, à Lysmont ? »"
+            effets: [{ affinite: { morra: 5 } }]
+            aller: gateaux
+      gateaux:
+        repliques:
+          - { qui: morra, dit: "Elle se fige. « Des gâteaux. » Un silence. « Appelé, si tu me mens, je te coupe en deux. » Un autre silence. « … Quel genre de gâteaux ? »" }
+        suite: fin
+      fin:
+        repliques:
+          - { qui: morra, dit: "Les gardes nains la regardent de travers. Elle leur fait un grand sourire plein de dents pointues. Ils regardent ailleurs. Elle rit." }
+        fin: true
+
+  - id: mo-chaines
+    pnj: durna
+    titre: "Morra — Les chaînes d'obsidienne"
+    type: individuel
+    lieu: karak-forge
+    decor: karak-forge
+    quete: q-morra
+    disponible_si: { flag: morra-recrutee, affinite_palier: { morra: proche } }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: morra, dit: "Morra pose un maillon de chaîne noire sur l'enclume de Durna. « Arraché à la chaîne de Lyss, le jour où je suis partie. Obsidienne des Cendres. Aucune lame ne la coupe. »" }
+          - { qui: durna, dit: "Maîtresse Durna frappe le maillon. Son marteau rebondit. Elle frappe encore, plus fort. Rien. Elle siffle d'admiration. « Une matière qui résiste au feu de mille ans… Il faudrait une clé, pas une lame. Une clé de braise, forgée dans un feu plus vieux que les Cendres. »" }
+          - { qui: durna, dit: "« Le feu d'un dragon, par exemple. » Elle se gratte le menton. « Si votre dragonne veut bien souffler dans ma forge… »" }
+        choix:
+          - texte: "« Nous trouverons ce feu. Je te le promets, Morra. »"
+            effets: [{ affinite: { morra: 8 } }]
+            aller: fin
+          - texte: "Prendre la main de Morra, sans rien dire."
+            effets: [{ affinite: { morra: 6 } }]
+            aller: fin
+      fin:
+        repliques:
+          - { qui: morra, expression: tristesse, dit: "Morra reprend le maillon et le serre dans son poing. « Trois siècles que je sers le Souverain pour qu'elle vive. » Elle vous regarde. « C'est la première fois que quelqu'un me dit « nous ». »" }
+        effets: [{ quete: { id: q-morra, etape: cle }, flag: cle-de-braise-connue, xp: 300 }]
+        fin: true
+
+  - id: mo-toit
+    titre: "Morra — Sur les toits de Karak-Dûm"
+    type: individuel
+    lieu: karak-taverne
+    decor: karak-taverne
+    romance: true
+    disponible_si: { flag: morra-recrutee, affinite_palier: { morra: amoureuse } }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: morra, dit: "Morra vous a entraîné sur le toit de la Chope Ardente, au-dessus des cheminées de la cité-forge. Elle regarde les étincelles monter dans la nuit. « Dans les Cendres, il n'y a pas d'étoiles. J'en ai vu pour la première fois cette année. »" }
+          - { qui: morra, expression: gene, dit: "« Je ne sais pas faire ça. Les… sentiments. Trois cents ans, et je ne sais pas. » Elle grogne. « C'est ridicule. Arrête de sourire. »" }
+        choix:
+          - texte: "« On apprendra ensemble. »"
+            effets: [{ affinite: { morra: 6 } }]
+            aller: fin
+      fin:
+        repliques:
+          - { qui: morra, expression: joie, dit: "Elle vous regarde longtemps. Puis elle pose son front contre le vôtre, ses cornes vous effleurant les cheveux. « D'accord. Ensemble. Mais si tu le racontes à quelqu'un, je nie tout… »" }
+          - { dit: "(Fondu au noir.)" }
+        fin: true
+
+  # ── Les autres compagnes : étape 2 de leur quête ────────────
+  - id: av-verite
+    pnj: aveline
+    titre: "Aveline — Le nom de mon père"
+    type: individuel
+    lieu: karak-taverne
+    decor: karak-taverne
+    quete: q-aveline
+    disponible_si: { quete_etape: { q-aveline: verite }, flag: registre-lu, affinite_min: { aveline: 40 } }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: aveline, dit: "Aveline n'a pas touché à sa chope. Elle a l'estampage du Registre étalé devant elle, et la lettre de Valgrane qu'elle garde depuis Qarzim. « Les dates correspondent. Le jour de l'Appel secret, mon père tenait la porte nord de Valgrane. »" }
+          - { qui: aveline, expression: tristesse, dit: "« Il a vu le cercle s'ouvrir. Il a vu les Cendres sortir. Il a fait évacuer la ville. Trois mille personnes. » Sa voix se brise. « Et l'Ordre l'a fait exécuter pour trahison, pour que personne ne sache ce qu'il avait vu. »" }
+        choix:
+          - texte: "« Ton père était un héros, Aveline. Nous le ferons savoir à tout le royaume. »"
+            effets: [{ affinite: { aveline: 8 } }]
+            aller: fin
+          - texte: "La laisser pleurer contre votre épaule, sans rien dire."
+            effets: [{ affinite: { aveline: 10 } }]
+            aller: fin
+      fin:
+        repliques:
+          - { qui: aveline, dit: "Elle s'essuie les yeux, se redresse, redevient la capitaine. « Gauvain de Castelroc. Je veux entendre ce nom crié sur la place de Lysmont. Pas murmuré. » Elle serre votre main. « Merci de m'avoir suivie jusqu'ici. »" }
+        effets: [{ quete: { id: q-aveline, etape: rehabilitation }, flag: verite-valgrane, xp: 300 }]
+        fin: true
+
+  - id: el-revelation
+    pnj: elianne
+    titre: "Elianne — Ce que la Lumière cache"
+    type: individuel
+    lieu: karak-trone
+    decor: karak-trone
+    quete: q-elianne
+    disponible_si: { quete_etape: { q-elianne: revelation }, flag: registre-lu, affinite_min: { elianne: 40 } }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: elianne, dit: "Elianne est restée seule dans la salle du trône, devant le feu de lave. Elle a posé son voile de l'Ordre sur ses genoux. « J'ai prié toute la nuit. Pour la première fois de ma vie, personne n'a répondu. »" }
+          - { qui: elianne, expression: tristesse, dit: "« J'ai été élevée par l'Ordre. J'ai vu votre Appel. J'ai chanté pendant qu'on vous arrachait à votre monde. » Elle lève les yeux vers vous. « Comment peux-tu encore me regarder ? »" }
+        choix:
+          - texte: "« Tu ne savais pas. Et maintenant que tu sais, tu te bats pour la vérité. C'est ça qui compte. »"
+            effets: [{ affinite: { elianne: 8 } }]
+            aller: fin
+          - texte: "« La Lumière n'est pas l'Ordre, Elianne. Ta foi t'appartient. »"
+            effets: [{ affinite: { elianne: 10 } }]
+            aller: foi
+      foi:
+        repliques:
+          - { qui: elianne, dit: "Elle vous regarde longtemps. Puis elle remet son voile, lentement, avec soin. « Tu as raison. Ce ne sont pas eux qui m'ont appris à soigner. C'est la Lumière. Ils n'ont pas le droit de me la prendre. »" }
+        suite: fin
+      fin:
+        repliques:
+          - { qui: elianne, dit: "« Il faudra choisir, bientôt. Dire la vérité, ou la garder. » Elle se lève. « Quand le moment viendra… je serai à côté de toi. Quoi que tu décides. Ou presque. »" }
+        effets: [{ quete: { id: q-elianne, etape: choix }, xp: 300 }]
+        fin: true
+
+  - id: il-voile
+    titre: "Ilyssë — Là où le Voile est fin"
+    type: individuel
+    lieu: phare-noye
+    decor: phare-noye
+    quete: q-ilysse
+    disponible_si: { quete_etape: { q-ilysse: voile }, flag: carte-du-nid, affinite_min: { ilysse: 40 } }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: ilysse, dit: "Ilyssë a installé ses instruments au sommet du Phare noyé : des lentilles, des fils d'argent, un astrolabe elfique. « La lumière verte, ici, ne vient pas de notre monde. Le Voile est si fin qu'on voit à travers. »" }
+          - { qui: ilysse, dit: "Elle vous tend une lentille. De l'autre côté, flou, comme sous l'eau : des lumières jaunes alignées, des toits plats, un ciel orange. Une ville. Une ville de VOTRE monde." }
+        choix:
+          - texte: "Regarder longtemps, sans un mot."
+            effets: [{ affinite: { ilysse: 6 } }]
+            aller: fin
+          - texte: "« On pourrait… rentrer, par là ? »"
+            effets: [{ affinite: { ilysse: 4 } }]
+            aller: rentrer
+      rentrer:
+        repliques:
+          - { qui: ilysse, dit: "Ilyssë ne répond pas tout de suite. « Peut-être. Un jour. Si on comprend comment le Voile se recoud… on comprendra aussi comment il s'ouvre proprement. » Elle détourne les yeux. « Tu voudrais partir ? »" }
+        suite: fin
+      fin:
+        repliques:
+          - { qui: ilysse, dit: "Elle note tout dans son carnet, très vite, l'écriture qui penche. « Le Voile n'est pas déchiré au hasard. Il est déchiré le long des Appels, comme un tissu qu'on a trop percé au même endroit. » Elle relève la tête. « Ça veut dire qu'on peut le recoudre. Je ne sais pas encore comment. Mais on peut. »" }
+        effets: [{ quete: { id: q-ilysse, etape: recoudre }, flag: voile-compris, xp: 300 }]
+        fin: true
+
+  - id: ky-terres
+    pnj: sorha
+    titre: "Kaya — Les terres des ancêtres"
+    type: individuel
+    lieu: campement-lunecroc
+    decor: campement-lunecroc
+    quete: q-kaya
+    disponible_si: { quete_etape: { q-kaya: terres }, flag: ch4-depart-fait, affinite_min: { kaya: 40 } }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: sorha, dit: "L'Ancienne Sorha déroule une peau tannée où sont dessinées les terres des Lunecroc, avant la Concorde. « Le Prévôt veut rouvrir les mines du canyon. Nos tombes sont dans ce canyon. »" }
+          - { qui: kaya, expression: colere, dit: "Kaya montre les crocs. « Ils ne toucheront pas aux tombes. » Elle se tourne vers vous. « J'ai écrit au Prévôt. Avec ton nom à côté du mien. Un héros d'Aubeclaire, ça compte, à Qarzim. »" }
+        choix:
+          - texte: "« Mon nom est à toi. Utilise-le. »"
+            effets: [{ affinite: { kaya: 8 }, reputation: { ourvalis: 10, concorde: -5 } }]
+            aller: fin
+          - texte: "« Allons voir le Prévôt ensemble. Il comprendra mieux en face. »"
+            effets: [{ affinite: { kaya: 6 }, reputation: { ourvalis: 8 } }]
+            aller: fin
+      fin:
+        repliques:
+          - { qui: kaya, expression: joie, dit: "Une semaine plus tard, une lettre de Qarzim : le canyon des tombes est rendu aux Lunecroc. Kaya hurle à la lune toute la nuit, et toute la tribu avec elle." }
+          - { qui: sorha, dit: "Sorha vous pose une plume blanche dans les cheveux. « Les ancêtres connaissent ton nom, maintenant. » Kaya, à côté : « Plus qu'un rang. Le rang S. Et ils chanteront nos noms pour toujours. »" }
+        effets: [{ quete: { id: q-kaya, etape: rang-s }, flag: tombes-rendues, xp: 300 }]
+        fin: true
+
+  - id: nd-acheteurs
+    pnj: nadja
+    titre: "Nadja — Les acheteurs de cristaux"
+    type: individuel
+    lieu: port-quais
+    decor: port-quais
+    quete: q-nadja
+    disponible_si: { quete_etape: { q-nadja: acheteurs }, flag: carte-du-nid, affinite_min: { nadja: 40 } }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: nadja, dit: "Nadja vous entraîne derrière une pile de caisses, sur les quais. « Regarde les marques. » Des caisses de cristaux d'éther, tamponnées du sceau de la Concorde. Destination : « Mur d'Aube, poste 7 »." }
+          - { qui: nadja, dit: "« Il n'y a pas de poste 7 sur le Mur. J'ai vérifié. » Elle sort son Grand Livre rouge. « Les cristaux passent le Mur. La Concorde vend des morceaux du Voile à la Légion. Et ça fait trente ans que ça dure. »" }
+        choix:
+          - texte: "« Avec ça, tu peux faire tomber la Concorde, Nadja. »"
+            effets: [{ affinite: { nadja: 8 } }]
+            aller: fin
+          - texte: "« Avec ça, tu peux racheter ta dette. Et la leur faire payer au centuple. »"
+            effets: [{ affinite: { nadja: 6 } }]
+            aller: dette
+      dette:
+        repliques:
+          - { qui: nadja, dit: "Nadja sourit, du sourire qu'elle a quand elle négocie. « Je préfère ta version. » Puis, plus bas : « Mais je veux aussi qu'ils tombent. Ma famille, ils l'ont ruinée en souriant. »" }
+        suite: fin
+      fin:
+        repliques:
+          - { qui: nadja, dit: "Elle referme le Grand Livre rouge. « Il me faut une dernière preuve : un acheteur, côté Légion, pris la main dans le sac. Quand la guerre commencera, il y en aura. » Elle vous tapote la joue. « Associé. »" }
+        effets: [{ quete: { id: q-nadja, etape: liberte }, flag: trafic-concorde-prouve, xp: 300 }]
+        fin: true
+
+  - id: sr-anneau-vendu
+    pnj: seraphine
+    titre: "Séraphine — L'homme à la cape bleue"
+    type: individuel
+    lieu: port-taverne
+    decor: port-taverne
+    quete: q-seraphine
+    disponible_si: { quete_etape: { q-seraphine: rumeurs }, flag: carte-du-nid, affinite_min: { seraphine: 40 } }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: seraphine, dit: "Séraphine a passé trois jours à faire boire tous les capitaines de Port-Vérane. Elle tient mieux le rhum qu'eux, ce qui l'étonne elle-même. « J'ai trouvé. L'anneau d'Aldric a été vendu ici, il y a quatre ans, par un démon qui payait en obsidienne. »" }
+          - { qui: seraphine, dit: "« Le démon a dit au marchand : « Mon maître n'en a plus besoin. Il a une nouvelle famille. » » Elle serre les poings. « Une nouvelle famille. Aldric est de l'autre côté du Mur. Avec eux. »" }
+        choix:
+          - texte: "« Prisonnier, peut-être. Pas forcément traître. »"
+            effets: [{ affinite: { seraphine: 8 } }]
+            aller: fin
+          - texte: "« Quoi qu'il soit devenu, tu n'es pas seule pour l'affronter. »"
+            effets: [{ affinite: { seraphine: 8 } }]
+            aller: fin
+      fin:
+        repliques:
+          - { qui: seraphine, expression: tristesse, dit: "« L'armure noire. La cape bleue. » Elle ferme les yeux. « Quand la guerre commencera, je le chercherai sur le champ de bataille. Et s'il me lève une épée… » Elle ne finit pas. Elle n'a pas besoin." }
+        effets: [{ quete: { id: q-seraphine, etape: aldric }, flag: aldric-chez-legion, xp: 300 }]
+        fin: true

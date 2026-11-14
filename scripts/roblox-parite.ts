@@ -59,7 +59,7 @@ if (graine === 'equipement') {
 }
 if (graine === 'contrats') scenarioContrats();
 if (graine !== 'contrats') for (const s of ['ch1-appel', 'ch1-examen', 'sq-tournoi', 'sq-loups', 'ch1-crypte', 'sq-tanneurs', 'ch1-lanternes', 'ch1-serment']) jouerSceneGroupe(c, r, s);
-// graine « saison » : le chapitre 2 en plus (Marche des Sables, donjon des Ruines de Sel, révolte)
+// graine « saison » : les chapitres 2, 3 et 4 en plus (Marche des Sables, Sylvenoire, Grisfer et l'Archipel)
 if (graine === 'saison') {
   finirTempsLibre(c, r);
   jouer(c, r, { type: 'chapitre_suivant', joueur: 'j1' });
@@ -70,6 +70,11 @@ if (graine === 'saison') {
   jouer(c, r, { type: 'chapitre_suivant', joueur: 'j1' });
   dormirHistoire(c, r);
   for (const s of ['ch3-domaines', 'ch3-lisiere', 'sq-follets-retour', 'ch3-reine', 'sq-domaine-milice', 'ch3-bibliotheque', 'ch3-nuitlongue', 'ch3-verdict']) jouerSceneGroupe(c, r, s);
+  // chapitre 4 : Monts Grisfer et Archipel des Brumes
+  finirTempsLibre(c, r);
+  jouer(c, r, { type: 'chapitre_suivant', joueur: 'j1' });
+  dormirHistoire(c, r);
+  for (const s of ['ch4-depart', 'ch4-karak', 'sq-forge-retour', 'ch4-marches', 'ch4-port', 'sq-phare-retour', 'ch4-nid', 'ch4-deserteur', 'ch4-conseil']) jouerSceneGroupe(c, r, s);
 }
 finirTempsLibre(c, r);
 

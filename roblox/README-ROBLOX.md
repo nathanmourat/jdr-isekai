@@ -291,6 +291,16 @@ On y va par la **carte → « Y aller »** (téléportation). Chaque région a s
 - [ ] Bibliothèque des Racines : donjon jouable, Codex à la fin.
 - [ ] Nuitlongue : combat contre Morra, puis le choix l'achever / l'épargner.
 
+### Liste de contrôle — chapitre 4 (Monts Grisfer et Archipel des Brumes)
+- [ ] Fin du chapitre 3 → dormir → au château : « L'alliance des peuples ».
+- [ ] La carte affiche « Monts Grisfer » (à l'est) et « Archipel des Brumes » (au sud-ouest).
+- [ ] Karak-Dûm : porte de bronze, salle du trône, Grande Forge (boutique de Durna, palier IV), Chope Ardente (lit), Comptoir de la Guilde.
+- [ ] Port-Vérane : quais, Requin Ivre (lit), Marché aux épaves (boutique de Corail), Comptoir de la Guilde.
+- [ ] Les Mille Marches : donjon jouable (golems, salamandres, Gardien), Registre à la fin.
+- [ ] Nid des Wyrms : combat contre Vask, puis Ysoria rejoint le groupe (amitié seulement sur Roblox).
+- [ ] Porte de Karak-Dûm : Morra déserte (si on l'avait épargnée), sinon un déserteur.
+- [ ] Temple du Seuil : le choix « révéler / garder le secret » de l'Ordre, puis fin du chapitre.
+
 ## Publier sur Roblox (quand tout marche)
 
 1. **Fichier → Publier sur Roblox**, si ce n'est pas déjà fait.

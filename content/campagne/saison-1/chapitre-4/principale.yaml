@@ -1,0 +1,331 @@
+# Chapitre 4 — « Feu et Écailles » : quête principale (scènes de groupe, choix votés).
+scenes:
+  # ─────────────────────────────────────────────────────────────
+  - id: ch4-depart
+    pnj: edmund-iv
+    titre: "L'alliance des peuples"
+    type: groupe
+    lieu: chateau
+    decor: chateau-trone
+    quete: q-ch4-feu
+    disponible_si: { flag: chapitre-3-fini, pas_flag: ch4-depart-fait, date_min: { annee: 1021, mois: 1, jour: 1 } }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "Germinal 1021. Neuf ans depuis l'Appel. Sur la grande carte de la salle du trône, le Mur d'Aube est entouré de rouge. Trop de rouge." }
+          - { qui: edmund-iv, dit: "Le roi a vieilli. « Les éclaireurs le disent tous : la Légion se rassemble derrière le Mur. Dans trois ans, peut-être moins, elle attaquera. Et nous ne tiendrons pas seuls. »" }
+          - { qui: edmund-iv, dit: "« Les elfes sont avec nous, grâce à vous. Il nous faut les nains de Grisfer : leurs armes, leurs murailles. Et… » Il hésite. « Les dragons de l'Archipel, s'il en reste. »" }
+          - { qui: seraphine, dit: "Séraphine croise les bras. « Père, les nains ont fermé leur porte à la Couronne il y a cent ans. Ils ne l'ouvriront pas pour un ambassadeur. Ils l'ouvriront peut-être pour des héros. »", si: { flag: seraphine-recrutee } }
+          - { qui: elianne, expression: tristesse, dit: "Elianne, à voix basse : « Les nains ont forgé les sceaux de l'Appel, en l'an 430. Si quelqu'un a gardé une trace de ce que l'Ordre a fait… c'est eux. »", si: { flag: elianne-recrutee } }
+        choix:
+          - texte: "« Nous irons à Karak-Dûm. Puis dans l'Archipel. »"
+            aller: route
+          - texte: "« Et l'Ordre, Majesté ? Que dit le Grand Prieur de tout ça ? »"
+            aller: ordre
+      ordre:
+        repliques:
+          - { qui: edmund-iv, dit: "Le roi détourne le regard. « Le Grand Prieur dit qu'il faut un nouvel Appel. D'autres héros. » Il soupire. « Je lui ai dit d'attendre. Je ne sais pas combien de temps il m'obéira. »" }
+        effets: [{ flag: appel-menace }]
+        suite: route
+      route:
+        repliques:
+          - { dit: "On vous remet des lettres scellées, des cartes, et un sac de pièces d'or naines, frappées d'un marteau. « Elles ouvrent plus de portes que les nôtres », dit le trésorier, vexé." }
+        effets:
+          - { flag: ch4-depart-fait, or: 300, quete: { id: q-ch4-feu, etape: karak }, journal: "Germinal 1021 : la Couronne envoie {groupe} chercher l'alliance des nains de Grisfer et des dragons de l'Archipel." }
+        fin: true
+
+  # ─────────────────────────────────────────────────────────────
+  - id: ch4-karak
+    pnj: bardrek
+    titre: "Le Roi-sous-la-Montagne"
+    type: groupe
+    lieu: karak-trone
+    decor: karak-trone
+    quete: q-ch4-feu
+    disponible_si: { quete_etape: { q-ch4-feu: karak } }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "La salle du trône de Karak-Dûm est si haute qu'on n'en voit pas le plafond. Des rivières de lave domptées coulent dans des rigoles de bronze, et la chaleur vous sèche les yeux." }
+          - { qui: bardrek, dit: "Le roi Bardrek ne se lève pas. « Des humains. Des Appelés, en plus. » Il boit une longue gorgée. « La dernière fois que des Appelés sont venus à Karak-Dûm, c'était il y a six cents ans. Ils nous ont demandé de forger des sceaux. Nous l'avons fait. Nous le regrettons encore. »" }
+          - { qui: bardrek, dit: "« Une alliance ? Contre la Légion ? » Il rit, sans joie. « La Légion ne nous a jamais rien fait. Ce sont vos prêtres qui nous ont menti. »" }
+        choix:
+          - texte: "« Alors dites-nous ce qu'ils ont fait. Nous voulons la vérité, nous aussi. »"
+            effets: [{ reputation: { nains: 5 } }]
+            aller: verite
+          - texte: "Lui offrir un tonnelet de bière de Karak, à la manière naine."
+            si: { objet: biere-de-karak }
+            effets: [{ retirer_objet: biere-de-karak, reputation: { nains: 10 } }]
+            aller: biere
+          - texte: "« La Légion ne vous a rien fait… encore. » (Charisme, difficulté 26)"
+            test: { carac: CHA, difficulte: 26, reussite: encore, echec: verite }
+      biere:
+        repliques:
+          - { qui: bardrek, dit: "Le roi regarde le tonnelet, puis vous. Puis il éclate d'un rire qui fait trembler la lave. « Des humains qui savent offrir ! Asseyez-vous. Les tonneaux d'abord, les affaires ensuite. »" }
+        suite: verite
+      encore:
+        repliques:
+          - { qui: bardrek, dit: "Bardrek pose sa chope. Lentement. « … Encore. » Il se gratte la barbe. « Mes éclaireurs ont vu des soldats cendrés dans les Marches. Je croyais qu'ils se perdaient. » Un silence. « Ils ne se perdaient pas. »" }
+        effets: [{ reputation: { nains: 8 } }]
+        suite: verite
+      verite:
+        repliques:
+          - { qui: bardrek, dit: "« Les Mille Marches. Mille étages sous la montagne. Tout en bas, la Salle des Registres : nos ancêtres y ont gravé chaque Appel depuis l'an 430, et ce que chacun a coûté. »" }
+          - { qui: bardrek, dit: "« Mais il y a vingt ans, le Gardien des Marches s'est réveillé. Un golem que nos ancêtres ont forgé pour protéger les Registres. Il n'obéit plus à personne. »" }
+          - { qui: bardrek, dit: "« Descendez. Faites taire le Gardien. Lisez les Registres. Si vous remontez, vous aurez l'alliance des nains. » Il sourit dans sa barbe. « Si vous ne remontez pas… vous aurez une belle tombe. Nous faisons de très belles tombes. »" }
+        effets:
+          - { flag: karak-recus, xp: 500, quete: { id: q-ch4-feu, etape: marches }, journal: "{groupe} sont reçus par Bardrek, Roi-sous-la-Montagne. Il promet l'alliance des nains s'ils reviennent des Mille Marches." }
+        fin: true
+
+  # ─────────────────────────────────────────────────────────────
+  - id: ch4-marches
+    titre: "Les Mille Marches"
+    type: groupe
+    lieu: mille-marches
+    decor: mille-marches
+    quete: q-ch4-feu
+    disponible_si: { quete_etape: { q-ch4-feu: marches }, date_min: { annee: 1022, mois: 2, jour: 1 } }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "Floréal 1022. La porte des Mille Marches s'ouvre dans un grondement. Un escalier plonge dans le noir. Une marche par étage. Un étage par siècle, disent les nains." }
+          - { qui: elianne, dit: "Elianne serre son chapelet. « Si les Registres disent ce que je crois… » Elle ne finit pas sa phrase.", si: { flag: elianne-recrutee } }
+        choix:
+          - texte: "Descendre les Mille Marches."
+            aller: donjon
+      donjon:
+        donjon: { id: mille-marches, sortie: sortie, abandon: abandon }
+      abandon:
+        repliques:
+          - { dit: "Le Gardien vous rejette vers l'escalier. Mais, pendant le combat, une des tables de pierre s'est fendue en deux, et un morceau a roulé à vos pieds. Vous le remontez." }
+        effets: [{ objet: registre-des-appels }]
+        suite: revelation
+      sortie:
+        repliques:
+          - { dit: "Le Gardien des Mille Marches s'est éteint, un genou à terre, comme un chevalier qui salue. Derrière lui, la Salle des Registres : des tables de pierre, du sol au plafond, couvertes de runes naines." }
+        suite: revelation
+      revelation:
+        repliques:
+          - { qui: elianne, dit: "Elianne lit, avec l'aide d'un vieux scribe nain venu avec vous. « An 430 : premier Appel. Un seul Appelé. Son nom… » Elle plisse les yeux. « Orvan. Le prix : la vallée de Cendre, au nord. Mille âmes. »" }
+          - { qui: elianne, dit: "« An 611 : deuxième Appel. Le prix : la ville de Merran. An 874 : troisième Appel. Le prix : les îles du Levant. » Sa voix tremble. « Chaque Appel ouvre le Voile. Chaque ouverture laisse entrer les Cendres. Chaque fois, une terre meurt. »" }
+          - { qui: elianne, expression: tristesse, dit: "Elle s'arrête sur la dernière table, gravée récemment. « An 1003. Appel secret, à Valgrane. Échec. Le prix : Valgrane. » Elle se tourne lentement vers vous. « Et an 1012… » Elle ne lit pas la suite. Elle n'en a pas besoin." }
+          - { qui: aveline, expression: colere, dit: "Aveline a pâli. « Valgrane. Ce n'était pas une trahison. Ce n'était pas mon père. C'était l'Ordre. Un Appel raté. » Sa main tremble sur la garde de son épée.", si: { flag: aveline-rencontree } }
+          - { qui: elianne, dit: "Elianne referme son carnet. « Chaque invocation nourrit les Cendres. Votre venue, à vous tous, a nourri la Légion. » Elle ferme les yeux. « Et l'Ordre le sait depuis six cents ans. »" }
+        effets:
+          - { flag: [registre-lu, nains-allies, verite-ordre], reputation: { nains: 20 }, xp: 700, quete: { id: q-ch4-feu, etape: port }, journal: "Floréal 1022 : dans la Salle des Registres, {groupe} découvrent que chaque Appel nourrit les Cendres, et que l'Ordre le sait depuis l'an 430." }
+        choix:
+          - texte: "Remonter et annoncer la nouvelle à Bardrek."
+            aller: bardrek
+      bardrek:
+        repliques:
+          - { qui: bardrek, dit: "Bardrek écoute sans un mot. Puis il pose son marteau sur la table. « Les nains de Karak-Dûm marcheront avec vous. Pas pour la Couronne. Pas pour l'Ordre. Pour vous, qui êtes descendus. »" }
+          - { qui: bardrek, dit: "« Et pour les dragons… Il y a une capitaine pirate, à Port-Vérane, qui connaît la route du Nid. Corsa la Rouge. Elle me doit une jambe. Enfin, une jambe de bois : c'est moi qui l'ai fabriquée. »" }
+        fin: true
+
+  # ─────────────────────────────────────────────────────────────
+  - id: ch4-port
+    pnj: corsa
+    titre: "Corsa la Rouge"
+    type: groupe
+    lieu: port-quais
+    decor: port-quais
+    quete: q-ch4-feu
+    disponible_si: { quete_etape: { q-ch4-feu: port } }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "Port-Vérane sent le sel, le goudron et le rhum renversé. Sur le pont d'une frégate rouge, une femme à la jambe de bois fait tourner un sabre autour de son doigt." }
+          - { qui: corsa, dit: "« Le Nid des Wyrms ? » La capitaine Corsa rit si fort que son perroquet (vivant, lui) s'envole. « Personne n'y va, mes jolis. Les récifs mangent les coques, et les dragons mangent ce qui reste. »" }
+          - { qui: corsa, dit: "« Et puis il y a déjà un client, cette saison. Un certain Orlen Vask, chasseur de la Concorde. Il a payé cher pour la route. Il a dit qu'il cherchait… un œuf. »" }
+        choix:
+          - texte: "« Bardrek dit que vous lui devez une jambe. »"
+            aller: jambe
+          - texte: "« Nous vous payons le double de Vask. » (500 or)"
+            si: { or_min: 500 }
+            effets: [{ or: -500 }]
+            aller: carte
+          - texte: "« Un duel. Si nous gagnons, la carte est à nous. »"
+            aller: duel
+      jambe:
+        repliques:
+          - { qui: corsa, dit: "Corsa regarde sa jambe de bois, puis vous. « Ce vieux grincheux… » Elle soupire. « D'accord. Mais mon équipage veut s'amuser un peu d'abord. Montrez-leur ce que valent des Appelés. »" }
+        suite: duel
+      duel:
+        repliques:
+          - { dit: "L'équipage forme un cercle sur le quai. Deux pirates aux sabres courbes s'avancent en souriant." }
+        combat: { rencontre: archipel-pirates, victoire: carte, defaite: carte-perdu }
+      carte-perdu:
+        repliques:
+          - { qui: corsa, dit: "Vous voilà dans l'eau du port. Corsa vous repêche elle-même, hilare. « Vous perdez avec panache. J'aime ça. » Elle vous jette la carte. « Ne la mouillez pas plus que vous. »" }
+        suite: carte
+      carte:
+        repliques:
+          - { qui: corsa, dit: "Corsa déroule une carte marine couverte de croix rouges. « Le Nid est là. On n'y passe qu'en été, quand la brume se lève. Revenez à Solaire, et ne dites à personne que c'est moi. »" }
+        effets:
+          - { flag: carte-du-nid, objet: carte-marine, xp: 500, quete: { id: q-ch4-feu, etape: nid }, journal: "À Port-Vérane, la capitaine Corsa la Rouge confie à {groupe} la route du Nid des Wyrms." }
+        fin: true
+
+  # ─────────────────────────────────────────────────────────────
+  - id: ch4-nid
+    titre: "Le Nid des Wyrms"
+    type: groupe
+    lieu: nid-des-wyrms
+    decor: nid-des-wyrms
+    quete: q-ch4-feu
+    disponible_si: { quete_etape: { q-ch4-feu: nid }, date_min: { annee: 1023, mois: 4, jour: 1 } }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "Solaire 1023. La brume s'ouvre comme un rideau. L'île est noire, fumante, couverte de nids de pierre grands comme des maisons. Ils sont presque tous vides." }
+          - { dit: "Dans les rochers, de jeunes wyrms (des dragons pas plus grands que des chevaux, sans ailes, furieux) se tournent vers vous en sifflant." }
+        choix:
+          - texte: "Se défendre sans les tuer : les repousser."
+            aller: wyrms
+          - texte: "Leur montrer qu'on ne leur veut aucun mal. (Esprit, difficulté 27)"
+            test: { carac: ESP, difficulte: 27, reussite: calmes, echec: wyrms }
+      wyrms:
+        combat: { rencontre: nid-wyrms, victoire: vask, defaite: vask }
+      calmes:
+        repliques:
+          - { dit: "Vous vous agenouillez, les mains ouvertes. Les wyrms reniflent, hésitent… puis se couchent, la tête basse. Ils n'ont pas peur de vous. Ils ont peur de quelqu'un d'autre." }
+        effets: [{ reputation: { dragons: 10 } }]
+        suite: vask
+      vask:
+        repliques:
+          - { dit: "Au sommet de l'île, dans le plus grand nid, un homme en manteau de cuir pose le pied sur une immense tête dorée, endormie. Des chasseurs l'entourent, des harpons à la main." }
+          - { qui: narrateur, dit: "« Orlen Vask, chasseur de la Concorde. » Il ne se retourne pas. « L'œuf est déjà vendu, Appelés. Il ne reste que la mère. Une dragonne endormie depuis trois siècles… savez-vous combien vaut une seule de ses écailles ? »" }
+        choix:
+          - texte: "« Écarte-toi de cette dragonne. »"
+            aller: combat
+      combat:
+        combat: { rencontre: nid-vask, victoire: reveil, defaite: reveil-dur }
+      reveil-dur:
+        repliques:
+          - { dit: "Vask vous jette à terre. Son harpon se lève au-dessus de la dragonne… et la dragonne ouvre un œil. Un œil d'or, grand comme un bouclier." }
+          - { dit: "Le souffle qui suit ne laisse aux chasseurs que le temps de sauter à la mer. Vask, en flammes, plonge le dernier." }
+        suite: ysoria
+      reveil:
+        repliques:
+          - { dit: "Vask recule jusqu'au bord de la falaise, saute à la mer et disparaît dans la brume. Derrière vous, la tête dorée remue. Un œil s'ouvre. Un œil d'or, grand comme un bouclier." }
+        suite: ysoria
+      ysoria:
+        repliques:
+          - { dit: "La dragonne se déplie. Elle est immense. Puis elle rapetisse, rapetisse, et à sa place se tient une femme grande, aux cheveux d'or et aux yeux de braise, vêtue seulement d'écailles." }
+          - { qui: ysoria, dit: "« Je suis Ysoria. Je dormais. » Elle regarde le nid vide, et sa voix devient très calme, ce qui est pire qu'un cri. « Mon œuf. Où est mon œuf. »" }
+          - { qui: ysoria, dit: "Elle vous écoute raconter, sans cligner des yeux. Puis : « Vous m'avez défendue pendant mon sommeil. Chez les dragons, cela fait de vous… » Elle cherche le mot humain. « … de la famille. Je viens avec vous. Je retrouverai mon œuf. Et je mangerai ce Vask. »" }
+          - { qui: ysoria, dit: "« Et votre guerre contre les Cendres ? » Elle hausse les épaules. « Les Cendres ont dévoré les miens avant vous. Les dragons qui restent écouteront ma voix. »" }
+        effets:
+          - { flag: [ysoria-recrutee, dragons-allies], recruter: ysoria, reputation: { dragons: 25 }, xp: 800, quete: { id: q-ch4-feu, etape: deserteur }, journal: "Solaire 1023 : au Nid des Wyrms, {groupe} sauvent la dragonne Ysoria des chasseurs de la Concorde. Elle les rejoint, et les dragons avec elle." }
+        fin: true
+
+  # ─────────────────────────────────────────────────────────────
+  - id: ch4-deserteur
+    titre: "Celle qui a déserté"
+    type: groupe
+    lieu: karak-porte
+    decor: karak-porte
+    quete: q-ch4-feu
+    disponible_si: { quete_etape: { q-ch4-feu: deserteur }, date_min: { annee: 1023, mois: 7, jour: 1 } }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "Brumaire 1023. Les gardes de la Porte de Karak-Dûm vous font appeler en pleine nuit. « Quelqu'un vous demande. Quelqu'un avec des cornes. »" }
+          - { dit: "Dans la neige, devant la porte de bronze, une silhouette encapuchonnée tient à peine debout. Une corne est brisée.", si: { flag: morra-vivante } }
+          - { qui: morra, dit: "Morra relève la tête. « Bonsoir, Appelés. » Elle sourit, avec du sang aux dents. « J'ai déserté. Ils me suivent. Vous avez cinq secondes pour décider si vous m'aidez. »", si: { flag: morra-vivante } }
+          - { dit: "Dans la neige, devant la porte de bronze, un jeune soldat cendré lève les mains. Il a jeté son épée. « Je… je déserte. J'ai des nouvelles du Mur. Ils me suivent ! »", si: { flag: morra-tuee } }
+        choix:
+          - texte: "Se battre contre les chasseurs de la Légion."
+            aller: combat
+      combat:
+        combat: { rencontre: deserteuse-poursuite, victoire: apres, defaite: apres-dur }
+      apres-dur:
+        repliques:
+          - { dit: "Les chasseurs de la Légion vous submergent… jusqu'à ce que les portes de bronze s'ouvrent et que cinquante nains en armure en sortent en hurlant. Les soldats cendrés s'enfuient dans la neige." }
+        suite: apres
+      apres:
+        repliques:
+          - { qui: morra, dit: "Morra s'assoit dans la neige, essoufflée. « Le Souverain prépare l'assaut du Mur d'Aube. Au printemps 1025. Il a… » Elle ferme les yeux. « Il a dit qu'il ferait de Lyss sa nouvelle commandante. Elle a seize ans. »", si: { flag: morra-vivante } }
+          - { qui: narrateur, dit: "Le jeune déserteur claque des dents. « Au printemps 1025, ils attaqueront le Mur d'Aube. Toute la Légion. La commandante Morra… avant de mourir, elle disait que le Souverain gardait les Appelés pour la fin. »", si: { flag: morra-tuee } }
+        choix:
+          - texte: "« Viens avec nous, Morra. Nous libérerons ta sœur. »"
+            si: { flag: morra-vivante }
+            effets: [{ flag: [morra-recrutee, morra-alliee], recruter: morra, reputation: { legion: 10 } }]
+            aller: morra-oui
+          - texte: "« Tu peux rester à Karak-Dûm, à l'abri. Mais pas avec nous. »"
+            si: { flag: morra-vivante }
+            effets: [{ flag: morra-refugiee }]
+            aller: morra-non
+          - texte: "Confier le déserteur aux nains et repartir."
+            si: { flag: morra-tuee }
+            aller: fin
+      morra-oui:
+        repliques:
+          - { qui: morra, dit: "Morra vous regarde longtemps. Puis elle rit, un vrai rire cette fois. « Une démone parmi les Appelés. Le Souverain va en faire une attaque. » Elle tend la main. « D'accord. Mais je garde ma faux. Et je mange quand je veux. »" }
+          - { qui: elianne, dit: "Elianne la fixe, et Morra soutient son regard. Puis la prêtresse lui tend une couverture. « Tu trembles. » « Je ne tremble jamais. » « Tu trembles. »", si: { flag: elianne-recrutee } }
+        suite: fin
+      morra-non:
+        repliques:
+          - { qui: morra, dit: "« À l'abri. » Morra hoche la tête, sans surprise. « Vous avez raison. On ne fait pas confiance à une démone. » Elle se détourne. « Moi non plus, je ne me ferais pas confiance. »" }
+        suite: fin
+      fin:
+        effets:
+          - { flag: assaut-connu, xp: 700, quete: { id: q-ch4-feu, etape: conseil }, journal: "Brumaire 1023 : à la Porte de Karak-Dûm, {groupe} apprennent que la Légion attaquera le Mur d'Aube au printemps 1025." }
+        fin: true
+
+  # ─────────────────────────────────────────────────────────────
+  - id: ch4-conseil
+    pnj: aureliath
+    titre: "Le secret de l'Ordre"
+    type: groupe
+    lieu: temple-du-seuil
+    decor: temple-du-seuil
+    quete: q-ch4-feu
+    disponible_si: { quete_etape: { q-ch4-feu: conseil }, date_min: { annee: 1023, mois: 12, jour: 1 } }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "Aurore 1023. Le Temple du Seuil, où tout a commencé. Le grand cercle de l'Appel brille toujours au sol. Le Grand Prieur Auréliath vous attend devant l'autel, seul." }
+          - { qui: aureliath, dit: "« Les Registres des nains. » Il ne fait même pas semblant d'être surpris. « Je savais qu'un jour, quelqu'un descendrait. J'espérais que ce serait après ma mort. »" }
+          - { qui: aureliath, dit: "« Oui, chaque Appel nourrit les Cendres. Oui, l'Ordre le sait. Mais sans Appel, il y a six cents ans, les dragons nous auraient tous brûlés. Et sans vous, la Légion serait déjà à Lysmont. » Il ouvre les mains. « Nous avons choisi le moindre mal. Six cents ans de moindre mal. »" }
+          - { qui: aureliath, dit: "« Et maintenant, il faut un nouvel Appel. Vingt Appelés, cent peut-être. Pour gagner la guerre. » Il vous regarde. « Je vous demande de vous taire. Le peuple ne comprendrait pas. »" }
+          - { qui: elianne, expression: colere, dit: "Elianne, d'une voix que vous ne lui connaissiez pas : « Le peuple comprendrait très bien. C'est pour ça que vous avez peur. »", si: { flag: elianne-recrutee } }
+          - { qui: aveline, expression: colere, dit: "Aveline a la main sur son épée. « Valgrane. Vous avez laissé exécuter mon père pour cacher votre échec. »", si: { flag: aveline-rencontree } }
+          - { qui: morra, dit: "Morra, appuyée contre une colonne, ricane. « Et c'est nous, les démons. »", si: { flag: morra-recrutee } }
+        choix:
+          - texte: "Tout révéler : convoquer le peuple sur la place de Lysmont et lire les Registres à voix haute."
+            effets: [{ flag: secret-revele, reputation: { ordre: -40, couronne: -5 } }]
+            aller: revele
+          - texte: "Garder le secret, pour ne pas briser le royaume avant la guerre. Mais exiger : plus aucun Appel."
+            effets: [{ flag: [secret-garde, appels-suspendus], reputation: { ordre: 15 } }]
+            aller: garde
+          - texte: "Garder le secret, et laisser l'Ordre préparer un nouvel Appel pour gagner la guerre."
+            effets: [{ flag: [secret-garde, nouvel-appel], reputation: { ordre: 25, couronne: 5 } }]
+            aller: appel
+      revele:
+        repliques:
+          - { dit: "Le lendemain, sur la place de Lysmont, vous lisez les Registres devant des milliers de gens. Le silence est total. Puis quelqu'un jette une pierre contre la porte du Temple. Puis une autre." }
+          - { qui: aureliath, dit: "Le soir même, le Grand Prieur est démis par le roi. On dit qu'il a quitté la ville, seul, vers le nord. Il n'a rien dit en partant. Sauf une phrase, à Elianne : « Tu feras mieux que moi. »" }
+          - { qui: elianne, dit: "Elianne pleure, et sourit en même temps. « L'Ordre ne sera plus jamais le même. Il faudra le reconstruire. Sans mensonges, cette fois. »", si: { flag: elianne-recrutee } }
+        effets: [{ flag: aureliath-demis }]
+        suite: fin
+      garde:
+        repliques:
+          - { qui: aureliath, dit: "Auréliath vous regarde longtemps. Puis il s'incline. « Plus aucun Appel. Vous avez ma parole. » Il soupire. « Je ne sais pas si vous venez de sauver le monde ou de le perdre. »" }
+          - { qui: elianne, expression: tristesse, dit: "Elianne ne dit rien sur le chemin du retour. Le soir, elle vous demande seulement : « Vous croyez qu'on peut bâtir quelque chose de juste sur un mensonge ? »", si: { flag: elianne-recrutee } }
+        effets: [{ affinite: { elianne: -5 } }]
+        suite: fin
+      appel:
+        repliques:
+          - { qui: aureliath, dit: "Le Grand Prieur sourit, soulagé. « Vous êtes sages. Plus sages que je ne l'étais à votre âge. » Il pose la main sur le cercle de l'Appel. « Dans un an, de nouveaux héros arriveront. »" }
+          - { qui: elianne, expression: colere, dit: "Elianne se lève et sort du Temple sans un mot. Sur le parvis, elle arrache le voile de l'Ordre de ses cheveux.", si: { flag: elianne-recrutee } }
+          - { qui: ilysse, expression: colere, dit: "Ilyssë, glaciale : « Vous venez de décider d'ouvrir une nouvelle déchirure. J'espère que vous aimerez le monde qui en sortira. »", si: { flag: ilysse-recrutee } }
+        effets: [{ affinite: { elianne: -15, ilysse: -10 } }]
+        suite: fin
+      fin:
+        repliques:
+          - { dit: "L'hiver finit. Au nord, derrière le Mur d'Aube, des milliers de feux s'allument chaque nuit. Les nains forgent. Les dragons volent. Les elfes tendent leurs arcs." }
+          - { dit: "La guerre des Cendres commence au printemps." }
+        effets:
+          - { terminer_quete: q-ch4-feu, xp: 600, journal: "Aurore 1023 : {groupe} affrontent le Grand Prieur Auréliath au Temple du Seuil. L'alliance des peuples est prête pour la guerre." }
+          - { fin_chapitre: 4 }
+        fin: true

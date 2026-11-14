@@ -1,0 +1,88 @@
+# Chapitre 4 — « Feu et Écailles » (1021 → 1024), Monts Grisfer et Archipel des Brumes, niveaux 22 à 28.
+quetes:
+  - id: q-ch4-feu
+    titre: "Chapitre 4 — Feu et Écailles"
+    type: principale
+    chapitre: 4
+    niveau: 21
+    region: monts-grisfer
+    resume: "La guerre approche. Il faut l'alliance des nains de Grisfer et des dragons de l'Archipel. Et Elianne cherche toujours ses preuves."
+    etapes:
+      - { id: depart, objectif: "Se présenter au château de Lysmont (Germinal 1021).", scene: ch4-depart, lieu: chateau }
+      - { id: karak, objectif: "Être reçus par le Roi-sous-la-Montagne, à Karak-Dûm.", scene: ch4-karak, lieu: karak-trone, niveau: 22 }
+      - { id: marches, objectif: "Descendre les Mille Marches (Floréal 1022).", scene: ch4-marches, lieu: mille-marches, niveau: 23 }
+      - { id: port, objectif: "Trouver un navire pour le Nid des Wyrms, à Port-Vérane.", scene: ch4-port, lieu: port-quais, niveau: 24 }
+      - { id: nid, objectif: "Aborder au Nid des Wyrms (Solaire 1023).", scene: ch4-nid, lieu: nid-des-wyrms, niveau: 25 }
+      - { id: deserteur, objectif: "Quelqu'un vous attend à la Porte de Karak-Dûm (Brumaire 1023).", scene: ch4-deserteur, lieu: karak-porte, niveau: 26 }
+      - { id: conseil, objectif: "Affronter le Grand Prieur au Temple du Seuil (Aurore 1023).", scene: ch4-conseil, lieu: temple-du-seuil }
+      - { id: fin, objectif: "Chapitre terminé." }
+
+  # ── Quêtes secondaires
+  - id: q-forge-froide
+    titre: "La forge qui s'éteint"
+    type: secondaire
+    chapitre: 4
+    niveau: 22
+    region: monts-grisfer
+    resume: "Le feu de la Grande Forge brûle depuis mille ans. Il est en train de mourir."
+    etapes:
+      - { id: durna, objectif: "Écouter Maîtresse Durna, à la Grande Forge.", scene: sq-forge-durna, lieu: karak-forge }
+      - { id: coulee, objectif: "Trouver la Braise-mère à la Coulée de lave.", scene: sq-forge-coulee, lieu: coulee-de-lave, niveau: 23 }
+      - { id: retour, objectif: "Rapporter la Braise-mère à Durna.", scene: sq-forge-retour, lieu: karak-forge }
+  - id: q-cave-grumli
+    titre: "La cave de Grumli"
+    type: secondaire
+    chapitre: 4
+    niveau: 22
+    region: monts-grisfer
+    resume: "Quelqu'un vide les tonneaux de la Chope Ardente par en dessous. Grumli en pleure dans sa barbe."
+    etapes:
+      - { id: grumli, objectif: "Écouter Grumli, à la Chope Ardente.", scene: sq-cave-grumli, lieu: karak-taverne }
+      - { id: mines, objectif: "Suivre le tunnel jusqu'aux Mines profondes.", scene: sq-cave-mines, lieu: mines-profondes, niveau: 22 }
+      - { id: retour, objectif: "Revenir à la Chope Ardente.", scene: sq-cave-retour, lieu: karak-taverne }
+  - id: q-phare
+    titre: "La lumière du Phare noyé"
+    type: secondaire
+    chapitre: 4
+    niveau: 24
+    region: archipel-des-brumes
+    resume: "Le Phare noyé s'allume certaines nuits. Le fils du vieux Brann est parti voir qui l'allume. Il n'est pas revenu."
+    etapes:
+      - { id: brann, objectif: "Écouter le vieux Brann, au Requin Ivre.", scene: sq-phare-brann, lieu: port-taverne }
+      - { id: phare, objectif: "Monter au Phare noyé.", scene: sq-phare, lieu: phare-noye, niveau: 24 }
+      - { id: retour, objectif: "Revenir au Requin Ivre.", scene: sq-phare-retour, lieu: port-taverne }
+  - id: q-sirene
+    titre: "Le chant de Néréa"
+    type: secondaire
+    chapitre: 4
+    niveau: 23
+    region: archipel-des-brumes
+    resume: "Une sirène chante au Récif, et les marins sautent à l'eau. Corail dit qu'elle ne chante pas pour noyer, mais pour appeler à l'aide."
+    etapes:
+      - { id: corail, objectif: "Écouter Corail, au Marché aux épaves.", scene: sq-sirene-corail, lieu: port-marche }
+      - { id: recif, objectif: "Aller au Récif des sirènes.", scene: sq-sirene-recif, lieu: recif-des-sirenes, niveau: 23 }
+      - { id: retour, objectif: "Revenir voir Corail.", scene: sq-sirene-retour, lieu: port-marche }
+
+  # ── Quêtes des compagnes du chapitre 4
+  - id: q-ysoria
+    titre: "L'Œuf de braise"
+    type: compagnon
+    chapitre: 4
+    niveau: 25
+    region: archipel-des-brumes
+    resume: "Pendant qu'Ysoria dormait, quelqu'un a volé son œuf. Le dernier œuf de dragon du monde."
+    etapes:
+      - { id: oeuf, objectif: "Retrouver la trace de l'œuf d'Ysoria (palier « Proche »).", scene: ys-oeuf, lieu: port-marche }
+      - { id: eclosion, objectif: "Reprendre l'œuf à ses voleurs (chapitre 5)." }
+      - { id: choix, objectif: "Décider avec Ysoria si les dragons reviennent dans le monde (chapitre 5)." }
+  - id: q-morra
+    titre: "Les Chaînes d'Obsidienne"
+    type: compagnon
+    chapitre: 4
+    niveau: 26
+    region: monts-grisfer
+    resume: "Lyss, la petite sœur de Morra, est enchaînée dans la Citadelle d'Obsidienne. Les chaînes ne cèdent à aucune lame connue."
+    etapes:
+      - { id: chaines, objectif: "Trouver un moyen de briser les chaînes d'obsidienne (palier « Proche »).", scene: mo-chaines, lieu: karak-forge }
+      - { id: cle, objectif: "Forger la Clé de braise (chapitre 5)." }
+      - { id: lyss, objectif: "Libérer Lyss dans la Citadelle d'Obsidienne (chapitre 6)." }

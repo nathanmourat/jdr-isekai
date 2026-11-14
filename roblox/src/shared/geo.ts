@@ -83,6 +83,15 @@ export const LIEU_DU_DECOR: Record<string, string> = {
 	marais: "bois-des-feux-follets",
 	bibliotheque: "bibliotheque-racines",
 	clairiere: "clairiere-dechirure",
+	// chapitre 4 : Monts Grisfer et Archipel des Brumes
+	montagne: "col-des-vents",
+	"mine-naine": "mines-profondes",
+	forge: "coulee-de-lave",
+	marches: "mille-marches",
+	plage: "plage-noire",
+	port: "port-quais",
+	epave: "phare-noye",
+	nid: "nid-des-wyrms",
 };
 
 /** Hauteur à laquelle est dessiné le donjon (au-dessus du monde). */

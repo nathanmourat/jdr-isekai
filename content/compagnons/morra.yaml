@@ -1,0 +1,48 @@
+# Morwenna, dite « Morra » — la démone repentie (ennemie au chapitre 3, alliée au chapitre 4 si on l'a épargnée).
+compagnon:
+  id: morra
+  nom: "Morwenna « Morra »"
+  titre: "Ancienne commandante de la Légion Cendrée"
+  age: 300
+  genre: f
+  personnalite: "Humour noir, fierté, tendresse cachée sous trois couches de sarcasme. Découvre le monde des vivants avec méfiance… et une gourmandise surprenante pour le pain chaud."
+  passe: "Commandante de la Première Légion pendant deux siècles. Le Souverain garde sa petite sœur Lyss enchaînée dans la Citadelle d'Obsidienne pour s'assurer de son obéissance."
+  objectif: "Libérer sa sœur Lyss."
+  chapitre_arrivee: 4
+  quete: q-morra
+  lignes_rouges:
+    - { flag: demons-extermines, description: "« Tous les démons, sans distinction ? Les enfants aussi ? » Elle recule. « Je me suis trompée sur toi. »", penalite: -60, definitive: true }
+    - { flag: morra-livree, description: "« Tu m'as vendue à l'Ordre. » Elle ne crie pas. C'est pire.", penalite: -80, definitive: true }
+  cadeaux:
+    prefere: [gateau-lysmont, pierre-de-feu]
+    apprecie: [rhum-des-brumes, biere-de-karak, kit-entretien-armes]
+    deteste: [fleur-des-champs, bijou-dore]
+  combat:
+    caracteristiques: { FOR: 14, AGI: 11, INT: 7, VIT: 11, ESP: 10, CHA: 7 }
+    attaque: { stat: FOR, element: ombre, portee: melee, puissance: 10 }
+    armure: 5
+    rang: avant
+    competences:
+      - id: morra-faux
+        nom: Fauche cendrée
+        description: "Un grand cercle de sa faux, qui laisse une traînée d'ombre."
+        recharge: 3
+        cible: tous_ennemis
+        portee: melee
+        effets: [{ type: degats, puissance: 10, stat: FOR, element: ombre }]
+        ia: { priorite: 3, quand: plusieurs_ennemis }
+      - id: morra-marque
+        nom: Marque de la Légion
+        description: "Elle connaît les points faibles des soldats cendrés. Et des autres."
+        recharge: 2
+        cible: ennemi
+        portee: melee
+        effets:
+          - { type: degats, puissance: 12, stat: FOR, element: ombre }
+          - { type: etat, etat: expose, duree: 2, valeur: 0.15 }
+        ia: { priorite: 2 }
+  bonus_paliers:
+    alliee: { id: aura-degats, nom: "Discipline de la Légion", description: "+6 % de dégâts pour tout le groupe.", parametres: { valeur: 0.06 } }
+    proche: { id: aura-precision, nom: "Connaissance des Cendres", description: "+6 % de précision pour le groupe.", parametres: { valeur: 0.06 } }
+    amoureuse: { id: contre-attaque, nom: "Riposte d'ombre", description: "25 % de chances de contre-attaquer quand elle est frappée.", parametres: { chance: 0.25 } }
+    engagee: { id: attaque-combinee, nom: "Deux ombres, une lame", description: "Attaque combinée avec son héros : +25 % de dégâts.", parametres: { degats: 0.25 } }

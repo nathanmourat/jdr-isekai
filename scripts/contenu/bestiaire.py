@@ -9,6 +9,12 @@ import importlib.util, os, sys
 ICI = os.path.dirname(os.path.abspath(__file__))
 RACINE = os.path.dirname(os.path.dirname(ICI))
 
+# Coefficients par chapitre : aux niveaux élevés, l'équipement et les compétences rendent les héros plus forts
+# que la seule formule par niveau (réglé avec npm run equilibrage:chapitres).
+COEF_PV = {2: 1.0, 3: 1.0, 4: 1.35, 5: 1.55, 6: 1.75}
+COEF_DEGATS = {2: 1.0, 3: 1.0, 4: 1.12, 5: 1.2, 6: 1.28}
+CHAPITRE = 2
+
 RANGS = {
     #          pv0  stat  armure  puiss  xp    or
     'faible':   (24, 0.9,  0.8,   0,    3.5,  1.0),
@@ -31,9 +37,9 @@ def ennemi(id, nom, description, niveau, rang, categorie, stat='FOR', element='p
     c = {'FOR': autre, 'AGI': round(7 + 0.35 * N), 'INT': autre, 'VIT': vit, 'ESP': autre, 'CHA': max(2, round(3 + 0.1 * N))}
     c[stat] = main
     if caracs: c.update(caracs)
-    pvs = pv if pv is not None else round(pv0 * (1 + 0.32 * (N - 1)) * facteur_pv)
+    pvs = pv if pv is not None else round(pv0 * (1 + 0.32 * (N - 1)) * facteur_pv * COEF_PV.get(CHAPITRE, 1))
     armure = round(1 + 0.45 * N * ra)
-    puissance = round((7 + 0.22 * N + rp) * facteur_degats)
+    puissance = round((7 + 0.22 * N + rp) * facteur_degats * COEF_DEGATS.get(CHAPITRE, 1))
     xp = round(rx * N ** 1.5)
     orx = round(ro * N)
     L = []
@@ -74,6 +80,8 @@ if __name__ == '__main__':
     for n in range(2, 7):
         chemin = os.path.join(ICI, f'ch{n}_ennemis.py')
         if not os.path.exists(chemin): continue
+        CHAPITRE = n
+        sys.modules['bestiaire'] = sys.modules[__name__]
         spec = importlib.util.spec_from_file_location(f'ch{n}', chemin)
         m = importlib.util.module_from_spec(spec); sys.modules[f'ch{n}'] = m
         sys.path.insert(0, ICI)

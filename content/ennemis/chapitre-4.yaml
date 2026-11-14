@@ -1,0 +1,307 @@
+# Ennemis du chapitre 4 (Monts Grisfer et Archipel des Brumes, niveaux 22 à 28).
+# Fichier généré par scripts/contenu/bestiaire.py à partir de scripts/contenu/ch4_ennemis.py : modifier la source, puis relancer.
+ennemis:
+  - id: chauve-souris-de-lave
+    nom: "Chauve-souris de lave"
+    description: "Une chauve-souris noire aux ailes rougeoyantes, qui niche dans les cheminées volcaniques."
+    niveau: 21
+    categorie: bete
+    caracteristiques: { FOR: 10, AGI: 22, INT: 10, VIT: 17, ESP: 10, CHA: 5 }
+    pv: 240
+    armure: 9
+    attaque: { stat: AGI, element: feu, portee: melee, puissance: 13 }
+    attaques:
+      - { nom: "Morsure brûlante", phrase: "mord {cible} d'une gueule fumante", effet: feu }
+      - { nom: "Battement de feu", phrase: "souffle des étincelles sur {cible}", effet: feu }
+    resistances: { feu: 0.6, glace: -0.4 }
+    recompenses: { xp: 337, or: 21 }
+
+  - id: kobold-mineur
+    nom: "Kobold mineur"
+    description: "Un petit kobold écailleux, casque de mineur et pioche. Il défend « sa » galerie."
+    niveau: 22
+    categorie: humanoide
+    caracteristiques: { FOR: 24, AGI: 15, INT: 10, VIT: 19, ESP: 10, CHA: 5 }
+    pv: 354
+    armure: 11
+    attaque: { stat: FOR, element: physique, portee: melee, puissance: 13 }
+    attaques:
+      - { nom: "Coup de pioche", phrase: "plante sa pioche dans {cible}", effet: entaille }
+      - { nom: "Lancer de caillou", phrase: "jette un caillou sur {cible}", effet: impact }
+    competences:
+      - id: eboulement
+        nom: Éboulement
+        description: "Il fait tomber le plafond sur le groupe."
+        recharge: 4
+        cible: tous_ennemis
+        effets: [{ type: degats, puissance: 12, stat: FOR }]
+        ia: { priorite: 3 }
+    recompenses: { xp: 516, or: 33 }
+
+  - id: gelee-de-magma
+    nom: "Gelée de magma"
+    description: "Une gelée de roche fondue, brûlante, qui laisse des traces noires derrière elle."
+    niveau: 23
+    categorie: bete
+    caracteristiques: { FOR: 11, AGI: 15, INT: 11, VIT: 25, ESP: 11, CHA: 5 }
+    pv: 369
+    armure: 11
+    attaque: { stat: VIT, element: feu, portee: melee, puissance: 14 }
+    attaques:
+      - { nom: "Éclaboussure de magma", phrase: "éclabousse {cible} de roche fondue", effet: feu }
+      - { nom: "Engloutissement", phrase: "s'étale sur les pieds de {cible}", effet: feu }
+    resistances: { feu: 0.5, physique: 0.1, glace: -0.5 }
+    competences:
+      - id: coulee
+        nom: Coulée
+        description: "Une coulée brûlante."
+        recharge: 3
+        cible: ennemi
+        effets:
+          - { type: degats, puissance: 14, stat: VIT, element: feu }
+          - { type: etat, etat: brulure, duree: 2, valeur: 8, chance: 0.6 }
+        ia: { priorite: 3 }
+    recompenses: { xp: 552, or: 34 }
+
+  - id: salamandre
+    nom: "Salamandre de forge"
+    description: "Un lézard des forges, queue enflammée, qui crache du feu quand on l'énerve. Il est toujours énervé."
+    niveau: 24
+    categorie: bete
+    caracteristiques: { FOR: 11, AGI: 28, INT: 11, VIT: 22, ESP: 11, CHA: 5 }
+    pv: 519
+    armure: 14
+    attaque: { stat: AGI, element: feu, portee: melee, puissance: 15 }
+    attaques:
+      - { nom: "Crocs de braise", phrase: "mord {cible}", effet: feu }
+      - { nom: "Coup de queue enflammée", phrase: "fouette {cible} de sa queue en feu", effet: feu }
+    resistances: { feu: 0.4, glace: -0.4 }
+    competences:
+      - id: crachat-de-feu
+        nom: Crachat de feu
+        description: "Un jet de flammes sur tout le groupe."
+        recharge: 3
+        cible: tous_ennemis
+        effets: [{ type: degats, puissance: 13, stat: AGI, element: feu }]
+        ia: { priorite: 3 }
+    recompenses: { xp: 823, or: 48 }
+
+  - id: golem-de-granite
+    nom: "Golem de granite"
+    description: "Un golem nain de granite, une rune bleue sur le torse. Il garde les Mille Marches depuis des siècles."
+    niveau: 26
+    categorie: construction
+    sprite: golem-de-pierre
+    caracteristiques: { FOR: 29, AGI: 16, INT: 12, VIT: 23, ESP: 12, CHA: 6 }
+    pv: 559
+    armure: 15
+    attaque: { stat: FOR, element: physique, portee: melee, puissance: 15 }
+    attaques:
+      - { nom: "Poing de granite", phrase: "abat un poing de pierre sur {cible}", effet: impact }
+      - { nom: "Balayage", phrase: "balaie {cible} d'un revers", effet: impact }
+    resistances: { physique: 0.3, poison: 1.0, foudre: -0.3 }
+    recompenses: { xp: 928, or: 52 }
+
+  - id: gardien-des-marches
+    nom: "Le Gardien des Mille Marches"
+    description: "Un colosse de bronze et de runes, assis au sommet de la millième marche. Il pose une question à chaque visiteur. Il n'aime pas les réponses."
+    niveau: 27
+    categorie: construction
+    boss: true
+    sprite: golem-de-pierre
+    caracteristiques: { FOR: 33, AGI: 16, INT: 12, VIT: 26, ESP: 12, CHA: 6 }
+    pv: 1699
+    armure: 19
+    attaque: { stat: FOR, element: physique, portee: melee, puissance: 18 }
+    attaques:
+      - { nom: "Marteau de bronze", phrase: "abat un marteau runique sur {cible}", effet: impact }
+      - { nom: "Rune de foudre", phrase: "frappe {cible} d'une rune crépitante", effet: foudre }
+    resistances: { physique: 0.3, poison: 1.0, foudre: 0.3, glace: -0.2 }
+    competences:
+      - id: onde-runique
+        nom: Onde runique
+        description: "Toutes les runes s'allument : la foudre frappe le groupe."
+        recharge: 3
+        cible: tous_ennemis
+        effets:
+          - { type: degats, puissance: 15, stat: INT, element: foudre }
+          - { type: etat, etat: affaibli, duree: 2, valeur: 0.15, chance: 0.5 }
+        ia: { priorite: 4 }
+      - id: reparation
+        nom: Réparation runique
+        description: "Les runes recousent le bronze."
+        recharge: 5
+        cible: soi
+        effets: [{ type: soin, puissance: 30, stat: VIT }]
+        ia: { priorite: 4, quand: soi_blesse }
+    recompenses: { xp: 4209, or: 270 }
+
+  - id: crabe-des-recifs
+    nom: "Crabe des récifs"
+    description: "Un gros crabe rouge couvert de coquillages, aux pinces capables de briser une ancre."
+    niveau: 23
+    categorie: bete
+    caracteristiques: { FOR: 25, AGI: 15, INT: 11, VIT: 20, ESP: 11, CHA: 5 }
+    pv: 369
+    armure: 11
+    attaque: { stat: FOR, element: physique, portee: melee, puissance: 14 }
+    attaques:
+      - { nom: "Pince", phrase: "serre {cible} dans sa pince", effet: impact }
+      - { nom: "Carapace", phrase: "charge {cible} carapace en avant", effet: impact }
+    resistances: { physique: 0.25, glace: 0.3, foudre: -0.4 }
+    recompenses: { xp: 552, or: 34 }
+
+  - id: pirate-de-verane
+    nom: "Pirate de Port-Vérane"
+    description: "Un pirate en chemise rayée, sabre d'abordage et sourire édenté."
+    niveau: 24
+    categorie: humanoide
+    sprite: bandit
+    caracteristiques: { FOR: 11, AGI: 26, INT: 11, VIT: 20, ESP: 11, CHA: 5 }
+    pv: 384
+    armure: 12
+    attaque: { stat: AGI, element: physique, portee: melee, puissance: 14 }
+    attaques:
+      - { nom: "Sabre d'abordage", phrase: "taillade {cible} de son sabre", effet: entaille }
+      - { nom: "Coup de crosse", phrase: "assomme presque {cible} d'un coup de crosse", effet: impact }
+    recompenses: { xp: 588, or: 36 }
+
+  - id: pirate-noye
+    nom: "Pirate noyé"
+    description: "Un squelette de pirate couvert de coquillages, bandeau rouge et sabre rouillé. Il ne sait pas qu'il est mort."
+    niveau: 25
+    categorie: mort-vivant
+    caracteristiques: { FOR: 29, AGI: 16, INT: 11, VIT: 22, ESP: 11, CHA: 6 }
+    pv: 539
+    armure: 14
+    attaque: { stat: FOR, element: physique, portee: melee, puissance: 15 }
+    attaques:
+      - { nom: "Sabre rouillé", phrase: "taillade {cible} d'un sabre rongé de sel", effet: entaille }
+      - { nom: "Étreinte des noyés", phrase: "agrippe {cible} de ses doigts d'os", effet: ombre }
+    resistances: { poison: 1.0, glace: 0.3, sacre: -0.5, foudre: -0.2 }
+    competences:
+      - id: chant-des-noyes
+        nom: Chant des noyés
+        description: "Un chant qui glace le sang."
+        recharge: 4
+        cible: tous_ennemis
+        effets: [{ type: etat, etat: peur, duree: 1, chance: 0.3 }]
+        ia: { priorite: 2 }
+    recompenses: { xp: 875, or: 50 }
+
+  - id: jeune-wyrm
+    nom: "Jeune wyrm"
+    description: "Un jeune dragon des brumes, ailes membraneuses, souffle de feu. Rendu fou par la disparition de son œuf."
+    niveau: 27
+    categorie: bete
+    sprite: wyrmling
+    caracteristiques: { FOR: 30, AGI: 16, INT: 12, VIT: 23, ESP: 12, CHA: 6 }
+    pv: 579
+    armure: 16
+    attaque: { stat: FOR, element: feu, portee: melee, puissance: 16 }
+    attaques:
+      - { nom: "Griffes", phrase: "lacère {cible} de ses griffes", effet: entaille }
+      - { nom: "Morsure de braise", phrase: "mord {cible} d'une gueule ardente", effet: feu }
+    resistances: { feu: 0.6, glace: -0.3 }
+    competences:
+      - id: souffle-du-wyrm
+        nom: Souffle du wyrm
+        description: "Un souffle de flammes sur tout le groupe."
+        recharge: 3
+        cible: tous_ennemis
+        effets: [{ type: degats, puissance: 15, stat: FOR, element: feu }]
+        ia: { priorite: 4 }
+    recompenses: { xp: 982, or: 54 }
+
+  - id: chasseur-concorde
+    nom: "Chasseur de dragons"
+    description: "Mercenaire de la Concorde équipé pour chasser les dragons : filet lesté, harpon, armure ignifugée."
+    niveau: 25
+    categorie: humanoide
+    sprite: bandit
+    caracteristiques: { FOR: 27, AGI: 16, INT: 11, VIT: 21, ESP: 11, CHA: 6 }
+    pv: 398
+    armure: 12
+    attaque: { stat: FOR, element: physique, portee: melee, puissance: 14 }
+    attaques:
+      - { nom: "Harpon", phrase: "lance un harpon sur {cible}", effet: entaille }
+      - { nom: "Filet lesté", phrase: "jette un filet sur {cible}", effet: impact }
+    resistances: { feu: 0.4 }
+    competences:
+      - id: filet
+        nom: Filet lesté
+        description: "Immobilise la cible."
+        recharge: 3
+        cible: ennemi
+        effets:
+          - { type: degats, puissance: 10, stat: FOR }
+          - { type: etat, etat: immobilise, duree: 1, chance: 0.6 }
+        ia: { priorite: 3 }
+    recompenses: { xp: 625, or: 38 }
+
+  - id: vask-chasseur
+    nom: "Orlen Vask, chasseur de dragons"
+    description: "Le capitaine des mercenaires de la Concorde est revenu. Il vend maintenant des œufs de dragon au plus offrant."
+    niveau: 27
+    categorie: humanoide
+    boss: true
+    fuit_sous_pourcent: 0.15
+    sprite: bandit
+    caracteristiques: { FOR: 33, AGI: 16, INT: 12, VIT: 26, ESP: 12, CHA: 6 }
+    pv: 1227
+    armure: 19
+    attaque: { stat: FOR, element: physique, portee: melee, puissance: 18 }
+    attaques:
+      - { nom: "Lance-harpon", phrase: "tire un harpon sur {cible}", effet: entaille }
+      - { nom: "Fendoir doré", phrase: "abat son fendoir sur {cible}", effet: entaille }
+    resistances: { feu: 0.5 }
+    competences:
+      - id: ordre-de-chasse
+        nom: Ordre de chasse
+        description: "Ses chasseurs frappent plus fort."
+        recharge: 4
+        cible: tous_allies
+        effets: [{ type: etat, etat: bonus_degats, duree: 2, valeur: 0.3 }]
+        ia: { priorite: 3, quand: debut_combat }
+      - id: harpon-empoisonne
+        nom: Harpon empoisonné
+        description: "Un harpon trempé dans du venin de scorpion."
+        recharge: 2
+        cible: ennemi
+        effets:
+          - { type: degats, puissance: 18, stat: FOR }
+          - { type: etat, etat: poison, duree: 3, valeur: 9 }
+        ia: { priorite: 3 }
+    recompenses: { xp: 4209, or: 270 }
+
+  - id: soldat-cendre
+    nom: "Soldat de la Légion"
+    description: "Un soldat de la Légion Cendrée en armure noire, envoyé pour ramener une déserteuse."
+    niveau: 24
+    categorie: demon
+    sprite: chevalier-cendre
+    caracteristiques: { FOR: 26, AGI: 15, INT: 11, VIT: 20, ESP: 11, CHA: 5 }
+    pv: 384
+    armure: 12
+    attaque: { stat: FOR, element: physique, portee: melee, puissance: 14 }
+    attaques:
+      - { nom: "Lame noire", phrase: "taille {cible} d'une lame noire", effet: ombre }
+      - { nom: "Coup de bouclier", phrase: "frappe {cible} de son bouclier", effet: impact }
+    resistances: { feu: 0.3, ombre: 0.3, sacre: -0.3 }
+    recompenses: { xp: 588, or: 36 }
+
+rencontres:
+  - { id: grisfer-chauves-souris, nom: "Nuée de chauves-souris de lave", fond: montagne, ennemis: [{ id: chauve-souris-de-lave }, { id: chauve-souris-de-lave }, { id: chauve-souris-de-lave }], renforts: [chauve-souris-de-lave] }
+  - { id: grisfer-kobolds, nom: "Les kobolds de la galerie", fond: mine-naine, ennemis: [{ id: kobold-mineur }, { id: kobold-mineur }], renforts: [kobold-mineur] }
+  - { id: grisfer-magma, nom: "Gelées de magma", fond: forge, ennemis: [{ id: gelee-de-magma }, { id: gelee-de-magma }], renforts: [gelee-de-magma] }
+  - { id: grisfer-salamandres, nom: "Salamandres de forge", fond: forge, ennemis: [{ id: salamandre }, { id: chauve-souris-de-lave, rang: arriere }], renforts: [salamandre] }
+  - { id: marches-golems, nom: "Les gardiens de granite", fond: marches, ennemis: [{ id: golem-de-granite }, { id: kobold-mineur }], renforts: [golem-de-granite] }
+  - { id: marches-salamandres, nom: "Les salamandres des Marches", fond: marches, ennemis: [{ id: salamandre }, { id: gelee-de-magma }], renforts: [gelee-de-magma] }
+  - { id: marches-gardien, nom: "Le Gardien des Mille Marches", fond: marches, fuite_possible: false, ennemis: [{ id: gardien-des-marches }, { id: golem-de-granite }], renforts: [golem-de-granite] }
+  - { id: archipel-crabes, nom: "Les crabes du récif", fond: plage, ennemis: [{ id: crabe-des-recifs }, { id: crabe-des-recifs }], renforts: [crabe-des-recifs] }
+  - { id: archipel-pirates, nom: "Abordage !", fond: port, ennemis: [{ id: pirate-de-verane }, { id: pirate-de-verane }], renforts: [pirate-de-verane] }
+  - { id: archipel-noyes, nom: "L'équipage noyé", fond: epave, ennemis: [{ id: pirate-noye }, { id: pirate-noye }], renforts: [pirate-noye] }
+  - { id: nid-wyrms, nom: "Les jeunes wyrms", fond: nid, ennemis: [{ id: jeune-wyrm }, { id: crabe-des-recifs }], renforts: [jeune-wyrm] }
+  - { id: nid-chasseurs, nom: "Les chasseurs de dragons", fond: nid, ennemis: [{ id: chasseur-concorde }, { id: chasseur-concorde }], renforts: [chasseur-concorde] }
+  - { id: nid-vask, nom: "Orlen Vask, chasseur de dragons", fond: nid, fuite_possible: false, ennemis: [{ id: vask-chasseur }, { id: chasseur-concorde }], renforts: [chasseur-concorde] }
+  - { id: deserteuse-poursuite, nom: "Les chasseurs de la Légion", fond: montagne, fuite_possible: false, ennemis: [{ id: soldat-cendre }, { id: soldat-cendre }], renforts: [soldat-cendre] }

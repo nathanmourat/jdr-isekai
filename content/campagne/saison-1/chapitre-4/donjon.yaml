@@ -1,0 +1,47 @@
+# Donjon du chapitre 4 : les Mille Marches (vue de dessus). Tuiles provisoires en attendant le graphiste.
+donjons:
+  - id: mille-marches
+    nom: "Les Mille Marches"
+    tileset: mille-marches
+    legende:
+      "#": mur
+      ".": sol
+      "S": escalier
+      "D": porte
+      "O": sol-os
+      "T": sol-piege
+      "C": sol-coffre
+      "F": colonne-fontaine
+      "X": sol-sceau
+    depart: { x: 1, y: 1 }
+    carte:
+      - "########################"
+      - "#S.....D.......#.......#"
+      - "#......#...O...D...C...#"
+      - "#..C...#.......#.......#"
+      - "###D######D#####...T...#"
+      - "#......#.......####D####"
+      - "#..O...D...T...#.......#"
+      - "#......#.......D...O...#"
+      - "####D###.......#.......#"
+      - "#......####D########D###"
+      - "#..T...#...F...#.......#"
+      - "#..X...D.......D...C...#"
+      - "#......#.......#.......#"
+      - "########################"
+    evenements:
+      - { id: entree, x: 2, y: 1, type: texte, texte: "Des marches taillées dans le granite, usées au centre par des milliers de pas. Sur chaque palier, une statue de roi nain vous regarde descendre." }
+      - { id: golems, x: 11, y: 2, type: combat, rencontre: marches-golems, texte: "Deux statues descendent de leur socle. Leurs yeux s'allument : des runes rouges, qui ne reconnaissent pas votre visage." }
+      - { id: coffre-1, x: 3, y: 3, type: coffre, texte: "Le coffre d'un éclaireur nain, mort ici il y a longtemps. Sa lanterne brûle encore.", or: 260, objets: [potion-soin-grande] }
+      - { id: coffre-2, x: 19, y: 2, type: coffre, texte: "Une offrande au pied d'une statue royale : des pièces d'or frappées d'un marteau.", or: 320, objets: [pierre-de-feu] }
+      - { id: piege-1, x: 19, y: 4, type: piege, texte: "Une marche s'enfonce sous votre pied. Des jets de vapeur brûlante jaillissent des murs !", test: { carac: AGI, difficulte: 27 }, degats_pourcent: 15 }
+      - { id: salamandres, x: 11, y: 6, type: combat, rencontre: marches-salamandres, texte: "Une fissure dans le mur laisse couler de la lave. Des salamandres en sortent, attirées par votre chaleur." }
+      - { id: piege-2, x: 11, y: 5, type: piege, texte: "Le palier s'effondre à moitié ! Il faut s'accrocher au bord.", test: { carac: FOR, difficulte: 27 }, degats_pourcent: 15 }
+      - { id: os, x: 3, y: 6, type: texte, texte: "Le squelette d'un soldat cendré, une carte des Marches à la main. La Légion cherchait déjà les Registres." }
+      - { id: coffre-3, x: 19, y: 7, type: coffre, texte: "Le coffre d'un maître forgeron, scellé d'une rune. La rune s'éteint à votre approche.", or: 300, objets: [potion-mana-grande, potion-soin-supreme] }
+      - { id: piege-3, x: 3, y: 10, type: piege, texte: "Une poche de gaz de mine s'enflamme !", test: { carac: VIT, difficulte: 27 }, degats_pourcent: 15 }
+      - { id: gardien, x: 11, y: 11, type: combat, rencontre: marches-gardien, texte: "Au millième palier, un golem haut comme trois hommes, couvert de runes, déplie ses bras de granite. « LES REGISTRES… NE SONT PAS… POUR LES APPELÉS. »" }
+      - { id: registre, x: 19, y: 11, type: coffre, texte: "La Salle des Registres. Sur la dernière table de pierre, un scribe nain a laissé du papier et du charbon pour faire un estampage.", objets: [registre-des-appels] }
+      - { id: sceau, x: 3, y: 11, type: texte, texte: "Un cercle d'Appel gravé dans la roche, exactement comme celui du Temple du Seuil. Les nains l'ont barré de sept traits." }
+      - { id: sortie, x: 1, y: 1, type: sortie, unique: false, si: { objet: registre-des-appels } }
+      - { id: pas-fini, x: 1, y: 1, type: texte, unique: false, texte: "Vous n'avez pas encore lu les Registres. Remonter maintenant, ce serait avoir fait tout ce chemin pour rien." }

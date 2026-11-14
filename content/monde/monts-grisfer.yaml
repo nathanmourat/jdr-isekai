@@ -1,0 +1,102 @@
+# Région du chapitre 4 (1/2) : les Monts Grisfer (niveaux 20 à 28). Positions en pixels sur la carte (1920 × 1080).
+regions:
+  - id: monts-grisfer
+    nom: "Monts Grisfer"
+    description: "Montagnes, mines et forges volcaniques. Les nains de Karak-Dûm y gardent leurs secrets… et leurs registres."
+    carte: monts-grisfer
+    chapitre: 4
+    position_monde: { x: 1480, y: 470 }
+    disponible_si: { flag: ch4-depart-fait }
+    villes:
+      - id: karak-dum
+        nom: "Karak-Dûm"
+        description: "La cité-forge des nains, creusée dans la montagne. On y entend battre les marteaux jour et nuit."
+        plan: karak-dum-plan
+        position: { x: 940, y: 520 }
+    lieux:
+      - id: karak-porte
+        nom: "Porte de Karak-Dûm"
+        description: "Une porte de bronze haute comme dix hommes, gravée de runes et de visages de rois."
+        decor: karak-porte
+        ville: karak-dum
+        position: { x: 940, y: 580 }
+        position_plan: { x: 640, y: 620 }
+        disponible_si: { flag: ch4-depart-fait }
+        pnj: [{ id: morra, si: { flag: morra-recrutee } }]
+      - id: karak-trone
+        nom: "Salle du Roi-sous-la-Montagne"
+        description: "Une salle immense taillée dans la roche, éclairée par des rivières de lave domptées."
+        decor: karak-trone
+        ville: karak-dum
+        position: { x: 940, y: 460 }
+        position_plan: { x: 640, y: 150 }
+        disponible_si: { flag: ch4-depart-fait }
+        pnj: [{ id: bardrek }, { id: elianne, si: { flag: elianne-recrutee } }]
+      - id: karak-forge
+        nom: "La Grande Forge"
+        description: "La forge la plus chaude du monde. Les armes qui en sortent ne rouillent jamais."
+        decor: karak-forge
+        ville: karak-dum
+        position: { x: 880, y: 510 }
+        position_plan: { x: 380, y: 400 }
+        disponible_si: { flag: ch4-depart-fait }
+        pnj: [{ id: durna }]
+        gerant: durna
+        boutique: [
+          potion-soin-grande, potion-soin-supreme, potion-mana-grande, antidote, bombe-feu, bombe-fumee, biere-de-karak,
+          pierre-de-feu, epee-iv, epee-iv-maitre, deux-mains-iv, deux-mains-iv-maitre, masse-iv, masse-iv-maitre,
+          dague-iv, dague-iv-maitre, arc-iv, arc-iv-maitre, arbalete-iv, arbalete-iv-maitre, baton-iv, baton-iv-maitre,
+          sceptre-iv, sceptre-iv-maitre, orbe-iv, orbe-iv-maitre, instrument-iv, instrument-iv-maitre, lourde-iv,
+          lourde-iv-maitre, intermediaire-iv, intermediaire-iv-maitre, legere-iv, legere-iv-maitre, bouclier-iv,
+          bouclier-iv-maitre, anneau-iv, anneau-iv-maitre, amulette-iv, amulette-iv-maitre, talisman-iv, talisman-iv-maitre,
+          carquois-iv, carquois-iv-maitre, sacoche-iv, sacoche-iv-maitre,
+        ]
+      - id: karak-taverne
+        nom: "La Chope Ardente"
+        description: "Une taverne naine : tables de pierre, chopes de bronze, et des chansons qui durent toute la nuit."
+        decor: karak-taverne
+        ville: karak-dum
+        auberge: true
+        position: { x: 1000, y: 520 }
+        position_plan: { x: 900, y: 430 }
+        disponible_si: { flag: ch4-depart-fait }
+        pnj: [{ id: grumli }, { id: kaya, si: { flag: kaya-recrutee } }, { id: aveline, si: { flag: aveline-rencontree } }]
+        gerant: grumli
+        boutique: [ration, potion-soin-grande, biere-de-karak, pierre-de-feu]
+      - id: guilde-karak
+        nom: "Comptoir de la Guilde (Karak-Dûm)"
+        description: "Un comptoir de pierre où une naine borgne tient les contrats d'une main de fer."
+        decor: guilde
+        ville: karak-dum
+        position: { x: 990, y: 580 }
+        position_plan: { x: 1020, y: 600 }
+        disponible_si: { flag: ch4-depart-fait }
+        pnj: [{ id: hjalmi }]
+        gerant: hjalmi
+        boutique: [
+          potion-soin-supreme, potion-mana-grande, epee-des-mille-marches, baton-de-basalte-chantant, orbe-du-wyrmling,
+          stylet-du-brouillard, marteau-de-l-enclume-mere, arbalete-soufflet-naine, arc-de-fer-cerf, baton-de-corail-blanc,
+          marteau-volcan, rapiere-du-corsaire,
+        ]
+      # ── Hors de la ville
+      - id: mille-marches
+        nom: "Les Mille Marches"
+        description: "Un escalier qui s'enfonce dans la montagne : une marche par étage, mille étages. Personne n'est jamais arrivé en bas… sauf les rois."
+        decor: mille-marches
+        position: { x: 1240, y: 760 }
+        disponible_si: { quete_etape: { q-ch4-feu: marches } }
+      - id: mines-profondes
+        nom: "Mines profondes"
+        description: "Les galeries abandonnées des anciens nains, où les kobolds ont fait leur nid."
+        decor: mines-profondes
+        position: { x: 600, y: 700 }
+        disponible_si: { flag: ch4-depart-fait }
+      - id: coulee-de-lave
+        nom: "Coulée de lave"
+        description: "Une rivière de feu qui descend lentement de la montagne. Les salamandres y prennent leur bain."
+        decor: coulee-de-lave
+        position: { x: 1500, y: 360 }
+        disponible_si: { flag: ch4-depart-fait }
+      # ── Lieux d'étape
+      - { id: col-des-vents, nom: "Col des Vents", description: "Un passage étroit entre deux pics, où le vent hurle comme une bête.", decor: col-des-vents, position: { x: 420, y: 300 }, etape_seulement: true }
+      - { id: source-chaude, nom: "Source chaude", description: "Une source fumante au creux de la roche, où les nains viennent soigner leurs vieux os.", decor: source-chaude, position: { x: 1600, y: 760 }, etape_seulement: true }

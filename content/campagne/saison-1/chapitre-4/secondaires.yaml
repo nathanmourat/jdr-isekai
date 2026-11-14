@@ -1,0 +1,275 @@
+# Chapitre 4 — quêtes secondaires (scènes courtes, une par étape).
+scenes:
+  # ── La forge qui s'éteint (Grisfer)
+  - id: sq-forge-durna
+    pnj: durna
+    titre: "La forge qui s'éteint"
+    type: groupe
+    lieu: karak-forge
+    decor: karak-forge
+    quete: q-forge-froide
+    disponible_si: { flag: karak-recus, pas_flag: forge-commencee }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: durna, dit: "Maîtresse Durna frappe un lingot, le regarde, et le jette dans un seau avec dégoût. « Tiède. TIÈDE ! Le feu de la Grande Forge brûle depuis mille ans, et le voilà qui tousse comme un vieux nain. »" }
+          - { qui: durna, dit: "« La Braise-mère. Le cœur du feu. Elle vient de la Coulée de lave, là-haut. Et les salamandres l'ont volée, j'en mettrais ma barbe au feu. Enfin, si j'avais une barbe. »" }
+        choix:
+          - texte: "« Nous irons chercher votre Braise-mère. »"
+            effets: [{ flag: forge-commencee, quete: { id: q-forge-froide, etape: coulee } }]
+            aller: fin
+      fin:
+        repliques:
+          - { qui: durna, dit: "« Rapportez-la dans ça. » Elle vous tend une lanterne de bronze aux parois épaisses comme un pouce. « Et ne la touchez pas avec les doigts. Vous n'en aurez plus. »" }
+        fin: true
+  - id: sq-forge-coulee
+    titre: "La Coulée de lave"
+    type: groupe
+    lieu: coulee-de-lave
+    decor: coulee-de-lave
+    quete: q-forge-froide
+    disponible_si: { quete_etape: { q-forge-froide: coulee } }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "La lave descend en grosses vagues lentes. Au milieu, sur un rocher noir, une braise grosse comme un poing pulse comme un cœur. Autour d'elle, des salamandres dorment, enroulées." }
+        choix:
+          - texte: "Se glisser jusqu'à la braise sans les réveiller. (Agilité, difficulté 26)"
+            test: { carac: AGI, difficulte: 26, reussite: prise, echec: combat }
+          - texte: "Attaquer les salamandres."
+            aller: combat
+      combat:
+        combat: { rencontre: grisfer-salamandres, victoire: prise, defaite: prise-dure }
+      prise-dure:
+        repliques:
+          - { dit: "Les salamandres vous chassent de la coulée, les vêtements fumants. Mais dans la bousculade, la braise a roulé jusqu'à vos pieds. Vous l'attrapez avec la lanterne." }
+        suite: prise
+      prise:
+        repliques:
+          - { dit: "La Braise-mère entre dans la lanterne avec un soupir de contentement. Le bronze devient rouge, puis se calme." }
+        effets: [{ quete: { id: q-forge-froide, etape: retour }, xp: 500 }]
+        fin: true
+  - id: sq-forge-retour
+    pnj: durna
+    titre: "Le feu de mille ans"
+    type: groupe
+    lieu: karak-forge
+    decor: karak-forge
+    quete: q-forge-froide
+    rend_quete: true
+    disponible_si: { quete_etape: { q-forge-froide: retour } }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: durna, dit: "Durna verse la Braise-mère dans le foyer. Le feu rugit si fort que toute la forge recule d'un pas. Puis tous les forgerons de Karak-Dûm se mettent à frapper en même temps, comme un tambour de victoire." }
+          - { qui: durna, dit: "« Les armes de cette guerre sortiront d'ici, et elles seront chaudes. » Elle vous tend un petit paquet. « Et ça, c'est pour vous. Un nain ne doit jamais rien à personne. »" }
+        effets: [{ terminer_quete: q-forge-froide, or: 400, xp: 600, reputation: { nains: 10 }, objet: potion-soin-supreme }]
+        fin: true
+
+  # ── La cave de Grumli (Grisfer)
+  - id: sq-cave-grumli
+    pnj: grumli
+    titre: "La cave de Grumli"
+    type: groupe
+    lieu: karak-taverne
+    decor: karak-taverne
+    quete: q-cave-grumli
+    disponible_si: { flag: karak-recus, pas_flag: cave-commencee }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: grumli, dit: "Grumli pleure dans sa barbe, et ce n'est pas une image. « Trois tonneaux ! Trois ! Vidés par en dessous, avec un petit trou rond. Et des traces de pattes. Des PETITES pattes ! »" }
+          - { qui: grumli, dit: "« Il y a un vieux tunnel sous la cave. Il descend jusqu'aux Mines profondes. Je n'ose pas y aller. Les mines, c'est plein de kobolds. Et moi, je suis tavernier, pas guerrier. »" }
+        choix:
+          - texte: "« Nous allons retrouver vos voleurs de bière. »"
+            effets: [{ flag: cave-commencee, quete: { id: q-cave-grumli, etape: mines } }]
+            aller: fin
+      fin:
+        repliques:
+          - { qui: grumli, dit: "« Et s'ils ont tout bu, ramenez-moi au moins les tonneaux ! Ce sont des tonneaux de famille ! »" }
+        fin: true
+  - id: sq-cave-mines
+    titre: "Les voleurs de bière"
+    type: groupe
+    lieu: mines-profondes
+    decor: mines-profondes
+    quete: q-cave-grumli
+    disponible_si: { quete_etape: { q-cave-grumli: mines } }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "Au bout du tunnel, une galerie. Des dizaines de kobolds (petits, écailleux, avec de grandes oreilles) sont assis autour des trois tonneaux de Grumli. Ils ont l'air… très joyeux." }
+          - { dit: "Plus loin dans la galerie, une lueur rouge : des gelées de magma qui avancent lentement. Les kobolds n'ont pas volé la bière pour s'amuser. Ils fuient leurs mines, envahies." }
+        choix:
+          - texte: "Chasser les gelées de magma pour rendre leurs mines aux kobolds."
+            aller: gelees
+          - texte: "Attaquer les kobolds et reprendre les tonneaux."
+            aller: kobolds
+      gelees:
+        combat: { rencontre: grisfer-magma, victoire: merci, defaite: merci-dur }
+      merci-dur:
+        repliques:
+          - { dit: "Les gelées vous repoussent… mais les kobolds se jettent dans la mêlée avec des pioches et des seaux d'eau. À vous tous, vous en venez à bout." }
+        suite: merci
+      merci:
+        repliques:
+          - { dit: "Les kobolds rentrent chez eux en chantant (très faux). Le plus vieux vous rend les tonneaux vides, avec une pépite d'or dans chacun, en guise d'excuse." }
+        effets: [{ flag: kobolds-amis, or: 150, quete: { id: q-cave-grumli, etape: retour }, xp: 500 }]
+        fin: true
+      kobolds:
+        combat: { rencontre: grisfer-kobolds, victoire: chasses, defaite: chasses }
+      chasses:
+        repliques:
+          - { dit: "Les kobolds s'enfuient dans les galeries… vers les gelées de magma. Vous entendez leurs cris longtemps. Vous récupérez les tonneaux." }
+        effets: [{ quete: { id: q-cave-grumli, etape: retour }, xp: 400 }]
+        fin: true
+  - id: sq-cave-retour
+    pnj: grumli
+    titre: "Une tournée pour la maison"
+    type: groupe
+    lieu: karak-taverne
+    decor: karak-taverne
+    quete: q-cave-grumli
+    rend_quete: true
+    disponible_si: { quete_etape: { q-cave-grumli: retour } }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: grumli, dit: "Grumli serre ses tonneaux dans ses bras comme des enfants retrouvés. « Mes tonneaux ! »" }
+          - { qui: grumli, dit: "Il écoute l'histoire des kobolds, et se gratte la tête. « Des voisins qui aiment la bière… Bon. Je leur laisserai un tonneau par mois. Au fond du tunnel. C'est bon pour les affaires, les voisins. »", si: { flag: kobolds-amis } }
+          - { qui: grumli, dit: "« Tournée générale ! Pour les héros ! » Personne, dans toute la taverne, ne refuse." }
+        effets: [{ terminer_quete: q-cave-grumli, or: 300, xp: 500, reputation: { nains: 8 }, objet: biere-de-karak }]
+        fin: true
+
+  # ── La lumière du Phare noyé (Archipel)
+  - id: sq-phare-brann
+    pnj: brann
+    titre: "La lumière du Phare noyé"
+    type: groupe
+    lieu: port-taverne
+    decor: port-taverne
+    quete: q-phare
+    disponible_si: { flag: carte-du-nid, pas_flag: phare-commence }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: brann, dit: "Le vieux Brann essuie le même verre depuis une heure. « Mon fils Tobby. Seize ans, la tête pleine de vent. Le Phare noyé s'est allumé, il y a trois nuits. Il a pris une barque pour aller voir qui l'allume. »" }
+          - { qui: brann, dit: "« Personne ne revient du Phare. On dit que l'équipage du Vent-Noir y monte la garde, depuis qu'il a coulé. Cinquante ans sous l'eau, et ils montent encore la garde. »" }
+        choix:
+          - texte: "« Nous ramènerons Tobby. »"
+            effets: [{ flag: phare-commence, quete: { id: q-phare, etape: phare } }]
+            aller: fin
+      fin:
+        fin: true
+  - id: sq-phare
+    titre: "Le Phare noyé"
+    type: groupe
+    lieu: phare-noye
+    decor: phare-noye
+    quete: q-phare
+    disponible_si: { quete_etape: { q-phare: phare } }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "La mer arrive au deuxième étage du phare. Vous montez par l'escalier en colimaçon, couvert d'algues. En haut, la lanterne brille d'une lumière verte, froide, qui ne chauffe rien." }
+          - { dit: "Un garçon est assis contre la lanterne, terrifié mais vivant : Tobby. Entre vous et lui, des marins ruisselants se lèvent, les yeux vides. L'équipage du Vent-Noir." }
+        choix:
+          - texte: "Se battre pour passer."
+            aller: combat
+          - texte: "« Votre navire a coulé il y a cinquante ans. Vous pouvez vous reposer. » (Esprit, difficulté 26)"
+            test: { carac: ESP, difficulte: 26, reussite: repos, echec: combat }
+      combat:
+        combat: { rencontre: archipel-noyes, victoire: tobby, defaite: tobby-dur }
+      tobby-dur:
+        repliques:
+          - { dit: "Les noyés vous repoussent vers l'escalier… mais le soleil se lève, et ils s'effondrent en flaques d'eau de mer. Tobby se jette dans vos bras." }
+        suite: tobby
+      repos:
+        repliques:
+          - { dit: "Le capitaine noyé vous regarde longtemps. Puis il retire son chapeau. « Cinquante ans… » La lanterne s'éteint. Quand vous rouvrez les yeux, il n'y a plus que de l'eau sur les marches." }
+        effets: [{ flag: noyes-apaises }]
+        suite: tobby
+      tobby:
+        repliques:
+          - { dit: "Tobby claque des dents. « Ils… ils voulaient juste que quelqu'un allume la lumière pour eux. Pour retrouver le port. »" }
+        effets: [{ quete: { id: q-phare, etape: retour }, xp: 600 }]
+        fin: true
+  - id: sq-phare-retour
+    pnj: brann
+    titre: "Le retour de Tobby"
+    type: groupe
+    lieu: port-taverne
+    decor: port-taverne
+    quete: q-phare
+    rend_quete: true
+    disponible_si: { quete_etape: { q-phare: retour } }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: brann, dit: "Le vieux Brann lâche son verre, qui se brise. Il serre Tobby si fort que le garçon proteste. Puis il lui donne une claque derrière la tête, et le serre encore." }
+          - { qui: brann, dit: "« Au Requin Ivre, vous ne paierez plus jamais une chope. Jamais. Et prenez ça. » Il vous tend une vieille bourse, lourde de doublons." }
+        effets: [{ terminer_quete: q-phare, or: 450, xp: 600, objet: rhum-des-brumes }]
+        fin: true
+
+  # ── Le chant de Néréa (Archipel)
+  - id: sq-sirene-corail
+    pnj: corail
+    titre: "Le chant de Néréa"
+    type: groupe
+    lieu: port-marche
+    decor: port-marche
+    quete: q-sirene
+    disponible_si: { flag: carte-du-nid, pas_flag: sirene-commencee }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: corail, dit: "Corail polit une perle sans vous regarder. « Les marins disent que la sirène du Récif chante pour les noyer. Les marins sont idiots. »" }
+          - { qui: corail, dit: "« Néréa chante depuis un mois. Toujours le même chant : un appel au secours, en langue des sirènes. Je suis la seule ici à la comprendre. » Elle lève enfin les yeux. « Et moi, je ne sais pas me battre. »" }
+        choix:
+          - texte: "« Nous irons au Récif. »"
+            effets: [{ flag: sirene-commencee, quete: { id: q-sirene, etape: recif } }]
+            aller: fin
+      fin:
+        fin: true
+  - id: sq-sirene-recif
+    pnj: sirene
+    titre: "Le Récif des sirènes"
+    type: groupe
+    lieu: recif-des-sirenes
+    decor: recif-des-sirenes
+    quete: q-sirene
+    disponible_si: { quete_etape: { q-sirene: recif } }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "Le soir tombe sur le Récif. Une voix s'élève, belle à en avoir mal. Sur un rocher, une sirène aux cheveux d'algue chante, les yeux fermés. Sa queue est prise dans un filet de fer." }
+          - { qui: sirene, dit: "Elle ouvre les yeux. « Enfin, des gens qui ne sautent pas à l'eau. » Sa voix parlée est rauque. « Les crabes du récif gardent le filet. Ils m'apportent à manger pour que je reste grasse. Pour la Concorde, qui paie cher les écailles de sirène. »" }
+        choix:
+          - texte: "Attaquer les crabes qui gardent le filet."
+            aller: combat
+      combat:
+        combat: { rencontre: archipel-crabes, victoire: libre, defaite: libre-dur }
+      libre-dur:
+        repliques:
+          - { dit: "Les crabes vous repoussent dans l'eau. Mais pendant qu'ils s'occupent de vous, Néréa a rongé le filet. Elle plonge, libre, en riant." }
+        suite: libre
+      libre:
+        repliques:
+          - { qui: sirene, dit: "Néréa vous offre un coquillage nacré. « Quand tu voudras une chanson, souffle dedans. Je viendrai. » Elle hésite. « Et si un jour un barde vient au Récif… je lui apprendrai le dernier couplet. »" }
+        effets: [{ flag: nerea-libre, objet: coquillage-chantant, quete: { id: q-sirene, etape: retour }, xp: 550 }]
+        fin: true
+  - id: sq-sirene-retour
+    pnj: corail
+    titre: "Une dette de sirène"
+    type: groupe
+    lieu: port-marche
+    decor: port-marche
+    quete: q-sirene
+    rend_quete: true
+    disponible_si: { quete_etape: { q-sirene: retour } }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: corail, dit: "Corail écoute, et pour la première fois, elle sourit franchement. « Néréa est ma cousine. Très éloignée. » Elle vous tend une écaille dorée, polie comme un miroir. « Ne la vendez jamais. »" }
+        effets: [{ terminer_quete: q-sirene, or: 300, xp: 550, objet: ecaille-de-dragon-polie, reputation: { dragons: 5 } }]
+        fin: true

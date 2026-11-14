@@ -62,3 +62,19 @@ ambiance:
   - { id: s-follets, lieu: ithrael-auberge, qui: client, texte: "Ne suivez jamais les lumières bleues. Jamais.", si: { flag: sylvenoire-ouverte } }
   - { id: s-legion, lieu: ithrael-racines, qui: garde, texte: "La Légion rôde sous les arbres. Gardez votre arc à portée de main.", si: { flag: sylvenoire-ouverte, pas_flag: elfes-allies } }
   - { id: s-nuit, lieu: ithrael-auberge, texte: "La nuit, les arbres chantent. Écoutez bien.", moment: nuit, si: { flag: sylvenoire-ouverte } }
+  # ─── Monts Grisfer (Karak-Dûm)
+  - { id: g-humains, lieu: karak-porte, qui: garde, texte: "Des humains à Karak-Dûm. Qu'ils essuient leurs bottes.", si: { flag: ch4-depart-fait, pas_flag: nains-allies } }
+  - { id: g-marches, lieu: karak-porte, qui: garde, texte: "Ce sont eux qui sont descendus jusqu'au fond des Mille Marches. Respect.", si: { flag: nains-allies } }
+  - { id: g-forge, lieu: karak-forge, qui: marchand, texte: "Une lame de Karak-Dûm, c'est pour la vie ! La vôtre, de préférence.", si: { flag: ch4-depart-fait } }
+  - { id: g-forge-froide, lieu: karak-forge, texte: "Le feu de la Grande Forge est tiède… Mauvais présage.", si: { flag: karak-recus, pas_flag: forge-commencee } }
+  - { id: g-chanson, lieu: karak-taverne, qui: client, texte: "Encore une chanson ! La quarante-septième ! On ne compte qu'à partir de trois !", si: { flag: ch4-depart-fait } }
+  - { id: g-kobolds, lieu: karak-taverne, qui: client, texte: "On dit que Grumli laisse un tonneau aux kobolds, chaque mois. Drôle d'époque.", si: { flag: kobolds-amis } }
+  - { id: gr-nuit, lieu: karak-porte, texte: "La nuit, les marteaux ne s'arrêtent jamais. On s'y habitue. Ou pas.", moment: nuit, si: { flag: ch4-depart-fait } }
+  # ─── Archipel des Brumes (Port-Vérane)
+  - { id: a-rhum, lieu: port-taverne, qui: client, texte: "Le rhum des Brumes guérit tout. Sauf la soif.", si: { flag: ch4-depart-fait } }
+  - { id: a-corsa, lieu: port-quais, texte: "Corsa la Rouge a perdu sa jambe contre un requin. Ou un dragon. Ça dépend du jour.", si: { flag: ch4-depart-fait } }
+  - { id: a-dragonne, lieu: port-quais, texte: "Une dragonne d'or a survolé le port ! J'en ai lâché mon filet.", si: { flag: ysoria-recrutee } }
+  - { id: a-phare, lieu: port-taverne, qui: client, texte: "Le Phare noyé s'est encore allumé hier soir. Restez loin de cette lumière verte.", si: { flag: ch4-depart-fait, pas_flag: phare-commence } }
+  - { id: a-tobby, lieu: port-taverne, qui: client, texte: "Le petit Tobby est rentré du Phare ! Le vieux Brann n'a jamais été aussi gentil.", si: { quete_terminee: q-phare } }
+  - { id: a-epaves, lieu: port-marche, qui: marchand, texte: "Tout ce que la mer rapporte ! Ne demandez pas d'où ça vient.", si: { flag: ch4-depart-fait } }
+  - { id: a-nuit, lieu: port-quais, texte: "La brume monte la nuit. Les cloches des navires sonnent toutes seules.", moment: nuit, si: { flag: ch4-depart-fait } }

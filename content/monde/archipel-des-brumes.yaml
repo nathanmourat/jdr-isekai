@@ -1,0 +1,87 @@
+# Région du chapitre 4 (2/2) : l'Archipel des Brumes (niveaux 22 à 30). Positions en pixels sur la carte (1920 × 1080).
+regions:
+  - id: archipel-des-brumes
+    nom: "Archipel des Brumes"
+    description: "Îles volcaniques, récifs et brouillard permanent. Des pirates, des sirènes… et les derniers dragons."
+    carte: archipel-des-brumes
+    chapitre: 4
+    position_monde: { x: 560, y: 880 }
+    disponible_si: { flag: ch4-depart-fait }
+    villes:
+      - id: port-verane
+        nom: "Port-Vérane"
+        description: "Un port de pirates bâti sur des épaves : des ponts de cordes, des tavernes, et personne ne pose de questions."
+        plan: port-verane-plan
+        position: { x: 980, y: 540 }
+    lieux:
+      - id: port-quais
+        nom: "Les Quais"
+        description: "Des pontons de bois, des navires de toutes les couleurs, et l'odeur du sel et du goudron."
+        decor: port-quais
+        ville: port-verane
+        position: { x: 980, y: 600 }
+        position_plan: { x: 640, y: 620 }
+        disponible_si: { flag: ch4-depart-fait }
+        pnj: [{ id: corsa }, { id: nadja, si: { flag: nadja-rencontree } }]
+      - id: port-taverne
+        nom: "Le Requin Ivre"
+        description: "Une taverne construite dans la coque d'un galion échoué. Les hamacs tanguent, même à terre."
+        decor: port-taverne
+        ville: port-verane
+        auberge: true
+        position: { x: 1040, y: 550 }
+        position_plan: { x: 900, y: 420 }
+        disponible_si: { flag: ch4-depart-fait }
+        pnj: [{ id: brann }, { id: seraphine, si: { flag: seraphine-recrutee } }, { id: ysoria, si: { flag: ysoria-recrutee } }]
+        gerant: brann
+        boutique: [ration, potion-soin-grande, rhum-des-brumes, coquillage-chantant]
+      - id: port-marche
+        nom: "Marché aux épaves"
+        description: "On y vend tout ce que la mer rapporte : des trésors, des armes, et des choses qu'il vaut mieux ne pas toucher."
+        decor: port-marche
+        ville: port-verane
+        position: { x: 920, y: 540 }
+        position_plan: { x: 380, y: 400 }
+        disponible_si: { flag: ch4-depart-fait }
+        pnj: [{ id: corail }, { id: ilysse, si: { flag: ilysse-recrutee } }]
+        gerant: corail
+        boutique: [
+          potion-soin-supreme, potion-mana-grande, antidote, bombe-feu, bombe-fumee, rhum-des-brumes, coquillage-chantant,
+          ecaille-de-dragon-polie, plates-de-la-forge-volcanique, robe-des-brumes-salees, manteau-du-nid-des-wyrms,
+          gilet-de-maille-de-grisargent, plates-du-rempart-nain, combinaison-du-plongeur-de-l-archipel, armure-de-plumes-de-wyrm,
+          chasuble-de-la-source-chaude, plates-d-ecailles-de-dragon, habit-de-gala-de-port-verane,
+        ]
+      - id: guilde-port
+        nom: "Comptoir de la Guilde (Port-Vérane)"
+        description: "Un comptoir flottant, amarré entre deux navires. Le tableau des contrats est cloué au mât."
+        decor: guilde
+        ville: port-verane
+        position: { x: 1050, y: 620 }
+        position_plan: { x: 1020, y: 610 }
+        disponible_si: { flag: ch4-depart-fait }
+        pnj: [{ id: maree }]
+        gerant: maree
+        boutique: [potion-soin-supreme, potion-mana-grande, antidote]
+      # ── Hors de la ville
+      - id: nid-des-wyrms
+        nom: "Nid des Wyrms"
+        description: "Une île volcanique couverte de nids de pierre, où dorment les derniers dragons."
+        decor: nid-des-wyrms
+        position: { x: 420, y: 300 }
+        disponible_si: { flag: carte-du-nid }
+      - id: phare-noye
+        nom: "Phare noyé"
+        description: "Un phare à moitié englouti, dont la lumière s'allume encore certaines nuits. Personne ne sait qui l'allume."
+        decor: phare-noye
+        position: { x: 1500, y: 300 }
+        disponible_si: { flag: ch4-depart-fait }
+      - id: recif-des-sirenes
+        nom: "Récif des sirènes"
+        description: "Des rochers noirs à fleur d'eau, où l'on entend chanter à la tombée du jour."
+        decor: recif-des-sirenes
+        position: { x: 1300, y: 860 }
+        disponible_si: { flag: ch4-depart-fait }
+        pnj: [{ id: sirene }]
+      # ── Lieux d'étape
+      - { id: ile-aux-epaves, nom: "Île aux épaves", description: "Une île faite de navires échoués, empilés comme des jouets cassés.", decor: ile-aux-epaves, position: { x: 700, y: 860 }, etape_seulement: true }
+      - { id: plage-noire, nom: "Plage noire", description: "Une plage de sable volcanique, chaude sous les pieds, où pondent les tortues de feu.", decor: plage-noire, position: { x: 1700, y: 620 }, etape_seulement: true }

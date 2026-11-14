@@ -1,0 +1,47 @@
+# Ysoria — la dragonne sous forme humaine (chapitre 4).
+compagnon:
+  id: ysoria
+  nom: "Ysoria"
+  titre: "Dragonne de l'Archipel, sous forme humaine"
+  age: 900
+  genre: f
+  personnalite: "Majestueuse, directe, ignore tout des coutumes humaines (elle mange avec les mains, dort sur les tas d'or, dit exactement ce qu'elle pense). Adore tout ce qui brille."
+  passe: "Une des dernières dragonnes. Elle dormait depuis trois siècles au Nid des Wyrms. À son réveil, son œuf avait disparu."
+  objectif: "Retrouver son œuf, puis décider si les dragons doivent revenir dans le monde."
+  chapitre_arrivee: 4
+  quete: q-ysoria
+  lignes_rouges:
+    - { flag: dragon-chasse, description: "« Tu as chassé l'un des miens. Je sens son sang sur toi. Ne me parle plus. »", penalite: -60, definitive: true }
+    - { flag: relique-vendue, description: "« Tu as VENDU une écaille de mes ancêtres ? À un marchand ? » Elle crache une petite flamme, très en colère.", penalite: -35 }
+  cadeaux:
+    prefere: [ecaille-de-dragon-polie, bijou-dore]
+    apprecie: [pierre-de-feu, perle-du-desert, viande-grillee]
+    deteste: [the-de-sylve, fleur-des-champs]
+  combat:
+    caracteristiques: { FOR: 15, AGI: 8, INT: 9, VIT: 14, ESP: 8, CHA: 6 }
+    attaque: { stat: FOR, element: feu, portee: melee, puissance: 10 }
+    armure: 6
+    rang: avant
+    competences:
+      - id: ysoria-souffle
+        nom: Souffle de braise
+        description: "Elle reprend un instant sa vraie forme et crache un torrent de feu. Une seule fois par combat."
+        recharge: 99
+        cible: tous_ennemis
+        effets:
+          - { type: degats, puissance: 16, stat: FOR, element: feu }
+          - { type: etat, etat: brulure, duree: 2, valeur: 4 }
+        ia: { priorite: 4, quand: plusieurs_ennemis }
+      - id: ysoria-griffes
+        nom: Griffes d'écailles
+        description: "Ses mains se couvrent d'écailles dorées le temps d'un coup."
+        recharge: 2
+        cible: ennemi
+        portee: melee
+        effets: [{ type: degats, puissance: 11, stat: FOR, coups: 2 }]
+        ia: { priorite: 2 }
+  bonus_paliers:
+    alliee: { id: aura-defense, nom: "Écailles partagées", description: "+6 % de défense pour tout le groupe.", parametres: { valeur: 0.06 } }
+    proche: { id: aura-degats, nom: "Fierté draconique", description: "+8 % de dégâts pour tout le groupe.", parametres: { valeur: 0.08 } }
+    amoureuse: { id: regeneration-groupe, nom: "Chaleur du nid", description: "Le groupe regagne 2 % de ses PV à chaque tour.", parametres: { valeur: 0.02 } }
+    engagee: { id: attaque-combinee, nom: "Vol à deux", description: "Attaque combinée avec son héros : +25 % de dégâts.", parametres: { degats: 0.25 } }

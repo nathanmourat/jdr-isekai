@@ -22,3 +22,13 @@ objets:
   - { id: codex-dechirure, nom: "Codex de la Déchirure", description: "Le grand livre des elfes qui ont tenté de recoudre le Voile. Les dernières pages sont arrachées.", type: quete }
   - { id: corne-de-morra, nom: "Corne brisée", description: "Une corne noire, brisée pendant le combat de la Nuitlongue. Elle est encore tiède.", type: quete }
   - { id: sceau-du-domaine, nom: "Sceau du domaine", description: "Le sceau de cire de vos terres : il vous fait seigneur ou dame, pour le meilleur et pour les impôts.", type: quete }
+  # ── Chapitre 4 : Monts Grisfer et Archipel des Brumes
+  - { id: potion-soin-supreme, nom: "Potion de soin suprême", description: "Une fiole dorée qui brille comme un soleil miniature.", utilite: "À boire en combat (bouton du sac). Pour les héros les plus aguerris.", type: consommable, prix: 180, cible: allie, effets: [{ type: soin, puissance: 100, stat: VIT }] }
+  - { id: biere-de-karak, nom: "Tonnelet de bière de Karak", description: "Une bière brune et amère, brassée sous la montagne depuis mille ans.", type: cadeau, prix: 18 }
+  - { id: pierre-de-feu, nom: "Pierre de feu", description: "Une pierre volcanique qui reste tiède toute la nuit. Les nains en offrent aux amis.", type: cadeau, prix: 28 }
+  - { id: rhum-des-brumes, nom: "Rhum des Brumes", description: "Un rhum noir qui sent la fumée et la vanille. Les pirates jurent qu'il guérit tout.", type: cadeau, prix: 20 }
+  - { id: coquillage-chantant, nom: "Coquillage chantant", description: "Quand on l'approche de l'oreille, on entend une sirène chanter.", type: cadeau, prix: 26 }
+  - { id: ecaille-de-dragon-polie, nom: "Écaille de dragon polie", description: "Une écaille dorée, polie comme un miroir. Elle brille de mille feux.", type: cadeau, prix: 60, mystere: true }
+  - { id: registre-des-appels, nom: "Estampage du Registre des Appels", description: "Une copie, frottée au charbon, des tables de pierre où les nains ont noté chaque Appel depuis l'an 430… et ce qu'il a coûté.", type: quete }
+  - { id: oeuf-de-braise, nom: "Œuf de braise", description: "Un œuf de dragon, gros comme une tête, brûlant comme une forge. Il bat doucement.", type: quete }
+  - { id: carte-marine, nom: "Carte marine de Corsa", description: "La seule carte qui montre le chemin du Nid des Wyrms entre les récifs.", type: quete }

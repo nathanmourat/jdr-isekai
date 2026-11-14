@@ -5,3 +5,4 @@ dist/
 rapports/*.csv
 test-results/
 playwright-report/
+__pycache__/

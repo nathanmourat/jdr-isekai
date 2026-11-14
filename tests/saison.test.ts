@@ -14,6 +14,7 @@ export const SCENES_SAISON: Record<number, string[]> = {
   1: ['ch1-appel', 'ch1-examen', 'sq-tournoi', 'sq-loups', 'ch1-crypte', 'sq-tanneurs', 'ch1-lanternes', 'ch1-serment'],
   2: ['ch2-depart', 'ch2-caravane', 'sq-pillards-retour', 'ch2-palais', 'sq-matriarche-fin', 'ch2-complot', 'ch2-bazar', 'sq-puits-retour', 'ch2-tempete', 'ch2-revolte'],
   3: ['ch3-domaines', 'ch3-lisiere', 'sq-follets-retour', 'ch3-reine', 'sq-domaine-milice', 'ch3-bibliotheque', 'ch3-nuitlongue', 'ch3-verdict'],
+  4: ['ch4-depart', 'ch4-karak', 'sq-forge-retour', 'ch4-marches', 'ch4-port', 'sq-phare-retour', 'ch4-nid', 'ch4-deserteur', 'ch4-conseil'],
 };
 
 /** Joue un chapitre ; à la fin, passe au chapitre suivant (auberge). */
@@ -46,7 +47,7 @@ describe('Saison 1 jouée par le robot', () => {
     for (const h of listeHeros(r.etat)) expect(h.niveau).toBeGreaterThanOrEqual(6);
   });
 
-  it('chapitre 3 : Sylvenoire, la Bibliothèque des Racines et la Nuitlongue', () => {
+  it('chapitres 3 et 4 : Sylvenoire, puis Grisfer et l\'Archipel', () => {
     const r = groupeDeDeux(c, 'saison3');
     jouerPrologues(c, r);
     for (const n of [1, 2, 3]) jouerChapitre(r, n);
@@ -57,5 +58,15 @@ describe('Saison 1 jouée par le robot', () => {
     expect(r.etat.flags['morra-vivante'] || r.etat.flags['morra-tuee']).toBe(true);
     expect((r.etat.reputation.troupes ?? 0)).toBeGreaterThan(10);
     expect(r.etat.chapitre).toBe(4);
+    // chapitre 4 : Feu et Écailles
+    jouerChapitre(r, 4);
+    expect(r.etat.quetes['q-ch4-feu'].terminee).toBe(true);
+    expect(r.etat.flags['registre-lu']).toBe(true);
+    expect(r.etat.flags['nains-allies'] && r.etat.flags['dragons-allies']).toBe(true);
+    expect(r.etat.compagnonsRencontres).toContain('ysoria');
+    if (r.etat.flags['morra-vivante']) expect(r.etat.compagnonsRencontres).toContain('morra');
+    expect(r.etat.flags['secret-revele'] || r.etat.flags['secret-garde']).toBe(true);
+    expect(r.etat.quetes['q-forge-froide']?.terminee).toBe(true);
+    expect(r.etat.chapitre).toBe(5);
   });
 });

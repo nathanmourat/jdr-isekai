@@ -1,0 +1,67 @@
+# Contrats de guilde du chapitre 4, aux comptoirs de Karak-Dûm et de Port-Vérane. Dernière étape : retour au comptoir.
+contrats:
+  - id: c-col-des-vents
+    titre: "Nuée sur le Col des Vents"
+    description: "Des chauves-souris de lave attaquent les caravanes de minerai qui passent le Col des Vents."
+    rang_min: C
+    niveau: 22
+    rencontre: grisfer-chauves-souris
+    duree_jours: 3
+    disponible_si: { flag: karak-recus }
+    recompenses: { or: 360, xp: 1100, points_guilde: 200 }
+    etapes:
+      - { lieu: col-des-vents, objectif: "Monter au Col des Vents.", texte: "Le vent hurle entre les pics. Des chariots renversés, du minerai répandu dans la neige, et des traces de brûlure sur les bâches.", bouton: "Attendre la nuit" }
+      - { lieu: col-des-vents, objectif: "Chasser la nuée.", texte: "La nuit tombe. Des points rouges s'allument dans le ciel, comme des braises qui volent. Puis ils plongent.", combat: grisfer-chauves-souris }
+      - { lieu: guilde-karak, objectif: "Revenir au comptoir de Karak-Dûm.", texte: "Hjalmi tamponne le contrat d'un coup sec. « Les caravanes repasseront demain. Bon travail. Ne crachez pas par terre en sortant. »", bouton: "Toucher la récompense" }
+
+  - id: c-source-chaude
+    titre: "Kobolds à la source chaude"
+    description: "Une bande de kobolds a pris possession de la source chaude où les vieux nains soignent leurs rhumatismes. Les vieux nains sont furieux."
+    rang_min: C
+    niveau: 22
+    rencontre: grisfer-kobolds
+    duree_jours: 3
+    disponible_si: { flag: karak-recus }
+    recompenses: { or: 340, xp: 1050, points_guilde: 190, objets: [biere-de-karak] }
+    etapes:
+      - lieu: source-chaude
+        objectif: "Aller à la source chaude."
+        texte: "Des kobolds barbotent dans l'eau fumante, l'air ravi. Sur la rive, des pioches, des seaux, et un panneau en kobold que personne ne sait lire."
+        choix:
+          - { texte: "Leur parler d'abord, avec des gestes.", resultat: "Les kobolds vous écoutent poliment, puis vous jettent de l'eau chaude au visage." }
+          - { texte: "Leur faire peur en criant très fort.", resultat: "Les kobolds sortent de l'eau, très vexés, et prennent leurs pioches." }
+      - { lieu: source-chaude, objectif: "Déloger les kobolds.", texte: "Les kobolds se mettent en rang, pioches levées.", combat: grisfer-kobolds }
+      - { lieu: guilde-karak, objectif: "Revenir au comptoir de Karak-Dûm.", texte: "Hjalmi grogne. « Les vieux vous envoient une tonne de remerciements. Moi, je vous envoie la prime. C'est plus utile. »", bouton: "Toucher la récompense" }
+
+  - id: c-ile-aux-epaves
+    titre: "Les pilleurs de l'Île aux épaves"
+    description: "Une bande de pirates sans pavillon pille les navires échoués sur l'Île aux épaves. Même Corsa la Rouge veut les voir partir."
+    rang_min: B
+    niveau: 24
+    rencontre: archipel-pirates
+    duree_jours: 4
+    disponible_si: { flag: carte-du-nid }
+    recompenses: { or: 440, xp: 1300, points_guilde: 250 }
+    etapes:
+      - lieu: ile-aux-epaves
+        objectif: "Aborder l'Île aux épaves."
+        texte: "Des navires couchés les uns sur les autres, des mâts comme des forêts mortes. Un feu brûle dans la cale d'un galion."
+        choix:
+          - { texte: "Approcher par la plage, à découvert.", resultat: "Une vigie vous voit et sonne la cloche. Ils vous attendent." }
+          - { texte: "Grimper par les mâts couchés.", resultat: "Vous tombez du ciel au milieu de leur campement. Effet garanti." }
+      - { lieu: ile-aux-epaves, objectif: "Chasser les pilleurs.", texte: "« Des héros ! » crie le chef des pilleurs. « Enfin quelqu'un de riche ! »", combat: archipel-pirates }
+      - { lieu: guilde-port, objectif: "Revenir au comptoir de Port-Vérane.", texte: "Marée est vert, comme d'habitude. « Bravo. Euh. Excusez-moi. » Il se penche par-dessus le bastingage. Puis il vous paie.", bouton: "Toucher la récompense" }
+
+  - id: c-plage-noire
+    titre: "Les pontes de la Plage noire"
+    description: "Les crabes des récifs dévorent les œufs des tortues de feu sur la Plage noire. Sans tortues, plus de lampes à huile à Port-Vérane."
+    rang_min: C
+    niveau: 23
+    rencontre: archipel-crabes
+    duree_jours: 3
+    disponible_si: { flag: carte-du-nid }
+    recompenses: { or: 380, xp: 1150, points_guilde: 210, objets: [potion-soin-grande] }
+    etapes:
+      - { lieu: plage-noire, objectif: "Aller à la Plage noire.", texte: "Le sable volcanique est chaud sous les pieds. Des nids de tortues, éventrés. Des pinces énormes qui dépassent du sable.", bouton: "Creuser près des nids" }
+      - { lieu: plage-noire, objectif: "Chasser les crabes.", texte: "Le sable se soulève. Les crabes des récifs sortent, pinces grandes ouvertes.", combat: archipel-crabes }
+      - { lieu: guilde-port, objectif: "Revenir au comptoir de Port-Vérane.", texte: "« Les tortues vous remercient, dit Marée. Enfin, elles ne disent rien. Ce sont des tortues. Mais l'intention y est. »", bouton: "Toucher la récompense" }
