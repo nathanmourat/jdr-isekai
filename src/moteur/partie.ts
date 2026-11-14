@@ -23,7 +23,7 @@ import { competencesConnues as connuesDe } from './personnage';
 import { exemplaires, problemeEquipement } from './equipement';
 import { anneeDepart, chapitreDe, fetesEntre, formaterDate, joursParMois, versDate, versJour } from './temps';
 
-export const VERSION_ETAT = 6;
+export const VERSION_ETAT = 7;
 export const MAX_JOUEURS = 6;
 
 export interface Joueur { id: string; pseudo: string; herosId: string | null; present: boolean }
@@ -54,7 +54,9 @@ export interface MouvementOr { heros: string; montant: number; raison: string }
 
 export interface ContexteCombat {
   cle: string;               // 'groupe' ou id du héros (combat individuel)
-  origine: 'scene' | 'donjon' | 'contrat';
+  origine: 'scene' | 'donjon' | 'contrat' | 'examen';
+  /** Combat d'examen de rang : rang visé et héros qui le passent ensemble. */
+  examen?: { rang: string; heros: string[] } | null;
   sceneCle: string | null;   // scène à reprendre
   victoire: string | null;
   defaite: string | null;
@@ -136,6 +138,10 @@ export interface EtatPartie {
   objetsConnus: string[];
   /** Goûts découverts des compagnons : pour chacun, les cadeaux dont on connaît la réaction. */
   goutsConnus: Record<string, string[]>;
+  /** Rang de Guilde obtenu par examen, par héros (absent = F). Les points ne font que débloquer l'examen. */
+  rangs: Record<string, string>;
+  /** Jour du dernier examen raté, par héros : on peut retenter le lendemain. */
+  examensRates: Record<string, number>;
 }
 
 export type Action =
@@ -180,6 +186,8 @@ export type Action =
   /** Joue l'étape en cours de son contrat (choix : index de la réponse quand l'étape en propose). */
   | { type: 'etape_contrat'; joueur: string; choix?: number }
   | { type: 'abandonner_contrat'; joueur: string }
+  /** Passer l'examen du rang suivant à la Guilde (combat d'examen, ou début de l'épreuve en plusieurs étapes). */
+  | { type: 'examen_rang'; joueur: string }
   | { type: 'meneur'; joueur: string; nouveau: string }
   | { type: 'nouvelle_session'; joueur: string }
   | { type: 'chapitre_suivant'; joueur: string }
@@ -235,6 +243,8 @@ export function nouvellePartie(contenu: Contenu, id: string, nom: string, graine
     contrats: {},
     objetsConnus: [],
     goutsConnus: {},
+    rangs: {},
+    examensRates: {},
   };
 }
 
@@ -284,6 +294,73 @@ export function rangGuilde(contenu: Contenu, points: number): string {
 
 const ordreRangs = ['F', 'E', 'D', 'C', 'B', 'A', 'S'];
 
+// ───────────────────────────── Rangs de Guilde et examens ─────────────────────────────
+
+/** Rang de Guilde du héros : celui du dernier examen réussi (F au départ). */
+export function rangHeros(etat: EtatPartie, herosId: string): string {
+  return (etat.rangs ?? {})[herosId] ?? 'F';
+}
+
+export interface ProchainExamen {
+  rang: string;
+  points: number;
+  pointsRequis: number;
+  niveauRequis: number;
+  type: 'combat' | 'epreuve' | null;
+  /** Vrai si le héros peut passer l'examen maintenant. */
+  pret: boolean;
+  /** Ce qui manque, en une phrase ('' si l'examen est possible). */
+  raison: string;
+}
+
+/** Examen du rang suivant pour ce héros (null : il a déjà le rang le plus haut). */
+export function prochainExamen(contenu: Contenu, etat: EtatPartie, herosId: string): ProchainExamen | null {
+  const h = etat.heros[herosId];
+  if (!h) return null;
+  const rangs = contenu.config.guilde.rangs;
+  const i = rangs.findIndex((r) => r.rang === rangHeros(etat, herosId));
+  const suivant = rangs[i + 1];
+  if (i < 0 || !suivant) return null;
+  const points = etat.pointsGuilde[herosId] ?? 0;
+  const rate = (etat.examensRates ?? {})[herosId];
+  let raison = '';
+  if (points < suivant.points) raison = `Il faut ${suivant.points} points de Guilde (vous en avez ${points}).`;
+  else if (h.niveau < suivant.niveau_min) raison = `Il faut être niveau ${suivant.niveau_min} (vous êtes niveau ${h.niveau}).`;
+  else if (!suivant.examen) raison = `L'examen du rang ${suivant.rang} arrivera avec un prochain chapitre.`;
+  else if (rate !== undefined && etat.jour <= rate) raison = 'Examen raté aujourd\'hui : revenez demain.';
+  else if (suivant.examen.type === 'epreuve' && vrai(etat.contrats[herosId])) raison = 'Terminez d\'abord votre contrat en cours.';
+  return { rang: suivant.rang, points, pointsRequis: suivant.points, niveauRequis: suivant.niveau_min, type: suivant.examen ? suivant.examen.type : null, pret: raison === '', raison };
+}
+
+/** Héros présents qui peuvent passer le même combat d'examen que ce héros, lui compris (ordre de la partie). */
+export function candidatsExamen(contenu: Contenu, etat: EtatPartie, herosId: string): string[] {
+  const ex = prochainExamen(contenu, etat, herosId);
+  if (!ex || !ex.pret || ex.type !== 'combat') return [];
+  return listeHeros(etat).filter((x) => {
+    if (x.id === herosId) return true;
+    if (!(etat.joueurs[x.joueurId]?.present ?? false)) return false;
+    const e = prochainExamen(contenu, etat, x.id);
+    return !!e && e.pret && e.rang === ex.rang && e.type === 'combat';
+  }).map((x) => x.id);
+}
+
+/** Cérémonie : le héros reçoit son nouveau rang. */
+function promouvoir(contenu: Contenu, etat: EtatPartie, h: Heros, rang: string): string {
+  etat.rangs[h.id] = rang;
+  delete etat.examensRates[h.id];
+  const qui = contenu.pnj[contenu.config.guilde.examinatrice]?.nom ?? 'La Guilde';
+  journal(contenu, etat, `${h.nom} réussit l'examen de la Guilde : rang ${rang}.`);
+  return `${qui} tamponne la carte de ${h.nom} devant tout le hall : rang ${rang} ! Les contrats du rang ${rang} lui sont ouverts.`;
+}
+
+/** Phrase à afficher quand un gain de points (ou de niveau) rend un examen possible. */
+function annonceExamen(contenu: Contenu, etat: EtatPartie, h: Heros): string {
+  const ex = prochainExamen(contenu, etat, h.id);
+  if (!ex || ex.type === null || ex.points < ex.pointsRequis) return '';
+  if (h.niveau < ex.niveauRequis) return ` — examen du rang ${ex.rang} possible dès le niveau ${ex.niveauRequis}`;
+  return ` — ${h.nom} peut passer l'examen du rang ${ex.rang} à la Guilde !`;
+}
+
 // ───────────────────────────── Conditions ─────────────────────────────
 
 /** Une condition sur un héros précis (scènes individuelles, dialogues). */
@@ -314,7 +391,7 @@ export function conditionHeros(contenu: Contenu, etat: EtatPartie, c: Condition 
   if (c.niveau_min !== undefined && h.niveau < c.niveau_min) return false;
   if (c.or_min !== undefined && h.or < c.or_min) return false;
   if (vrai(c.objet) && !(h.inventaire[c.objet] > 0)) return false;
-  if (vrai(c.rang_guilde_min) && ordreRangs.indexOf(rangGuilde(contenu, etat.pointsGuilde[h.id] ?? 0)) < ordreRangs.indexOf(c.rang_guilde_min)) return false;
+  if (vrai(c.rang_guilde_min) && ordreRangs.indexOf(rangHeros(etat, h.id)) < ordreRangs.indexOf(c.rang_guilde_min)) return false;
   return true;
 }
 
@@ -362,7 +439,8 @@ function appliquerConsequence(contenu: Contenu, etat: EtatPartie, eff: Consequen
     const avant = rangGuilde(contenu, etat.pointsGuilde[h.id] ?? 0);
     etat.pointsGuilde[h.id] = (etat.pointsGuilde[h.id] ?? 0) + eff.points_guilde;
     const apres = rangGuilde(contenu, etat.pointsGuilde[h.id]);
-    messages.push(`${h.nom} : +${eff.points_guilde} points de guilde${apres !== avant ? ` — nouveau rang ${apres} !` : ''}`);
+    // les points ne donnent plus le rang : ils débloquent l'examen
+    messages.push(`${h.nom} : +${eff.points_guilde} points de guilde${apres !== avant ? annonceExamen(contenu, etat, h) : ''}`);
   }
   if (eff.quete) {
     const neuve = !etat.quetes[eff.quete.id];
@@ -800,8 +878,8 @@ export function lieuHorsVille(contenu: Contenu, lieu: string | null | undefined)
   return false;
 }
 
-function lancerCombat(contenu: Contenu, etat: EtatPartie, rencontre: string, cle: string, contexte: ContexteCombat, lieu: string | null = null) {
-  const herosIds = cle === 'groupe' ? participantsGroupe(etat) : [cle];
+function lancerCombat(contenu: Contenu, etat: EtatPartie, rencontre: string, cle: string, contexte: ContexteCombat, lieu: string | null = null, participants: string[] | null = null) {
+  const herosIds = participants ?? (cle === 'groupe' ? participantsGroupe(etat) : [cle]);
   if (herosIds.length === 0) refuser('Aucun héros disponible pour combattre');
   const allies: Combattant[] = [];
   for (const id of herosIds) {
@@ -870,6 +948,9 @@ function terminerCombat(contenu: Contenu, etat: EtatPartie, cle: string) {
       h.inventaire[o] = (h.inventaire[o] ?? 0) + 1;
       bilan.push(`${h.nom} récupère : ${contenu.objets[o].nom}`);
     });
+  } else if (combat.resultat === 'defaite' && contexte.origine === 'examen') {
+    // examen de rang : aucun danger. Ni blessure, ni or perdu ; on pourra retenter le lendemain.
+    bilan.push("L'examinateur baisse son arme et vous aide à vous relever. « Pas encore. Revenez demain. » Aucune blessure, aucune pièce perdue.");
   } else if (combat.resultat === 'defaite') {
     for (const h of heros) {
       const perte = Math.floor(h.or * contenu.config.mort_douce.perte_or_pourcent / 100);
@@ -886,7 +967,15 @@ function apresCombat(contenu: Contenu, etat: EtatPartie, cle: string) {
   const { combat, contexte } = etat.combats[cle];
   delete etat.combats[cle];
   const victoire = combat.resultat === 'victoire';
-  if (contexte.origine === 'scene' && vrai(contexte.sceneCle) && etat.scenes[contexte.sceneCle]) {
+  if (contexte.origine === 'examen' && contexte.examen) {
+    // examen réussi : cérémonie, nouveau rang pour chaque héros qui l'a passé
+    etat.dernieresNouvelles.push(...(contexte.bilan ?? []));
+    for (const id of contexte.examen.heros) {
+      if (!etat.heros[id]) continue;
+      if (victoire) etat.dernieresNouvelles.push(promouvoir(contenu, etat, etat.heros[id], contexte.examen.rang));
+      else etat.examensRates[id] = etat.jour; // raté : nouvelle tentative le lendemain
+    }
+  } else if (contexte.origine === 'scene' && vrai(contexte.sceneCle) && etat.scenes[contexte.sceneCle]) {
     entrerNoeud(contenu, etat, contexte.sceneCle, (victoire ? contexte.victoire : contexte.defaite)!);
     etat.scenes[contexte.sceneCle].messages.unshift(...(contexte.bilan ?? []));
   } else if (contexte.origine === 'donjon' && etat.donjon) {
@@ -1058,6 +1147,8 @@ export function appliquer(contenu: Contenu, etatAvant: EtatPartie, action: Actio
   etat.mises ??= {};
   etat.objetsConnus ??= [];
   etat.goutsConnus ??= {};
+  etat.rangs ??= {};
+  etat.examensRates ??= {};
   etat.contrats ??= {};
   for (const h of valeurs(etat.heros)) { h.grimoire ??= {}; h.maitrise ??= {}; }
   if (etat.grimoire) repartirAncienGrimoire(contenu, etat); // parties d'avant le grimoire personnel
@@ -1409,7 +1500,8 @@ export function appliquer(contenu: Contenu, etatAvant: EtatPartie, action: Actio
       const h = herosDuJoueur(etat, action.joueur);
       const ct = contenu.contrats[action.contrat] ?? refuser('Contrat inconnu');
       if (etat.combats[h.id]) refuser('Vous êtes déjà en combat');
-      if (ordreRangs.indexOf(rangGuilde(contenu, etat.pointsGuilde[h.id] ?? 0)) < ordreRangs.indexOf(ct.rang_min)) refuser(`Contrat réservé au rang ${ct.rang_min}`);
+      if (vrai(ct.examen_rang)) refuser('Cette épreuve se demande à la Guilde, en passant l\'examen de rang');
+      if (ordreRangs.indexOf(rangHeros(etat, h.id)) < ordreRangs.indexOf(ct.rang_min)) refuser(`Contrat réservé au rang ${ct.rang_min}`);
       if (!conditionHeros(contenu, etat, ct.disponible_si, h)) refuser('Contrat indisponible');
       if (ct.etapes.length > 0) {
         // contrat à étapes : on l'accepte à la Guilde, puis on le joue sur la carte, lieu après lieu
@@ -1431,6 +1523,27 @@ export function appliquer(contenu: Contenu, etatAvant: EtatPartie, action: Actio
           etat.dernieresNouvelles.push(`Contrat raté (${ct.test.carac} : ${total} < ${ct.test.difficulte}). Vous en tirez quand même une leçon.`, ...msgs);
         }
       }
+      break;
+    }
+    case 'examen_rang': {
+      const h = herosDuJoueur(etat, action.joueur);
+      const ex = prochainExamen(contenu, etat, h.id) ?? refuser('Vous avez déjà le rang le plus haut');
+      if (!ex.pret) refuser(ex.raison);
+      const def = contenu.config.guilde.rangs.find((r) => r.rang === ex.rang)!.examen!;
+      if (def.type === 'epreuve') {
+        const ct = contenu.contrats[def.contrat ?? ''] ?? refuser('Épreuve introuvable');
+        etat.contrats[h.id] = { id: ct.id, etape: 0, notes: [] };
+        etat.dernieresNouvelles.push(`Épreuve du rang ${ex.rang} : ${ct.titre}. ${ct.etapes[0].objectif}`);
+        break;
+      }
+      if (etat.combats.groupe || etat.combats[h.id]) refuser('Un combat est en cours');
+      if (etat.scenes.groupe && etat.scenes.groupe.noeud !== '__fin__') refuser('Une scène de groupe est en cours');
+      if (etat.donjon) refuser('Le groupe est dans un donjon');
+      if (etat.tempsLibre && !etat.tempsLibre.resultats) refuser('Terminez d\'abord le temps libre');
+      // les héros présents et prêts pour le même rang passent l'examen ensemble (difficulté de groupe habituelle)
+      const candidats = candidatsExamen(contenu, etat, h.id).filter((id) => !etat.combats[id]);
+      etat.dernieresNouvelles.push(`Examen du rang ${ex.rang} : ${candidats.map((id) => etat.heros[id].nom).join(', ')} ${candidats.length > 1 ? 'entrent' : 'entre'} dans l'arène d'entraînement.`);
+      lancerCombat(contenu, etat, def.rencontre!, 'groupe', { cle: 'groupe', origine: 'examen', sceneCle: null, victoire: null, defaite: null, evenementDonjon: null, contrat: null, bilan: null, examen: { rang: ex.rang, heros: candidats } }, null, candidats);
       break;
     }
     case 'etape_contrat': {
@@ -1607,6 +1720,10 @@ function avancerContrat(contenu: Contenu, etat: EtatPartie, h: Heros) {
   const msgs: string[] = [];
   appliquerConsequence(contenu, etat, { or: ct.recompenses.or, xp: ct.recompenses.xp, points_guilde: ct.recompenses.points_guilde, objet: ct.recompenses.objets }, [h.id], msgs);
   delete etat.contrats[h.id];
+  if (vrai(ct.examen_rang)) {
+    etat.dernieresNouvelles.push(`Épreuve réussie : ${ct.titre}.`, ...msgs, promouvoir(contenu, etat, h, ct.examen_rang));
+    return;
+  }
   etat.dernieresNouvelles.push(`Contrat rempli : ${ct.titre}.`, ...msgs);
   journal(contenu, etat, `${h.nom} remplit le contrat « ${ct.titre} ».`);
 }

@@ -237,7 +237,84 @@ ennemis:
         ia: { priorite: 2, quand: debut_combat }
     recompenses: { xp: 220, or: 100, objets: [{ id: sceau-cendre, chance: 1 }] }
 
+  # ── Examinateurs de la Guilde (examens de rang) : des adversaires d'entraînement, sans danger de mort.
+  - id: examinateur-rang-e
+    nom: Sergent Maelric
+    description: "Examinateur de la Guilde : un vétéran trapu qui frappe du plat de l'épée."
+    niveau: 3
+    categorie: humanoide
+    sprite: bandit
+    caracteristiques: { FOR: 12, AGI: 10, INT: 6, VIT: 12, ESP: 7, CHA: 8 }
+    pv: 140
+    armure: 5
+    attaque: { stat: FOR, portee: melee, puissance: 15 }
+    attaques:
+      - { nom: "Plat de l'épée", phrase: "frappe {cible} du plat de l'épée", effet: impact }
+      - { nom: "Feinte basse", phrase: "feinte, puis touche {cible} à la jambe", effet: entaille }
+    competences:
+      - id: lecon-du-sergent
+        nom: Leçon du sergent
+        description: "Un enchaînement appuyé, pour voir si le candidat tient debout."
+        recharge: 3
+        cible: ennemi
+        portee: melee
+        effets: [{ type: degats, puissance: 24, stat: FOR }]
+        ia: { priorite: 2, quand: toujours }
+    recompenses: { xp: 40, or: 0, objets: [] }
+
+  - id: examinateur-rang-d
+    nom: Capitaine Ysolde Brandefer
+    description: "Examinatrice de la Guilde : rapide, précise, et jamais essoufflée."
+    niveau: 6
+    categorie: humanoide
+    sprite: bandit
+    caracteristiques: { FOR: 14, AGI: 14, INT: 8, VIT: 14, ESP: 9, CHA: 10 }
+    pv: 170
+    armure: 6
+    attaque: { stat: AGI, portee: melee, puissance: 19 }
+    attaques:
+      - { nom: "Estoc", phrase: "porte un estoc net à {cible}", effet: entaille }
+      - { nom: "Revers", phrase: "surprend {cible} d'un revers", effet: entaille }
+      - { nom: "Coup de pommeau", phrase: "repousse {cible} d'un coup de pommeau", effet: impact }
+    competences:
+      - id: passe-de-brandefer
+        nom: Passe de Brandefer
+        description: "Deux touches enchaînées, trop rapides pour être parées toutes les deux."
+        recharge: 3
+        cible: ennemi
+        portee: melee
+        effets: [{ type: degats, puissance: 14, stat: AGI, coups: 2 }]
+        ia: { priorite: 2, quand: toujours }
+    recompenses: { xp: 90, or: 0, objets: [] }
+
+  - id: examinateur-rang-c
+    nom: Maître d'armes Corvan Elsterre
+    description: "Le maître d'armes de la Guilde : il ne se bat que contre ceux qui visent le rang C."
+    niveau: 10
+    categorie: humanoide
+    sprite: bandit
+    caracteristiques: { FOR: 17, AGI: 15, INT: 10, VIT: 17, ESP: 11, CHA: 11 }
+    pv: 280
+    armure: 8
+    attaque: { stat: FOR, portee: melee, puissance: 22 }
+    attaques:
+      - { nom: "Taille", phrase: "abat sa lame sur {cible}", effet: entaille }
+      - { nom: "Charge d'épaule", phrase: "percute {cible} de l'épaule", effet: impact }
+    competences:
+      - id: epreuve-du-maitre
+        nom: Épreuve du maître
+        description: "Un coup porté de toute sa force, pour clore l'examen."
+        recharge: 3
+        cible: ennemi
+        portee: melee
+        effets: [{ type: degats, puissance: 30, stat: FOR }]
+        ia: { priorite: 2, quand: toujours }
+    recompenses: { xp: 160, or: 0, objets: [] }
+
 rencontres:
+  - { id: examen-rang-e, nom: "Examen du rang E", fond: arene, fuite_possible: false, ennemis: [{ id: examinateur-rang-e }], renforts: [examinateur-rang-e] }
+  - { id: examen-rang-d, nom: "Examen du rang D", fond: arene, fuite_possible: false, ennemis: [{ id: examinateur-rang-d }], renforts: [examinateur-rang-d] }
+  - { id: examen-rang-c, nom: "Examen du rang C", fond: arene, fuite_possible: false, ennemis: [{ id: examinateur-rang-c }], renforts: [examinateur-rang-c] }
   - { id: examen-guilde, nom: "Examen de la Guilde", fond: arene, fuite_possible: false, ennemis: [{ id: mannequin-entrainement }], renforts: [mannequin-entrainement] }
   - { id: loups-combe, nom: "Les loups de la Combe-aux-Saules", fond: foret, ennemis: [{ id: loup-gris }, { id: loup-gris }], renforts: [loup-gris] }
   - { id: loups-alpha, nom: "La louve noire", fond: foret, ennemis: [{ id: loup-gris }, { id: loup-gris }, { id: loup-gris }], renforts: [loup-gris] }

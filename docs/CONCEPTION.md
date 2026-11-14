@@ -603,6 +603,47 @@ Les drapeaux conditionnent les dialogues, les quêtes et les fins.
 
 ---
 
+### Rangs de la Guilde et examens (changement du test 2)
+
+Le rang (F à S) est **individuel** et s'obtient par **examen**. Les points de Guilde ne donnent plus le rang : ils **débloquent l'examen**. Réglages dans `content/config/campagne.yaml` (`guilde.rangs`).
+
+| Rang | Points | Niveau minimum | Examen |
+|---|---|---|---|
+| F | 0 | — | examen d'entrée (scène du chapitre 1) |
+| E | 100 | 3 | combat contre le Sergent Maelric |
+| D | 300 | 6 | combat contre la Capitaine Ysolde Brandefer |
+| C | 700 | 10 | épreuve en 4 étapes : escorter, enquêter, affronter le Maître d'armes Corvan Elsterre, cérémonie |
+| B, A, S | 1 500, 3 000, 6 000 | 15, 22, 30 | à écrire avec les prochains chapitres |
+
+- Quand les points et le niveau sont atteints, une notification l'annonce et **Dame Rowena porte un « ! »**. On lui parle à la Guilde pour passer l'examen.
+- **Combat d'examen** : sans danger. En cas de défaite, ni blessure ni or perdu ; on retente **le lendemain** (en jeu). Les héros présents et prêts pour le même rang le passent **ensemble** (difficulté de groupe habituelle).
+- **Épreuve** (à partir du rang C) : un contrat à étapes qui n'apparaît pas au tableau ; il se joue seul et se termine par un combat, puis par la cérémonie.
+- Examen réussi : cérémonie avec Rowena, nouveau rang, accès aux contrats du rang.
+- Équilibrage : `npm run equilibrage:examens` (rapport dans `rapports/equilibrage-examens.md`).
+
+### Maîtrises d'équipement (changement du test 2)
+
+Tout se ramasse et s'achète, mais une classe n'est pas douée avec tout. Chaque classe liste ses familles maîtrisées (`maitrises` dans `content/classes/*.yaml`).
+
+| Classe | Armes maîtrisées | Armures maîtrisées | Interdit |
+|---|---|---|---|
+| Lame runique | épée, deux-mains | lourde | — |
+| Arcaniste | bâton, orbe | légère | armure lourde |
+| Invocateur | bâton, orbe | légère | armure lourde |
+| Ombre | dague | intermédiaire | — |
+| Gardien | épée, masse, sceptre | lourde | — |
+| Alchimiste | arbalète | intermédiaire | — |
+| Archer | arc, arbalète | intermédiaire | — |
+| Guérisseur | bâton, sceptre | légère | armure lourde |
+| Berserker | deux-mains, masse | lourde | — |
+| Barde | dague, instrument | intermédiaire | — |
+
+- **Arme non maîtrisée** : −30 % de dégâts (compétences comprises) et −15 points de chance de toucher.
+- **Armure non maîtrisée** : la moitié de son armure est perdue, et −2 en Agilité.
+- **Accessoire spécialisé** (bouclier, carquois, sacoche) d'une autre classe : bonus réduits de moitié.
+- **Interdit** : l'objet ne s'équipe pas. **Réservé** : seuls les légendaires et mythiques propres à une classe.
+- Le malus est affiché en orange (l'interdit en rouge) dans l'infobulle et la fiche, avant l'achat et l'équipement.
+
 ## 9. Temps, ellipses et temps libre
 
 ### 9.1 Réglages (fichier `content/config/campagne.yaml`)

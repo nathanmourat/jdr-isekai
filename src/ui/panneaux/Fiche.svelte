@@ -1,7 +1,7 @@
 <script lang="ts">
   import { jeu } from '../jeu.svelte';
   import { caracsTotales, competencesConnues, competencesEquipees, manaMax, pvMax, xpPourNiveau, age } from '../../moteur/personnage';
-  import { prixVente, rangGuilde } from '../../moteur/partie';
+  import { prixVente, prochainExamen, rangHeros } from '../../moteur/partie';
   import { CARACS } from '../../contenu/schemas';
   import { versDate } from '../../moteur/temps';
   import { urlAsset } from '../../rendu/assets';
@@ -39,7 +39,7 @@
     <div>
       <h2>{h.nom}</h2>
       <p>{ra.nom} · {cl.nom} · {h.origine === 'invoque' ? 'Invoqué' : 'Réincarné'} · {age(h, versDate(c, etat.jour).annee)} ans</p>
-      <p class="discret">Niveau {h.niveau} — XP {h.xp} / {xpPourNiveau(c, h.niveau)} · Rang de guilde {rangGuilde(c, etat.pointsGuilde[h.id] ?? 0)} · {h.or} or{h.blessure ? ' · blessé' : ''}</p>
+      <p class="discret">Niveau {h.niveau} — XP {h.xp} / {xpPourNiveau(c, h.niveau)} · Rang de guilde {rangHeros(etat, h.id)}{#if prochainExamen(c, etat, h.id)?.pret} <span class="badge or">examen du rang {prochainExamen(c, etat, h.id)!.rang} possible</span>{/if} · {h.or} or{h.blessure ? ' · blessé' : ''}</p>
       <p class="discret">PV max {pvMax(c, k.VIT, h.niveau)} · Mana {manaMax(k.ESP, h.niveau)}</p>
       <label class="discret">Changer de portrait <input type="file" accept="image/*" onchange={portrait} /></label>
       <label class="discret ligne">Si je suis absent, mon héros

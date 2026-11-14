@@ -4,7 +4,7 @@
  */
 import type { Contenu } from '../contenu/types';
 import type { Scene } from '../contenu/schemas';
-import { conditionHeros, etapeContrat, listeHeros, scenesDisponibles, sceneEstDisponible, type EtatPartie } from './partie';
+import { conditionHeros, etapeContrat, listeHeros, prochainExamen, scenesDisponibles, sceneEstDisponible, type EtatPartie } from './partie';
 import { niveauMoyen } from './personnage';
 import { entrees, valeurs, vrai } from './outils';
 import { versJour } from './temps';
@@ -96,13 +96,29 @@ export function scenesDuPnj(contenu: Contenu, etat: EtatPartie, lieu: string, pn
 export function marqueurPnj(contenu: Contenu, etat: EtatPartie, lieu: string, pnj: string, herosId: string | null): Marqueur | null {
   let res: Marqueur | null = null;
   for (const s of scenesDuPnj(contenu, etat, lieu, pnj, herosId)) res = plusImportant(res, marqueurScene(contenu, s));
+  // l'examinatrice de la Guilde porte un « ! » quand le héros peut passer un examen de rang
+  if (pnj === contenu.config.guilde.examinatrice && examenPret(contenu, etat, herosId)) res = plusImportant(res, 'secondaire');
   return res;
+}
+
+/** Vrai si le héros peut passer maintenant l'examen de son prochain rang de Guilde. */
+export function examenPret(contenu: Contenu, etat: EtatPartie, herosId: string | null): boolean {
+  if (!vrai(herosId)) return false;
+  const ex = prochainExamen(contenu, etat, herosId);
+  return !!ex && ex.pret;
 }
 
 /** Symbole à afficher sur un lieu de la carte ou du plan (le plus important de ses scènes). */
 export function marqueurLieu(contenu: Contenu, etat: EtatPartie, lieu: string, herosId: string | null): Marqueur | null {
   let res: Marqueur | null = null;
   for (const s of scenesDisponibles(contenu, etat, lieu, herosId)) res = plusImportant(res, marqueurScene(contenu, s));
+  // examen de rang possible : le lieu où se tient l'examinatrice est signalé
+  if (examenPret(contenu, etat, herosId)) {
+    for (const r of valeurs(contenu.regions)) {
+      const l = r.lieux.find((x) => x.id === lieu);
+      if (l && l.pnj.some((p) => p.id === contenu.config.guilde.examinatrice)) res = plusImportant(res, 'secondaire');
+    }
+  }
   return res;
 }
 

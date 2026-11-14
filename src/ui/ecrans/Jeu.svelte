@@ -1,7 +1,7 @@
 <script lang="ts">
   import { jeu } from '../jeu.svelte';
   import { aideDate, formaterDate, saisonDe } from '../../moteur/temps';
-  import { attenteRepos, noeudCourant, rangGuilde } from '../../moteur/partie';
+  import { attenteRepos, noeudCourant, rangHeros } from '../../moteur/partie';
   import Carte from '../vues/Carte.svelte';
   import Lieu from '../vues/Lieu.svelte';
   import Dialogue from '../vues/Dialogue.svelte';
@@ -75,7 +75,7 @@
       {/if}
     </div>
     <div class="ligne moi">
-      <button class="badge or barre-heros" aria-expanded={ficheOuverte} title="Ouvrir ou fermer ma fiche" onclick={() => (ficheOuverte = !ficheOuverte)}>{h.nom} · niv. {h.niveau} · rang {rangGuilde(c, etat.pointsGuilde[h.id] ?? 0)} · {h.or} or {ficheOuverte ? '▴' : '▾'}</button>
+      <button class="badge or barre-heros" aria-expanded={ficheOuverte} title="Ouvrir ou fermer ma fiche" onclick={() => (ficheOuverte = !ficheOuverte)}>{h.nom} · niv. {h.niveau} · rang {rangHeros(etat, h.id)} · {h.or} or {ficheOuverte ? '▴' : '▾'}</button>
       {#if etat.meneur}<span class="badge" title="Le meneur du jour tranche les égalités et guide le groupe dans les donjons">Meneur : {etat.joueurs[etat.meneur]?.pseudo}</span>{/if}
       {#if jeu.joueursLocaux.length > 1}
         <select aria-label="Joueur actif sur cet appareil" value={jeu.joueurActif} onchange={(e) => jeu.changerJoueur((e.target as HTMLSelectElement).value)}>
