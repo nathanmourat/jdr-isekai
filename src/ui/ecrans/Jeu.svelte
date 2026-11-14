@@ -27,6 +27,7 @@
   import Tiroir from '../Tiroir.svelte';
   import Fenetre from '../Fenetre.svelte';
   import { trouverLieu } from '../../moteur/guide';
+  import { ecrirePreference, lirePreference } from '../preferences';
 
   const c = jeu.contenu!;
   type Panneau = 'histoire' | 'fiche' | 'compagnons' | 'quetes' | 'journal' | 'partie';
@@ -37,7 +38,9 @@
   let ville = $state<string | null>(null);
   let ficheOuverte = $state(false);
   let aideDateOuverte = $state(false);
-  let barreRepliee = $state(false);
+  /** Barre du haut repliée : préférence de cet appareil, retenue d'une session à l'autre. */
+  let barreRepliee = $state(lirePreference('barre-repliee', false));
+  $effect(() => ecrirePreference('barre-repliee', barreRepliee));
   let pleinEcran = $state(false);
   /** Ouvre un lieu ; s'il est dans une ville, on reviendra ensuite sur le plan de cette ville. */
   function ouvrirLieu(id: string) {
@@ -77,6 +80,13 @@
     if (etat.tempsLibre) return 'temps-libre';
     if (etat.finChapitre) return 'fin-chapitre';
     return 'monde';
+  });
+
+  // une scène, un combat ou un donjon qui commence referme le tiroir ouvert (sinon il cacherait l'action)
+  let vuePrecedente = '';
+  $effect(() => {
+    if (vue !== vuePrecedente && vuePrecedente !== '') { tiroir = null; menuOuvert = false; }
+    vuePrecedente = vue;
   });
 
   const entrees: [Panneau, string, string, string][] = [
@@ -131,7 +141,7 @@
       <Dialogue cle={sceneMoi!} />
     {:else if vue === 'temps-libre' || vue === 'fin-chapitre'}
       <div class="arriere" inert><Carte choisir={() => undefined} /></div>
-      <Fenetre titre={vue === 'temps-libre' ? 'Temps libre' : 'Fin du chapitre'}>
+      <Fenetre>
         {#if vue === 'temps-libre'}<TempsLibre />{:else}<FinChapitre />{/if}
       </Fenetre>
     {:else if lieu}
@@ -168,6 +178,7 @@
         <div class="menu">
           <button class="icone" aria-label="Menu" aria-expanded={menuOuvert} aria-haspopup="true" onclick={() => (menuOuvert = !menuOuvert)}>☰{#if pastilleMenu}<span class="pastille">{pastilleMenu}</span>{/if}</button>
           {#if menuOuvert}
+            <div class="fond-menu" role="presentation" onclick={() => (menuOuvert = false)}></div>
             <div class="liste-menu carte-ui" role="menu">
               {#each entrees as [id, nom, icone, k] (id)}
                 <button role="menuitem" aria-expanded={tiroir === id} onclick={() => ouvrir(id)}>
@@ -233,6 +244,7 @@
   .icone { position: relative; min-width: 44px; min-height: 40px; padding: 0.2em 0.6em; background: #ffffff10; border-color: #ffffff22; font-size: 1.05rem; }
   .texte { font-size: 0.9rem; }
   .menu { position: relative; }
+  .fond-menu { position: fixed; inset: 0; z-index: 74; }
   .liste-menu { position: absolute; right: 0; top: calc(100% + 0.3rem); width: min(300px, calc(100vw - 1rem)); display: grid; gap: 0.3rem; padding: 0.5rem; z-index: 75; }
   .liste-menu button { display: flex; align-items: center; gap: 0.5rem; text-align: left; min-height: 44px; }
   .liste-menu button span:first-child { flex: 1; }

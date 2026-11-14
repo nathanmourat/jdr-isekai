@@ -21,6 +21,7 @@
   import Auberge from './Auberge.svelte';
   import Cadre169 from '../Cadre169.svelte';
   import Fenetre from '../Fenetre.svelte';
+  import { ecrirePreference, lirePreference } from '../preferences';
 
   let { id, retour }: { id: string; retour: () => void } = $props();
   const c = jeu.contenu!;
@@ -55,10 +56,11 @@
   let litOuvert = $state(false);
   let panneaux = $state<HTMLElement | null>(null);
   /** Cadre d'informations en bas de l'écran : replié (une ligne) ou déplié. */
-  let detailsOuverts = $state(false);
+  let detailsOuverts = $state(lirePreference('lieu-details', false));
+  $effect(() => ecrirePreference('lieu-details', detailsOuverts));
   /** La proposition de repos en cours a été mise de côté (la fenêtre du lit est fermée). */
   let reposCache = $state(false);
-  $effect(() => { void id; pnjChoisi = null; piece = 'salle'; boutiqueOuverte = false; contratsOuverts = false; litOuvert = false; detailsOuverts = false; });
+  $effect(() => { void id; pnjChoisi = null; piece = 'salle'; boutiqueOuverte = false; contratsOuverts = false; litOuvert = false; });
   $effect(() => { if (!etat.repos) reposCache = false; });
   // une proposition de repos en cours se règle dans la chambre
   $effect(() => { if (etat.repos && lieu.auberge) piece = 'chambre'; });

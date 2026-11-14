@@ -11,6 +11,7 @@
   import { actionsDisponibles, estimerAction, NOMS_ETATS, type ActionCombat, type Combat, type Combattant, type EvenementCombat } from '../../moteur/combat';
   import type { Competence } from '../../contenu/schemas';
   import { etapeContrat } from '../../moteur/partie';
+  import { ecrirePreference, lirePreference } from '../preferences';
 
   let { cle }: { cle: string } = $props();
   const c = jeu.contenu!;
@@ -107,8 +108,10 @@
   let selection = $state<{ type: 'attaque' } | { type: 'competence'; comp: Competence } | { type: 'potion' } | { type: 'pacifier' } | { type: 'sac'; item: string; cible: string } | null>(null);
   let scene: SceneCombat | null = null;
   /** Panneau d'actions replié, volet du journal ouvert (affichage seulement, propre à cet appareil). */
-  let actionsReduites = $state(false);
-  let journalOuvert = $state(false);
+  let actionsReduites = $state(lirePreference('combat-actions-reduites', false));
+  let journalOuvert = $state(lirePreference('combat-journal', false));
+  $effect(() => ecrirePreference('combat-actions-reduites', actionsReduites));
+  $effect(() => ecrirePreference('combat-journal', journalOuvert));
 
   const cibles = $derived.by((): string[] => {
     if (!dispo || !acteur || !selection) return [];

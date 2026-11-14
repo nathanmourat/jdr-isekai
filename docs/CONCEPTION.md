@@ -802,6 +802,18 @@ Chaque fin comprend un **épilogue par héros** (son âge en 1030, son domaine, 
 
 ---
 
+### 11.1 L'écran de jeu (décidé le 14/11)
+
+Le jeu s'affiche **en plein écran, comme un jeu vidéo** : l'image (carte, décor, combat) occupe toute la fenêtre, et la page ne défile jamais.
+
+- **En haut**, une barre fine et transparente : la date, le badge du héros (qui ouvre sa fiche), le meneur du jour, et les boutons 🗺 Carte, ☰ Menu, ⛶ plein écran et ▴ pour cacher la barre.
+- **Le menu ☰** ouvre des tiroirs qui glissent depuis la droite : Histoire, Personnage, Compagnons, Quêtes, Journal, Partie. Un seul à la fois ; on le ferme avec ✕, Échap, un clic à côté, ou en balayant vers la droite. Sur ordinateur : C carte, H histoire, P personnage, O compagnons, Q quêtes, J journal.
+- **Dans un lieu**, on clique sur un personnage du décor : une petite bulle s'ouvre près de lui (lui parler, voir sa marchandise…). Le nom du lieu et ses informations sont dans un cadre en bas, replié par défaut.
+- **En dialogue**, le décor reste en fond et le texte est dans une boîte en bas, qu'on peut réduire pour voir l'image.
+- **En combat**, la scène occupe tout l'écran ; les actions sont dans un panneau en bas, le journal dans un volet à droite.
+- La boutique, le lit de l'auberge, l'examen de rang et le temps libre s'ouvrent dans des fenêtres au centre de l'écran.
+- Chaque appareil retient si l'on préfère la barre, le cadre du lieu ou le panneau du combat repliés.
+
 ## 12. Équilibrage : la méthode
 
 - Un script (`npm run equilibrage`) fait combattre **chaque classe** contre des **ennemis de référence** (un costaud, un rapide, un mage, un groupe de faibles, un mini-boss), au niveau 1 puis à quelques niveaux repères. Il fait **au moins 1 000 combats par cas**.

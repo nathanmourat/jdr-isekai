@@ -20,6 +20,22 @@ page.on('console', (m) => { if (m.type() === 'error') erreurs.push(m.text()); })
 let n = 0;
 const capture = async (nom) => page.screenshot({ path: `${dossier}/${String(++n).padStart(2, '0')}-${nom}.png` });
 const etape = (t) => console.log(`✔ ${t}`);
+/** Écran plein écran : les panneaux s'ouvrent par le menu ☰, comme des tiroirs. */
+async function ouvrirTiroir(nom) {
+  await page.getByRole('button', { name: 'Menu', exact: true }).click();
+  await page.getByRole('menuitem', { name: new RegExp(nom) }).click();
+}
+/** Retour à la carte (bouton de la barre du haut, présent seulement depuis un lieu ou un plan de ville). */
+async function allerCarte() {
+  const bouton = page.getByRole('button', { name: 'Carte', exact: true });
+  if (await bouton.isVisible()) await bouton.click();
+  await page.locator('[data-lieu], [data-ville]').first().waitFor();
+}
+/** La page ne doit jamais défiler. */
+async function pasDeDefilement(vue) {
+  const r = await page.evaluate(() => ({ h: document.scrollingElement.scrollHeight, w: document.scrollingElement.scrollWidth, vh: innerHeight, vw: innerWidth }));
+  if (r.h > r.vh + 1 || r.w > r.vw + 1) erreurs.push(`${vue} : la page défile (${r.w}×${r.h} pour ${r.vw}×${r.vh})`);
+}
 
 await page.goto(url);
 await page.getByRole('heading', { name: 'Les Appelés de Velmaris' }).waitFor();
@@ -36,11 +52,11 @@ await page.getByRole('button', { name: /Lame runique/ }).click();
 await page.getByRole('button', { name: /^Œil du Seuil/ }).click();
 await capture('creation');
 await page.getByRole('button', { name: 'Créer mon héros' }).click();
-await page.getByRole('button', { name: 'Carte', exact: true }).waitFor();
+await page.locator('[data-lieu="temple-du-seuil"]').waitFor(); // la carte est la scène elle-même
 etape('héros 1 créé (invoqué)');
 
 // Joueur 2 sur le même appareil : réincarné
-await page.getByRole('button', { name: 'Partie', exact: true }).click();
+await ouvrirTiroir('Partie');
 await page.getByRole('button', { name: /Ajouter un joueur sur cet appareil/ }).click();
 await page.getByLabel('Pseudo').fill('Bravo');
 await page.getByRole('button', { name: 'Rejoindre la partie' }).click();
@@ -50,7 +66,7 @@ await page.getByRole('button', { name: /^Elfe/ }).click();
 await page.getByRole('button', { name: /Guérisseur/ }).click();
 await page.getByRole('button', { name: /^Aura de l'Élu/ }).click();
 await page.getByRole('button', { name: 'Créer mon héros' }).click();
-await page.getByRole('button', { name: 'Histoire', exact: true }).click();
+await ouvrirTiroir('Histoire');
 etape('héros 2 créé (réincarné)');
 
 // Prologue de Bravo
@@ -71,13 +87,15 @@ for (let s = 0; s < 4; s++) {
   }
   if (s === 0) await capture('prologue');
   await page.getByRole('button', { name: 'Terminer la scène' }).click();
-  await page.getByRole('button', { name: 'Histoire', exact: true }).click();
+  await ouvrirTiroir('Histoire');
 }
+await page.keyboard.press('Escape'); // on referme le tiroir « Histoire »
 etape('prologue joué (4 scènes)');
 
 // Carte → Temple → L'Appel
-await page.getByRole('button', { name: 'Carte', exact: true }).click();
+await allerCarte();
 await capture('carte');
+await pasDeDefilement('carte');
 await page.getByRole('button', { name: /Temple du Seuil/ }).click();
 // on clique sur le Grand Prieur (silhouette sur le décor), puis on lui parle
 await page.getByRole('button', { name: /Parler à Grand Prieur/ }).click();
@@ -151,12 +169,13 @@ await jouerScene('appel');
 await page.getByRole('button', { name: 'Terminer la scène' }).click();
 etape('scène de l\'Appel jouée (votes des 2 joueurs)');
 
-await page.getByRole('button', { name: 'Carte', exact: true }).click();
+await allerCarte();
 // un seul point « Ville de Lysmont » sur la carte, puis le plan de la ville
 await page.getByRole('button', { name: /Ville de Lysmont/ }).click();
 await capture('plan-lysmont');
 await page.getByRole('button', { name: /Guilde de la Rose des Vents/ }).click();
 await capture('guilde');
+await pasDeDefilement('guilde');
 await page.getByRole('button', { name: /Dame Rowena/ }).first().click();
 await page.getByRole('button', { name: 'Lui parler' }).first().click();
 await jouerScene('examen-combat');
@@ -164,7 +183,7 @@ await page.getByRole('button', { name: 'Terminer la scène' }).click();
 etape('examen de la Guilde avec combat');
 
 // Les mois ne passent qu'à l'auberge : on clique sur le lit, on propose 6 mois, l'autre joueur accepte
-await page.getByRole('button', { name: 'Carte', exact: true }).click();
+await allerCarte();
 await page.getByRole('button', { name: /Ville de Lysmont/ }).click();
 await page.getByRole('button', { name: /Le Chaudron Fêlé/ }).click();
 // le lit est dans la chambre, à l'étage (escalier ou porte de la chambre)
@@ -177,6 +196,7 @@ etape('repos à l\'auberge accepté par tous');
 
 await page.getByRole('heading', { name: /Temps libre/ }).waitFor();
 await capture('temps-libre');
+await pasDeDefilement('temps libre');
 etape('temps libre affiché');
 
 // Reprise après rechargement
