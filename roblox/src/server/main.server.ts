@@ -5,7 +5,23 @@
  */
 import { Players } from "@rbxts/services";
 import { reseau, type Commande, type ReponseCommande } from "shared/reseau";
-import { accueillir, actionDuJoueur, boucleJours, boucleSauvegarde, diffuserGroupes, inviter, messageErreur, partieDe, quitterGroupe, repondreInvitation, sortir, toutEnregistrer } from "./parties";
+import {
+	accueillir,
+	actionDuJoueur,
+	boucleJours,
+	boucleSauvegarde,
+	diffuserGroupes,
+	inviter,
+	messageErreur,
+	partieDe,
+	publierAnnonce,
+	quitterGroupe,
+	rejoindreAnnonce,
+	repondreInvitation,
+	retirerAnnonce,
+	sortir,
+	toutEnregistrer,
+} from "./parties";
 import { sauvegardeActive } from "./stockage";
 import { diffuser as diffuserModeration, preparerModeration, verifierArrivee } from "./moderation";
 import { construireMonde } from "./monde";
@@ -60,6 +76,13 @@ r.commande.OnServerInvoke = (joueur: Player, c: unknown): ReponseCommande => {
 			}
 			case "repondre_invitation": {
 				const err = repondreInvitation(joueur, cmd.accepter === true);
+				return err !== undefined ? { ok: false, erreur: err } : { ok: true };
+			}
+			case "publier_annonce":
+			case "retirer_annonce":
+			case "rejoindre_annonce": {
+				const err =
+					cmd.type === "publier_annonce" ? publierAnnonce(joueur, cmd.objectif) : cmd.type === "retirer_annonce" ? retirerAnnonce(joueur) : rejoindreAnnonce(joueur, cmd.chef);
 				return err !== undefined ? { ok: false, erreur: err } : { ok: true };
 			}
 			case "quitter_groupe": {

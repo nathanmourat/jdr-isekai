@@ -12,7 +12,7 @@
 import { HttpService, Players, TextService } from "@rbxts/services";
 import { CONTENU } from "shared/donnees";
 import { appliquer, deltaHistoire, exporterHeros, pointHistoire, type PointHistoire, FORMAT, jourPeutPasser, nouvellePartie, rejouer, verifierSauvegarde, type Action, type EtatPartie } from "shared/moteur";
-import { idJoueur, reseau, type ActionJoueur, type EtatGroupe } from "shared/reseau";
+import { idJoueur, OBJECTIFS_GROUPE, reseau, type ActionJoueur, type EtatGroupe } from "shared/reseau";
 import { chargerEtVerrouiller, enregistrer, type DonneesPartie } from "./stockage";
 
 const r = reseau();
@@ -159,6 +159,7 @@ export function sortir(joueur: Player) {
 	const i = enAttente.indexOf(joueur);
 	if (i >= 0) enAttente.remove(i);
 	invitations.delete(joueur);
+	annonces.delete(joueur);
 	quitterGroupe(joueur, true);
 	const p = campagnePerso.get(joueur);
 	partieDe.delete(joueur);
@@ -184,6 +185,49 @@ const groupeDe = new Map<Player, Groupe>();
 /** Point de l'histoire du chef quand chaque membre est arrivé (pour faire avancer l'histoire du membre au retour). */
 const histoireAvant = new Map<Player, PointHistoire>();
 const invitations = new Map<Player, { chef: Player; expire: number }>();
+/** Tableau « Recherche de groupe » : ce que chaque chef (ou joueur seul) cherche à faire. */
+const annonces = new Map<Player, { objectif: string }>();
+
+function niveauDe(j: Player): number {
+	const p = campagnePerso.get(j);
+	const hid = p?.etat.joueurs[idJoueur(j)]?.herosId;
+	return hid !== undefined ? p!.etat.heros[hid]?.niveau ?? 1 : 1;
+}
+
+export function publierAnnonce(j: Player, objectif: unknown): string | undefined {
+	if (!aUnHeros(j)) return "Crée d'abord ton héros.";
+	const g = groupeDe.get(j);
+	if (g && g.chef !== j) return "Seul le chef du groupe peut publier une annonce.";
+	if (g && g.membres.size() >= MAX_GROUPE) return "Ton groupe est déjà complet.";
+	const i = typeIs(objectif, "number") ? objectif : 0;
+	annonces.set(j, { objectif: OBJECTIFS_GROUPE[i] ?? OBJECTIFS_GROUPE[0] });
+	diffuserGroupes();
+	return undefined;
+}
+
+export function retirerAnnonce(j: Player): string | undefined {
+	annonces.delete(j);
+	diffuserGroupes();
+	return undefined;
+}
+
+/** Rejoindre en un clic le groupe d'une annonce (sans attendre l'accord du chef : l'annonce est publique). */
+export function rejoindreAnnonce(j: Player, chefId: unknown): string | undefined {
+	const chef = typeIs(chefId, "number") ? Players.GetPlayerByUserId(chefId) : undefined;
+	if (!chef || !annonces.has(chef)) return "Cette annonce n'existe plus.";
+	if (chef === j) return "C'est ton annonce.";
+	if (groupeDe.has(j)) return "Quitte d'abord ton groupe.";
+	if (!aUnHeros(j)) return "Crée d'abord ton héros.";
+	const g = groupeDe.get(chef);
+	if (g && g.membres.size() >= MAX_GROUPE) return "Ce groupe est complet.";
+	const err = rejoindreGroupe(chef, j);
+	if (err !== undefined) return err;
+	annonces.delete(j);
+	const g2 = groupeDe.get(chef);
+	if (g2 && g2.membres.size() >= MAX_GROUPE) annonces.delete(chef);
+	diffuserGroupes();
+	return undefined;
+}
 
 function aUnHeros(j: Player): boolean {
 	const p = campagnePerso.get(j);
@@ -194,6 +238,11 @@ function aUnHeros(j: Player): boolean {
 export function diffuserGroupes() {
 	const occupes: number[] = [];
 	for (const [j] of groupeDe) occupes.push(j.UserId);
+	const liste: EtatGroupe["annonces"] = [];
+	for (const [chef, a] of annonces) {
+		if (chef.Parent !== Players) continue;
+		liste.push({ chef: chef.UserId, nom: chef.DisplayName, objectif: a.objectif, niveau: niveauDe(chef), places: MAX_GROUPE - (groupeDe.get(chef)?.membres.size() ?? 1) });
+	}
 	for (const j of Players.GetPlayers()) {
 		const g = groupeDe.get(j);
 		const inv = invitations.get(j);
@@ -202,6 +251,7 @@ export function diffuserGroupes() {
 			invitation: inv && inv.expire > os.time() ? { chef: inv.chef.UserId, nom: inv.chef.DisplayName } : undefined,
 			occupes,
 			pret: aUnHeros(j),
+			annonces: liste,
 		};
 		r.groupe.FireClient(j, info);
 	}
@@ -240,6 +290,7 @@ function rejoindreGroupe(chef: Player, j: Player): string | undefined {
 	}
 	g.membres.push(j);
 	groupeDe.set(j, g);
+	annonces.delete(j);
 	perso.membres.delete(j);
 	campagneChef.membres.add(j);
 	partieDe.set(j, campagneChef);

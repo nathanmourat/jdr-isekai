@@ -49,6 +49,7 @@ import {
 } from "shared/moteur";
 import { agir, commandeGroupe, commandeModeration, jeu, monHeros } from "../partie";
 import { RAISONS } from "shared/grades";
+import { OBJECTIFS_GROUPE } from "shared/reseau";
 import { vueModeration } from "./moderation";
 import { messageLocal } from "./messages";
 import { affichage, type Panneau } from "../local";
@@ -324,6 +325,7 @@ function vueLieu(parent: Frame, id: string, fermer: () => void, redessiner: () =
 			bouton(c, libelle, () => agir({ type: "contrat", contrat: ct.id }), { actif: ok, hauteur: 32, taille: 14 });
 		}
 	}
+	if (estGuilde(id) && voir("contrats")) vueRecherche(parent, redessiner);
 	if (estGuilde(id) && voir("grimoire")) {
 		const g = carte(parent, "📖 Fusions que la Guilde peut t'enseigner");
 		texte(g, "Uniquement les fusions de ta classe et de tes compétences. Elles vont dans ton grimoire personnel : les autres joueurs ne le voient pas.", 13, { couleur: COULEURS.texte2 });
@@ -680,6 +682,38 @@ function nomDe(userId: number): string {
 	return Players.GetPlayerByUserId(userId)?.DisplayName ?? "un joueur parti";
 }
 
+/** Annonce qu'on s'apprête à publier (objectif choisi). */
+const recherche = { objectif: 0 };
+
+/** Tableau « Recherche de groupe » : les annonces du serveur, rejoindre en un clic, publier la sienne. */
+export function vueRecherche(parent: Instance, redessiner: () => void) {
+	const g = jeu.groupe;
+	const moi = Players.LocalPlayer.UserId;
+	const c = carte(parent, "📋 Recherche de groupe");
+	const annonces = g?.annonces ?? [];
+	const mienne = annonces.find((a) => a.chef === moi);
+	const autres = annonces.filter((a) => a.chef !== moi);
+	if (autres.size() === 0) texte(c, "Aucune annonce pour l'instant.", 14, { couleur: COULEURS.texte2 });
+	const libre = g?.membres === undefined;
+	for (const a of autres) {
+		const l = ligne(c, 8);
+		texte(l, `<b>${esc(a.nom)}</b> (niv. ${a.niveau}) cherche du monde : <b>${esc(a.objectif)}</b> · ${a.places} place${a.places > 1 ? "s" : ""}`, 14, { largeur: new UDim(1, -120) });
+		bouton(l, "Rejoindre", () => commandeGroupe({ type: "rejoindre_annonce", chef: a.chef }), { principal: true, actif: libre && g?.pret === true, hauteur: 30, taille: 14 });
+	}
+	const chef = g?.membres?.[0];
+	if (g?.pret !== true || (chef !== undefined && chef !== moi)) return;
+	if (mienne) {
+		const l = ligne(c, 8);
+		texte(l, `Ton annonce : <b>${esc(mienne.objectif)}</b>`, 14, { couleur: COULEURS.or, largeur: new UDim(1, -120) });
+		bouton(l, "Retirer", () => commandeGroupe({ type: "retirer_annonce" }), { hauteur: 30, taille: 14 });
+	} else {
+		texte(c, "Publier une annonce : que veux-tu faire ?", 13, { couleur: COULEURS.texte2 });
+		const lo = ligne(c, 6);
+		OBJECTIFS_GROUPE.forEach((o, i) => bouton(lo, o, () => ((recherche.objectif = i), redessiner()), { hauteur: 28, taille: 12, choisi: recherche.objectif === i }));
+		bouton(c, "Publier", () => commandeGroupe({ type: "publier_annonce", objectif: recherche.objectif }), { principal: true, hauteur: 32, taille: 14 });
+	}
+}
+
 /** Groupe : ma campagne ou celle du chef, membres, invitations, joueurs du serveur. */
 function vuePartie(parent: Frame, _redessiner: () => void) {
 	const etat = jeu.etat!;
@@ -710,6 +744,7 @@ function vuePartie(parent: Frame, _redessiner: () => void) {
 		bouton(gr, chef === moi ? "Dissoudre le groupe" : "Quitter le groupe", () => commandeGroupe({ type: "quitter_groupe" }), { hauteur: 32, taille: 14 });
 	}
 
+	vueRecherche(parent, _redessiner);
 	// les joueurs du serveur
 	const autres = Players.GetPlayers().filter((p) => p !== Players.LocalPlayer);
 	const sv = carte(parent, `Joueurs sur ce serveur (${autres.size() + 1})`);

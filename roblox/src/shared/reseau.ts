@@ -30,7 +30,20 @@ export type Commande =
 	| { type: "synchro" }
 	| { type: "inviter"; cible: number }
 	| { type: "repondre_invitation"; accepter: boolean }
-	| { type: "quitter_groupe" };
+	| { type: "quitter_groupe" }
+	| { type: "publier_annonce"; objectif: number }
+	| { type: "retirer_annonce" }
+	| { type: "rejoindre_annonce"; chef: number };
+
+/** Ce qu'on peut chercher à faire en groupe (tableau « Recherche de groupe »). */
+export const OBJECTIFS_GROUPE = [
+	"Quête principale",
+	"Contrats de la Guilde",
+	"Donjon",
+	"Quêtes secondaires",
+	"Examen de rang",
+	"Explorer et discuter",
+];
 
 /** Ce que chaque joueur sait des groupes du serveur (UserId Roblox). */
 export interface EtatGroupe {
@@ -42,6 +55,8 @@ export interface EtatGroupe {
 	occupes: number[];
 	/** Vrai si j'ai déjà créé mon héros (sinon je ne peux ni inviter ni être invité). */
 	pret: boolean;
+	/** Tableau « Recherche de groupe » du serveur. */
+	annonces: { chef: number; nom: string; objectif: string; niveau: number; places: number }[];
 }
 
 /** Campagne envoyée à un joueur (à son arrivée, en entrant dans un groupe, en le quittant). */
