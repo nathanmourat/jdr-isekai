@@ -2,8 +2,9 @@
 
 Pour chaque expression <e>, écrit dans <sortie>/<e>/ :
   yeux.png   : yeux fermés (seulement la zone des yeux, bords adoucis), pour le clignement
-  bouche.png : bouche ouverte (zone de la bouche), pour la parole
-  carte.png  : R = mouvement des cheveux (0..255), G = respiration (0..255)
+  carte.png  : R = cheveux (ondulation), G = respiration, B = tête (micro-mouvements)
+La bouche est animée par le code (mâchoire + intérieur de bouche), d'après anim.json :
+  centre de la bouche, largeur, bouche déjà ouverte ou non, pivot du cou.
 Le portrait de base reste prepares/portrait-<e>.png.
 
 Usage : python3 preparer_animation.py <dossier sources> <dossier portraits 512> <sortie> <id> <bouche_x> <bouche_y>
@@ -60,38 +61,6 @@ def png512(rgba, chemin):
     cv2.imwrite(chemin, p, [cv2.IMWRITE_PNG_COMPRESSION, 9])
 
 
-def ouvrir_bouche(img, cx, cy, largeur, ouverture, peindre=True):
-    """Bouche provisoire : la lèvre du bas et le menton descendent, l'ouverture est peinte en sombre."""
-    H, W = img.shape[:2]
-    yy, xx = np.mgrid[0:H, 0:W].astype(np.float32)
-    fx = np.exp(-((xx - cx) / (largeur * 0.75)) ** 2)
-    fy = np.clip((yy - cy) / 4.0, 0, 1) * np.clip(1 - (yy - cy - 8) / 45.0, 0, 1)
-    dy = ouverture * fx * fy
-    out = cv2.remap(img, xx, (yy - dy).astype(np.float32), cv2.INTER_CUBIC, borderMode=cv2.BORDER_REPLICATE)
-    if not peindre:  # bouche déjà ouverte : on abaisse seulement la mâchoire
-        return out
-    # ouverture : lentille sombre entre la lèvre du haut et la lèvre du bas abaissée
-    mask = np.zeros((H, W), np.float32)
-    xs = np.arange(int(cx - largeur / 2), int(cx + largeur / 2))
-    pts_haut, pts_bas = [], []
-    for x in xs:
-        t = (x - cx) / (largeur / 2)
-        h = ouverture * 0.95 * max(0.0, 1 - t * t) ** 0.8
-        pts_haut.append((x, cy + 1))
-        pts_bas.append((x, cy + 1 + h))
-    poly = np.array(pts_haut + pts_bas[::-1], np.int32)
-    cv2.fillPoly(mask, [poly], 1.0, lineType=cv2.LINE_AA)
-    mask = adoucir(mask, 1.2)[..., None]
-    interieur = np.zeros_like(out[..., :3], np.float32)
-    interieur[:] = (32, 30, 78)  # BGR : rouge-brun très sombre
-    # un peu plus clair en bas (langue)
-    langue = np.clip((yy - cy - ouverture * 0.45) / (ouverture * 0.5 + 1e-3), 0, 1)[..., None]
-    interieur = interieur * (1 - 0.5 * langue) + np.array((70, 74, 150), np.float32) * 0.5 * langue
-    rgb = out[..., :3].astype(np.float32) * (1 - mask) + interieur * mask
-    out = out.copy(); out[..., :3] = np.clip(rgb, 0, 255).astype(np.uint8)
-    return out
-
-
 def masque_cheveux(img_bgr, alpha, visage):
     H, W = alpha.shape
     hsv = cv2.cvtColor(img_bgr, cv2.COLOR_BGR2HSV)
@@ -120,8 +89,17 @@ def masque_cheveux(img_bgr, alpha, visage):
 def respiration(alpha):
     H, W = alpha.shape
     yy = np.mgrid[0:H, 0:W][0].astype(np.float32)
-    g = 0.45 + 0.55 * np.clip((yy - 0.50 * H) / (0.20 * H), 0, 1)  # la tête suit un peu, le buste beaucoup
+    g = 0.35 + 0.65 * np.clip((yy - 0.50 * H) / (0.16 * H), 0, 1)  # la tête suit un peu, épaules et buste beaucoup
     return g * (alpha > 0).astype(np.float32)
+
+
+def tete(alpha, cheveux, cou_y):
+    """Poids de la tête : 1 au-dessus du cou, 0 sur le buste ; la tresse suit à 60 %."""
+    H, W = alpha.shape
+    yy = np.mgrid[0:H, 0:W][0].astype(np.float32)
+    t = np.clip((cou_y + 0.035 * H - yy) / (0.07 * H), 0, 1)
+    t = np.maximum(t, 0.6 * (cheveux > 0.05).astype(np.float32))
+    return adoucir(t * (alpha > 0).astype(np.float32), 4)
 
 
 def main():
@@ -141,13 +119,9 @@ def main():
     yeux = cv2.dilate(yeux, np.ones((17, 17), np.uint8))
     yeux_m = np.clip(adoucir(yeux.astype(np.float32), 5) * 1.3, 0, 1)
 
-    # 2. bouche ouverte provisoire sur le neutre
+    # 2. bouche : seulement ses dimensions (le code anime la mâchoire)
     largeur = 0.060 * W
-    ouverture = 0.010 * H
-    bouche_n = ouvrir_bouche(neutre, MX, MY, largeur, ouverture)
     yy, xx = np.mgrid[0:H, 0:W]
-    bouche_m = np.clip(1.3 - np.sqrt(((xx - MX) / (largeur * 0.80)) ** 2 + ((yy - MY - ouverture * 2.0) / (ouverture * 5.0)) ** 2), 0, 1)
-    bouche_m = adoucir(bouche_m.astype(np.float32), 2)
 
     visage = (MX - 0.005 * W, MY - 0.085 * H, 0.105 * W, 0.135 * H)
 
@@ -167,20 +141,21 @@ def main():
         rgba = np.dstack([f_e, (m_e * 255).astype(np.uint8)])
         png512(rgba, os.path.join(dos, "yeux.png"))
 
-        # bouche : ouverte sur l'image de l'expression, centre ramené dans son repère
         c = M @ np.array([MX, MY, 1.0])
-        b_e = ouvrir_bouche(img, c[0], c[1], largeur, ouverture, peindre=e not in ("joie", "surprise"))
-        bm_e = vers(bouche_m, M, img.shape, inverse=False)
-        rgba = np.dstack([b_e, (bm_e * 255).astype(np.uint8)])
-        png512(rgba, os.path.join(dos, "bouche.png"))
-
         # carte : cheveux (R) et respiration (G)
         v_e = (c[0] - 0.005 * W, c[1] - 0.085 * H, visage[2], visage[3])
         ch = masque_cheveux(img, alpha, v_e)
         re = respiration(alpha)
-        carte = np.dstack([np.zeros_like(ch), re, ch])  # BGR : B=0, G=respiration, R=cheveux
+        cou_y = c[1] + 0.075 * H
+        te = tete(alpha, ch, cou_y)
+        carte = np.dstack([te, re, ch])  # BGR : B=tête, G=respiration, R=cheveux
         png512((np.clip(carte, 0, 1) * 255).astype(np.uint8), os.path.join(dos, "carte.png"))
-        infos["expressions"][e] = {"bouche": [round(c[0] / W, 4), round(c[1] / H, 4)]}
+        infos["expressions"][e] = {
+            "bouche": [round(float(c[0]) / W, 4), round(float(c[1]) / H, 4)],
+            "largeur": round(largeur / W, 4),
+            "ouverte": e in ("joie", "surprise"),
+            "cou": [round(float(c[0]) / W, 4), round(float(cou_y) / H, 4)],
+        }
         print(e, "ok, bouche", infos["expressions"][e]["bouche"])
 
     with open(os.path.join(OUT, "anim.json"), "w") as f:

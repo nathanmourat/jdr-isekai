@@ -128,7 +128,7 @@ Traductions (pour vérifier) :
 
 À venir : Kaya, Nadja, Séraphine, Elianne, Ilyssë, Ysoria, Morra ; Halvine, Rowena, Auréliath, Bram, Ferrand…
 
-## 5. Animation des portraits (15/11)
+## 5. Animation des portraits (15/11, version « réaliste »)
 
 Démonstration : artefact « Portrait animé — Aveline » (lien donné au groupe dans la conversation).
 
@@ -136,15 +136,22 @@ Démonstration : artefact « Portrait animé — Aveline » (lien donné au grou
 - `assets/personnages/compagnes/aveline/portrait-<expression>.png` : portrait 512 × 512, fond transparent ;
 - `assets/personnages/compagnes/aveline/anim/<expression>/` :
   - `yeux.png` : yeux fermés, seulement la zone des yeux (alpha = masque adouci) → clignement ;
-  - `bouche.png` : bouche ouverte, seulement la zone de la bouche → parole. **Provisoire** (dessinée en code) en attendant l'image IA « neutre-bouche-ouverte » ;
-  - `carte.png` : canal rouge = ondulation des cheveux (0 près du crâne, fort sur les pointes et la tresse), canal vert = respiration (le buste monte, la tête suit à moitié) ;
-- `anim/anim.json` : taille et centre de la bouche par expression.
+  - `carte.png` : rouge = cheveux (0 près du crâne, fort vers les pointes et la tresse), vert = respiration (épaules et buste), bleu = tête (1 au-dessus du cou, la tresse suit à 60 %) ;
+- `anim/anim.json` : par expression, centre de la bouche, largeur, `ouverte` (bouche déjà ouverte sur l'image : joie, surprise) et pivot du cou.
 
-**Module** : `outils/portraits/portrait-anime.js` (classe `PortraitAnime`, WebGL 1, sans dépendance). Respiration (cycle de 4,2 s), clignement aléatoire toutes les 2,5 à 6 s (parfois double), ondulation des cheveux, bouche qui bouge tant que `parler(true)` (à brancher sur l'affichage lettre par lettre), aura lumineuse qui pulse (`definirLueur(couleur)`), particules (`lucioles`, `braises`, `magie`, `neige`, `ombre`). Avec `prefers-reduced-motion` : clignement et parole seulement. Sans WebGL : portrait fixe.
+**Ce que fait le module** (`outils/portraits/portrait-anime.js`, classe `PortraitAnime`, WebGL 1, sans dépendance) :
+- **tête** jamais tout à fait immobile : balancement lent (moins de 0,5° et 1 px), changement de posture toutes les 5 à 12 s, petit hochement sur certaines voyelles accentuées ;
+- **cheveux** : vague qui descend vers les pointes, souffle d'air irrégulier, inertie (ils suivent la tête avec retard) ;
+- **respiration** irrégulière (inspiration 38 %, expiration 45 %, pause), cycle de 4 à 5,2 s, plus courte pendant la parole ; épaules qui montent ;
+- **clignement** au rythme humain : fermeture 75 ms, fermé 45 ms, ouverture 140 ms ; toutes les 2,4 à 5,6 s (parfois double, parfois en fin de phrase) ;
+- **changement d'expression pendant un clignement**, avec un fondu de 120 ms ;
+- **bouche** dessinée par le code : la mâchoire s'abaisse et l'intérieur de la bouche (avec les dents du haut) apparaît selon la lettre prononcée (`prononcer(lettre)` : voyelles ouvertes, m/b/p fermées), avec un lissage naturel. Plus besoin d'image « bouche ouverte » ;
+- **lueur** douce et **particules** en deux plans (derrière et devant le personnage, avec parallaxe) : `lucioles`, `braises`, `magie`, `neige`, `ombre` ;
+- `prefers-reduced-motion` : clignement et parole seulement. Sans WebGL : portrait fixe.
 
 **Scripts** (`outils/portraits/`, Python + OpenCV + rembg) :
 - `preparer_portrait.py <source> <sortie>` : détourage (modèle `isnet-anime`) et 512 × 512 ;
-- `preparer_animation.py <sources> <portraits 512> <sortie> <id> <bouche_x> <bouche_y>` : recale les variantes sur le neutre (ECC affine) et fabrique `yeux.png`, `bouche.png`, `carte.png` pour chaque expression ;
+- `preparer_animation.py <sources> <portraits 512> <sortie> <id> <bouche_x> <bouche_y>` : recale chaque expression sur le neutre (ECC affine) et fabrique `yeux.png`, `carte.png` et `anim.json` ;
 - `aligner.py` : recalage seul, pour vérifier.
 
 Les originaux IA (1254 × 1254) restent sur le PC du graphiste dans `portraits-sources/` (ignoré par Git).
