@@ -22,6 +22,10 @@ export const affichage = {
 	texteLibre: "",
 	/** Réplique affichée dans la scène en cours (clé « scène:nœud ») */
 	replique: { cle: "", vues: 1 },
+	/** Interface repliée (surtout sur téléphone) : panneau latéral, barre du haut, panneaux du combat. */
+	lateralReplie: false,
+	barreReduite: false,
+	combatReduit: false,
 	/** Activités de temps libre en cours de choix */
 	activites: [] as { activite: string; compagnon?: string }[],
 };

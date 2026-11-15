@@ -2,6 +2,7 @@
  * Petite boîte à outils d'interface (fenêtres, textes, boutons, champs) aux couleurs de Velmaris.
  * Tout est construit par le code : aucune interface à dessiner dans Studio.
  */
+import { UserInputService } from "@rbxts/services";
 
 export const COULEURS = {
 	fond: Color3.fromRGB(20, 15, 9),
@@ -17,6 +18,11 @@ export const COULEURS = {
 	bleu: Color3.fromRGB(110, 170, 230),
 	violet: Color3.fromRGB(160, 110, 210),
 };
+
+/** Écran tactile sans clavier (téléphone, tablette) : boutons plus gros, panneaux plus compacts. */
+export const MOBILE = UserInputService.TouchEnabled && !UserInputService.KeyboardEnabled;
+/** Hauteur minimale d'un bouton au doigt (environ 44 points, comme sur le web). */
+const DOIGT = 44;
 
 const POLICE = Enum.Font.Gotham;
 const POLICE_GRAS = Enum.Font.GothamBold;
@@ -104,7 +110,7 @@ export function texte(
 	const t = new Instance("TextLabel");
 	t.BackgroundTransparency = 1;
 	t.Text = contenu;
-	t.TextSize = taille;
+	t.TextSize = MOBILE ? math.max(14, taille) : taille;
 	t.Font = options.gras ? POLICE_GRAS : POLICE;
 	t.TextColor3 = options.couleur ?? COULEURS.texte;
 	t.TextWrapped = true;
@@ -125,7 +131,7 @@ export function bouton(
 	const b = new Instance("TextButton");
 	const actif = options.actif ?? true;
 	b.Text = libelle;
-	b.TextSize = options.taille ?? 16;
+	b.TextSize = MOBILE ? math.max(15, (options.taille ?? 16) + 1) : options.taille ?? 16;
 	b.Font = options.principal ? POLICE_GRAS : POLICE;
 	b.TextWrapped = true;
 	b.RichText = true;
@@ -133,10 +139,11 @@ export function bouton(
 	b.TextColor3 = options.principal ? COULEURS.fond : actif ? COULEURS.texte : COULEURS.texte2;
 	b.BackgroundColor3 = options.principal ? COULEURS.or : options.choisi ? COULEURS.choisi : COULEURS.fond2;
 	b.BackgroundTransparency = actif ? 0 : 0.5;
+	const hauteur = MOBILE ? math.max(DOIGT, options.hauteur ?? 40) : options.hauteur ?? 40;
 	if (options.largeur) {
-		b.Size = new UDim2(options.largeur, new UDim(0, options.hauteur ?? 40));
+		b.Size = new UDim2(options.largeur, new UDim(0, hauteur));
 	} else {
-		b.Size = new UDim2(0, 0, 0, options.hauteur ?? 40);
+		b.Size = new UDim2(0, 0, 0, hauteur);
 		b.AutomaticSize = Enum.AutomaticSize.X;
 	}
 	arrondir(b, 8);

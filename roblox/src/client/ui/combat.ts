@@ -10,7 +10,7 @@ import { actionsDisponibles, interpreter, NOMS_ETATS, propositionsScript, raison
 import { affichage } from "../local";
 import { agir, jeu, monHeros, montrerErreur } from "../partie";
 import { proposerCibles } from "../rendu/arene";
-import { barre, bouton, champ, colonne, COULEURS, esc, ligne, texte } from "./kit";
+import { barre, bouton, champ, colonne, COULEURS, esc, ligne, MOBILE, texte } from "./kit";
 
 const ESSAIS_MAX = 3;
 type Menu = "aucun" | "competences" | "objets" | "proposer" | "conseils" | "plus" | "cible";
@@ -96,11 +96,15 @@ export function vueCombat(calque: Frame, cle: string, redessiner: () => void) {
 	}
 
 	// ── En haut : titre et ordre des tours
-	const haut = contenu(cadre(calque, new UDim2(0.5, 0, 0, 10), new Vector2(0.5, 0), new UDim(0, 640)));
-	texte(haut, `⚔ <b>${combat.nom}</b>  ·  Tour ${combat.tour}`, 18, { couleur: COULEURS.or, centre: true });
+	const haut = contenu(cadre(calque, new UDim2(0.5, 0, 0, 10), new Vector2(0.5, 0), MOBILE ? new UDim(1, -16) : new UDim(0, 640)));
+	const lt = ligne(haut, 6);
+	texte(lt, `⚔ <b>${combat.nom}</b>  ·  Tour ${combat.tour}`, 18, { couleur: COULEURS.or, centre: true, largeur: new UDim(1, -60) });
+	// panneaux réductibles : on voit mieux le combat en 3D (surtout sur téléphone)
+	bouton(lt, affichage.combatReduit ? "▾" : "▴", () => ((affichage.combatReduit = !affichage.combatReduit), redessiner()), { hauteur: 28, taille: 14 });
+	const reduit = affichage.combatReduit;
 	const ordre = ligne(haut, 4);
 	const n = combat.ordre.size();
-	for (let k = 0; k < math.min(n, 8); k++) {
+	for (let k = 0; k < math.min(n, reduit ? 0 : MOBILE ? 5 : 8); k++) {
 		const id = combat.ordre[(combat.index + k) % math.max(1, n)];
 		const x = combat.combattants.find((c) => c.id === id);
 		if (!x || x.ko || x.parti) continue;
@@ -109,10 +113,11 @@ export function vueCombat(calque: Frame, cle: string, redessiner: () => void) {
 	}
 	// derniers événements
 	const nb = combat.evenements.size();
-	for (let i = math.max(0, nb - 3); i < nb; i++) texte(haut, combat.evenements[i].texte, 13, { couleur: i === nb - 1 ? COULEURS.texte : COULEURS.texte2, centre: true });
+	for (let i = math.max(0, nb - (reduit || MOBILE ? 1 : 3)); i < nb; i++) texte(haut, combat.evenements[i].texte, 13, { couleur: i === nb - 1 ? COULEURS.texte : COULEURS.texte2, centre: true });
 
-	// ── À gauche : l'équipe
-	const equipe = contenu(cadre(calque, new UDim2(0, 10, 0, 10), new Vector2(0, 0), new UDim(0, 230)));
+	// ── À gauche : l'équipe (sous le titre sur téléphone ; cachée quand les panneaux sont réduits)
+	const equipe = contenu(cadre(calque, MOBILE ? new UDim2(0, 8, 0, 130) : new UDim2(0, 10, 0, 10), new Vector2(0, 0), new UDim(0, MOBILE ? 170 : 230)));
+	(equipe.Parent as Frame).Visible = !reduit;
 	for (const x of combat.combattants) {
 		if (x.camp !== "heros" || x.parti) continue;
 		const etats = x.etats.map((e) => NOMS_ETATS[e.id] ?? e.id).join(", ");
@@ -122,7 +127,7 @@ export function vueCombat(calque: Frame, cle: string, redessiner: () => void) {
 	}
 
 	// ── En bas : commandes
-	const bas = contenu(cadre(calque, new UDim2(0.5, 0, 1, -10), new Vector2(0.5, 1), new UDim(0, 860), 0.08));
+	const bas = contenu(cadre(calque, new UDim2(0.5, 0, 1, -10), new Vector2(0.5, 1), MOBILE ? new UDim(1, -16) : new UDim(0, 860), 0.08));
 
 	if (combat.resultat !== undefined) {
 		proposerCibles([], undefined);

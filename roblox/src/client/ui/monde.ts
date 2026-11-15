@@ -104,8 +104,15 @@ export function barreHaut(parent: Frame, redessiner: () => void, allerA: (lieu: 
 		l1,
 		`<font color="#d9a441">${esc(h.nom)} · niv. ${h.niveau} · rang ${rangHeros(etat, h.id)} · ${h.or} or</font> · ${textePv(h)}${etat.meneur !== undefined ? ` · Meneur : ${esc(etat.joueurs[etat.meneur]?.pseudo ?? "?")}` : ""}`,
 		15,
-		{ largeur: new UDim(1, -320) },
+		{ largeur: new UDim(1, -370) },
 	);
+	// barre réductible (pratique sur téléphone) : une seule ligne quand elle est réduite
+	bouton(l1, affichage.barreReduite ? "▾" : "▴", () => ((affichage.barreReduite = !affichage.barreReduite), redessiner()), { hauteur: 28, taille: 14 });
+	if (affichage.barreReduite) {
+		const lr = ligne(c, 6);
+		for (const [id, nom] of ONGLETS) bouton(lr, nom, () => ((affichage.panneau = affichage.panneau === id ? undefined : id), (affichage.lieu = undefined), redessiner()), { choisi: affichage.panneau === id, hauteur: 28, taille: 13 });
+		return;
+	}
 	if (affichage.dans !== undefined) {
 		const ld = ligne(c, 8);
 		texte(ld, `📍 Tu es dans : <b>${nomLieu(affichage.dans)}</b>`, 15, { largeur: new UDim(0, 320) });

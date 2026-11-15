@@ -21,7 +21,7 @@ import { vueCombat } from "./ui/combat";
 import { vueDialogue } from "./ui/dialogue";
 import { vueDonjon } from "./ui/donjon";
 import { ecranAccueil, ecranCreation } from "./ui/ecrans";
-import { COULEURS, vider } from "./ui/kit";
+import { COULEURS, MOBILE, vider } from "./ui/kit";
 import { barreHaut, panneauLateral } from "./ui/monde";
 import { vueFinChapitre, vueTempsLibre } from "./ui/temps";
 import { majSons } from "./sons";
@@ -126,6 +126,28 @@ new Instance("UICorner").Parent = bandeau;
 remplissage(bandeau, 8);
 bandeau.Parent = gui;
 
+// languette pour replier / rouvrir le panneau latéral (pratique sur téléphone)
+const languette = new Instance("TextButton");
+languette.Name = "Languette";
+languette.AnchorPoint = new Vector2(1, 1);
+languette.Size = new UDim2(0, 0, 0, MOBILE ? 44 : 30);
+languette.AutomaticSize = Enum.AutomaticSize.X;
+languette.BackgroundColor3 = COULEURS.fond2;
+languette.TextColor3 = COULEURS.texte;
+languette.Font = Enum.Font.GothamBold;
+languette.TextSize = MOBILE ? 16 : 14;
+languette.Visible = false;
+new Instance("UICorner").Parent = languette;
+remplissage(languette, 6);
+languette.Parent = gui;
+languette.MouseButton1Click.Connect(() => {
+	affichage.lateralReplie = !affichage.lateralReplie;
+	redessiner();
+});
+function placerLanguette(y: number) {
+	languette.Position = new UDim2(1, -8, 0, math.max(MOBILE ? 52 : 40, y - 4));
+}
+
 function allerA(lieu: string) {
 	affichage.panneau = undefined;
 	affichage.lieu = undefined;
@@ -216,6 +238,13 @@ function redessiner() {
 		}
 	}
 
+	// panneau latéral replié : seule la languette reste
+	const panneauVoulu = laterale.Visible;
+	if (panneauVoulu && affichage.lateralReplie) laterale.Visible = false;
+	languette.Visible = panneauVoulu;
+	languette.Text = affichage.lateralReplie ? "☰ Ouvrir le panneau" : "▸ Replier";
+	placerLanguette(laterale.Position.Y.Offset);
+
 	if (vue !== "combat") cacherArene();
 	if (vue !== "donjon" && !combatDonjon) cacherDonjon();
 	if (vue !== "combat") cameraNormale();
@@ -231,6 +260,7 @@ function redessiner() {
 			const y = barre.AbsoluteSize.Y + 8;
 			laterale.Position = new UDim2(1, etroit ? 0 : -8, 0, y);
 			laterale.Size = etroit ? new UDim2(1, 0, 0.55, -y) : new UDim2(0, 470, 1, -y - 8);
+			placerLanguette(y);
 		});
 	}
 	if (vue !== vuePrecedente) {
