@@ -10,6 +10,7 @@ import { Players, TweenService } from "@rbxts/services";
 import { CONTENU } from "shared/donnees";
 import { pvHorsCombat, type TestCarac } from "shared/moteur";
 import { jeu, monHeros } from "../partie";
+import { jouer } from "../sons";
 import { COULEURS } from "./kit";
 
 const NOMS_CARACS: Record<string, string> = { FOR: "Force", AGI: "Agilité", INT: "Intelligence", VIT: "Vitalité", ESP: "Esprit", CHA: "Charisme" };
@@ -118,6 +119,8 @@ function comparer() {
 	const attente = math.max(0, finDes - os.clock());
 	task.delay(attente, () => {
 		for (const [t, c] of lignes) notifier(t, c);
+		if (apres.niveau > avant.niveau) jouer("niveau");
+		else if (apres.or > avant.or) jouer("pieces");
 	});
 }
 
@@ -170,6 +173,7 @@ function lancer(t: TestCarac) {
 	detail.LayoutOrder = 4;
 	f.Parent = gui;
 	finDes = os.clock() + 3.6;
+	jouer("de");
 	task.spawn(() => {
 		const hasard = new Random();
 		for (let i = 0; i < 16; i++) {
@@ -184,6 +188,7 @@ function lancer(t: TestCarac) {
 		r.TextXAlignment = Enum.TextXAlignment.Center;
 		r.LayoutOrder = 5;
 		bord.Color = t.reussi ? COULEURS.vert : COULEURS.rouge;
+		jouer(t.reussi ? "reussite" : "echec");
 		task.wait(2);
 		f.Destroy();
 		desEnCours = false;

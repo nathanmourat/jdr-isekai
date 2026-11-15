@@ -16,6 +16,7 @@ import { Players, ReplicatedStorage, RunService, TweenService, Workspace } from 
 import { CONTENU } from "shared/donnees";
 import { caseDonjon, listeHeros, type DonjonDef, type EtatDonjon, type EtatPartie } from "shared/moteur";
 import { agir, jeu } from "../partie";
+import { jouer } from "../sons";
 
 const CASE = 12;
 const HAUT = 18;
@@ -467,7 +468,9 @@ function construire(dj: EtatDonjon) {
 
 /** Construit le donjon (la première fois) puis le met à jour : brouillard, coffres, pièges, portes, monstres. */
 export function afficherDonjon(dj: EtatDonjon) {
-	if (donjonAffiche !== dj.id) {
+	// à la construction, les coffres déjà ouverts et les pièges déjà joués ne font pas de bruit
+	const neuf = donjonAffiche !== dj.id;
+	if (neuf) {
 		cacherDonjon(false);
 		construire(dj);
 	}
@@ -492,6 +495,7 @@ export function afficherDonjon(dj: EtatDonjon) {
 		if (c && fait && c.eclat.Enabled) {
 			// ouvert une seule fois : le couvercle bascule, l'or disparaît (l'objet de l'autel aussi)
 			c.eclat.Enabled = false;
+			if (!neuf) jouer("coffre");
 			if (c.objet) {
 				c.objet.Transparency = 1;
 				for (const x of c.objet.GetChildren()) if (x.IsA("BasePart")) x.Transparency = 1;
@@ -499,7 +503,10 @@ export function afficherDonjon(dj: EtatDonjon) {
 			if (c.couvercle !== c.objet) TweenService.Create(c.couvercle, new TweenInfo(0.5, Enum.EasingStyle.Back), { CFrame: c.ouvert }).Play();
 		}
 		const p = pieges.get(e.id);
-		if (p) p.Parent = fait ? dossier : undefined;
+		if (p) {
+			if (fait && p.Parent === undefined && !neuf) jouer("piege");
+			p.Parent = fait ? dossier : undefined;
+		}
 		// monstres : visibles dans les cases vues, tant que leur combat n'est pas gagné
 		if (e.type === "combat" && e.rencontre !== undefined) {
 			const voir = vus.has(`${e.x},${e.y}`) && !fait;

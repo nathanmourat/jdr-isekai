@@ -301,6 +301,127 @@ function eclat(p: Pion, couleur: Color3, nombre = 24) {
 	task.delay(1, () => a.Destroy());
 }
 
+/** Élément d'une action (attaque de base ou compétence), pour la couleur des projectiles. */
+function elementAction(attaquant: Combattant | undefined, competence: string | undefined): string {
+	if (competence === undefined || competence === "attaque") return (attaquant?.attaque as { element?: string } | undefined)?.element ?? "physique";
+	const k = CONTENU.competences[competence] as unknown as { effets?: { element?: string }[] } | undefined;
+	return k?.effets?.find((x) => x.element !== undefined)?.element ?? "arcane";
+}
+
+/** Projectile (sort, flèche, fiole) qui file de la source à la cible, avec une traînée de la couleur de l'élément. */
+function projectile(source: Pion, cible: Pion, element: string) {
+	if (!dossier) return;
+	const couleur = COULEUR_ELEMENT[element] ?? new Color3(1, 1, 1);
+	const depart = source.racine.Position.add(new Vector3(0, 1.5, 0));
+	const arrivee = cible.racine.Position.add(new Vector3(0, 1.2, 0));
+	const balle = new Instance("Part");
+	balle.Shape = Enum.PartType.Ball;
+	balle.Size = new Vector3(0.9, 0.9, 0.9);
+	balle.Material = Enum.Material.Neon;
+	balle.Color = couleur;
+	balle.Anchored = true;
+	balle.CanCollide = false;
+	balle.CastShadow = false;
+	balle.Position = depart;
+	const a0 = new Instance("Attachment");
+	a0.Position = new Vector3(0, 0.35, 0);
+	a0.Parent = balle;
+	const a1 = new Instance("Attachment");
+	a1.Position = new Vector3(0, -0.35, 0);
+	a1.Parent = balle;
+	const trainee = new Instance("Trail");
+	trainee.Attachment0 = a0;
+	trainee.Attachment1 = a1;
+	trainee.Color = new ColorSequence(couleur);
+	trainee.LightEmission = 1;
+	trainee.Lifetime = 0.25;
+	trainee.Transparency = new NumberSequence(0.1, 1);
+	trainee.Parent = balle;
+	const l = new Instance("PointLight");
+	l.Color = couleur;
+	l.Range = 10;
+	l.Parent = balle;
+	balle.Parent = dossier;
+	const t = TweenService.Create(balle, new TweenInfo(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.In), { Position: arrivee });
+	t.Completed.Connect(() => balle.Destroy());
+	t.Play();
+}
+
+/** Impact propre à chaque élément : flammes, éclats de glace, éclair, colonne de lumière, fumée, bulles… */
+function impact(cible: Pion, element: string, fort: boolean) {
+	if (!dossier) return;
+	const couleur = COULEUR_ELEMENT[element] ?? new Color3(1, 1, 1);
+	const pos = cible.racine.Position;
+	const temporaire = (o: Instance, duree: number) => task.delay(duree, () => o.Destroy());
+	const morceau = (taille: Vector3, cf: CFrame, c: Color3, transparence = 0.2) => {
+		const p = new Instance("Part");
+		p.Anchored = true;
+		p.CanCollide = false;
+		p.CastShadow = false;
+		p.Material = Enum.Material.Neon;
+		p.Color = c;
+		p.Size = taille;
+		p.CFrame = cf;
+		p.Transparency = transparence;
+		p.Parent = dossier;
+		return p;
+	};
+	if (element === "feu") {
+		const f = new Instance("Fire");
+		f.Size = fort ? 9 : 6;
+		f.Heat = 12;
+		f.Color = couleur;
+		f.SecondaryColor = Color3.fromRGB(255, 220, 120);
+		f.Parent = cible.racine;
+		task.delay(0.6, () => (f.Enabled = false));
+		temporaire(f, 1.6);
+	} else if (element === "glace") {
+		for (let i = 0; i < (fort ? 8 : 5); i++) {
+			const a = (i / 6) * math.pi * 2;
+			const eclatGlace = morceau(new Vector3(0.4, 1.6, 0.4), new CFrame(pos.add(new Vector3(math.cos(a) * 1.4, -1, math.sin(a) * 1.4))).mul(CFrame.Angles(math.rad(20), a, 0)), couleur, 0.3);
+			eclatGlace.Material = Enum.Material.Ice;
+			TweenService.Create(eclatGlace, new TweenInfo(0.6), { Transparency: 1 }).Play();
+			temporaire(eclatGlace, 0.7);
+		}
+	} else if (element === "foudre") {
+		// éclair en zigzag tombé du ciel
+		let haut = pos.add(new Vector3(0, 18, 0));
+		for (let i = 0; i < 6; i++) {
+			const bas = i === 5 ? pos : haut.add(new Vector3(math.random(-20, 20) / 10, -3, math.random(-20, 20) / 10));
+			const seg = morceau(new Vector3(0.25, 0.25, haut.sub(bas).Magnitude), CFrame.lookAt(haut.add(bas).div(2), bas), couleur, 0);
+			TweenService.Create(seg, new TweenInfo(0.35), { Transparency: 1 }).Play();
+			temporaire(seg, 0.4);
+			haut = bas;
+		}
+	} else if (element === "sacre") {
+		const colonne = morceau(new Vector3(14, 3.5, 3.5), new CFrame(pos.add(new Vector3(0, 4, 0))).mul(CFrame.Angles(0, 0, math.pi / 2)), couleur, 0.4);
+		colonne.Shape = Enum.PartType.Cylinder;
+		TweenService.Create(colonne, new TweenInfo(0.6), { Transparency: 1, Size: new Vector3(14, 0.5, 0.5) }).Play();
+		temporaire(colonne, 0.7);
+	} else if (element === "ombre" || element === "poison") {
+		const a = new Instance("Attachment");
+		a.Parent = cible.racine;
+		const fumee = new Instance("ParticleEmitter");
+		fumee.Color = new ColorSequence(couleur);
+		fumee.Size = new NumberSequence([new NumberSequenceKeypoint(0, 1), new NumberSequenceKeypoint(1, 3)]);
+		fumee.Transparency = new NumberSequence(0.3, 1);
+		fumee.Speed = new NumberRange(1, 3);
+		fumee.Lifetime = new NumberRange(0.8, 1.2);
+		fumee.SpreadAngle = new Vector2(180, 180);
+		fumee.Rate = 0;
+		fumee.Parent = a;
+		fumee.Emit(fort ? 30 : 18);
+		temporaire(a, 1.5);
+	} else if (element === "arcane") {
+		const anneau = morceau(new Vector3(0.3, 2, 2), new CFrame(pos).mul(CFrame.Angles(0, 0, math.pi / 2)), couleur, 0.2);
+		anneau.Shape = Enum.PartType.Cylinder;
+		TweenService.Create(anneau, new TweenInfo(0.45), { Size: new Vector3(0.3, 9, 9), Transparency: 1 }).Play();
+		temporaire(anneau, 0.5);
+	}
+	// toujours : les étincelles de l'impact
+	eclat(cible, couleur, fort ? 40 : 20);
+}
+
 function flash(p: Pion, couleur: Color3) {
 	p.surbrillance.FillColor = couleur;
 	p.surbrillance.FillTransparency = 0.35;
@@ -341,7 +462,11 @@ function jouerEvenement(e: EvenementCombat): number {
 					if (source.racine.Anchored) aller.Play();
 				} else {
 					jouerAnim(source, "sort");
-					eclat(source, Color3.fromRGB(255, 230, 160), 12);
+					const element = elementAction(attaquant, e.competence);
+					eclat(source, COULEUR_ELEMENT[element] ?? Color3.fromRGB(255, 230, 160), 12);
+					// sort, flèche ou fiole : un projectile file vers la cible
+					task.delay(0.12, () => projectile(source, cible, element));
+					if (e.competence !== undefined && e.competence !== "attaque") jouer("sort");
 				}
 			}
 			return 0.45;
@@ -353,7 +478,7 @@ function jouerEvenement(e: EvenementCombat): number {
 				majBarre(cible);
 				chiffre(cible, `${e.valeur ?? 0}`, e.critique ? Color3.fromRGB(255, 220, 60) : Color3.fromRGB(255, 90, 70), e.critique === true);
 				flash(cible, Color3.fromRGB(255, 60, 50));
-				eclat(cible, COULEUR_ELEMENT[e.element ?? "physique"] ?? new Color3(1, 1, 1), e.critique ? 40 : 20);
+				impact(cible, e.element ?? "physique", e.critique === true);
 				if (e.critique) secousse(1.5);
 			}
 			return 0.4;
@@ -390,6 +515,7 @@ function jouerEvenement(e: EvenementCombat): number {
 			return 0.6;
 		case "fin":
 			if (e.texte.find("Victoire")[0] !== undefined) jouer("victoire");
+			else if (e.texte.find("Défaite")[0] !== undefined || e.texte.find("défaite")[0] !== undefined) jouer("defaite");
 			if (e.texte.find("Victoire")[0] !== undefined) for (const [, p] of pions) if (!p.ko && p.modele.Name.sub(1, 2) === "h:") jouerAnim(p, "victoire");
 			return 0.3;
 	}
