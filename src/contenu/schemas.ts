@@ -547,6 +547,9 @@ export const zContrat = z.object({
   examen_rang: z.string().optional(),
   /** Niveau conseillé (comparé au niveau moyen du groupe : vert, orange, rouge). */
   niveau: z.number({ error: 'niveau conseillé obligatoire (champ « niveau »)' }).int().min(1),
+  /** Répétable (par défaut) : une fois rempli, le contrat quitte le tableau et revient quelques jours plus tard
+   * (config.contrats.retour_jours). false : rempli une fois pour toutes (créature unique, histoire). */
+  repetable: z.boolean().default(true),
   etapes: z.array(zEtapeContrat).default([]),
   rencontre: z.string().optional(),
   test: z.object({ carac: zCarac, difficulte: z.number() }).optional(),
@@ -668,6 +671,8 @@ export const zConfig = z.object({
     toucher_par_rang: z.number().default(0.01),
   }).default({ seuils: [5, 15, 30, 50, 80], degats_par_rang: 0.02, toucher_par_rang: 0.01 }),
   mort_douce: z.object({ perte_or_pourcent: z.number(), blessure_pv_pourcent: z.number() }),
+  /** Contrats répétables : retour au tableau de la Guilde après ce nombre de jours (test 4). */
+  contrats: z.object({ retour_jours: z.number().int().min(0).default(5) }).default({ retour_jours: 5 }),
   /** PV gardés d'un combat à l'autre, et comment les récupérer (après le test 3). */
   soins: z.object({
     regen_jour_pourcent: z.number().default(10),

@@ -1,4 +1,6 @@
 # Contrats de guilde du chapitre 5 (missions de guerre), au comptoir de la Guilde de Fort-Aube. Dernière étape : retour au comptoir.
+# Répétable par défaut : une fois rempli, le contrat quitte le tableau et revient après config.contrats.retour_jours (5 jours).
+# « repetable: false » : rempli une fois pour toutes (créature unique, histoire).
 contrats:
   - id: c-ronde-diablotins
     titre: "Diablotins sur le chemin de ronde"
@@ -35,6 +37,7 @@ contrats:
 
   - id: c-capitaine
     titre: "Tête de la Légion"
+    repetable: false   # créature unique : ce contrat ne revient pas au tableau
     description: "Un capitaine de la Légion a installé un camp avancé dans la plaine cendrée. Sans lui, ses troupes reculeront."
     rang_min: A
     niveau: 33
@@ -49,6 +52,7 @@ contrats:
 
   - id: c-colosse
     titre: "Le colosse égaré"
+    repetable: false   # créature unique : ce contrat ne revient pas au tableau
     description: "Un colosse de siège s'est remis en marche tout seul, près de la Brèche. Personne ne le pousse, mais il avance quand même."
     rang_min: A
     niveau: 32

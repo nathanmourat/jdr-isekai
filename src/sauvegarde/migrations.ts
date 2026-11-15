@@ -83,6 +83,16 @@ export const migrations: Record<number, Migration> = {
     s.version = 8;
     return s;
   },
+  // v8 → v9 (test 4) : contrats remplis, qui quittent le tableau puis reviennent (5 jours) ou jamais.
+  // Les actions déjà jouées se rejouent avec l'ancienne règle (un contrat pouvait être repris tout de suite) :
+  // la nouvelle règle ne vaut qu'à partir de la prochaine action.
+  8: (s) => {
+    const d = s.depart as { contratsTermines?: Record<string, number>; regleContratsDepuis?: number };
+    d.contratsTermines ??= {};
+    d.regleContratsDepuis = s.actions.length;
+    s.version = 9;
+    return s;
+  },
 };
 
 export class ErreurSauvegarde extends Error {

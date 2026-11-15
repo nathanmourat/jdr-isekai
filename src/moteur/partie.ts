@@ -6,7 +6,7 @@
  * Ainsi, chaque joueur obtient exactement le même état en rejouant la même liste d'actions.
  */
 import type { Contenu } from '../contenu/types';
-import type { Choix, Condition, Consequence, Lieu, Noeud, Scene } from '../contenu/schemas';
+import type { Choix, Condition, Consequence, Contrat, Lieu, Noeud, Scene } from '../contenu/schemas';
 import { affiniteVide, modifierAffinite, palier, paliersAtteints, pardonner, peutOffrir, reactionCadeau, verifierLignesRouges, type Affinite } from './affinite';
 import {
   annulerTour, avancer, combattantCompagnon, combattantHeros, demarrerCombat, jouerAction, recompensesCombat,
@@ -23,7 +23,7 @@ import { competencesConnues as connuesDe } from './personnage';
 import { exemplaires, problemeEquipement } from './equipement';
 import { anneeDepart, chapitreDe, fetesEntre, formaterDate, joursParMois, versDate, versJour } from './temps';
 
-export const VERSION_ETAT = 8;
+export const VERSION_ETAT = 9;
 export const MAX_JOUEURS = 6;
 
 export interface Joueur { id: string; pseudo: string; herosId: string | null; present: boolean }
@@ -153,6 +153,11 @@ export interface EtatPartie {
   rangs: Record<string, string>;
   /** Jour du dernier examen raté, par héros : on peut retenter le lendemain. */
   examensRates: Record<string, number>;
+  /** Contrats remplis (test 4) : jour où ils ont été remplis, ou -1 pour un contrat non répétable (il ne revient jamais). */
+  contratsTermines?: Record<string, number>;
+  /** Partie d'avant le format 9 : la règle du retour des contrats ne s'applique qu'à partir de cette action
+   * (les anciennes actions se rejouent telles quelles). */
+  regleContratsDepuis?: number;
 }
 
 export type Action =
@@ -259,6 +264,7 @@ export function nouvellePartie(contenu: Contenu, id: string, nom: string, graine
     goutsConnus: {},
     rangs: {},
     examensRates: {},
+    contratsTermines: {},
   };
 }
 
@@ -1252,6 +1258,7 @@ export function appliquer(contenu: Contenu, etatAvant: EtatPartie, action: Actio
   etat.goutsConnus ??= {};
   etat.rangs ??= {};
   etat.examensRates ??= {};
+  etat.contratsTermines ??= {};
   etat.contrats ??= {};
   for (const h of valeurs(etat.heros)) { h.grimoire ??= {}; h.maitrise ??= {}; }
   if (etat.grimoire) repartirAncienGrimoire(contenu, etat); // parties d'avant le grimoire personnel
@@ -1662,6 +1669,11 @@ export function appliquer(contenu: Contenu, etatAvant: EtatPartie, action: Actio
       if (vrai(ct.examen_rang)) refuser('Cette épreuve se demande à la Guilde, en passant l\'examen de rang');
       if (ordreRangs.indexOf(rangHeros(etat, h.id)) < ordreRangs.indexOf(ct.rang_min)) refuser(`Contrat réservé au rang ${ct.rang_min}`);
       if (!conditionHeros(contenu, etat, ct.disponible_si, h)) refuser('Contrat indisponible');
+      if (etat.numeroAction >= (etat.regleContratsDepuis ?? 0)) {
+        const retour = retourContrat(contenu, etat, ct.id);
+        if (retour === -1) refuser('Ce contrat a déjà été rempli : il ne reviendra pas');
+        if (retour > 0) refuser(`Ce contrat vient d'être rempli : il revient au tableau dans ${retour} jour${retour > 1 ? 's' : ''}`);
+      }
       if (ct.etapes.length > 0) {
         // contrat à étapes : on l'accepte à la Guilde, puis on le joue sur la carte, lieu après lieu
         if (etat.contrats[h.id]) refuser(`Terminez d'abord votre contrat en cours : ${contenu.contrats[etat.contrats[h.id].id]?.titre ?? ''}`);
@@ -1678,6 +1690,7 @@ export function appliquer(contenu: Contenu, etatAvant: EtatPartie, action: Actio
           appliquerConsequence(contenu, etat, { or: ct.recompenses.or, xp: ct.recompenses.xp, points_guilde: ct.recompenses.points_guilde, objet: ct.recompenses.objets }, [h.id], msgs);
           etat.dernieresNouvelles.push(`Contrat réussi (${ct.test.carac} : ${jet} + ${total - jet} = ${total} ≥ ${ct.test.difficulte}).`, ...msgs);
           journal(contenu, etat, `${h.nom} remplit le contrat « ${ct.titre} ».`);
+          noterContratRempli(etat, ct);
         } else {
           appliquerConsequence(contenu, etat, { xp: Math.round(ct.recompenses.xp / 3) }, [h.id], msgs);
           etat.dernieresNouvelles.push(`Contrat raté (${ct.test.carac} : ${total} < ${ct.test.difficulte}). Vous en tirez quand même une leçon.`, ...msgs);
@@ -1888,6 +1901,23 @@ function avancerContrat(contenu: Contenu, etat: EtatPartie, h: Heros) {
   }
   etat.dernieresNouvelles.push(`Contrat rempli : ${ct.titre}.`, ...msgs);
   journal(contenu, etat, `${h.nom} remplit le contrat « ${ct.titre} ».`);
+  noterContratRempli(etat, ct);
+}
+
+/** Un contrat rempli quitte le tableau de la Guilde pour tout le groupe (test 4). */
+function noterContratRempli(etat: EtatPartie, ct: Contrat) {
+  if (etat.contratsTermines === undefined) etat.contratsTermines = {};
+  etat.contratsTermines[ct.id] = ct.repetable === false ? -1 : etat.jour;
+}
+
+/**
+ * Le contrat est-il au tableau ? 0 = oui ; -1 = rempli, il ne revient jamais ; n > 0 = il revient dans n jours.
+ */
+export function retourContrat(contenu: Contenu, etat: EtatPartie, id: string): number {
+  const fait = (etat.contratsTermines ?? {})[id];
+  if (fait === undefined) return 0;
+  if (fait < 0) return -1;
+  return Math.max(0, fait + contenu.config.contrats.retour_jours - etat.jour);
 }
 
 function quantiteValide(q: number | undefined): number {

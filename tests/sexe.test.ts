@@ -49,6 +49,6 @@ describe('sexe du héros', () => {
     const s = creerSauvegarde(depart, [], '2026-11-15');
     s.version = 7;
     expect(migrer(s).version).toBe(VERSION_ETAT);
-    expect(VERSION_ETAT).toBe(8);
+    expect(VERSION_ETAT).toBeGreaterThanOrEqual(8);
   });
 });

@@ -147,6 +147,10 @@ config:
   mort_douce:
     perte_or_pourcent: 10
     blessure_pv_pourcent: 10
+  # Contrats de la Guilde : un contrat répétable rempli quitte le tableau, puis revient après ce nombre de jours.
+  # (Un contrat marqué « repetable: false » ne revient jamais ; les épreuves d'examen ne sont jamais au tableau.)
+  contrats:
+    retour_jours: 5
   # PV gardés d'un combat à l'autre (après le test 3) et façons de les récupérer
   soins:
     regen_jour_pourcent: 10        # chaque jour qui passe rend 10 % des PV max

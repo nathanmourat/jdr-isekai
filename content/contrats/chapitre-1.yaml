@@ -1,4 +1,6 @@
 # Contrats de guilde : missions courtes et répétables, jouables en solo et en asynchrone.
+# Répétable par défaut : une fois rempli, le contrat quitte le tableau et revient après config.contrats.retour_jours (5 jours).
+# « repetable: false » : rempli une fois pour toutes (créature unique, histoire).
 # Un contrat se joue par ÉTAPES sur la carte : on l'accepte à la Guilde, on se rend à chaque lieu (le point clignote),
 # on lit le texte, on fait un petit choix, un test ou un combat, puis on REVIENT À LA GUILDE toucher la récompense.
 # Une étape : lieu, objectif (affiché dans le panneau Quêtes), texte, puis au plus UN de : choix / test / combat.

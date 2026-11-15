@@ -1,4 +1,6 @@
 # Contrats de guilde du chapitre 3, au Relais de la Guilde d'Ithrael. Dernière étape : retour au Relais.
+# Répétable par défaut : une fois rempli, le contrat quitte le tableau et revient après config.contrats.retour_jours (5 jours).
+# « repetable: false » : rempli une fois pour toutes (créature unique, histoire).
 contrats:
   - id: c-loups-brume
     titre: "Loups de brume à la lisière"

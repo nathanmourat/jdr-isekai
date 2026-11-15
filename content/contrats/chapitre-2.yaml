@@ -1,4 +1,6 @@
 # Contrats de guilde du chapitre 2, au Comptoir de la Guilde de Qarzim. Dernière étape : retour au Comptoir.
+# Répétable par défaut : une fois rempli, le contrat quitte le tableau et revient après config.contrats.retour_jours (5 jours).
+# « repetable: false » : rempli une fois pour toutes (créature unique, histoire).
 contrats:
   - id: c-scorpions
     titre: "Nid de scorpions près des puits"

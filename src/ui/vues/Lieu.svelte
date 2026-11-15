@@ -9,7 +9,7 @@
   import { tick } from 'svelte';
   import { annoncer, premierPlan } from '../premierPlan.svelte';
   import { jeu } from '../jeu.svelte';
-  import { candidatsExamen, conditionHeros, conditionScene, etapeContrat, listeHeros, objetConnu, palierCompagnon, prochainExamen, rangHeros, scenesDisponibles } from '../../moteur/partie';
+  import { candidatsExamen, conditionHeros, conditionScene, etapeContrat, listeHeros, retourContrat, objetConnu, palierCompagnon, prochainExamen, rangHeros, scenesDisponibles } from '../../moteur/partie';
   import ObjetInfo from '../ObjetInfo.svelte';
   import { activiteChangee, signatureActivite } from '../activite';
   import { alertesSante, santeHeros } from '../sante';
@@ -37,7 +37,9 @@
   const scenes = $derived(scenesDisponibles(c, etat, id, h.id));
   /** Scènes qui ne passent par aucun personnage présent : on les lance depuis « Sur place ». */
   const scenesSurPlace = $derived(scenes.filter((s) => !s.pnj || !pnj.some((p) => p.id === s.pnj)));
-  const contrats = $derived(estGuilde(id) ? Object.values(c.contrats).filter((ct) => !ct.examen_rang && conditionHeros(c, etat, ct.disponible_si, h)) : []);
+  /** Contrats remplis récemment : ils reviennent au tableau dans quelques jours (test 4). */
+  const revenants = $derived(estGuilde(id) ? Object.values(c.contrats).filter((ct) => !ct.examen_rang && retourContrat(c, etat, ct.id) > 0).map((ct) => ({ titre: ct.titre, jours: retourContrat(c, etat, ct.id) })) : []);
+  const contrats = $derived(estGuilde(id) ? Object.values(c.contrats).filter((ct) => !ct.examen_rang && conditionHeros(c, etat, ct.disponible_si, h) && retourContrat(c, etat, ct.id) === 0) : []);
   const rang = $derived(rangHeros(etat, h.id));
   /** Examen du prochain rang de Guilde, et héros présents qui peuvent le passer en même temps. */
   const examen = $derived(prochainExamen(c, etat, h.id));
@@ -363,6 +365,7 @@
           {#if contrats.length && contratsOuverts}
             <div class="carte-ui" data-panneau="contrats">
               <div class="ligne entre"><h3>Tableau des contrats <span class="badge">votre rang : {rang}</span></h3><button class="petit" onclick={() => (contratsOuverts = false)}>Fermer ✕</button></div>
+              {#if revenants.length}<p class="discret">Remplis récemment, de retour bientôt : {revenants.map((r) => `${r.titre} (dans ${r.jours} j)`).join(", ")}.</p>{/if}
               {#if contratEnCours}
                 <div class="item en-cours">
                   <p><strong>En cours : {contratEnCours.contrat.titre}</strong> <span class="badge or">étape {contratEnCours.numero}/{contratEnCours.total}</span></p>
