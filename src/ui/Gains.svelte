@@ -13,7 +13,7 @@
 
   $effect(() => {
     // pendant un lancer de dé, les gains attendent la fin de l'animation (ils dévoileraient le résultat)
-    if (jeu.deEnCours) return;
+    if (jeu.pauseNotifications) return;
     const etat = jeu.etat;
     const miens = new Set(jeu.joueursLocaux.map((j) => etat?.joueurs[j]?.herosId).filter(Boolean));
     for (const g of jeu.gains) {

@@ -157,7 +157,19 @@ config:
     pv_apres_ko_pourcent: 20       # un héros K.O. se relève avec 20 % de ses PV
     repas: { prix: 3, pourcent: 30 }   # repas chaud dans une auberge
     ration_pourcent: 15            # manger une ration de voyage hors combat
-    temple: { prix: 15 }           # soins des prêtres : tous les PV et la blessure
+    # soins des prêtres : tous les PV et la blessure, avec une petite scène animée (environ 10 secondes, test 4)
+    temple:
+      prix: 15
+      pnj: elianne
+      repliques:
+        - "« Asseyez-vous. Respirez. La Lumière fera le reste, et moi un peu aussi. »"
+        - "Sœur Elianne pose les mains au-dessus des plaies et murmure une prière. La lumière descend, chaude comme un soleil d'été."
+        - "« Voilà. Vous voilà {{guéri|guérie}}. Essayez de ne pas vous faire frapper pendant au moins… une semaine. »"
+      # quand le héros a une blessure : la 2e et la 3e réplique changent
+      repliques_blessure:
+        - "« Asseyez-vous. Respirez. La Lumière fera le reste, et moi un peu aussi. »"
+        - "« Celle-ci est plus profonde. Ne bougez pas, ça va piquer. » La lumière se resserre sur la vieille plaie, qui se referme lentement."
+        - "« Et cette fois, laissez la cicatrice tranquille. »"
     # le lit de l'auberge (et le temps libre) rend tous les PV ; une potion hors combat rend puissance/64 des PV max
 
   graphismes:

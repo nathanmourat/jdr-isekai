@@ -17,7 +17,8 @@ export function portraitPersonnage(contenu: Contenu, qui: string, expression = '
   // (tête et épaules) : les balises <img class="portrait"> la cadrent par le haut (object-position: top).
   if (contenu.compagnons[qui]) {
     const base = `personnages/compagnes/${qui}/`;
-    return imagePortrait([`${base}portrait-${expression}`, `${base}portrait-neutre`, `${base}decor`], qui, contenu.compagnons[qui].nom);
+    // une compagne qui est aussi un PNJ (Elianne…) peut n'avoir que son image de PNJ : on la prend en dernier recours
+    return imagePortrait([`${base}portrait-${expression}`, `${base}portrait-neutre`, `${base}decor`, `personnages/pnj/${qui}/decor`], qui, contenu.compagnons[qui].nom);
   }
   const base = `personnages/pnj/${qui}/`;
   return imagePortrait([`${base}portrait-${expression}`, `${base}portrait-neutre`, `${base}decor`], qui, contenu.pnj[qui]?.nom ?? qui);

@@ -695,8 +695,14 @@ export const zConfig = z.object({
     pv_apres_ko_pourcent: z.number().default(20),
     repas: z.object({ prix: z.number(), pourcent: z.number() }).default({ prix: 3, pourcent: 30 }),
     ration_pourcent: z.number().default(15),
-    temple: z.object({ prix: z.number() }).default({ prix: 15 }),
-  }).default({ regen_jour_pourcent: 10, pv_apres_ko_pourcent: 20, repas: { prix: 3, pourcent: 30 }, ration_pourcent: 15, temple: { prix: 15 } }),
+    /** Soins au Temple, avec les répliques du prêtre pendant la petite scène animée (test 4). */
+    temple: z.object({
+      prix: z.number(),
+      pnj: z.string().default('elianne'),
+      repliques: z.array(z.string()).default([]),
+      repliques_blessure: z.array(z.string()).default([]),
+    }).default({ prix: 15, pnj: 'elianne', repliques: [], repliques_blessure: [] }),
+  }).default({ regen_jour_pourcent: 10, pv_apres_ko_pourcent: 20, repas: { prix: 3, pourcent: 30 }, ration_pourcent: 15, temple: { prix: 15, pnj: 'elianne', repliques: [], repliques_blessure: [] } }),
   graphismes: z.record(z.string(), z.number()),
 });
 export type Config = z.infer<typeof zConfig>;

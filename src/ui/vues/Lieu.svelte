@@ -123,6 +123,13 @@
     return places.map((p) => ({ id: p.id, x: p.pos!.x, y: p.pos!.y })).sort((a, b) => a.y - b.y);
   });
   /** On parle à un personnage : une petite bulle s'ouvre près de lui (le cadre du bas reste comme il est). */
+  /** Soins au Temple : la petite scène animée (SoinsTemple.svelte) se joue chez le joueur soigné (test 4). */
+  async function soignerAuTemple() {
+    const s = santeHeros(c, h);
+    jeu.soinTemple = { heros: h.id, avant: s.pv, max: s.pvMax, blesse: h.blessure };
+    const ok = await jeu.agir({ type: 'se_soigner', moyen: 'temple', lieu: id });
+    if (!ok) jeu.soinTemple = null;
+  }
   function parler(p: string) { annoncer('bulle'); pnjChoisi = p; }
   /** Personnage dont on a ouvert une fenêtre (examen, identification) : la bulle, elle, se ferme. */
   let pnjFenetre = $state<string | null>(null);
@@ -345,7 +352,7 @@
         {/if}
         {#if id.startsWith('temple')}
           {@const s = santeHeros(c, h)}
-          <div class="item soin"><button disabled={(s.pv >= s.pvMax && !h.blessure) || h.or < c.config.soins.temple.prix} onclick={() => jeu.agir({ type: 'se_soigner', moyen: 'temple', lieu: id })}>✨ Soins des prêtres ({c.config.soins.temple.prix} or) : tous les PV{h.blessure ? ' et la blessure' : ''}</button>
+          <div class="item soin"><button disabled={(s.pv >= s.pvMax && !h.blessure) || h.or < c.config.soins.temple.prix} onclick={soignerAuTemple}>✨ Soins des prêtres ({c.config.soins.temple.prix} or) : tous les PV{h.blessure ? ' et la blessure' : ''}</button>
             <small class="discret">{s.pv}/{s.pvMax} PV{s.pv >= s.pvMax && !h.blessure ? ' : en pleine forme' : ''}</small></div>
         {/if}
 

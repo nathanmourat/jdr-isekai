@@ -15,7 +15,7 @@
   let enAttente: string[] = [];
   $effect(() => {
     const etat = jeu.etat;
-    const de = jeu.deEnCours;
+    const de = jeu.pauseNotifications;
     if (etat && etat.numeroAction !== dernier) {
       const premier = dernier === -1;
       dernier = etat.numeroAction;

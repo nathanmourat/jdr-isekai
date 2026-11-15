@@ -39,6 +39,10 @@ class Jeu {
   lancers = $state<(TestCarac & { id: number })[]>([]);
   /** Un lancer de dé est à l'écran : les notifications de gain attendent la fin (pour ne pas dévoiler le résultat). */
   deEnCours = $state(false);
+  /** Soins au Temple en cours d'animation (test 4) : seul le joueur soigné la voit. */
+  soinTemple = $state<{ heros: string; avant: number; max: number; blesse: boolean } | null>(null);
+  /** Les notifications attendent la fin d'une animation (dé, soins) pour ne pas dévoiler le résultat. */
+  get pauseNotifications() { return this.deEnCours || this.soinTemple !== null; }
   private numeroGain = 0;
   info = $state<string | null>(null);
   chargement = $state(false);
