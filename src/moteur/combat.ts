@@ -595,6 +595,36 @@ export function ciblesValides(c: Combat, x: Combattant, type: 'ennemi' | 'allie'
   return liste;
 }
 
+/**
+ * Pourquoi un combattant ne peut pas être visé (test 4) : mêmes règles que ciblesValides, expliquées au joueur.
+ * type : ce que vise l'action (« ennemi », « allie », « allie_ko », ou une action sans cible à choisir).
+ * Renvoie null si la cible est valide.
+ */
+export function raisonCibleRefusee(c: Combat, x: Combattant, cible: Combattant, type: string, portee: 'melee' | 'distance'): string | null {
+  if (type !== 'ennemi' && type !== 'allie' && type !== 'allie_ko') return 'Cette action ne se dirige pas : pas de cible à choisir';
+  if (cible.parti) return `${cible.nom} a quitté le combat`;
+  if (type === 'allie_ko') {
+    if (cible.camp !== x.camp) return 'Cette action ne vise que les alliés K.O.';
+    if (!cible.ko) return `${cible.nom} n'est pas K.O.`;
+    if (cible.type === 'invocation') return 'Une invocation ne peut pas être relevée';
+    return null;
+  }
+  if (cible.ko) return `${cible.nom} est déjà K.O.`;
+  if (type === 'allie') return cible.camp === x.camp ? null : 'Cette action ne vise que les alliés';
+  if (cible.camp === x.camp) return 'Cette action ne vise que les ennemis';
+  if (ciblesValides(c, x, 'ennemi', portee).some((y) => y.id === cible.id)) return null;
+  const liste = adversaires(c, x);
+  const visibles = liste.filter((y) => !aEtat(y, 'furtif'));
+  if (visibles.length > 0 && aEtat(cible, 'furtif')) return `${cible.nom} est caché : impossible de le viser`;
+  const prov = x.etats.find((e) => e.id === 'provoque');
+  if (prov) {
+    const src = (visibles.length > 0 ? visibles : liste).find((y) => y.id === prov.source);
+    if (src) return `${x.nom} est provoqué par ${src.nom} : il doit l'attaquer`;
+  }
+  if (portee === 'melee') return 'Hors de portée : au corps à corps, il faut d\'abord vaincre les ennemis du premier rang';
+  return 'Cible impossible';
+}
+
 // ───────────────────────────── Calculs ─────────────────────────────
 
 const ELEMENTS_MAGIQUES: Element[] = ['feu', 'glace', 'foudre', 'sacre', 'ombre', 'arcane'];

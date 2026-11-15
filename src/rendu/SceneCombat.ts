@@ -21,6 +21,8 @@ interface Vue {
   cleTexture: string;
   anime: boolean;
   zone: Phaser.GameObjects.Zone;
+  /** Le combattant a quitté le combat (fuite, invocation dissipée) : on ne peut plus cliquer dessus. */
+  parti?: boolean;
   /** Icônes d'état avec le nombre de tours restants (☠3 🔥2). */
   etats: Phaser.GameObjects.Text;
   /** Bulles vertes qui montent tant que le combattant est empoisonné. */
@@ -96,6 +98,17 @@ export class SceneCombat extends Phaser.Scene {
     this.pret = true;
     this.marqueurActif = this.add.triangle(0, 0, 0, 0, 16, 0, 8, 12, 0xffd166).setDepth(50).setVisible(false);
     this.tweens.add({ targets: this.marqueurActif, y: '+=6', yoyo: true, repeat: -1, duration: 400 });
+    // Choix de la cible (test 4) : un seul gestionnaire pour toute la scène, qui prend le combattant le plus proche
+    // du clic. Les zones de chaque combattant se chevauchaient (rang serré, zoom sur téléphone) et le dernier dessiné
+    // « volait » le clic de son voisin.
+    this.input.on('pointerdown', (p: Phaser.Input.Pointer) => {
+      const id = this.combattantSous(p.worldX, p.worldY);
+      if (id && this.dernier) this.dernier.opts.surClic(id);
+    });
+    this.input.on('pointermove', (p: Phaser.Input.Pointer) => {
+      const id = this.combattantSous(p.worldX, p.worldY);
+      this.input.setDefaultCursor(id && this.dernier?.opts.ciblesCliquables.includes(id) ? 'pointer' : 'default');
+    });
     // le cadre change de taille (téléphone tourné, fenêtre redimensionnée) : on réajuste le zoom
     this.scale.on(Phaser.Scale.Events.RESIZE, () => { if (this.majZoom() && this.dernier) this.afficher(this.dernier.combat, this.dernier.opts); });
     if (this.enAttente) { const e = this.enAttente; this.enAttente = null; this.afficher(e.combat, e.opts); }
@@ -142,10 +155,8 @@ export class SceneCombat extends Phaser.Scene {
       const vue = this.vues.get(c.id) ?? this.creerVue(c, opts);
       const p = positions.get(c.id);
       if (p) this.tweens.add({ targets: [vue.conteneur, vue.etiquette], x: p.x, y: p.y, duration: 250 });
-      vue.zone.removeAllListeners();
       const cliquable = opts.ciblesCliquables.includes(c.id);
-      vue.zone.setInteractive({ useHandCursor: cliquable });
-      vue.zone.on('pointerdown', () => opts.surClic(c.id));
+      vue.parti = !!c.parti;
       vue.nom.setColor(cliquable ? '#ffd166' : '#f3ead7');
       this.majBarre(vue, c);
       this.majEtats(vue, c);
@@ -164,6 +175,53 @@ export class SceneCombat extends Phaser.Scene {
     } else this.marqueurActif?.setVisible(false);
     this.animer(combat.evenements.slice(this.nbEvenements));
     this.nbEvenements = combat.evenements.length;
+  }
+
+  /**
+   * Combattant sous un point du monde (coordonnées de la scène), ou null. Zone de clic : le corps du personnage
+   * et son nom, au moins 44 × 44 px à l'écran (règle d'interface), le plus proche gagne quand deux zones se recouvrent.
+   */
+  combattantSous(x: number, y: number): string | null {
+    const ecranVersMonde = this.scale.displayScale.x / (this.cameras.main.zoom || 1);
+    const demiMin = 22 * ecranVersMonde;
+    let meilleur: string | null = null;
+    let distance = Infinity;
+    for (const [id, v] of this.vues) {
+      if (v.parti || v.conteneur.alpha <= 0.05) continue;
+      const cx = v.conteneur.x;
+      const haut = v.conteneur.y + v.zone.y - v.zone.height / 2;
+      const bas = v.conteneur.y + Math.max(30, demiMin);   // le nom, sous les pieds, est cliquable aussi
+      const demiL = Math.max(v.zone.width / 2, demiMin);
+      const milieu = (haut + bas) / 2;
+      const demiH = Math.max((bas - haut) / 2, demiMin);
+      if (Math.abs(x - cx) > demiL || Math.abs(y - milieu) > demiH) continue;
+      const d = Math.abs(x - cx) / demiL + Math.abs(y - milieu) / demiH * 0.5;
+      if (d < distance) { distance = d; meilleur = id; }
+    }
+    return meilleur;
+  }
+
+  /** Centre du corps de chaque combattant visible, en pixels CSS dans le canvas (tests navigateur). */
+  positionsEcran(): { id: string; x: number; y: number }[] {
+    const cam = this.cameras.main;
+    const d = this.scale.displayScale;
+    const res: { id: string; x: number; y: number }[] = [];
+    for (const [id, v] of this.vues) {
+      if (v.parti || v.conteneur.alpha <= 0.05) continue;
+      const wx = v.conteneur.x, wy = v.conteneur.y + v.zone.y;
+      res.push({ id, x: ((wx - cam.worldView.x) * cam.zoom) / d.x, y: ((wy - cam.worldView.y) * cam.zoom) / d.y });
+    }
+    return res;
+  }
+
+  /** Court message au-dessus d'un combattant (cible impossible : « Hors de portée »…). */
+  signaler(id: string, texte: string) {
+    const v = this.vues.get(id);
+    if (!v) return;
+    const t = this.add.text(v.conteneur.x, v.conteneur.y + v.zone.y - v.zone.height / 2 - 12, texte, {
+      fontFamily: 'Source Sans 3', fontSize: '15px', color: '#ffd9a0', stroke: '#000', strokeThickness: 4, align: 'center', wordWrap: { width: 230 },
+    }).setOrigin(0.5, 1).setDepth(70).setResolution(2);
+    this.tweens.add({ targets: t, y: t.y - 14, alpha: 0, delay: 1800, duration: 400, onComplete: () => t.destroy() });
   }
 
   private reinitialiser(combat: Combat) {

@@ -7,7 +7,7 @@
   import PhaserHote from '../PhaserHote.svelte';
   import ActionsLibres from './ActionsLibres.svelte';
   import { utiliseMana, type SceneCombat } from '../../rendu/SceneCombat';
-  import { actionsDisponibles, estimerAction, NOMS_ETATS, type ActionCombat, type Combat, type Combattant, type EvenementCombat } from '../../moteur/combat';
+  import { actionsDisponibles, estimerAction, NOMS_ETATS, raisonCibleRefusee, type ActionCombat, type Combat, type Combattant, type EvenementCombat } from '../../moteur/combat';
   import type { Competence } from '../../contenu/schemas';
   import { etapeContrat } from '../../moteur/partie';
   import { ecrirePreference, lirePreference } from '../preferences';
@@ -146,7 +146,7 @@
       tailleExploration: c.config.graphismes.taille_sprite_exploration ?? 32,
       ciblesCliquables: termine ? cibles : [],
       actif: termine ? combat.enAttente : null,
-      surClic: (id) => { if (termine && cibles.includes(id)) viser(id); },
+      surClic: (id) => { dernierClic = id; if (!termine) return; if (cibles.includes(id)) viser(id); else signalerCible(id); },
       contenu: c,
       decorLieu,
     });
@@ -174,6 +174,36 @@
     else if (selection.type === 'sac') envoyer({ type: 'objet', acteur: acteur.id, objet: 'potion', item: selection.item, cible: id });
     else if (selection.type === 'pacifier') envoyer({ type: 'pacifier', acteur: acteur.id, cible: id });
     else envoyer({ type: 'competence', acteur: acteur.id, competence: selection.comp.id, cible: id });
+  }
+  /** Cible impossible (test 4) : un court message explique pourquoi, avec les règles du moteur. */
+  let messageCible = $state<string | null>(null);
+  /** Dernier combattant cliqué (attribut data-dernier-clic, lu par le test navigateur tests/e2e/cibles.mjs). */
+  let dernierClic = $state('');
+  $effect(() => {
+    const w = window as unknown as { __velmarisCombat?: unknown };
+    w.__velmarisCombat = { positions: () => scene?.positionsEcran() ?? [] };
+    return () => { delete w.__velmarisCombat; };
+  });
+  let minuteurMessage: ReturnType<typeof setTimeout> | undefined;
+  function raisonCible(id: string): string {
+    const x = combat.combattants.find((y) => y.id === id);
+    if (combat.resultat || !x) return '';
+    if (!acteur || !monTour) return "Ce n'est pas votre tour";
+    if (!selection) return `Choisissez d'abord une action, puis cliquez sur ${x.nom}`;
+    if (selection.type === 'pacifier') return `${x.nom} ne peut pas être pacifié (seulement une bête ou un démon affaibli, jamais un boss)`;
+    const [type, portee] = selection.type === 'attaque' ? ['ennemi', acteur.attaque.portee]
+      : selection.type === 'potion' ? ['allie', 'distance']
+      : selection.type === 'sac' ? [selection.cible, 'distance']
+      : [selection.comp.cible, selection.comp.portee];
+    return raisonCibleRefusee(combat, acteur, x, type, portee as 'melee' | 'distance') ?? 'Cible impossible';
+  }
+  function signalerCible(id: string) {
+    const texte = raisonCible(id);
+    if (!texte) return;
+    messageCible = texte;
+    scene?.signaler(id, texte);
+    clearTimeout(minuteurMessage);
+    minuteurMessage = setTimeout(() => (messageCible = null), 2500);
   }
   /** Chiffres réels d'une compétence contre la première cible possible (calculés par le moteur). */
   function reel(k: Competence) {
@@ -234,7 +264,7 @@
   const peutSecondDepart = $derived(jeu.monHeros?.don === 'second-depart' && etat.secondDepart[jeu.monHeros.id] !== etat.session && combat.instantane && !combat.resultat && termine);
 </script>
 
-<section class="combat">
+<section class="combat" data-dernier-clic={dernierClic}>
   <div class="arene" style={`bottom:${hauteurBarre ? hauteurBarre + 8 : 0}px`}>
     <PhaserHote plein scene="combat" surPret={(s) => (scene = s as SceneCombat)} />
     {#if suspense}
@@ -301,12 +331,13 @@
         <h3>À vous : {acteur.nom} <span class="discret">({acteur.pv}/{acteur.pvMax} PV · {acteur.mana}/{acteur.manaMax} mana)</span></h3>
         {#if selection}
           <p class="consigne">Cliquez sur la cible dans la scène{cibles.length ? '' : ' — aucune cible possible'}, ou :</p>
+          {#if messageCible}<p class="message-cible" role="status">{messageCible}</p>{/if}
           <div class="ligne cibles">
             {#each cibles as id (id)}<button onclick={() => viser(id)}>{nom(id)}<small>{chanceSur(id)}</small></button>{/each}
             <button class="petit" onclick={() => (selection = null)}>Annuler</button>
           </div>
         {:else}
-          <p class="detail" aria-live="polite">{detail ?? 'Survolez une action (ou appuyez longuement) pour voir son détail.'}</p>
+          <p class="detail" aria-live="polite">{messageCible ?? detail ?? 'Survolez une action (ou appuyez longuement) pour voir son détail.'}</p>
           <div class="actions courtes">
             <button {...survol(detailAttaque)} onclick={siCourt(() => choisir({ type: 'attaque' }))}>⚔ Attaque</button>
             {#each dispo.competences as k (k.comp.id)}
@@ -357,6 +388,7 @@
   .panneau-proposer { position: absolute; bottom: calc(100% + 0.4rem); right: 0; width: min(520px, 100%); max-height: 55dvh; overflow-y: auto; overscroll-behavior: contain; padding: 0.6rem 0.7rem; background: #14111cf5; border-color: var(--or); z-index: 2; }
   .fermer-proposer { min-width: 44px; min-height: 44px; }
   .cibles button { min-height: 44px; }
+  .message-cible { margin: 0.2rem 0; color: #ffd9a0; font-weight: 600; }
   /* téléphone : les actions tiennent sur une ligne qu'on fait défiler du doigt, pour laisser voir le combat */
   @media (max-width: 640px), (max-height: 500px) {
     .actions.courtes { flex-wrap: nowrap; overflow-x: auto; overscroll-behavior-x: contain; padding-bottom: 0.2rem; scrollbar-width: thin; }
@@ -368,7 +400,8 @@
     .proposer .long { display: none; }
   }
   .hud-combat { position: absolute; z-index: 20; top: calc(max(0.3rem, env(safe-area-inset-top)) + 3rem); left: max(0.5rem, env(safe-area-inset-left)); right: max(0.5rem, env(safe-area-inset-right)); display: flex; justify-content: space-between; align-items: center; gap: 0.4rem; flex-wrap: wrap; pointer-events: none; }
-  .hud-combat > * { pointer-events: auto; }
+  /* le titre et la ligne du journal ne sont que du texte : les clics passent au travers, vers les combattants (test 4) */
+  .hud-combat > .ligne { pointer-events: auto; }
   .hud-combat h2 { margin: 0; font-size: clamp(1rem, 2.4vw, 1.3rem); text-shadow: 0 2px 6px #000, 0 0 2px #000; }
   .hud-combat .option { background: #1d1928e6; border-radius: 8px; padding: 0.2rem 0.5rem; min-height: 36px; }
   .hud-combat button { background: #1d1928e6; min-height: 36px; }
