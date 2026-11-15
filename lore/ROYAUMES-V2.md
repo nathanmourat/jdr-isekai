@@ -13,7 +13,7 @@
 | 4 | Monts Grisfer (nains) | ✅ validé le 15/11 |
 | 5 | Cimes de Braise (dragons, nouveau) | ✅ validé le 15/11 |
 | 6 | Archipel des Brumes | ✅ validé le 15/11 |
-| 7 | État démoniaque | à faire |
+| 7 | Royaume Délié (État démoniaque) | ✅ validé le 16/11 |
 | 8 | État de la Lumière (nouveau) | à faire |
 | 9 | Domaine nocturne (vampires, nouveau) | à faire |
 
@@ -68,7 +68,7 @@ Le plus grand royaume humain, au centre de Velmaris. Une **façade noble et lumi
 | **Domaine nocturne** | Neutre | Officiellement aucun lien ; officieusement, des vampires à la cour |
 | **Sylvenoire** | **Tension** | La **guerre des Racines** (vers 962 AV) : poussé par l'Ordre, Aubeclaire voulait le **Cœur Immobile**, le fragment de Sérène qui protège la forêt. Ses soldats ont rasé le village de **Thessaëlle** ; la forêt a écrasé « la Colonne perdue ». Chacun accuse l'autre. Les demi-elfes, nés de la paix d'avant, en paient encore le prix. |
 | **Monts Grisfer** | **Ancienne tension** | Les nains ont bâti le **Mur d'Aube** (702) ; Aubeclaire n'a jamais payé toute sa dette et s'en est attribué la gloire. On leur achète toujours des armes, à prix fort et avec rancune. |
-| **État démoniaque** | **Ennemi majeur** | Le Mur d'Aube est la frontière |
+| **Royaume Délié** (démons) | **Ennemi majeur** | Le Mur d'Aube est la frontière |
 
 ### À créer plus tard
 - Les chefs des Maisons Clairmont et Ventaile.
@@ -117,7 +117,7 @@ Une **ligue marchande** de cités-oasis au cœur d'un **désert mystique et mort
 | **Monts Grisfer** | **Bonne entente** | Métal et machines naines contre épices, soieries et cristaux |
 | **Sylvenoire** | Neutre | Peu d'échanges ; les elfes désapprouvent en silence l'extraction des cristaux |
 | **État de la Lumière** | Neutre | Neutre en politique, même si l'Ordre est son meilleur client |
-| **État démoniaque** | Neutre | On ne parle pas d'eux… et on ne se demande pas où vont certaines cargaisons |
+| **Royaume Délié** (démons) | Neutre | On ne parle pas d'eux… et on ne se demande pas où vont certaines cargaisons |
 | **Archipel des Brumes** | **Conflit** | La Concorde **ne reconnaît pas leurs valeurs** : des pirates qui ne respectent aucun contrat. Piraterie sur les routes maritimes, représailles, primes sur les capitaines. |
 
 ### À créer plus tard
@@ -157,7 +157,7 @@ Une forêt primaire d'arbres géants, cachée sous une **brume bleue**. Un peupl
 - **Pourquoi les elfes ne le céderont jamais** : sans le Cœur, Sylvenoire est **à découvert**. Le perdre, c'est perdre le royaume.
 - **L'ironie** : les elfes sont protégés par un morceau de l'anomalie, et ils l'ignorent (sauf peut-être les Lignées).
 - **Secret (à garder ou non)** : le rituel de l'an 0 **utilisait ce même fragment**. C'est pour ça qu'il a déchiré le monde.
-- **Idée pour la V1/V2** : au chapitre 3, si la Légion réussit à entrer, c'est que **la brume faiblit**. Pourquoi ? (Le Cœur s'épuise, quelqu'un le vole par morceaux, ou l'extraction de Qarzim affaiblit tous les fragments.)
+- **Au chapitre 3**, la Légion attaque pour prendre le Cœur (voir le Royaume Délié : c'est la Voix, liée à l'Ordre, qui l'a voulu). Si elle réussit à entrer, c'est que **la brume faiblit**. Pourquoi ? (Le Cœur s'épuise, quelqu'un le vole par morceaux, ou l'extraction de Qarzim affaiblit tous les fragments.)
 
 ### La guerre des Racines (vers 962 AV)
 - **Il y a environ 50 ans** : tous les elfes s'en souviennent ; quelques vétérans humains sont encore en vie.
@@ -180,7 +180,7 @@ Une forêt primaire d'arbres géants, cachée sous une **brume bleue**. Un peupl
 | **Concorde de Qarzim** | Neutre | Peu d'échanges ; les elfes désapprouvent en silence l'extraction des cristaux |
 | **Archipel des Brumes** | Neutre | Peu de contacts |
 | **État de la Lumière** | **Méfiance** | Allié d'Aubeclaire et de l'Ordre ; il a béni la guerre des Racines. Pas de guerre, mais des relations froides. |
-| **État démoniaque** | **Tension sans conflit** | ⚠️ La Légion attaque la forêt au chapitre 3 (V1) : la Légion agit seule, ou l'État la laisse faire en le niant. **À trancher avec l'État démoniaque.** |
+| **Royaume Délié** (démons) | **Tension sans conflit** | La Légion a attaqué la forêt au chapitre 3 pour prendre le Cœur Immobile, sur ordre secret de **la Voix** ; le Royaume dément officiellement |
 | **Domaine nocturne** | **Ennemi** | Les elfes vénèrent la Vie ; les vampires ont refusé la Mort et vivent de la vie des autres. Le **sang elfe**, chargé d'éther, est le plus recherché : « **la Chasse Pâle** », des enlèvements à la lisière. Un vampire se tue à vue. |
 
 ### À créer plus tard
@@ -249,7 +249,7 @@ Les forges volcaniques sont chauffées par le **souffle de Morghast**, qui remon
 | **Concorde de Qarzim** | **Bonne entente** | Métal et machines contre épices, soieries et cristaux |
 | **Sylvenoire** | **Allié** | La guerre des Racines (refus de vendre des armes à Aubeclaire, réfugiés accueillis) et le **commerce du vin** |
 | **Archipel des Brumes** | **Bons termes** | Les pirates sont les **meilleurs clients** des eaux-de-vie naines ; en échange, les nains reçoivent des marchandises « sans poser de questions » |
-| **État démoniaque** | **Neutre des deux côtés** | Un **intérêt stratégique** : les nains sont alliés des elfes. L'État démoniaque évite de les provoquer (pas de second front) ; les nains restent neutres pour protéger leurs montagnes |
+| **Royaume Délié** (démons) | **Neutre des deux côtés** | Un **intérêt stratégique** : les nains sont alliés des elfes. L'État démoniaque évite de les provoquer (pas de second front) ; les nains restent neutres pour protéger leurs montagnes |
 | **Domaine nocturne** | **Tension** | Par solidarité avec les elfes (la Chasse Pâle), sans aller plus loin. Les nains **refusent de leur vendre des armes** |
 | **État de la Lumière** | Neutre | L'Ordre les juge hérétiques, mais a besoin de leur métal |
 | **Cimes de Braise** | **Allié** | Le **Pacte des Braises** : feu de dragon contre chaleur des volcans et garde des couvées |
@@ -298,7 +298,7 @@ Quelques **pics volcaniques** à la lisière des Monts Grisfer, où vivent les *
 | **Aubeclaire** | Méfiance | Des chasseurs de trésors humains rôdent autour des cimes |
 | **Concorde de Qarzim** | Neutre | Les marchands rêvent de leurs trésors, sans oser y toucher |
 | **Archipel des Brumes** | Cousins éloignés | Les deux branches de dragons se parlent peu |
-| **État démoniaque** | **Ennemi** | Les Terres Cendrées sont nées de la chute des dragons-rois |
+| **Royaume Délié** (démons) | **Ennemi** | Les Terres Cendrées sont nées de la chute des dragons-rois |
 | **État de la Lumière** | Méfiance | Pour l'Ordre, les dragons sont les restes d'un âge à oublier |
 | **Domaine nocturne** | Neutre | Aucun intérêt commun |
 
@@ -371,7 +371,7 @@ La brume est le **rêve de Xyrrha**. Personne n'a jamais atteint le centre de l'
 | **Sylvenoire** | Neutre | Peu de contacts |
 | **Monts Grisfer** | **Bons termes** | Les eaux-de-vie naines ; marchandises « sans poser de questions » |
 | **Cimes de Braise** | Cousins éloignés | Par les deux branches de dragons |
-| **État démoniaque** | **Bonne entente** | Un ennemi commun (l'Ordre et l'État de la Lumière), de la contrebande… et les démons paient bien |
+| **Royaume Délié** (démons) | **Bonne entente** | Un ennemi commun (l'Ordre et l'État de la Lumière), de la contrebande… et les démons paient bien |
 | **État de la Lumière** | **Ennemi** | Il traite les pirates d'hérétiques, leur fait la chasse en mer et veut « purifier » la brume |
 | **Domaine nocturne** | **Neutre, mais toléré** | Les vampires sont acceptés à Port-Vérane tant qu'ils paient et respectent le Code |
 
@@ -379,3 +379,70 @@ La brume est le **rêve de Xyrrha**. Personne n'a jamais atteint le centre de l'
 - Le **nom du Roi des Pirates**, son navire et son pavillon ; les autres capitaines de la Table.
 - Les **pavillons** des capitaines légendaires.
 - L'épreuve des sirènes pour la quête de l'œuf.
+
+---
+
+## 7. Le Royaume Délié (l'État démoniaque) — « le faux ennemi final » ✅
+
+### En bref
+Au nord, derrière le **Mur d'Aube**, dans les **Terres Cendrées**. Pour Aubeclaire et l'Ordre, ce sont « les Cendres », la Légion, l'ennemi absolu. Pour ceux qui y vivent, c'est le **Royaume Délié** : ceux qui ont **brisé leurs chaînes** et qui disent la vérité sur le Voile. Un ennemi **gris**, qui a en partie raison… et le **faux ennemi final** : le vrai fil remonte jusqu'à l'Ordre (à développer plus tard).
+
+### Ce qui vient de la V1
+- Plaine de cendres, ciel rouge, forteresses noires ; la **Citadelle d'Obsidienne** (boss final de la saison 1).
+- Démons, morts-vivants, humains corrompus ; **demi-démons** le long du Mur.
+- La **Légion Cendrée** ; **Vorthak** (attaque de Lysmont, 1014) ; **Morra**, commandante, qui peut déserter (sa sœur est prisonnière du Souverain).
+- **Orvan**, le Premier Appelé : trahi par l'Ordre en 437, élevé par Morghast, réveillé en **990** comme **Souverain des Cendres**. L'Ordre en a fait « saint Aldebrand ».
+- **Aldric**, le prince disparu, est vivant mais corrompu dans les Cendres.
+- En V2 (cosmologie) : **Morghast** dort sous la Citadelle ; pour eux, le Voile est une **prison** pour les dieux.
+
+### La hiérarchie
+
+| Rang | Qui | Rôle |
+|---|---|---|
+| 1 | **Le Roi démon : Orvan**, et sa famille | Le pouvoir suprême, depuis la Citadelle d'Obsidienne |
+| 2 | **Les Trois Suprêmes** | **La Main** (la guerre, commande la Légion), **la Voix** (diplomatie et commerce), **le Masque** (espions et cultes des Cendres dans les villes) |
+| 3 | **Les Sept Familles** | Les grandes maisons démoniaques, chacune avec sa forteresse (Morra et Vorthak en viennent) |
+| 4 | **Les Démons anciens** | Ceux d'avant la Déchirure : très respectés, peu nombreux |
+| 5 | **Le peuple** | La Légion, les demi-démons, les humains corrompus, les morts-vivants |
+
+Tous suivent d'abord le Roi démon… mais pas tous pour les mêmes raisons.
+
+### La famille royale
+- **Orvan**, le Roi démon : un humain devenu roi des démons. Sa guerre est d'abord une **vengeance** contre l'Ordre, et contre ceux qui le protègent (Aubeclaire, l'État de la Lumière). Avec les autres peuples, il commerce, négocie ou les laisse tranquilles.
+- **La famille du premier seigneur démon**, celui qu'Orvan a vaincu en 430 : il l'a épargnée et liée à lui.
+- **Aldric, l'héritier adoptif** : le prince disparu d'Aubeclaire. Comme Orvan, il a été **trahi par l'Ordre** (qui l'a fait disparaître en 1009). Orvan se reconnaît en lui et en a fait son héritier.
+
+### La Voix : le Suprême qui manipule
+- La Voix murmure aux **Sept Familles**, qui poussent ensuite le roi à décider.
+- **Son pacte secret avec l'Ordre** : l'Ordre a besoin d'un ennemi pour justifier ses Appels ; la Voix **entretient la guerre**. En échange, elle reçoit (à créer : pouvoir, protection, une promesse de trône…).
+- **L'attaque de la forêt (chapitre 3, Nuitlongue 1020)** vient d'elle : la Légion devait s'emparer du **Cœur Immobile**, le fragment de Sérène qui protège Sylvenoire. Officiellement, pour affaiblir le Voile. En réalité, le Cœur devait **finir chez l'Ordre**, qui avait déjà échoué à le prendre pendant la guerre des Racines.
+- **Morra** a mené l'attaque sans savoir qu'on l'utilisait. C'est peut-être ce qui la fera déserter au chapitre 4.
+- Officiellement, le Royaume **dément** l'attaque : c'est pourquoi les elfes restent en « tension sans conflit ».
+
+### Économie
+- La cendre nourrit mal : le Royaume **manque de nourriture** et l'achète en contrebande, par l'**Archipel** et par les « cargaisons » de **Qarzim**.
+- Il paie en **obsidienne**, en **métaux de braise** et en **ingrédients démoniaques**.
+- Les **vampires** servent d'ambassadeurs et de banquiers.
+
+### Religion et zone grise
+- **Morghast** (la Destruction) et **Xyrrha** (le Chaos), vus comme des dieux **enchaînés injustement**.
+- **Ils disent la vérité** sur les Appels : l'Ordre ment, et eux le savent. Certains demi-démons et humains corrompus les ont rejoints **par conviction**, pas par malédiction.
+- Ils oublient pourtant ce que coûterait la destruction du Voile.
+
+### Relations
+
+| Avec | Relation | Pourquoi |
+|---|---|---|
+| **Aubeclaire** | **Ennemi majeur** | Le Mur d'Aube est la frontière ; la Couronne protège l'Ordre |
+| **État de la Lumière** | **Ennemi juré** | L'Ordre a trahi Orvan |
+| **Concorde de Qarzim** | Neutre | Commerce discret : on ne se demande pas où vont certaines cargaisons |
+| **Sylvenoire** | **Tension sans conflit** | L'attaque de la forêt, officiellement démentie |
+| **Monts Grisfer** | Neutre | Intérêt stratégique : ne pas provoquer les alliés des elfes (pas de second front) |
+| **Cimes de Braise** | **Ennemi** | Les Terres Cendrées sont nées de la chute des dragons-rois |
+| **Archipel des Brumes** | **Bonne entente** | Ennemi commun, contrebande, et les démons paient bien |
+| **Domaine nocturne** | **Allié** | Deux peuples pourchassés par l'Ordre, qui refusent ce que les dieux leur ont imposé (la Mort pour les uns, le Voile pour les autres). Les vampires sont leurs ambassadeurs et leurs banquiers. |
+
+### À créer plus tard
+- Les **noms des Trois Suprêmes** et des **Sept Familles**.
+- Ce que la Voix reçoit de l'Ordre, et qui est au courant du pacte.
+- Le vrai ennemi final (développement futur).
