@@ -14,6 +14,7 @@ import { afficherDonjon, cacherDonjon, retraitCombat } from "./rendu/donjon3d";
 import { animerDecor } from "./rendu/ambiance";
 import { ecouterMessages } from "./ui/messages";
 import { majNotifications } from "./ui/notifications";
+import { majTutoriel } from "./ui/tutoriel";
 import { majInvitesJoueurs, preparerInvitesJoueurs } from "./rendu/joueurs";
 import { allerAuLieu, entrerDans, majMarqueurs, majPnj, sortirDe, surInteraction } from "./rendu/marqueurs";
 import { vueCombat } from "./ui/combat";
@@ -221,6 +222,7 @@ function redessiner() {
 	majMarqueurs(vue === "monde");
 	majInvitesJoueurs();
 	majNotifications();
+	majTutoriel(vue);
 	majPnj();
 	majSons(vue, affichage.dans);
 	// le panneau latéral commence juste sous la barre du haut (sa hauteur varie avec son contenu)
