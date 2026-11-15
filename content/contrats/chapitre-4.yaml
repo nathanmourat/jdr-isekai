@@ -1,4 +1,4 @@
-# Contrats de guilde du chapitre 4, aux comptoirs de Karak-Dûm et de Port-Vérane. Dernière étape : retour au comptoir.
+# Contrats de guilde du chapitre 4, aux comptoirs d'Ardenclume et de Port-Vérane. Dernière étape : retour au comptoir.
 # Répétable par défaut : une fois rempli, le contrat quitte le tableau et revient après config.contrats.retour_jours (5 jours).
 # « repetable: false » : rempli une fois pour toutes (créature unique, histoire).
 contrats:
@@ -14,7 +14,7 @@ contrats:
     etapes:
       - { lieu: col-des-vents, objectif: "Monter au Col des Vents.", texte: "Le vent hurle entre les pics. Des chariots renversés, du minerai répandu dans la neige, et des traces de brûlure sur les bâches.", bouton: "Attendre la nuit" }
       - { lieu: col-des-vents, objectif: "Chasser la nuée.", texte: "La nuit tombe. Des points rouges s'allument dans le ciel, comme des braises qui volent. Puis ils plongent.", combat: grisfer-chauves-souris }
-      - { lieu: guilde-karak, objectif: "Revenir au comptoir de Karak-Dûm.", texte: "Hjalmi tamponne le contrat d'un coup sec. « Les caravanes repasseront demain. Bon travail. Ne crachez pas par terre en sortant. »", bouton: "Toucher la récompense" }
+      - { lieu: guilde-karak, objectif: "Revenir au comptoir d'Ardenclume.", texte: "Hjalmi tamponne le contrat d'un coup sec. « Les caravanes repasseront demain. Bon travail. Ne crachez pas par terre en sortant. »", bouton: "Toucher la récompense" }
 
   - id: c-source-chaude
     titre: "Kobolds à la source chaude"
@@ -33,7 +33,7 @@ contrats:
           - { texte: "Leur parler d'abord, avec des gestes.", resultat: "Les kobolds vous écoutent poliment, puis vous jettent de l'eau chaude au visage." }
           - { texte: "Leur faire peur en criant très fort.", resultat: "Les kobolds sortent de l'eau, très vexés, et prennent leurs pioches." }
       - { lieu: source-chaude, objectif: "Déloger les kobolds.", texte: "Les kobolds se mettent en rang, pioches levées.", combat: grisfer-kobolds }
-      - { lieu: guilde-karak, objectif: "Revenir au comptoir de Karak-Dûm.", texte: "Hjalmi grogne. « Les vieux vous envoient une tonne de remerciements. Moi, je vous envoie la prime. C'est plus utile. »", bouton: "Toucher la récompense" }
+      - { lieu: guilde-karak, objectif: "Revenir au comptoir d'Ardenclume.", texte: "Hjalmi grogne. « Les vieux vous envoient une tonne de remerciements. Moi, je vous envoie la prime. C'est plus utile. »", bouton: "Toucher la récompense" }
 
   - id: c-ile-aux-epaves
     titre: "Les pilleurs de l'Île aux épaves"

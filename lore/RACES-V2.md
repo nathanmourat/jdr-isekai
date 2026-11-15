@@ -3,6 +3,7 @@
 > Nouvelles races jouables proposées pour la **V2** : les **Anges** et les **Vampires**.
 > Elles s'appuient sur la [cosmologie V2](COSMOLOGIE-V2.md). **Rien n'est encore dans le jeu** : la décision revient au groupe.
 > Pas de « demi-ange » : les demi-démons restent une particularité.
+> **Accord avec le jeu (vérifié le 15/11)** : le jeu a toujours ses 8 races (humain, elfe, demi-elfe, nain, Ourvalis, Vulpin, demi-démon, sang-dragon) ; les Anges et les Vampires n'y sont pas encore.
 
 ---
 

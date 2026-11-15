@@ -4,6 +4,8 @@
 > Les petits clins d'œil possibles dans la V1 (noms, fêtes, reliques) sont également validés.
 > Idée de départ du groupe (les 3 dragons primordiaux, les 4 dieux supérieurs, les 12 dieux, l'Interdit, l'Éveil et l'Élévation), mise en forme et reliée au monde existant.
 > Tous les noms sont **originaux** et peuvent être changés.
+>
+> **Accord avec le jeu (vérifié le 15/11)** : les faits de la V1 cités ici correspondent au jeu (dons, Temple du Seuil, « regard du Seuil », Fête des Lanternes le 15 Floréal, Nuitlongue, Orvan le Premier Appelé, Légion Cendrée, Ylvarae, ultimes au niveau 30). Clins d'œil **déjà mis dans le jeu** : la réplique d'Orvan sur « Saint Aldebrand » (chapitre 6, face au trône) et des phrases de passants (la Passeuse et la Fête des Lanternes, les Douze, Fenna-aux-Dés, Tharvos, Oraëlle, le nom oublié du Temple du Seuil) dans `content/monde/ambiance.yaml`. Le reste de ce document n'est pas encore dans le jeu.
 
 ---
 
@@ -226,7 +228,7 @@ Certains **États** seront **religieux**. Il y aura au moins un **État démonia
 | Les **4 fins de saison** | **Le Sceau** : refermer le Voile, Sérène reprend force. **Le Pacte** : un équilibre avec la Destruction. **La Couronne** : le Voile s'effrite. **Le Retour** : Saëlor ouvre un seuil vers notre monde. |
 
 ### Les 3 incohérences de la V1, réglées
-1. **« Saint Aldebrand, le Premier Appelé »** contre **Orvan** : *Aldebrand* est le **nom de sainteté** que l'Ordre a donné à Orvan après l'avoir trahi. Il a effacé son vrai nom pour en faire un saint sans histoire. Les reliques d'« Aldebrand » sont donc… celles d'Orvan.
+1. **« Saint Aldebrand, le Premier Appelé »** contre **Orvan** : *Aldebrand* est le **nom de sainteté** que l'Ordre a donné à Orvan après l'avoir trahi. Il a effacé son vrai nom pour en faire un saint sans histoire. Les reliques d'« Aldebrand » sont donc… celles d'Orvan. **Dans le jeu depuis le 15/11** : au chapitre 6, Orvan montre sa main à qui il manque deux phalanges (la « Phalange de Saint Aldebrand » vendue par Orlan Cassebrune) et le dit lui-même.
 2. **Ordre des régions** : la V2 numérotera les régions dans l'ordre des chapitres (Aubeclaire, Marche des Sables, Sylvenoire, Grisfer et Archipel, Mur d'Aube, Terres Cendrées), avec des niveaux alignés sur les chapitres.
 3. **Rituel elfe et sujet tabou** : les elfes cachent leur faute. Leur version de la Rupture accuse le Chaos, et étudier la Déchirure revient à découvrir leur responsabilité. C'est pour ça qu'Ilyssë a été bannie.
 

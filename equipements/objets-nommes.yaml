@@ -17,7 +17,7 @@ lame-runique:
   - { palier: II, rarete: rare, type: deux-mains, nom: "Fendeuse de Qarzim", description: "Une lame courbe à deux mains, forgée pour un champion des arènes du Grand Bazar.", effets: [critique] }
   - { palier: III, rarete: rare, type: lourde, nom: "Cuirasse d'écorce-fer", description: "Des plaques taillées dans l'écorce durcie des arbres géants de Sylvenoire.", effets: [resistance:poison] }
   - { palier: III, rarete: epique, type: anneau, nom: "Anneau des Racines", description: "Un anneau de bois vivant qui garde la mémoire de chaque rune qu'il a vue.", effets: [mana, precision] }
-  - { palier: IV, rarete: rare, type: epee, nom: "Épée des Mille Marches", description: "Forgée à Karak-Dûm, une marche gravée sur la lame pour chaque étage conquis.", effets: [touche:foudre] }
+  - { palier: IV, rarete: rare, type: epee, nom: "Épée des Mille Marches", description: "Forgée à Ardenclume, une marche gravée sur la lame pour chaque étage conquis.", effets: [touche:foudre] }
   - { palier: IV, rarete: epique, type: lourde, nom: "Plates de la forge volcanique", description: "Une armure trempée dans la lave des Monts Grisfer, encore tiède au toucher.", effets: [vigueur, resistance:feu] }
   - { palier: V, rarete: rare, type: bouclier, nom: "Pavois du Mur d'Aube", description: "Le grand bouclier des sentinelles de la frontière, couvert de sceaux de garde.", effets: [resistance:ombre] }
   - { palier: V, rarete: epique, type: epee, nom: "Sceau-lame des Sentinelles", description: "Chaque rune gravée sur cette lame scelle un démon tombé sur le Mur.", effets: [critique, touche:sacre] }
@@ -77,7 +77,7 @@ gardien:
   - { palier: II, rarete: rare, type: epee, nom: "Épée du serment des sables", description: "Les gardes des caravanes jurent sur cette lame de ne jamais abandonner un voyageur.", effets: [precision] }
   - { palier: III, rarete: rare, type: lourde, nom: "Harnois du gardien des racines", description: "Une armure de plaques ornée de feuilles, portée par les protecteurs d'Ithrael.", effets: [resistance:poison] }
   - { palier: III, rarete: epique, type: bouclier, nom: "Bouclier-chêne", description: "Taillé d'une seule pièce dans un chêne millénaire qui a accepté de le donner.", effets: [vigueur, resistance:arcane] }
-  - { palier: IV, rarete: rare, type: masse, nom: "Marteau de l'enclume-mère", description: "Le marteau cérémoniel des forgerons de Karak-Dûm.", effets: [touche:feu] }
+  - { palier: IV, rarete: rare, type: masse, nom: "Marteau de l'enclume-mère", description: "Le marteau cérémoniel des forgerons d'Ardenclume.", effets: [touche:feu] }
   - { palier: IV, rarete: epique, type: lourde, nom: "Plates du Rempart nain", description: "Une armure si lourde qu'il faut deux nains pour aider à l'enfiler.", effets: [vigueur, resistance:feu] }
   - { palier: V, rarete: rare, type: bouclier, nom: "Bouclier de l'Aube", description: "Il brille d'un éclat doré quand un démon approche.", effets: [resistance:ombre] }
   - { palier: V, rarete: epique, type: sceptre, nom: "Sceptre de la sainte garde", description: "Le sceptre des capitaines de l'Ordre sur le Mur d'Aube.", effets: [vigueur, touche:sacre] }
@@ -92,7 +92,7 @@ alchimiste:
   - { palier: II, rarete: rare, type: arbalete, nom: "Arbalète à éther de la Concorde", description: "Une arme de marchand, alimentée par un petit cristal d'éther.", effets: [precision] }
   - { palier: III, rarete: rare, type: intermediaire, nom: "Veste d'herboriste", description: "Une veste couverte de poches à graines, cousue par un botaniste elfe.", effets: [resistance:poison] }
   - { palier: III, rarete: epique, type: sacoche, nom: "Besace des racines", description: "Les ingrédients qu'on y range ne pourrissent jamais.", effets: [mana, vigueur] }
-  - { palier: IV, rarete: rare, type: arbalete, nom: "Arbalète-soufflet naine", description: "Une arbalète à vapeur conçue par des ingénieurs gnomes de Karak-Dûm.", effets: [touche:feu] }
+  - { palier: IV, rarete: rare, type: arbalete, nom: "Arbalète-soufflet naine", description: "Une arbalète à vapeur conçue par des ingénieurs gnomes d'Ardenclume.", effets: [touche:feu] }
   - { palier: IV, rarete: epique, type: intermediaire, nom: "Combinaison du plongeur de l'Archipel", description: "Cuir huilé et casque de verre, pour récolter les algues du Phare noyé.", effets: [vigueur, resistance:glace] }
   - { palier: V, rarete: rare, type: sacoche, nom: "Sacoche de l'artificier du Mur", description: "Les artificiers de la frontière y rangent leurs bombes de siège.", effets: [precision] }
   - { palier: V, rarete: epique, type: arbalete, nom: "Canon de poing à cristal", description: "Plus une arbalète, plus tout à fait un canon : une invention interdite à Lysmont.", effets: [critique, touche:feu] }

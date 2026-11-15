@@ -63,10 +63,10 @@ ambiance:
   - { id: s-follets, lieu: ithrael-auberge, qui: client, texte: "Ne suivez jamais les lumières bleues. Jamais.", si: { flag: sylvenoire-ouverte } }
   - { id: s-legion, lieu: ithrael-racines, qui: garde, texte: "La Légion rôde sous les arbres. Gardez votre arc à portée de main.", si: { flag: sylvenoire-ouverte, pas_flag: elfes-allies } }
   - { id: s-nuit, lieu: ithrael-auberge, texte: "La nuit, les arbres chantent. Écoutez bien.", moment: nuit, si: { flag: sylvenoire-ouverte } }
-  # ─── Monts Grisfer (Karak-Dûm)
-  - { id: g-humains, lieu: karak-porte, qui: garde, texte: "Des humains à Karak-Dûm. Qu'ils essuient leurs bottes.", si: { flag: ch4-depart-fait, pas_flag: nains-allies } }
+  # ─── Monts Grisfer (Ardenclume)
+  - { id: g-humains, lieu: karak-porte, qui: garde, texte: "Des humains à Ardenclume. Qu'ils essuient leurs bottes.", si: { flag: ch4-depart-fait, pas_flag: nains-allies } }
   - { id: g-marches, lieu: karak-porte, qui: garde, texte: "Ce sont eux qui sont descendus jusqu'au fond des Mille Marches. Respect.", si: { flag: nains-allies } }
-  - { id: g-forge, lieu: karak-forge, qui: marchand, texte: "Une lame de Karak-Dûm, c'est pour la vie ! La vôtre, de préférence.", si: { flag: ch4-depart-fait } }
+  - { id: g-forge, lieu: karak-forge, qui: marchand, texte: "Une lame d'Ardenclume, c'est pour la vie ! La vôtre, de préférence.", si: { flag: ch4-depart-fait } }
   - { id: g-forge-froide, lieu: karak-forge, texte: "Le feu de la Grande Forge est tiède… Mauvais présage.", si: { flag: karak-recus, pas_flag: forge-commencee } }
   - { id: g-chanson, lieu: karak-taverne, qui: client, texte: "Encore une chanson ! La quarante-septième ! On ne compte qu'à partir de trois !", si: { flag: ch4-depart-fait } }
   - { id: g-kobolds, lieu: karak-taverne, qui: client, texte: "On dit que Grumli laisse un tonneau aux kobolds, chaque mois. Drôle d'époque.", si: { flag: kobolds-amis } }
@@ -97,3 +97,13 @@ ambiance:
   - { id: t-citadelle, lieu: guilde-camp, qui: garde, texte: "La Citadelle… On dit que sa porte a toujours été ouverte. Ça fait encore plus peur.", si: { flag: ch6-depart-fait, pas_flag: orvan-vaincu } }
   - { id: t-paix, lieu: camp-tentes, texte: "C'est fini. C'est vraiment fini. Le ciel est bleu, au-dessus des Cendres.", si: { flag: voile-recousu } }
   - { id: t-pacte, lieu: camp-tentes, texte: "Des ambassadeurs démons, au camp ! Et personne ne sort l'épée. Drôle d'époque.", si: { flag: royaume-des-cendres } }
+
+  # ─── Clins d'œil au lore V2 (validés par le groupe : lore/COSMOLOGIE-V2.md) ───
+  - { id: v-lanternes-passeuse, texte: "Ma grand-mère disait que la Fête des Lanternes était pour la Passeuse, celle qui porte la lanterne des morts. Avant que l'Ordre ne la reprenne." }
+  - { id: v-tharvos, texte: "Les caravaniers jurent par Tharvos, le Cœur-Battant. Moi, je jure par mes bottes.", moment: jour }
+  - { id: v-douze, texte: "Douze dieux, et pas un pour m'aider à payer mon loyer." }
+  - { id: ta-fenna, lieu: taverne, qui: client, texte: "Trois dés, dont un sans face… Fenna-aux-Dés me boude, ce soir." }
+  - { id: ta-aldebrand, lieu: taverne, qui: client, texte: "Saint Aldebrand, le Premier Appelé… Drôle de saint : personne ne connaît son visage." }
+  - { id: te-seuil, lieu: temple-du-seuil, texte: "Pourquoi « Temple du Seuil » ? Plus personne ne s'en souvient. Une vieille histoire de porte, je crois." }
+  - { id: te-douze, lieu: temple-du-seuil, qui: pretre, texte: "Les Douze servent la Lumière. Priez-les si vous voulez, mais remerciez la Lumière." }
+  - { id: g-oraelle, lieu: guilde, texte: "Un contrat signé devant la Rose des Vents, c'est sacré. Même Oraëlle n'y trouverait rien à redire." }

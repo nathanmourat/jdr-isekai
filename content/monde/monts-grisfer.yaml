@@ -2,20 +2,20 @@
 regions:
   - id: monts-grisfer
     nom: "Monts Grisfer"
-    description: "Montagnes, mines et forges volcaniques. Les nains de Karak-Dûm y gardent leurs secrets… et leurs registres."
+    description: "Montagnes, mines et forges volcaniques. Les nains d'Ardenclume y gardent leurs secrets… et leurs registres."
     carte: monts-grisfer
     chapitre: 4
     position_monde: { x: 1480, y: 470 }
     disponible_si: { flag: ch4-depart-fait }
     villes:
       - id: karak-dum
-        nom: "Karak-Dûm"
+        nom: "Ardenclume"
         description: "La cité-forge des nains, creusée dans la montagne. On y entend battre les marteaux jour et nuit."
         plan: karak-dum-plan
         position: { x: 940, y: 520 }
     lieux:
       - id: karak-porte
-        nom: "Porte de Karak-Dûm"
+        nom: "Porte d'Ardenclume"
         description: "Une porte de bronze haute comme dix hommes, gravée de runes et de visages de rois."
         decor: karak-porte
         ville: karak-dum
@@ -24,7 +24,7 @@ regions:
         disponible_si: { flag: ch4-depart-fait }
         pnj: [{ id: morra, si: { flag: morra-recrutee } }]
       - id: karak-trone
-        nom: "Salle du Roi-sous-la-Montagne"
+        nom: "Salle du Haut-Forgeron"
         description: "Une salle immense taillée dans la roche, éclairée par des rivières de lave domptées."
         decor: karak-trone
         ville: karak-dum
@@ -64,7 +64,7 @@ regions:
         gerant: grumli
         boutique: [ration, potion-soin-grande, biere-de-karak, pierre-de-feu]
       - id: guilde-karak
-        nom: "Comptoir de la Guilde (Karak-Dûm)"
+        nom: "Comptoir de la Guilde (Ardenclume)"
         description: "Un comptoir de pierre où une naine borgne tient les contrats d'une main de fer."
         decor: guilde
         ville: karak-dum

@@ -57,7 +57,7 @@ Les héros (et eux seuls) voient une **fenêtre d'état** : niveau, caractérist
 |---|---|---|---|---|---|
 | 1 | **Royaume d'Aubeclaire** | Plaines, rivières, châteaux | Humains, quelques demi-elfes | **Lysmont** (capitale), **Temple du Seuil** (lieu des invocations), siège de la Guilde, Crypte de la Fontaine (donjon) | 1–10 |
 | 2 | **Sylvenoire** | Forêt primaire, arbres géants, brume bleue | Elfes sylvains, dryades | **Ithrael** (cité dans un arbre), Bibliothèque des Racines, Clairière de la Déchirure | 15–22 |
-| 3 | **Monts Grisfer** | Montagnes, mines, forges volcaniques | Nains, gnomes | **Karak-Dûm** (cité-forge), donjon **les Mille Marches** (une marche = un étage) | 20–28 |
+| 3 | **Monts Grisfer** | Montagnes, mines, forges volcaniques | Nains, gnomes | **Ardenclume** (cité-forge), donjon **les Mille Marches** (une marche = un étage) | 20–28 |
 | 4 | **Marche des Sables** | Désert, cités-oasis, canyons | Humains du désert, **Ourvalis** (peuple-loup), **Vulpins** (peuple-renard) | **Qarzim** (cité marchande), Grand Bazar, Ruines de Sel | 8–16 |
 | 5 | **Archipel des Brumes** | Îles volcaniques, récifs, brouillard permanent | Pirates, sirènes, **derniers dragons**, **sang-dragons** | **Port-Vérane**, Nid des Wyrms, Phare noyé | 22–30 |
 | 6 | **Terres Cendrées** | Plaine de cendres, ciel rouge, forteresses noires | Démons, morts-vivants, humains corrompus ; **demi-démons** le long du Mur d'Aube | **Mur d'Aube** (frontière), Citadelle d'Obsidienne (boss final) | 28–40 |
@@ -738,7 +738,7 @@ Chaque action importante écrit une ligne datée dans le journal de la partie :
   - **1023** : le Nid des Wyrms, où l'on rencontre **Ysoria** ;
   - **1023** : Morra déserte et rejoint le groupe, si on l'avait épargnée ;
   - **1024** : **choix majeur** : révéler publiquement le secret de l'Ordre ou le garder.
-- **Personnages** : Ysoria, le Roi-sous-la-Montagne Bardrek, les pirates de Port-Vérane.
+- **Personnages** : Ysoria, le Haut-Forgeron Bardrek, les pirates de Port-Vérane.
 - **Quêtes de classe** : étape 2.
 
 ### Chapitre 5 — « La Guerre des Cendres » (1024 → 1027) · niveaux 28 → 34 · Mur d'Aube

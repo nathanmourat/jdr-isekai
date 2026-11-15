@@ -2,6 +2,8 @@
 
 > Document de travail pour la **V2**, construit avec le groupe, un royaume à la fois. **La V1 ne change pas.**
 > S'appuie sur la [cosmologie](COSMOLOGIE-V2.md) et les [races](RACES-V2.md). Tous les noms sont originaux et modifiables.
+>
+> **Accord avec le jeu (vérifié le 15/11)** : chaque section « Ce qui vient de la V1 » a été comparée au contenu du jeu (dates, lieux, personnages, chapitres) ; les écarts trouvés sont corrigés ci-dessous. **Mis dans le jeu le 15/11** : les renommages des Monts Grisfer (Ardenclume, le Haut-Forgeron). Tout le reste (Maisons, Conseil des Sept Bourses, Lignées, Pacte des Braises, Roi des Pirates, Cimes de Braise…) n'est pas encore dans le jeu.
 
 ## Avancement
 
@@ -55,7 +57,7 @@ Le plus grand royaume humain, au centre de Velmaris. Une **façade noble et lumi
 ### Armée, économie, religion
 - **Armée** : la garde royale (capitaine **Aveline**), les Chevaliers de l'Aube, les chevaliers des Maisons, et la part du royaume au **Mur d'Aube** (sous Ferrecœur).
 - **Économie** : le **grenier à blé** du monde et la **laine de Valgrane** ; une **dette** qui grandit envers Qarzim (par la Maison Dorvalle) et envers l'Ordre.
-- **Monnaie** : la **couronne** (or), l'**écu** (argent), le **denier** (cuivre).
+- **Monnaie** : la **couronne** (or), l'**écu** (argent), le **denier** (cuivre). *(Dans le jeu, tout se compte encore en « or » : les écus et deniers sont pour plus tard.)*
 - **Religion** : l'**Ordre de la Lumière Sereine** domine ; le culte populaire des **Douze** est toléré ; les **cultes des Cendres** sont pourchassés.
 
 ### Relations
@@ -134,7 +136,7 @@ Une forêt primaire d'arbres géants, cachée sous une **brume bleue**. Un peupl
 
 ### Ce qui vient de la V1
 - **Elfes sylvains** et **dryades** ; la cité-arbre d'**Ithrael**, la **Bibliothèque des Racines**, la **Clairière de la Déchirure**.
-- La **Reine-Sève** règne (seulement nommée en V1).
+- La **Reine-Sève** règne : elle apparaît dans le jeu (sa cour à Ithrael), mais sans nom propre. Sa description dit qu'elle « a vu la Déchirure » : elle a donc plus de mille ans, ce qui colle avec une reine élue par l'Arbre-Monde.
 - En **l'an 0**, un **rituel elfe** lancé contre les dragons-rois a provoqué la **Déchirure** et fait naître les Terres Cendrées. Le sujet est **tabou** ; **Ilyssë** (compagne) a été bannie pour l'avoir étudié.
 - Chapitre 3 : la Légion attaque la forêt ; les héros affrontent **Morra**.
 - En V2 (cosmologie) : culte de l'**Arbre-Monde** et d'**Aurévane** (la Création), qui dormirait dans ses racines ; leur version de la Rupture accuse le Chaos.
@@ -197,11 +199,11 @@ Des montagnes de forges volcaniques à l'est de Velmaris. Un peuple **rude mais 
 
 ### Ce qui vient de la V1
 - Montagnes, mines, forges volcaniques ; **nains** et **gnomes** ; couleurs gris et orange de forge.
-- La cité-forge et le donjon des **Mille Marches** (une marche = un étage).
+- La cité-forge (**Ardenclume**, appelée Karak-Dûm jusqu'au 15/11) et le donjon des **Mille Marches** (une marche = un étage).
 - Le roi **Bardrek** ; chapitre 4 : former l'**alliance des nains et des dragons** (Mille Marches en 1022).
 - En V2 (cosmologie) : **Durnhal** (la Forge), les **Ancêtres** sous la montagne, **Morghast « le Briseur »** vénéré comme un artisan (défaire pour refaire), ce que l'Ordre juge hérétique.
 
-### Noms renommés en V2 (pour rester 100 % originaux)
+### Noms renommés (pour rester 100 % originaux) — appliqués au jeu le 15/11
 | V1 | V2 |
 |---|---|
 | Karak-Dûm | **Ardenclume** (la cité-forge) |

@@ -296,11 +296,11 @@ On y va par la **carte → « Y aller »** (téléportation). Chaque région a s
 ### Liste de contrôle — chapitre 4 (Monts Grisfer et Archipel des Brumes)
 - [ ] Fin du chapitre 3 → dormir → au château : « L'alliance des peuples ».
 - [ ] La carte affiche « Monts Grisfer » (à l'est) et « Archipel des Brumes » (au sud-ouest).
-- [ ] Karak-Dûm : porte de bronze, salle du trône, Grande Forge (boutique de Durna, palier IV), Chope Ardente (lit), Comptoir de la Guilde.
+- [ ] Ardenclume : porte de bronze, salle du trône, Grande Forge (boutique de Durna, palier IV), Chope Ardente (lit), Comptoir de la Guilde.
 - [ ] Port-Vérane : quais, Requin Ivre (lit), Marché aux épaves (boutique de Corail), Comptoir de la Guilde.
 - [ ] Les Mille Marches : donjon jouable (golems, salamandres, Gardien), Registre à la fin.
 - [ ] Nid des Wyrms : combat contre Vask, puis Ysoria rejoint le groupe (amitié seulement sur Roblox).
-- [ ] Porte de Karak-Dûm : Morra déserte (si on l'avait épargnée), sinon un déserteur.
+- [ ] Porte d'Ardenclume : Morra déserte (si on l'avait épargnée), sinon un déserteur.
 - [ ] Temple du Seuil : le choix « révéler / garder le secret » de l'Ordre, puis fin du chapitre.
 
 ### Liste de contrôle — chapitre 5 (Mur d'Aube)
@@ -327,7 +327,7 @@ Le monde est trois fois plus grand (1,8 stud par pixel de la carte au lieu de 0,
 - [ ] Lysmont est entourée de remparts crénelés (tours rondes, chemin de ronde) avec une porte fortifiée sur chaque route qui sort (temple au nord, Combe à l'ouest, crypte à l'est, campagne au sud).
 - [ ] Le château est une forteresse : courtines de 36 studs, tours d'angle, châtelet d'entrée avec herse et bannières, logis royal, donjon et grande tour du roi (plus de 130 studs).
 - [ ] La ville est pleine de maisons (quartiers entre les rues) ; la grande place a son marché et sa fontaine agrandie.
-- [ ] Les villes des autres régions (Qarzim, Ithrael, Karak-Dûm, Fort-Aube, Camp de l'Aube) ont leurs remparts aux couleurs de la région ; Port-Vérane reste ouvert sur la mer.
+- [ ] Les villes des autres régions (Qarzim, Ithrael, Ardenclume, Fort-Aube, Camp de l'Aube) ont leurs remparts aux couleurs de la région ; Port-Vérane reste ouvert sur la mer.
 - [ ] La caméra recule jusqu'à 420 studs (molette) ; on marche un peu plus vite (24 au lieu de 16).
 - [ ] Les combats « sur place » se déroulent devant la porte des bâtiments, pas à l'intérieur des murs.
 - [ ] Performance : si Studio rame au démarrage, dis-le-moi (nombre de pièces à réduire).
@@ -436,7 +436,7 @@ Chaque région a ses costumes (`src/server/cultures.ts`) : habitants des maisons
 - [ ] **Aubeclaire** (Lysmont) : laine et lin, tabliers, capuches, chapeaux de paille ; gardes en armure.
 - [ ] **Marche des Sables** (Qarzim) : turbans, voiles contre le sable, robes claires, ceintures safran et indigo ; des **Vulpins** (pelage roux, oreilles et queue de renard) et des **Ourvalis** (grands, oreilles d'ours).
 - [ ] **Sylvenoire** : elfes aux oreilles pointues, verts mousse et argent, capes, couronnes de feuilles ; gardes archers.
-- [ ] **Monts Grisfer** (Karak-Dûm) : nains petits et barbus (roux, noirs, blancs), cols de fourrure, tabliers de forge.
+- [ ] **Monts Grisfer** (Ardenclume) : nains petits et barbus (roux, noirs, blancs), cols de fourrure, tabliers de forge.
 - [ ] **Archipel des Brumes** (Port-Vérane) : bandanas, tricornes à plume, chemises blanches, ceintures rouges.
 - [ ] **Mur d'Aube** : soldats en tabard doré, réfugiés en capes grises.
 - [ ] **Terres Cendrées** : peuple des Cendres (cornes, peaux grises, yeux de braise, capes noires) et soldats du camp de l'Aube.

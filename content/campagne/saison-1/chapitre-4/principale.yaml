@@ -18,7 +18,7 @@ scenes:
           - { qui: seraphine, dit: "Séraphine croise les bras. « Père, les nains ont fermé leur porte à la Couronne il y a cent ans. Ils ne l'ouvriront pas pour un ambassadeur. Ils l'ouvriront peut-être pour des héros. »", si: { flag: seraphine-recrutee } }
           - { qui: elianne, expression: tristesse, dit: "Elianne, à voix basse : « Les nains ont forgé les sceaux de l'Appel, en l'an 430. Si quelqu'un a gardé une trace de ce que l'Ordre a fait… c'est eux. »", si: { flag: elianne-recrutee } }
         choix:
-          - texte: "« Nous irons à Karak-Dûm. Puis dans l'Archipel. »"
+          - texte: "« Nous irons à Ardenclume. Puis dans l'Archipel. »"
             aller: route
           - texte: "« Et l'Ordre, Majesté ? Que dit le Grand Prieur de tout ça ? »"
             aller: ordre
@@ -37,7 +37,7 @@ scenes:
   # ─────────────────────────────────────────────────────────────
   - id: ch4-karak
     pnj: bardrek
-    titre: "Le Roi-sous-la-Montagne"
+    titre: "Le Haut-Forgeron"
     type: groupe
     lieu: karak-trone
     decor: karak-trone
@@ -46,14 +46,14 @@ scenes:
     noeuds:
       debut:
         repliques:
-          - { dit: "La salle du trône de Karak-Dûm est si haute qu'on n'en voit pas le plafond. Des rivières de lave domptées coulent dans des rigoles de bronze, et la chaleur vous sèche les yeux." }
-          - { qui: bardrek, dit: "Le roi Bardrek ne se lève pas. « Des humains. Des Appelés, en plus. » Il boit une longue gorgée. « La dernière fois que des Appelés sont venus à Karak-Dûm, c'était il y a six cents ans. Ils nous ont demandé de forger des sceaux. Nous l'avons fait. Nous le regrettons encore. »" }
+          - { dit: "La salle du trône d'Ardenclume est si haute qu'on n'en voit pas le plafond. Des rivières de lave domptées coulent dans des rigoles de bronze, et la chaleur vous sèche les yeux." }
+          - { qui: bardrek, dit: "Le roi Bardrek ne se lève pas. « Des humains. Des Appelés, en plus. » Il boit une longue gorgée. « La dernière fois que des Appelés sont venus à Ardenclume, c'était il y a six cents ans. Ils nous ont demandé de forger des sceaux. Nous l'avons fait. Nous le regrettons encore. »" }
           - { qui: bardrek, dit: "« Une alliance ? Contre la Légion ? » Il rit, sans joie. « La Légion ne nous a jamais rien fait. Ce sont vos prêtres qui nous ont menti. »" }
         choix:
           - texte: "« Alors dites-nous ce qu'ils ont fait. Nous voulons la vérité, nous aussi. »"
             effets: [{ reputation: { nains: 5 } }]
             aller: verite
-          - texte: "Lui offrir un tonnelet de bière de Karak, à la manière naine."
+          - texte: "Lui offrir un tonnelet de bière d'Ardenclume, à la manière naine."
             si: { objet: biere-de-karak }
             effets: [{ retirer_objet: biere-de-karak, reputation: { nains: 10 } }]
             aller: biere
@@ -74,7 +74,7 @@ scenes:
           - { qui: bardrek, dit: "« Mais il y a vingt ans, le Gardien des Marches s'est réveillé. Un golem que nos ancêtres ont forgé pour protéger les Registres. Il n'obéit plus à personne. »" }
           - { qui: bardrek, dit: "« Descendez. Faites taire le Gardien. Lisez les Registres. Si vous remontez, vous aurez l'alliance des nains. » Il sourit dans sa barbe. « Si vous ne remontez pas… vous aurez une belle tombe. Nous faisons de très belles tombes. »" }
         effets:
-          - { flag: karak-recus, xp: 500, quete: { id: q-ch4-feu, etape: marches }, journal: "{groupe} sont reçus par Bardrek, Roi-sous-la-Montagne. Il promet l'alliance des nains s'ils reviennent des Mille Marches." }
+          - { flag: karak-recus, xp: 500, quete: { id: q-ch4-feu, etape: marches }, journal: "{groupe} sont reçus par Bardrek, le Haut-Forgeron. Il promet l'alliance des nains s'ils reviennent des Mille Marches." }
         fin: true
 
   # ─────────────────────────────────────────────────────────────
@@ -118,7 +118,7 @@ scenes:
             aller: bardrek
       bardrek:
         repliques:
-          - { qui: bardrek, dit: "Bardrek écoute sans un mot. Puis il pose son marteau sur la table. « Les nains de Karak-Dûm marcheront avec vous. Pas pour la Couronne. Pas pour l'Ordre. Pour vous, qui êtes descendus. »" }
+          - { qui: bardrek, dit: "Bardrek écoute sans un mot. Puis il pose son marteau sur la table. « Les nains d'Ardenclume marcheront avec vous. Pas pour la Couronne. Pas pour l'Ordre. Pour vous, qui êtes descendus. »" }
           - { qui: bardrek, dit: "« Et pour les dragons… Il y a une capitaine pirate, à Port-Vérane, qui connaît la route du Nid. Corsa la Rouge. Elle me doit une jambe. Enfin, une jambe de bois : c'est moi qui l'ai fabriquée. »" }
         fin: true
 
@@ -230,7 +230,7 @@ scenes:
     noeuds:
       debut:
         repliques:
-          - { dit: "Brumaire 1023. Les gardes de la Porte de Karak-Dûm vous font appeler en pleine nuit. « Quelqu'un vous demande. Quelqu'un avec des cornes. »" }
+          - { dit: "Brumaire 1023. Les gardes de la Porte d'Ardenclume vous font appeler en pleine nuit. « Quelqu'un vous demande. Quelqu'un avec des cornes. »" }
           - { dit: "Dans la neige, devant la porte de bronze, une silhouette encapuchonnée tient à peine debout. Une corne est brisée.", si: { flag: morra-vivante } }
           - { qui: morra, dit: "Morra relève la tête. « Bonsoir, Appelés. » Elle sourit, avec du sang aux dents. « J'ai déserté. Ils me suivent. Vous avez cinq secondes pour décider si vous m'aidez. »", si: { flag: morra-vivante } }
           - { dit: "Dans la neige, devant la porte de bronze, un jeune soldat cendré lève les mains. Il a jeté son épée. « Je… je déserte. J'ai des nouvelles du Mur. Ils me suivent ! »", si: { flag: morra-tuee } }
@@ -252,7 +252,7 @@ scenes:
             si: { flag: morra-vivante }
             effets: [{ flag: [morra-recrutee, morra-alliee], recruter: morra, reputation: { legion: 10 } }]
             aller: morra-oui
-          - texte: "« Tu peux rester à Karak-Dûm, à l'abri. Mais pas avec nous. »"
+          - texte: "« Tu peux rester à Ardenclume, à l'abri. Mais pas avec nous. »"
             si: { flag: morra-vivante }
             effets: [{ flag: morra-refugiee }]
             aller: morra-non
@@ -270,7 +270,7 @@ scenes:
         suite: fin
       fin:
         effets:
-          - { flag: assaut-connu, xp: 700, quete: { id: q-ch4-feu, etape: conseil }, journal: "Brumaire 1023 : à la Porte de Karak-Dûm, {groupe} apprennent que la Légion attaquera le Mur d'Aube au printemps 1025." }
+          - { flag: assaut-connu, xp: 700, quete: { id: q-ch4-feu, etape: conseil }, journal: "Brumaire 1023 : à la Porte d'Ardenclume, {groupe} apprennent que la Légion attaquera le Mur d'Aube au printemps 1025." }
         fin: true
 
   # ─────────────────────────────────────────────────────────────

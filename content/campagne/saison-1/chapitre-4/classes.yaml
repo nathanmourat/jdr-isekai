@@ -128,7 +128,7 @@ scenes:
     noeuds:
       debut:
         repliques:
-          - { dit: "Le vieux paladin de Qarzim vous attendait devant la Porte de Karak-Dûm. Il a fait tout le chemin à pied. « Les nains m'ont laissé passer. Ils disent que tu es descendu au fond. Bien. Maintenant, tiens la passe. »" }
+          - { dit: "Le vieux paladin de Qarzim vous attendait devant la Porte d'Ardenclume. Il a fait tout le chemin à pied. « Les nains m'ont laissé passer. Ils disent que tu es descendu au fond. Bien. Maintenant, tiens la passe. »" }
           - { dit: "Il vous mène au premier palier des Mille Marches, là où l'escalier est si étroit qu'un seul homme peut le défendre. Des statues de rois nains, de chaque côté. « Prête le serment ici. Face à l'ennemi. »" }
         choix:
           - texte: "Tenir la passe toute la nuit, bouclier levé, sans reculer d'un pas. (Vitalité, difficulté 28)"

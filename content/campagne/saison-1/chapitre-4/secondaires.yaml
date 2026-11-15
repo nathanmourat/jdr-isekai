@@ -61,7 +61,7 @@ scenes:
     noeuds:
       debut:
         repliques:
-          - { qui: durna, dit: "Durna verse la Braise-mère dans le foyer. Le feu rugit si fort que toute la forge recule d'un pas. Puis tous les forgerons de Karak-Dûm se mettent à frapper en même temps, comme un tambour de victoire." }
+          - { qui: durna, dit: "Durna verse la Braise-mère dans le foyer. Le feu rugit si fort que toute la forge recule d'un pas. Puis tous les forgerons d'Ardenclume se mettent à frapper en même temps, comme un tambour de victoire." }
           - { qui: durna, dit: "« Les armes de cette guerre sortiront d'ici, et elles seront chaudes. » Elle vous tend un petit paquet. « Et ça, c'est pour vous. Un nain ne doit jamais rien à personne. »" }
         effets: [{ terminer_quete: q-forge-froide, or: 400, xp: 600, reputation: { nains: 10 }, objet: potion-soin-supreme }]
         fin: true

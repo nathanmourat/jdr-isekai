@@ -124,6 +124,10 @@ Si une demande est floue ou contradictoire : poser la question plutôt que devin
 - Roblox suit les lots C/D/E du web (13/11) : jours par le serveur (`boucleJours`), lit de l'auberge (taverne), `parole_a`, paris, grimoire personnel, contrats à étapes (balises dorées des lieux `etape_seulement`), migrations au chargement. Parité Lune : graines `contrats` et `equipement` en plus.
 - Deux sessions Claude travaillent sur la branche : celle-ci (cloud) s'occupe de Roblox, celle du PC de Nathan de la version web. Toujours `git fetch` + rebase avant de pousser.
 
+## Lore V2 (branche `lore-v2`, fusionnée le 15/11)
+- Documents de travail du groupe dans `lore/` (`COSMOLOGIE-V2.md`, `RACES-V2.md`, `ROYAUMES-V2.md`) ; la V2 n'est pas finie (3 États « à faire », races Ange et Vampire « à valider »). **Ne pas l'intégrer au jeu sans décision du groupe.**
+- **Accord fait le 15/11** : les sections « Ce qui vient de la V1 » ont été vérifiées contre le contenu ; dans le jeu, Karak-Dûm s'appelle **Ardenclume** et le Roi-sous-la-Montagne **le Haut-Forgeron** (noms affichés seulement, les ids `karak-*` ne changent pas) ; Orvan révèle au chapitre 6 qu'il est « Saint Aldebrand » ; phrases d'ambiance sur les dieux (la Passeuse, les Douze, Fenna-aux-Dés, Tharvos, Oraëlle). Monnaie : le jeu compte toujours en « or ».
+
 ## Choix techniques
 - TypeScript + Vite + **Phaser 3** (rendu 2D) + Svelte (menus et dialogues par-dessus) ; tests avec Vitest ; Playwright pour le test de bout en bout.
 - Le moteur de règles est **pur** (`src/moteur/`, sans interface ni réseau). Il est réutilisé par les tests et par `scripts/equilibrage.ts`.

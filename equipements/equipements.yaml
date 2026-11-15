@@ -4430,7 +4430,7 @@ objets:
     valeur: 0.05
 - id: epee-des-mille-marches
   nom: Épée des Mille Marches
-  description: Forgée à Karak-Dûm, une marche gravée sur la lame pour chaque étage conquis.
+  description: Forgée à Ardenclume, une marche gravée sur la lame pour chaque étage conquis.
   type: equipement
   emplacement: arme
   prix: 770
@@ -5675,7 +5675,7 @@ objets:
     valeur: 0.11
 - id: marteau-de-l-enclume-mere
   nom: Marteau de l'enclume-mère
-  description: Le marteau cérémoniel des forgerons de Karak-Dûm.
+  description: Le marteau cérémoniel des forgerons d'Ardenclume.
   type: equipement
   emplacement: arme
   prix: 770
@@ -5960,7 +5960,7 @@ objets:
     valeur: 0.05
 - id: arbalete-soufflet-naine
   nom: Arbalète-soufflet naine
-  description: Une arbalète à vapeur conçue par des ingénieurs gnomes de Karak-Dûm.
+  description: Une arbalète à vapeur conçue par des ingénieurs gnomes d'Ardenclume.
   type: equipement
   emplacement: arme
   prix: 770

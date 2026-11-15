@@ -9,11 +9,11 @@ quetes:
     resume: "La guerre approche. Il faut l'alliance des nains de Grisfer et des dragons de l'Archipel. Et Elianne cherche toujours ses preuves."
     etapes:
       - { id: depart, objectif: "Se présenter au château de Lysmont (Germinal 1021).", scene: ch4-depart, lieu: chateau }
-      - { id: karak, objectif: "Être reçus par le Roi-sous-la-Montagne, à Karak-Dûm.", scene: ch4-karak, lieu: karak-trone, niveau: 22 }
+      - { id: karak, objectif: "Être reçus par le Haut-Forgeron, à Ardenclume.", scene: ch4-karak, lieu: karak-trone, niveau: 22 }
       - { id: marches, objectif: "Descendre les Mille Marches (Floréal 1022).", scene: ch4-marches, lieu: mille-marches, niveau: 23 }
       - { id: port, objectif: "Trouver un navire pour le Nid des Wyrms, à Port-Vérane.", scene: ch4-port, lieu: port-quais, niveau: 24 }
       - { id: nid, objectif: "Aborder au Nid des Wyrms (Solaire 1023).", scene: ch4-nid, lieu: nid-des-wyrms, niveau: 25 }
-      - { id: deserteur, objectif: "Quelqu'un vous attend à la Porte de Karak-Dûm (Brumaire 1023).", scene: ch4-deserteur, lieu: karak-porte, niveau: 26 }
+      - { id: deserteur, objectif: "Quelqu'un vous attend à la Porte d'Ardenclume (Brumaire 1023).", scene: ch4-deserteur, lieu: karak-porte, niveau: 26 }
       - { id: conseil, objectif: "Affronter le Grand Prieur au Temple du Seuil (Aurore 1023).", scene: ch4-conseil, lieu: temple-du-seuil }
       - { id: fin, objectif: "Chapitre terminé." }
 

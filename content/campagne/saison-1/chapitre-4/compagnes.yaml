@@ -135,7 +135,7 @@ scenes:
         fin: true
 
   - id: mo-toit
-    titre: "Morra — Sur les toits de Karak-Dûm"
+    titre: "Morra — Sur les toits d'Ardenclume"
     type: individuel
     lieu: karak-taverne
     decor: karak-taverne

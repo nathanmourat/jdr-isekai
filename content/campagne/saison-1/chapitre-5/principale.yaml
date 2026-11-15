@@ -47,7 +47,7 @@ scenes:
         repliques:
           - { qui: marechale, dit: "La Maréchale Corvin ne lève pas les yeux de sa carte. « Les Appelés. On m'a dit que vous arriviez. On m'a dit beaucoup de choses. » Elle plante une figurine noire au-delà du Mur. « Quarante mille. Voilà ce qu'ils sont. Nous sommes dix mille. »" }
           - { qui: marechale, dit: "« Les nains ont promis de renforcer les portes. Les elfes, de tenir les tours. Les dragons… » Elle a un petit rire. « Je n'ai jamais commandé de dragons. »" }
-          - { qui: bardrek, dit: "Une voix tonne depuis la porte. « Les nains de Karak-Dûm sont arrivés ! Trois mille marteaux ! Où sont les tonneaux ? »", si: { flag: nains-allies } }
+          - { qui: bardrek, dit: "Une voix tonne depuis la porte. « Les nains d'Ardenclume sont arrivés ! Trois mille marteaux ! Où sont les tonneaux ? »", si: { flag: nains-allies } }
           - { qui: vaelor, dit: "Le capitaine Vaelor entre sans bruit. « Les archers d'Ithrael sont dans les tours. La Reine-Sève vous salue. »", si: { flag: elfes-allies } }
           - { qui: ysoria, dit: "Ysoria s'assoit sur la table, sur la carte, sur les figurines. « Mes cousins dorment sur les collines. Quand vous voudrez du feu, appelez. » La Maréchale la regarde, longtemps. Puis elle sourit, pour la première fois.", si: { flag: ysoria-recrutee } }
         choix:
@@ -110,7 +110,7 @@ scenes:
       allies:
         repliques:
           - { dit: "La bataille dure jusqu'au soir. Ce qui la décide, ce sont ceux qui sont venus pour vous." }
-          - { dit: "Les nains de Karak-Dûm referment la brèche avec un mur de boucliers qui ne recule pas d'un pouce.", si: { flag: nains-allies } }
+          - { dit: "Les nains d'Ardenclume referment la brèche avec un mur de boucliers qui ne recule pas d'un pouce.", si: { flag: nains-allies } }
           - { dit: "Les archers d'Ithrael tirent depuis les tours, si vite que le ciel se couvre de flèches.", si: { flag: elfes-allies } }
           - { dit: "Les dragons de l'Archipel brûlent les arrières de la Légion. Ysoria, en forme de dragonne d'or, plonge sur les colosses.", si: { flag: dragons-allies } }
           - { dit: "Les guerriers Lunecroc chargent sur le flanc, en hurlant à la lune, Kaya en tête.", si: { reputation_min: { ourvalis: 20 } } }

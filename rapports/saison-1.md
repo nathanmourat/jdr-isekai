@@ -9,7 +9,7 @@ Elle va du chapitre 1 (« L'Appel », 1012) au chapitre 6 (« Le Souverain des C
 |---|---|---|---|
 | 2 — Les Routes du Sud (1015-1018) | Marche des Sables (Qarzim) | 8 → 15 | Caravane, Grand Bazar, complot contre Séraphine, Ruines de Sel, révolte des Ourvalis. Kaya et Nadja. |
 | 3 — La Forêt qui se souvient (1018-1021) | Sylvenoire (Ithrael) | 15 → 22 | Domaines, Reine-Sève, Bibliothèque des Racines, Nuitlongue et Morra (l'achever ou l'épargner). Elianne et Ilyssë. |
-| 4 — Feu et Écailles (1021-1024) | Monts Grisfer (Karak-Dûm) et Archipel des Brumes (Port-Vérane) | 22 → 28 | Mille Marches et le Registre des Appels, Nid des Wyrms, Morra déserte, choix : révéler ou garder le secret de l'Ordre. Ysoria et Morra. |
+| 4 — Feu et Écailles (1021-1024) | Monts Grisfer (Ardenclume) et Archipel des Brumes (Port-Vérane) | 22 → 28 | Mille Marches et le Registre des Appels, Nid des Wyrms, Morra déserte, choix : révéler ou garder le secret de l'Ordre. Ysoria et Morra. |
 | 5 — La Guerre des Cendres (1024-1027) | Mur d'Aube (Fort-Aube) | 28 → 34 | Chute du Mur (des PNJ peuvent mourir selon vos alliances), épreuve du rang S, Aldric, contre-offensive. Fin des quêtes des compagnes, ultimes. |
 | 6 — Le Souverain des Cendres (1027-1030) | Terres Cendrées (Citadelle d'Obsidienne) | 34 → 40 | Cendrebourg, le souvenir du Premier Appel, la Citadelle, Orvan en 3 phases, les 4 fins et les épilogues. |
 

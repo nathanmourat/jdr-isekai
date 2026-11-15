@@ -4,7 +4,7 @@
  *  - Marche des Sables : cités-oasis marchandes de Qarzim, Ourvalis et Vulpins (turbans, voiles,
  *    robes claires, ceintures d'étoffe safran et indigo) ;
  *  - Sylvenoire : elfes de la forêt (oreilles pointues, verts mousse et argent, capes, couronnes de feuilles) ;
- *  - Monts Grisfer : nains de Karak-Dûm (petits, barbus, cuir, cols de fourrure, tabliers de forge) ;
+ *  - Monts Grisfer : nains d'Ardenclume (petits, barbus, cuir, cols de fourrure, tabliers de forge) ;
  *  - Archipel des Brumes : marins et pirates de Port-Vérane (bandanas, tricornes, ceintures rouges) ;
  *  - Mur d'Aube : ville de garnison (soldats en tabard, réfugiés en capes grises) ;
  *  - Terres Cendrées : camp de l'Aube et peuple des Cendres (cornes, peaux grises, yeux de braise, capes noires).

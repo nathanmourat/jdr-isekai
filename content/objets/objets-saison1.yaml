@@ -24,7 +24,7 @@ objets:
   - { id: sceau-du-domaine, nom: "Sceau du domaine", description: "Le sceau de cire de vos terres : il vous fait seigneur ou dame, pour le meilleur et pour les impôts.", type: quete }
   # ── Chapitre 4 : Monts Grisfer et Archipel des Brumes
   - { id: potion-soin-supreme, nom: "Potion de soin suprême", description: "Une fiole dorée qui brille comme un soleil miniature.", utilite: "À boire en combat (bouton du sac). Pour les héros les plus aguerris.", type: consommable, prix: 180, cible: allie, effets: [{ type: soin, puissance: 100, stat: VIT }] }
-  - { id: biere-de-karak, nom: "Tonnelet de bière de Karak", description: "Une bière brune et amère, brassée sous la montagne depuis mille ans.", type: cadeau, prix: 18 }
+  - { id: biere-de-karak, nom: "Tonnelet de bière d'Ardenclume", description: "Une bière brune et amère, brassée sous la montagne depuis mille ans.", type: cadeau, prix: 18 }
   - { id: pierre-de-feu, nom: "Pierre de feu", description: "Une pierre volcanique qui reste tiède toute la nuit. Les nains en offrent aux amis.", type: cadeau, prix: 28 }
   - { id: rhum-des-brumes, nom: "Rhum des Brumes", description: "Un rhum noir qui sent la fumée et la vanille. Les pirates jurent qu'il guérit tout.", type: cadeau, prix: 20 }
   - { id: coquillage-chantant, nom: "Coquillage chantant", description: "Quand on l'approche de l'oreille, on entend une sirène chanter.", type: cadeau, prix: 26 }

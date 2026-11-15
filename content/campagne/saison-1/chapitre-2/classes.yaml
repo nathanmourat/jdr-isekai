@@ -24,7 +24,7 @@ scenes:
       gravee:
         repliques:
           - { dit: "La rune s'imprime dans l'acier comme si elle l'attendait. Pendant une seconde, vous voyez mille sceaux s'allumer le long de la lame, puis s'éteindre." }
-          - { dit: "Le marchand murmure : « Les nains de Karak-Dûm savent forger ces runes-là. On dit qu'ils les tiennent des tout premiers Appelés. »" }
+          - { dit: "Le marchand murmure : « Les nains d'Ardenclume savent forger ces runes-là. On dit qu'ils les tiennent des tout premiers Appelés. »" }
         effets: [{ flag: heros:classe-1, quete: { id: q-classe-lame-runique, etape: etape2 }, xp: 200 }]
         fin: true
       brulure:
@@ -192,12 +192,12 @@ scenes:
             aller: bricolage
       plans:
         repliques:
-          - { dit: "À l'aube, la page est là, recopiée de votre main : les engrenages, les soupapes, et au centre, un cercle vide marqué « cœur de forge — Karak-Dûm »." }
+          - { dit: "À l'aube, la page est là, recopiée de votre main : les engrenages, les soupapes, et au centre, un cercle vide marqué « cœur de forge — Ardenclume »." }
         effets: [{ flag: heros:classe-1, quete: { id: q-classe-alchimiste, etape: etape2 }, xp: 200, objet: bombe-feu }]
         fin: true
       bricolage:
         repliques:
-          - { dit: "Les plans sous le bras, vous savez ce qu'il vous faut : un cœur de forge, et la seule forge qui en fabrique est à Karak-Dûm, dans les Monts Grisfer." }
+          - { dit: "Les plans sous le bras, vous savez ce qu'il vous faut : un cœur de forge, et la seule forge qui en fabrique est à Ardenclume, dans les Monts Grisfer." }
         effets: [{ flag: heros:classe-1, quete: { id: q-classe-alchimiste, etape: etape2 }, xp: 140 }]
         fin: true
 
