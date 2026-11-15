@@ -63,3 +63,16 @@ Outils : `npm run traductions:extraire`, `npm run traductions:rapport`, `npm run
 | le Voile | the Veil | el Velo | der Schleier | ヴェール |
 | Chapitres 1 à 6 | The Lanterns of Aubeclaire · The Southern Roads · The Forest That Remembers · Fire and Scales · The War of Ashes · The Ash Sovereign | Las Linternas de Aubeclaire · Los Caminos del Sur · El Bosque que Recuerda · Fuego y Escamas · La Guerra de las Cenizas · El Soberano de las Cenizas | Die Laternen von Aubeclaire · Die Straßen des Südens · Der Wald, der sich erinnert · Feuer und Schuppen · Der Aschenkrieg · Der Aschenherrscher | オーブクレールの灯 · 南への道 · 記憶する森 · 炎と鱗 · 灰の戦争 · 灰の君主 |
 | Fins : le Sceau, le Pacte, la Couronne, le Retour | the Seal, the Pact, the Crown, the Return | el Sello, el Pacto, la Corona, el Regreso | das Siegel, der Pakt, die Krone, die Rückkehr | 封印、盟約、王冠、帰還 |
+
+## Calendrier
+| Français | English | Español | Deutsch | 日本語 |
+|---|---|---|---|---|
+| Germinal, Floréal, Pluvial, Solaire | Germinal, Floreal, Pluvial, Solar | Germinal, Floreal, Pluvial, Solar | Keimmond, Blütenmond, Regenmond, Sonnenmond | 芽吹月、花月、雨月、陽月 |
+| Moisson, Ardent, Brumaire, Cendral | Harvest, Ardent, Brumaire, Cendral | Cosecha, Ardiente, Brumario, Cendral | Erntemond, Glutmond, Nebelmond, Aschenmond | 収穫月、灼熱月、霧月、灰月 |
+| Givral, Nivôse, Nuitlongue, Aurore | Rimefall, Nivose, Longnight, Aurora | Escarcha, Nivoso, Nochelarga, Aurora | Reifmond, Schneemond, Langnacht, Morgenrot | 霜月、雪月、長夜月、曙月 |
+| AV (Après le Voile) | AV (After the Veil) | AV (Después del Velo) | AV (Nach dem Schleier) | AV（ヴェール後） |
+
+## Personnages (déjà fixés)
+Auréliath = 大修道院長オレリアス ; Aveline de Castelroc = アヴリーヌ・ド・カステルロック ; Rowena = ロウェナ ; Kaya Lunecroc = Kaya Mooncrest / Kaya Colmillo de Luna / Kaya Mondzahn / カヤ・ルヌクロ ;
+Séraphine = Serafina (es) / セラフィーヌ ; Edmund IV = Edmundo IV (es) / エドマンド4世 ; Elianne = エリアンヌ ; Vorthak = ヴォルサック ; Bram = ブラム ; Halvine = アルヴィーヌ ;
+Ferrand = フェラン ; Orlan = オルラン ; Barnoul Kestrin = バルヌール・ケストラン ; Tobin = トビン ; Gareth = ガレス ; Orlo = オルロ ; Cassian = カシアン ; Pipa = ピパ ; Gauvain = ゴーヴァン.
