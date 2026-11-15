@@ -52,6 +52,12 @@ def npc(s):
     p.rect(cx - tw, hy + 7, cx + tw, waist, tc)
     p.rect(cx + tw - 2, hy + 8, cx + tw, waist, shade(tc, 0.8))
     p.rect(cx - tw, hy + 8, cx - tw + 1, waist, shade(tc, 1.15))
+    if s.get('vest'):                                   # gilet ouvert sur la chemise, rapiécé
+        v = s['vest']
+        p.rect(cx - tw, hy + 7, cx - 2, waist, v); p.rect(cx + 2, hy + 7, cx + tw, waist, shade(v, 0.85))
+        p.rect(cx - tw + 1, hy + 15, cx - tw + 3, hy + 17, shade(v, 0.68)); p.rect(cx + tw - 3, hy + 11, cx + tw - 1, hy + 13, hexc('8a5a32'))
+        for k in (hy + 10, hy + 14, hy + 18):
+            p.px(cx - 3, k, GOLD)
     if s.get('armor'):
         a = s['armor']
         p.rect(cx - tw + 1, hy + 8, cx + tw - 1, hy + 18, a)
@@ -219,6 +225,13 @@ def npc(s):
         p.ell(cx - hw - 6, hy - 7, cx + hw + 6, hy - 3, hexc('e8c870'))
         p.ell(cx - hw, hy - 12, cx + hw, hy - 4, hexc('d8b860'))
         p.line(cx - hw, hy - 6, cx + hw, hy - 6, hexc('b84a2a'))
+    if s.get('charm_hat'):                              # chapeau à larges bords couvert de breloques
+        c = s['charm_hat']
+        p.ell(cx - hw - 7, hy - 7, cx + hw + 7, hy - 3, c)
+        p.ell(cx - hw, hy - 13, cx + hw, hy - 4, shade(c, 1.12))
+        p.line(cx - hw, hy - 6, cx + hw, hy - 6, hexc('8a2a1a'))
+        for k, col in ((-10, GOLD), (-6, hexc('5fd3ff')), (-2, hexc('e0a8ff')), (6, hexc('d84a3a')), (10, GOLD)):
+            p.px(cx + k, hy - 3, col); p.px(cx + k, hy - 2, shade(col, 0.75))
     if s.get('headband'):
         p.line(cx - hw - 1, hy - 4, cx + hw + 1, hy - 4, s['headband'])
         p.line(cx - hw - 1, hy - 4, cx - hw - 4, hy + 1, s['headband'])
@@ -259,6 +272,11 @@ def npc(s):
         p.line(x + 1, hy + 12, x + 1, hy + 26, GOLD); p.line(x - 2, hy + 17, x + 4, hy + 17, GOLD)
     elif prop == 'relic':
         p.ell(cx - 6, hy + 17, cx, hy + 23, hexc('8a6a3a')); p.px(cx - 3, hy + 20, hexc('b04aff')); p.px(cx - 4, hy + 19, hexc('e0a8ff'))
+    if s.get('satchel'):                                # énorme sacoche en bandoulière
+        p.line(cx - tw, hy + 8, cx + tw, waist - 2, hexc('6a4426'), 1)
+        p.rect(cx + tw - 2, waist - 3, cx + tw + 6, waist + 7, hexc('8a5a32'))
+        p.line(cx + tw - 2, waist - 3, cx + tw + 6, waist - 3, shade(hexc('8a5a32'), 1.3))
+        p.rect(cx + tw + 1, waist, cx + tw + 3, waist + 2, GOLD)
     if s.get('sword_hip'):
         p.line(cx + tw - 1, waist, cx + tw + 4, feet - 6, STEEL, 1); p.line(cx + tw - 2, waist - 1, cx + tw + 2, waist + 1, GOLD)
     if s.get('rings'):
@@ -300,6 +318,9 @@ PNJ = {
                  apron=hexc('e8dcc4'), stains=hexc('a87a5a'), prop='mug', pose='hold', mouth='smile', arm=SKIN['mate']),
     'ferrand': dict(skin=SKIN['clair'], hair='short', hair_c=hexc('2a2026'), mustache=hexc('2a2026'), mouth='smirk', top=hexc('5a2a6a'), robe=hexc('5a2a6a'),
                     robe_trim=GOLD, collar=GOLD, rings=True, prop='relic', pose='hold', eye=hexc('3a2a1a')),
+    'orlan': dict(skin=SKIN['clair'], shorter=4, wide=2, hair='short', hair_c=hexc('6a4a2a'), mustache=hexc('6a4a2a'), mouth='grin',
+                  top=hexc('e8dcc4'), vest=hexc('c8a02a'), lower='legs', legs=hexc('5a4430'), boots=hexc('4a3020'), belt=hexc('6a4426'),
+                  charm_hat=hexc('7a5232'), satchel=True, prop='relic', pose='hold', eye=hexc('4a3a2a')),
     'edmund-iv': dict(skin=SKIN['clair'], hair='short', hair_c=hexc('9a9aa0'), beard=hexc('9a9aa0'), crown=True, stern=True, mouth='flat', top=hexc('2e4a9c'),
                       robe=hexc('2e4a9c'), robe_trim=GOLD, collar=WHITE, ermine=True, cape=hexc('8a1a2a'), eye=hexc('4a5a6a')),
     'seraphine': dict(skin=SKIN['pale'], hair='long', hair_c=hexc('f0e0a8'), diadem=True, eye=hexc('6aa8e8'), mouth='smirk', top=WHITE, robe=WHITE,

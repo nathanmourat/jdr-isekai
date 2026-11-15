@@ -146,6 +146,7 @@
         <ObjetInfo id={o} nombre={n} />
         {#if c.objets[o].type === 'equipement'}{@const refus = problemeEquipement(c, h, c.objets[o])}{@const malus = avertissementEquipement(c, h, c.objets[o])}<button class="petit" disabled={refus !== undefined} title={refus ?? malus ?? ''} onclick={() => jeu.agir({ type: 'equiper', objet: o })}>Équiper</button>{#if refus}<small class="refus-equip">{refus}</small>{:else if malus}<small class="malus-equip">{malus}</small>{/if}{/if}
         {#if o === 'ration' && sante.pv < sante.pvMax}<button class="petit" onclick={() => jeu.agir({ type: 'se_soigner', moyen: 'ration' })}>Manger (+{c.config.soins.ration_pourcent} % PV)</button>{/if}
+        {#if c.objets[o].effets?.some((e) => e.type === 'relever') && (sante.pv < sante.pvMax || h.blessure)}<button class="petit" onclick={() => jeu.agir({ type: 'se_soigner', moyen: 'objet', objet: o })}>Utiliser (tous les PV et la blessure)</button>{/if}
         {#if c.objets[o].effets?.some((e) => e.type === 'soin') && sante.pv < sante.pvMax}<button class="petit" onclick={() => jeu.agir({ type: 'se_soigner', moyen: 'objet', objet: o })}>Boire (+{Math.round(partSoinObjet(c.objets[o].effets!.find((e) => e.type === 'soin')!) * 100)} % PV)</button>{/if}
         {#if c.objets[o].type !== 'quete'}<button class="petit" onclick={() => jeu.agir({ type: 'vendre', objet: o })}>Vendre ({prixVente(c, h, o)} or)</button>{/if}
       </div>

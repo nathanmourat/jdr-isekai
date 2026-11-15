@@ -34,8 +34,9 @@ ambiance:
   - { id: gu-contrat, lieu: guilde, qui: client, texte: "Qui veut un contrat facile ? Des rats dans ma cave, rien de bien méchant…", si: { flag: examen-reussi } }
   - { id: gu-rang, lieu: guilde, qui: client, texte: "Rang C à vingt ans ! Moi, à vingt ans, je trayais des chèvres." }
   - { id: ta-chope, lieu: taverne, qui: client, texte: "Bram ! Une autre chope !" }
-  - { id: ta-reliques, lieu: taverne, qui: client, texte: "Le marchand d'os de saint ? Arnaque, je vous dis.", si: { pas_flag: ferrand-demasque } }
-  - { id: ta-ferrand, lieu: taverne, qui: client, texte: "Bien fait pour Ferrand. Vendre des os de poulet comme reliques…", si: { flag: ferrand-demasque } }
+  - { id: ta-reliques, lieu: taverne, qui: client, texte: "Le marchand d'os de saint ? Arnaque, je vous dis.", si: { flag: examen-reussi, pas_flag: orlan-rencontre } }
+  - { id: ta-orlan, lieu: taverne, qui: client, texte: "Bien fait pour Orlan. Vendre des os de poulet comme reliques…", si: { flag: orlan-demasque } }
+  - { id: ta-orlan-parti, lieu: taverne, qui: client, texte: "Le colporteur aux os de saint ? Parti vers d'autres marchés. Il a laissé une ardoise de trois bières chez Bram.", si: { minuteur_passe: orlan-depart, minuteur_actif: orlan-retour, pas_flag: orlan-parti } }
   - { id: ta-chanson, lieu: taverne, qui: client, moment: nuit, texte: "🎵 Au bord de la Fontaine, j'ai perdu ma chopine… 🎵" }
   - { id: co-loups, lieu: combe-aux-saules, texte: "Encore des loups cette nuit… Gareth a perdu trois moutons.", si: { pas_flag: loups-sauves } }
   - { id: co-loups-ok, lieu: combe-aux-saules, texte: "Plus un hurlement depuis que les aventuriers sont passés. Merci à eux !", si: { flag: loups-sauves } }

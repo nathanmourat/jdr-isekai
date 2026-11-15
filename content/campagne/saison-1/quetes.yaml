@@ -42,7 +42,7 @@ quetes:
     niveau: 2
     resume: "Au Chaudron Fêlé, un marchand vend des « os de saint » à prix d'or."
     etapes:
-      - { id: enqueter, objectif: "Approcher Ferrand à la taverne.", scene: sq-reliques, lieu: taverne }
+      - { id: enqueter, objectif: "Approcher le colporteur Orlan Cassebrune à la taverne.", scene: sq-reliques, lieu: taverne }
   - id: q-tanneurs
     titre: "Les disparus du quartier des Tanneurs"
     type: secondaire

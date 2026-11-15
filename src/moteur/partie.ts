@@ -16,7 +16,7 @@ import {
   age, ameliorerCompetence, caracsTotales, choisirBranche, competencesConnues, competencesEquipees, creerHeros, gagnerMaitrise, gagnerXp, niveauMoyen, rangMaitrise, repartirPoint,
   xpPourNiveau, type Carac, type Heros, type OptionsCreation,
 } from './personnage';
-import { choisir as choisirAuHasard, creerRng, de, type Rng } from './rng';
+import { chance as auHasard, choisir as choisirAuHasard, creerRng, de, type Rng } from './rng';
 import { cles, copieProfonde, entrees, valeurs, vrai } from './outils';
 import { apprendre, creerTechnique, idFusion, peutApprendre, type Technique } from './fusions';
 import { competencesConnues as connuesDe } from './personnage';
@@ -155,6 +155,8 @@ export interface EtatPartie {
   examensRates: Record<string, number>;
   /** Contrats remplis (test 4) : jour où ils ont été remplis, ou -1 pour un contrat non répétable (il ne revient jamais). */
   contratsTermines?: Record<string, number>;
+  /** Minuteurs du contenu (effet « minuteur ») : jour d'échéance (test 4). */
+  minuteurs?: Record<string, number>;
   /** Partie d'avant le format 9 : la règle du retour des contrats ne s'applique qu'à partir de cette action
    * (les anciennes actions se rejouent telles quelles). */
   regleContratsDepuis?: number;
@@ -394,10 +396,12 @@ export function conditionHeros(contenu: Contenu, etat: EtatPartie, c: Condition 
   if (vrai(c.quete_terminee) && !etat.quetes[c.quete_terminee]?.terminee) return false;
   for (const [f, v] of entrees(c.reputation_min ?? {})) if ((etat.reputation[f] ?? 0) < v) return false;
   if (c.date_min && etat.jour < versJour(contenu, c.date_min)) return false;
+  if (vrai(c.minuteur_passe)) { const t = (etat.minuteurs ?? {})[c.minuteur_passe]; if (t === undefined || etat.jour < t) return false; }
+  if (vrai(c.minuteur_actif)) { const t = (etat.minuteurs ?? {})[c.minuteur_actif]; if (t === undefined || etat.jour >= t) return false; }
   if (c.ou && !c.ou.some((x) => conditionHeros(contenu, etat, x, h))) return false;
   // (pas de liste [c.race, c.classe…] ici : en Luau, une liste avec des trous peut sembler vide)
   const besoinHeros = vrai(c.race) || vrai(c.classe) || vrai(c.origine) || vrai(c.don) || vrai(c.affinite_min) || vrai(c.affinite_palier)
-    || vrai(c.carac_min) || vrai(c.objet) || vrai(c.rang_guilde_min) || c.niveau_min !== undefined || c.or_min !== undefined;
+    || vrai(c.carac_min) || vrai(c.objet) || vrai(c.rang_guilde_min) || c.niveau_min !== undefined || c.or_min !== undefined || c.or_min_chapitre !== undefined;
   if (!besoinHeros) return true;
   if (!h) return false;
   const races = liste(c.race); if (races && !races.includes(h.race)) return false;
@@ -413,6 +417,7 @@ export function conditionHeros(contenu: Contenu, etat: EtatPartie, c: Condition 
   for (const [k, v] of entrees(c.carac_min ?? {})) if (ca[k as Carac] < (v ?? 0)) return false;
   if (c.niveau_min !== undefined && h.niveau < c.niveau_min) return false;
   if (c.or_min !== undefined && h.or < c.or_min) return false;
+  if (c.or_min_chapitre !== undefined && h.or < c.or_min_chapitre * etat.chapitre) return false;
   if (vrai(c.objet) && !((h.inventaire[c.objet] ?? 0) > 0)) return false;
   if (vrai(c.rang_guilde_min) && ordreRangs.indexOf(rangHeros(etat, h.id)) < ordreRangs.indexOf(c.rang_guilde_min)) return false;
   return true;
@@ -429,6 +434,9 @@ export function conditionScene(contenu: Contenu, etat: EtatPartie, c: Condition 
 
 // ───────────────────────────── Conséquences ─────────────────────────────
 
+/** Paliers d'équipement en chiffres romains (minuscules), par chapitre. */
+const PALIERS_ROMAINS = ['i', 'ii', 'iii', 'iv', 'v', 'vi'];
+
 function appliquerConsequence(contenu: Contenu, etat: EtatPartie, eff: Consequence, heros: string[], messages: string[]) {
   const hs = heros.map((h) => etat.heros[h]);
   const liste = (v?: string | string[]) => (v === undefined ? [] : Array.isArray(v) ? v : [v]);
@@ -437,6 +445,21 @@ function appliquerConsequence(contenu: Contenu, etat: EtatPartie, eff: Consequen
     else etat.flags[f] = true;
   }
   if (vrai(eff.retirer_flag)) delete etat.flags[eff.retirer_flag];
+  if (eff.minuteur !== undefined) { if (etat.minuteurs === undefined) etat.minuteurs = {}; etat.minuteurs[eff.minuteur.id] = etat.jour + eff.minuteur.jours; }
+  if (vrai(eff.retirer_minuteur) && etat.minuteurs !== undefined) delete etat.minuteurs[eff.retirer_minuteur];
+  if (eff.tirage !== undefined) {
+    if (auHasard(etat.rng, eff.tirage.chance) === true) etat.flags[eff.tirage.flag] = true;
+    else delete etat.flags[eff.tirage.flag];
+  }
+  if (eff.tirage_un !== undefined) {
+    for (const f of eff.tirage_un) delete etat.flags[f];
+    etat.flags[choisirAuHasard(etat.rng, eff.tirage_un)] = true;
+  }
+  if (vrai(eff.prix_chapitre)) for (const h of hs) {
+    const prix = eff.prix_chapitre * etat.chapitre;
+    h.or = Math.max(0, h.or - prix);
+    messages.push(`${h.nom} perd ${prix} pièces d'or`);
+  }
   if (vrai(eff.rang_guilde)) for (const h of hs) {
     if (ordreRangs.indexOf(rangHeros(etat, h.id)) < ordreRangs.indexOf(eff.rang_guilde)) messages.push(promouvoir(contenu, etat, h, eff.rang_guilde));
   }
@@ -459,7 +482,9 @@ function appliquerConsequence(contenu: Contenu, etat: EtatPartie, eff: Consequen
   }
   if (vrai(eff.xp)) for (const h of hs) { const n = gagnerXp(contenu, h, eff.xp); messages.push(`${h.nom} gagne ${eff.xp} XP${vrai(n) ? ` et monte au niveau ${h.niveau} !` : ''}`); }
   if (vrai(eff.or)) for (const h of hs) { h.or = Math.max(0, h.or + eff.or); messages.push(`${h.nom} ${eff.or > 0 ? 'gagne' : 'perd'} ${Math.abs(eff.or)} pièces d'or`); }
-  for (const o of liste(eff.objet)) {
+  for (const brut of liste(eff.objet)) {
+    // « relique-x-{palier} » : la version du palier du chapitre en cours (i à vi)
+    const o = brut.split('{palier}').join(PALIERS_ROMAINS[Math.max(0, Math.min(PALIERS_ROMAINS.length - 1, etat.chapitre - 1))]);
     const h = hs[0];
     if (h !== undefined) {
       if (dejaUnique(contenu, etat, o)) messages.push(`${contenu.objets[o].nom} existe déjà dans la partie : il n'en existe qu'un.`);
@@ -1259,6 +1284,7 @@ export function appliquer(contenu: Contenu, etatAvant: EtatPartie, action: Actio
   etat.rangs ??= {};
   etat.examensRates ??= {};
   etat.contratsTermines ??= {};
+  etat.minuteurs ??= {};
   etat.contrats ??= {};
   for (const h of valeurs(etat.heros)) { h.grimoire ??= {}; h.maitrise ??= {}; }
   if (etat.grimoire) repartirAncienGrimoire(contenu, etat); // parties d'avant le grimoire personnel
@@ -1413,6 +1439,17 @@ export function appliquer(contenu: Contenu, etatAvant: EtatPartie, action: Actio
         h.blessure = false;
         delete h.pv;
         etat.dernieresNouvelles.push(`Les prêtres soignent ${h.nom} : tous les PV sont rendus${pv < max ? '' : ' et la blessure est guérie'}.`);
+        break;
+      }
+      // objet qui relève les K.O. (Larme de Sainte Ysolde) : hors combat, tous les PV et la blessure
+      const releve = action.moyen === 'objet' && vrai(action.objet) ? contenu.objets[action.objet] : undefined;
+      if (releve !== undefined && vrai(releve.effets?.some((e) => e.type === 'relever'))) {
+        if (pv >= max && !h.blessure) refuser(`${h.nom} est déjà en pleine forme`);
+        if ((h.inventaire[releve.id] ?? 0) <= 0) refuser('Objet impossible à utiliser');
+        h.inventaire[releve.id]--;
+        h.blessure = false;
+        delete h.pv;
+        etat.dernieresNouvelles.push(`${h.nom} utilise : ${releve.nom}. Tous les PV sont rendus, et la blessure est guérie.`);
         break;
       }
       if (pv >= max) refuser(`${h.nom} est déjà en pleine forme`);

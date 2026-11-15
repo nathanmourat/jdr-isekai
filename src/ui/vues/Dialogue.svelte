@@ -72,12 +72,12 @@
   /** Prix d'un choix payant (or retiré par ses effets), affiché sur le bouton s'il n'est pas déjà écrit (test 3, point 13). */
   function libelleChoix(ch: (typeof choix)[number]): string {
     const t = texte(ch.choix.texte);
-    const prix = -ch.choix.effets.reduce((n, e) => n + Math.min(0, e.or ?? 0), 0);
+    const prix = -ch.choix.effets.reduce((n, e) => n + Math.min(0, e.or ?? 0), 0) + ch.choix.effets.reduce((n, e) => n + (e.prix_chapitre ?? 0) * etat.chapitre, 0);
     return prix > 0 && !/(d+ or)/.test(t) ? `${t} (${prix} or)` : t;
   }
   /** Pourquoi un choix est grisé : surtout le manque d'or, expliqué clairement. */
   function raisonIndispo(ch: (typeof choix)[number]): string {
-    const min = ch.choix.si?.or_min;
+    const min = ch.choix.si?.or_min ?? (ch.choix.si?.or_min_chapitre !== undefined ? ch.choix.si.or_min_chapitre * etat.chapitre : undefined);
     if (min !== undefined) return `Pas assez d'or : il faut ${min} or (${es.heros.map((h) => `${etat.heros[h].nom} : ${etat.heros[h].or}`).join(', ')})`;
     return 'indisponible';
   }

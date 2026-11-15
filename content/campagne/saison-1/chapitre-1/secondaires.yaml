@@ -127,8 +127,11 @@ scenes:
         effets: [{ or: 25, points_guilde: 30, terminer_quete: q-loups, reputation: { guilde: 3 } }]
         fin: true
 
+  # Orlan Cassebrune, colporteur de reliques (test 4) : il remplace Ferrand dans cette scène (Ferrand reste l'expert qui identifie).
+  # Démasqué ou arrêté : flag orlan-parti, il ne revient jamais. Sinon il part 3 jours plus tard et revient 60 jours après
+  # (minuteurs orlan-depart et orlan-retour), avec une nouvelle relique : sq-reliques-retour.
   - id: sq-reliques
-    pnj: ferrand
+    pnj: orlan
     titre: "Le marchand de reliques"
     type: groupe
     lieu: taverne
@@ -137,40 +140,163 @@ scenes:
     disponible_si: { flag: examen-reussi }
     noeuds:
       debut:
-        effets: [{ quete: { id: q-reliques, etape: enqueter } }]
+        effets: [{ quete: { id: q-reliques, etape: enqueter }, flag: orlan-rencontre }]
         repliques:
-          - { qui: ferrand, dit: "« Approchez, approchez ! Un os authentique de Saint Aldebrand, le Premier Appelé ! Il guérit les fièvres et porte chance aux aventuriers. Cent pièces seulement ! »" }
+          - { qui: orlan, dit: "« Approchez, approchez ! Orlan Cassebrune, colporteur de merveilles ! » Il brandit un petit os jauni, posé sur un coussin de velours mité. « Ceci, [[{{mon ami|mon amie}}||{{groupe:mes amis|mes amies|mes amis}}]], est un os authentique de Saint Aldebrand, le Premier Appelé ! Il guérit les fièvres et porte chance aux aventuriers. Cent pièces seulement ! »" }
+          - { qui: orlan, dit: "« J'ai aussi un cheveu de la Reine des Brumes. Mais celui-là, je le garde pour moi. »" }
           - { qui: bram, dit: "Bram lève les yeux au ciel derrière son comptoir. « Ça fait trois semaines qu'il vend des os de poulet. »", si: { pas_flag: mort:bram } }
+          - { qui: ferrand, dit: "À la table du fond, Ferrand l'expert lève un sourcil et ne dit rien. Il a l'air de souffrir pour toute la profession." }
         choix:
           - texte: "Examiner la « relique » de près. (Intelligence, difficulté 15)"
             test: { carac: INT, difficulte: 15, reussite: demasque, echec: rate }
           - texte: "L'acheter. On ne sait jamais."
             si: { or_min: 100 }
             visible_si_bloque: true
-            effets: [{ or: -100, objet: relique-douteuse }]
+            effets: [{ or: -100, objet: relique-douteuse, flag: orlan-achete }]
             aller: achete
           - texte: "Aller prévenir l'Ordre : vendre de fausses reliques est un crime."
             aller: ordre
+          - texte: "L'ignorer et retourner à sa bière."
+            aller: ignore
       demasque:
         repliques:
-          - { dit: "Un os de poulet, verni et gravé à la hâte. Vous le brandissez sous le nez des clients. Rires, huées : Ferrand s'enfuit sous les quolibets." }
-        effets: [{ xp: 50, reputation: { guilde: 5 }, flag: ferrand-demasque }]
+          - { dit: "Un os de poulet, verni et gravé à la hâte. [[Tu le brandis||Vous le brandissez]] sous le nez des clients. Rires, huées : Orlan ramasse son coussin et s'enfuit sous les quolibets, en jurant qu'on n'a « aucun respect pour l'histoire »." }
+        effets: [{ xp: 50, reputation: { guilde: 5 }, flag: [orlan-demasque, orlan-parti] }]
         suite: fin
       rate:
         repliques:
-          - { dit: "L'os a l'air… vrai ? Vous n'en êtes pas sûrs. Ferrand vous adresse un clin d'œil satisfait." }
+          - { dit: "L'os a l'air… vrai ? [[Tu n'en es pas {{sûr|sûre}}||Vous n'en êtes pas {{groupe:sûrs|sûres|sûrs}}]]. Orlan [[t'adresse||vous adresse]] un clin d'œil satisfait." }
+        effets: [{ minuteur: { id: orlan-depart, jours: 3 } }, { minuteur: { id: orlan-retour, jours: 63 } }]
         suite: fin
       achete:
         repliques:
-          - { dit: "Ferrand empoche l'or avec un sourire radieux. La relique sent vaguement le poulet rôti." }
+          - { dit: "Orlan empoche l'or avec un sourire radieux et une révérence un peu trop basse. La relique sent vaguement le poulet rôti." }
+        effets: [{ minuteur: { id: orlan-depart, jours: 3 } }, { minuteur: { id: orlan-retour, jours: 63 } }]
         suite: fin
       ordre:
         repliques:
-          - { qui: elianne, dit: "Sœur Elianne arrive en personne, le visage grave. « Ces escrocs salissent la mémoire des Appelés. Merci. » Ferrand est emmené par deux gardes." }
-        effets: [{ reputation: { ordre: 8 }, flag: ferrand-arrete, xp: 40 }]
+          - { qui: elianne, dit: "Sœur Elianne arrive en personne, le visage grave. « Ces escrocs salissent la mémoire des Appelés. Merci. » Orlan est emmené par deux gardes, en protestant qu'il est « victime d'un fournisseur malhonnête »." }
+        effets: [{ reputation: { ordre: 8 }, flag: [orlan-arrete, orlan-parti], xp: 40 }]
+        suite: fin
+      ignore:
+        repliques:
+          - { qui: orlan, dit: "Orlan hausse les épaules et range son coussin. « Les vraies merveilles attendent toujours leur heure. »" }
+        effets: [{ minuteur: { id: orlan-depart, jours: 3 } }, { minuteur: { id: orlan-retour, jours: 63 } }]
         suite: fin
       fin:
         effets: [{ terminer_quete: q-reliques, points_guilde: 15 }]
+        fin: true
+
+  # Le retour d'Orlan (peut se rejouer) : à son arrivée, on tire la relique proposée (une sur trois) et si elle est vraie (10 %).
+  - id: sq-reliques-retour
+    pnj: orlan
+    titre: "Le retour du colporteur"
+    type: groupe
+    repetable: true
+    lieu: taverne
+    decor: taverne
+    disponible_si: { minuteur_passe: orlan-retour, pas_flag: orlan-parti }
+    noeuds:
+      debut:
+        effets: [{ tirage_un: [orlan-relique-phalange, orlan-relique-clou, orlan-relique-larme] }, { tirage: { flag: orlan-relique-vraie, chance: 0.1 } }]
+        repliques:
+          - { qui: orlan, dit: "« [[{{Mon ami|Mon amie}}||{{groupe:Mes amis|Mes amies|Mes amis}}]] ! » Orlan Cassebrune ouvre grand les bras. « Je n'oublie jamais un visage. Surtout un visage qui m'a déjà fait confiance. »" }
+          - { qui: orlan, dit: "« Et cet os de saint, il vous porte chance ? Non ? Il faut lui laisser le temps. »", si: { flag: orlan-achete } }
+          - { qui: orlan, dit: "Il déballe un coffret doublé de soie. « Cette fois, c'est du sérieux. La phalange de Saint Aldebrand. L'autre phalange. Il en avait plusieurs, vous savez. »", si: { flag: orlan-relique-phalange } }
+          - { qui: orlan, dit: "Il déballe un coffret doublé de soie. « Cette fois, c'est du sérieux. Un clou de la Porte d'Aube, arraché la nuit où le Mur a tenu. Il n'en reste presque plus. »", si: { flag: orlan-relique-clou } }
+          - { qui: orlan, dit: "Il déballe un coffret doublé de soie. « Cette fois, c'est du sérieux. Une larme de Sainte Ysolde, dans sa fiole de cristal. Elle relève les mourants, dit-on. »", si: { flag: orlan-relique-larme } }
+          - { qui: bram, dit: "Bram, en essuyant une chope : « Il est revenu. Évidemment qu'il est revenu. »", si: { pas_flag: mort:bram } }
+        choix:
+          - texte: "Examiner la relique de près. (Intelligence, difficulté 15)"
+            test: { carac: INT, difficulte: 15, reussite: examen-ok, echec: rate }
+          - texte: "L'acheter. On ne sait jamais."
+            si: { or_min_chapitre: 100 }
+            visible_si_bloque: true
+            effets: [{ prix_chapitre: 100, flag: orlan-achete }]
+            aller: achete
+          - texte: "Aller prévenir l'Ordre : vendre de fausses reliques est un crime."
+            aller: ordre
+          - texte: "L'ignorer et retourner à sa bière."
+            aller: ignore
+      examen-ok:
+        repliques:
+          - { dit: "[[Tu approches||Vous approchez]] la relique de la lanterne et [[la tournes||la tournez]] lentement entre [[tes||vos]] doigts." }
+        aiguillage: [{ si: { flag: orlan-relique-vraie }, aller: sincere }]
+        suite: demasque
+      sincere:
+        repliques:
+          - { dit: "Ce n'est pas un os de poulet. Le travail est ancien, les gravures sont justes, et quand [[tu la prends||vous la prenez]] en main, une chaleur douce remonte le long du bras." }
+          - { qui: orlan, dit: "Orlan pâlit. « Elle est… vraie ? » Il s'assoit lourdement. « Trente ans de métier, et c'est la première fois. »" }
+        choix:
+          - texte: "L'acheter."
+            si: { or_min_chapitre: 100 }
+            visible_si_bloque: true
+            effets: [{ prix_chapitre: 100, flag: orlan-achete }]
+            aller: achete-vraie
+          - texte: "La lui laisser."
+            aller: depart
+      demasque:
+        repliques:
+          - { dit: "Un os de poulet. Encore. Celui-ci a même gardé un peu de sauce. [[Tu le brandis||Vous le brandissez]] devant toute la taverne ; Orlan s'enfuit, et cette fois, on ne le reverra plus." }
+        effets: [{ xp: 40, reputation: { guilde: 3 }, flag: [orlan-demasque, orlan-parti] }]
+        fin: true
+      rate:
+        repliques:
+          - { dit: "Impossible de trancher. Orlan sourit de toutes ses dents." }
+        suite: depart
+      achete:
+        repliques:
+          - { dit: "L'or change de mains. Orlan compte les pièces deux fois, par principe." }
+        aiguillage: [{ si: { flag: orlan-relique-vraie }, aller: achete-vraie }]
+        suite: achete-fausse
+      achete-fausse:
+        repliques:
+          - { dit: "Orlan empoche l'or avec une révérence. La relique sent toujours le poulet." }
+        effets: [{ objet: relique-douteuse }]
+        suite: depart
+      achete-vraie:
+        repliques:
+          - { qui: orlan, dit: "Orlan emballe l'objet avec un soin qu'on ne lui connaissait pas." }
+        aiguillage: [{ si: { flag: orlan-relique-phalange }, aller: don-phalange }, { si: { flag: orlan-relique-clou }, aller: don-clou }]
+        suite: don-larme
+      don-phalange:
+        repliques:
+          - { qui: orlan, dit: "« Prenez-en soin. Moi, je n'y croyais pas. »" }
+        effets: [{ objet: "relique-phalange-{palier}" }]
+        suite: depart
+      don-clou:
+        repliques:
+          - { qui: orlan, dit: "« Prenez-en soin. Moi, je n'y croyais pas. »" }
+        effets: [{ objet: "relique-clou-{palier}" }]
+        suite: depart
+      don-larme:
+        repliques:
+          - { qui: orlan, dit: "« Prenez-en soin. Moi, je n'y croyais pas. »" }
+        effets: [{ objet: larme-ysolde }]
+        suite: depart
+      ordre:
+        repliques:
+          - { dit: "Un garçon de salle court chercher l'Ordre. Orlan, lui, ne bouge pas : il commande même une bière." }
+        aiguillage: [{ si: { flag: orlan-relique-vraie }, aller: ordre-vraie }]
+        suite: ordre-fausse
+      ordre-fausse:
+        repliques:
+          - { qui: elianne, dit: "Sœur Elianne arrive en personne, le visage grave. « Ces escrocs salissent la mémoire des Appelés. Merci. » Orlan est emmené par deux gardes, en protestant qu'il est « victime d'un fournisseur malhonnête »." }
+        effets: [{ xp: 30, reputation: { ordre: 5 }, flag: [orlan-arrete, orlan-parti] }]
+        fin: true
+      ordre-vraie:
+        repliques:
+          - { qui: elianne, dit: "« Elle est authentique. » Elianne la tient comme un nouveau-né. « Où l'avez-vous trouvée ? » Orlan bafouille une histoire de grenier. L'Ordre la lui achète à bon prix : il repart ravi, et parfaitement innocent." }
+        effets: [{ reputation: { ordre: 5 } }]
+        suite: depart
+      ignore:
+        repliques:
+          - { qui: orlan, dit: "« Je repasserai. Je repasse toujours. »" }
+        suite: depart
+      depart:
+        repliques:
+          - { dit: "Orlan range son coffret. Dans quelques jours, il repartira vers d'autres marchés." }
+        effets: [{ minuteur: { id: orlan-depart, jours: 3 } }, { minuteur: { id: orlan-retour, jours: 63 } }]
         fin: true
 
   - id: sq-tanneurs-plainte

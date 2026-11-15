@@ -16,7 +16,7 @@ const heros = (classe = 'lame-runique', niveau = 1): Heros => {
 
 describe('Équipement : catalogue', () => {
   it('le catalogue du groupe est chargé (364 objets, 6 mythiques uniques)', () => {
-    const equip = Object.values(c.objets).filter((o) => o.type === 'equipement');
+    const equip = Object.values(c.objets).filter((o) => o.type === 'equipement' && !o.id.startsWith('relique-'));   // les reliques d'Orlan (content/objets/reliques.yaml) sont à part
     expect(equip.length).toBe(364);
     expect(equip.filter((o) => o.unique_par_partie).length).toBe(6);
     expect(equip.every((o) => o.rarete !== undefined && o.niveau !== undefined)).toBe(true);

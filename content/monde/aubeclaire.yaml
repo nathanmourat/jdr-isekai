@@ -60,7 +60,7 @@ regions:
         position: { x: 845, y: 610 }
         position_plan: { x: 380, y: 430 }
         disponible_si: { flag: appel-fait }
-        pnj: [{ id: bram, si: { pas_flag: mort:bram } }, { id: ferrand, si: { flag: examen-reussi } }]
+        pnj: [{ id: bram, si: { pas_flag: mort:bram } }, { id: ferrand, si: { flag: examen-reussi } }, { id: orlan, si: { flag: examen-reussi, pas_flag: orlan-parti, ou: [{ pas_flag: orlan-rencontre }, { minuteur_actif: orlan-depart }, { minuteur_passe: orlan-retour }] } }]
         gerant: bram
         boutique: [ration, gateau-lysmont, livre-ancien]
       - id: boutique

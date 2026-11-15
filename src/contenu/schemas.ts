@@ -274,6 +274,11 @@ export const zCondition: z.ZodType<Condition> = z.lazy(() =>
     quete_terminee: z.string().optional(),
     date_min: z.object({ annee: z.number(), mois: z.number().default(1), jour: z.number().default(1) }).optional(),
     rang_guilde_min: z.string().optional(),
+    /** Minuteur (effet « minuteur ») arrivé à échéance / encore en cours (test 4 : départ et retour d'Orlan). */
+    minuteur_passe: z.string().optional(),
+    minuteur_actif: z.string().optional(),
+    /** Assez d'or pour un prix qui dépend du chapitre : n × numéro du chapitre. */
+    or_min_chapitre: z.number().optional(),
     /** Nombre de héros dans la scène (pour adapter une réplique à un joueur seul ou à un groupe). */
     groupe_min: z.number().optional(),
     groupe_max: z.number().optional(),
@@ -286,6 +291,7 @@ export interface Condition {
   affinite_min?: Record<string, number>; affinite_palier?: Record<string, string>;
   reputation_min?: Record<string, number>; carac_min?: Partial<Record<(typeof CARACS)[number], number>>;
   niveau_min?: number; or_min?: number; objet?: string;
+  minuteur_passe?: string; minuteur_actif?: string; or_min_chapitre?: number;
   quete_etape?: Record<string, string>; quete_terminee?: string;
   date_min?: { annee: number; mois: number; jour: number }; rang_guilde_min?: string; groupe_min?: number; groupe_max?: number; ou?: Condition[];
 }
@@ -325,6 +331,16 @@ export const zConsequence = z.object({
   gain_pari: z.number().min(0).optional(),
   /** Pari perdu : la mise est définitivement perdue. */
   perte_pari: z.boolean().optional(),
+  /** Minuteur : arrive à échéance dans n jours (conditions minuteur_passe / minuteur_actif). */
+  minuteur: z.object({ id: z.string(), jours: z.number().int().min(0) }).optional(),
+  /** Retire un minuteur. */
+  retirer_minuteur: z.string().optional(),
+  /** Tirage au sort (hasard à graine) : le flag est posé avec cette chance, retiré sinon. */
+  tirage: z.object({ flag: z.string(), chance: z.number().min(0).max(1) }).optional(),
+  /** Tirage au sort : un seul des flags de la liste est posé (les autres sont retirés). */
+  tirage_un: z.array(z.string()).min(1).optional(),
+  /** Prix qui dépend du chapitre : chaque héros concerné paie n × numéro du chapitre. */
+  prix_chapitre: z.number().int().min(1).optional(),
 });
 export type Consequence = z.infer<typeof zConsequence>;
 

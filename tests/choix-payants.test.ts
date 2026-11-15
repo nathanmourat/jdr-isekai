@@ -11,14 +11,14 @@ const PAYER = /\b(pay|achet|rachet|soudoy|pourboire)|\(\d+ or\)/i;
 /** Répliques prononcées qui parlent de payer sans que le héros paie (ex. « leur faire payer au centuple »). */
 const EXCEPTIONS = new Set(['nd-acheteurs']);
 
-type ChoixLu = { ou: string; texte: string; effets: { or?: number; miser?: number }[]; si?: { or_min?: number }; contrat: boolean };
+type ChoixLu = { ou: string; texte: string; effets: { or?: number; miser?: number; prix_chapitre?: number }[]; si?: { or_min?: number }; contrat: boolean };
 function tousLesChoix(): ChoixLu[] {
   const l: ChoixLu[] = [];
   for (const s of Object.values(c.scenes)) for (const [nid, n] of Object.entries(s.noeuds)) for (const ch of n.choix) l.push({ ou: `${s.id} › ${nid}`, texte: ch.texte, effets: ch.effets, si: ch.si, contrat: false });
   for (const ct of Object.values(c.contrats)) ct.etapes.forEach((e, i) => (e.choix ?? []).forEach((ch) => l.push({ ou: `contrat ${ct.id} › étape ${i + 1}`, texte: ch.texte, effets: ch.effets ?? [], contrat: true })));
   return l;
 }
-const cout = (x: ChoixLu) => x.effets.reduce((n, e) => n - Math.min(0, e.or ?? 0) + (e.miser ?? 0), 0);
+const cout = (x: ChoixLu) => x.effets.reduce((n, e) => n - Math.min(0, e.or ?? 0) + (e.miser ?? 0) + (e.prix_chapitre ?? 0), 0);
 
 describe('choix payants', () => {
   it('tout choix qui fait payer retire vraiment de l\'or', () => {

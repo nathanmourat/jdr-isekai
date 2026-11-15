@@ -265,7 +265,8 @@ function verifierCondition(c: Contenu, ou: string, cond: Condition, e: string[])
 
 function verifierConsequence(c: Contenu, ou: string, eff: Consequence, e: string[]) {
   const liste = (v?: string | string[]) => (v === undefined ? [] : Array.isArray(v) ? v : [v]);
-  for (const o of liste(eff.objet)) if (!c.objets[o]) e.push(`${ou} › objet « ${o} » introuvable`);
+  // « relique-x-{palier} » : les 6 versions (i à vi) doivent exister
+  for (const o of liste(eff.objet)) for (const v of o.includes('{palier}') ? ['i', 'ii', 'iii', 'iv', 'v', 'vi'].map((p) => o.split('{palier}').join(p)) : [o]) if (!c.objets[v]) e.push(`${ou} › objet « ${v} » introuvable`);
   for (const id of Object.keys(eff.affinite ?? {})) if (!c.compagnons[id]) e.push(`${ou} › affinité › compagnon « ${id} » introuvable`);
   if (eff.rang_guilde && !c.config.guilde.rangs.some((r) => r.rang === eff.rang_guilde)) e.push(`${ou} › rang_guilde « ${eff.rang_guilde} » inconnu`);
   if (eff.recruter && !c.compagnons[eff.recruter]) e.push(`${ou} › recruter › compagnon « ${eff.recruter} » introuvable`);
