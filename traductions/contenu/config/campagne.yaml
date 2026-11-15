@@ -1,34 +1,162 @@
 # Textes de content/config/campagne.yaml
 # Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
 - fr: Saison 1 — Le Souverain des Cendres
+  en: Season 1 — The Ash Sovereign
+  es: Temporada 1 — El Soberano de las Cenizas
+  de: Staffel 1 — Der Aschenherrscher
+  ja: シーズン1 — 灰の君主
 - fr: Germinal
+  en: Germinal
+  es: Germinal
+  de: Keimmond
+  ja: 芽吹月
 - fr: Floréal
+  en: Floreal
+  es: Floreal
+  de: Blütenmond
+  ja: 花月
 - fr: Pluvial
+  en: Pluvial
+  es: Pluvial
+  de: Regenmond
+  ja: 雨月
 - fr: Solaire
+  en: Solar
+  es: Solar
+  de: Sonnenmond
+  ja: 陽月
 - fr: Moisson
+  en: Harvest
+  es: Cosecha
+  de: Erntemond
+  ja: 収穫月
 - fr: Ardent
+  en: Ardent
+  es: Ardiente
+  de: Glutmond
+  ja: 灼熱月
 - fr: Brumaire
+  en: Brumaire
+  es: Brumario
+  de: Nebelmond
+  ja: 霧月
 - fr: Cendral
+  en: Cendral
+  es: Cendral
+  de: Aschenmond
+  ja: 灰月
 - fr: Givral
+  en: Rimefall
+  es: Escarcha
+  de: Reifmond
+  ja: 霜月
 - fr: Nivôse
+  en: Nivose
+  es: Nivoso
+  de: Schneemond
+  ja: 雪月
 - fr: Nuitlongue
+  en: Longnight
+  es: Nochelarga
+  de: Langnacht
+  ja: 長夜月
 - fr: Aurore
+  en: Aurora
+  es: Aurora
+  de: Morgenrot
+  ja: 曙月
 - fr: Fête des Lanternes
+  en: Lantern Festival
+  es: Fiesta de las Linternas
+  de: Laternenfest
+  ja: 灯籠祭
 - fr: Tournoi de la Couronne
+  en: Crown Tournament
+  es: Torneo de la Corona
+  de: Kronturnier
+  ja: 王冠杯の大会
 - fr: Grand Bazar de Qarzim
+  en: Great Bazaar of Qarzim
+  es: Gran Bazar de Qarzim
+  de: Großer Basar von Qarzim
+  ja: カルジムの大バザール
 - fr: Inconnue
+  en: Stranger
+  es: Desconocida
+  de: Fremde
+  ja: 他人
 - fr: Alliée
+  en: Ally
+  es: Aliada
+  de: Verbündete
+  ja: 味方
 - fr: Proche
+  en: Close
+  es: Cercana
+  de: Vertraute
+  ja: 親しい仲
 - fr: Amoureuse
+  en: In love
+  es: Enamorada
+  de: Verliebt
+  ja: 恋仲
 - fr: Engagée
+  en: Committed
+  es: Comprometida
+  de: Gebunden
+  ja: 誓いの仲
 - fr: Hostile
+  en: Hostile
+  es: Hostil
+  de: Feindselig
+  ja: 敵対
 - fr: Méfiant
+  en: Wary
+  es: Desconfiado
+  de: Misstrauisch
+  ja: 警戒
 - fr: Neutre
+  en: Neutral
+  es: Neutral
+  de: Neutral
+  ja: 中立
 - fr: Ami
+  en: Friendly
+  es: Amistoso
+  de: Freundlich
+  ja: 友好
 - fr: Allié
+  en: Allied
+  es: Aliado
+  de: Verbündet
+  ja: 同盟
 - fr: Honoré
+  en: Honoured
+  es: Honrado
+  de: Geehrt
+  ja: 崇敬
 - fr: « Asseyez-vous. Respirez. La Lumière fera le reste, et moi un peu aussi. »
+  en: “Sit down. Breathe. The Light will do the rest, and so will I, a little.”
+  es: «Siéntese. Respire. La Luz hará el resto, y yo un poco también.»
+  de: „Setzt Euch. Atmet. Das Licht erledigt den Rest, und ich ein wenig auch.“
+  ja: 「座って。深呼吸を。あとは光が——それと私も少しだけ——なんとかします」
 - fr: Sœur Elianne pose les mains au-dessus des plaies et murmure une prière. La lumière descend, chaude comme un soleil d'été.
+  en: Sister Elianne holds her hands above the wounds and murmurs a prayer. The light comes down, warm as a summer sun.
+  es: La hermana Elianne pone las manos sobre las heridas y murmura una oración. La luz desciende, cálida como un sol de verano.
+  de: Schwester Elianne hält die Hände über die Wunden und murmelt ein Gebet. Das Licht senkt sich herab, warm wie eine Sommersonne.
+  ja: シスター・エリアンヌが傷の上に手をかざし、祈りをささやく。夏の陽のように温かな光が降りてくる。
 - fr: « Voilà. Vous voilà {{guéri|guérie}}. Essayez de ne pas vous faire frapper pendant au moins… une semaine. »
+  en: “There. You're healed. Try not to get hit for at least… a week.”
+  es: «Ya está. Ya está {{curado|curada}}. Intente que no le golpeen durante al menos… una semana.»
+  de: „So. Ihr seid geheilt. Versucht, Euch mindestens … eine Woche lang nicht schlagen zu lassen.“
+  ja: 「はい、治りました。せめて…一週間は殴られないようにしてくださいね」
 - fr: « Celle-ci est plus profonde. Ne bougez pas, ça va piquer. » La lumière se resserre sur la vieille plaie, qui se referme lentement.
+  en: “This one's deeper. Don't move, it'll sting.” The light tightens around the old wound, which slowly closes.
+  es: «Esta es más profunda. No se mueva, va a escocer.» La luz se ciñe sobre la vieja herida, que se cierra lentamente.
+  de: „Die hier ist tiefer. Nicht bewegen, das brennt gleich.“ Das Licht zieht sich um die alte Wunde zusammen, die sich langsam schließt.
+  ja: 「こっちは深いですね。動かないで、少ししみますよ」光が古傷に集まり、ゆっくりと塞いでいく。
 - fr: « Et cette fois, laissez la cicatrice tranquille. »
+  en: “And this time, leave the scar alone.”
+  es: «Y esta vez, deje la cicatriz en paz.»
+  de: „Und diesmal lasst die Narbe in Ruhe.“
+  ja: 「今度こそ、傷跡をいじらないでくださいね」

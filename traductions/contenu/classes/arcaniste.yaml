@@ -1,33 +1,157 @@
 # Textes de content/classes/arcaniste.yaml
 # Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
 - fr: Arcaniste élémentaire
+  en: Elemental Arcanist
+  es: Arcanista elemental
+  de: Elementar-Arkanist
+  ja: 元素のアルカニスト
 - fr: Dégâts (zone)
+  en: Damage (area)
+  es: Daño (área)
+  de: Schaden (Fläche)
+  ja: 火力（範囲）
 - fr: Un mage qui plie le feu, la glace et la foudre à sa volonté.
+  en: A mage who bends fire, ice and lightning to their will.
+  es: Un mago que doblega el fuego, el hielo y el rayo a su voluntad.
+  de: Ein Magier, der Feuer, Eis und Blitz seinem Willen unterwirft.
+  ja: 炎、氷、雷を意のままに操る魔術師。
 - fr: Résonance
+  en: Resonance
+  es: Resonancia
+  de: Resonanz
+  ja: 共鳴
 - fr: Enchaîner deux éléments différents donne +25 % de dégâts au second.
+  en: Chaining two different elements gives +25% damage to the second.
+  es: Encadenar dos elementos distintos da +25 % de daño al segundo.
+  de: Zwei verschiedene Elemente hintereinander geben dem zweiten +25 % Schaden.
+  ja: 異なる属性を続けて使うと、2つ目のダメージ+25%。
 - fr: Pyromancie et foudre
+  en: Pyromancy and lightning
+  es: Piromancia y rayo
+  de: Pyromantie und Blitz
+  ja: 炎術と雷
 - fr: Dégâts purs.
+  en: Pure damage.
+  es: Daño puro.
+  de: Reiner Schaden.
+  ja: 純粋な火力。
 - fr: Cryo et terre
+  en: Cryo and earth
+  es: Crio y tierra
+  de: Kryo und Erde
+  ja: 氷と大地
 - fr: Contrôle et protection.
+  en: Control and protection.
+  es: Control y protección.
+  de: Kontrolle und Schutz.
+  ja: 妨害と守り。
 - fr: Convergence des Quatre
+  en: Convergence of the Four
+  es: Convergencia de los Cuatro
+  de: Konvergenz der Vier
+  ja: 四元の収束
 - fr: Dégâts massifs sur tous les ennemis, exposés aux 4 éléments.
+  en: Massive damage to all enemies, exposed to all 4 elements.
+  es: Daño masivo a todos los enemigos, expuestos a los 4 elementos.
+  de: Massiver Schaden an allen Gegnern, die allen 4 Elementen ausgesetzt werden.
+  ja: 敵全体に大ダメージ。4属性すべてに弱くなる。
 - fr: Le meilleur pour nettoyer les groupes d'ennemis.
+  en: The best at clearing groups of enemies.
+  es: El mejor para limpiar grupos de enemigos.
+  de: Der Beste, um Gegnergruppen zu beseitigen.
+  ja: 敵の集団の殲滅が得意。
 - fr: Très fragile ; s'épuise en mana dans les longs combats.
+  en: Very fragile; runs out of mana in long fights.
+  es: Muy frágil; se queda sin maná en los combates largos.
+  de: Sehr zerbrechlich; geht in langen Kämpfen das Mana aus.
+  ja: とても打たれ弱い。長期戦ではマナ切れになる。
 - fr: Javelot de flamme
+  en: Flame Javelin
+  es: Jabalina de llamas
+  de: Flammenspeer
+  ja: 炎の投槍
 - fr: Un javelot de feu qui peut enflammer la cible.
+  en: A javelin of fire that can set the target ablaze.
+  es: Una jabalina de fuego que puede incendiar al objetivo.
+  de: Ein Feuerspeer, der das Ziel in Brand setzen kann.
+  ja: 対象を燃やすこともある炎の投槍。
 - fr: Onde de givre
+  en: Frost Wave
+  es: Onda de escarcha
+  de: Frostwelle
+  ja: 霜の波動
 - fr: Une vague de froid qui touche tous les ennemis et les ralentit.
+  en: A wave of cold that hits all enemies and slows them.
+  es: Una ola de frío que alcanza a todos los enemigos y los ralentiza.
+  de: Eine Kältewelle, die alle Gegner trifft und verlangsamt.
+  ja: 敵全体を打ち、動きを鈍らせる冷気の波。
 - fr: Éclair en chaîne
+  en: Chain Lightning
+  es: Rayo en cadena
+  de: Kettenblitz
+  ja: 連鎖雷
 - fr: La foudre rebondit sur tous les ennemis.
+  en: Lightning bounces off every enemy.
+  es: El rayo rebota sobre todos los enemigos.
+  de: Der Blitz springt auf alle Gegner über.
+  ja: 雷が敵全体に跳ね回る。
 - fr: Mur de glace
+  en: Ice Wall
+  es: Muro de hielo
+  de: Eiswall
+  ja: 氷の壁
 - fr: Un mur de glace protège tout le groupe (+25 % de défense pendant 2 tours).
+  en: A wall of ice protects the whole group (+25% defence for 2 turns).
+  es: Un muro de hielo protege a todo el grupo (+25 % de defensa durante 2 turnos).
+  de: Ein Eiswall schützt die ganze Gruppe (+25 % Verteidigung für 2 Runden).
+  ja: 氷の壁がパーティー全員を守る（2ターン防御+25%）。
 - fr: Météore
+  en: Meteor
+  es: Meteoro
+  de: Meteor
+  ja: メテオ
 - fr: Un bloc de roche en feu s'abat sur la cible.
+  en: A block of burning rock crashes down on the target.
+  es: Un bloque de roca en llamas cae sobre el objetivo.
+  de: Ein brennender Felsbrocken stürzt auf das Ziel.
+  ja: 燃える岩塊が対象に降りそそぐ。
 - fr: Tempête foudroyante
+  en: Thunderstorm
+  es: Tormenta fulminante
+  de: Gewittersturm
+  ja: 雷嵐
 - fr: La foudre frappe tous les ennemis, deux fois.
+  en: Lightning strikes every enemy, twice.
+  es: El rayo golpea a todos los enemigos, dos veces.
+  de: Der Blitz trifft alle Gegner, zweimal.
+  ja: 雷が敵全体を2回打つ。
 - fr: Prison de givre
+  en: Frost Prison
+  es: Prisión de escarcha
+  de: Frostkerker
+  ja: 氷獄
 - fr: Enferme la cible dans la glace.
+  en: Traps the target in ice.
+  es: Encierra al objetivo en el hielo.
+  de: Schließt das Ziel in Eis ein.
+  ja: 対象を氷に閉じ込める。
 - fr: Séisme
+  en: Earthquake
+  es: Seísmo
+  de: Erdbeben
+  ja: 地震
 - fr: Le sol se fend sous tous les ennemis, qui perdent l'équilibre.
+  en: The ground splits under all enemies, who lose their balance.
+  es: El suelo se agrieta bajo todos los enemigos, que pierden el equilibrio.
+  de: Der Boden reißt unter allen Gegnern auf, die das Gleichgewicht verlieren.
+  ja: 敵全体の足元の地面が裂け、体勢を崩す。
 - fr: Ultime — Convergence des Quatre
+  en: Ultimate — Convergence of the Four
+  es: Definitiva — Convergencia de los Cuatro
+  de: Ultimativ — Konvergenz der Vier
+  ja: 奥義 — 四元の収束
 - fr: "Feu, glace, foudre et terre se rejoignent : dégâts massifs sur tous les ennemis, exposés aux éléments."
+  en: "Fire, ice, lightning and earth unite: massive damage to all enemies, exposed to the elements."
+  es: "Fuego, hielo, rayo y tierra se unen: daño masivo a todos los enemigos, expuestos a los elementos."
+  de: "Feuer, Eis, Blitz und Erde vereinen sich: massiver Schaden an allen Gegnern, die den Elementen ausgesetzt werden."
+  ja: 炎、氷、雷、大地がひとつに：敵全体に大ダメージを与え、属性に弱くする。

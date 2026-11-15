@@ -1,37 +1,177 @@
 # Textes de content/dons/dons.yaml
 # Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
 - fr: Œil du Seuil
+  en: Eye of the Threshold
+  es: Ojo del Umbral
+  de: Auge der Schwelle
+  ja: 境界の眼
 - fr: Voit les PV et faiblesses des ennemis ; +10 % de dégâts sur une faiblesse.
+  en: Sees enemies' HP and weaknesses; +10% damage on a weakness.
+  es: Ve los PV y las debilidades de los enemigos; +10 % de daño sobre una debilidad.
+  de: Sieht LP und Schwächen der Gegner; +10 % Schaden auf eine Schwäche.
+  ja: 敵のHPと弱点が見える。弱点への攻撃ダメージ+10%。
 - fr: Révèle les pièges, secrets et statistiques des objets.
+  en: Reveals traps, secrets and item stats.
+  es: Revela trampas, secretos y estadísticas de los objetos.
+  de: Enthüllt Fallen, Geheimnisse und Werte von Gegenständen.
+  ja: 罠、秘密、アイテムの性能を見破る。
 - fr: Réserve du Néant
+  en: Void Reserve
+  es: Reserva de la Nada
+  de: Reserve des Nichts
+  ja: 虚無の蓄え
 - fr: Une fois par combat, utiliser un objet ne coûte pas d'action.
+  en: Once per fight, using an item costs no action.
+  es: Una vez por combate, usar un objeto no cuesta acción.
+  de: Einmal pro Kampf kostet das Benutzen eines Gegenstands keine Aktion.
+  ja: 戦闘ごとに1回、アイテム使用で行動を消費しない。
 - fr: Inventaire illimité ; +10 % sur les ventes.
+  en: Unlimited inventory; +10% on sales.
+  es: Inventario ilimitado; +10 % en las ventas.
+  de: Unbegrenztes Inventar; +10 % beim Verkauf.
+  ja: 所持数無制限。売値+10%。
 - fr: Langue universelle
+  en: Universal Tongue
+  es: Lengua universal
+  de: Universalsprache
+  ja: 万国の言葉
 - fr: Peut pacifier une bête ou un démon mineur affaibli (sous 30 % de PV).
+  en: Can pacify a weakened beast or lesser demon (below 30% HP).
+  es: Puede apaciguar a una bestia o demonio menor debilitado (por debajo del 30 % de PV).
+  de: Kann ein geschwächtes Tier oder einen niederen Dämon besänftigen (unter 30 % LP).
+  ja: 弱った獣や下級悪魔（HP30%未満）をなだめられる。
 - fr: Comprend toutes les langues ; +20 % d'affinité en dialogue.
+  en: Understands every language; +20% affinity in dialogue.
+  es: Entiende todos los idiomas; +20 % de afinidad en los diálogos.
+  de: Versteht alle Sprachen; +20 % Zuneigung in Gesprächen.
+  ja: あらゆる言語を理解する。会話での好感度+20%。
 - fr: Second départ
+  en: Second Start
+  es: Segundo comienzo
+  de: Zweiter Anlauf
+  ja: 仕切り直し
 - fr: Une fois par session, annule et rejoue le dernier tour du groupe.
+  en: Once per session, undoes and replays the group's last turn.
+  es: Una vez por sesión, anula y vuelve a jugar el último turno del grupo.
+  de: Einmal pro Sitzung die letzte Runde der Gruppe rückgängig machen und neu spielen.
+  ja: セッションごとに1回、パーティーの直前のターンをやり直す。
 - fr: Une fois par chapitre, refaire un choix de dialogue.
+  en: Once per chapter, redo a dialogue choice.
+  es: Una vez por capítulo, rehacer una elección de diálogo.
+  de: Einmal pro Kapitel eine Dialogentscheidung wiederholen.
+  ja: 章ごとに1回、会話の選択をやり直す。
 - fr: Croissance accélérée
+  en: Accelerated Growth
+  es: Crecimiento acelerado
+  de: Beschleunigtes Wachstum
+  ja: 成長促進
 - fr: +15 % d'XP pour soi ; une activité « Entraînement » bonus par chapitre.
+  en: +15% XP for yourself; a bonus “Training” activity per chapter.
+  es: +15 % de XP para uno mismo; una actividad «Entrenamiento» extra por capítulo.
+  de: +15 % EP für dich; eine zusätzliche Aktivität „Training“ pro Kapitel.
+  ja: 自分の経験値+15%。章ごとに「鍛錬」の活動が1回増える。
 - fr: Bénédiction de fortune
+  en: Blessing of Fortune
+  es: Bendición de la fortuna
+  de: Segen des Glücks
+  ja: 幸運の祝福
 - fr: Une fois par combat, relance un jet raté (toucher, critique, résistance).
+  en: Once per fight, rerolls a failed roll (hit, critical, resistance).
+  es: Una vez por combate, repite una tirada fallida (acierto, crítico, resistencia).
+  de: Einmal pro Kampf einen misslungenen Wurf wiederholen (Treffer, Krit, Widerstand).
+  ja: 戦闘ごとに1回、失敗した判定（命中・クリティカル・抵抗）を振り直す。
 - fr: Meilleur butin (+1 objet rare par donjon).
+  en: Better loot (+1 rare item per dungeon).
+  es: Mejor botín (+1 objeto raro por mazmorra).
+  de: Bessere Beute (+1 seltener Gegenstand pro Verlies).
+  ja: 戦利品が良くなる（ダンジョンごとにレアアイテム+1）。
 - fr: Mimétisme
+  en: Mimicry
+  es: Mimetismo
+  de: Mimikry
+  ja: 擬態
 - fr: Copie une compétence active d'un ennemi vue pendant le combat, jusqu'à la fin du combat.
+  en: Copies an enemy's active skill seen during the fight, until the end of the fight.
+  es: Copia una habilidad activa de un enemigo vista durante el combate, hasta el final del combate.
+  de: Kopiert eine im Kampf gesehene aktive Fähigkeit eines Gegners bis zum Ende des Kampfes.
+  ja: 戦闘中に見た敵のアクティブスキルを、戦闘終了まで真似できる。
 - fr: Apprend les recettes d'artisanat en les voyant une fois.
+  en: Learns crafting recipes by seeing them once.
+  es: Aprende las recetas de artesanía con verlas una vez.
+  de: Lernt Handwerksrezepte, indem er sie einmal sieht.
+  ja: 一度見ただけで製作レシピを覚える。
 - fr: Cœur inépuisable
+  en: Inexhaustible Heart
+  es: Corazón inagotable
+  de: Unerschöpfliches Herz
+  ja: 尽きぬ心臓
 - fr: Régénère 2 % de ses PV max par tour.
+  en: Regenerates 2% of max HP per turn.
+  es: Regenera el 2 % de sus PV máx. por turno.
+  de: Regeneriert 2 % der max. LP pro Runde.
+  ja: 毎ターン最大HPの2%を再生する。
 - fr: Ignore la fatigue ; voyages 20 % plus rapides.
+  en: Ignores fatigue; travel 20% faster.
+  es: Ignora el cansancio; viajes un 20 % más rápidos.
+  de: Ignoriert Erschöpfung; reist 20 % schneller.
+  ja: 疲労知らず。移動が20%速い。
 - fr: Lien des bêtes
+  en: Bond of Beasts
+  es: Vínculo de las bestias
+  de: Band der Tiere
+  ja: 獣の絆
 - fr: Peut recruter une bête vaincue comme compagnon faible (un à la fois).
+  en: Can recruit a defeated beast as a weak companion (one at a time).
+  es: Puede reclutar a una bestia vencida como compañero débil (uno a la vez).
+  de: Kann ein besiegtes Tier als schwachen Begleiter anwerben (immer nur eines).
+  ja: 倒した獣を弱い仲間として迎えられる（1体まで）。
 - fr: Monture gratuite ; bonus contre les bêtes en exploration.
+  en: Free mount; bonus against beasts while exploring.
+  es: Montura gratuita; bonificación contra las bestias al explorar.
+  de: Kostenloses Reittier; Bonus gegen Tiere bei der Erkundung.
+  ja: 無料の乗騎。探索中、獣に対してボーナス。
 - fr: Main de l'artisan
+  en: Artisan's Hand
+  es: Mano del artesano
+  de: Hand des Handwerkers
+  ja: 職人の手
 - fr: Une fois par combat, fabrique un objet improvisé (potion ou bombe).
+  en: Once per fight, crafts an improvised item (potion or bomb).
+  es: Una vez por combate, fabrica un objeto improvisado (poción o bomba).
+  de: Einmal pro Kampf einen improvisierten Gegenstand herstellen (Trank oder Bombe).
+  ja: 戦闘ごとに1回、即席のアイテム（ポーションか爆弾）を作る。
 - fr: Artisanat de qualité supérieure ; répare les reliques.
+  en: Superior-quality crafting; repairs relics.
+  es: Artesanía de calidad superior; repara las reliquias.
+  de: Handwerk höherer Qualität; repariert Reliquien.
+  ja: 上質な製作。聖遺物を修理できる。
 - fr: Aura de l'Élu
+  en: Aura of the Chosen
+  es: Aura del Elegido
+  de: Aura des Auserwählten
+  ja: 選ばれし者のオーラ
 - fr: Les alliés gagnent +5 % de dégâts et +5 % de résistance.
+  en: Allies gain +5% damage and +5% resistance.
+  es: Los aliados ganan +5 % de daño y +5 % de resistencia.
+  de: Verbündete erhalten +5 % Schaden und +5 % Resistenz.
+  ja: 味方のダメージ+5%、耐性+5%。
 - fr: Première impression +5 d'affinité ; prestige auprès des PNJ.
+  en: First impression +5 affinity; prestige with NPCs.
+  es: Primera impresión +5 de afinidad; prestigio ante los PNJ.
+  de: Erster Eindruck +5 Zuneigung; Ansehen bei NSCs.
+  ja: 第一印象で好感度+5。NPCからの尊敬を集める。
 - fr: Pas de l'ombre
+  en: Shadow Step
+  es: Paso de sombra
+  de: Schattenschritt
+  ja: 影歩き
 - fr: Une fois par combat, esquive garantie puis le coup suivant est critique.
+  en: Once per fight, a guaranteed dodge, then the next hit is critical.
+  es: Una vez por combate, esquiva garantizada y el golpe siguiente es crítico.
+  de: Einmal pro Kampf garantiertes Ausweichen, danach ist der nächste Treffer kritisch.
+  ja: 戦闘ごとに1回、確実に回避し、次の攻撃がクリティカルになる。
 - fr: Se faufile n'importe où, une fois par quête.
+  en: Slips in anywhere, once per quest.
+  es: Se cuela en cualquier parte, una vez por misión.
+  de: Schlüpft überall hinein, einmal pro Quest.
+  ja: クエストごとに1回、どこへでも忍び込める。

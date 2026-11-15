@@ -1,42 +1,202 @@
 # Textes de content/races/races.yaml
 # Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
 - fr: Humain
+  en: Human
+  es: Humano
+  de: Mensch
+  ja: 人間
 - fr: Le peuple le plus nombreux de Velmaris, présent partout. Polyvalent et obstiné.
+  en: The most numerous people of Velmaris, found everywhere. Versatile and stubborn.
+  es: El pueblo más numeroso de Velmaris, presente en todas partes. Polivalente y obstinado.
+  de: Das zahlreichste Volk von Velmaris, überall zu finden. Vielseitig und stur.
+  ja: ヴェルマリスで最も数の多い種族。どこにでもいる。万能で頑固。
 - fr: Détermination
+  en: Determination
+  es: Determinación
+  de: Entschlossenheit
+  ja: 不屈
 - fr: Une fois par combat, quand il passe sous 25 % de PV, il se ressaisit et regagne 10 % de ses PV.
+  en: Once per fight, when dropping below 25% HP, pulls themselves together and regains 10% of their HP.
+  es: Una vez por combate, al bajar del 25 % de PV, se rehace y recupera el 10 % de sus PV.
+  de: Einmal pro Kampf, wenn die LP unter 25 % fallen, rafft er sich auf und erhält 10 % seiner LP zurück.
+  ja: 戦闘ごとに1回、HPが25%を下回ると奮起し、HPを10%回復する。
 - fr: −10 % de résistance magique.
+  en: −10% magic resistance.
+  es: −10 % de resistencia mágica.
+  de: −10 % Magieresistenz.
+  ja: 魔法耐性−10%。
 - fr: Elfe
+  en: Elf
+  es: Elfo
+  de: Elf
+  ja: エルフ
 - fr: Peuple ancien de Sylvenoire, lié à la magie et aux forêts.
+  en: An ancient people of Sylvenoire, bound to magic and forests.
+  es: Pueblo antiguo de Sylvenoire, ligado a la magia y a los bosques.
+  de: Ein altes Volk aus Sylvenoire, mit Magie und Wäldern verbunden.
+  ja: 魔法と森に結びついた、シルヴェノワールの古き民。
 - fr: Sang ancien
+  en: Ancient Blood
+  es: Sangre antigua
+  de: Altes Blut
+  ja: 古き血
 - fr: +15 % de résistance magique ; voit dans le noir.
+  en: +15% magic resistance; sees in the dark.
+  es: +15 % de resistencia mágica; ve en la oscuridad.
+  de: +15 % Magieresistenz; sieht im Dunkeln.
+  ja: 魔法耐性+15%。暗闇でも見える。
 - fr: Poisons et saignements durent 1 tour de plus.
+  en: Poisons and bleeding last 1 turn longer.
+  es: Los venenos y sangrados duran 1 turno más.
+  de: Gifte und Blutungen halten 1 Runde länger.
+  ja: 毒と出血が1ターン長く続く。
 - fr: Demi-elfe
+  en: Half-elf
+  es: Semielfo
+  de: Halbelf
+  ja: ハーフエルフ
 - fr: "Ni tout à fait humain, ni tout à fait elfe : à l'aise partout, chez soi nulle part."
+  en: "Neither quite human nor quite elf: at ease everywhere, at home nowhere."
+  es: "Ni del todo humano ni del todo elfo: a gusto en todas partes, en casa en ninguna."
+  de: "Weder ganz Mensch noch ganz Elf: überall wohl, nirgends zu Hause."
+  ja: 人間でもエルフでもない。どこでもなじめるが、どこにも居場所がない。
 - fr: Entre deux mondes
+  en: Between Two Worlds
+  es: Entre dos mundos
+  de: Zwischen zwei Welten
+  ja: 二つの世界の狭間
 - fr: +10 % d'affinité en dialogue ; +5 % de précision.
+  en: +10% affinity in dialogue; +5% accuracy.
+  es: +10 % de afinidad en los diálogos; +5 % de precisión.
+  de: +10 % Zuneigung in Gesprächen; +5 % Präzision.
+  ja: 会話での好感度+10%。命中+5%。
 - fr: −10 de réputation de départ auprès de la Couronne.
+  en: −10 starting reputation with the Crown.
+  es: −10 de reputación inicial con la Corona.
+  de: −10 Anfangsruf bei der Krone.
+  ja: 王家からの初期評判−10。
 - fr: Nain
+  en: Dwarf
+  es: Enano
+  de: Zwerg
+  ja: ドワーフ
 - fr: Forgerons et mineurs des Monts Grisfer, solides comme la roche.
+  en: Smiths and miners of the Greyiron Mountains, solid as rock.
+  es: Herreros y mineros de los Montes Grisfer, sólidos como la roca.
+  de: Schmiede und Bergleute der Grauerz-Berge, fest wie Fels.
+  ja: グリフェル山脈の鍛冶師と鉱夫。岩のように頑丈。
 - fr: Robuste
+  en: Sturdy
+  es: Robusto
+  de: Robust
+  ja: 頑健
 - fr: Résiste au poison à 50 % ; +2 % de défense.
+  en: 50% poison resistance; +2% defence.
+  es: Resiste al veneno al 50 %; +2 % de defensa.
+  de: 50 % Giftresistenz; +2 % Verteidigung.
+  ja: 毒耐性50%。防御+2%。
 - fr: −3 d'initiative ; ne sait pas nager.
+  en: −3 initiative; can't swim.
+  es: −3 de iniciativa; no sabe nadar.
+  de: −3 Initiative; kann nicht schwimmen.
+  ja: 先制−3。泳げない。
 - fr: Ourvalis
+  en: Ourvalis
+  es: Ourvalis
+  de: Ourvalis
+  ja: ウルヴァリス
 - fr: Peuple-loup nomade de la Marche des Sables, chassé de ses terres par la Concorde.
+  en: A nomadic wolf-folk of the Sand Marches, driven from their lands by the Concord.
+  es: Pueblo lobo nómada de la Marca de las Arenas, expulsado de sus tierras por la Concordia.
+  de: Ein nomadisches Wolfsvolk aus der Sandmark, von der Eintracht aus seinem Land vertrieben.
+  ja: 協調派によって土地を追われた、砂の辺境の遊牧の狼の民。
 - fr: Instinct de meute
+  en: Pack Instinct
+  es: Instinto de manada
+  de: Rudelinstinkt
+  ja: 群れの本能
 - fr: +10 % de dégâts sur une cible déjà frappée par un allié ce tour ; flair.
+  en: +10% damage on a target already hit by an ally this turn; keen nose.
+  es: +10 % de daño a un objetivo ya golpeado por un aliado este turno; olfato.
+  de: +10 % Schaden gegen ein Ziel, das in dieser Runde schon von einem Verbündeten getroffen wurde; feine Nase.
+  ja: このターンに味方が攻撃した対象へのダメージ+10%。鋭い嗅覚。
 - fr: −15 % de résistance à la peur et à la provocation.
+  en: −15% resistance to fear and taunts.
+  es: −15 % de resistencia al miedo y a la provocación.
+  de: −15 % Resistenz gegen Furcht und Provokation.
+  ja: 恐怖と挑発への耐性−15%。
 - fr: Vulpin
+  en: Vulpin
+  es: Vulpino
+  de: Vulpin
+  ja: ヴルパン
 - fr: Peuple-renard rusé, commerçant et voyageur.
+  en: A cunning fox-folk of traders and travellers.
+  es: Pueblo zorro astuto, comerciante y viajero.
+  de: Ein listiges Fuchsvolk aus Händlern und Reisenden.
+  ja: 商売と旅を好む、ずる賢い狐の民。
 - fr: Ruse
+  en: Cunning
+  es: Astucia
+  de: List
+  ja: 狡知
 - fr: +5 % d'esquive ; −10 % sur les prix.
+  en: +5% dodge; −10% on prices.
+  es: +5 % de esquiva; −10 % en los precios.
+  de: +5 % Ausweichen; −10 % auf Preise.
+  ja: 回避+5%。買い物−10%。
 - fr: "Réputation de filou : marchands humains et Couronne méfiants."
+  en: "Trickster's reputation: human merchants and the Crown are wary."
+  es: "Fama de pillo: los mercaderes humanos y la Corona desconfían."
+  de: "Ruf als Schlitzohr: Menschliche Händler und die Krone sind misstrauisch."
+  ja: ペテン師の評判：人間の商人と王家に警戒される。
 - fr: Demi-démon
+  en: Half-demon
+  es: Semidemonio
+  de: Halbdämon
+  ja: 半魔
 - fr: Descendants de lignées touchées par les Cendres, le long du Mur d'Aube. L'Ordre les craint.
+  en: Descendants of bloodlines touched by the Ashes, along the Dawnwall. The Order fears them.
+  es: Descendientes de linajes tocados por las Cenizas, a lo largo del Muro del Alba. La Orden los teme.
+  de: Nachfahren von Blutlinien, die von der Asche berührt wurden, entlang des Morgenwalls. Der Orden fürchtet sie.
+  ja: 暁の壁沿いの、灰に触れた血筋の末裔。教団に恐れられている。
 - fr: Sang cendré
+  en: Ashen Blood
+  es: Sangre cenicienta
+  de: Aschenblut
+  ja: 灰の血
 - fr: 25 % de résistance au feu et à l'ombre ; sous 50 % de PV, régénère 2 % de ses PV par tour.
+  en: 25% fire and shadow resistance; below 50% HP, regenerates 2% of their HP per turn.
+  es: 25 % de resistencia al fuego y a la sombra; por debajo del 50 % de PV, regenera el 2 % de sus PV por turno.
+  de: 25 % Feuer- und Schattenresistenz; unter 50 % LP regeneriert er 2 % seiner LP pro Runde.
+  ja: 炎と影への耐性25%。HPが50%未満のとき毎ターンHPを2%再生。
 - fr: +25 % de dégâts sacrés subis ; −20 % de soins sacrés reçus des autres.
+  en: +25% holy damage taken; −20% holy healing received from others.
+  es: +25 % de daño sagrado recibido; −20 % de curación sagrada recibida de los demás.
+  de: +25 % erlittener heiliger Schaden; −20 % heilige Heilung von anderen.
+  ja: 聖属性の被ダメージ+25%。他者からの聖なる回復−20%。
 - fr: Sang-dragon
+  en: Dragonblood
+  es: Sangre de dragón
+  de: Drachenblut
+  ja: 竜血族
 - fr: Descendants des anciens pactes avec les dragons-rois, surtout dans l'Archipel des Brumes.
+  en: Descendants of the ancient pacts with the dragon-kings, mostly in the Mist Archipelago.
+  es: Descendientes de los antiguos pactos con los reyes dragón, sobre todo en el Archipiélago de las Brumas.
+  de: Nachfahren der alten Pakte mit den Drachenkönigen, vor allem im Nebelarchipel.
+  ja: 竜王たちとの古の盟約の末裔。主に霧の群島に住む。
 - fr: Écailles et souffle
+  en: Scales and Breath
+  es: Escamas y aliento
+  de: Schuppen und Odem
+  ja: 鱗と息吹
 - fr: Un souffle de feu mineur par combat ; −10 % de dégâts de feu reçus.
+  en: One minor fire breath per fight; −10% fire damage taken.
+  es: Un aliento de fuego menor por combate; −10 % de daño de fuego recibido.
+  de: Ein kleiner Feueratem pro Kampf; −10 % erlittener Feuerschaden.
+  ja: 戦闘ごとに小さな炎の息を1回。炎の被ダメージ−10%。
 - fr: +25 % de dégâts de glace reçus ; −1 d'initiative.
+  en: +25% ice damage taken; −1 initiative.
+  es: +25 % de daño de hielo recibido; −1 de iniciativa.
+  de: +25 % erlittener Eisschaden; −1 Initiative.
+  ja: 氷の被ダメージ+25%。先制−1。

@@ -1,33 +1,157 @@
 # Textes de content/classes/barde.yaml
 # Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
 - fr: Barde enchanteur
+  en: Enchanting Bard
+  es: Bardo encantador
+  de: Bezaubernder Barde
+  ja: 魅惑の吟遊詩人
 - fr: Soutien / contrôle
+  en: Support / control
+  es: Apoyo / control
+  de: Unterstützung / Kontrolle
+  ja: 支援／妨害
 - fr: Sa musique galvanise ses amis et endort ses ennemis.
+  en: Their music rouses friends and lulls enemies to sleep.
+  es: Su música enardece a sus amigos y adormece a sus enemigos.
+  de: Seine Musik spornt Freunde an und lässt Feinde einschlafen.
+  ja: その音楽は仲間を奮い立たせ、敵を眠らせる。
 - fr: Refrain
+  en: Refrain
+  es: Estribillo
+  de: Refrain
+  ja: リフレイン
 - fr: Ses chants de groupe durent tant que le Barde n'est pas K.O.
+  en: Their group songs last as long as the Bard isn't KO'd.
+  es: Sus cantos de grupo duran mientras el Bardo no esté K.O.
+  de: Seine Gruppenlieder halten an, solange der Barde nicht K. o. ist.
+  ja: 吟遊詩人が倒れない限り、全体の歌の効果が続く。
 - fr: Virtuose
+  en: Virtuoso
+  es: Virtuoso
+  de: Virtuose
+  ja: 名手
 - fr: Bonus de groupe.
+  en: Group bonuses.
+  es: Bonificaciones de grupo.
+  de: Gruppenboni.
+  ja: 全体強化。
 - fr: Dissonance
+  en: Dissonance
+  es: Disonancia
+  de: Dissonanz
+  ja: 不協和
 - fr: Dégâts sonores et contrôle.
+  en: Sonic damage and control.
+  es: Daño sonoro y control.
+  de: Klangschaden und Kontrolle.
+  ja: 音のダメージと妨害。
 - fr: Symphonie du dernier acte
+  en: Symphony of the Final Act
+  es: Sinfonía del último acto
+  de: Sinfonie des letzten Akts
+  ja: 終幕の交響曲
 - fr: Tout le groupe rejoue immédiatement un tour complet.
+  en: The whole group immediately replays a full turn.
+  es: Todo el grupo vuelve a jugar inmediatamente un turno completo.
+  de: Die ganze Gruppe spielt sofort eine weitere volle Runde.
+  ja: パーティー全員がすぐにもう1ターン行動する。
 - fr: Rend tout le groupe meilleur ; le meilleur en dialogue.
+  en: Makes the whole group better; the best in dialogue.
+  es: Mejora a todo el grupo; el mejor en los diálogos.
+  de: Macht die ganze Gruppe besser; der Beste in Gesprächen.
+  ja: パーティー全体を底上げする。会話では一番。
 - fr: Peu de dégâts personnels ; le soutien le plus fragile.
+  en: Little personal damage; the most fragile support.
+  es: Poco daño personal; el apoyo más frágil.
+  de: Wenig eigener Schaden; die zerbrechlichste Unterstützung.
+  ja: 自身の火力は低く、最も打たれ弱い支援役。
 - fr: Ballade du courage
+  en: Ballad of Courage
+  es: Balada del valor
+  de: Ballade des Mutes
+  ja: 勇気のバラード
 - fr: +25 % de dégâts, +15 % d'initiative et une légère régénération pour le groupe.
+  en: +25% damage, +15% initiative and light regeneration for the group.
+  es: +25 % de daño, +15 % de iniciativa y una ligera regeneración para el grupo.
+  de: +25 % Schaden, +15 % Initiative und leichte Regeneration für die Gruppe.
+  ja: パーティーのダメージ+25%、先制+15%、軽い再生。
 - fr: Berceuse
+  en: Lullaby
+  es: Nana
+  de: Wiegenlied
+  ja: 子守歌
 - fr: Peut endormir chaque ennemi (60 %) ; un ennemi frappé se réveille.
+  en: Can put each enemy to sleep (60%); an enemy that's hit wakes up.
+  es: Puede dormir a cada enemigo (60 %); un enemigo golpeado se despierta.
+  de: Kann jeden Gegner einschläfern (60 %); ein getroffener Gegner wacht auf.
+  ja: 敵それぞれを眠らせることがある（60%）。攻撃された敵は目を覚ます。
 - fr: Hymne de guérison
+  en: Hymn of Healing
+  es: Himno de curación
+  de: Hymne der Heilung
+  ja: 癒やしの讃歌
 - fr: Soigne tout le groupe.
+  en: Heals the whole group.
+  es: Cura a todo el grupo.
+  de: Heilt die ganze Gruppe.
+  ja: パーティー全員を回復する。
 - fr: Accord dissonant
+  en: Dissonant Chord
+  es: Acorde disonante
+  de: Dissonanter Akkord
+  ja: 不協和音
 - fr: Dégâts sur tous les ennemis et défense réduite.
+  en: Damage to all enemies and reduced defence.
+  es: Daño a todos los enemigos y defensa reducida.
+  de: Schaden an allen Gegnern und verringerte Verteidigung.
+  ja: 敵全体にダメージと防御低下。
 - fr: Chant de l'aube
+  en: Song of Dawn
+  es: Canto del alba
+  de: Lied der Morgenröte
+  ja: 暁の歌
 - fr: Une mélodie qui soigne et purifie tout le groupe.
+  en: A melody that heals and purifies the whole group.
+  es: Una melodía que cura y purifica a todo el grupo.
+  de: Eine Melodie, die die ganze Gruppe heilt und reinigt.
+  ja: パーティー全員を癒やし、浄化する旋律。
 - fr: Hymne héroïque
+  en: Heroic Anthem
+  es: Himno heroico
+  de: Heldenhymne
+  ja: 英雄の讃歌
 - fr: Tout le groupe frappe plus fort, plus vite et plus juste.
+  en: The whole group hits harder, faster and truer.
+  es: Todo el grupo golpea más fuerte, más rápido y con más precisión.
+  de: Die ganze Gruppe schlägt härter, schneller und genauer zu.
+  ja: パーティー全員がより強く、速く、正確に攻撃する。
 - fr: Cri de la banshee
+  en: Banshee's Wail
+  es: Grito de la banshee
+  de: Schrei der Banshee
+  ja: バンシーの叫び
 - fr: "Une note insoutenable : dégâts et peur sur tous les ennemis."
+  en: "An unbearable note: damage and fear on all enemies."
+  es: "Una nota insoportable: daño y miedo sobre todos los enemigos."
+  de: "Ein unerträglicher Ton: Schaden und Furcht für alle Gegner."
+  ja: 耐えがたい音：敵全体にダメージと恐怖。
 - fr: Requiem
+  en: Requiem
+  es: Réquiem
+  de: Requiem
+  ja: レクイエム
 - fr: Un chant funèbre qui brise la volonté de tous les ennemis.
+  en: A funeral song that breaks the will of all enemies.
+  es: Un canto fúnebre que quiebra la voluntad de todos los enemigos.
+  de: Ein Trauergesang, der den Willen aller Gegner bricht.
+  ja: 敵全体の意志をくじく葬送の歌。
 - fr: Ultime — Symphonie du dernier acte
+  en: Ultimate — Symphony of the Final Act
+  es: Definitiva — Sinfonía del último acto
+  de: Ultimativ — Sinfonie des letzten Akts
+  ja: 奥義 — 終幕の交響曲
 - fr: "La dernière note emporte tout : le groupe est soigné, purifié et galvanisé comme jamais."
+  en: "The final note sweeps everything away: the group is healed, purified and roused as never before."
+  es: "La última nota lo arrastra todo: el grupo queda curado, purificado y enardecido como nunca."
+  de: "Der letzte Ton reißt alles mit: Die Gruppe wird geheilt, gereinigt und angespornt wie nie zuvor."
+  ja: 最後の一音がすべてを包む：パーティーはかつてないほど癒やされ、浄化され、奮い立つ。

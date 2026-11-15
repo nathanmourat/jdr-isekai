@@ -1,33 +1,157 @@
 # Textes de content/classes/lame-runique.yaml
 # Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
 - fr: Lame runique
+  en: Runeblade
+  es: Hoja rúnica
+  de: Runenklinge
+  ja: ルーンブレイド
 - fr: Dégâts (hybride)
+  en: Damage (hybrid)
+  es: Daño (híbrido)
+  de: Schaden (hybrid)
+  ja: 火力（複合）
 - fr: Un guerrier qui grave des runes sur sa lame en plein combat.
+  en: A warrior who carves runes on their blade in the heat of battle.
+  es: Un guerrero que graba runas en su hoja en pleno combate.
+  de: Ein Krieger, der mitten im Kampf Runen in seine Klinge ritzt.
+  ja: 戦いの最中に刃へルーンを刻む戦士。
 - fr: Runes gravées
+  en: Carved Runes
+  es: Runas grabadas
+  de: Eingeritzte Runen
+  ja: 刻印ルーン
 - fr: "Chaque attaque réussie ajoute une charge de rune (3 au maximum). La compétence suivante consomme les charges : +20 % de dégâts par charge."
+  en: "Each successful attack adds a rune charge (3 max). The next skill consumes the charges: +20% damage per charge."
+  es: "Cada ataque acertado añade una carga de runa (3 como máximo). La siguiente habilidad consume las cargas: +20 % de daño por carga."
+  de: "Jeder erfolgreiche Angriff fügt eine Runenladung hinzu (höchstens 3). Die nächste Fähigkeit verbraucht die Ladungen: +20 % Schaden pro Ladung."
+  ja: 攻撃が当たるたびにルーンのチャージ+1（最大3）。次のスキルでチャージを消費し、1つにつきダメージ+20%。
 - fr: Runes de guerre
+  en: War Runes
+  es: Runas de guerra
+  de: Kriegsrunen
+  ja: 戦のルーン
 - fr: Dégâts et enchaînements.
+  en: Damage and combos.
+  es: Daño y encadenamientos.
+  de: Schaden und Kombos.
+  ja: ダメージと連携。
 - fr: Runes de sceau
+  en: Seal Runes
+  es: Runas de sello
+  de: Siegelrunen
+  ja: 封印のルーン
 - fr: Affaiblissements et silence.
+  en: Debuffs and silence.
+  es: Debilitamientos y silencio.
+  de: Schwächungen und Stille.
+  ja: 弱体と沈黙。
 - fr: Lame des Mille Sceaux
+  en: Blade of a Thousand Seals
+  es: Hoja de los Mil Sellos
+  de: Klinge der Tausend Siegel
+  ja: 千の封印の刃
 - fr: Consomme toutes les charges et frappe tous les ennemis ; chaque charge ajoute un effet.
+  en: Consumes all charges and strikes all enemies; each charge adds an effect.
+  es: Consume todas las cargas y golpea a todos los enemigos; cada carga añade un efecto.
+  de: Verbraucht alle Ladungen und trifft alle Gegner; jede Ladung fügt einen Effekt hinzu.
+  ja: 全チャージを消費し敵全体を打つ。チャージごとに効果が加わる。
 - fr: Polyvalent, efficace contre les ennemis physiques comme magiques.
+  en: Versatile, effective against physical and magical enemies alike.
+  es: Polivalente, eficaz contra enemigos físicos y mágicos.
+  de: Vielseitig, wirksam gegen physische wie magische Gegner.
+  ja: 万能。物理の敵にも魔法の敵にも強い。
 - fr: "Lent à démarrer : il doit accumuler ses charges."
+  en: "Slow to get going: must build up charges."
+  es: "Lento al empezar: debe acumular sus cargas."
+  de: "Braucht Anlauf: Er muss erst Ladungen sammeln."
+  ja: 立ち上がりが遅い。チャージを溜める必要がある。
 - fr: Entaille runique
+  en: Runic Slash
+  es: Tajo rúnico
+  de: Runenschnitt
+  ja: ルーン斬り
 - fr: "Une entaille qui libère l'énergie des runes : dégâts physiques et arcaniques."
+  en: "A slash that releases the runes' energy: physical and arcane damage."
+  es: "Un tajo que libera la energía de las runas: daño físico y arcano."
+  de: "Ein Schnitt, der die Energie der Runen freisetzt: physischer und arkaner Schaden."
+  ja: ルーンの力を解き放つ斬撃：物理と秘術のダメージ。
 - fr: Rune de garde
+  en: Guard Rune
+  es: Runa de guardia
+  de: Schutzrune
+  ja: 守りのルーン
 - fr: "Grave une rune protectrice : bouclier de 20 % des PV et +1 charge."
+  en: "Carves a protective rune: shield of 20% of HP and +1 charge."
+  es: "Graba una runa protectora: escudo del 20 % de los PV y +1 carga."
+  de: "Ritzt eine Schutzrune: Schild von 20 % der LP und +1 Ladung."
+  ja: 守りのルーンを刻む：HPの20%の盾とチャージ+1。
 - fr: Frappe écarlate
+  en: Scarlet Strike
+  es: Golpe escarlata
+  de: Scharlachhieb
+  ja: 緋の一撃
 - fr: Un coup puissant porté par les runes de guerre.
+  en: A powerful blow carried by the war runes.
+  es: Un golpe potente impulsado por las runas de guerra.
+  de: Ein kraftvoller Hieb, getragen von den Kriegsrunen.
+  ja: 戦のルーンが乗った強烈な一撃。
 - fr: Sceau de silence
+  en: Seal of Silence
+  es: Sello de silencio
+  de: Siegel der Stille
+  ja: 沈黙の封印
 - fr: Appose un sceau qui peut réduire l'ennemi au silence pendant 2 tours.
+  en: Places a seal that can silence the enemy for 2 turns.
+  es: Coloca un sello que puede silenciar al enemigo durante 2 turnos.
+  de: Setzt ein Siegel, das den Gegner 2 Runden lang verstummen lassen kann.
+  ja: 敵を2ターン沈黙させることがある封印を施す。
 - fr: Rune d'embrasement
+  en: Blaze Rune
+  es: Runa de abrasamiento
+  de: Brandrune
+  ja: 炎上のルーン
 - fr: "Grave une rune de feu sur la lame : un coup brûlant qui peut embraser la cible."
+  en: "Carves a fire rune on the blade: a burning blow that can set the target ablaze."
+  es: "Graba una runa de fuego en la hoja: un golpe ardiente que puede incendiar al objetivo."
+  de: "Ritzt eine Feuerrune in die Klinge: ein brennender Hieb, der das Ziel entzünden kann."
+  ja: 刃に炎のルーンを刻む：対象を燃やすこともある灼熱の一撃。
 - fr: Tempête de lames
+  en: Storm of Blades
+  es: Tormenta de hojas
+  de: Klingensturm
+  ja: 刃の嵐
 - fr: "Les runes se détachent de la lame et tournoient : frappe tous les ennemis."
+  en: "The runes break away from the blade and whirl: strikes all enemies."
+  es: "Las runas se desprenden de la hoja y giran: golpea a todos los enemigos."
+  de: "Die Runen lösen sich von der Klinge und wirbeln umher: trifft alle Gegner."
+  ja: ルーンが刃から離れて渦を巻き、敵全体を打つ。
 - fr: Sceau d'entrave
+  en: Seal of Binding
+  es: Sello de traba
+  de: Fesselsiegel
+  ja: 束縛の封印
 - fr: Un sceau qui cloue l'ennemi au sol et l'affaiblit.
+  en: A seal that pins the enemy to the ground and weakens them.
+  es: Un sello que clava al enemigo al suelo y lo debilita.
+  de: Ein Siegel, das den Gegner am Boden festnagelt und schwächt.
+  ja: 敵を地に縫いとめ、弱らせる封印。
 - fr: Grand sceau de rupture
+  en: Great Seal of Rupture
+  es: Gran sello de ruptura
+  de: Großes Bruchsiegel
+  ja: 大いなる破断の封印
 - fr: "Brise les protections de tous les ennemis : dégâts arcaniques et défense réduite."
+  en: "Breaks the protections of all enemies: arcane damage and reduced defence."
+  es: "Rompe las protecciones de todos los enemigos: daño arcano y defensa reducida."
+  de: "Bricht die Schutzzauber aller Gegner: arkaner Schaden und verringerte Verteidigung."
+  ja: 敵全体の守りを砕く：秘術ダメージと防御低下。
 - fr: Ultime — Lame des Mille Sceaux
+  en: Ultimate — Blade of a Thousand Seals
+  es: Definitiva — Hoja de los Mil Sellos
+  de: Ultimativ — Klinge der Tausend Siegel
+  ja: 奥義 — 千の封印の刃
 - fr: Consomme toutes les charges de rune et frappe tous les ennemis, plus fort à chaque charge, en les réduisant au silence.
+  en: Consumes all rune charges and strikes all enemies, harder with each charge, silencing them.
+  es: Consume todas las cargas de runa y golpea a todos los enemigos, más fuerte con cada carga, silenciándolos.
+  de: Verbraucht alle Runenladungen und trifft alle Gegner, mit jeder Ladung stärker, und lässt sie verstummen.
+  ja: ルーンのチャージをすべて消費し、チャージごとに強く敵全体を打ち、沈黙させる。

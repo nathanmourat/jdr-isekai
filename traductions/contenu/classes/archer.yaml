@@ -1,33 +1,157 @@
 # Textes de content/classes/archer.yaml
 # Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
 - fr: Archer spirituel
+  en: Spirit Archer
+  es: Arquero espiritual
+  de: Geisterschütze
+  ja: 精霊の射手
 - fr: Dégâts (distance)
+  en: Damage (ranged)
+  es: Daño (distancia)
+  de: Schaden (Fernkampf)
+  ja: 火力（遠距離）
 - fr: Ses flèches portent les esprits des ancêtres.
+  en: Their arrows carry the spirits of the ancestors.
+  es: Sus flechas llevan los espíritus de los antepasados.
+  de: Seine Pfeile tragen die Geister der Ahnen.
+  ja: 矢に祖霊を宿す。
 - fr: Œil du faucon
+  en: Hawk Eye
+  es: Ojo de halcón
+  de: Falkenauge
+  ja: 鷹の目
 - fr: Ses attaques simples ont 30 % de chances de marquer la cible ; les cibles marquées subissent +15 % de dégâts de tout le groupe.
+  en: Basic attacks have a 30% chance to mark the target; marked targets take +15% damage from the whole group.
+  es: Sus ataques básicos tienen un 30 % de probabilidad de marcar al objetivo; los objetivos marcados reciben +15 % de daño de todo el grupo.
+  de: Einfache Angriffe markieren das Ziel mit 30 % Chance; markierte Ziele erleiden +15 % Schaden von der ganzen Gruppe.
+  ja: 通常攻撃が30%の確率で対象をマークする。マークされた対象はパーティー全員から+15%のダメージを受ける。
 - fr: Tireur d'élite
+  en: Sharpshooter
+  es: Tirador de élite
+  de: Scharfschütze
+  ja: 狙撃手
 - fr: Une cible, perforation.
+  en: Single target, piercing.
+  es: Un objetivo, perforación.
+  de: Ein Ziel, durchschlagend.
+  ja: 単体、貫通。
 - fr: Chaman des vents
+  en: Wind Shaman
+  es: Chamán de los vientos
+  de: Windschamane
+  ja: 風のシャーマン
 - fr: Esprits et soutien léger.
+  en: Spirits and light support.
+  es: Espíritus y apoyo ligero.
+  de: Geister und leichte Unterstützung.
+  ja: 精霊と軽い支援。
 - fr: Pluie des Ancêtres
+  en: Rain of the Ancestors
+  es: Lluvia de los Antepasados
+  de: Regen der Ahnen
+  ja: 祖霊の雨
 - fr: Pendant 2 tours, une pluie de flèches frappe tous les ennemis à chaque début de tour.
+  en: For 2 turns, a rain of arrows strikes all enemies at the start of each turn.
+  es: Durante 2 turnos, una lluvia de flechas golpea a todos los enemigos al comienzo de cada turno.
+  de: 2 Runden lang trifft zu Beginn jeder Runde ein Pfeilregen alle Gegner.
+  ja: 2ターンの間、毎ターン開始時に矢の雨が敵全体を打つ。
 - fr: Dégâts réguliers et fiables, depuis la deuxième ligne.
+  en: Steady, reliable damage from the second line.
+  es: Daño constante y fiable desde la segunda línea.
+  de: Gleichmäßiger, zuverlässiger Schaden aus der zweiten Reihe.
+  ja: 後列から安定して確実なダメージ。
 - fr: Fragile au contact ; peu d'outils défensifs.
+  en: Fragile up close; few defensive tools.
+  es: Frágil en el cuerpo a cuerpo; pocas herramientas defensivas.
+  de: Im Nahkampf zerbrechlich; wenige Verteidigungsmittel.
+  ja: 接近戦に弱く、守りの手段が少ない。
 - fr: Flèche marquante
+  en: Marking Arrow
+  es: Flecha marcadora
+  de: Markierender Pfeil
+  ja: 標的の矢
 - fr: Dégâts et marque (+15 % de dégâts subis pendant 3 tours).
+  en: Damage and mark (+15% damage taken for 3 turns).
+  es: Daño y marca (+15 % de daño recibido durante 3 turnos).
+  de: Schaden und Markierung (+15 % erlittener Schaden für 3 Runden).
+  ja: ダメージとマーク（3ターンの間、被ダメージ+15%）。
 - fr: Volée d'esprits
+  en: Spirit Volley
+  es: Andanada de espíritus
+  de: Geistersalve
+  ja: 精霊の斉射
 - fr: 3 flèches spirituelles sur des cibles au hasard.
+  en: 3 spirit arrows on random targets.
+  es: 3 flechas espirituales sobre objetivos al azar.
+  de: 3 Geisterpfeile auf zufällige Ziele.
+  ja: ランダムな対象に精霊の矢を3本。
 - fr: Tir perforant
+  en: Piercing Shot
+  es: Disparo perforante
+  de: Durchschlagender Schuss
+  ja: 貫通射撃
 - fr: Une flèche qui traverse les armures.
+  en: An arrow that goes through armour.
+  es: Una flecha que atraviesa las armaduras.
+  de: Ein Pfeil, der Rüstungen durchschlägt.
+  ja: 鎧を貫く矢。
 - fr: Souffle des ancêtres
+  en: Breath of the Ancestors
+  es: Aliento de los antepasados
+  de: Atem der Ahnen
+  ja: 祖霊の息吹
 - fr: Soigne un peu tout le groupe et le rend plus rapide.
+  en: Heals the whole group a little and makes it faster.
+  es: Cura un poco a todo el grupo y lo hace más rápido.
+  de: Heilt die ganze Gruppe ein wenig und macht sie schneller.
+  ja: パーティー全員を少し回復し、素早くする。
 - fr: Tir du faucon
+  en: Hawk Shot
+  es: Disparo del halcón
+  de: Falkenschuss
+  ja: 鷹の一矢
 - fr: "Une flèche guidée par l'esprit du faucon : critique assuré."
+  en: "An arrow guided by the hawk's spirit: guaranteed critical."
+  es: "Una flecha guiada por el espíritu del halcón: crítico asegurado."
+  de: "Ein vom Falkengeist gelenkter Pfeil: garantiert kritisch."
+  ja: 鷹の霊に導かれた矢：確定クリティカル。
 - fr: Flèche de l'oubli
+  en: Arrow of Oblivion
+  es: Flecha del olvido
+  de: Pfeil des Vergessens
+  ja: 忘却の矢
 - fr: Une flèche qui traverse la cible et la marque pour tout le groupe.
+  en: An arrow that goes through the target and marks it for the whole group.
+  es: Una flecha que atraviesa al objetivo y lo marca para todo el grupo.
+  de: Ein Pfeil, der das Ziel durchdringt und es für die ganze Gruppe markiert.
+  ja: 対象を貫き、パーティー全員のためにマークする矢。
 - fr: Vent guérisseur
+  en: Healing Wind
+  es: Viento sanador
+  de: Heilender Wind
+  ja: 癒やしの風
 - fr: Le vent des ancêtres soigne tout le groupe.
+  en: The ancestors' wind heals the whole group.
+  es: El viento de los antepasados cura a todo el grupo.
+  de: Der Wind der Ahnen heilt die ganze Gruppe.
+  ja: 祖霊の風がパーティー全員を癒やす。
 - fr: Tornade d'esprits
+  en: Spirit Tornado
+  es: Tornado de espíritus
+  de: Geistertornado
+  ja: 精霊の竜巻
 - fr: Une tornade d'esprits frappe tous les ennemis à plusieurs reprises.
+  en: A tornado of spirits strikes all enemies several times.
+  es: Un tornado de espíritus golpea a todos los enemigos varias veces.
+  de: Ein Geistertornado trifft alle Gegner mehrmals.
+  ja: 精霊の竜巻が敵全体を何度も打つ。
 - fr: Ultime — Pluie des Ancêtres
+  en: Ultimate — Rain of the Ancestors
+  es: Definitiva — Lluvia de los Antepasados
+  de: Ultimativ — Regen der Ahnen
+  ja: 奥義 — 祖霊の雨
 - fr: Une pluie de flèches d'esprit s'abat sur tous les ennemis, encore et encore.
+  en: A rain of spirit arrows falls on all enemies, again and again.
+  es: Una lluvia de flechas espirituales cae sobre todos los enemigos, una y otra vez.
+  de: Ein Regen aus Geisterpfeilen fällt immer wieder auf alle Gegner.
+  ja: 精霊の矢の雨が、敵全体に何度も降りそそぐ。

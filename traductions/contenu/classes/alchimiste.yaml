@@ -1,33 +1,157 @@
 # Textes de content/classes/alchimiste.yaml
 # Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
 - fr: Alchimiste-artificier
+  en: Alchemist-Artificer
+  es: Alquimista artificiero
+  de: Alchemist-Tüftler
+  ja: 錬金術師
 - fr: Soutien / contrôle
+  en: Support / control
+  es: Apoyo / control
+  de: Unterstützung / Kontrolle
+  ja: 支援／妨害
 - fr: "Bombes, fioles et machines : la science au service de l'aventure."
+  en: "Bombs, vials and machines: science in the service of adventure."
+  es: "Bombas, frascos y máquinas: la ciencia al servicio de la aventura."
+  de: "Bomben, Phiolen und Maschinen: die Wissenschaft im Dienst des Abenteuers."
+  ja: 爆弾、薬瓶、機械。冒険に役立つ科学。
 - fr: Fioles optimisées
+  en: Optimized Vials
+  es: Frascos optimizados
+  de: Optimierte Phiolen
+  ja: 改良薬瓶
 - fr: "Ses objets sont 40 % plus efficaces, avec 25 % de chances de ne pas être consommés. "
+  en: Their items are 40% more effective, with a 25% chance not to be used up.
+  es: Sus objetos son un 40 % más eficaces, con un 25 % de probabilidad de no gastarse.
+  de: Seine Gegenstände sind 40 % wirksamer und werden mit 25 % Chance nicht verbraucht.
+  ja: アイテムの効果が40%上がり、25%の確率で消費しない。
 - fr: Grenadier
+  en: Grenadier
+  es: Granadero
+  de: Grenadier
+  ja: 擲弾兵
 - fr: Bombes et dégâts de zone.
+  en: Bombs and area damage.
+  es: Bombas y daño de área.
+  de: Bomben und Flächenschaden.
+  ja: 爆弾と範囲攻撃。
 - fr: Mécaniste
+  en: Mechanist
+  es: Mecanista
+  de: Mechanist
+  ja: 機工士
 - fr: Tourelles et élixirs.
+  en: Turrets and elixirs.
+  es: Torretas y elixires.
+  de: Geschütztürme und Elixiere.
+  ja: 砲台と霊薬。
 - fr: Golem d'airain
+  en: Brass Golem
+  es: Gólem de bronce
+  de: Messinggolem
+  ja: 真鍮のゴーレム
 - fr: Se protège dans une armure-golem pendant 3 tours, avec des compétences améliorées.
+  en: Shelters in a golem armour for 3 turns, with upgraded skills.
+  es: Se protege en una armadura-gólem durante 3 turnos, con habilidades mejoradas.
+  de: Schützt sich 3 Runden lang in einer Golemrüstung, mit verbesserten Fähigkeiten.
+  ja: 3ターンの間ゴーレムの鎧をまとい、スキルが強化される。
 - fr: Très polyvalent ; le meilleur artisan hors combat.
+  en: Very versatile; the best crafter out of combat.
+  es: Muy polivalente; el mejor artesano fuera de combate.
+  de: Sehr vielseitig; der beste Handwerker außerhalb des Kampfes.
+  ja: 非常に万能。戦闘外では最高の職人。
 - fr: Dépend de ses ressources, qu'il doit fabriquer entre les quêtes.
+  en: Depends on resources, which must be crafted between quests.
+  es: Depende de sus recursos, que debe fabricar entre misiones.
+  de: Hängt von seinen Vorräten ab, die er zwischen den Quests herstellen muss.
+  ja: クエストの合間に作る資源に頼る。
 - fr: Bombe collante
+  en: Sticky Bomb
+  es: Bomba pegajosa
+  de: Klebebombe
+  ja: 粘着爆弾
 - fr: Dégâts de feu et immobilisation (l'ennemi peut perdre son prochain tour).
+  en: Fire damage and immobilization (the enemy may lose their next turn).
+  es: Daño de fuego e inmovilización (el enemigo puede perder su próximo turno).
+  de: Feuerschaden und Bewegungsunfähigkeit (der Gegner kann seine nächste Runde verlieren).
+  ja: 炎ダメージと拘束（敵は次のターンを失うことがある）。
 - fr: Tourelle mécanique
+  en: Mechanical Turret
+  es: Torreta mecánica
+  de: Mechanischer Geschützturm
+  ja: 機械砲台
 - fr: Pose une tourelle qui tire pendant 3 tours.
+  en: Sets up a turret that fires for 3 turns.
+  es: Coloca una torreta que dispara durante 3 turnos.
+  de: Stellt einen Geschützturm auf, der 3 Runden lang feuert.
+  ja: 3ターン射撃する砲台を設置する。
 - fr: Grenade incendiaire
+  en: Incendiary Grenade
+  es: Granada incendiaria
+  de: Brandgranate
+  ja: 焼夷手榴弾
 - fr: Dégâts de feu sur tous les ennemis, avec brûlure.
+  en: Fire damage to all enemies, with burning.
+  es: Daño de fuego a todos los enemigos, con quemadura.
+  de: Feuerschaden an allen Gegnern, mit Verbrennung.
+  ja: 敵全体に炎ダメージと火傷。
 - fr: Élixir de combat
+  en: Combat Elixir
+  es: Elixir de combate
+  de: Kampfelixier
+  ja: 戦闘の霊薬
 - fr: +30 % de dégâts pendant 3 tours et un petit soin.
+  en: +30% damage for 3 turns and a small heal.
+  es: +30 % de daño durante 3 turnos y una pequeña curación.
+  de: +30 % Schaden für 3 Runden und eine kleine Heilung.
+  ja: 3ターンの間ダメージ+30%、少し回復。
 - fr: Bombe à fragmentation
+  en: Fragmentation Bomb
+  es: Bomba de fragmentación
+  de: Splitterbombe
+  ja: 破片爆弾
 - fr: Des éclats de métal sur tous les ennemis.
+  en: Shards of metal on all enemies.
+  es: Esquirlas de metal sobre todos los enemigos.
+  de: Metallsplitter auf alle Gegner.
+  ja: 敵全体に金属片を浴びせる。
 - fr: Feu grégeois
+  en: Greek Fire
+  es: Fuego griego
+  de: Griechisches Feuer
+  ja: ギリシア火
 - fr: "Un liquide qui brûle même sur l'eau : tous les ennemis s'embrasent."
+  en: "A liquid that burns even on water: all enemies catch fire."
+  es: "Un líquido que arde incluso sobre el agua: todos los enemigos se incendian."
+  de: "Eine Flüssigkeit, die sogar auf Wasser brennt: Alle Gegner gehen in Flammen auf."
+  ja: 水の上でも燃える液体。敵全体が炎上する。
 - fr: Tourelle améliorée
+  en: Improved Turret
+  es: Torreta mejorada
+  de: Verbesserter Geschützturm
+  ja: 改良砲台
 - fr: Deux tourelles pour 4 tours.
+  en: Two turrets for 4 turns.
+  es: Dos torretas durante 4 turnos.
+  de: Zwei Geschütztürme für 4 Runden.
+  ja: 4ターンの間、砲台2基。
 - fr: Nuée de drones
+  en: Drone Swarm
+  es: Enjambre de drones
+  de: Drohnenschwarm
+  ja: ドローンの群れ
 - fr: De petits automates soignent le groupe et le protègent.
+  en: Small automatons heal and protect the group.
+  es: Pequeños autómatas curan al grupo y lo protegen.
+  de: Kleine Automaten heilen und schützen die Gruppe.
+  ja: 小さな自動人形がパーティーを癒やし、守る。
 - fr: Ultime — Golem d'airain
+  en: Ultimate — Brass Golem
+  es: Definitiva — Gólem de bronce
+  de: Ultimativ — Messinggolem
+  ja: 奥義 — 真鍮のゴーレム
 - fr: "Se glisse dans une armure-golem : énorme protection, dégâts augmentés et salve de canons sur tous les ennemis."
+  en: "Slips into a golem armour: huge protection, increased damage and a cannon volley on all enemies."
+  es: "Se mete en una armadura-gólem: enorme protección, daño aumentado y salva de cañones sobre todos los enemigos."
+  de: "Schlüpft in eine Golemrüstung: riesiger Schutz, mehr Schaden und eine Kanonensalve auf alle Gegner."
+  ja: ゴーレムの鎧をまとう：強大な守り、ダメージ上昇、敵全体への砲撃。

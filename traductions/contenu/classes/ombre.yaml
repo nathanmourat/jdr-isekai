@@ -1,33 +1,157 @@
 # Textes de content/classes/ombre.yaml
 # Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
 - fr: Ombre
+  en: Shadow
+  es: Sombra
+  de: Schatten
+  ja: シャドウ
 - fr: Dégâts (cible unique)
+  en: Damage (single target)
+  es: Daño (objetivo único)
+  de: Schaden (Einzelziel)
+  ja: 火力（単体）
 - fr: Un assassin qui frappe là où l'ennemi ne regarde pas.
+  en: An assassin who strikes where the enemy isn't looking.
+  es: Un asesino que golpea donde el enemigo no mira.
+  de: Ein Assassine, der dort zuschlägt, wo der Gegner nicht hinsieht.
+  ja: 敵の目が届かぬところを突く暗殺者。
 - fr: Dans le dos
+  en: In the Back
+  es: Por la espalda
+  de: In den Rücken
+  ja: 背後から
 - fr: +35 % de chances de critique contre une cible affaiblie ou qui ne l'attaque pas.
+  en: +35% critical chance against a weakened target or one not attacking them.
+  es: +35 % de probabilidad de crítico contra un objetivo debilitado o que no le ataca.
+  de: +35 % Krit-Chance gegen ein geschwächtes Ziel oder eines, das ihn nicht angreift.
+  ja: 弱った敵や自分を狙っていない敵へのクリティカル率+35%。
 - fr: Assassinat
+  en: Assassination
+  es: Asesinato
+  de: Meuchelmord
+  ja: 暗殺
 - fr: Critiques et exécutions.
+  en: Criticals and executions.
+  es: Críticos y ejecuciones.
+  de: Kritische Treffer und Hinrichtungen.
+  ja: クリティカルととどめ。
 - fr: Toxines
+  en: Toxins
+  es: Toxinas
+  de: Toxine
+  ja: 毒物
 - fr: Poisons et affaiblissements.
+  en: Poisons and debuffs.
+  es: Venenos y debilitamientos.
+  de: Gifte und Schwächungen.
+  ja: 毒と弱体。
 - fr: Mille Coupures
+  en: Thousand Cuts
+  es: Mil Cortes
+  de: Tausend Schnitte
+  ja: 千の斬撃
 - fr: 6 frappes réparties sur les ennemis, chacune avec une chance de critique.
+  en: 6 strikes spread over the enemies, each with a chance to crit.
+  es: 6 golpes repartidos entre los enemigos, cada uno con probabilidad de crítico.
+  de: 6 Hiebe, auf die Gegner verteilt, jeder mit Krit-Chance.
+  ja: 敵に6回の攻撃を振り分ける。それぞれクリティカルの可能性あり。
 - fr: Élimine une cible prioritaire en un ou deux tours.
+  en: Takes out a priority target in one or two turns.
+  es: Elimina a un objetivo prioritario en uno o dos turnos.
+  de: Schaltet ein vorrangiges Ziel in ein oder zwei Runden aus.
+  ja: 優先目標を1〜2ターンで仕留める。
 - fr: Peu de PV ; faible contre les groupes nombreux.
+  en: Few HP; weak against large groups.
+  es: Pocos PV; débil contra grupos numerosos.
+  de: Wenig LP; schwach gegen große Gruppen.
+  ja: HPが低く、大人数の敵に弱い。
 - fr: Pas d'ombre
+  en: Shadow Step
+  es: Paso de sombra
+  de: Schattenschritt
+  ja: 影歩き
 - fr: Devient invisible pendant 1 tour ; la prochaine attaque est un critique garanti.
+  en: Becomes invisible for 1 turn; the next attack is a guaranteed critical.
+  es: Se vuelve invisible durante 1 turno; el próximo ataque es un crítico garantizado.
+  de: Wird 1 Runde lang unsichtbar; der nächste Angriff ist garantiert kritisch.
+  ja: 1ターン透明になり、次の攻撃は確定クリティカル。
 - fr: Lame empoisonnée
+  en: Poisoned Blade
+  es: Hoja envenenada
+  de: Vergiftete Klinge
+  ja: 毒刃
 - fr: Une entaille qui empoisonne (cumulable 3 fois).
+  en: A slash that poisons (stacks up to 3 times).
+  es: Un tajo que envenena (acumulable 3 veces).
+  de: Ein Schnitt, der vergiftet (bis zu 3-mal stapelbar).
+  ja: 毒を与える斬撃（3回まで重複）。
 - fr: Coup de grâce
+  en: Coup de Grâce
+  es: Golpe de gracia
+  de: Gnadenstoß
+  ja: とどめの一撃
 - fr: Double dégâts contre une cible sous 25 % de PV.
+  en: Double damage against a target below 25% HP.
+  es: Daño doble contra un objetivo por debajo del 25 % de PV.
+  de: Doppelter Schaden gegen ein Ziel unter 25 % LP.
+  ja: HP25%未満の対象にダメージ2倍。
 - fr: Nuage toxique
+  en: Toxic Cloud
+  es: Nube tóxica
+  de: Giftwolke
+  ja: 毒の雲
 - fr: Empoisonne tous les ennemis.
+  en: Poisons all enemies.
+  es: Envenena a todos los enemigos.
+  de: Vergiftet alle Gegner.
+  ja: 敵全体を毒にする。
 - fr: Danse des lames
+  en: Dance of Blades
+  es: Danza de hojas
+  de: Klingentanz
+  ja: 刃の舞
 - fr: Trois frappes rapides sur la même cible.
+  en: Three quick strikes on the same target.
+  es: Tres golpes rápidos sobre el mismo objetivo.
+  de: Drei schnelle Hiebe auf dasselbe Ziel.
+  ja: 同じ対象に素早い3連撃。
 - fr: Exécution silencieuse
+  en: Silent Execution
+  es: Ejecución silenciosa
+  de: Lautlose Hinrichtung
+  ja: 静かなる処刑
 - fr: Un coup mortel, toujours critique, qui achève une cible affaiblie.
+  en: A deadly blow, always critical, that finishes off a weakened target.
+  es: Un golpe mortal, siempre crítico, que remata a un objetivo debilitado.
+  de: Ein tödlicher Hieb, immer kritisch, der ein geschwächtes Ziel erledigt.
+  ja: 必ずクリティカルになる致命の一撃で、弱った対象を仕留める。
 - fr: Venin paralysant
+  en: Paralysing Venom
+  es: Veneno paralizante
+  de: Lähmendes Gift
+  ja: 麻痺毒
 - fr: Un poison qui engourdit les muscles.
+  en: A poison that numbs the muscles.
+  es: Un veneno que entumece los músculos.
+  de: Ein Gift, das die Muskeln betäubt.
+  ja: 筋肉をしびれさせる毒。
 - fr: Peste noire
+  en: Black Plague
+  es: Peste negra
+  de: Schwarze Pest
+  ja: 黒死病
 - fr: Un nuage de toxines sur tous les ennemis, qui s'affaiblissent.
+  en: A cloud of toxins on all enemies, who are weakened.
+  es: Una nube de toxinas sobre todos los enemigos, que se debilitan.
+  de: Eine Toxinwolke über allen Gegnern, die geschwächt werden.
+  ja: 敵全体を毒の雲が包み、弱らせる。
 - fr: Ultime — Mille Coupures
+  en: Ultimate — Thousand Cuts
+  es: Definitiva — Mil Cortes
+  de: Ultimativ — Tausend Schnitte
+  ja: 奥義 — 千の斬撃
 - fr: "L'Ombre disparaît et frappe partout à la fois : six coups sur les ennemis, chacun avec une chance de critique."
+  en: "The Shadow vanishes and strikes everywhere at once: six blows on the enemies, each with a chance to crit."
+  es: "La Sombra desaparece y golpea en todas partes a la vez: seis golpes sobre los enemigos, cada uno con probabilidad de crítico."
+  de: "Der Schatten verschwindet und schlägt überall zugleich zu: sechs Hiebe auf die Gegner, jeder mit Krit-Chance."
+  ja: シャドウが消え、あらゆる場所を同時に斬る：敵に6回の攻撃、それぞれクリティカルの可能性あり。

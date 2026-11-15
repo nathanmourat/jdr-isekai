@@ -1,50 +1,242 @@
 # Textes de content/campagne/saison-1/prologue.yaml
 # Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
 - fr: Prologue — Les souvenirs d'avant (6 ans, 1000 AV)
+  en: Prologue — Memories from Before (age 6, 1000 AV)
+  es: Prólogo — Los recuerdos de antes (6 años, 1000 AV)
+  de: Prolog — Erinnerungen von früher (6 Jahre, 1000 AV)
+  ja: プロローグ — 前世の記憶（6歳、AV1000年）
 - fr: "Tu as six ans. Ce matin, en regardant ton reflet dans une flaque, une vague d'images te submerge : des rues éclairées la nuit, des écrans, un nom qui n'est pas le tien… une autre vie, terminée trop tôt."
+  en: "You are six years old. This morning, looking at your reflection in a puddle, a wave of images washes over you: streets lit at night, screens, a name that isn't yours… another life, ended too soon."
+  es: "Tienes seis años. Esta mañana, al mirar tu reflejo en un charco, te invade una oleada de imágenes: calles iluminadas de noche, pantallas, un nombre que no es el tuyo… otra vida, terminada demasiado pronto."
+  de: "Du bist sechs Jahre alt. Heute Morgen, als du dein Spiegelbild in einer Pfütze betrachtest, überflutet dich eine Welle von Bildern: nachts beleuchtete Straßen, Bildschirme, ein Name, der nicht deiner ist … ein anderes Leben, zu früh zu Ende."
+  ja: きみは六歳。今朝、水たまりに映る自分を見たとたん、映像の波が押し寄せた。夜を照らす街、画面、自分のものではない名前……早すぎた別の人生。
 - fr: Tu comprends, avec une clarté effrayante, que tu as déjà vécu. Et que ce monde-ci n'est pas le même.
+  en: You understand, with frightening clarity, that you have lived before. And that this world is not the same one.
+  es: Comprendes, con una claridad aterradora, que ya has vivido. Y que este mundo no es el mismo.
+  de: Mit erschreckender Klarheit begreifst du, dass du schon einmal gelebt hast. Und dass diese Welt nicht dieselbe ist.
+  ja: 恐ろしいほどはっきりとわかる。自分はすでに一度生きていた。そして、この世界はあの世界ではない。
 - fr: "Mais d'abord : où as-tu grandi, dans cette nouvelle vie ?"
+  en: "But first: where did you grow up, in this new life?"
+  es: "Pero primero: ¿dónde creciste, en esta nueva vida?"
+  de: "Aber zuerst: Wo bist du in diesem neuen Leben aufgewachsen?"
+  ja: でもまずは——この新しい人生で、きみはどこで育ったのだろう？
 - fr: Dans une ferme près de la Combe-aux-Saules. Des champs de blé à perte de vue.
+  en: On a farm near Combe-aux-Saules. Wheat fields as far as the eye can see.
+  es: En una granja cerca de Combe-aux-Saules. Campos de trigo hasta perderse de vista.
+  de: Auf einem Hof nahe Combe-aux-Saules. Weizenfelder, so weit das Auge reicht.
+  ja: コンブ＝オ＝ソール近くの農場。見渡す限りの麦畑。
 - fr: "{heros} grandit dans une ferme d'Aubeclaire."
+  en: "{heros} grows up on a farm in Aubeclaire."
+  es: "{heros} crece en una granja de Aubeclaire."
+  de: "{heros} wächst auf einem Hof in Aubeclaire auf."
+  ja: "{heros}はオーブクレールの農場で育つ。"
 - fr: Dans le manoir d'une petite famille noble, entre précepteurs et étiquette.
+  en: In the manor of a minor noble family, between tutors and etiquette.
+  es: En la mansión de una pequeña familia noble, entre preceptores y etiqueta.
+  de: Im Herrenhaus einer kleinen Adelsfamilie, zwischen Hauslehrern und Etikette.
+  ja: 小貴族の館。家庭教師と礼儀作法に囲まれて。
 - fr: "{heros} grandit dans un manoir de petite noblesse."
+  en: "{heros} grows up in a minor noble's manor."
+  es: "{heros} crece en una mansión de la pequeña nobleza."
+  de: "{heros} wächst im Herrenhaus eines kleinen Adelsgeschlechts auf."
+  ja: "{heros}は小貴族の館で育つ。"
 - fr: À l'orphelinat de l'Ordre, sous les cloches de la chapelle blanche.
+  en: At the Order's orphanage, under the bells of the white chapel.
+  es: En el orfanato de la Orden, bajo las campanas de la capilla blanca.
+  de: Im Waisenhaus des Ordens, unter den Glocken der weißen Kapelle.
+  ja: 白い礼拝堂の鐘の下、教団の孤児院。
 - fr: "{heros} grandit à l'orphelinat de l'Ordre."
+  en: "{heros} grows up at the Order's orphanage."
+  es: "{heros} crece en el orfanato de la Orden."
+  de: "{heros} wächst im Waisenhaus des Ordens auf."
+  ja: "{heros}は教団の孤児院で育つ。"
 - fr: Dans l'arrière-boutique encombrée d'un marchand ambulant.
+  en: In the cluttered back room of a travelling merchant.
+  es: En la trastienda abarrotada de un mercader ambulante.
+  de: Im vollgestopften Hinterzimmer eines fahrenden Händlers.
+  ja: 行商人の散らかった店の奥。
 - fr: "{heros} grandit parmi les caisses d'un marchand."
+  en: "{heros} grows up among a merchant's crates."
+  es: "{heros} crece entre las cajas de un mercader."
+  de: "{heros} wächst zwischen den Kisten eines Händlers auf."
+  ja: "{heros}は商人の木箱に囲まれて育つ。"
 - fr: La ferme sent le foin et le pain chaud. Ta mère d'ici chante faux, ton père d'ici rit fort. Tu décides de garder ton secret… pour l'instant.
+  en: The farm smells of hay and warm bread. Your mother here sings off-key, your father here laughs loudly. You decide to keep your secret… for now.
+  es: La granja huele a heno y a pan caliente. Tu madre de aquí canta desafinado, tu padre de aquí ríe fuerte. Decides guardar tu secreto… por ahora.
+  de: Der Hof riecht nach Heu und warmem Brot. Deine Mutter hier singt schief, dein Vater hier lacht laut. Du beschließt, dein Geheimnis zu bewahren … vorerst.
+  ja: 農場は干し草と焼きたてのパンの匂い。こちらの母は音痴で、こちらの父は大声で笑う。きみは秘密を守ることにした……今のところは。
 - fr: Les couloirs du manoir résonnent de leçons de maintien. Ton précepteur trouve que tu poses « de bien étranges questions » sur l'électricité.
+  en: The manor's halls echo with lessons in deportment. Your tutor finds you ask “very strange questions” about electricity.
+  es: Los pasillos de la mansión resuenan con lecciones de compostura. Tu preceptor opina que haces «preguntas muy extrañas» sobre la electricidad.
+  de: In den Gängen des Herrenhauses hallen Benimmstunden wider. Dein Hauslehrer findet, dass du „sehr seltsame Fragen“ über Elektrizität stellst.
+  ja: 館の廊下には礼儀作法の授業が響く。家庭教師は、きみが電気について「実に奇妙な質問」をすると思っている。
 - fr: Les sœurs sont strictes mais justes. Tu apprends vite à lire — trop vite, murmure-t-on. Une prêtresse note ton nom dans un registre.
+  en: The sisters are strict but fair. You learn to read quickly — too quickly, people whisper. A priestess writes your name in a register.
+  es: Las hermanas son estrictas pero justas. Aprendes a leer rápido —demasiado rápido, se murmura—. Una sacerdotisa anota tu nombre en un registro.
+  de: Die Schwestern sind streng, aber gerecht. Du lernst schnell lesen — zu schnell, flüstert man. Eine Priesterin trägt deinen Namen in ein Register ein.
+  ja: 修道女たちは厳しいが公平だ。きみはすぐに読み書きを覚えた——早すぎる、とささやかれるほどに。ある女神官が、きみの名を帳面に書きとめる。
 - fr: Entre les épices et les tapis roulés, tu apprends à compter plus vite que les adultes. Le marchand jure que tu lui porteras chance.
+  en: Between the spices and rolled-up rugs, you learn to count faster than the adults. The merchant swears you'll bring him luck.
+  es: Entre las especias y las alfombras enrolladas, aprendes a contar más rápido que los adultos. El mercader jura que le traerás suerte.
+  de: Zwischen Gewürzen und gerollten Teppichen lernst du schneller rechnen als die Erwachsenen. Der Händler schwört, dass du ihm Glück bringen wirst.
+  ja: 香辛料と巻いた絨毯の間で、きみは大人より速く計算できるようになった。商人は、きみが幸運を運んでくれると誓う。
 - fr: Les souvenirs de ton ancienne vie s'estompent un peu, comme un rêve au réveil. Mais ils ne partent jamais tout à fait.
+  en: The memories of your old life fade a little, like a dream on waking. But they never quite go away.
+  es: Los recuerdos de tu antigua vida se difuminan un poco, como un sueño al despertar. Pero nunca se van del todo.
+  de: Die Erinnerungen an dein altes Leben verblassen ein wenig, wie ein Traum beim Aufwachen. Aber sie verschwinden nie ganz.
+  ja: 前世の記憶は、目覚めたあとの夢のように少し薄れていく。けれど、完全に消えることはない。
 - fr: Prologue — Le premier secret (10 ans, 1004 AV)
+  en: Prologue — The First Secret (age 10, 1004 AV)
+  es: Prólogo — El primer secreto (10 años, 1004 AV)
+  de: Prolog — Das erste Geheimnis (10 Jahre, 1004 AV)
+  ja: プロローグ — 最初の秘密（10歳、AV1004年）
 - fr: "Tu as dix ans. Une nuit d'orage, quelque chose s'éveille en toi : ton don. Il frémit sous ta peau, impatient."
+  en: "You are ten. One stormy night, something awakens in you: your gift. It quivers beneath your skin, impatient."
+  es: "Tienes diez años. Una noche de tormenta, algo despierta en ti: tu don. Se estremece bajo tu piel, impaciente."
+  de: "Du bist zehn. In einer Gewitternacht erwacht etwas in dir: deine Gabe. Sie bebt unter deiner Haut, ungeduldig."
+  ja: きみは十歳。嵐の夜、きみの中で何かが目覚めた。天賦だ。それは肌の下で、待ちきれないように震えている。
 - fr: Un adulte entre dans la pièce au moment exact où ton don se manifeste.
+  en: An adult walks into the room at the exact moment your gift reveals itself.
+  es: Un adulto entra en la habitación justo en el momento en que se manifiesta tu don.
+  de: Genau in dem Moment, in dem sich deine Gabe zeigt, betritt ein Erwachsener den Raum.
+  ja: 天賦が表に出たまさにその瞬間、大人が部屋に入ってきた。
 - fr: Cacher ton don à tout prix. Personne ne doit savoir.
+  en: Hide your gift at all costs. No one must know.
+  es: Ocultar tu don a toda costa. Nadie debe saberlo.
+  de: Deine Gabe um jeden Preis verbergen. Niemand darf es erfahren.
+  ja: 何としても天賦を隠す。誰にも知られてはならない。
 - fr: Lui montrer. Tu as besoin de confier ce secret à quelqu'un.
+  en: Show them. You need to confide this secret in someone.
+  es: Enseñárselo. Necesitas confiar este secreto a alguien.
+  de: Es zeigen. Du musst dieses Geheimnis jemandem anvertrauen.
+  ja: 見せる。この秘密を誰かに打ち明けたい。
 - fr: "T'en servir pour aider : le toit de la grange s'effondre sous la pluie."
+  en: "Use it to help: the barn roof is collapsing under the rain."
+  es: "Usarlo para ayudar: el tejado del granero se hunde bajo la lluvia."
+  de: "Sie nutzen, um zu helfen: Das Scheunendach stürzt unter dem Regen ein."
+  ja: 人助けに使う。雨で納屋の屋根が崩れかけている。
 - fr: Tu inventes une excuse maladroite. L'adulte hausse les épaules. Tu apprends ce soir-là l'art de te taire — il te servira.
+  en: You make up a clumsy excuse. The adult shrugs. That night you learn the art of keeping quiet — it will serve you well.
+  es: Inventas una excusa torpe. El adulto se encoge de hombros. Esa noche aprendes el arte de callar; te será útil.
+  de: Du erfindest eine ungeschickte Ausrede. Der Erwachsene zuckt mit den Schultern. An diesem Abend lernst du die Kunst des Schweigens — sie wird dir nützen.
+  ja: ぎこちない言い訳をすると、大人は肩をすくめた。その夜、きみは黙る術を覚えた——いずれ役に立つ。
 - fr: L'adulte reste longtemps silencieux, puis te serre contre lui. « Ce sera notre secret. » Tu n'as jamais été aussi soulagé.
+  en: The adult stays silent a long time, then holds you close. “This will be our secret.” You have never felt so relieved.
+  es: El adulto guarda silencio un largo rato y luego te abraza. «Será nuestro secreto.» Nunca te habías sentido tan {{aliviado|aliviada}}.
+  de: Der Erwachsene schweigt lange, dann drückt er dich an sich. „Das bleibt unser Geheimnis.“ Du warst noch nie so erleichtert.
+  ja: 大人は長いあいだ黙っていたが、やがてきみを抱きしめた。「二人だけの秘密だ」これほどほっとしたことはなかった。
 - fr: Ton don retient la charpente juste assez longtemps pour que les bêtes sortent. On parle de miracle au village. Toi, tu trembles toute la nuit.
+  en: Your gift holds up the frame just long enough for the animals to get out. In the village, people speak of a miracle. You tremble all night long.
+  es: Tu don sostiene la armazón el tiempo justo para que salgan los animales. En el pueblo se habla de milagro. Tú tiemblas toda la noche.
+  de: Deine Gabe hält das Gebälk gerade lange genug, damit die Tiere hinauskommen. Im Dorf spricht man von einem Wunder. Du zitterst die ganze Nacht.
+  ja: 天賦が梁をちょうど家畜が逃げ出せるだけの間支えた。村では奇跡だと噂された。きみは一晩中震えていた。
 - fr: Dès lors, chaque jour, tu t'entraînes en cachette. Ton corps d'enfant apprend ce que ton âme sait déjà.
+  en: From then on, every day, you train in secret. Your child's body learns what your soul already knows.
+  es: Desde entonces, cada día, entrenas a escondidas. Tu cuerpo de niño aprende lo que tu alma ya sabe.
+  de: Von da an trainierst du jeden Tag heimlich. Dein Kinderkörper lernt, was deine Seele schon weiß.
+  ja: それからというもの、きみは毎日こっそり鍛錬した。子どもの体が、魂がすでに知っていることを覚えていく。
 - fr: Prologue — La rencontre (14 ans, 1008 AV)
+  en: Prologue — The Encounter (age 14, 1008 AV)
+  es: Prólogo — El encuentro (14 años, 1008 AV)
+  de: Prolog — Die Begegnung (14 Jahre, 1008 AV)
+  ja: プロローグ — 出会い（14歳、AV1008年）
 - fr: Tu as quatorze ans. Cette année-là, quelqu'un entre dans ta vie et ne la quitte plus vraiment.
+  en: You are fourteen. That year, someone enters your life and never really leaves it.
+  es: Tienes catorce años. Ese año, alguien entra en tu vida y ya nunca se va del todo.
+  de: Du bist vierzehn. In diesem Jahr tritt jemand in dein Leben und verlässt es nie wirklich wieder.
+  ja: きみは十四歳。その年、ある人がきみの人生に入ってきて、二度と離れなかった。
 - fr: Maître Orlo, un vieux bibliothécaire bourru, qui devine ce que tu es et t'enseigne les légendes de l'Appel.
+  en: Master Orlo, a gruff old librarian who guesses what you are and teaches you the legends of the Calling.
+  es: Maese Orlo, un viejo bibliotecario gruñón que adivina lo que eres y te enseña las leyendas de la Llamada.
+  de: Meister Orlo, ein alter, brummiger Bibliothekar, der ahnt, was du bist, und dich die Legenden des Rufs lehrt.
+  ja: オルロ師。きみの正体を見抜き、召喚の伝説を教えてくれる無愛想な老司書。
 - fr: "{heros} devient l'élève de Maître Orlo."
+  en: "{heros} becomes Master Orlo's pupil."
+  es: "{heros} se convierte en {{el alumno|la alumna}} de Maese Orlo."
+  de: "{heros} wird Meister Orlos {{Schüler|Schülerin}}."
+  ja: "{heros}はオルロ師の弟子になる。"
 - fr: Cassian, fils de garde, fier et rapide. Il te bat à la course, tu le bats aux échecs. Rivaux pour la vie.
+  en: Cassian, a guard's son, proud and quick. He beats you at racing, you beat him at chess. Rivals for life.
+  es: Cassian, hijo de un guardia, orgulloso y rápido. Él te gana en la carrera, tú le ganas al ajedrez. Rivales de por vida.
+  de: Cassian, Sohn eines Wächters, stolz und schnell. Er schlägt dich im Wettlauf, du schlägst ihn im Schach. Rivalen fürs Leben.
+  ja: カシアン。衛兵の息子で、誇り高く足が速い。駆けっこでは彼が勝ち、チェスではきみが勝つ。生涯のライバル。
 - fr: "{heros} se trouve un rival : Cassian."
+  en: "{heros} finds a rival: Cassian."
+  es: "{heros} encuentra un rival: Cassian."
+  de: "{heros} findet einen Rivalen: Cassian."
+  ja: "{heros}にライバルができた：カシアン。"
 - fr: Pipa, rieuse et intrépide, qui t'entraîne dans toutes les bêtises du canton.
+  en: Pipa, giggly and fearless, who drags you into every bit of mischief in the district.
+  es: Pipa, risueña e intrépida, que te arrastra a todas las travesuras de la comarca.
+  de: Pipa, kichernd und furchtlos, die dich in jeden Unfug der Gegend mitzieht.
+  ja: ピパ。よく笑い怖いもの知らずで、近所のあらゆるいたずらにきみを引きずり込む。
 - fr: "{heros} et Pipa deviennent inséparables."
+  en: "{heros} and Pipa become inseparable."
+  es: "{heros} y Pipa se vuelven inseparables."
+  de: "{heros} und Pipa werden unzertrennlich."
+  ja: "{heros}とピパは大の仲良しになる。"
 - fr: « Les Appelés d'autrefois… on les dit héros. Moi, je me demande surtout ce qu'ils ont payé pour l'être. »
+  en: “The Summoned of old… they call them heroes. Me, I mostly wonder what they paid to become heroes.”
+  es: «Los Llamados de antaño… dicen que eran héroes. Yo me pregunto sobre todo qué pagaron por serlo.»
+  de: „Die Gerufenen von einst … man nennt sie Helden. Ich frage mich vor allem, was sie dafür bezahlt haben.“
+  ja: 「昔の召喚者たち……英雄と呼ばれておる。だがわしはむしろ、英雄になるために何を払ったのかが気になるのじゃ」
 - fr: « La prochaine fois, je gagne. Et un jour, je serai dans la garde royale. Toi, tu feras quoi ? »
+  en: “Next time, I win. And one day, I'll be in the royal guard. What about you, what will you do?”
+  es: «La próxima vez, gano yo. Y un día estaré en la guardia real. ¿Y tú, qué harás?»
+  de: „Nächstes Mal gewinne ich. Und eines Tages bin ich in der königlichen Garde. Und du, was wirst du machen?“
+  ja: 「次は俺が勝つ。いつか王の近衛になるんだ。お前は何になる？」
 - fr: « Promets-moi qu'un jour on partira voir la mer. Promets ! »
+  en: “Promise me that one day we'll go and see the sea. Promise!”
+  es: «Prométeme que un día iremos a ver el mar. ¡Prométemelo!»
+  de: „Versprich mir, dass wir eines Tages das Meer sehen gehen. Versprich es!“
+  ja: 「いつか一緒に海を見に行くって約束して。約束だよ！」
 - fr: Ce lien te suivra jusqu'à Lysmont. Peut-être même au-delà.
+  en: This bond will follow you all the way to Lysmont. Maybe even beyond.
+  es: Este lazo te seguirá hasta Lysmont. Quizá incluso más allá.
+  de: Dieses Band wird dich bis nach Lysmont begleiten. Vielleicht sogar darüber hinaus.
+  ja: この絆はリスモンまでついてくる。もしかすると、その先までも。
 - fr: Prologue — Le départ (17 ans, 1011 AV)
+  en: Prologue — The Departure (age 17, 1011 AV)
+  es: Prólogo — La partida (17 años, 1011 AV)
+  de: Prolog — Der Aufbruch (17 Jahre, 1011 AV)
+  ja: プロローグ — 旅立ち（17歳、AV1011年）
 - fr: Tu as dix-sept ans. Depuis des semaines, une vibration te réveille la nuit, venue de la capitale. L'Ordre prépare quelque chose.
+  en: You are seventeen. For weeks, a vibration coming from the capital has been waking you at night. The Order is preparing something.
+  es: Tienes diecisiete años. Desde hace semanas, una vibración procedente de la capital te despierta por las noches. La Orden prepara algo.
+  de: Du bist siebzehn. Seit Wochen weckt dich nachts eine Schwingung aus der Hauptstadt. Der Orden bereitet etwas vor.
+  ja: きみは十七歳。ここ数週間、王都から届く震えに夜ごと目を覚ます。教団が何かを準備している。
 - fr: Tu prends la route de Lysmont au lever du soleil. Avant de partir, tu reçois un dernier conseil… ou un dernier cadeau.
+  en: You set off for Lysmont at sunrise. Before leaving, you receive one last piece of advice… or one last gift.
+  es: Tomas el camino de Lysmont al amanecer. Antes de partir, recibes un último consejo… o un último regalo.
+  de: Bei Sonnenaufgang machst du dich auf den Weg nach Lysmont. Vor dem Aufbruch bekommst du einen letzten Rat … oder ein letztes Geschenk.
+  ja: 日の出とともにリスモンへ旅立つ。出発前に、最後の助言……あるいは最後の贈り物を受け取る。
 - fr: Une lettre de recommandation pour la Guilde (Guilde +10).
+  en: A letter of recommendation for the Guild (Guild +10).
+  es: Una carta de recomendación para el Gremio (Gremio +10).
+  de: Ein Empfehlungsschreiben für die Gilde (Gilde +10).
+  ja: ギルドへの推薦状（ギルド+10）。
 - fr: Le sceau d'une famille noble qui te doit service (Couronne +10).
+  en: The seal of a noble family that owes you a service (Crown +10).
+  es: El sello de una familia noble que te debe un favor (Corona +10).
+  de: Das Siegel einer Adelsfamilie, die dir einen Dienst schuldet (Krone +10).
+  ja: きみに恩のある貴族の家の印章（王家+10）。
 - fr: La bénédiction d'une prêtresse de l'orphelinat (Ordre +10).
+  en: The blessing of a priestess from the orphanage (Order +10).
+  es: La bendición de una sacerdotisa del orfanato (Orden +10).
+  de: Der Segen einer Priesterin aus dem Waisenhaus (Orden +10).
+  ja: 孤児院の女神官の祝福（教団+10）。
 - fr: Une bourse bien remplie, économisée sou après sou (+60 or).
+  en: A well-filled purse, saved coin by coin (+60 gold).
+  es: Una bolsa bien llena, ahorrada moneda a moneda (+60 de oro).
+  de: Ein gut gefüllter Beutel, Münze für Münze gespart (+60 Gold).
+  ja: 一枚ずつ貯めた、たっぷり詰まった財布（+60G）。
 - fr: Au loin, les tours blanches de Lysmont. Dans quelques mois, au printemps 1012, tu auras dix-huit ans… et le Temple du Seuil s'illuminera.
+  en: In the distance, the white towers of Lysmont. In a few months, in the spring of 1012, you'll turn eighteen… and the Temple of the Threshold will light up.
+  es: A lo lejos, las torres blancas de Lysmont. Dentro de unos meses, en la primavera de 1012, cumplirás dieciocho años… y el Templo del Umbral se iluminará.
+  de: In der Ferne die weißen Türme von Lysmont. In ein paar Monaten, im Frühling 1012, wirst du achtzehn … und der Tempel der Schwelle wird erstrahlen.
+  ja: 遠くにリスモンの白い塔。数か月後、1012年の春、きみは十八歳になる……そして境界の神殿が光を放つ。
 - fr: (Fin du prologue. Ton histoire rejoint celle des autres héros au chapitre 1.)
+  en: (End of the prologue. Your story joins the other heroes' in chapter 1.)
+  es: (Fin del prólogo. Tu historia se une a la de los demás héroes en el capítulo 1.)
+  de: (Ende des Prologs. Deine Geschichte trifft in Kapitel 1 auf die der anderen Helden.)
+  ja: （プロローグ終わり。きみの物語は第1章で他のヒーローたちと合流する）

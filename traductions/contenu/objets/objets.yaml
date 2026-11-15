@@ -1,50 +1,242 @@
 # Textes de content/objets/objets.yaml
 # Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
 - fr: Petite potion de soin
+  en: Small healing potion
+  es: Poción de curación pequeña
+  de: Kleiner Heiltrank
+  ja: 小さな回復ポーション
 - fr: Rend un peu de PV.
+  en: Restores a few HP.
+  es: Devuelve unos pocos PV.
+  de: Stellt ein paar LP wieder her.
+  ja: HPを少し回復する。
 - fr: À boire en combat (bouton « Potion »).
+  en: Drink in combat (“Potion” button).
+  es: Se bebe en combate (botón «Poción»).
+  de: Im Kampf trinken (Schaltfläche „Trank“).
+  ja: 戦闘中に飲む（「ポーション」ボタン）。
 - fr: Potion de soin
+  en: Healing potion
+  es: Poción de curación
+  de: Heiltrank
+  ja: 回復ポーション
 - fr: Rend beaucoup de PV.
+  en: Restores a lot of HP.
+  es: Devuelve muchos PV.
+  de: Stellt viele LP wieder her.
+  ja: HPを大きく回復する。
 - fr: À boire en combat (bouton du sac, dans « Toutes les actions »).
+  en: Drink in combat (bag button, under “All actions”).
+  es: Se bebe en combate (botón de la bolsa, en «Todas las acciones»).
+  de: Im Kampf trinken (Taschenschaltfläche unter „Alle Aktionen“).
+  ja: 戦闘中に飲む（「すべての行動」内の袋ボタン）。
 - fr: Potion de mana
+  en: Mana potion
+  es: Poción de maná
+  de: Manatrank
+  ja: マナポーション
 - fr: Rend 20 points de mana.
+  en: Restores 20 mana points.
+  es: Devuelve 20 puntos de maná.
+  de: Stellt 20 Manapunkte wieder her.
+  ja: マナを20回復する。
 - fr: À boire en combat pour relancer des sorts (bouton du sac).
+  en: Drink in combat to cast spells again (bag button).
+  es: Se bebe en combate para volver a lanzar hechizos (botón de la bolsa).
+  de: Im Kampf trinken, um wieder zaubern zu können (Taschenschaltfläche).
+  ja: 戦闘中に飲んで、また呪文を使えるようにする（袋ボタン）。
 - fr: Antidote
+  en: Antidote
+  es: Antídoto
+  de: Gegengift
+  ja: 解毒剤
 - fr: Retire poisons et effets négatifs.
+  en: Removes poisons and negative effects.
+  es: Elimina venenos y efectos negativos.
+  de: Entfernt Gifte und negative Effekte.
+  ja: 毒と弱体効果を解除する。
 - fr: À utiliser en combat sur un allié empoisonné, brûlé ou affaibli (bouton du sac).
+  en: Use in combat on a poisoned, burned or weakened ally (bag button).
+  es: Se usa en combate sobre un aliado envenenado, quemado o debilitado (botón de la bolsa).
+  de: Im Kampf bei einem vergifteten, verbrannten oder geschwächten Verbündeten benutzen (Taschenschaltfläche).
+  ja: 戦闘中、毒・火傷・弱体状態の味方に使う（袋ボタン）。
 - fr: Bombe incendiaire
+  en: Incendiary bomb
+  es: Bomba incendiaria
+  de: Brandbombe
+  ja: 焼夷弾
 - fr: Dégâts de feu sur tous les ennemis.
+  en: Fire damage on all enemies.
+  es: Daño de fuego sobre todos los enemigos.
+  de: Feuerschaden an allen Gegnern.
+  ja: 敵全体に炎ダメージ。
 - fr: "À lancer en combat : touche tous les ennemis d'un coup (bouton du sac)."
+  en: "Throw in combat: hits all enemies at once (bag button)."
+  es: "Se lanza en combate: alcanza a todos los enemigos de una vez (botón de la bolsa)."
+  de: "Im Kampf werfen: trifft alle Gegner auf einmal (Taschenschaltfläche)."
+  ja: 戦闘中に投げる：敵全体に一度に当たる（袋ボタン）。
 - fr: Bombe fumigène
+  en: Smoke bomb
+  es: Bomba de humo
+  de: Rauchbombe
+  ja: 煙玉
 - fr: Le groupe devient plus difficile à toucher.
+  en: The group becomes harder to hit.
+  es: El grupo se vuelve más difícil de alcanzar.
+  de: Die Gruppe ist schwerer zu treffen.
+  ja: パーティーに攻撃が当たりにくくなる。
 - fr: "À lancer en combat : protège tout le groupe pendant 2 tours (bouton du sac)."
+  en: "Throw in combat: protects the whole group for 2 turns (bag button)."
+  es: "Se lanza en combate: protege a todo el grupo durante 2 turnos (botón de la bolsa)."
+  de: "Im Kampf werfen: schützt die ganze Gruppe 2 Runden lang (Taschenschaltfläche)."
+  ja: 戦闘中に投げる：2ターンの間パーティー全員を守る（袋ボタン）。
 - fr: Parchemin de retour
+  en: Scroll of return
+  es: Pergamino de regreso
+  de: Schriftrolle der Rückkehr
+  ja: 帰還の巻物
 - fr: Ramène le groupe en ville (hors combat).
+  en: Brings the group back to town (out of combat).
+  es: Devuelve al grupo a la ciudad (fuera de combate).
+  de: Bringt die Gruppe in die Stadt zurück (außerhalb des Kampfes).
+  ja: パーティーを町へ戻す（戦闘外）。
 - fr: "Pas encore utilisable : il servira dans les grands donjons des prochains chapitres."
+  en: "Not usable yet: it will serve in the great dungeons of the coming chapters."
+  es: "Aún no se puede usar: servirá en las grandes mazmorras de los próximos capítulos."
+  de: "Noch nicht benutzbar: Sie wird in den großen Verliesen der nächsten Kapitel nützlich sein."
+  ja: まだ使えない。今後の章の大ダンジョンで役立つ。
 - fr: Ration de voyage
+  en: Travel ration
+  es: Ración de viaje
+  de: Reiseration
+  ja: 携帯食
 - fr: Pain, fromage et viande séchée.
+  en: Bread, cheese and dried meat.
+  es: Pan, queso y carne seca.
+  de: Brot, Käse und Trockenfleisch.
+  ja: パン、チーズ、干し肉。
 - fr: "Il en faut une par héros pour chaque combat hors de la ville. Sans ration, la route fatigue : −15 % de PV au début du combat."
+  en: "Each hero needs one for every fight outside town. Without a ration, the road tires you: −15% HP at the start of the fight."
+  es: "Hace falta una por héroe para cada combate fuera de la ciudad. Sin ración, el camino cansa: −15 % de PV al empezar el combate."
+  de: "Jeder Held braucht eine für jeden Kampf außerhalb der Stadt. Ohne Ration ermüdet der Weg: −15 % LP zu Kampfbeginn."
+  ja: 町の外での戦闘ごとに、ヒーロー1人につき1つ必要。ないと道中で疲れ、戦闘開始時HP−15%。
 - fr: Gâteau de Lysmont
+  en: Lysmont cake
+  es: Pastel de Lysmont
+  de: Lysmonter Kuchen
+  ja: リスモンケーキ
 - fr: Une pâtisserie à la crème, spécialité de la capitale.
+  en: A cream pastry, the capital's speciality.
+  es: Un pastel de crema, especialidad de la capital.
+  de: Ein Sahnegebäck, die Spezialität der Hauptstadt.
+  ja: クリームたっぷりの菓子。王都の名物。
 - fr: Kit d'entretien d'armes
+  en: Weapon care kit
+  es: Kit de mantenimiento de armas
+  de: Waffenpflegeset
+  ja: 武器の手入れセット
 - fr: Pierre à aiguiser, huile et chiffon.
+  en: Whetstone, oil and rag.
+  es: Piedra de afilar, aceite y trapo.
+  de: Wetzstein, Öl und Lappen.
+  ja: 砥石、油、布。
 - fr: Collier doré
+  en: Golden necklace
+  es: Collar dorado
+  de: Goldene Halskette
+  ja: 金の首飾り
 - fr: Clinquant et cher.
+  en: Flashy and expensive.
+  es: Llamativo y caro.
+  de: Protzig und teuer.
+  ja: 派手で高価。
 - fr: Bouquet de fleurs des champs
+  en: Bouquet of wildflowers
+  es: Ramo de flores silvestres
+  de: Wiesenblumenstrauß
+  ja: 野の花の花束
 - fr: Simple et joli.
+  en: Simple and pretty.
+  es: Sencillo y bonito.
+  de: Schlicht und hübsch.
+  ja: 素朴でかわいい。
 - fr: Livre ancien
+  en: Old book
+  es: Libro antiguo
+  de: Altes Buch
+  ja: 古い本
 - fr: "Des chroniques de chevalerie, aux enluminures passées : un beau cadeau pour qui aime les histoires d'honneur."
+  en: "Chronicles of chivalry with faded illuminations: a fine gift for anyone who loves tales of honour."
+  es: "Crónicas de caballería con iluminaciones desvaídas: un buen regalo para quien ame las historias de honor."
+  de: "Ritterchroniken mit verblassten Buchmalereien: ein schönes Geschenk für alle, die Geschichten über Ehre lieben."
+  ja: 色あせた挿絵の騎士道物語。名誉の物語を愛する人への良い贈り物。
 - fr: Sceau cendré
+  en: Ashen seal
+  es: Sello cenizo
+  de: Aschensiegel
+  ja: 灰の封印
 - fr: Fragment de pierre noire marqué d'une rune violette.
+  en: A fragment of black stone marked with a purple rune.
+  es: Fragmento de piedra negra marcado con una runa violeta.
+  de: Ein Bruchstück aus schwarzem Stein mit einer violetten Rune.
+  ja: 紫のルーンが刻まれた黒い石のかけら。
 - fr: Clé de bronze de la crypte
+  en: Bronze crypt key
+  es: Llave de bronce de la cripta
+  de: Bronzeschlüssel der Krypta
+  ja: 地下墓所の青銅の鍵
 - fr: Ouvre la salle du fond de la Crypte de la Fontaine.
+  en: Opens the back room of the Fountain Crypt.
+  es: Abre la sala del fondo de la Cripta de la Fuente.
+  de: Öffnet den hinteren Raum der Brunnenkrypta.
+  ja: 泉の地下墓所の奥の部屋を開ける。
 - fr: Croc de loup
+  en: Wolf fang
+  es: Colmillo de lobo
+  de: Wolfszahn
+  ja: 狼の牙
 - fr: Une dent longue comme un doigt.
+  en: A tooth as long as a finger.
+  es: Un diente largo como un dedo.
+  de: Ein Zahn, so lang wie ein Finger.
+  ja: 指ほどの長さの牙。
 - fr: "Matériau : se revend, ou sert à l'activité « Artisanat » du temps libre."
+  en: "Material: sell it, or use it for the “Crafting” free-time activity."
+  es: "Material: se revende o sirve para la actividad «Artesanía» del tiempo libre."
+  de: "Material: verkaufen oder für die Freizeitaktivität „Handwerk“ nutzen."
+  ja: 素材：売るか、自由時間の「製作」に使う。
 - fr: Soie d'araignée
+  en: Spider silk
+  es: Seda de araña
+  de: Spinnenseide
+  ja: 蜘蛛の糸
 - fr: Un fil solide et collant.
+  en: A strong, sticky thread.
+  es: Un hilo resistente y pegajoso.
+  de: Ein fester, klebriger Faden.
+  ja: 丈夫で粘りのある糸。
 - fr: Breloque cabossée
+  en: Battered trinket
+  es: Baratija abollada
+  de: Verbeulter Anhänger
+  ja: へこんだ小物
 - fr: Une vieille breloque en cuivre, trouvée entre deux pavés. Elle ne sert à rien, mais elle se vend.
+  en: An old copper trinket, found between two cobblestones. It's useless, but it sells.
+  es: Una vieja baratija de cobre, encontrada entre dos adoquines. No sirve para nada, pero se vende.
+  de: Ein alter Kupferanhänger, zwischen zwei Pflastersteinen gefunden. Nutzlos, aber verkäuflich.
+  ja: 石畳の間で見つけた古い銅の小物。役には立たないが売れる。
 - fr: À revendre dans une boutique (onglet « Vendre »).
+  en: Sell it in a shop (“Sell” tab).
+  es: Se revende en una tienda (pestaña «Vender»).
+  de: In einem Laden verkaufen (Reiter „Verkaufen“).
+  ja: 店で売る（「売る」タブ）。
 - fr: Relique douteuse
+  en: Dubious relic
+  es: Reliquia dudosa
+  de: Zweifelhafte Reliquie
+  ja: 怪しい聖遺物
 - fr: "Un « os de saint » vendu sous le manteau : en vérité, un os de poulet verni."
+  en: "A “saint's bone” sold under the counter: really, a varnished chicken bone."
+  es: "Un «hueso de santo» vendido bajo cuerda: en realidad, un hueso de pollo barnizado."
+  de: "Ein unter der Hand verkaufter „Heiligenknochen“: in Wahrheit ein lackierter Hühnerknochen."
+  ja: こっそり売られていた「聖人の骨」。実はニスを塗った鶏の骨。

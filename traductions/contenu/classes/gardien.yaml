@@ -1,33 +1,157 @@
 # Textes de content/classes/gardien.yaml
 # Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
 - fr: Gardien sacré
+  en: Holy Guardian
+  es: Guardián sagrado
+  de: Heiliger Hüter
+  ja: 聖なるガーディアン
 - fr: Protection
+  en: Protection
+  es: Protección
+  de: Schutz
+  ja: 守護
 - fr: Un rempart vivant, béni par la lumière.
+  en: A living rampart, blessed by the light.
+  es: Una muralla viviente, bendecida por la luz.
+  de: Ein lebender Wall, vom Licht gesegnet.
+  ja: 光に祝福された生ける城壁。
 - fr: Rempart
+  en: Rampart
+  es: Muralla
+  de: Bollwerk
+  ja: 城壁
 - fr: 30 % de chances d'intercepter une attaque visant un allié, en subissant 20 % de dégâts en moins.
+  en: 30% chance to intercept an attack aimed at an ally, taking 20% less damage.
+  es: 30 % de probabilidad de interceptar un ataque dirigido a un aliado, recibiendo un 20 % menos de daño.
+  de: 30 % Chance, einen Angriff auf einen Verbündeten abzufangen und dabei 20 % weniger Schaden zu erleiden.
+  ja: 30%の確率で味方への攻撃をかばい、被ダメージを20%減らす。
 - fr: Bastion
+  en: Bastion
+  es: Bastión
+  de: Bastion
+  ja: 砦
 - fr: Défense pure.
+  en: Pure defence.
+  es: Defensa pura.
+  de: Reine Verteidigung.
+  ja: 純粋な防御。
 - fr: Croisé
+  en: Crusader
+  es: Cruzado
+  de: Kreuzritter
+  ja: 聖戦士
 - fr: Riposte et dégâts sacrés.
+  en: Riposte and holy damage.
+  es: Réplica y daño sagrado.
+  de: Gegenschlag und heiliger Schaden.
+  ja: 反撃と聖属性ダメージ。
 - fr: Bastion éternel
+  en: Eternal Bastion
+  es: Bastión eterno
+  de: Ewige Bastion
+  ja: 永遠の砦
 - fr: Pendant 2 tours, aucun allié ne peut tomber sous 1 PV.
+  en: For 2 turns, no ally can fall below 1 HP.
+  es: Durante 2 turnos, ningún aliado puede bajar de 1 PV.
+  de: 2 Runden lang kann kein Verbündeter unter 1 LP fallen.
+  ja: 2ターンの間、味方のHPは1未満にならない。
 - fr: Rend le groupe très solide ; seul, il gagne en tenant longtemps.
+  en: Makes the group very sturdy; alone, wins by holding out a long time.
+  es: Hace al grupo muy sólido; solo, gana resistiendo mucho tiempo.
+  de: Macht die Gruppe sehr widerstandsfähig; allein gewinnt er durch langes Durchhalten.
+  ja: パーティーをとても頑丈にする。ソロでは長く耐えて勝つ。
 - fr: Dégâts faibles, combats longs, peu mobile.
+  en: Low damage, long fights, not very mobile.
+  es: Daño bajo, combates largos, poco móvil.
+  de: Wenig Schaden, lange Kämpfe, wenig beweglich.
+  ja: 火力が低く、戦闘が長引き、機動力も低い。
 - fr: Provocation sainte
+  en: Holy Taunt
+  es: Provocación santa
+  de: Heilige Provokation
+  ja: 聖なる挑発
 - fr: Une onde sacrée frappe tous les ennemis et les force à le cibler pendant 2 tours ; sa défense augmente.
+  en: A holy wave strikes all enemies and forces them to target him for 2 turns; his defence increases.
+  es: Una onda sagrada golpea a todos los enemigos y los obliga a atacarle durante 2 turnos; su defensa aumenta.
+  de: Eine heilige Welle trifft alle Gegner und zwingt sie 2 Runden lang, ihn anzugreifen; seine Verteidigung steigt.
+  ja: 聖なる波動で敵全体を打ち、2ターンの間自分を狙わせる。防御も上がる。
 - fr: Bouclier d'aube
+  en: Dawn Shield
+  es: Escudo del alba
+  de: Morgenschild
+  ja: 暁の盾
 - fr: Donne à un allié un bouclier qui absorbe 20 % de ses PV.
+  en: Gives an ally a shield that absorbs 20% of their HP.
+  es: Da a un aliado un escudo que absorbe el 20 % de sus PV.
+  de: Gibt einem Verbündeten einen Schild, der 20 % seiner LP absorbiert.
+  ja: 味方1人に、HPの20%を吸収する盾を与える。
 - fr: Mur de foi
+  en: Wall of Faith
+  es: Muro de fe
+  de: Mauer des Glaubens
+  ja: 信仰の壁
 - fr: +30 % de défense pour tout le groupe pendant 2 tours.
+  en: +30% defence for the whole group for 2 turns.
+  es: +30 % de defensa para todo el grupo durante 2 turnos.
+  de: +30 % Verteidigung für die ganze Gruppe für 2 Runden.
+  ja: 2ターンの間、パーティー全員の防御+30%。
 - fr: Jugement sacré
+  en: Holy Judgement
+  es: Juicio sagrado
+  de: Heiliges Urteil
+  ja: 聖なる審判
 - fr: Un coup de masse chargé de lumière.
+  en: A mace blow charged with light.
+  es: Un golpe de maza cargado de luz.
+  de: Ein lichtgeladener Streitkolbenhieb.
+  ja: 光をまとったメイスの一撃。
 - fr: Égide sacrée
+  en: Holy Aegis
+  es: Égida sagrada
+  de: Heilige Ägide
+  ja: 聖なるイージス
 - fr: Un bouclier de lumière sur tout le groupe.
+  en: A shield of light on the whole group.
+  es: Un escudo de luz sobre todo el grupo.
+  de: Ein Lichtschild für die ganze Gruppe.
+  ja: パーティー全員に光の盾を張る。
 - fr: Citadelle de lumière
+  en: Citadel of Light
+  es: Ciudadela de luz
+  de: Zitadelle des Lichts
+  ja: 光の城塞
 - fr: Le Gardien attire tous les coups et protège le groupe.
+  en: The Guardian draws every blow and protects the group.
+  es: El Guardián atrae todos los golpes y protege al grupo.
+  de: Der Hüter zieht alle Schläge auf sich und schützt die Gruppe.
+  ja: ガーディアンがすべての攻撃を引きつけ、パーティーを守る。
 - fr: Marteau de l'aube
+  en: Hammer of Dawn
+  es: Martillo del alba
+  de: Hammer der Morgenröte
+  ja: 暁の鉄槌
 - fr: Un coup sacré qui peut étourdir de peur.
+  en: A holy blow that can stun with fear.
+  es: Un golpe sagrado que puede aturdir de miedo.
+  de: Ein heiliger Schlag, der vor Furcht lähmen kann.
+  ja: 恐怖で動きを止めることもある聖なる一撃。
 - fr: Colère divine
+  en: Divine Wrath
+  es: Ira divina
+  de: Göttlicher Zorn
+  ja: 神の怒り
 - fr: La lumière frappe tous les ennemis ; les démons et les morts-vivants la craignent.
+  en: The light strikes all enemies; demons and undead fear it.
+  es: La luz golpea a todos los enemigos; los demonios y los no muertos la temen.
+  de: Das Licht trifft alle Gegner; Dämonen und Untote fürchten es.
+  ja: 光が敵全体を打つ。悪魔とアンデッドはこれを恐れる。
 - fr: Ultime — Bastion éternel
+  en: Ultimate — Eternal Bastion
+  es: Definitiva — Bastión eterno
+  de: Ultimativ — Ewige Bastion
+  ja: 奥義 — 永遠の砦
 - fr: "Pendant 2 tours, le groupe est presque intouchable : énorme bouclier, défense et régénération."
+  en: "For 2 turns, the group is nearly untouchable: huge shield, defence and regeneration."
+  es: "Durante 2 turnos, el grupo es casi intocable: enorme escudo, defensa y regeneración."
+  de: "2 Runden lang ist die Gruppe fast unantastbar: riesiger Schild, Verteidigung und Regeneration."
+  ja: 2ターンの間、パーティーはほぼ無敵：巨大な盾、防御、再生。

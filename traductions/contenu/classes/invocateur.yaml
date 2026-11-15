@@ -1,33 +1,157 @@
 # Textes de content/classes/invocateur.yaml
 # Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
 - fr: Invocateur
+  en: Summoner
+  es: Invocador
+  de: Beschwörer
+  ja: 召喚士
 - fr: Contrôle / dégâts indirects
+  en: Control / indirect damage
+  es: Control / daño indirecto
+  de: Kontrolle / indirekter Schaden
+  ja: 妨害／間接火力
 - fr: Il combat entouré de créatures liées à son âme.
+  en: Fights surrounded by creatures bound to their soul.
+  es: Combate rodeado de criaturas ligadas a su alma.
+  de: Kämpft umgeben von Kreaturen, die an seine Seele gebunden sind.
+  ja: 魂で結ばれた生き物たちに囲まれて戦う。
 - fr: Lien d'âme
+  en: Soul Bond
+  es: Vínculo de alma
+  de: Seelenband
+  ja: 魂の絆
 - fr: Un loup spectral combat à ses côtés en permanence. S'il tombe, il revient au bout de 4 tours.
+  en: A spectral wolf permanently fights at their side. If it falls, it returns after 4 turns.
+  es: Un lobo espectral combate siempre a su lado. Si cae, vuelve al cabo de 4 turnos.
+  de: Ein Geisterwolf kämpft ständig an seiner Seite. Fällt er, kehrt er nach 4 Runden zurück.
+  ja: 霊狼が常にそばで戦う。倒れても4ターン後に戻ってくる。
 - fr: Meute
+  en: Pack
+  es: Manada
+  de: Rudel
+  ja: 群れ
 - fr: Plusieurs petites invocations.
+  en: Several small summons.
+  es: Varias invocaciones pequeñas.
+  de: Mehrere kleine Beschwörungen.
+  ja: 小さな召喚獣を複数。
 - fr: Colosse
+  en: Colossus
+  es: Coloso
+  de: Koloss
+  ja: 巨像
 - fr: Une grosse invocation.
+  en: One big summon.
+  es: Una invocación grande.
+  de: Eine große Beschwörung.
+  ja: 大型の召喚獣1体。
 - fr: Porte du Bestiaire
+  en: Gate of the Bestiary
+  es: Puerta del Bestiario
+  de: Tor des Bestiariums
+  ja: 獣界の門
 - fr: Invoque une créature légendaire pendant 3 tours.
+  en: Summons a legendary creature for 3 turns.
+  es: Invoca a una criatura legendaria durante 3 turnos.
+  de: Beschwört 3 Runden lang eine legendäre Kreatur.
+  ja: 3ターンの間、伝説の生き物を召喚する。
 - fr: Agit plusieurs fois par tour grâce à ses invocations, qui encaissent à sa place.
+  en: Acts several times per turn thanks to their summons, which take hits for them.
+  es: Actúa varias veces por turno gracias a sus invocaciones, que encajan los golpes por él.
+  de: Handelt dank seiner Beschwörungen mehrmals pro Runde, die die Treffer für ihn einstecken.
+  ja: 召喚獣のおかげで1ターンに何度も行動でき、攻撃も肩代わりしてもらえる。
 - fr: Très faible si ses invocations sont détruites ; vulnérable au silence.
+  en: Very weak if their summons are destroyed; vulnerable to silence.
+  es: Muy débil si destruyen sus invocaciones; vulnerable al silencio.
+  de: Sehr schwach, wenn seine Beschwörungen vernichtet werden; anfällig für Stille.
+  ja: 召喚獣を倒されるととても弱い。沈黙に弱い。
 - fr: Appel du gardien de pierre
+  en: Call of the Stone Guardian
+  es: Llamada del guardián de piedra
+  de: Ruf des Steinwächters
+  ja: 石の守護者の召喚
 - fr: Invoque un golem de pierre qui provoque les ennemis pendant 2 tours.
+  en: Summons a stone golem that taunts enemies for 2 turns.
+  es: Invoca un gólem de piedra que provoca a los enemigos durante 2 turnos.
+  de: Beschwört einen Steingolem, der 2 Runden lang die Gegner provoziert.
+  ja: 2ターンの間敵を挑発する石のゴーレムを召喚する。
 - fr: Échange d'âme
+  en: Soul Exchange
+  es: Intercambio de alma
+  de: Seelentausch
+  ja: 魂の交換
 - fr: Soigne ses invocations de 40 % et se protège d'un bouclier.
+  en: Heals their summons by 40% and protects themselves with a shield.
+  es: Cura un 40 % a sus invocaciones y se protege con un escudo.
+  de: Heilt seine Beschwörungen um 40 % und schützt sich mit einem Schild.
+  ja: 召喚獣を40%回復し、自分に盾を張る。
 - fr: Feux follets
+  en: Will-o'-the-Wisps
+  es: Fuegos fatuos
+  de: Irrlichter
+  ja: 鬼火
 - fr: Invoque deux feux follets qui brûlent les ennemis pendant 3 tours.
+  en: Summons two wisps that burn enemies for 3 turns.
+  es: Invoca dos fuegos fatuos que queman a los enemigos durante 3 turnos.
+  de: Beschwört zwei Irrlichter, die 3 Runden lang die Gegner verbrennen.
+  ja: 3ターンの間敵を焼く鬼火を2体召喚する。
 - fr: Éveil du colosse
+  en: Awakening of the Colossus
+  es: Despertar del coloso
+  de: Erwachen des Kolosses
+  ja: 巨像の目覚め
 - fr: Invoque un colosse de pierre pendant 4 tours.
+  en: Summons a stone colossus for 4 turns.
+  es: Invoca un coloso de piedra durante 4 turnos.
+  de: Beschwört 4 Runden lang einen Steinkoloss.
+  ja: 4ターンの間、石の巨像を召喚する。
 - fr: Meute spectrale
+  en: Spectral Pack
+  es: Manada espectral
+  de: Geisterrudel
+  ja: 霊狼の群れ
 - fr: Appelle deux loups spectraux pour 3 tours.
+  en: Calls two spectral wolves for 3 turns.
+  es: Llama a dos lobos espectrales durante 3 turnos.
+  de: Ruft zwei Geisterwölfe für 3 Runden herbei.
+  ja: 3ターンの間、霊狼を2体呼ぶ。
 - fr: Chasse sauvage
+  en: Wild Hunt
+  es: Cacería salvaje
+  de: Wilde Jagd
+  ja: ワイルドハント
 - fr: Les esprits de la meute fondent sur tous les ennemis.
+  en: The pack's spirits swoop on all enemies.
+  es: Los espíritus de la manada se abalanzan sobre todos los enemigos.
+  de: Die Geister des Rudels stürzen sich auf alle Gegner.
+  ja: 群れの霊が敵全体に襲いかかる。
 - fr: Rempart vivant
+  en: Living Rampart
+  es: Muralla viviente
+  de: Lebender Wall
+  ja: 生ける城壁
 - fr: Une carapace de pierre protège tout le groupe ; les créatures sont soignées.
+  en: A stone carapace protects the whole group; creatures are healed.
+  es: Un caparazón de piedra protege a todo el grupo; las criaturas se curan.
+  de: Ein Steinpanzer schützt die ganze Gruppe; die Kreaturen werden geheilt.
+  ja: 石の甲殻がパーティー全員を守り、召喚獣を癒やす。
 - fr: Titan de pierre
+  en: Stone Titan
+  es: Titán de piedra
+  de: Steintitan
+  ja: 石の巨人
 - fr: Réveille un colosse pour 4 tours et un gardien de pierre à ses côtés.
+  en: Awakens a colossus for 4 turns and a stone guardian at their side.
+  es: Despierta a un coloso durante 4 turnos y a un guardián de piedra a su lado.
+  de: Erweckt 4 Runden lang einen Koloss und einen Steinwächter an seiner Seite.
+  ja: 4ターンの間、巨像と石の守護者を呼び起こす。
 - fr: Ultime — Porte du Bestiaire
+  en: Ultimate — Gate of the Bestiary
+  es: Definitiva — Puerta del Bestiario
+  de: Ultimativ — Tor des Bestiariums
+  ja: 奥義 — 獣界の門
 - fr: "Ouvre la Porte : un wyrm ancestral combat pour le groupe pendant 3 tours."
+  en: "Opens the Gate: an ancestral wyrm fights for the group for 3 turns."
+  es: "Abre la Puerta: una sierpe ancestral combate por el grupo durante 3 turnos."
+  de: "Öffnet das Tor: Ein uralter Wyrm kämpft 3 Runden lang für die Gruppe."
+  ja: 門を開く：古のワームが3ターンの間パーティーのために戦う。

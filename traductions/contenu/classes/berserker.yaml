@@ -1,33 +1,157 @@
 # Textes de content/classes/berserker.yaml
 # Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
 - fr: Berserker draconique
+  en: Draconic Berserker
+  es: Berserker dracónico
+  de: Drachen-Berserker
+  ja: 竜のバーサーカー
 - fr: Dégâts (mêlée) / tank offensif
+  en: Damage (melee) / offensive tank
+  es: Daño (cuerpo a cuerpo) / tanque ofensivo
+  de: Schaden (Nahkampf) / offensiver Tank
+  ja: 火力（近接）／攻撃型タンク
 - fr: "Le sang du dragon bout dans ses veines : plus il saigne, plus il frappe fort."
+  en: "Dragon blood boils in their veins: the more they bleed, the harder they hit."
+  es: "La sangre de dragón hierve en sus venas: cuanto más sangra, más fuerte golpea."
+  de: "Drachenblut kocht in seinen Adern: Je mehr er blutet, desto härter schlägt er zu."
+  ja: 竜の血が沸き立つ。傷つくほど一撃が重くなる。
 - fr: Sang de dragon
+  en: Dragon Blood
+  es: Sangre de dragón
+  de: Drachenblut
+  ja: 竜の血
 - fr: +1 % de dégâts par tranche de 2 % de PV manquants (+40 % au maximum).
+  en: +1% damage per 2% of missing HP (+40% max).
+  es: +1 % de daño por cada 2 % de PV perdidos (+40 % como máximo).
+  de: +1 % Schaden pro 2 % fehlender LP (höchstens +40 %).
+  ja: 失ったHP2%ごとにダメージ+1%（最大+40%）。
 - fr: Furie
+  en: Fury
+  es: Furia
+  de: Raserei
+  ja: 憤怒
 - fr: Dégâts et vol de vie.
+  en: Damage and life steal.
+  es: Daño y robo de vida.
+  de: Schaden und Lebensraub.
+  ja: ダメージと吸収。
 - fr: Écailles
+  en: Scales
+  es: Escamas
+  de: Schuppen
+  ja: 鱗
 - fr: Réduction de dégâts quand il est blessé.
+  en: Damage reduction when wounded.
+  es: Reducción de daño cuando está herido.
+  de: Schadensverringerung, wenn er verletzt ist.
+  ja: 負傷時に被ダメージ軽減。
 - fr: Forme du Wyrm
+  en: Wyrm Form
+  es: Forma de Sierpe
+  de: Wyrmgestalt
+  ja: ワーム化
 - fr: "Se transforme pendant 3 tours : souffle de feu et carapace d'écailles."
+  en: "Transforms for 3 turns: fire breath and a carapace of scales."
+  es: "Se transforma durante 3 turnos: aliento de fuego y caparazón de escamas."
+  de: "Verwandelt sich für 3 Runden: Feueratem und Schuppenpanzer."
+  ja: 3ターンの間変身する：炎の息と鱗の甲殻。
 - fr: Les plus gros dégâts en mêlée ; dangereux quand il est blessé.
+  en: The biggest melee damage; dangerous when wounded.
+  es: El mayor daño cuerpo a cuerpo; peligroso cuando está herido.
+  de: Der höchste Nahkampfschaden; gefährlich, wenn er verletzt ist.
+  ja: 近接最大の火力。負傷すると危険度が増す。
 - fr: Se met en danger lui-même ; faible face à la magie et au contrôle.
+  en: Puts themselves in danger; weak against magic and control.
+  es: Se pone en peligro a sí mismo; débil frente a la magia y el control.
+  de: Bringt sich selbst in Gefahr; schwach gegen Magie und Kontrolle.
+  ja: 自ら危険に身をさらす。魔法と妨害に弱い。
 - fr: Fendoir furieux
+  en: Furious Cleaver
+  es: Tajo furioso
+  de: Wütender Spalter
+  ja: 怒りの剛斬
 - fr: Une frappe énorme qui coûte 5 % de ses propres PV.
+  en: A huge strike that costs 5% of their own HP.
+  es: Un golpe enorme que cuesta el 5 % de sus propios PV.
+  de: Ein gewaltiger Hieb, der 5 % der eigenen LP kostet.
+  ja: 自分のHPを5%消費する強烈な一撃。
 - fr: Rugissement
+  en: Roar
+  es: Rugido
+  de: Gebrüll
+  ja: 咆哮
 - fr: "Peut effrayer tous les ennemis : 50 % de chances de perdre leur tour."
+  en: "Can frighten all enemies: 50% chance to lose their turn."
+  es: "Puede asustar a todos los enemigos: 50 % de probabilidad de perder su turno."
+  de: "Kann alle Gegner erschrecken: 50 % Chance, die Runde zu verlieren."
+  ja: 敵全体を怯えさせることがある：50%の確率でターンを失う。
 - fr: Frénésie
+  en: Frenzy
+  es: Frenesí
+  de: Blutrausch
+  ja: 狂乱
 - fr: Deux coups rapides.
+  en: Two quick blows.
+  es: Dos golpes rápidos.
+  de: Zwei schnelle Hiebe.
+  ja: 素早い2連撃。
 - fr: Peau d'écailles
+  en: Scaled Skin
+  es: Piel de escamas
+  de: Schuppenhaut
+  ja: 鱗の皮膚
 - fr: +40 % de défense et régénération pendant 3 tours.
+  en: +40% defence and regeneration for 3 turns.
+  es: +40 % de defensa y regeneración durante 3 turnos.
+  de: +40 % Verteidigung und Regeneration für 3 Runden.
+  ja: 3ターンの間、防御+40%と再生。
 - fr: Carnage
+  en: Carnage
+  es: Carnicería
+  de: Gemetzel
+  ja: 殺戮
 - fr: Un tourbillon de coups sur tous les ennemis, au prix de quelques PV.
+  en: A whirlwind of blows on all enemies, at the cost of a few HP.
+  es: Un torbellino de golpes sobre todos los enemigos, a costa de algunos PV.
+  de: Ein Wirbel aus Hieben gegen alle Gegner, auf Kosten einiger LP.
+  ja: HPを少し払い、敵全体に連撃の嵐を浴びせる。
 - fr: Rage du wyrm
+  en: Wyrm's Rage
+  es: Rabia de la sierpe
+  de: Wyrmzorn
+  ja: ワームの憤激
 - fr: "Le sang de dragon bout : énorme coup unique, d'autant plus fort que le Berserker est blessé."
+  en: "The dragon blood boils: one huge blow, all the stronger as the Berserker is wounded."
+  es: "La sangre de dragón hierve: un golpe único enorme, más fuerte cuanto más herido está el Berserker."
+  de: "Das Drachenblut kocht: ein einziger gewaltiger Hieb, umso stärker, je verletzter der Berserker ist."
+  ja: 竜の血が沸騰する：負傷しているほど強くなる渾身の一撃。
 - fr: Écailles d'airain
+  en: Brass Scales
+  es: Escamas de bronce
+  de: Messingschuppen
+  ja: 真鍮の鱗
 - fr: "Des écailles couvrent sa peau : bouclier et défense."
+  en: "Scales cover their skin: shield and defence."
+  es: "Las escamas cubren su piel: escudo y defensa."
+  de: "Schuppen bedecken seine Haut: Schild und Verteidigung."
+  ja: 鱗が肌を覆う：盾と防御。
 - fr: Souffle brûlant
+  en: Searing Breath
+  es: Aliento abrasador
+  de: Sengender Odem
+  ja: 灼熱の息
 - fr: Un souffle de flammes sur tous les ennemis.
+  en: A breath of flames on all enemies.
+  es: Un aliento de llamas sobre todos los enemigos.
+  de: Ein Flammenatem auf alle Gegner.
+  ja: 敵全体に炎の息を吐く。
 - fr: Ultime — Forme du Wyrm
+  en: Ultimate — Wyrm Form
+  es: Definitiva — Forma de Sierpe
+  de: Ultimativ — Wyrmgestalt
+  ja: 奥義 — ワーム化
 - fr: "Se transforme en wyrm : carapace d'écailles, régénération et souffle de feu sur tous les ennemis."
+  en: "Turns into a wyrm: carapace of scales, regeneration and fire breath on all enemies."
+  es: "Se transforma en sierpe: caparazón de escamas, regeneración y aliento de fuego sobre todos los enemigos."
+  de: "Verwandelt sich in einen Wyrm: Schuppenpanzer, Regeneration und Feueratem auf alle Gegner."
+  ja: ワームに変身する：鱗の甲殻、再生、敵全体への炎の息。

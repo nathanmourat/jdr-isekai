@@ -1,20 +1,92 @@
 # Textes de content/campagne/activites.yaml
 # Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
 - fr: Entraînement
+  en: Training
+  es: Entrenamiento
+  de: Training
+  ja: 鍛錬
 - fr: "Exercices, duels, sueur : de l'expérience, et de la maîtrise pour vos compétences équipées."
+  en: "Drills, duels, sweat: experience, and mastery for your equipped skills."
+  es: "Ejercicios, duelos, sudor: experiencia, y maestría para tus habilidades equipadas."
+  de: "Übungen, Duelle, Schweiß: Erfahrung und Meisterschaft für deine ausgerüsteten Fähigkeiten."
+  ja: 訓練、手合わせ、汗。経験値と、装備スキルの習熟度が得られる。
 - fr: Entraînement intensif
+  en: Intensive training
+  es: Entrenamiento intensivo
+  de: Intensivtraining
+  ja: 猛特訓
 - fr: "Un maître d'armes exigeant : +1 point de caractéristique, et un peu de maîtrise."
+  en: "A demanding weapons master: +1 attribute point, and a bit of mastery."
+  es: "Un maestro de armas exigente: +1 punto de característica, y algo de maestría."
+  de: "Ein strenger Waffenmeister: +1 Attributpunkt und etwas Meisterschaft."
+  ja: 厳しい武術師範：能力値ポイント+1と、少しの習熟度。
 - fr: Artisanat
+  en: Crafting
+  es: Artesanía
+  de: Handwerk
+  ja: 製作
 - fr: Fabriquer des potions de soin (meilleur avec l'Intelligence, l'Alchimiste ou la Main de l'artisan).
+  en: Make healing potions (better with Intelligence, the Alchemist or the Artisan's Hand).
+  es: Fabricar pociones de curación (mejor con la Inteligencia, el Alquimista o la Mano del artesano).
+  de: Heiltränke herstellen (besser mit Intelligenz, dem Alchemisten oder der Hand des Handwerkers).
+  ja: 回復ポーションを作る（知力、錬金術師、職人の手があると効果的）。
 - fr: Commerce
+  en: Trade
+  es: Comercio
+  de: Handel
+  ja: 商売
 - fr: Acheter, revendre, négocier (selon le Charisme).
+  en: Buy, resell, haggle (depends on Charisma).
+  es: Comprar, revender, negociar (según el Carisma).
+  de: Kaufen, weiterverkaufen, feilschen (je nach Charisma).
+  ja: 買って、売って、値切る（魅力しだい）。
 - fr: Relation
+  en: Bonding
+  es: Relación
+  de: Beziehung
+  ja: 交流
 - fr: "Passer du temps avec un compagnon : une scène et de l'affinité."
+  en: "Spend time with a companion: a scene and affinity."
+  es: "Pasar tiempo con una compañera: una escena y afinidad."
+  de: "Zeit mit einer Gefährtin verbringen: eine Szene und Zuneigung."
+  ja: 仲間と過ごす：シーンと好感度。
 - fr: Contrats de guilde
+  en: Guild contracts
+  es: Contratos del gremio
+  de: Gildenaufträge
+  ja: ギルドの依頼
 - fr: "Petites missions : or et points de guilde."
+  en: "Small missions: gold and guild points."
+  es: "Pequeñas misiones: oro y puntos de gremio."
+  de: "Kleine Aufträge: Gold und Gildenpunkte."
+  ja: ちょっとした仕事：ゴールドとギルドポイント。
 - fr: Études
+  en: Studies
+  es: Estudios
+  de: Studien
+  ja: 研究
 - fr: "Bibliothèques et archives : un peu d'expérience et des indices."
+  en: "Libraries and archives: a little experience and some clues."
+  es: "Bibliotecas y archivos: algo de experiencia y pistas."
+  de: "Bibliotheken und Archive: etwas Erfahrung und Hinweise."
+  ja: 図書館と記録庫：少しの経験値と手がかり。
 - fr: Repos
+  en: Rest
+  es: Descanso
+  de: Ruhe
+  ja: 休息
 - fr: Soigne les blessures ; un moment avec tout le monde.
+  en: Heals wounds; a moment with everyone.
+  es: Cura las heridas; un momento con todos.
+  de: Heilt Verletzungen; ein Moment mit allen.
+  ja: 負傷を癒やす。みんなとのひととき。
 - fr: Gestion du domaine
+  en: Domain management
+  es: Gestión del dominio
+  de: Verwaltung der Ländereien
+  ja: 領地経営
 - fr: "Développer sa seigneurie : des revenus, et des soldats qui serviront dans la guerre à venir (chapitre 5)."
+  en: "Develop your lordship: income, and soldiers who will serve in the coming war (chapter 5)."
+  es: "Desarrollar el señorío: ingresos, y soldados que servirán en la guerra que se avecina (capítulo 5)."
+  de: "Deine Herrschaft ausbauen: Einnahmen und Soldaten, die im kommenden Krieg dienen (Kapitel 5)."
+  ja: 領地を育てる：収入と、来たる戦争（第5章）で戦う兵が得られる。

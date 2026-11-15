@@ -1,33 +1,157 @@
 # Textes de content/classes/guerisseur.yaml
 # Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
 - fr: Guérisseur
+  en: Healer
+  es: Sanador
+  de: Heiler
+  ja: ヒーラー
 - fr: Soin
+  en: Healing
+  es: Curación
+  de: Heilung
+  ja: 回復
 - fr: La lumière qui ramène ses compagnons du bord du gouffre.
+  en: The light that brings companions back from the brink.
+  es: La luz que trae a sus compañeros de vuelta desde el borde del abismo.
+  de: Das Licht, das Gefährten vom Rand des Abgrunds zurückholt.
+  ja: 仲間を奈落の淵から連れ戻す光。
 - fr: Main bienveillante
+  en: Kindly Hand
+  es: Mano bondadosa
+  de: Gütige Hand
+  ja: 慈しみの手
 - fr: Les soins qui dépassent les PV max deviennent un bouclier (50 % du surplus).
+  en: Healing above max HP becomes a shield (50% of the excess).
+  es: Las curaciones que superan los PV máx. se convierten en escudo (50 % del excedente).
+  de: Heilung über die max. LP hinaus wird zu einem Schild (50 % des Überschusses).
+  ja: 最大HPを超えた回復量は盾になる（超過分の50%）。
 - fr: Sanctuaire
+  en: Sanctuary
+  es: Santuario
+  de: Heiligtum
+  ja: 聖域
 - fr: Soins de groupe.
+  en: Group healing.
+  es: Curación de grupo.
+  de: Gruppenheilung.
+  ja: 全体回復。
 - fr: Jugement
+  en: Judgement
+  es: Juicio
+  de: Urteil
+  ja: 審判
 - fr: Dégâts sacrés, soin en frappant.
+  en: Holy damage, heals while striking.
+  es: Daño sagrado, cura al golpear.
+  de: Heiliger Schaden, heilt beim Zuschlagen.
+  ja: 聖属性ダメージ。攻撃しながら回復。
 - fr: Second Souffle
+  en: Second Wind
+  es: Segundo aliento
+  de: Zweiter Atem
+  ja: 再起の息吹
 - fr: Relève tous les alliés K.O. à 40 % de leurs PV.
+  en: Revives all KO'd allies at 40% of their HP.
+  es: Levanta a todos los aliados K.O. con el 40 % de sus PV.
+  de: Richtet alle K.-o.-Verbündeten mit 40 % ihrer LP wieder auf.
+  ja: 戦闘不能の味方全員をHP40%で蘇生する。
 - fr: Rend le groupe presque increvable.
+  en: Makes the group nearly unkillable.
+  es: Hace al grupo casi invencible.
+  de: Macht die Gruppe fast unverwüstlich.
+  ja: パーティーをほぼ不死身にする。
 - fr: Dégâts très faibles ; seul, il gagne en tenant, pas en tuant.
+  en: Very low damage; alone, wins by holding out, not by killing.
+  es: Daño muy bajo; solo, gana resistiendo, no matando.
+  de: Sehr wenig Schaden; allein gewinnt er durch Durchhalten, nicht durch Töten.
+  ja: 火力はとても低い。ソロでは倒すより耐えて勝つ。
 - fr: Lumière apaisante
+  en: Soothing Light
+  es: Luz apaciguadora
+  de: Beruhigendes Licht
+  ja: 癒やしの光
 - fr: Soigne un allié.
+  en: Heals an ally.
+  es: Cura a un aliado.
+  de: Heilt einen Verbündeten.
+  ja: 味方1人を回復する。
 - fr: Purification
+  en: Purification
+  es: Purificación
+  de: Reinigung
+  ja: 浄化
 - fr: Retire les effets négatifs du groupe et le soigne un peu.
+  en: Removes the group's negative effects and heals it a little.
+  es: Elimina los efectos negativos del grupo y lo cura un poco.
+  de: Entfernt negative Effekte der Gruppe und heilt sie ein wenig.
+  ja: パーティーの弱体効果を解除し、少し回復する。
 - fr: Prière de groupe
+  en: Group Prayer
+  es: Oración de grupo
+  de: Gruppengebet
+  ja: 集団の祈り
 - fr: Soigne tout le groupe.
+  en: Heals the whole group.
+  es: Cura a todo el grupo.
+  de: Heilt die ganze Gruppe.
+  ja: パーティー全員を回復する。
 - fr: Châtiment
+  en: Chastisement
+  es: Castigo
+  de: Züchtigung
+  ja: 懲罰
 - fr: Dégâts sacrés ; le guérisseur récupère des PV.
+  en: Holy damage; the healer recovers HP.
+  es: Daño sagrado; el sanador recupera PV.
+  de: Heiliger Schaden; der Heiler erhält LP zurück.
+  ja: 聖属性ダメージ。ヒーラーはHPを回復する。
 - fr: Cercle de vie
+  en: Circle of Life
+  es: Círculo de vida
+  de: Kreis des Lebens
+  ja: 生命の円環
 - fr: Un cercle de lumière qui soigne tout le groupe chaque tour.
+  en: A circle of light that heals the whole group every turn.
+  es: Un círculo de luz que cura a todo el grupo cada turno.
+  de: Ein Lichtkreis, der jede Runde die ganze Gruppe heilt.
+  ja: 毎ターン、パーティー全員を癒やす光の円。
 - fr: Bénédiction de l'aube
+  en: Dawn Blessing
+  es: Bendición del alba
+  de: Segen der Morgenröte
+  ja: 暁の祝福
 - fr: Purifie tout le groupe et le protège.
+  en: Purifies and protects the whole group.
+  es: Purifica a todo el grupo y lo protege.
+  de: Reinigt und schützt die ganze Gruppe.
+  ja: パーティー全員を浄化し、守る。
 - fr: Lance de lumière
+  en: Lance of Light
+  es: Lanza de luz
+  de: Lichtlanze
+  ja: 光の槍
 - fr: Une lance sacrée transperce la cible.
+  en: A holy lance pierces the target.
+  es: Una lanza sagrada atraviesa al objetivo.
+  de: Eine heilige Lanze durchbohrt das Ziel.
+  ja: 聖なる槍が対象を貫く。
 - fr: Aube vengeresse
+  en: Vengeful Dawn
+  es: Alba vengadora
+  de: Rächende Morgenröte
+  ja: 報復の暁
 - fr: La lumière brûle tous les ennemis et soigne le Guérisseur.
+  en: The light burns all enemies and heals the Healer.
+  es: La luz quema a todos los enemigos y cura al Sanador.
+  de: Das Licht verbrennt alle Gegner und heilt den Heiler.
+  ja: 光が敵全体を焼き、ヒーラーを癒やす。
 - fr: Ultime — Second Souffle
+  en: Ultimate — Second Wind
+  es: Definitiva — Segundo aliento
+  de: Ultimativ — Zweiter Atem
+  ja: 奥義 — 再起の息吹
 - fr: Relève tous les alliés K.O. à 40 % de leurs PV et soigne tout le groupe.
+  en: Revives all KO'd allies at 40% of their HP and heals the whole group.
+  es: Levanta a todos los aliados K.O. con el 40 % de sus PV y cura a todo el grupo.
+  de: Richtet alle K.-o.-Verbündeten mit 40 % ihrer LP wieder auf und heilt die ganze Gruppe.
+  ja: 戦闘不能の味方全員をHP40%で蘇生し、パーティー全員を回復する。
