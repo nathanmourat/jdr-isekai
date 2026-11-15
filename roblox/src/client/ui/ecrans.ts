@@ -1,10 +1,10 @@
 /**
- * Écrans plein écran : accueil (créer / rejoindre une partie) et création du héros.
+ * Écrans plein écran : chargement de la campagne du serveur et création du héros.
  */
 import { CONTENU } from "shared/donnees";
 import { caracsDeDepart, listeHeros, type Carac, type Caracs, type OptionsHeros } from "shared/moteur";
-import type { ResumePartie } from "shared/reseau";
-import { agir, commander, jeu, montrerErreur } from "../partie";
+import { Players } from "@rbxts/services";
+import { agir, jeu, montrerErreur } from "../partie";
 import { bouton, carte, champ, choix, colonne, COULEURS, esc, ligne, texte } from "./kit";
 
 const CARACS: Carac[] = ["FOR", "AGI", "INT", "VIT", "ESP", "CHA"];
@@ -22,63 +22,23 @@ function trie<T extends { nom: string }>(o: Record<string, T>): T[] {
 
 // ───────────────────────────── Accueil ─────────────────────────────
 
-const accueil = { nom: "", code: "", parties: undefined as ResumePartie[] | undefined, chargement: false };
-
-export function ecranAccueil(racine: Frame, redessiner: () => void) {
+/** En attendant la campagne du serveur (chargée automatiquement à l'arrivée). */
+export function ecranAccueil(racine: Frame, _redessiner: () => void) {
 	const c = colonne(racine, 12);
 	texte(c, "Les Appelés de Velmaris", 34, { gras: true, couleur: COULEURS.or, centre: true });
-	texte(c, "JDR isekai en coopération, de 1 à 6 joueurs.", 16, { couleur: COULEURS.texte2, centre: true });
-
-	const creer = carte(c, "Créer une partie");
-	texte(creer, "Tu deviens le premier joueur. Donne ensuite le code à tes amis.", 14, { couleur: COULEURS.texte2 });
-	const l1 = ligne(creer);
-	champ(l1, "Nom de la partie (ex. Les Lanternes)", accueil.nom, (v) => (accueil.nom = v), new UDim(0.65, 0));
-	bouton(
-		l1,
-		"Créer",
-		() => {
-			if (accueil.nom.gsub("%s", "")[0].size() === 0) return;
-			commander({ type: "creer", nom: accueil.nom });
-		},
-		{ principal: true },
+	texte(c, "JDR isekai en coopération, de 1 à 6 joueurs par serveur.", 16, { couleur: COULEURS.texte2, centre: true });
+	texte(c, "Chargement de la campagne du serveur…", 18, { centre: true });
+	texte(
+		c,
+		"Serveur privé : la campagne de ce serveur reprend là où vous l'aviez laissée.\nServeur public : vous jouez la campagne du premier joueur arrivé, chacun avec son héros.",
+		14,
+		{ couleur: COULEURS.texte2, centre: true },
 	);
-
-	const rej = carte(c, "Rejoindre une partie");
-	texte(rej, "Entre le code à 6 caractères donné par un ami.", 14, { couleur: COULEURS.texte2 });
-	const l2 = ligne(rej);
-	champ(l2, "Code (ex. K7QM2X)", accueil.code, (v) => (accueil.code = v), new UDim(0.4, 0));
-	bouton(l2, "Rejoindre", () => commander({ type: "rejoindre", code: accueil.code }), { principal: true });
-
-	const mes = carte(c, "Mes parties");
-	if (accueil.parties === undefined) {
-		texte(mes, "Chargement…", 14, { couleur: COULEURS.texte2 });
-		if (!accueil.chargement) {
-			accueil.chargement = true;
-			task.spawn(() => {
-				const rep = commander({ type: "mes_parties" });
-				accueil.parties = rep.parties ?? [];
-				accueil.chargement = false;
-				if (rep.info !== undefined) jeu.info = rep.info;
-				redessiner();
-			});
-		}
-	} else if (accueil.parties.size() === 0) {
-		texte(mes, "Aucune partie pour l'instant.", 14, { couleur: COULEURS.texte2 });
-	} else {
-		for (const p of accueil.parties) {
-			choix(mes, esc(p.nom), `Code ${p.code} — cliquer pour reprendre`, false, () => commander({ type: "rejoindre", code: p.code }));
-		}
-	}
-}
-
-export function oublierListeParties() {
-	accueil.parties = undefined;
 }
 
 // ───────────────────────────── Création du héros ─────────────────────────────
 
 const creation = {
-	nom: "",
 	origine: "invoque" as "invoque" | "reincarne",
 	age: "20",
 	race: "humain",
@@ -98,13 +58,13 @@ export function ecranCreation(racine: Frame, redessiner: () => void) {
 	const etat = jeu.etat!;
 	const cfg = CONTENU.config.personnage;
 	const c = colonne(racine, 12);
-	texte(c, `Création de ton héros — partie « ${esc(jeu.nom)} » · code <b>${jeu.code}</b>`, 20, { gras: true, couleur: COULEURS.or });
+	texte(c, `Création de ton héros — ${esc(jeu.nom)}`, 20, { gras: true, couleur: COULEURS.or });
 	const enCours = etat.jour > 0 || listeHeros(etat).some((h) => h.niveau > 1);
 	if (enCours) texte(c, "La campagne a déjà commencé : ton héros arrivera au niveau moyen du groupe.", 14, { couleur: COULEURS.vert });
 
 	// 1. Identité
-	const id = carte(c, "1. Identité");
-	champ(id, "Nom du héros (ex. Kael)", creation.nom, (v) => (creation.nom = v));
+	const id = carte(c, "1. Origine");
+	texte(id, `Ton héros porte ton nom Roblox : <b>${esc(Players.LocalPlayer.DisplayName)}</b>.`, 15);
 	const lo = ligne(id);
 	bouton(lo, "Invoqué (adulte, appelé par l'Ordre)", () => ((creation.origine = "invoque"), redessiner()), { choisi: creation.origine === "invoque" });
 	bouton(lo, "Réincarné (né dans ce monde en 994)", () => ((creation.origine = "reincarne"), redessiner()), { choisi: creation.origine === "reincarne" });
@@ -169,8 +129,7 @@ export function ecranCreation(racine: Frame, redessiner: () => void) {
 		rc,
 		"Créer mon héros",
 		() => {
-			const heros: OptionsHeros = { nom: creation.nom, classe: creation.classe, race: creation.race, don: creation.don, origine: creation.origine, libres: opt };
-			if (creation.nom.gsub("%s", "")[0].size() === 0) return agirErreur("Donne un nom à ton héros.");
+			const heros: OptionsHeros = { nom: Players.LocalPlayer.DisplayName, classe: creation.classe, race: creation.race, don: creation.don, origine: creation.origine, libres: opt };
 			if (creation.don === "") return agirErreur("Choisis un don.");
 			if (creation.origine === "invoque") heros.age = tonumber(creation.age) ?? 20;
 			agir({ type: "creer_heros", heros });

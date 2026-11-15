@@ -1,13 +1,17 @@
 /**
- * Parties ouvertes sur ce serveur : état, membres, application des actions et sauvegarde.
+ * La campagne du serveur : état, membres, application des actions et sauvegarde.
+ * Sur Roblox, un serveur = un groupe (6 joueurs au plus) : pas de code de partie ni de pseudo à choisir.
+ * Serveur privé : la campagne est attachée au serveur privé. Serveur public : c'est celle de l'hôte
+ * (le premier joueur arrivé), et les autres y entrent avec leur héros.
  */
 import { HttpService, Players, TextService } from "@rbxts/services";
 import { CONTENU } from "shared/donnees";
 import { appliquer, FORMAT, jourPeutPasser, nouvellePartie, rejouer, verifierSauvegarde, type Action, type EtatPartie } from "shared/moteur";
-import { idJoueur, reseau, type ActionJoueur } from "shared/reseau";
-import { ajouterPartieAuJoueur, chargerEtVerrouiller, enregistrer, partieExiste, type DonneesPartie } from "./stockage";
 
-const LETTRES = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+const MAX_JOUEURS = 6;
+import { idJoueur, reseau, type ActionJoueur } from "shared/reseau";
+import { chargerEtVerrouiller, enregistrer, type DonneesPartie } from "./stockage";
+
 const r = reseau();
 
 export class PartieOuverte {
@@ -76,39 +80,71 @@ export function filtrer(texte: string, auteur: Player): string {
 	return res as string;
 }
 
-function nouveauCode(): string {
-	for (let essai = 0; essai < 20; essai++) {
-		let code = "";
-		for (let i = 0; i < 6; i++) {
-			const k = math.random(1, LETTRES.size());
-			code += LETTRES.sub(k, k);
+// ───────────────────────────── Une campagne par serveur ─────────────────────────────
+
+/** La campagne de ce serveur (une seule : tous les joueurs du serveur forment le groupe). */
+let partieServeur: PartieOuverte | undefined;
+const enAttente: Player[] = [];
+let occupe = false;
+
+/** Clé de sauvegarde : le serveur privé lui-même, sinon l'hôte (premier joueur arrivé sur le serveur). */
+function cleDuServeur(hote: Player): { cle: string; nom: string } {
+	if (game.PrivateServerId !== "") {
+		let proprio = "ses amis";
+		if (game.PrivateServerOwnerId !== 0) {
+			const [ok, n] = pcall(() => Players.GetNameFromUserIdAsync(game.PrivateServerOwnerId as never));
+			if (ok) proprio = n as string;
 		}
-		if (!ouvertes.has(code) && !partieExiste(code)) return code;
+		return { cle: `prive-${game.PrivateServerId}`, nom: `Serveur privé de ${proprio}` };
 	}
-	throw "Impossible de trouver un code libre, réessaie.";
+	return { cle: `hote-${idJoueur(hote)}`, nom: `Campagne de ${hote.DisplayName}` };
 }
 
-export function creerPartie(nomBrut: string, auteur: Player): PartieOuverte {
-	const nom = filtrer(nomBrut.sub(1, 40), auteur);
-	if (nom.size() === 0) throw "Donne un nom à la partie.";
-	const code = nouveauCode();
-	const depart = nouvellePartie(CONTENU, code, nom, HttpService.GenerateGUID(false));
-	const p = new PartieOuverte({ code, nom, depart, actions: [] });
-	enregistrer(p.donnees);
-	ouvertes.set(code, p);
+function ouvrirPartieDuServeur(hote: Player): PartieOuverte {
+	const { cle, nom } = cleDuServeur(hote);
+	// un joueur (ou un serveur privé) n'est que sur un serveur à la fois : on reprend la partie même si
+	// un ancien serveur arrêté brutalement l'a laissée verrouillée
+	const d = chargerEtVerrouiller(cle, true);
+	let p: PartieOuverte;
+	if (typeIs(d, "string")) {
+		const depart = nouvellePartie(CONTENU, cle, nom, HttpService.GenerateGUID(false));
+		p = new PartieOuverte({ code: cle, nom, depart, actions: [] });
+		enregistrer(p.donnees);
+	} else p = new PartieOuverte(d);
+	ouvertes.set(cle, p);
 	return p;
 }
 
-export function ouvrirPartie(codeBrut: string): PartieOuverte | string {
-	const code = codeBrut.upper().gsub("[^%w]", "")[0];
-	if (code.size() !== 6) return "Le code d'une partie a 6 caractères.";
-	const deja = ouvertes.get(code);
-	if (deja) return deja;
-	const d = chargerEtVerrouiller(code);
-	if (typeIs(d, "string")) return d;
-	const p = new PartieOuverte(d);
-	ouvertes.set(code, p);
-	return p;
+/**
+ * Un joueur arrive sur le serveur : il entre automatiquement dans la campagne du serveur
+ * (chargée ou créée à l'arrivée du premier joueur). Les arrivées sont traitées une par une.
+ */
+export function accueillir(joueur: Player) {
+	enAttente.push(joueur);
+	if (occupe) return;
+	occupe = true;
+	task.spawn(() => {
+		while (enAttente.size() > 0) {
+			const j = enAttente.shift()!;
+			if (j.Parent !== Players) continue;
+			const [ok, err] = pcall(() => {
+				if (!partieServeur) partieServeur = ouvrirPartieDuServeur(j);
+				if (partieServeur.membres.size() >= MAX_JOUEURS) {
+					j.Kick("Ce serveur est complet (6 joueurs au plus). Rejoins un autre serveur.");
+					return;
+				}
+				entrer(j, partieServeur);
+			});
+			if (!ok) {
+				warn(`[Velmaris] Arrivée de ${j.Name} : ${messageErreur(err)}`);
+				const m = messageErreur(err);
+				// la campagne a déjà ses 6 héros : ce joueur ne peut pas y entrer
+				if (m.find("complète", 1, true)[0] !== undefined) j.Kick(`La campagne de ce serveur a déjà ses 6 héros. Rejoins un autre serveur.`);
+				else r.erreur.FireClient(j, m);
+			}
+		}
+		occupe = false;
+	});
 }
 
 /** Fait entrer un joueur dans une partie : il « rejoint » la première fois, puis il est marqué présent. */
@@ -132,7 +168,6 @@ export function entrer(joueur: Player, p: PartieOuverte) {
 	} else if (!j.present) {
 		p.jouer({ type: "presence", joueur: id, present: true });
 	}
-	task.spawn(() => pcall(() => ajouterPartieAuJoueur(id, { code: p.donnees.code, nom: p.donnees.nom })));
 }
 
 /** Retire un joueur de sa partie (il devient « absent »). La partie est fermée quand il n'y a plus personne. */
@@ -147,6 +182,8 @@ export function sortir(joueur: Player) {
 		pcall(() => enregistrer(p.donnees, true));
 		p.modifiee = false;
 		ouvertes.delete(p.donnees.code);
+		// serveur vide : le prochain joueur qui arrive devient l'hôte (sa campagne sera chargée)
+		if (partieServeur === p) partieServeur = undefined;
 	}
 }
 
@@ -158,13 +195,8 @@ export function actionDuJoueur(joueur: Player, brute: ActionJoueur) {
 	// le serveur décide qui joue : on ne fait jamais confiance au champ « joueur » envoyé
 	const action = { ...brute, joueur: idJoueur(joueur) } as Action;
 	// textes écrits par le joueur et visibles par les autres : filtrés
-	if (action.type === "creer_heros" && typeIs(action.heros, "table")) {
-		const h = action.heros as { nom?: unknown };
-		if (!typeIs(h.nom, "string")) return r.erreur.FireClient(joueur, "Donne un nom à ton héros.");
-		const [ok, nom] = pcall(() => filtrer((h.nom as string).sub(1, 30), joueur));
-		if (!ok) return r.erreur.FireClient(joueur, tostring(nom));
-		action.heros = { ...(action.heros as object), nom, portrait: undefined };
-	}
+	// sur Roblox, le héros porte le nom affiché du joueur (déjà filtré par Roblox)
+	if (action.type === "creer_heros" && typeIs(action.heros, "table")) action.heros = { ...(action.heros as object), nom: joueur.DisplayName, portrait: undefined };
 	if (action.type === "rejoindre" || action.type === "portrait") return r.erreur.FireClient(joueur, "Action non disponible sur Roblox.");
 	const err = p.jouer(action);
 	if (err !== undefined) r.erreur.FireClient(joueur, err);

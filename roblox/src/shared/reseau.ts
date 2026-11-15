@@ -16,20 +16,14 @@ export interface ResumePartie {
 	nom: string;
 }
 
-export type Commande =
-	| { type: "creer"; nom: string }
-	| { type: "rejoindre"; code: string }
-	| { type: "mes_parties" }
-	| { type: "synchro" }
-	| { type: "quitter" };
+/** Seule commande : « synchro » (la campagne du serveur, entière). Pas de création ni de code sur Roblox. */
+export type Commande = { type: "synchro" };
 
 export interface ReponseCommande {
 	ok: boolean;
 	erreur?: string;
-	/** Partie ouverte (creer, rejoindre, synchro) */
+	/** Campagne du serveur (synchro) */
 	partie?: { code: string; nom: string; depart: EtatPartie; actions: Action[] };
-	/** Mes parties (mes_parties) */
-	parties?: ResumePartie[];
 	/** Message d'information (ex. sauvegarde désactivée dans Studio) */
 	info?: string;
 }
@@ -63,7 +57,7 @@ export function reseau() {
 		nouvellesActions: dossier.WaitForChild("NouvellesActions") as RemoteEvent<(debut: number, actions: Action[]) => void>,
 		/** serveur → joueur : action refusée (message en français) */
 		erreur: dossier.WaitForChild("Erreur") as RemoteEvent<(message: string) => void>,
-		/** joueur → serveur : créer, rejoindre, lister ses parties… */
+		/** joueur → serveur : demander la campagne du serveur (synchro) */
 		commande: dossier.WaitForChild("Commande") as RemoteFunction<(c: Commande) => ReponseCommande>,
 	};
 }

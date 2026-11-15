@@ -1,6 +1,7 @@
 /**
  * Sauvegarde des parties dans les DataStores Roblox.
- *  - « VelmarisParties_v1 » : code → { nom, depart, actions, verrou }
+ *  - « VelmarisParties_v1 » : clé → { nom, depart, actions, verrou } ; clé = « prive-<id du serveur privé> »
+ *    ou « hote-u<UserId> » (campagne de l'hôte d'un serveur public)
  *  - « VelmarisJoueurs_v1 » : u<UserId> → { parties: [{ code, nom }] }
  * Dans Studio sans accès aux services (jeu non publié ou option désactivée), on garde tout en mémoire :
  * le jeu marche, mais rien n'est conservé après l'arrêt.
@@ -62,7 +63,7 @@ export function partieExiste(code: string): boolean {
 }
 
 /** Charge une partie et la verrouille pour ce serveur. Renvoie un message d'erreur si impossible. */
-export function chargerEtVerrouiller(code: string): DonneesPartie | string {
+export function chargerEtVerrouiller(code: string, forcer = false): DonneesPartie | string {
 	if (memoire) return parties.get(code) ?? "Aucune partie avec ce code.";
 	let refus: string | undefined;
 	const res = essayer(() =>
@@ -74,7 +75,7 @@ export function chargerEtVerrouiller(code: string): DonneesPartie | string {
 				return $tuple(undefined);
 			}
 			const v = d.verrou;
-			if (v !== undefined && v.serveur !== SERVEUR && v.expire > os.time()) {
+			if (!forcer && v !== undefined && v.serveur !== SERVEUR && v.expire > os.time()) {
 				refus = "Cette partie est déjà ouverte sur un autre serveur. Rejoins ton ami sur Roblox (bouton « Rejoindre » sur son profil), puis entre le code.";
 				return $tuple(undefined);
 			}

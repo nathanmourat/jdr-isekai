@@ -45,7 +45,6 @@ import {
 import { agir, commander, jeu, monHeros } from "../partie";
 import { affichage, type Panneau } from "../local";
 import { barre, bouton, carte, colonne, COULEURS, esc, ligne, texte } from "./kit";
-import { oublierListeParties } from "./ecrans";
 
 const CARACS: Carac[] = ["FOR", "AGI", "INT", "VIT", "ESP", "CHA"];
 const NOMS_CARACS: Record<Carac, string> = { FOR: "Force", AGI: "Agilité", INT: "Intelligence", VIT: "Vitalité", ESP: "Esprit", CHA: "Charisme" };
@@ -591,8 +590,16 @@ function vueCompagnons(parent: Frame) {
 
 function vuePartie(parent: Frame, redessiner: () => void) {
 	const etat = jeu.etat!;
-	const c = carte(parent, `Partie « ${esc(jeu.nom)} »`);
-	texte(c, `Code à donner à tes amis : <b><font color="#d9a441">${jeu.code}</font></b>`, 17);
+	const c = carte(parent, esc(jeu.nom));
+	const prive = (jeu.code ?? "").sub(1, 6) === "prive-";
+	texte(
+		c,
+		prive
+			? "Serveur privé : la campagne appartient à ce serveur. Tes amis la rejoignent en entrant sur le serveur."
+			: "Serveur public : c'est la campagne de l'hôte (le premier joueur arrivé). Elle est gardée dans sa sauvegarde.",
+		14,
+		{ couleur: COULEURS.texte2 },
+	);
 	texte(c, `Session ${etat.session}${etat.meneur !== undefined ? ` · meneur du jour : ${esc(etat.joueurs[etat.meneur]?.pseudo ?? "?")}` : ""}`, 14);
 	const j = carte(parent, "Joueurs");
 	for (const id of etat.ordreJoueurs) {
@@ -602,15 +609,5 @@ function vuePartie(parent: Frame, redessiner: () => void) {
 	}
 	const a = carte(parent, "Actions");
 	bouton(a, "Nouvelle session (le meneur change)", () => agir({ type: "nouvelle_session" }), { hauteur: 34 });
-	bouton(
-		a,
-		"Quitter la partie",
-		() => {
-			affichage.panneau = undefined;
-			oublierListeParties();
-			commander({ type: "quitter" });
-			redessiner();
-		},
-		{ hauteur: 34 },
-	);
+	texte(a, "Pour arrêter, quitte simplement le serveur : la campagne est sauvegardée toute seule.", 13, { couleur: COULEURS.texte2 });
 }

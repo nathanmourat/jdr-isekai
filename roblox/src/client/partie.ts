@@ -63,15 +63,24 @@ export function commander(c: Commande): ReponseCommande {
 	const [ok, rep] = pcall(() => r.commande.InvokeServer(c));
 	if (!ok) return { ok: false, erreur: "Le serveur ne répond pas. Réessaie." };
 	if (rep.ok && rep.partie) ouvrir(rep);
-	if (rep.ok && c.type === "quitter") {
-		jeu.code = undefined;
-		jeu.etat = undefined;
-		jeu.depart = undefined;
-		jeu.actions = [];
-	}
 	if (!rep.ok) jeu.erreur = rep.erreur;
 	prevenir();
 	return rep;
+}
+
+/** Au démarrage : attend que le serveur ait chargé sa campagne (le joueur y entre automatiquement). */
+export function attendreCampagne() {
+	task.spawn(() => {
+		while (!jeu.etat) {
+			const [ok, rep] = pcall(() => r.commande.InvokeServer({ type: "synchro" }));
+			if (ok && rep.ok && rep.partie) {
+				ouvrir(rep);
+				prevenir();
+				return;
+			}
+			task.wait(1.5);
+		}
+	});
 }
 
 /** Joue une action : vérifiée ici d'abord (message immédiat), puis par le serveur. */

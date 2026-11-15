@@ -7,7 +7,7 @@ import { Players, Workspace } from "@rbxts/services";
 import { CONTENU } from "shared/donnees";
 import { noeudCourant } from "shared/moteur";
 import { affichage } from "./local";
-import { effacerMessages, jeu, monHeros, surChangement } from "./partie";
+import { attendreCampagne, effacerMessages, jeu, monHeros, surChangement } from "./partie";
 import { afficherArene, cacherArene, definirEquipements } from "./rendu/arene";
 import type { EquipementPorte } from "shared/equipement3d";
 import { afficherDonjon, cacherDonjon, retraitCombat } from "./rendu/donjon3d";
@@ -264,6 +264,7 @@ surInteraction((lieu, action, pnj) => {
 	redessiner();
 });
 surChangement(redessiner);
+attendreCampagne();
 surveillerButin();
 animerDecor();
 redessiner();

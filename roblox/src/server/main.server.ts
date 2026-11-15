@@ -1,11 +1,11 @@
 /**
  * Serveur Roblox des Appelés de Velmaris :
- * parties avec code à 6 caractères, actions vérifiées par le moteur, sauvegarde DataStore.
+ * une campagne par serveur (serveur privé, ou campagne de l'hôte), actions vérifiées par le moteur, sauvegarde DataStore.
  */
 import { Players } from "@rbxts/services";
-import { idJoueur, reseau, type Commande, type ReponseCommande } from "shared/reseau";
-import { actionDuJoueur, boucleJours, boucleSauvegarde, creerPartie, entrer, messageErreur, ouvrirPartie, partieDe, sortir, toutEnregistrer } from "./parties";
-import { partiesDuJoueur, sauvegardeActive } from "./stockage";
+import { reseau, type Commande, type ReponseCommande } from "shared/reseau";
+import { accueillir, actionDuJoueur, boucleJours, boucleSauvegarde, messageErreur, partieDe, sortir, toutEnregistrer } from "./parties";
+import { sauvegardeActive } from "./stockage";
 import { construireMonde } from "./monde";
 import { preparerModeles } from "./modeles";
 import { construireInterieurs } from "./interieurs";
@@ -43,30 +43,12 @@ r.commande.OnServerInvoke = (joueur: Player, c: unknown): ReponseCommande => {
 	try {
 		const info = sauvegardeActive() ? undefined : INFO_MEMOIRE;
 		switch (cmd.type) {
-			case "creer": {
-				if (!typeIs(cmd.nom, "string")) return { ok: false, erreur: "Donne un nom à la partie." };
-				const p = creerPartie(cmd.nom, joueur);
-				entrer(joueur, p);
-				return { ok: true, partie: p.resume(), info };
-			}
-			case "rejoindre": {
-				if (!typeIs(cmd.code, "string")) return { ok: false, erreur: "Entre un code." };
-				const p = ouvrirPartie(cmd.code);
-				if (typeIs(p, "string")) return { ok: false, erreur: p };
-				entrer(joueur, p);
-				return { ok: true, partie: p.resume(), info };
-			}
 			case "synchro": {
+				// la campagne du serveur se charge à l'arrivée du joueur : il redemande jusqu'à ce qu'elle soit prête
 				const p = partieDe.get(joueur);
-				if (!p) return { ok: false, erreur: "Tu n'es dans aucune partie." };
-				return { ok: true, partie: p.resume() };
+				if (!p) return { ok: false, erreur: "La campagne se charge…" };
+				return { ok: true, partie: p.resume(), info };
 			}
-			case "quitter": {
-				sortir(joueur);
-				return { ok: true };
-			}
-			case "mes_parties":
-				return { ok: true, parties: partiesDuJoueur(idJoueur(joueur)), info };
 		}
 		return { ok: false, erreur: "Commande inconnue." };
 	} catch (e) {
@@ -75,6 +57,9 @@ r.commande.OnServerInvoke = (joueur: Player, c: unknown): ReponseCommande => {
 };
 
 r.action.OnServerEvent.Connect((joueur, a) => actionDuJoueur(joueur, a as never));
+// chaque joueur qui arrive entre directement dans la campagne du serveur
+Players.GetPlayers().forEach(accueillir);
+Players.PlayerAdded.Connect(accueillir);
 Players.PlayerRemoving.Connect((joueur) => sortir(joueur));
 game.BindToClose(() => toutEnregistrer());
 task.spawn(boucleSauvegarde);

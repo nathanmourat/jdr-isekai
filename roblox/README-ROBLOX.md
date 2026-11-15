@@ -74,15 +74,14 @@ Sans ces réglages, le jeu marche quand même, mais les parties sont **perdues �
 1. Onglet **Test** → **Clients et serveurs** (*Clients and Servers*) → choisis **2 joueurs** → **Démarrer** (*Start*). Trois fenêtres s'ouvrent : le serveur, Player1 et Player2.
 2. Fais les vérifications ci-dessous dans les fenêtres Player1 et Player2.
 
-- [ ] L'écran d'accueil « Les Appelés de Velmaris » s'affiche.
-- [ ] **Player1** : crée une partie → l'écran « Création de ton héros » s'affiche avec un **code à 6 caractères**.
-- [ ] **Player1** : clique sur « Créer mon héros » sans nom → bandeau rouge « Donne un nom à ton héros. » (un clic dessus le ferme).
-- [ ] **Player1** : crée un héros (nom, race, classe, don) → la **fiche** s'affiche (date, prochaine étape, caractéristiques, joueurs, journal).
-- [ ] **Player2** : entre le code → « Rejoindre » → dans la liste des dons, celui de Player1 est **grisé**, avec « pris par … ».
-- [ ] **Player2** : crée son héros → chez **Player1**, la liste « Joueurs » montre Player2 🟢 **sans recharger**.
-- [ ] **Player2** : « Quitter la partie » → chez Player1, Player2 passe en ⚪ (absent).
-- [ ] **Player2** : « Mes parties » → la partie est listée → un clic la reprend, et Player2 repasse en 🟢.
-- [ ] Avec la sauvegarde activée : arrête le test, relance-le → « Mes parties » → la partie revient avec les héros.
+**Un serveur = un groupe (15/11).** Plus de création de partie, de code ni de pseudo : en arrivant sur le serveur, on entre directement dans **la campagne du serveur**. Serveur privé : la campagne appartient au serveur privé et reprend à chaque visite. Serveur public : c'est la campagne de l'**hôte** (le premier joueur arrivé, sauvegardée chez lui) ; les autres y entrent avec leur héros. Le héros porte le **nom affiché Roblox** du joueur.
+- [ ] En arrivant : « Chargement de la campagne du serveur… », puis directement l'écran « Création de ton héros » (titre « Campagne de Player1 »), **sans case de nom** : « Ton héros porte ton nom Roblox : Player1 ».
+- [ ] **Player1** : crée un héros (origine, race, classe, don) → la **fiche** s'affiche ; le héros s'appelle Player1.
+- [ ] **Player2** (arrivé en même temps) : il est dans la **même campagne** ; dans la liste des dons, celui de Player1 est **grisé**, avec « pris par … ».
+- [ ] **Player2** : crée son héros → chez **Player1**, la liste « Joueurs » (panneau Partie) montre Player2 🟢 **sans recharger**. Le panneau Partie n'a plus de code ni de bouton « Quitter la partie ».
+- [ ] Avec la sauvegarde activée : arrête le test, relance-le → la campagne de Player1 (l'hôte) revient avec les deux héros.
+- [ ] Un 7ᵉ joueur sur le serveur est renvoyé avec « Ce serveur est complet (6 joueurs au plus) ». À régler aussi sur le site Roblox : **nombre maximum de joueurs = 6** (*Creator Dashboard → ton expérience → Places → Max Players*).
+- [ ] Serveur privé (une fois le jeu publié) : crée un serveur privé sur la page du jeu, joues-y, quitte, reviens → la campagne reprend ; un ami invité sur ce serveur privé y entre directement.
 - [ ] Aucune ligne rouge dans Output (fenêtres du serveur et des joueurs).
 
 ## Liste de contrôle — étapes R2 à R5 (tout le chapitre 1 sur Roblox)
