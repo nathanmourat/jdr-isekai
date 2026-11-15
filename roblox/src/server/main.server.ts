@@ -3,7 +3,7 @@
  * une campagne par joueur (sauvegardée sur son compte), monde partagé, groupes formés dans le jeu
  * (le groupe joue la campagne du chef), actions vérifiées par le moteur, sauvegarde DataStore.
  */
-import { Players } from "@rbxts/services";
+import { Players, Workspace } from "@rbxts/services";
 import { reseau, type Commande, type ReponseCommande } from "shared/reseau";
 import {
 	accueillir,
@@ -31,6 +31,7 @@ import { construireInterieurs } from "./interieurs";
 import { animerVille } from "./vie";
 import { habillerLesHeros } from "./tenues";
 import { construireRegions } from "./regions";
+import { preparerPierres } from "./voyage";
 import { preparerCollisions } from "./collisions";
 
 // joueurs et PNJ ne se bloquent plus entre eux (groupes de collision)
@@ -47,7 +48,11 @@ const reglerJoueur = (j: Player) => {
 Players.GetPlayers().forEach(reglerJoueur);
 Players.PlayerAdded.Connect(reglerJoueur);
 // les autres régions (chapitres 2 à 6), loin de Lysmont
-task.spawn(construireRegions);
+task.spawn(() => {
+	construireRegions();
+	// pierres de voyage : après les régions, pour se poser sur leur terrain
+	preparerPierres(Workspace.FindFirstChild("Velmaris") ?? Workspace);
+});
 // les modèles 3D sont créés en arrière-plan (cela prend quelques secondes) : le jeu démarre sans attendre
 task.spawn(preparerModeles);
 task.spawn(construireInterieurs);

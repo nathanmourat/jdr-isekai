@@ -14,6 +14,15 @@ import { jeu, monHeros } from "../partie";
 import { COULEURS } from "./kit";
 
 let masque = false;
+/** Lieu vers lequel « Y aller » guide (quand on ne peut pas encore s'y téléporter). */
+let guide: string | undefined;
+let derniereVue = "";
+
+/** Montre la flèche dorée vers un lieu, jusqu'à ce qu'on y arrive (même après le tutoriel). */
+export function guiderVers(lieu: string | undefined) {
+	guide = lieu;
+	majTutoriel(derniereVue);
+}
 let gui: ScreenGui | undefined;
 let bulle: TextLabel | undefined;
 let fleche: Part | undefined;
@@ -124,6 +133,11 @@ RunService.RenderStepped.Connect(() => {
 	const d = new Vector3(cible.X - r.Position.X, 0, cible.Z - r.Position.Z);
 	if (d.Magnitude < 12) {
 		fleche.Transparency = 1;
+		// arrivé : le guidage s'arrête
+		if (guide !== undefined) {
+			guide = undefined;
+			task.defer(() => majTutoriel(derniereVue));
+		}
 		return;
 	}
 	fleche.Transparency = 0.1;
@@ -150,14 +164,20 @@ function conseil(vue: string): string | undefined {
 	if (!e.disponible) return `🎯 Objectif : <b>${e.objectif}</b>. L'histoire attend : va dormir au <b>Chaudron Fêlé</b> (la taverne) pour faire passer le temps.`;
 	const astuce = !vus.has("groupe") ? "\nAstuce : le menu <b>👥 Groupe</b> permet de jouer à plusieurs." : "";
 	vus.add("groupe");
-	return `🎯 Objectif : <b>${e.objectif}</b>. Suis la <b>flèche dorée</b> jusqu'à <b>${nomCible}</b>, puis appuie sur <b>E</b> devant la porte. (Le bouton « Y aller » de la barre du haut t'y emmène directement.)${astuce}`;
+	return `🎯 Objectif : <b>${e.objectif}</b>. Suis la <b>flèche dorée</b> jusqu'à <b>${nomCible}</b>, puis appuie sur <b>E</b> devant la porte. (Le bouton « Guider » de la barre du haut montre aussi le chemin.)${astuce}`;
 }
 
 /** À appeler à chaque changement d'écran ou de partie. */
 export function majTutoriel(vue: string) {
+	derniereVue = vue;
+	// guidage demandé par « Y aller » : la flèche montre ce lieu (tutoriel ou non)
+	const porteGuide = guide !== undefined && vue === "monde" && affichage.dans === undefined ? porteDe(guide) : undefined;
 	if (!actif()) {
 		if (gui) gui.Enabled = false;
-		retirerFleche();
+		if (porteGuide) {
+			poserFleche();
+			cible = porteGuide;
+		} else retirerFleche();
 		return;
 	}
 	ecran();
@@ -166,7 +186,7 @@ export function majTutoriel(vue: string) {
 	if (t !== undefined) bulle!.Text = t;
 	// la flèche : dehors, vers la porte du lieu de la prochaine étape
 	const e = prochaineEtape(CONTENU, jeu.etat!, monHeros()!.id);
-	const porte = vue === "monde" && affichage.dans === undefined && e?.lieu !== undefined ? porteDe(e.lieu) : undefined;
+	const porte = porteGuide ?? (vue === "monde" && affichage.dans === undefined && e?.lieu !== undefined ? porteDe(e.lieu) : undefined);
 	if (porte) {
 		poserFleche();
 		cible = porte;

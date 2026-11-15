@@ -171,6 +171,11 @@ function placer(cf: CFrame) {
 	}
 }
 
+/** Téléportation avec fondu au noir (voyage rapide). */
+export function teleporter(cf: CFrame) {
+	fondu(() => placer(cf));
+}
+
 /** Téléporte le personnage dans la salle d'un lieu. */
 export function entrerDans(lieu: string) {
 	const arrivee = Workspace.FindFirstChild("Interieurs")?.FindFirstChild(lieu)?.FindFirstChild("Arrivee") as BasePart | undefined;
@@ -191,9 +196,7 @@ export function sortirDe(lieu: string) {
 /** Téléporte le personnage devant l'entrée d'un lieu. */
 export function allerAuLieu(id: string) {
 	const ancre = entrees().find((a) => a.GetAttribute("Lieu") === id);
-	const perso = Players.LocalPlayer.Character;
-	const racine = perso?.FindFirstChild("HumanoidRootPart") as BasePart | undefined;
-	if (ancre && racine) racine.CFrame = new CFrame(ancre.Position.add(new Vector3(0, 1, 6)), ancre.Position);
+	if (ancre) teleporter(new CFrame(ancre.Position.add(new Vector3(0, 1, 6)), ancre.Position));
 }
 
 // ───────────────────────────── Habitants ─────────────────────────────

@@ -12,10 +12,13 @@ import { afficherArene, cacherArene, definirEquipements } from "./rendu/arene";
 import type { EquipementPorte } from "shared/equipement3d";
 import { afficherDonjon, cacherDonjon, retraitCombat } from "./rendu/donjon3d";
 import { animerDecor } from "./rendu/ambiance";
+import { teleportationPossible } from "./rendu/voyage";
+import { DEBLOCAGE_VOYAGE, voyageDebloque } from "shared/voyage";
+import { trouverLieu } from "shared/geo";
 import { demarrerMeteo } from "./rendu/meteo";
 import { ecouterMessages } from "./ui/messages";
 import { majNotifications } from "./ui/notifications";
-import { majTutoriel } from "./ui/tutoriel";
+import { guiderVers, majTutoriel } from "./ui/tutoriel";
 import { majInvitesJoueurs, preparerInvitesJoueurs } from "./rendu/joueurs";
 import { allerAuLieu, entrerDans, majMarqueurs, majPnj, sortirDe, surInteraction } from "./rendu/marqueurs";
 import { vueCombat } from "./ui/combat";
@@ -149,11 +152,25 @@ function placerLanguette(y: number) {
 	languette.Position = new UDim2(1, -8, 0, math.max(MOBILE ? 52 : 40, y - 4));
 }
 
+/**
+ * « Y aller » : téléportation si le voyage rapide le permet (pierre connue, ou première venue dans une région
+ * une fois le voyage éveillé) ; sinon, une flèche dorée guide jusqu'au lieu.
+ */
 function allerA(lieu: string) {
 	affichage.panneau = undefined;
 	affichage.lieu = undefined;
-	affichage.dans = undefined;
-	allerAuLieu(lieu);
+	if (teleportationPossible(lieu)) {
+		affichage.dans = undefined;
+		guiderVers(undefined);
+		allerAuLieu(lieu);
+	} else {
+		guiderVers(lieu);
+		const nom = trouverLieu(lieu)?.nom ?? lieu;
+		jeu.info = voyageDebloque(jeu.etat)
+			? `Pas encore de pierre de voyage activée près de ${nom} : suis la flèche dorée.`
+			: `Le voyage rapide s'éveillera ${DEBLOCAGE_VOYAGE.texte}. En attendant, suis la flèche dorée jusqu'à ${nom}.`;
+		if (affichage.dans !== undefined) jeu.info += " (Sors d'abord du bâtiment.)";
+	}
 	redessiner();
 }
 
@@ -289,6 +306,11 @@ surInteraction((lieu, action, pnj) => {
 			affichage.lieu = lieu;
 			affichage.section = "tout";
 		}
+	} else if (action === "voyage") {
+		// une pierre de voyage : la liste des pierres activées
+		affichage.panneau = "voyage";
+		affichage.lieu = undefined;
+		affichage.lateralReplie = false;
 	} else if (action === "sortir") {
 		sortirDe(lieu);
 		affichage.dans = undefined;

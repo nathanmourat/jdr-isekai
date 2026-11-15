@@ -53,6 +53,8 @@ import { OBJECTIFS_GROUPE } from "shared/reseau";
 import { vueModeration } from "./moderation";
 import { messageLocal } from "./messages";
 import { NOMS_TEMPS, tempsActuel } from "../rendu/meteo";
+import { pierresConnues, teleportationPossible, voyagerVers } from "../rendu/voyage";
+import { DEBLOCAGE_VOYAGE, pierresDeVoyage, voyageDebloque } from "shared/voyage";
 import { affichage, type Panneau } from "../local";
 import { barre, bouton, carte, colonne, COULEURS, esc, ligne, texte } from "./kit";
 
@@ -155,13 +157,13 @@ export function barreHaut(parent: Frame, redessiner: () => void, allerA: (lieu: 
 	if (contrat) {
 		const lc = ligne(c, 8);
 		texte(lc, `📜 <b>${contrat.contrat.titre}</b> (${contrat.numero}/${contrat.total}) : ${contrat.etape.objectif}`, 14, { largeur: new UDim(1, -130) });
-		bouton(lc, "Y aller", () => allerA(contrat.etape.lieu), { hauteur: 30, taille: 14 });
+		bouton(lc, teleportationPossible(contrat.etape.lieu) ? "Y aller" : "Guider", () => allerA(contrat.etape.lieu), { hauteur: 30, taille: 14 });
 	}
 	const etape = prochaineEtape(CONTENU, etat, h.id);
 	if (etape) {
 		const l2 = ligne(c, 8);
 		texte(l2, `➤ <b>Prochaine étape :</b> ${etape.objectif}`, 15, { largeur: new UDim(1, -130) });
-		if (etape.lieu !== undefined && etape.disponible) bouton(l2, "Y aller", () => allerA(etape.lieu!), { principal: true, hauteur: 32 });
+		if (etape.lieu !== undefined && etape.disponible) bouton(l2, teleportationPossible(etape.lieu) ? "Y aller" : "Guider", () => allerA(etape.lieu!), { principal: true, hauteur: 32 });
 	}
 	const l3 = ligne(c, 6);
 	// l'équipe de modération a un onglet de plus
@@ -215,6 +217,9 @@ export function panneauLateral(parent: Frame, redessiner: () => void, allerA: (l
 			break;
 		case "moderation":
 			vueModeration(parent, redessiner);
+			break;
+		case "voyage":
+			vueVoyage(parent);
 			break;
 		case "partie":
 			vuePartie(parent, redessiner);
@@ -467,10 +472,34 @@ function vueCarte(parent: Frame, allerA: (lieu: string) => void) {
 		const li = ligne(parent);
 		const ici = etapes.includes(l.id) ? '<font color="#ffd166">📍 étape en cours · </font>' : "";
 		texte(li, `${ici}${marque}<b>${l.nom}</b>${combat}`, 15, { largeur: new UDim(1, -100) });
-		bouton(li, "Y aller", () => allerA(l.id), { hauteur: 32, taille: 14 });
+		bouton(li, teleportationPossible(l.id) ? "Y aller" : "Guider", () => allerA(l.id), { hauteur: 32, taille: 14 });
 	}
 	}
-	texte(parent, "« Y aller » te téléporte devant l'entrée (même dans une autre région). Tu peux aussi marcher : approche-toi d'une porte et appuie sur E.", 13, { couleur: COULEURS.texte2 });
+	texte(
+		parent,
+		voyageDebloque(etat)
+			? "« Y aller » te téléporte près des pierres de voyage déjà activées ; « Guider » montre le chemin avec une flèche dorée. Une pierre s'active en passant à côté."
+			: `Le voyage rapide s'éveillera ${DEBLOCAGE_VOYAGE.texte}. En attendant, « Guider » montre le chemin avec une flèche dorée.`,
+		13,
+		{ couleur: COULEURS.texte2 },
+	);
+	vueVoyage(parent);
+}
+
+/** Pierres de voyage : celles qu'on a activées, et le voyage vers elles (s'il est éveillé). */
+function vueVoyage(parent: Instance) {
+	const etat = jeu.etat!;
+	const connues = pierresConnues();
+	const c = carte(parent, `🌀 Pierres de voyage (${connues.size()}/${pierresDeVoyage().size()})`);
+	const ok = voyageDebloque(etat);
+	if (!ok) texte(c, `Les pierres dorment encore : le voyage rapide s'éveillera ${DEBLOCAGE_VOYAGE.texte}. Tu peux déjà les activer en passant à côté.`, 13, { couleur: COULEURS.or });
+	for (const p of pierresDeVoyage()) {
+		if (!connues.has(p.id)) continue;
+		const l = ligne(c, 8);
+		texte(l, `<b>${esc(p.nom)}</b>  <font color="#beaf96">${CONTENU.regions[p.region]?.nom ?? p.region}</font>`, 15, { largeur: new UDim(1, -120) });
+		bouton(l, "Voyager", () => voyagerVers(p), { principal: true, actif: ok, hauteur: 30, taille: 14 });
+	}
+	if (connues.size() === 0) texte(c, "Aucune pierre activée : la première est sur la grande place de Lysmont.", 13, { couleur: COULEURS.texte2 });
 }
 
 // ───────────────────────────── Personnage ─────────────────────────────

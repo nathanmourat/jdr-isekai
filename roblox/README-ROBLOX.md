@@ -442,6 +442,13 @@ Chaque région a ses costumes (`src/server/cultures.ts`) : habitants des maisons
 - [ ] **Terres Cendrées** : peuple des Cendres (cornes, peaux grises, yeux de braise, capes noires) et soldats du camp de l'Aube.
 - [ ] En quittant une région (plus personne à moins de 1 600 studs), ses villageois disparaissent ; ils reviennent quand on y retourne.
 
+### Liste de contrôle — pierres de voyage (15/11)
+Une **pierre de voyage** (obélisque à rune bleue et cristal lumineux) au centre de chaque ville et village : Lysmont (grande place, côté sud), Hautepierre, la Combe-aux-Saules, et chaque ville des autres régions. Réglages : `src/shared/voyage.ts`.
+- [ ] En passant à moins de 35 studs d'une pierre : fenêtre « 🌀 Pierre de voyage : … activée ». C'est gardé sur le compte (on la retrouve au prochain serveur).
+- [ ] **Avant le départ de la caravane (chapitre 2)**, pas de téléportation : les boutons « Y aller » deviennent « **Guider** » et une flèche dorée montre le chemin jusqu'à la porte. La flèche disparaît à l'arrivée.
+- [ ] **Après**, dans 🗺 Carte : « Y aller » pour les lieux proches d'une pierre activée (fondu au noir), « Guider » pour les autres ; la liste « 🌀 Pierres de voyage » permet de « Voyager » vers chaque pierre activée. Toucher une pierre (E) ouvre aussi cette liste.
+- [ ] La première fois dans une nouvelle région, le bouton de l'étape de l'histoire y téléporte (le voyage de la caravane) ; il faut ensuite activer la pierre de la ville.
+
 ### Liste de contrôle — examens de rang et maîtrises d'équipement (test 2, changements 10 et 11)
 - [ ] Dans n'importe quel comptoir de la Guilde, le panneau « 🎖 Rang de Guilde » montre le rang suivant, ce qu'il manque (points, niveau) et le bouton de l'examen quand tout est prêt.
 - [ ] Rangs E, D et A : un combat contre un examinateur (A : Dame Rowena en personne). En cas d'échec, on retente le lendemain.
