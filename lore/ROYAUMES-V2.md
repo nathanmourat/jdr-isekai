@@ -261,10 +261,10 @@ Les forges volcaniques sont chauffées par le **souffle de Morghast**, qui remon
 
 ---
 
-## 5. Les Cimes de Braise — « peu nombreux, mais absolus » ✅ (nouveau)
+## 5. Les Cimes de Braise — « une ancienne puissance, aujourd'hui isolée » ✅ (nouveau)
 
 ### En bref
-Quelques **pics volcaniques** à la lisière des Monts Grisfer, où vivent les **derniers dragons** liés aux nains par le **Pacte des Braises**. Pas de villes, pas de lois écrites : un petit territoire, des **trésors immenses** et une **force de frappe absolue**… qui ne sort presque jamais.
+Quelques **pics volcaniques** à la lisière des Monts Grisfer, où vivent les **derniers dragons** liés aux nains par le **Pacte des Braises**. Autrefois maîtres de Velmaris, ils ne sont plus qu'une **ancienne puissance isolée** : pas de villes, pas de lois écrites, un petit territoire, des **trésors immenses** et une force encore redoutable… qui ne sort presque jamais.
 
 ### Qui vit là
 - **Une poignée de vieux dragons**, les derniers à avoir survécu à l'an 0, et leurs **couvées** (couvées dans les volcans, gardées par les nains).
@@ -289,7 +289,7 @@ Quelques **pics volcaniques** à la lisière des Monts Grisfer, où vivent les *
 
 **Ysoria** fait le lien entre les deux branches.
 
-### Relations (proposées)
+### Relations
 
 | Avec | Relation | Pourquoi |
 |---|---|---|
