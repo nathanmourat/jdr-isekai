@@ -11,10 +11,11 @@
 | 2 | Concorde de Qarzim (Marche des Sables) | ✅ validé le 15/11 |
 | 3 | Sylvenoire (elfes) | ✅ validé le 15/11 |
 | 4 | Monts Grisfer (nains) | ✅ validé le 15/11 |
-| 5 | Archipel des Brumes | à faire |
-| 6 | État démoniaque | à faire |
-| 7 | État de la Lumière (nouveau) | à faire |
-| 8 | Domaine nocturne (vampires, nouveau) | à faire |
+| 5 | Cimes de Braise (dragons, nouveau) | ✅ validé le 15/11 |
+| 6 | Archipel des Brumes | à faire |
+| 7 | État démoniaque | à faire |
+| 8 | État de la Lumière (nouveau) | à faire |
+| 9 | Domaine nocturne (vampires, nouveau) | à faire |
 
 ---
 
@@ -251,8 +252,56 @@ Les forges volcaniques sont chauffées par le **souffle de Morghast**, qui remon
 | **État démoniaque** | **Neutre des deux côtés** | Un **intérêt stratégique** : les nains sont alliés des elfes. L'État démoniaque évite de les provoquer (pas de second front) ; les nains restent neutres pour protéger leurs montagnes |
 | **Domaine nocturne** | **Tension** | Par solidarité avec les elfes (la Chasse Pâle), sans aller plus loin. Les nains **refusent de leur vendre des armes** |
 | **État de la Lumière** | Neutre | L'Ordre les juge hérétiques, mais a besoin de leur métal |
+| **Cimes de Braise** | **Allié** | Le **Pacte des Braises** : feu de dragon contre chaleur des volcans et garde des couvées |
 
 ### À créer plus tard
-- Le **nom du roi-dragon** du Pacte des Braises et le récit de la guerre ancienne.
+- Le récit de la guerre ancienne entre nains et dragons (le roi-dragon : voir les Cimes de Braise).
 - Les **clans** nains et leurs chefs ; les familles gnomes de l'Assemblée.
 - Les autres cités et mines des Monts Grisfer.
+
+---
+
+## 5. Les Cimes de Braise — « peu nombreux, mais absolus » ✅ (nouveau)
+
+### En bref
+Quelques **pics volcaniques** à la lisière des Monts Grisfer, où vivent les **derniers dragons** liés aux nains par le **Pacte des Braises**. Pas de villes, pas de lois écrites : un petit territoire, des **trésors immenses** et une **force de frappe absolue**… qui ne sort presque jamais.
+
+### Qui vit là
+- **Une poignée de vieux dragons**, les derniers à avoir survécu à l'an 0, et leurs **couvées** (couvées dans les volcans, gardées par les nains).
+- **Le roi-dragon du Pacte** (nom à créer) : le plus ancien. Proposition : il est encore en vie, mais **endormi** depuis des siècles. Le réveiller fait partie du chapitre 4.
+
+### Pourquoi ils ne règlent pas la guerre tout seuls
+- **Ils sont trop peu** : un dragon tué ne renaît pas, et chaque perte rapproche leur espèce de la fin. Ils ne risquent pas leur vie pour les affaires des autres peuples.
+- **Ils ne quittent jamais leurs cimes**, sauf si le **Pacte des Braises** est invoqué, et seuls les nains peuvent l'invoquer.
+- **En jeu** : leur force devient une **récompense**. Si les héros réussissent le chapitre 4, les dragons interviennent dans la grande bataille du **Mur d'Aube** (chapitre 5).
+
+### Ressources
+- **Or, gemmes et métaux rares** accumulés depuis l'Âge des Dragons.
+- **Le feu de dragon**, qui alimente les **Grandes Forges** des nains.
+- **Des écailles** tombées, que les nains travaillent en armures légendaires (une écaille donnée est un honneur ; une écaille arrachée, une déclaration de guerre).
+
+### Deux branches de dragons
+| | Dragons des Cimes de Braise | Dragons de l'Archipel des Brumes |
+|---|---|---|
+| **Caractère** | Anciens, sages, liés par la parole | Sauvages, imprévisibles |
+| **Proches de** | Les nains (Pacte des Braises) | **Xyrrha** (le Chaos), au cœur de l'Archipel |
+| **Rôle** | Alliés possibles du chapitre 4 | Le **Nid des Wyrms** (V1) |
+
+**Ysoria** fait le lien entre les deux branches.
+
+### Relations (proposées)
+
+| Avec | Relation | Pourquoi |
+|---|---|---|
+| **Monts Grisfer** | **Allié** | Le **Pacte des Braises** |
+| **Sylvenoire** | **Rancune ancienne** | Le rituel elfe de l'an 0 visait **les dragons-rois** : c'est lui qui les a presque tous fait disparaître. Les dragons ne pardonnent pas… mais leurs alliés nains sont aussi les alliés des elfes. |
+| **Aubeclaire** | Méfiance | Des chasseurs de trésors humains rôdent autour des cimes |
+| **Concorde de Qarzim** | Neutre | Les marchands rêvent de leurs trésors, sans oser y toucher |
+| **Archipel des Brumes** | Cousins éloignés | Les deux branches de dragons se parlent peu |
+| **État démoniaque** | **Ennemi** | Les Terres Cendrées sont nées de la chute des dragons-rois |
+| **État de la Lumière** | Méfiance | Pour l'Ordre, les dragons sont les restes d'un âge à oublier |
+| **Domaine nocturne** | Neutre | Aucun intérêt commun |
+
+### À créer plus tard
+- Le **nom du roi-dragon** du Pacte et les noms des vieux dragons.
+- La carte des Cimes de Braise (pics, nids, Grandes Forges).
