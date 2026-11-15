@@ -633,13 +633,40 @@ def crypte():
     return finish(img, vignette=0.5)
 
 
+def tannerie_cave():
+    """La cave de la tannerie abandonnée (test 4) : cages, bougies violettes, symboles du culte, échelle."""
+    from scenes_tannerie import symbole_culte, cage, bougie, VIOLET
+    img, p = canvas(hexc('0c0a10'))
+    wall_stone(p, 0, 0, W, SOL, hexc('4a4450'), seed=3, h=12, w=26)
+    for k in range(5):
+        x = 60 + k * 130
+        for t in range(4):
+            p.line(x - 70, 46 - t, x - 35, 14 - t, hexc('2a2630'), 2); p.line(x - 35, 14 - t, x + 35, 14 - t, hexc('2a2630'), 2); p.line(x + 35, 14 - t, x + 70, 46 - t, hexc('2a2630'), 2)
+        p.line(x - 70, 46, x - 70, SOL, hexc('2a2630'), 3)
+    p.rect(0, 0, W, 12, (8, 6, 12, 200))
+    floor_stone(p, SOL, H, hexc('3a3640'))
+    symbole_culte(p, 330, 86, 30, w=3); glow_light(p, 330, 86, 64, c=(176, 74, 255), a=40, steps=3)
+    symbole_culte(p, 110, 70, 14); symbole_culte(p, 560, 74, 14)
+    cage(p, 14, SOL - 86, 64, 86); cage(p, 86, SOL - 74, 54, 74)
+    cage(p, 492, SOL - 80, 60, 80); cage(p, 560, SOL - 96, 66, 96, ouverte=True)
+    p.poly([(214, 0), (270, 0), (262, 14), (222, 14)], hexc('c8c0a8')); glow_light(p, 242, 8, 40, c=(220, 210, 180), a=40, steps=2)
+    for xx in (226, 256):
+        p.line(xx, 0, xx - 5, SOL + 6, WOOD_L, 3)
+    for y in range(14, SOL + 6, 18):
+        p.line(226 - y * 5 / (SOL + 6), y, 256 - y * 5 / (SOL + 6), y, WOOD, 2)
+    for (x, y) in ((30, SOL + 6), (170, SOL + 2), (300, SOL + 2), (430, SOL + 2), (610, SOL + 6), (40, 330), (600, 336), (320, 340)):
+        bougie(p, x, y, 10)
+    bande_sol(p, c=(0, 0, 0, 60))
+    return finish(img, vignette=0.5)
+
+
 FONDS = {
     'plaine': plaine, 'crypte': crypte, 'arene': arene, 'foret': foret, 'foret-profonde': foret_profonde, 'clairiere': clairiere,
     'marais': marais, 'camp': camp, 'montagne': montagne, 'sommet': sommet, 'canyon': canyon, 'nid': nid, 'marches': marches,
     'desert': desert, 'ville-desert': ville_desert, 'plage': plage, 'port': port, 'epave': epave, 'rues-nuit': rues_nuit,
     'rempart': rempart, 'breche': breche, 'bibliotheque': bibliotheque, 'palais': palais, 'citadelle': citadelle,
     'forge': forge, 'lac-de-lave': lac_de_lave, 'mine': mine, 'mine-naine': mine_naine, 'ruines': ruines,
-    'plaine-cendree': plaine_cendree, 'cendres': cendres, 'voile': voile,
+    'plaine-cendree': plaine_cendree, 'cendres': cendres, 'voile': voile, 'tannerie-cave': tannerie_cave,
 }
 
 

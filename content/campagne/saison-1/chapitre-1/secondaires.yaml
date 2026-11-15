@@ -344,13 +344,18 @@ scenes:
     titre: "Les disparus des Tanneurs : la cave"
     type: groupe
     lieu: tannerie-abandonnee
-    decor: quartier-tanneurs
+    # dehors (tannerie-abandonnee), puis la cave (tannerie-cave) dès qu'on descend
+    decor: tannerie-abandonnee
     quete: q-tanneurs
     disponible_si: { quete_etape: { q-tanneurs: cave } }
     noeuds:
       debut:
         repliques:
-          - { dit: "La trappe est lourde, mais ses gonds sont graissés de frais. En bas : des cages, des bougies violettes." }
+          - { dit: "Au bout de la ruelle, la tannerie abandonnée. Volets cloués, enseigne effacée, et dans la cour, des cuves de trempage à sec où ne pousse plus qu'une mousse noire." }
+          - { dit: "Pourtant, le seuil n'a rien d'abandonné : la poussière est couverte de traces de pas, et de deux sillons parallèles, comme si on avait traîné quelqu'un." }
+          - { dit: "Au fond de l'atelier, une trappe de cave. Ses gonds sont graissés de frais. Une odeur monte entre les planches : de la cire, sucrée, presque écœurante. De la cire violette." }
+          - { dit: "Sous [[tes||vos]] pieds, très loin, un chant étouffé. Des voix qui répètent la même phrase, encore et encore.", si: { flag: tanneurs-piste-fraiche } }
+          - { dit: "Aucun bruit ne monte de la trappe. Un silence trop parfait, celui de quelqu'un qui [[t'attend||vous attend]].", si: { pas_flag: tanneurs-piste-fraiche } }
         choix:
           - texte: "Descendre dans la cave."
             si: { flag: tanneurs-piste-fraiche }
@@ -359,29 +364,42 @@ scenes:
             si: { pas_flag: tanneurs-piste-fraiche }
             aller: retard
       piste:
+        decor: tannerie-cave
         repliques:
-          - { dit: "Les cultistes sont en plein rituel et ne [[t'ont pas {{entendu|entendue}}||vous ont pas {{groupe:entendus|entendues|entendus}}]]. Lina est vivante, dans la cage du fond." }
+          - { dit: "L'échelle grince à chaque barreau. [[Tu retiens ton||Vous retenez votre]] souffle. En bas, la lumière est violette." }
+          - { dit: "La cave est plus grande que la tannerie elle-même. Des cages de fer le long des murs, des dizaines de bougies violettes fondues en flaques, et sur chaque pierre, le même symbole : un cercle brisé, entouré de flammes." }
+          - { dit: "Les cultistes sont en plein rituel, dos à l'échelle, et ne [[t'ont pas {{entendu|entendue}}||vous ont pas {{groupe:entendus|entendues|entendus}}]]. Ils chantent dans une langue qui râpe la gorge." }
+          - { dit: "Dans la cage du fond, une jeune fille aux mains tachées de teinture lève la tête. Lina. Vivante." }
+          - { dit: "Un cultiste se retourne pour moucher une bougie, et [[te||vous]] voit. Il a l'air aussi surpris que [[toi||vous]]." }
         combat: { rencontre: tanneurs-cultistes, victoire: sauvee, defaite: echec }
       retard:
+        decor: tannerie-cave
         repliques:
-          - { dit: "Trop de temps a passé : les cultistes [[t'attendent||vous attendent]] au pied de l'échelle." }
+          - { dit: "L'échelle grince à chaque barreau. [[Tu retiens ton||Vous retenez votre]] souffle. En bas, la lumière est violette." }
+          - { dit: "La cave est plus grande que la tannerie elle-même. Des cages de fer le long des murs, des dizaines de bougies violettes fondues en flaques, et sur chaque pierre, le même symbole : un cercle brisé, entouré de flammes." }
+          - { dit: "Les bougies brûlent, mais plus personne ne chante. Les cultistes [[t'attendent||vous attendent]] au pied de l'échelle, lames tirées. « Vous en avez mis, du temps. »" }
+          - { dit: "Au fond, une cage est ouverte, et les bougies autour d'elle se sont éteintes." }
         combat: { rencontre: tanneurs-cultistes, victoire: trop-tard, defaite: echec }
       sauvee:
+        decor: tannerie-cave
         repliques:
           - { qui: lina, dit: "Lina se jette dans les bras de sa mère en pleurant. Les deux autres disparus sont là aussi, affaiblis mais vivants." }
         effets: [{ reputation: { couronne: 5, guilde: 5 }, xp: 70, flag: lina-sauvee }]
         suite: fin
       trop-tard:
+        decor: tannerie-cave
         repliques:
           - { dit: "Les cultistes sont vaincus. Deux prisonniers sont sauvés… mais pour Lina, il est trop tard. Sa mère s'effondre." }
         effets: [{ pnj_mort: lina, xp: 50 }]
         suite: fin
       echec:
+        decor: tannerie-cave
         repliques:
           - { dit: "Vous êtes repoussés. Quand la garde investit la cave le lendemain, elle est vide. On ne retrouvera jamais Lina." }
         effets: [{ pnj_mort: lina, reputation: { couronne: -5 } }]
         suite: fin
       fin:
+        decor: tannerie-abandonnee
         repliques:
           - { dit: "Il faut que la Guilde sache ce qui se cachait sous cette tannerie." }
         effets: [{ quete: { id: q-tanneurs, etape: retour }, flag: cultistes-lysmont }]

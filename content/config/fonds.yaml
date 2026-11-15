@@ -15,6 +15,8 @@ fonds_combat:
   # vrais fonds déjà livrés
   plaine:          { type: exterieur }
   crypte:          { type: interieur }
+  # la cave de la tannerie abandonnée (quête des disparus des Tanneurs, test 4)
+  tannerie-cave:   { decor: tannerie-cave, type: interieur }
   # forêts et campagne
   foret:           { decor: combe-lisiere, type: exterieur }
   foret-profonde:  { decor: combe-taniere, type: exterieur }

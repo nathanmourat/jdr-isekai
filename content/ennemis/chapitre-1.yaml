@@ -323,7 +323,7 @@ rencontres:
   - { id: crypte-squelettes, nom: "Gardes de la crypte", fond: crypte, ennemis: [{ id: squelette }, { id: squelette }], renforts: [squelette] }
   - { id: crypte-araignees, nom: "Nid d'araignées", fond: crypte, ennemis: [{ id: araignee-geante }, { id: araignee-geante }], renforts: [araignee-geante] }
   - { id: crypte-golem, nom: "Le Golem de la Fontaine", fond: crypte, fuite_possible: false, ennemis: [{ id: golem-fontaine }], renforts: [squelette] }
-  - { id: tanneurs-cultistes, nom: "Les cultistes des Tanneurs", fond: rues-nuit, ennemis: [{ id: bandit }, { id: cultiste, rang: arriere }], renforts: [bandit] }
+  - { id: tanneurs-cultistes, nom: "Les cultistes des Tanneurs", fond: tannerie-cave, ennemis: [{ id: bandit }, { id: cultiste, rang: arriere }], renforts: [bandit] }
   - { id: lanternes-cultistes, nom: "Attaque de la Fête des Lanternes", fond: rues-nuit, fuite_possible: false, ennemis: [{ id: gobelin-cendre }, { id: gobelin-cendre }, { id: cultiste, rang: arriere }], renforts: [gobelin-cendre] }
   - { id: lanternes-vorthak, nom: "Vorthak", fond: rues-nuit, fuite_possible: false, ennemis: [{ id: vorthak }], renforts: [cultiste] }
   - { id: tournoi-ecuyers, nom: "Tournoi des écuyers", fond: arene, fuite_possible: false, ennemis: [{ id: bandit }], renforts: [bandit] }

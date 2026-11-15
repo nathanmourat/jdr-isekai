@@ -6,6 +6,10 @@ try:
     import scenes_ext; mods.append(scenes_ext)
 except ImportError:
     pass
+try:
+    import scenes_tannerie; mods.append(scenes_tannerie)   # test 4 : tannerie abandonnée et sa cave
+except ImportError:
+    pass
 only = [a for a in sys.argv[1:] if not a.startswith('/')]
 os.makedirs(f'{OUT}/decors', exist_ok=True)
 for m in mods:
