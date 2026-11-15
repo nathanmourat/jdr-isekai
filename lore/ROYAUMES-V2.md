@@ -12,7 +12,7 @@
 | 3 | Sylvenoire (elfes) | ✅ validé le 15/11 |
 | 4 | Monts Grisfer (nains) | ✅ validé le 15/11 |
 | 5 | Cimes de Braise (dragons, nouveau) | ✅ validé le 15/11 |
-| 6 | Archipel des Brumes | à faire |
+| 6 | Archipel des Brumes | ✅ validé le 15/11 |
 | 7 | État démoniaque | à faire |
 | 8 | État de la Lumière (nouveau) | à faire |
 | 9 | Domaine nocturne (vampires, nouveau) | à faire |
@@ -305,3 +305,77 @@ Quelques **pics volcaniques** à la lisière des Monts Grisfer, où vivent les *
 ### À créer plus tard
 - Le **nom du roi-dragon** du Pacte et les noms des vieux dragons.
 - La carte des Cimes de Braise (pics, nids, Grandes Forges).
+
+---
+
+## 6. L'Archipel des Brumes — « libres, ivres et dangereux » ✅
+
+### En bref
+Des îles volcaniques perdues dans un **brouillard permanent**, où les îles elles-mêmes changent de place. Une **république de pirates** menée par un **Roi des Pirates** : la **liberté** (l'alcool, le jeu, le pillage)… et le **chaos** (monstres marins, tempêtes cruelles, guerres qui les dépassent). Bref, la vie de pirate.
+
+### Ce qui vient de la V1
+- Îles volcaniques, récifs, brouillard permanent ; **Port-Vérane**, le **Nid des Wyrms**, le **Phare noyé** (niveaux 22 à 30).
+- Pirates, **sirènes**, **dragons sauvages**, **sang-dragons**.
+- Chapitre 4 (1023) : le Nid des Wyrms, la rencontre avec **Ysoria**, les pirates de Port-Vérane. Les nains ne savent pas nager (certains passages bloqués).
+- En V2 (cosmologie) : **Maëlstra** (mer, brumes, tempêtes) ; **Xyrrha** (le Chaos) dort au cœur de l'Archipel.
+
+### Le pouvoir : le Roi des Pirates et la Table des Capitaines
+- **Le Roi des Pirates** (nom à créer) : le capitaine le plus redouté de l'Archipel. Il règne tant qu'il gagne… et tant que personne ne le trahit.
+- **La Table des Capitaines** : un conseil des grands équipages, réuni à **Port-Vérane** autour du Roi. Chaque équipage **élit son capitaine**.
+- **Le Code** : la seule loi, **orale**, jamais écrite (ce que Qarzim déteste). Partage du butin, vote des équipages, et un tabou absolu : **les sirènes**.
+- **La trahison n'est jamais impossible** : chaque capitaine de la Table rêve en secret de la couronne.
+
+### Les légendes de l'Archipel (proposition, noms modifiables)
+Des capitaines célèbres, qui font peur dans toutes les mers et incarnent la force de l'Archipel :
+
+| Surnom | Qui | Ce qui fait sa légende |
+|---|---|---|
+| **Barbe-de-Braise** | Un **sang-dragon** géant | Sa barbe fume en permanence ; il incendie les navires qui refusent de se rendre |
+| **La Dame-Brume** | Une capitaine que personne n'a vue de près | Son navire sort du brouillard sans bruit, et y retourne avec la cargaison |
+| **Le Chien de Sel** | Un ancien **esclave pour dettes de Qarzim**, évadé | Corsaire qui ne chasse que les caravanes maritimes de la Concorde ; il libère les esclaves à bord |
+| **Mâchoire-de-Fer** | Une naine (oui, qui ne sait pas nager) | Mâchoire forgée après un combat contre un monstre marin ; la meilleure canonnière de l'Archipel |
+
+Chacun a son **navire** et son **pavillon**, à dessiner plus tard.
+
+### Ambiance
+- **La liberté** : tavernes, jeux de dés (on prie **Fenna-aux-Dés**), eaux-de-vie naines, butin partagé.
+- **Le chaos** : **monstres marins**, **tempêtes cruelles**, îles qui bougent, guerres des grandes puissances qui les dépassent.
+- **Un refuge** : l'Archipel accueille les fugitifs, notamment les **esclaves pour dettes échappés de Qarzim**.
+- **La navigation** : comme les îles bougent, seuls les pirates connaissent les **chants de route**, appris des sirènes. Sans pilote de l'Archipel, on se perd dans la brume.
+
+### Les sirènes : le tabou des pirates
+- Un **peuple ancien** dont la cité a sombré ; le **Phare noyé** en est le dernier vestige.
+- **On ne les touche pas, on ne les attaque pas.** Un équipage qui brise ce tabou est rayé du Code… et ne revient jamais de la brume.
+- Elles laissent passer les navires qui leur offrent un **tribut** (un chant, un souvenir).
+- **Leur rôle dans l'histoire : elles gardent l'œuf d'Ysoria** (voir ci-dessous).
+
+### Le secret de l'œuf d'Ysoria
+- **En V1** : Ysoria, l'une des dernières dragonnes, dort depuis des siècles au Nid des Wyrms, et **son œuf a été volé**. Son objectif : le retrouver, puis décider si les dragons doivent revenir dans le monde.
+- **La vérité (V2)** : l'œuf n'a pas été volé pour être vendu. Il a été **mis à l'abri chez les sirènes**, au fond du Phare noyé, parce que des chasseurs voulaient s'en emparer (piste : l'**Ordre**, pour qui un œuf de dragon serait une source d'éther immense pour ses Appels).
+- **Qui est au courant** : le **Roi des Pirates** et quelques personnes influentes de l'Archipel. Ils se taisent, car le Code protège les sirènes.
+- **Pour les héros** : une grande quête. Gagner la confiance des sirènes (un tribut, une épreuve, un chant perdu), apprendre la vérité, puis choisir : rendre l'œuf à Ysoria, le laisser à l'abri, ou le livrer à quelqu'un d'autre.
+
+### Le secret de la brume
+La brume est le **rêve de Xyrrha**. Personne n'a jamais atteint le centre de l'Archipel, que les pirates appellent « **l'Œil** ».
+
+### Religion
+- **Maëlstra** (la mer et les tempêtes), **Fenna-aux-Dés** (la chance), et une crainte respectueuse de **Xyrrha**.
+- **L'Ordre** est détesté : il les traite d'hérétiques et de bandits.
+
+### Relations
+
+| Avec | Relation | Pourquoi |
+|---|---|---|
+| **Aubeclaire** | Neutre | Accords de pêche ; pirates tolérés quand ils arrangent la Couronne |
+| **Concorde de Qarzim** | **Conflit** | Pas de contrats ; piraterie contre la Concorde ; l'Archipel accueille ses esclaves évadés |
+| **Sylvenoire** | Neutre | Peu de contacts |
+| **Monts Grisfer** | **Bons termes** | Les eaux-de-vie naines ; marchandises « sans poser de questions » |
+| **Cimes de Braise** | Cousins éloignés | Par les deux branches de dragons |
+| **État démoniaque** | **Bonne entente** | Un ennemi commun (l'Ordre et l'État de la Lumière), de la contrebande… et les démons paient bien |
+| **État de la Lumière** | **Ennemi** | Il traite les pirates d'hérétiques, leur fait la chasse en mer et veut « purifier » la brume |
+| **Domaine nocturne** | **Neutre, mais toléré** | Les vampires sont acceptés à Port-Vérane tant qu'ils paient et respectent le Code |
+
+### À créer plus tard
+- Le **nom du Roi des Pirates**, son navire et son pavillon ; les autres capitaines de la Table.
+- Les **pavillons** des capitaines légendaires.
+- L'épreuve des sirènes pour la quête de l'œuf.
