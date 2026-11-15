@@ -399,6 +399,38 @@ Le propriétaire est reconnu tout seul : le créateur du jeu (ou le rang 255 du 
 - [ ] **Orlan Cassebrune** (gilet moutarde, chapeau) est dans la taverne quand il doit y être (après l'examen de la Guilde) ; la scène des reliques se lance en lui parlant.
 - [ ] Héros d'une ancienne campagne : la barre demande « … est-il un homme ou une femme ? ».
 
+### Liste de contrôle — RPG Roblox et ambiance (15/11)
+**Histoire partagée**
+- [ ] Player1 (chef) et Player2 au même point de l'histoire (deux héros neufs) : groupe, scène de l'Appel ensemble, puis Player2 quitte le groupe → dans **sa** campagne, l'Appel est fait (journal : « Le groupe a fait avancer l'histoire »), avec ses gains.
+- [ ] Si Player2 n'en était pas au même point : il garde ses gains, et un message dit que son histoire ne change pas.
+
+**Recherche de groupe**
+- [ ] « 👥 Groupe » (ou le comptoir de la Guilde) → « 📋 Recherche de groupe » : Player1 choisit « Donjon » → « Publier ». Chez Player2 : « Player1 (niv. 1) cherche du monde : Donjon · 5 places » → « Rejoindre » : il entre directement dans le groupe.
+- [ ] L'annonce disparaît quand le groupe est complet, quand le chef la retire ou quitte le serveur.
+
+**Tutoriel** (jusqu'à l'examen de la Guilde)
+- [ ] Une flèche dorée flotte devant toi et montre la porte du lieu de la prochaine étape ; une bulle en bas explique quoi faire (dehors, dans un bâtiment, en dialogue, en combat, en donjon). « Masquer les conseils » la cache.
+
+**Mobile** (Studio : *Test → Device* → un téléphone)
+- [ ] Boutons plus gros (au moins 44 points), textes lisibles.
+- [ ] « ▸ Replier » / « ☰ Ouvrir le panneau » pour le panneau latéral ; « ▴ / ▾ » pour réduire la barre du haut à une ligne d'onglets.
+- [ ] Combat : panneaux en pleine largeur, équipe sous le titre, « ▴ / ▾ » pour tout réduire et voir le combat.
+
+**Badges et bonus de connexion**
+- [ ] Badges : crée-les sur le site (*Creator Dashboard → ton expérience → Associated Items → Badges* ; créer un badge peut coûter des Robux selon les règles du moment), puis colle leurs numéros dans `src/shared/badges.ts`. Tant qu'un numéro vaut 0, rien ne se passe. Badges prévus : héros créé, Guilde, groupe, chapitres 1 à 5, les 4 fins, niveaux 10 / 20 / 40.
+- [ ] Bonus de connexion : à la première connexion du jour (héros créé), « Bonus de connexion (1 jour de suite) : +10 or » ; le lendemain la série monte (or × chapitre, potions les jours 3, 5 et 7) ; un jour manqué la remet à 1.
+
+**Sons** (tout est branché ; il ne manque que les numéros)
+- [ ] Choisis des sons dans Studio (*Boîte à outils → Audio*, ou le Creator Store), écoute-les, clic droit → « Copier l'identifiant de l'asset », puis colle-les dans `src/shared/sons.ts` (format `"rbxassetid://123456"`). 22 emplacements : ville jour / nuit, nature, taverne, temple, forge, donjon, combat, boss, pluie, vent, victoire, défaite, coup, sort, dé, réussite, échec, coffre, piège, niveau, pièces.
+
+**Combats plus vivants**
+- [ ] Sorts, flèches et fioles partent en projectiles lumineux de la couleur de l'élément.
+- [ ] Impacts : flammes (feu), éclats de glace, éclair tombé du ciel (foudre), colonne de lumière (sacré), fumée (ombre, poison), anneau (arcane), étincelles (physique).
+
+**Météo** (selon la région, la saison du calendrier du jeu et le jour)
+- [ ] La barre du haut affiche le temps (☀ 🌧 ❄ 🌫 🏜 🌋). Aubeclaire : pluie au printemps et en automne, neige en hiver. Marche des Sables : tempêtes de sable. Sylvenoire et Archipel : brouillard et pluie. Monts Grisfer : neige. Mur d'Aube et Terres Cendrées : cendres.
+- [ ] Pas de météo dans les salles ni dans les donjons. Le temps change chaque jour de la campagne, le même pour tout le groupe.
+
 ### Liste de contrôle — examens de rang et maîtrises d'équipement (test 2, changements 10 et 11)
 - [ ] Dans n'importe quel comptoir de la Guilde, le panneau « 🎖 Rang de Guilde » montre le rang suivant, ce qu'il manque (points, niveau) et le bouton de l'examen quand tout est prêt.
 - [ ] Rangs E, D et A : un combat contre un examinateur (A : Dame Rowena en personne). En cas d'échec, on retente le lendemain.

@@ -52,6 +52,7 @@ import { RAISONS } from "shared/grades";
 import { OBJECTIFS_GROUPE } from "shared/reseau";
 import { vueModeration } from "./moderation";
 import { messageLocal } from "./messages";
+import { NOMS_TEMPS, tempsActuel } from "../rendu/meteo";
 import { affichage, type Panneau } from "../local";
 import { barre, bouton, carte, colonne, COULEURS, esc, ligne, texte } from "./kit";
 
@@ -99,12 +100,12 @@ export function barreHaut(parent: Frame, redessiner: () => void, allerA: (lieu: 
 	const h = monHeros()!;
 	const c = colonne(parent, 6);
 	const l1 = ligne(c, 10);
-	texte(l1, `<b>${formaterDate(CONTENU, etat.jour)}</b> · Chapitre ${etat.chapitre}`, 16, { largeur: new UDim(0, 300) });
+	texte(l1, `<b>${formaterDate(CONTENU, etat.jour)}</b> · Chapitre ${etat.chapitre} · ${NOMS_TEMPS[tempsActuel()]}`, 16, { largeur: new UDim(0, 350) });
 	texte(
 		l1,
 		`<font color="#d9a441">${esc(h.nom)} · niv. ${h.niveau} · rang ${rangHeros(etat, h.id)} · ${h.or} or</font> · ${textePv(h)}${etat.meneur !== undefined ? ` · Meneur : ${esc(etat.joueurs[etat.meneur]?.pseudo ?? "?")}` : ""}`,
 		15,
-		{ largeur: new UDim(1, -370) },
+		{ largeur: new UDim(1, -420) },
 	);
 	// barre réductible (pratique sur téléphone) : une seule ligne quand elle est réduite
 	bouton(l1, affichage.barreReduite ? "▾" : "▴", () => ((affichage.barreReduite = !affichage.barreReduite), redessiner()), { hauteur: 28, taille: 14 });
