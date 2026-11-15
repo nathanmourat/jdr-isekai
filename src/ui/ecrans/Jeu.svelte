@@ -34,7 +34,7 @@
   import { ecrirePreference, lirePreference } from '../preferences';
 
   const c = jeu.contenu!;
-  type Panneau = 'histoire' | 'fiche' | 'compagnons' | 'quetes' | 'journal' | 'partie';
+  import { pastillesMenu, trierEntrees, type Panneau } from '../pastilles';
   /** Tiroir ouvert (un seul à la fois), ou aucun. */
   let tiroir = $state<Panneau | null>(null);
   let menuOuvert = $state(false);
@@ -67,10 +67,16 @@
   const etat = $derived(jeu.etat!);
   const h = $derived(jeu.monHeros!);
   const nouvellesEntrees = $derived(Math.max(0, etat.journal.length - jeu.journalVu));
-  const pointsARepartir = $derived(!!(h.pointsCaracDispo || h.pointsCompetenceDispo));
   /** Une quête attend d'être rendue quelque part (scène « ? » disponible). */
   const queteARendre = $derived(Object.values(c.scenes).some((s) => s.rend_quete && sceneEstDisponible(c, etat, s, h.id)));
-  const pastilleMenu = $derived(nouvellesEntrees + (pointsARepartir ? 1 : 0) + (queteARendre ? 1 : 0));
+  // pastilles : rouge = action importante, vert = simple information (test 4, point 10)
+  const pastilles = $derived(pastillesMenu({
+    pointsCarac: h.pointsCaracDispo ?? 0,
+    pointsCompetence: h.pointsCompetenceDispo ?? 0,
+    brancheAChoisir: !h.branche && h.niveau >= c.config.personnage.niveau_branche,
+    queteARendre,
+    nouvellesLignes: nouvellesEntrees,
+  }));
 
   // Ce qui doit s'afficher dans la scène, par ordre de priorité
   const combatCle = $derived.by(() => {
@@ -114,6 +120,7 @@
     ['histoire', 'Histoire', '📖', 'H'], ['fiche', 'Personnage', '🧝', 'P'], ['compagnons', 'Compagnons', '💞', 'O'],
     ['quetes', 'Quêtes', '📜', 'Q'], ['journal', 'Journal', '🗒', 'J'], ['partie', 'Partie', '⚙', ''],
   ];
+  const entreesTriees = $derived(trierEntrees(entrees, pastilles.parEntree));
   const titres: Record<Panneau, string> = { histoire: 'Histoire', fiche: 'Personnage', compagnons: 'Compagnons', quetes: 'Quêtes', journal: 'Journal', partie: 'Partie' };
 
   // ───────────── Plein écran du navigateur ─────────────
@@ -207,16 +214,14 @@
       <nav class="droite" aria-label="Menu du jeu">
         {#if vue === 'monde' && (lieu || ville)}<button class="icone" aria-label="Carte" title="Revenir à la carte (C)" onclick={allerCarte}>🗺<span class="texte"> Carte</span></button>{/if}
         <div class="menu">
-          <button class="icone" aria-label="Menu" aria-expanded={menuOuvert} aria-haspopup="true" onclick={() => { if (!menuOuvert) annoncer('menu'); menuOuvert = !menuOuvert; }}>☰{#if pastilleMenu}<span class="pastille">{pastilleMenu}</span>{/if}</button>
+          <button class="icone" aria-label="Menu" aria-expanded={menuOuvert} aria-haspopup="true" onclick={() => { if (!menuOuvert) annoncer('menu'); menuOuvert = !menuOuvert; }}>☰{#if pastilles.bouton}<span class="pastille" class:verte={pastilles.bouton.couleur === 'vert'} title={pastilles.bouton.titre}>{pastilles.bouton.texte}</span>{/if}</button>
           {#if menuOuvert}
             <div class="fond-menu" role="presentation" onclick={() => (menuOuvert = false)}></div>
             <div class="liste-menu carte-ui" role="menu">
-              {#each entrees as [id, nom, icone, k] (id)}
+              {#each entreesTriees as [id, nom, icone, k] (id)}
                 <button role="menuitem" aria-expanded={tiroir === id} onclick={() => ouvrir(id)}>
                   <span>{icone} {nom}</span>
-                  {#if id === 'journal' && nouvellesEntrees}<span class="pastille">{nouvellesEntrees}</span>{/if}
-                  {#if id === 'fiche' && pointsARepartir}<span class="pastille">!</span>{/if}
-                  {#if id === 'quetes' && queteARendre}<span class="pastille">?</span>{/if}
+                  {#if pastilles.parEntree[id]}{@const p = pastilles.parEntree[id]!}<span class="pastille" class:verte={p.couleur === 'vert'} title={p.titre}>{p.texte}</span>{/if}
                   {#if k}<kbd>{k}</kbd>{/if}
                 </button>
               {/each}
@@ -305,6 +310,7 @@
   kbd { font: 0.75rem monospace; padding: 0.05em 0.35em; border: 1px solid var(--bord); border-radius: 4px; color: var(--texte-2); }
   .aide-touches { margin: 0.3rem 0 0; font-size: 0.8rem; line-height: 1.6; }
   .pastille { display: inline-block; min-width: 1.3em; padding: 0 0.3em; border-radius: 99px; background: var(--rouge); color: white; font-size: 0.72rem; text-align: center; }
+  .pastille.verte { background: var(--vert); color: #10200f; }
   .icone .pastille { position: absolute; top: -4px; right: -4px; }
   .languette { position: absolute; top: 0; left: 50%; translate: -50% 0; z-index: 70; min-width: 64px; min-height: 28px; padding: 0 1rem; border-radius: 0 0 10px 10px; border-top: none; background: #0d0b14cc; font-size: 0.9rem; }
   .bandeau-repos { position: absolute; z-index: 65; top: 3.4rem; left: 50%; translate: -50% 0; width: min(720px, calc(100% - 1rem)); display: flex; justify-content: space-between; align-items: center; gap: 0.6rem; flex-wrap: wrap; border-color: var(--or); padding: 0.5rem 0.8rem; }
