@@ -34,7 +34,7 @@
 
 <style>
   .gains { display: grid; gap: 0.3rem; justify-items: end; pointer-events: none; max-width: min(300px, calc(100vw - 1.2rem)); }
-  p { margin: 0; display: flex; align-items: center; gap: 0.4rem; padding: 0.3rem 0.7rem; border-radius: 999px; background: #14111cf0; border: 1px solid var(--bord); font-weight: 700; font-size: 0.92rem; box-shadow: var(--ombre); animation: entree 0.18s ease-out, sortie 0.3s ease-in 2.7s forwards; }
+  p { margin: 0; display: flex; align-items: center; gap: 0.4rem; padding: 0.3rem 0.7rem; border-radius: 999px; background: #14111cf0; border: 1px solid var(--bord); font-weight: 700; font-size: 0.92rem; box-shadow: var(--ombre); animation: entree 0.18s ease-out, sortie 0.3s ease-in 4.7s forwards; }
   p.gain { color: #8fe38f; border-color: #2f6b3a; }
   p.perte { color: #ff8f84; border-color: #7a2f2a; }
   p.info { color: var(--or-2); border-color: var(--or); }
