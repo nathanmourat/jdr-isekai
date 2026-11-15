@@ -251,7 +251,7 @@
       <p class="discret">Vous pourrez encore changer d'avis dans la fiche « Personnage » pendant le premier mois.</p>
     </Fenetre>
   {/if}
-  <!-- notifications empilées en haut à droite (gains de 3 s, puis messages), sans bloquer les clics -->
+  <!-- notifications empilées en haut à droite (gains de 5 s, puis messages), sans bloquer les clics -->
   <div class="pile-notifs"><Gains /><Notifications /></div>
   <PiecesAnimees />
 </div>

@@ -1,12 +1,12 @@
 <script lang="ts">
   /**
-   * Notifications de gain (test 3, point 5) : 3 secondes, empilées en haut à droite, sans bloquer les clics.
+   * Notifications de gain (test 3, point 5 ; 5 secondes depuis le test 4) : empilées en haut à droite, sans bloquer les clics.
    * Chaque joueur voit les gains de son héros (et des héros joués sur cet appareil) ; un gain de groupe, tout le monde le voit.
    */
   import { jeu } from './jeu.svelte';
   import { urlAsset } from '../rendu/assets';
 
-  const DUREE_MS = 3000;
+  const DUREE_MS = 5000;
   const MAX = 4;
   let vus = new Set<number>();
   let visibles = $state<{ id: number; texte: string; sorte: string; icone: string | null }[]>([]);
