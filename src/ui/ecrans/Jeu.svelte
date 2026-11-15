@@ -5,6 +5,7 @@
    * comme des tiroirs depuis la droite. La page ne défile jamais.
    */
   import { onMount } from 'svelte';
+  import { annoncer, premierPlan } from '../premierPlan.svelte';
   import { activiteChangee, signatureActivite } from '../activite';
   import { jeu } from '../jeu.svelte';
   import { aideDate, formaterDate, saisonDe } from '../../moteur/temps';
@@ -51,7 +52,17 @@
     ville = trouverLieu(c, id)?.lieu.ville ?? null;
   }
   function allerCarte() { lieu = null; ville = null; tiroir = null; menuOuvert = false; }
-  function ouvrir(p: Panneau) { tiroir = p; menuOuvert = false; }
+  function ouvrir(p: Panneau) { annoncer('tiroir'); tiroir = p; menuOuvert = false; }
+  // une fenêtre ou une bulle s'ouvre : le tiroir, le menu et la fiche rapide se ferment (une seule chose ouverte à la fois)
+  let jetonVu = premierPlan.jeton;
+  $effect(() => {
+    const j = premierPlan.jeton;
+    if (j === jetonVu) return;
+    jetonVu = j;
+    if (premierPlan.qui !== 'tiroir') tiroir = null;
+    if (premierPlan.qui !== 'menu') menuOuvert = false;
+    if (premierPlan.qui !== 'fiche') ficheOuverte = false;
+  });
 
   const etat = $derived(jeu.etat!);
   const h = $derived(jeu.monHeros!);
@@ -125,7 +136,7 @@
     const touche = e.key.toUpperCase();
     if (touche === 'C' && vue === 'monde') { allerCarte(); return; }
     const p = entrees.find(([, , , k]) => k === touche);
-    if (p) { e.preventDefault(); tiroir = tiroir === p[0] ? null : p[0]; menuOuvert = false; }
+    if (p) { e.preventDefault(); if (tiroir === p[0]) tiroir = null; else ouvrir(p[0]); menuOuvert = false; }
   }
 
   onMount(() => {
@@ -175,7 +186,7 @@
             </div>
           {/if}
         </div>
-        <button class="badge or barre-heros" aria-expanded={ficheOuverte} title="Ouvrir ou fermer ma fiche" onclick={() => (ficheOuverte = !ficheOuverte)}>{h.nom} · niv. {h.niveau} · rang {rangHeros(etat, h.id)} · {h.or} or {ficheOuverte ? '▴' : '▾'}</button>
+        <button class="badge or barre-heros" aria-expanded={ficheOuverte} title="Ouvrir ou fermer ma fiche" onclick={() => { if (!ficheOuverte) annoncer('fiche'); ficheOuverte = !ficheOuverte; }}>{h.nom} · niv. {h.niveau} · rang {rangHeros(etat, h.id)} · {h.or} or {ficheOuverte ? '▴' : '▾'}</button>
         <!-- PV et mana de chaque héros du groupe (test 3, point 12) ; repliés avec la barre -->
         <div class="mini-sante" role="list" aria-label="PV et mana du groupe">
           {#each listeHeros(etat) as x (x.id)}
@@ -196,7 +207,7 @@
       <nav class="droite" aria-label="Menu du jeu">
         {#if vue === 'monde' && (lieu || ville)}<button class="icone" aria-label="Carte" title="Revenir à la carte (C)" onclick={allerCarte}>🗺<span class="texte"> Carte</span></button>{/if}
         <div class="menu">
-          <button class="icone" aria-label="Menu" aria-expanded={menuOuvert} aria-haspopup="true" onclick={() => (menuOuvert = !menuOuvert)}>☰{#if pastilleMenu}<span class="pastille">{pastilleMenu}</span>{/if}</button>
+          <button class="icone" aria-label="Menu" aria-expanded={menuOuvert} aria-haspopup="true" onclick={() => { if (!menuOuvert) annoncer('menu'); menuOuvert = !menuOuvert; }}>☰{#if pastilleMenu}<span class="pastille">{pastilleMenu}</span>{/if}</button>
           {#if menuOuvert}
             <div class="fond-menu" role="presentation" onclick={() => (menuOuvert = false)}></div>
             <div class="liste-menu carte-ui" role="menu">

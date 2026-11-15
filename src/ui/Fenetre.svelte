@@ -2,9 +2,12 @@
   /** Fenêtre centrée par-dessus la scène (boutique, auberge, temps libre…), qu'on peut fermer ; elle défile à l'intérieur. */
   import type { Snippet } from 'svelte';
   import { onMount, tick } from 'svelte';
-  let { titre = '', fermer = null, children }: { titre?: string; fermer?: (() => void) | null; children: Snippet } = $props();
+  import { annoncer } from './premierPlan.svelte';
+  /** cle : nom de la fenêtre (« boutique », « lit »…) ; à l'ouverture, toute autre bulle, fenêtre ou tiroir se ferme. */
+  let { titre = '', fermer = null, cle = 'fenetre', children }: { titre?: string; fermer?: (() => void) | null; cle?: string; children: Snippet } = $props();
   let boite: HTMLElement;
   onMount(() => {
+    annoncer(`fenetre:${cle}`);
     // le focus va dans la fenêtre, puis revient au bouton qui l'a ouverte
     const avant = document.activeElement as HTMLElement | null;
     void tick().then(() => (boite?.querySelector<HTMLElement>('.fermer, button:not([disabled])') ?? boite)?.focus());

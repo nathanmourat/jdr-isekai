@@ -7,6 +7,7 @@
    * Ordre d'affichage : décor, PNJ (du fond vers l'avant), premier plan (comptoirs).
    */
   import { tick } from 'svelte';
+  import { annoncer, premierPlan } from '../premierPlan.svelte';
   import { jeu } from '../jeu.svelte';
   import { candidatsExamen, conditionHeros, conditionScene, etapeContrat, listeHeros, objetConnu, palierCompagnon, prochainExamen, rangHeros, scenesDisponibles } from '../../moteur/partie';
   import ObjetInfo from '../ObjetInfo.svelte';
@@ -120,7 +121,31 @@
     return places.map((p) => ({ id: p.id, x: p.pos!.x, y: p.pos!.y })).sort((a, b) => a.y - b.y);
   });
   /** On parle à un personnage : une petite bulle s'ouvre près de lui (le cadre du bas reste comme il est). */
-  function parler(p: string) { pnjChoisi = p; boutiqueOuverte = false; examenOuvert = false; identifierOuvert = false; }
+  function parler(p: string) { annoncer('bulle'); pnjChoisi = p; }
+  /** Personnage dont on a ouvert une fenêtre (examen, identification) : la bulle, elle, se ferme. */
+  let pnjFenetre = $state<string | null>(null);
+  /** Ouvre une fenêtre : la bulle et toute autre fenêtre se ferment d'abord (une seule chose ouverte à la fois). */
+  function ouvrirFenetre(f: 'boutique' | 'examen' | 'identifier' | 'lit') {
+    pnjFenetre = pnjChoisi;
+    pnjChoisi = null;
+    boutiqueOuverte = f === 'boutique';
+    examenOuvert = f === 'examen';
+    identifierOuvert = f === 'identifier';
+    litOuvert = f === 'lit';
+  }
+  // quelque chose d'autre s'ouvre (tiroir, menu, autre fenêtre…) : on ferme la bulle et nos fenêtres
+  let jetonVu = premierPlan.jeton;
+  $effect(() => {
+    const j = premierPlan.jeton;
+    if (j === jetonVu) return;
+    jetonVu = j;
+    const qui = premierPlan.qui;
+    if (qui !== 'bulle') pnjChoisi = null;
+    if (qui !== 'fenetre:boutique') boutiqueOuverte = false;
+    if (qui !== 'fenetre:examen') examenOuvert = false;
+    if (qui !== 'fenetre:identifier') identifierOuvert = false;
+    if (qui !== 'fenetre:lit') { litOuvert = false; reposCache = true; }
+  });
   let examenOuvert = $state(false);
   let identifierOuvert = $state(false);
   // une scène, un combat ou une épreuve qui commence referme toutes les fenêtres et la bulle (test 3, point 11)
@@ -165,7 +190,7 @@
       if (p) res.push({ cle, nom, x: p.x, y: p.y, l, h: hz, action });
     };
     if (piece === 'chambre') {
-      ajouter('lit', 'Le lit : dormir', 300, 190, () => { litOuvert = true; void montrerPanneaux(); });
+      ajouter('lit', 'Le lit : dormir', 300, 190, () => { ouvrirFenetre('lit'); void montrerPanneaux(); });
       ajouter('porte', 'Redescendre dans la salle', 120, 230, () => { piece = 'salle'; litOuvert = false; });
       return res;
     }
@@ -203,7 +228,7 @@
   </div>
 {/snippet}
 
-<svelte:window onkeydown={(e) => { if (e.key === 'Escape' && pnjChoisi && !boutiqueOuverte && !examenOuvert && !identifierOuvert) pnjChoisi = null; }} />
+<svelte:window onkeydown={(e) => { if (e.key === 'Escape' && pnjChoisi) pnjChoisi = null; }} />
 <section class="lieu">
   <Cadre169>
     <div class="decor pixel" role="presentation" onclick={clicDecor} data-decor={decor} style={`background-image:url(${imageDecor(decor, piece === 'chambre' ? 'Chambre du Chaudron Fêlé' : lieu.nom)})`}>
@@ -248,13 +273,13 @@
           {#if s.type === 'groupe' && absents.length}<p class="discret alerte">Il manque : {absents.join(' ; ')}.</p>{/if}
         {/each}
         {#if pnjChoisi === lieu.gerant && lieu.boutique.length}
-          <button class:principal={!scenesPnj.length} onclick={() => (boutiqueOuverte = true)}>🛒 Voir la marchandise</button>
+          <button class:principal={!scenesPnj.length} onclick={() => ouvrirFenetre('boutique')}>🛒 Voir la marchandise</button>
         {/if}
         {#if estExaminateur(c, id, pnjChoisi)}
-          <button class:principal={!scenesPnj.length} onclick={() => (examenOuvert = true)}>🎖 Examen de rang{#if examen?.pret} <span class="badge or">prêt</span>{/if}</button>
+          <button class:principal={!scenesPnj.length} onclick={() => ouvrirFenetre('examen')}>🎖 Examen de rang{#if examen?.pret} <span class="badge or">prêt</span>{/if}</button>
         {/if}
         {#if fiche?.identifie !== undefined}
-          <button onclick={() => (identifierOuvert = true)}>🔎 Faire identifier un objet</button>
+          <button onclick={() => ouvrirFenetre('identifier')}>🔎 Faire identifier un objet</button>
         {/if}
         {#if !scenesPnj.length && !(pnjChoisi === lieu.gerant && lieu.boutique.length) && !estExaminateur(c, id, pnjChoisi) && fiche?.identifie === undefined}
           <p>{nomPnj(pnjChoisi)} n'a rien de particulier à vous dire pour le moment.</p>
@@ -310,7 +335,7 @@
           </div>
         {/if}
 
-        {#if lieu.auberge && piece === 'chambre' && !litOuvert && !etat.repos}<div class="item"><button onclick={() => (litOuvert = true)}>🛏 Aller au lit</button></div>{/if}
+        {#if lieu.auberge && piece === 'chambre' && !litOuvert && !etat.repos}<div class="item"><button onclick={() => ouvrirFenetre('lit')}>🛏 Aller au lit</button></div>{/if}
         {#if lieu.auberge && piece === 'salle'}
           {@const s = santeHeros(c, h)}
           <div class="item soin"><button disabled={s.pv >= s.pvMax || h.or < c.config.soins.repas.prix} onclick={() => jeu.agir({ type: 'se_soigner', moyen: 'repas', lieu: id })}>🍲 Repas chaud ({c.config.soins.repas.prix} or) : +{c.config.soins.repas.pourcent} % de PV</button>
@@ -371,7 +396,7 @@
               {/each}
             </details>
           {/if}
-          {#if lieu.boutique.length && !gerantPresent && piece === 'salle'}<div class="carte-ui"><button class="principal" onclick={() => (boutiqueOuverte = true)}>🛒 Voir la marchandise</button></div>{/if}
+          {#if lieu.boutique.length && !gerantPresent && piece === 'salle'}<div class="carte-ui"><button class="principal" onclick={() => ouvrirFenetre('boutique')}>🛒 Voir la marchandise</button></div>{/if}
         </div>
       </div>
       {#if !scenes.length && !contrats.length && !lieu.boutique.length && !pnj.length && !etapeIci}
@@ -384,10 +409,10 @@
   </div>
 
   {#if boutiqueOuverte && lieu.boutique.length}
-    <Fenetre titre={`Boutique — ${lieu.gerant ? nomPnj(lieu.gerant) : lieu.nom}`} fermer={() => (boutiqueOuverte = false)}><Boutique lieu={id} objets={lieu.boutique} /></Fenetre>
+    <Fenetre cle="boutique" titre={`Boutique — ${lieu.gerant ? nomPnj(lieu.gerant) : lieu.nom}`} fermer={() => (boutiqueOuverte = false)}><Boutique lieu={id} objets={lieu.boutique} /></Fenetre>
   {/if}
-  {#if examenOuvert && pnjChoisi && estExaminateur(c, id, pnjChoisi)}
-    <Fenetre titre={`🎖 Rang de Guilde : ${rang}`} fermer={() => (examenOuvert = false)}>
+  {#if examenOuvert && pnjFenetre && estExaminateur(c, id, pnjFenetre)}
+    <Fenetre cle="examen" titre={`🎖 Rang de Guilde : ${rang}`} fermer={() => (examenOuvert = false)}>
             <div class="examen" data-panneau="examen">
               
               {#if examen}
@@ -408,23 +433,23 @@
             </div>
     </Fenetre>
   {/if}
-  {#if identifierOuvert && pnjChoisi && c.pnj[pnjChoisi]?.identifie !== undefined}
-    {@const fiche = c.pnj[pnjChoisi]}
+  {#if identifierOuvert && pnjFenetre && c.pnj[pnjFenetre]?.identifie !== undefined}
+    {@const fiche = c.pnj[pnjFenetre]}
     {@const prixIdentification = fiche?.identifie ?? 0}
-    <Fenetre titre="Faire identifier un objet" fermer={() => (identifierOuvert = false)}>
+    <Fenetre cle="identifier" titre="Faire identifier un objet" fermer={() => (identifierOuvert = false)}>
             <div>
               <h3>🔎 Faire identifier un objet <span class="badge or">{fiche.identifie} or</span></h3>
-              <p class="discret">Un objet mystérieux affiche « ??? ». {nomPnj(pnjChoisi)} vous dit ce qu'il est vraiment, avant même de l'acheter. Une fois identifié, tout le groupe le sait.</p>
+              <p class="discret">Un objet mystérieux affiche « ??? ». {nomPnj(pnjFenetre)} vous dit ce qu'il est vraiment, avant même de l'acheter. Une fois identifié, tout le groupe le sait.</p>
               {#each mysteres as o (o)}
                 <div class="ligne item entre">
                   <ObjetInfo id={o} />
-                  <button class="petit" disabled={h.or < prixIdentification} title={h.or < prixIdentification ? "Pas assez d'or" : ''} onclick={() => jeu.agir({ type: 'identifier', objet: o, pnj: pnjChoisi! })}>Identifier · {prixIdentification} or</button>
+                  <button class="petit" disabled={h.or < prixIdentification} title={h.or < prixIdentification ? "Pas assez d'or" : ''} onclick={() => jeu.agir({ type: 'identifier', objet: o, pnj: pnjFenetre! })}>Identifier · {prixIdentification} or</button>
                 </div>
               {:else}<p class="discret">Aucun objet mystérieux à identifier pour le moment.</p>{/each}
             </div>
     </Fenetre>
   {/if}  {#if lieu.auberge && piece === 'chambre' && (litOuvert || (etat.repos && !reposCache))}
-    <Fenetre titre="Le lit" fermer={() => { litOuvert = false; reposCache = true; }}><Auberge bind:ouvert={litOuvert} /></Fenetre>
+    <Fenetre cle="lit" titre="Le lit" fermer={() => { litOuvert = false; reposCache = true; }}><Auberge bind:ouvert={litOuvert} /></Fenetre>
   {/if}
 </section>
 
