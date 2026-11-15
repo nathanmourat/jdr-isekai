@@ -890,9 +890,15 @@ function appliquerEffets(contenu: Contenu, combat: Combat, rng: Rng, s: Combatta
   let multObjet = depuisObjet && s.passif?.id === 'fioles-optimisees' ? 1 + (s.passif.parametres.efficacite ?? 0.4) : 1;
   if (depuisObjet && aPouvoir(s, 'prisme')) multObjet *= 1.25;
 
+  // Effets « à l'impact » (test 4) : après un effet de dégâts, un état posé sur un adversaire ne vaut
+  // que pour les cibles réellement touchées (une attaque ratée n'empoisonne pas).
+  let degatsVus = false;
+  const touchees: string[] = [];
+  s.compteurs.dernierCoupTouche = 0;
   for (const ef of comp.effets) {
     const typeCible = ('cible' in ef && ef.cible) ? ef.cible : comp.cible;
     if (ef.type === 'degats') {
+      degatsVus = true;
       const n = ef.coups;
       for (let k = 0; k < n; k++) {
         let cibles: Combattant[];
@@ -916,6 +922,8 @@ function appliquerEffets(contenu: Contenu, combat: Combat, rng: Rng, s: Combatta
             continue;
           }
           if (!touche) { log(combat, { type: 'rate', source: s.id, cible: cible.id, chance: pToucher, competence: comp.id, texte: `${s.nom} rate ${cible.nom}.` }); continue; }
+          touchees.push(cible.id);
+          s.compteurs.dernierCoupTouche = 1;
           const furtif = aEtat(s, 'furtif');
           let critique = ef.critique_garanti || furtif || chance(rng, chanceCritique(contenu, s, cible));
           // Murmure : la première attaque du combat est toujours un coup critique
@@ -947,6 +955,7 @@ function appliquerEffets(contenu: Contenu, combat: Combat, rng: Rng, s: Combatta
       const cibles = typeCible === 'ennemi' && premiereCibleOffensive ? [premiereCibleOffensive] : resoudreCibles(combat, rng, s, typeCible, cibleChoisie, comp.portee);
       for (const cible of cibles) {
         if (!actif(cible)) continue;
+        if (degatsVus && cible.camp !== s.camp && !touchees.includes(cible.id)) continue;
         let p = ef.chance;
         if (cible.camp !== s.camp && ETATS_CONTROLE.includes(ef.etat as EtatId)) {
           if (cible.boss) p *= 0.5;
@@ -1017,6 +1026,7 @@ function attaqueSimple(contenu: Contenu, combat: Combat, rng: Rng, s: Combattant
     s.effetAttaque = nommee.effet ?? null;
   }
   appliquerEffets(contenu, combat, rng, s, comp, 1, cible);
+  const premierCoupTouche = (s.compteurs.dernierCoupTouche ?? 0) > 0;
   s.phrase = null;
   s.effetAttaque = null;
   const c = vrai(s.derniereCible) ? combat.combattants.find((x) => x.id === s.derniereCible) : null;
@@ -1040,7 +1050,7 @@ function attaqueSimple(contenu: Contenu, combat: Combat, rng: Rng, s: Combattant
   // Runes gravées : chaque attaque réussie charge une rune
   if (s.passif?.id === 'runes-gravees' && c && c.pv < avantPv) s.compteurs.runes = Math.min(s.passif.parametres.max ?? 3, (s.compteurs.runes ?? 0) + 1);
   // Œil du faucon : chance de marquer
-  if (s.passif?.id === 'oeil-du-faucon' && c && actif(c) && chance(rng, s.passif.parametres.chance_marque ?? 0.3)) {
+  if (s.passif?.id === 'oeil-du-faucon' && c && actif(c) && premierCoupTouche && chance(rng, s.passif.parametres.chance_marque ?? 0.3)) {
     ajouterEtat(combat, c, { id: 'marque', duree: 2, valeur: 0.15, source: s.id, cumul: 1 });
     log(combat, { type: 'etat', source: s.id, cible: c.id, texte: `${c.nom} est marqué.` });
   }
