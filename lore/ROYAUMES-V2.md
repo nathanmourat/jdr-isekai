@@ -10,7 +10,7 @@
 | 1 | Royaume d'Aubeclaire | ✅ validé le 14/11 |
 | 2 | Concorde de Qarzim (Marche des Sables) | ✅ validé le 15/11 |
 | 3 | Sylvenoire (elfes) | ✅ validé le 15/11 |
-| 4 | Monts Grisfer (nains) | en discussion |
+| 4 | Monts Grisfer (nains) | ✅ validé le 15/11 |
 | 5 | Archipel des Brumes | à faire |
 | 6 | État démoniaque | à faire |
 | 7 | État de la Lumière (nouveau) | à faire |
@@ -186,3 +186,73 @@ Une forêt primaire d'arbres géants, cachée sous une **brume bleue**. Un peupl
 - Les grandes familles des **Lignées Premières** et leurs chefs.
 - Ce qui affaiblit la brume au chapitre 3.
 - Le récit complet de la guerre des Racines (le roi de l'époque, le chef de la Colonne perdue).
+
+---
+
+## 4. Les Monts Grisfer — « la parole et le marteau » ✅
+
+### En bref
+Des montagnes de forges volcaniques à l'est de Velmaris. Un peuple **rude mais juste**, où l'on devient roi par son travail, où une parole donnée vaut un contrat… et où l'on boit sec. Les nains n'oublient jamais une dette.
+
+### Ce qui vient de la V1
+- Montagnes, mines, forges volcaniques ; **nains** et **gnomes** ; couleurs gris et orange de forge.
+- La cité-forge et le donjon des **Mille Marches** (une marche = un étage).
+- Le roi **Bardrek** ; chapitre 4 : former l'**alliance des nains et des dragons** (Mille Marches en 1022).
+- En V2 (cosmologie) : **Durnhal** (la Forge), les **Ancêtres** sous la montagne, **Morghast « le Briseur »** vénéré comme un artisan (défaire pour refaire), ce que l'Ordre juge hérétique.
+
+### Noms renommés en V2 (pour rester 100 % originaux)
+| V1 | V2 |
+|---|---|
+| Karak-Dûm | **Ardenclume** (la cité-forge) |
+| Roi-sous-la-Montagne | **le Haut-Forgeron** (Bardrek garde son nom) |
+
+### Le pouvoir : une royauté du mérite
+- Le Haut-Forgeron **n'hérite pas** du trône : il le **gagne**.
+- À la mort du roi, chaque clan présente un candidat, qui doit forger un **Grand Œuvre**. Les **Ancêtres** le jugent lors d'un rite dans la **Salle des Ancêtres**.
+- **L'Assemblée des Clans** vote les lois et la guerre. Les **gnomes** y ont **quelques sièges**, toujours minoritaires face aux nains.
+
+### Ambiance
+- **L'honneur, la parole donnée, le travail bien fait.** Rude mais juste.
+- **Ils n'oublient jamais une dette** (Aubeclaire en sait quelque chose).
+- **De grands buveurs** : chaque contrat, chaque Grand Œuvre et chaque enterrement se fête autour d'un tonneau.
+
+### Peuples
+- **Nains** : forgerons, mineurs, maîtres d'armes.
+- **Gnomes** : inventeurs et ingénieurs ; ce sont eux qui fabriquent les **machines** vendues à Qarzim. **Acceptés par le peuple**, ils siègent à l'Assemblée, mais restent minoritaires. Les nains défendent la tradition, les gnomes l'invention : une tension amicale… la plupart du temps.
+
+### Économie : le métal… et l'alcool
+- **Armes, armures, métal et machines** : les meilleures de Velmaris, vendues cher.
+- **Le commerce du vin avec Sylvenoire** : les elfes fournissent les **fruits et le vin de sève** ; les nains les **transforment** (eaux-de-vie, vins forts vieillis dans les caves volcaniques) et les **revendent** dans tout le monde. Leur fierté : l'**Eau-de-Sève**, une liqueur dorée que tout le monde s'arrache, des tavernes de Lysmont aux navires pirates.
+
+### Le Pacte des Braises (les dragons)
+- **Au temps des dragons-rois** (avant l'an 0), nains et dragons étaient **ennemis** : les dragons voulaient les montagnes et leurs trésors, les nains les ont défendues tunnel par tunnel.
+- **Un roi-dragon a arrêté la guerre** et conclu le **Pacte des Braises** (nom du roi-dragon à créer) :
+  - les dragons donnent leur **feu**, le seul assez chaud pour forger les métaux légendaires dans les **Grandes Forges** ;
+  - les nains offrent aux dragons la **chaleur des volcans** pour couver leurs **œufs**, et les gardent dans les profondeurs ;
+  - les deux peuples jurent de ne jamais s'attaquer et de **répondre à l'appel** de l'autre en cas de grand danger.
+- C'est ce pacte que les héros devront **réveiller** au chapitre 4 pour former l'alliance.
+- Piste à creuser : l'**œuf volé d'Ysoria** a-t-il un lien avec les couvées des nains ?
+
+### Religion
+- **Durnhal** (la Forge) et les **Ancêtres** ; **Morghast « le Briseur »** ; **Tonnhar** (les orages) sur les sommets.
+- **L'Ordre** les juge hérétiques, mais n'ose pas le dire trop fort : on a besoin de leurs armes.
+
+### Secret proposé (à confirmer)
+Les forges volcaniques sont chauffées par le **souffle de Morghast**, qui remonte sous terre depuis les Terres Cendrées. Plus on descend les Mille Marches, plus il fait chaud… et la dernière marche **communique avec les Cendres** : une porte de derrière pour la Légion.
+
+### Relations
+
+| Avec | Relation | Pourquoi |
+|---|---|---|
+| **Aubeclaire** | **Ancienne tension** | Le **Mur d'Aube** (702) jamais payé en entier ; Aubeclaire s'en est attribué la gloire. Les nains lui vendent toujours des armes, à prix fort. |
+| **Concorde de Qarzim** | **Bonne entente** | Métal et machines contre épices, soieries et cristaux |
+| **Sylvenoire** | **Allié** | La guerre des Racines (refus de vendre des armes à Aubeclaire, réfugiés accueillis) et le **commerce du vin** |
+| **Archipel des Brumes** | **Bons termes** | Les pirates sont les **meilleurs clients** des eaux-de-vie naines ; en échange, les nains reçoivent des marchandises « sans poser de questions » |
+| **État démoniaque** | **Neutre des deux côtés** | Un **intérêt stratégique** : les nains sont alliés des elfes. L'État démoniaque évite de les provoquer (pas de second front) ; les nains restent neutres pour protéger leurs montagnes |
+| **Domaine nocturne** | **Tension** | Par solidarité avec les elfes (la Chasse Pâle), sans aller plus loin. Les nains **refusent de leur vendre des armes** |
+| **État de la Lumière** | Neutre | L'Ordre les juge hérétiques, mais a besoin de leur métal |
+
+### À créer plus tard
+- Le **nom du roi-dragon** du Pacte des Braises et le récit de la guerre ancienne.
+- Les **clans** nains et leurs chefs ; les familles gnomes de l'Assemblée.
+- Les autres cités et mines des Monts Grisfer.
