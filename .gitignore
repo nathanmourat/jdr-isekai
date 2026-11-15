@@ -6,3 +6,6 @@ rapports/*.csv
 test-results/
 playwright-report/
 __pycache__/
+
+# Originaux des portraits IA (lourds, gardés sur le PC du graphiste)
+portraits-sources/

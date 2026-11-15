@@ -127,3 +127,24 @@ Traductions (pour vérifier) :
 ### 4.3 Autres compagnes et PNJ importants
 
 À venir : Kaya, Nadja, Séraphine, Elianne, Ilyssë, Ysoria, Morra ; Halvine, Rowena, Auréliath, Bram, Ferrand…
+
+## 5. Animation des portraits (15/11)
+
+Démonstration : artefact « Portrait animé — Aveline » (lien donné au groupe dans la conversation).
+
+**Fichiers par personnage** (exemple d'Aveline) :
+- `assets/personnages/compagnes/aveline/portrait-<expression>.png` : portrait 512 × 512, fond transparent ;
+- `assets/personnages/compagnes/aveline/anim/<expression>/` :
+  - `yeux.png` : yeux fermés, seulement la zone des yeux (alpha = masque adouci) → clignement ;
+  - `bouche.png` : bouche ouverte, seulement la zone de la bouche → parole. **Provisoire** (dessinée en code) en attendant l'image IA « neutre-bouche-ouverte » ;
+  - `carte.png` : canal rouge = ondulation des cheveux (0 près du crâne, fort sur les pointes et la tresse), canal vert = respiration (le buste monte, la tête suit à moitié) ;
+- `anim/anim.json` : taille et centre de la bouche par expression.
+
+**Module** : `outils/portraits/portrait-anime.js` (classe `PortraitAnime`, WebGL 1, sans dépendance). Respiration (cycle de 4,2 s), clignement aléatoire toutes les 2,5 à 6 s (parfois double), ondulation des cheveux, bouche qui bouge tant que `parler(true)` (à brancher sur l'affichage lettre par lettre), aura lumineuse qui pulse (`definirLueur(couleur)`), particules (`lucioles`, `braises`, `magie`, `neige`, `ombre`). Avec `prefers-reduced-motion` : clignement et parole seulement. Sans WebGL : portrait fixe.
+
+**Scripts** (`outils/portraits/`, Python + OpenCV + rembg) :
+- `preparer_portrait.py <source> <sortie>` : détourage (modèle `isnet-anime`) et 512 × 512 ;
+- `preparer_animation.py <sources> <portraits 512> <sortie> <id> <bouche_x> <bouche_y>` : recale les variantes sur le neutre (ECC affine) et fabrique `yeux.png`, `bouche.png`, `carte.png` pour chaque expression ;
+- `aligner.py` : recalage seul, pour vérifier.
+
+Les originaux IA (1254 × 1254) restent sur le PC du graphiste dans `portraits-sources/` (ignoré par Git).
