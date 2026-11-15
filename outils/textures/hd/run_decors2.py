@@ -33,5 +33,5 @@ for m in mods:
             if avp:
                 doc['avant_plan'] = avp
             json.dump(doc,
-                      open(f'{OUT}/decors/{k}.json', 'w'), ensure_ascii=False, indent=1)
+                      open(f'{OUT}/decors/{k}.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
         print(k)
