@@ -7,7 +7,7 @@
  * le jeu marche, mais rien n'est conservé après l'arrêt.
  */
 import { DataStoreService, HttpService, RunService } from "@rbxts/services";
-import type { Action, EtatPartie, HerosVoyageur } from "shared/moteur";
+import type { Action, DeltaHistoire, EtatPartie, HerosVoyageur } from "shared/moteur";
 import type { ResumePartie } from "shared/reseau";
 
 export interface DonneesPartie {
@@ -17,6 +17,8 @@ export interface DonneesPartie {
 	actions: Action[];
 	/** Gains du héros pendant qu'il est dans le groupe d'un autre joueur (rapportés au prochain chargement si besoin). */
 	retourEnAttente?: HerosVoyageur;
+	/** Histoire vécue en groupe, pas encore reportée dans cette campagne (arrêt brutal du serveur). */
+	histoireEnAttente?: DeltaHistoire;
 	/** Serveur qui a la partie ouverte (évite que deux serveurs l'écrivent en même temps). */
 	verrou?: { serveur: string; expire: number };
 }

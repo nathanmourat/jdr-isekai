@@ -278,6 +278,22 @@ export interface HerosVoyageur {
 }
 export function exporterHeros(etat: EtatPartie, herosId: string): HerosVoyageur;
 
+/** Histoire partagée (voyage.ts) : ce que le groupe fait avancer, rapporté chez un membre au même point. */
+export interface PointHistoire {
+	quetes: Record<string, { etape: string; terminee: boolean }>;
+	flags: Record<string, boolean>;
+	scenesVues: string[];
+	jour: number;
+	[cle: string]: unknown;
+}
+export interface DeltaHistoire {
+	scenes: string[];
+	jour: number;
+	[cle: string]: unknown;
+}
+export function pointHistoire(etat: EtatPartie): PointHistoire;
+export function deltaHistoire(avant: PointHistoire, apres: PointHistoire): DeltaHistoire;
+
 export interface Joueur {
 	id: string;
 	pseudo: string;

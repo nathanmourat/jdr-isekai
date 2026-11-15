@@ -22,7 +22,7 @@ import { apprendre, creerTechnique, idFusion, peutApprendre, type Technique } fr
 import { competencesConnues as connuesDe } from './personnage';
 import { exemplaires, problemeEquipement } from './equipement';
 import { anneeDepart, chapitreDe, fetesEntre, formaterDate, joursParMois, versDate, versJour } from './temps';
-import { recopierAutour, recopierProgression, type HerosVoyageur } from './voyage';
+import { appliquerHistoire, memePointHistoire, recopierAutour, recopierProgression, type DeltaHistoire, type HerosVoyageur } from './voyage';
 
 export const VERSION_ETAT = 9;
 export const MAX_JOUEURS = 6;
@@ -193,6 +193,8 @@ export type Action =
   | { type: 'invite_arrive'; joueur: string; pseudo: string; voyageur: HerosVoyageur }
   /** Roblox : le héros revient de la campagne de son chef de groupe avec ses gains, voir voyage.ts. */
   | { type: 'heros_retour'; joueur: string; voyageur: HerosVoyageur }
+  /** Roblox : l'histoire vécue dans le groupe compte aussi dans cette campagne, si elle en était au même point. */
+  | { type: 'histoire_retour'; joueur: string; delta: DeltaHistoire }
   /** Roblox : cadeau du propriétaire du jeu (outil de test réservé au propriétaire, décidé par le serveur). */
   | { type: 'cadeau_admin'; joueur: string; or?: number; xp?: number; objet?: string; quantite?: number }
   /** Dormir à l'auberge : `mois` choisi, ou `histoire: true` pour aller jusqu'au prochain événement de l'histoire. */
@@ -1344,6 +1346,20 @@ export function appliquer(contenu: Contenu, etatAvant: EtatPartie, action: Actio
       recopierProgression(h, action.voyageur.heros);
       recopierAutour(etat, h.id, action.voyageur);
       journal(contenu, etat, `${h.nom} revient d'une aventure en groupe (niveau ${h.niveau}).`);
+      break;
+    }
+    case 'histoire_retour': {
+      herosDuJoueur(etat, action.joueur);
+      if (!memePointHistoire(etat, action.delta)) {
+        if (action.delta.scenes.length > 0) etat.dernieresNouvelles.push('Ton histoire n\'en était pas au même point que celle du groupe : tu gardes tes gains, mais ton histoire ne change pas.');
+        break;
+      }
+      appliquerHistoire(etat, action.delta);
+      // le temps de l'aventure : la date de cette campagne rattrape celle du groupe (jamais en arrière)
+      if (action.delta.jour > etat.jour) avancerTemps(contenu, etat, action.delta.jour - etat.jour);
+      const n = action.delta.scenes.length;
+      etat.dernieresNouvelles.push(`L'histoire vécue avec le groupe compte aussi pour toi : ${n} scène${n > 1 ? 's' : ''} de plus dans ta campagne.`);
+      journal(contenu, etat, `Le groupe a fait avancer l'histoire (${n} scène${n > 1 ? 's' : ''}).`);
       break;
     }
     case 'cadeau_admin': {

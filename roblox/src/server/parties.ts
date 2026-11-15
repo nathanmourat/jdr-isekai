@@ -11,7 +11,7 @@
  */
 import { HttpService, Players, TextService } from "@rbxts/services";
 import { CONTENU } from "shared/donnees";
-import { appliquer, exporterHeros, FORMAT, jourPeutPasser, nouvellePartie, rejouer, verifierSauvegarde, type Action, type EtatPartie } from "shared/moteur";
+import { appliquer, deltaHistoire, exporterHeros, pointHistoire, type PointHistoire, FORMAT, jourPeutPasser, nouvellePartie, rejouer, verifierSauvegarde, type Action, type EtatPartie } from "shared/moteur";
 import { idJoueur, reseau, type ActionJoueur, type EtatGroupe } from "shared/reseau";
 import { chargerEtVerrouiller, enregistrer, type DonneesPartie } from "./stockage";
 
@@ -118,6 +118,12 @@ function ouvrirCampagnePerso(j: Player): PartieOuverte {
 		if (err !== undefined) warn(`[Velmaris] Retour en attente de ${j.Name} : ${err}`);
 		p.donnees.retourEnAttente = undefined;
 	}
+	const h = p.donnees.histoireEnAttente;
+	if (h !== undefined) {
+		const err = p.jouer({ type: "histoire_retour", joueur: id, delta: h });
+		if (err !== undefined) warn(`[Velmaris] Histoire en attente de ${j.Name} : ${err}`);
+		p.donnees.histoireEnAttente = undefined;
+	}
 	pcall(() => enregistrer(p.donnees));
 	return p;
 }
@@ -175,6 +181,8 @@ interface Groupe {
 	membres: Player[];
 }
 const groupeDe = new Map<Player, Groupe>();
+/** Point de l'histoire du chef quand chaque membre est arrivé (pour faire avancer l'histoire du membre au retour). */
+const histoireAvant = new Map<Player, PointHistoire>();
 const invitations = new Map<Player, { chef: Player; expire: number }>();
 
 function aUnHeros(j: Player): boolean {
@@ -237,6 +245,7 @@ function rejoindreGroupe(chef: Player, j: Player): string | undefined {
 	partieDe.set(j, campagneChef);
 	perso.donnees.retourEnAttente = voyageur;
 	perso.modifiee = true;
+	histoireAvant.set(j, pointHistoire(campagneChef.etat));
 	envoyerCampagne(j, campagneChef);
 	return undefined;
 }
@@ -276,6 +285,17 @@ function rentrer(j: Player, g: Groupe, depart: boolean) {
 				warn(`[Velmaris] Retour de ${j.Name} : ${err}`);
 				perso.donnees.retourEnAttente = v;
 			} else perso.donnees.retourEnAttente = undefined;
+			// l'histoire vécue avec le groupe compte aussi chez lui, s'il en était au même point
+			const avant = histoireAvant.get(j);
+			if (avant) {
+				const delta = deltaHistoire(avant, pointHistoire(campagneChef.etat));
+				if (delta.scenes.size() > 0) {
+					const e2 = perso.jouer({ type: "histoire_retour", joueur: id, delta });
+					if (e2 !== undefined) warn(`[Velmaris] Histoire de ${j.Name} : ${e2}`);
+				}
+			}
+			histoireAvant.delete(j);
+			perso.donnees.histoireEnAttente = undefined;
 			perso.modifiee = true;
 		}
 		campagneChef.membres.delete(j);
@@ -314,6 +334,11 @@ function majRetoursEnAttente() {
 		const herosId = campagneChef?.etat.joueurs[idJoueur(j)]?.herosId;
 		if (!campagneChef || !perso || herosId === undefined) continue;
 		perso.donnees.retourEnAttente = exporterHeros(campagneChef.etat, herosId);
+		const avant = histoireAvant.get(j);
+		if (avant) {
+			const delta = deltaHistoire(avant, pointHistoire(campagneChef.etat));
+			perso.donnees.histoireEnAttente = delta.scenes.size() > 0 ? delta : undefined;
+		}
 		perso.modifiee = true;
 	}
 }

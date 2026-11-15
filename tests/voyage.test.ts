@@ -97,3 +97,42 @@ describe('Héros voyageurs (Roblox : groupe dans la campagne du chef)', () => {
     expect(() => appliquer(c, solo.etat, { type: 'cadeau_admin', joueur: 'u1', objet: 'objet-qui-n-existe-pas' })).toThrow(/inconnu/);
   });
 });
+
+import { deltaHistoire, memePointHistoire, pointHistoire } from '../src/moteur/voyage';
+
+describe('Histoire partagée (Roblox)', () => {
+  const dons = Object.keys(c.dons);
+  const classes = Object.keys(c.classes);
+  function avance(e: EtatPartie): EtatPartie {
+    const x = JSON.parse(JSON.stringify(e)) as EtatPartie;
+    x.quetes['q-test'] = { etape: 'fin', terminee: true };
+    x.flags['flag-test'] = true;
+    x.scenesVues.push('scene-test');
+    x.reputation.guilde = (x.reputation.guilde ?? 0) + 5;
+    x.jour += 10;
+    return x;
+  }
+  it('au même point : la quête, les drapeaux, la scène et la date suivent', () => {
+    const chef = campagneSolo('h1c', 'u1', 'Alice', dons[0], classes[0]);
+    const membre = campagneSolo('h1m', 'u2', 'Bruno', dons[1], classes[1]);
+    const d = deltaHistoire(pointHistoire(chef.etat), pointHistoire(avance(chef.etat)));
+    expect(memePointHistoire(membre.etat, d)).toBe(true);
+    const e = appliquer(c, membre.etat, { type: 'histoire_retour', joueur: 'u2', delta: d });
+    expect(e.quetes['q-test']).toEqual({ etape: 'fin', terminee: true });
+    expect(e.flags['flag-test']).toBe(true);
+    expect(e.scenesVues).toContain('scene-test');
+    expect(e.jour).toBe(membre.etat.jour + 10);
+    expect(e.reputation.guilde).toBe((membre.etat.reputation.guilde ?? 0) + 5);
+  });
+  it('pas au même point : rien ne change dans son histoire', () => {
+    const chef = campagneSolo('h2c', 'u1', 'Alice', dons[0], classes[0]);
+    const membre = campagneSolo('h2m', 'u2', 'Bruno', dons[1], classes[1]);
+    const d = deltaHistoire(pointHistoire(chef.etat), pointHistoire(avance(chef.etat)));
+    const deja = JSON.parse(JSON.stringify(membre.etat)) as EtatPartie;
+    deja.quetes['q-test'] = { etape: 'debut', terminee: false };
+    const e = appliquer(c, deja, { type: 'histoire_retour', joueur: 'u2', delta: d });
+    expect(e.quetes['q-test']).toEqual({ etape: 'debut', terminee: false });
+    expect(e.scenesVues).not.toContain('scene-test');
+    expect(e.flags['flag-test']).toBeUndefined();
+  });
+});

@@ -61,6 +61,11 @@ for _, etat in sortie.points do
 		essai("pvHorsCombat", function() moteur.pvHorsCombat(contenu, h); moteur.pvMaxHorsCombat(contenu, h) end)
 		for id, _ in contenu.contrats do essai("retourContrat", function() moteur.retourContrat(contenu, etat, id) end) end
 		essai("exporterHeros", function() moteur.exporterHeros(etat, h.id) end)
+		essai("histoire", function()
+			local p = moteur.pointHistoire(etat)
+			local d = moteur.deltaHistoire(p, p)
+			moteur.memePointHistoire(etat, d)
+		end)
 		for id, o in contenu.objets do
 			if o.type == "equipement" then
 				essai("objet " .. id, function()
