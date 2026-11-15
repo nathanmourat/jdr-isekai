@@ -1,7 +1,7 @@
 import type { Contenu } from '../contenu/charger';
 import type { Heros } from '../moteur/personnage';
 import type { EtatPartie } from '../moteur/partie';
-import { imagePortrait } from '../rendu/assets';
+import { imagePortrait, urlAsset } from '../rendu/assets';
 
 /** Nom affiché d'un personnage de dialogue. */
 export function nomPersonnage(contenu: Contenu, etat: EtatPartie, qui: string, heros: string[]): string {
@@ -21,6 +21,12 @@ export function portraitPersonnage(contenu: Contenu, qui: string, expression = '
   }
   const base = `personnages/pnj/${qui}/`;
   return imagePortrait([`${base}portrait-${expression}`, `${base}portrait-neutre`, `${base}decor`], qui, contenu.pnj[qui]?.nom ?? qui);
+}
+
+/** Vrai si le personnage a un vrai portrait 512 × 512 (illustration : pas de rendu « pixel »), faux pour le repli decor.png. */
+export function estVraiPortrait(qui: string, contenu: Contenu, expression = 'neutre'): boolean {
+  const base = contenu.compagnons[qui] ? `personnages/compagnes/${qui}/` : `personnages/pnj/${qui}/`;
+  return !!(urlAsset(`${base}portrait-${expression}`) ?? urlAsset(`${base}portrait-neutre`));
 }
 
 export function portraitHeros(contenu: Contenu, h: Heros): string {

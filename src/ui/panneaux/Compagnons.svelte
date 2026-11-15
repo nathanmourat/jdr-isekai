@@ -1,7 +1,7 @@
 <script lang="ts">
   import { jeu } from '../jeu.svelte';
   import { affinite, goutConnu, palierCompagnon } from '../../moteur/partie';
-  import { portraitPersonnage } from '../outils';
+  import { estVraiPortrait, portraitPersonnage } from '../outils';
 
   const c = jeu.contenu!;
   const etat = $derived(jeu.etat!);
@@ -18,7 +18,7 @@
     {@const a = affinite(etat, h.id, id)}
     {@const p = palierCompagnon(c, etat, h.id, id)}
     <article class="carte-ui compagnon">
-      <img class="pixel" src={portraitPersonnage(c, id, p.index >= 3 ? 'joie' : 'neutre')} alt={`Portrait de ${co.nom}`} />
+      <img class:pixel={!estVraiPortrait(id, c, p.index >= 3 ? 'joie' : 'neutre')} src={portraitPersonnage(c, id, p.index >= 3 ? 'joie' : 'neutre')} alt={`Portrait de ${co.nom}`} />
       <div class="infos">
         <h2>{co.nom}</h2>
         <p class="discret">{co.titre} · {co.age} ans</p>

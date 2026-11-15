@@ -91,12 +91,12 @@ Description : femme de 24 ans, chevalière, cheveux châtain cuivré en tresse c
 
 | Fait | N° | Fichier (dans `assets/`) | Dimensions | Contenu |
 |---|---|---|---|---|
-| [ ] | 31 | `personnages/compagnes/aveline/portrait-neutre.png` | 512 × 512 | Visage sérieux, regard droit. |
-| [ ] | 32 | `personnages/compagnes/aveline/portrait-joie.png` | 512 × 512 | Sourire franc, un peu maladroit. |
-| [ ] | 33 | `personnages/compagnes/aveline/portrait-colere.png` | 512 × 512 | Sourcils froncés, mâchoire serrée. |
-| [ ] | 34 | `personnages/compagnes/aveline/portrait-tristesse.png` | 512 × 512 | Regard baissé, yeux humides. |
-| [ ] | 35 | `personnages/compagnes/aveline/portrait-gene.png` | 512 × 512 | Rougissement, détourne le regard (scènes de flirt). |
-| [ ] | 36 | `personnages/compagnes/aveline/portrait-surprise.png` | 512 × 512 | Yeux écarquillés, bouche entrouverte. |
+| [x] | 31 | `personnages/compagnes/aveline/portrait-neutre.png` | 512 × 512 | Visage sérieux, regard droit. |
+| [x] | 32 | `personnages/compagnes/aveline/portrait-joie.png` | 512 × 512 | Sourire franc, un peu maladroit. |
+| [x] | 33 | `personnages/compagnes/aveline/portrait-colere.png` | 512 × 512 | Sourcils froncés, mâchoire serrée. |
+| [x] | 34 | `personnages/compagnes/aveline/portrait-tristesse.png` | 512 × 512 | Regard baissé, yeux humides. |
+| [x] | 35 | `personnages/compagnes/aveline/portrait-gene.png` | 512 × 512 | Rougissement, détourne le regard (scènes de flirt). |
+| [x] | 36 | `personnages/compagnes/aveline/portrait-surprise.png` | 512 × 512 | Yeux écarquillés, bouche entrouverte. |
 
 ---
 

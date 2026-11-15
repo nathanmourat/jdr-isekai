@@ -588,6 +588,18 @@ export const zFondCombat = z.object({
 export type FondCombat = z.infer<typeof zFondCombat>;
 export const zFondsCombat = z.record(z.string(), zFondCombat);
 
+/** Effets d'un portrait animé de dialogue (content/config/portraits.yaml). Affichage seulement. */
+export const zEffetsPortrait = z.object({
+  lueur: z.string().regex(/^#[0-9a-fA-F]{3,8}$/, 'couleur attendue au format "#rrggbb"').nullable().default(null),
+  particules: z.enum(['lucioles', 'braises', 'magie', 'neige', 'ombre']).nullable().default(null),
+});
+export type EffetsPortrait = z.infer<typeof zEffetsPortrait>;
+export const zPortraits = z.object({
+  defaut: zEffetsPortrait.default({ lueur: null, particules: null }),
+  personnages: z.record(z.string(), zEffetsPortrait).default({}),
+});
+export type Portraits = z.infer<typeof zPortraits>;
+
 export const zDifficulte = z.object({ puissance: z.number(), pv: z.number(), degats: z.number(), ennemis_en_plus: z.number().int() });
 
 export const zConfig = z.object({

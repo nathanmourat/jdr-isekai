@@ -9,7 +9,7 @@
 import { parse } from 'yaml';
 import type { z } from 'zod';
 import {
-  zActivite, zFondsCombat, zAmbiance, zClasse, zCompagnon, zConfig, zContrat, zDon, zDonjon, zEnnemi, zObjet, zPnj, zQuete, zRace,
+  zActivite, zFondsCombat, zPortraits, zAmbiance, zClasse, zCompagnon, zConfig, zContrat, zDon, zDonjon, zEnnemi, zObjet, zPnj, zQuete, zRace,
   zRegion, zRencontre, zScene,
   type Activite, type Classe, type Compagnon, type Competence, type Condition, type Config, type Consequence,
   type Contrat, type Don, type Donjon, type Ennemi, type Objet, type Pnj, type Quete, type Race, type Region,
@@ -53,6 +53,7 @@ export function chargerContenu(fichiers: Record<string, string>): Contenu {
     classes: {}, competences: {}, races: {}, dons: {}, ennemis: {}, rencontres: {}, objets: {}, compagnons: {},
     regions: {}, pnj: {}, scenes: {}, quetes: {}, donjons: {}, contrats: {}, activites: {}, ambiance: {},
     fondsCombat: {},
+    portraits: { defaut: { lueur: null, particules: null }, personnages: {} },
   };
 
   const ajouter = <T extends { id: string }>(
@@ -102,8 +103,13 @@ export function chargerContenu(fichiers: Record<string, string>): Contenu {
           if (r.success) Object.assign(c.fondsCombat, r.data); else erreurs.push(...formaterErreurZod(fichier, 'fonds_combat', r.error));
           break;
         }
+        case 'portraits': {
+          const r = zPortraits.safeParse(valeur);
+          if (r.success) c.portraits = r.data; else erreurs.push(...formaterErreurZod(fichier, 'portraits', r.error));
+          break;
+        }
         case 'ambiance': ajouter(fichier, cle, valeur, zAmbiance, c.ambiance); break;
-        default: erreurs.push(`${fichier} › clé inconnue « ${cle} » (clés possibles : config, classe, races, dons, ennemis, rencontres, objets, compagnon, regions, pnj, scenes, quetes, donjons, contrats, activites, ambiance, fonds_combat)`);
+        default: erreurs.push(`${fichier} › clé inconnue « ${cle} » (clés possibles : config, classe, races, dons, ennemis, rencontres, objets, compagnon, regions, pnj, scenes, quetes, donjons, contrats, activites, ambiance, fonds_combat, portraits)`);
       }
     }
   }

@@ -16,7 +16,7 @@
   import { absentsDuGroupe, aideNiveau, couleurNiveau, estExaminateur, estGuilde, marqueurPnj, trouverLieu, niveauGroupe, niveauScene, sceneAvecCombat, type Marqueur } from '../../moteur/guide';
   import NiveauConseille from '../NiveauConseille.svelte';
   import { avantPlanDecor, imageDecor, imagePnjDecor, positionsImage, TAILLE_PNJ_DECOR } from '../../rendu/assets';
-  import { portraitPersonnage } from '../outils';
+  import { estVraiPortrait, portraitPersonnage } from '../outils';
   import { fusionsPossibles } from '../../moteur/fusions';
   import CompetenceInfo from '../CompetenceInfo.svelte';
   import type { Scene } from '../../contenu/schemas';
@@ -234,7 +234,7 @@
       <div class="bulle carte-ui" class:dessous={bulle.dessous} style={styleBulle} bind:this={bulleEl} onscroll={majSuite} role="dialog" aria-label={`Discussion avec ${nomPnj(pnjChoisi)}`}>
         <div class="ligne entre tete-bulle">
           <div class="ligne">
-            <img class="tete pixel" src={portraitPersonnage(c, pnjChoisi)} alt="" />
+            <img class="tete" class:pixel={!estVraiPortrait(pnjChoisi, c)} src={portraitPersonnage(c, pnjChoisi)} alt="" />
             <div><h3>{nomPnj(pnjChoisi)}</h3><p class="discret">{fiche?.titre ?? c.compagnons[pnjChoisi]?.titre ?? ''}</p></div>
           </div>
           <button class="fermer-bulle" aria-label="Fermer" onclick={() => (pnjChoisi = null)}>✕</button>

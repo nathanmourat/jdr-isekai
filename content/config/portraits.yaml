@@ -1,0 +1,17 @@
+# ─────────────────────────────────────────────────────────────
+#  Portraits animés de dialogue : effets par personnage (version web seulement).
+#  Un personnage a un portrait animé quand ces fichiers existent (voir docs/PORTRAITS-IA.md § 5) :
+#    assets/personnages/<compagnes|pnj>/<id>/portrait-<expression>.png  (512 × 512, fond transparent)
+#    assets/personnages/<compagnes|pnj>/<id>/anim/anim.json             (+ anim/<expression>/yeux.png et carte.png)
+#  Héros : assets/personnages/races/<race>/portrait-defaut.png (et portrait-defaut-f.png pour une héroïne),
+#  avec anim/anim.json (expressions « defaut » et « defaut-f ») et anim/defaut/, anim/defaut-f/.
+#  Sans ces fichiers, le portrait reste une image fixe (comme avant).
+#
+#  lueur : couleur d'une lueur douce derrière le personnage (ex. "#f3c45a"), ou rien.
+#  particules : lucioles, braises, magie, neige, ombre, ou rien.
+# ─────────────────────────────────────────────────────────────
+
+portraits:
+  defaut: { lueur: null, particules: null }
+  personnages:
+    aveline: { lueur: "#f3c45a", particules: lucioles }

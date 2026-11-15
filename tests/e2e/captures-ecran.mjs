@@ -73,7 +73,19 @@ for (const [ecran, viewport, dpr] of ECRANS) {
   await capture(page, ecran, '3-lieu-discussion');
   await page.getByRole('button', { name: 'Lui parler' }).first().click();
   await capture(page, ecran, '4-dialogue');
+  let portraitVu = false;
   for (let k = 0; k < 300; k++) {
+    // portrait animé d'Aveline (essai) : capture, cadre dans l'écran, un seul canvas WebGL par portrait
+    if (!portraitVu && await page.locator('.cadre-portrait').first().isVisible()) {
+      portraitVu = true;
+      await page.waitForTimeout(900);
+      const r = await page.evaluate(() => ({ cadres: [...document.querySelectorAll('.cadre-portrait')].map((e) => e.getBoundingClientRect().toJSON()), canvas: document.querySelectorAll('.cadre-portrait canvas').length, fixes: document.querySelectorAll('.cadre-portrait img.fixe').length, webgl: !!document.querySelector('.cadre-portrait canvas:nth-of-type(2)')?.getContext('webgl'), w: innerWidth, h: innerHeight }));
+      for (const b of r.cadres) if (b.left < 0 || b.top < 0 || b.right > r.w + 1 || b.bottom > r.h + 1) erreurs.push(`${ecran} › portrait animé hors de l'écran`);
+      if (r.canvas !== r.cadres.length * 3) erreurs.push(`${ecran} › ${r.canvas} canvas pour ${r.cadres.length} portrait(s) (3 attendus par portrait)`);
+      if (r.fixes) erreurs.push(ecran + ' › le portrait animé ne s\'est pas chargé (image fixe affichée)');
+      if (!r.webgl) console.log(ecran + ' : pas de WebGL dans ce navigateur, portrait fixe (repli prévu)');
+      await capture(page, ecran, '4b-dialogue-portrait-anime');
+    }
     const fin = page.getByRole('button', { name: 'Terminer la scène' });
     if (await fin.isVisible()) { await fin.click(); break; }
     const suivant = page.getByRole('button', { name: 'Continuer', exact: true });
@@ -83,6 +95,7 @@ for (const [ecran, viewport, dpr] of ECRANS) {
     if (await reponse.isVisible()) { await reponse.click(); continue; }
     await page.waitForTimeout(100);
   }
+  if (!portraitVu) erreurs.push(ecran + " › aucun portrait animé d'Aveline dans le premier dialogue");
   // retour à la carte par le bouton de la barre, puis le plan de Lysmont et la Guilde
   await page.getByRole('button', { name: 'Carte', exact: true }).click();
   await page.locator('[data-ville="lysmont"]').click();
@@ -105,5 +118,6 @@ for (const [ecran, viewport, dpr] of ECRANS) {
   await page.close();
 }
 await navigateur.close();
+console.log("Portrait animé d'Aveline : vérifié dans le premier dialogue (cadre dans l'écran, 3 canvas par portrait).");
 if (erreurs.length) { console.log('✘ Problèmes :\n' + erreurs.map((e) => ' - ' + e).join('\n')); process.exit(1); }
 console.log(`Captures enregistrées dans ${dossier} ; aucune page ne défile.`);

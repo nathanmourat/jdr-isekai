@@ -3,7 +3,9 @@
   import { jeu } from '../jeu.svelte';
   import { choixVisibles, conditionScene, joueursAttendusDialogue, joueursDuPari, miseDuChoix, noeudAffiche, partMinimaleDePari, partsDeMise, remplacerVariables } from '../../moteur/partie';
   import { imageDecor } from '../../rendu/assets';
-  import { NOMS_CARACS, nomPersonnage, portraitHeros, portraitPersonnage } from '../outils';
+  import { NOMS_CARACS, estVraiPortrait, nomPersonnage, portraitHeros, portraitPersonnage } from '../outils';
+  import PortraitAnime from '../PortraitAnime.svelte';
+  import { portraitAnimeHeros, portraitAnimePersonnage } from '../portraits';
 
   let { cle }: { cle: string } = $props();
   const c = jeu.contenu!;
@@ -104,6 +106,11 @@
   function votants(index: number) { return Object.entries(es.votes).filter(([, v]) => v === index).map(([j]) => etat.joueurs[j]?.pseudo); }
   function aVote(j: string) { return es.votes[j] !== undefined; }
   function suivant() { if (!toutVu) vues++; }
+  // Portraits animés (essai) : seulement si le personnage a ses vrais portraits et anim/anim.json, sinon image fixe
+  const animReplique = $derived(!replique ? null
+    : replique.qui === 'heros' ? (es.heros[0] ? portraitAnimeHeros(c, etat.heros[es.heros[0]]) : null)
+    : portraitAnimePersonnage(c, replique.qui, replique.expression));
+  const animQuestion = $derived(parole ? portraitAnimePersonnage(c, parole.def.question.qui, parole.def.question.expression) : null);
 </script>
 
 <section class="scene" style={`--decor: url(${imageDecor(decor, scene.titre)})`}>
@@ -127,8 +134,10 @@
 
     {#if replique}
       <div class="replique" onclick={suivant} onkeydown={(e) => (e.key === 'Enter' || e.key === ' ') && suivant()} role="button" tabindex="0">
-        {#if portraitPersonnage(c, replique.qui, replique.expression)}
-          <img class="portrait pixel" src={portraitPersonnage(c, replique.qui, replique.expression)} alt={nomPersonnage(c, etat, replique.qui, es.heros)} />
+        {#if animReplique}
+          <PortraitAnime portrait={animReplique} texte={texte(replique.dit)} cleParole={`${es.sceneId}:${es.noeud}:${vues}`} alt={nomPersonnage(c, etat, replique.qui, es.heros)} />
+        {:else if portraitPersonnage(c, replique.qui, replique.expression)}
+          <img class="portrait" class:pixel={!estVraiPortrait(replique.qui, c, replique.expression)} src={portraitPersonnage(c, replique.qui, replique.expression)} alt={nomPersonnage(c, etat, replique.qui, es.heros)} />
         {:else if replique.qui === 'heros' && es.heros[0]}
           <img class="portrait pixel" src={portraitHeros(c, etat.heros[es.heros[0]])} alt="" />
         {/if}
@@ -164,7 +173,8 @@
       {:else if parole}
         <div class="parole">
           <div class="question">
-            {#if portraitPersonnage(c, parole.def.question.qui, parole.def.question.expression)}<img class="portrait pixel" src={portraitPersonnage(c, parole.def.question.qui, parole.def.question.expression)} alt="" />{/if}
+            {#if animQuestion}<PortraitAnime portrait={animQuestion} texte={texteParole(parole.def.question.dit)} cleParole={`${es.sceneId}:${es.noeud}:question`} />
+            {:else if portraitPersonnage(c, parole.def.question.qui, parole.def.question.expression)}<img class="portrait" class:pixel={!estVraiPortrait(parole.def.question.qui, c, parole.def.question.expression)} src={portraitPersonnage(c, parole.def.question.qui, parole.def.question.expression)} alt="" />{/if}
             <div>
               <p class="qui">{nomPersonnage(c, etat, parole.def.question.qui, es.heros)} <span class="badge or">s'adresse à {joueurInterroge?.pseudo}</span></p>
               <p class="dit">{texteParole(parole.def.question.dit)}</p>
