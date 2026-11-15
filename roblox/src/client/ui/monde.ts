@@ -32,6 +32,11 @@ import {
 	exemplaires,
 	prochaineEtape,
 	pvMax,
+	pvHorsCombat,
+	pvMaxHorsCombat,
+	RATION,
+	remplacerVariables,
+	retourContrat,
 	candidatsExamen,
 	prochainExamen,
 	rangHeros,
@@ -45,6 +50,7 @@ import {
 import { agir, commandeGroupe, commandeModeration, jeu, monHeros } from "../partie";
 import { RAISONS } from "shared/grades";
 import { vueModeration } from "./moderation";
+import { messageLocal } from "./messages";
 import { affichage, type Panneau } from "../local";
 import { barre, bouton, carte, colonne, COULEURS, esc, ligne, texte } from "./kit";
 
@@ -79,6 +85,13 @@ function nomLieu(id: string | undefined): string | undefined {
 	return lieux().find((l) => l.id === id)?.nom ?? id;
 }
 
+/** PV hors combat, en rouge sous la moitié (on garde ses PV d'un combat à l'autre, test 3). */
+function textePv(h: Heros): string {
+	const pv = pvHorsCombat(CONTENU, h);
+	const max = pvMaxHorsCombat(CONTENU, h);
+	return `<font color="${pv * 2 < max ? "#e0605a" : "#7fc77a"}">${pv}/${max} PV</font>`;
+}
+
 /** Barre du haut : date, héros, prochaine étape et menu. */
 export function barreHaut(parent: Frame, redessiner: () => void, allerA: (lieu: string) => void) {
 	const etat = jeu.etat!;
@@ -88,7 +101,7 @@ export function barreHaut(parent: Frame, redessiner: () => void, allerA: (lieu: 
 	texte(l1, `<b>${formaterDate(CONTENU, etat.jour)}</b> · Chapitre ${etat.chapitre}`, 16, { largeur: new UDim(0, 300) });
 	texte(
 		l1,
-		`<font color="#d9a441">${esc(h.nom)} · niv. ${h.niveau} · rang ${rangHeros(etat, h.id)} · ${h.or} or</font>${etat.meneur !== undefined ? ` · Meneur : ${esc(etat.joueurs[etat.meneur]?.pseudo ?? "?")}` : ""}`,
+		`<font color="#d9a441">${esc(h.nom)} · niv. ${h.niveau} · rang ${rangHeros(etat, h.id)} · ${h.or} or</font> · ${textePv(h)}${etat.meneur !== undefined ? ` · Meneur : ${esc(etat.joueurs[etat.meneur]?.pseudo ?? "?")}` : ""}`,
 		15,
 		{ largeur: new UDim(1, -320) },
 	);
@@ -102,6 +115,16 @@ export function barreHaut(parent: Frame, redessiner: () => void, allerA: (lieu: 
 			redessiner();
 		}, { hauteur: 30, taille: 14 });
 	}
+	// héros d'une ancienne campagne : on demande son sexe (accords des textes, test 3)
+	if (h.sexeChoisi === false) {
+		const lsx = ligne(c, 8);
+		texte(lsx, `<b>${esc(h.nom)}</b> est-il un homme ou une femme ? (pour accorder les textes)`, 15, { largeur: new UDim(1, -240), couleur: COULEURS.or });
+		bouton(lsx, "Un homme", () => agir({ type: "changer_sexe", sexe: "m" }), { hauteur: 30, taille: 14 });
+		bouton(lsx, "Une femme", () => agir({ type: "changer_sexe", sexe: "f" }), { hauteur: 30, taille: 14 });
+	}
+	// PV bas : on prévient avant le prochain combat (test 3)
+	if (pvHorsCombat(CONTENU, h) * 2 < pvMaxHorsCombat(CONTENU, h))
+		texte(c, "⚠ Moins de la moitié de tes PV : soigne-toi avant de te battre (repas à l'auberge, Temple, potion ou ration du sac, ou repos).", 13, { couleur: COULEURS.rouge });
 	// invitation dans un groupe (60 s pour répondre)
 	const inv = jeu.groupe?.invitation;
 	if (inv) {
@@ -290,10 +313,15 @@ function vueLieu(parent: Frame, id: string, fermer: () => void, redessiner: () =
 		texte(c, "Un contrat se joue en plusieurs étapes, dans différents lieux (une balise lumineuse t'y attend). On revient ici toucher la récompense. Un seul contrat à la fois.", 13, { couleur: COULEURS.texte2 });
 		for (const [, ct] of pairs(CONTENU.contrats)) {
 			if (ct.examen_rang !== undefined || !conditionHeros(CONTENU, etat, ct.disponible_si, h)) continue;
+			// un contrat rempli quitte le tableau, puis revient quelques jours plus tard (sauf s'il est unique)
+			const retour = retourContrat(CONTENU, etat, ct.id);
+			if (retour === -1) continue;
 			texte(c, `<b>${ct.titre}</b>  <font color="#beaf96">rang ${ct.rang_min}${ct.etapes.size() > 0 ? ` · ${ct.etapes.size()} étapes` : ""}</font>`, 15);
 			texte(c, `${ct.description} Récompense : ${ct.recompenses.or} or, ${ct.recompenses.xp} XP, ${ct.recompenses.points_guilde} pts de guilde.`, 13, { couleur: COULEURS.texte2 });
-			const ok = RANGS.indexOf(rang) >= RANGS.indexOf(ct.rang_min) && enCours === undefined;
-			bouton(c, enCours ? "Termine d'abord ton contrat en cours" : ok ? "Accepter (en solo)" : `Rang ${ct.rang_min} requis`, () => agir({ type: "contrat", contrat: ct.id }), { actif: ok, hauteur: 32, taille: 14 });
+			const ok = RANGS.indexOf(rang) >= RANGS.indexOf(ct.rang_min) && enCours === undefined && retour === 0;
+			const libelle =
+				retour > 0 ? `Rempli : revient dans ${retour} jour${retour > 1 ? "s" : ""}` : enCours ? "Termine d'abord ton contrat en cours" : ok ? "Accepter (en solo)" : `Rang ${ct.rang_min} requis`;
+			bouton(c, libelle, () => agir({ type: "contrat", contrat: ct.id }), { actif: ok, hauteur: 32, taille: 14 });
 		}
 	}
 	if (estGuilde(id) && voir("grimoire")) {
@@ -307,7 +335,11 @@ function vueLieu(parent: Frame, id: string, fermer: () => void, redessiner: () =
 		}
 		if (fusions.size() === 0) texte(g, "Aucune fusion à apprendre pour l'instant : il faut deux compétences d'éléments différents.", 13, { couleur: COULEURS.texte2 });
 	}
-	if (lieu.auberge === true && (voir("parler") || section === "auberge")) vueAuberge(parent);
+	if (lieu.auberge === true && (voir("parler") || section === "auberge")) {
+		vueSoins(parent, h, "repas", id);
+		vueAuberge(parent);
+	}
+	if (id.sub(1, 6) === "temple" && (voir("parler") || section === "parler")) vueSoins(parent, h, "temple", id);
 	if (lieu.boutique.size() > 0 && voir("boutique")) {
 		const c = carte(parent, `Boutique (${h.or} or)`);
 		// d'abord ce que le héros peut porter, puis le reste ; les objets à usage unique en premier
@@ -338,6 +370,37 @@ function vueLieu(parent: Frame, id: string, fermer: () => void, redessiner: () =
 	if (section === "tout" && groupe.size() === 0 && perso.size() === 0 && !estGuilde(id) && lieu.boutique.size() === 0) {
 		texte(parent, "Rien de particulier à faire ici pour le moment.", 14, { couleur: COULEURS.texte2 });
 	}
+}
+
+// ───────────────────────────── Soins (PV gardés entre les combats, test 3) ─────────────────────────────
+
+/** Repas chaud à l'auberge, ou soins des prêtres au Temple (avec leurs répliques, test 4). */
+function vueSoins(parent: Instance, h: Heros, moyen: "repas" | "temple", lieu: string) {
+	const etat = jeu.etat!;
+	const cfg = CONTENU.config.soins;
+	const pv = pvHorsCombat(CONTENU, h);
+	const max = pvMaxHorsCombat(CONTENU, h);
+	const c = carte(parent, moyen === "repas" ? "🍲 Un repas chaud" : "✨ Les soins des prêtres");
+	texte(c, `${esc(h.nom)} : <b>${pv}/${max} PV</b>${h.blessure ? ' · <font color="#e0605a">blessé</font>' : ""}`, 15);
+	if (moyen === "repas") {
+		texte(c, `${cfg.repas.prix} or : rend ${cfg.repas.pourcent} % des PV.`, 13, { couleur: COULEURS.texte2 });
+		bouton(c, `Manger (${cfg.repas.prix} or)`, () => agir({ type: "se_soigner", moyen: "repas", lieu }), { actif: pv < max && h.or >= cfg.repas.prix, hauteur: 34 });
+	} else {
+		texte(c, `${cfg.temple.prix} or : tous les PV, et la blessure est guérie.`, 13, { couleur: COULEURS.texte2 });
+		bouton(
+			c,
+			`Se faire soigner (${cfg.temple.prix} or)`,
+			() => {
+				const blesse = h.blessure;
+				if (!agir({ type: "se_soigner", moyen: "temple", lieu })) return;
+				const pretre = CONTENU.pnj[cfg.temple.pnj]?.nom ?? CONTENU.compagnons[cfg.temple.pnj]?.nom ?? "Le Temple";
+				const repliques = blesse ? cfg.temple.repliques_blessure : cfg.temple.repliques;
+				for (const r of repliques) messageLocal({ titre: pretre, texte: remplacerVariables(CONTENU, etat, r, [h.id]), genre: "info" });
+			},
+			{ actif: (pv < max || h.blessure) && h.or >= cfg.temple.prix, hauteur: 34 },
+		);
+	}
+	if (pv >= max && !(moyen === "temple" && h.blessure)) texte(c, "Déjà en pleine forme.", 13, { couleur: COULEURS.vert });
 }
 
 // ───────────────────────────── Auberge ─────────────────────────────
@@ -482,7 +545,9 @@ function vueFiche(parent: Frame) {
 		texte(inv, NOMS_EMP[emp], 13, { couleur: COULEURS.texte2 });
 		ficheObjet(inv, o, { actions: [{ libelle: "Retirer", surClic: () => agir({ type: "desequiper", emplacement: emp }) }] });
 	}
-	const sac = carte(parent, `Sac (${h.or} or)`);
+	const pvHeros = pvHorsCombat(CONTENU, h);
+	const pvMaxHeros = pvMaxHorsCombat(CONTENU, h);
+	const sac = carte(parent, `Sac (${h.or} or) · ${pvHeros}/${pvMaxHeros} PV`);
 	const objets: string[] = [];
 	for (const [o, n] of pairs(h.inventaire)) if (n > 0 && CONTENU.objets[o] !== undefined) objets.push(o);
 	// équipements d'abord (rareté décroissante), puis le reste
@@ -499,6 +564,10 @@ function vueFiche(parent: Frame) {
 			const refus = problemeEquipement(CONTENU, h, def);
 			actions.push({ libelle: refus ?? "Équiper", surClic: () => agir({ type: "equiper", objet: o }), actif: refus === undefined, principal: refus === undefined });
 		}
+		// soins hors combat (test 3) : potions, rations, Larme de Sainte Ysolde
+		const soigne = def.effets?.some((e) => e.type === "soin" || e.type === "relever") === true;
+		if (o === RATION.objet) actions.push({ libelle: `Manger (+${CONTENU.config.soins.ration_pourcent} % PV)`, surClic: () => agir({ type: "se_soigner", moyen: "ration" }), actif: pvHeros < pvMaxHeros });
+		else if (soigne) actions.push({ libelle: "Utiliser (hors combat)", surClic: () => agir({ type: "se_soigner", moyen: "objet", objet: o }), actif: pvHeros < pvMaxHeros || h.blessure });
 		if (def.prix > 0 && def.type !== "quete") actions.push({ libelle: `Vendre ${prixVente(CONTENU, h, o)} or`, surClic: () => agir({ type: "vendre", objet: o }) });
 		ficheObjet(sac, o, { nombre: h.inventaire[o], comparer: true, actions });
 	}
@@ -671,7 +740,7 @@ function vuePartie(parent: Frame, _redessiner: () => void) {
 	for (const id of etat.ordreJoueurs) {
 		const jj = etat.joueurs[id];
 		const hj: Heros | undefined = jj.herosId !== undefined ? etat.heros[jj.herosId] : undefined;
-		texte(j, `${jj.present ? "🟢" : "⚪"} <b>${esc(jj.pseudo)}</b> — ${hj ? `${esc(hj.nom)} (${CONTENU.classes[hj.classe].nom}, niv. ${hj.niveau})${hj.invite === true ? " · renfort" : ""}` : "crée son héros…"}`, 15);
+		texte(j, `${jj.present ? "🟢" : "⚪"} <b>${esc(jj.pseudo)}</b> — ${hj ? `${esc(hj.nom)} (${CONTENU.classes[hj.classe].nom}, niv. ${hj.niveau}) · ${textePv(hj)}${hj.blessure ? ' <font color="#e0605a">blessé</font>' : ""}${hj.invite === true ? " · renfort" : ""}` : "crée son héros…"}`, 15);
 	}
 	const a = carte(parent, "Actions");
 	bouton(a, "Nouvelle session (le meneur change)", () => agir({ type: "nouvelle_session" }), { hauteur: 34 });

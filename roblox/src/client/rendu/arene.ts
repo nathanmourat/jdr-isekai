@@ -54,6 +54,7 @@ const file: EvenementCombat[] = [];
 let lecture = false;
 let dernierCombat: Combat | undefined;
 let surClic: ((id: string) => void) | undefined;
+let surRefus: ((id: string) => void) | undefined;
 let ciblesSurlignees: string[] = [];
 
 // ───────────────────────────── Lieu du combat ─────────────────────────────
@@ -467,9 +468,10 @@ export function afficherArene(combat: Combat, enDonjon: boolean) {
 }
 
 /** Contours dorés sur les cibles possibles ; un clic sur l'une d'elles appelle `choisir`. */
-export function proposerCibles(ids: string[], choisir: ((id: string) => void) | undefined) {
+export function proposerCibles(ids: string[], choisir: ((id: string) => void) | undefined, refuser?: (id: string) => void) {
 	ciblesSurlignees = ids;
 	surClic = choisir;
+	surRefus = refuser;
 	for (const [id, p] of pions) {
 		const ok = ids.includes(id);
 		p.surbrillance.OutlineTransparency = ok ? 0 : 1;
@@ -488,6 +490,8 @@ UserInputService.InputBegan.Connect((entree, traite) => {
 	let o: Instance | undefined = r?.Instance;
 	while (o && o.Parent !== dossier) o = o.Parent;
 	if (o && ciblesSurlignees.includes(o.Name)) surClic(o.Name);
+	// clic sur un combattant qu'on ne peut pas viser : on dit pourquoi (test 4)
+	else if (o && o.IsA("Model") && pions.has(o.Name)) surRefus?.(o.Name);
 });
 
 /** Retire le combat (fin du combat ou changement d'écran). */
@@ -500,6 +504,7 @@ export function cacherArene() {
 	file.clear();
 	dernierCombat = undefined;
 	surClic = undefined;
+	surRefus = undefined;
 	ciblesSurlignees = [];
 	void Players;
 }

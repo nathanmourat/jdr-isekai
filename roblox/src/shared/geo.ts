@@ -80,6 +80,7 @@ export function positionLieu(l: LieuDef): Vector3 {
 
 /** Lieu du monde où l'on se bat, selon le décor de la rencontre (combat « sur place »). */
 export const LIEU_DU_DECOR: Record<string, string> = {
+	"tannerie-cave": "tannerie-abandonnee",
 	arene: "arene",
 	foret: "combe-aux-saules",
 	plaine: "combe-aux-saules",

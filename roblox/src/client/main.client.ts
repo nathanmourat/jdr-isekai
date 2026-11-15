@@ -13,6 +13,7 @@ import type { EquipementPorte } from "shared/equipement3d";
 import { afficherDonjon, cacherDonjon, retraitCombat } from "./rendu/donjon3d";
 import { animerDecor } from "./rendu/ambiance";
 import { ecouterMessages } from "./ui/messages";
+import { majNotifications } from "./ui/notifications";
 import { majInvitesJoueurs, preparerInvitesJoueurs } from "./rendu/joueurs";
 import { allerAuLieu, entrerDans, majMarqueurs, majPnj, sortirDe, surInteraction } from "./rendu/marqueurs";
 import { vueCombat } from "./ui/combat";
@@ -219,6 +220,7 @@ function redessiner() {
 	if (vue !== "combat") cameraNormale();
 	majMarqueurs(vue === "monde");
 	majInvitesJoueurs();
+	majNotifications();
 	majPnj();
 	majSons(vue, affichage.dans);
 	// le panneau latéral commence juste sous la barre du haut (sa hauteur varie avec son contenu)

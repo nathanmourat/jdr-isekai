@@ -78,6 +78,12 @@ function afficher(m: MessageServeur) {
 	task.delay(10, finir);
 }
 
+/** Message affiché seulement chez ce joueur (répliques des soins du Temple…). */
+export function messageLocal(m: MessageServeur) {
+	if (ouvert) file.push(m);
+	else afficher(m);
+}
+
 export function ecouterMessages() {
 	r.message.OnClientEvent.Connect((m) => {
 		if (ouvert) file.push(m);

@@ -65,6 +65,8 @@ export interface ObjetDef {
 	effets_equipement?: { effet: string; valeur?: number; puissance?: number; element?: string }[];
 	pouvoir_unique?: string;
 	unique_par_partie?: boolean;
+	/** effets d'un consommable (soin, relever…) */
+	effets?: { type: string; puissance?: number; valeur?: number }[];
 }
 
 export interface BonusEquipement {
@@ -147,7 +149,8 @@ export interface Replique {
 
 export interface Choix {
 	texte: string;
-	effets: { miser?: number }[];
+	effets: { miser?: number; or?: number; prix_chapitre?: number }[];
+	visible_si_bloque?: boolean;
 	si?: Condition;
 	test?: { carac: Carac; difficulte: number };
 }
@@ -159,6 +162,8 @@ export interface Noeud {
 	repliques: Replique[];
 	choix: Choix[];
 	suite?: string;
+	/** pari partagé : mise totale du groupe, gain (multiplicateur) */
+	pari?: { mise: number; gain: number };
 	combat?: { rencontre: string };
 	donjon?: { id: string };
 	fin: boolean;
@@ -196,6 +201,13 @@ export interface Contenu {
 		ellipses: { activites_temps_libre: number; durees_auberge_mois: number[] };
 		jours_temps_reel: { minutes_par_jour: number; inactivite_minutes: number };
 		calendrier: { jours_par_mois: number };
+		soins: {
+			regen_jour_pourcent: number;
+			pv_apres_ko_pourcent: number;
+			repas: { prix: number; pourcent: number };
+			ration_pourcent: number;
+			temple: { prix: number; pnj: string; repliques: string[]; repliques_blessure: string[] };
+		};
 		[cle: string]: unknown;
 	};
 	classes: Record<string, ClasseDef>;
@@ -339,6 +351,26 @@ export interface EtatScene {
 	messages: string[];
 	/** un personnage interroge ce héros : lui seul répond, parmi ces réponses (index dans parole_a.reponses) */
 	parole?: { heros: string; reponses: number[] };
+	/** pari partagé en cours : réponse de chaque joueur (mise ou non) */
+	pari?: Record<string, boolean>;
+	/** test 3 : joueurs prêts à continuer, résultat du dernier vote, dernière réponse à un personnage */
+	prets?: string[];
+	resultatVote?: { choix: { texte: string; joueurs: string[] }[]; retenu: number };
+	reponseParole?: { joueur: string; texte: string };
+	/** dernier nœud d'une scène terminée (ses répliques s'affichent avant « Terminer ») */
+	noeudFin?: string;
+}
+
+/** Test de caractéristique de la dernière action (animation du dé, test 4). */
+export interface TestCarac {
+	heros: string;
+	carac: Carac;
+	jet: number;
+	bonus: number;
+	total: number;
+	difficulte: number;
+	reussi: boolean;
+	quoi: string;
 }
 
 export interface ContexteCombat {
@@ -423,6 +455,8 @@ export interface EtatPartie {
 	flags: Record<string, boolean | undefined>;
 	journal: { jour: number; chapitre: number; texte: string }[];
 	dernieresNouvelles: string[];
+	/** tests de caractéristique de la dernière action (animation du dé, test 4) */
+	tests?: TestCarac[];
 	rng: Rng;
 	[cle: string]: unknown;
 }
@@ -520,6 +554,17 @@ export function avertissementEquipement(contenu: Contenu, h: Heros, o: ObjetDef)
 export function exemplaires(heros: Heros[], objet: string): number;
 export function texteEffets(o: ObjetDef): string[];
 export function caseDonjon(contenu: Contenu, id: string, x: number, y: number): string;
+// rattrapage des tests 3 et 4 du web
+export function joueursAttendusDialogue(etat: EtatPartie, cle: string): string[];
+export function joueursDuPari(etat: EtatPartie, cle: string): string[];
+export function partsDeMise(total: number, nombre: number): number[];
+export function partMinimaleDePari(etat: EtatPartie, cle: string, total: number): number;
+export function noeudAffiche(contenu: Contenu, etat: EtatPartie, cle: string): Noeud | undefined;
+export function pvHorsCombat(contenu: Contenu, h: Heros): number;
+export function pvMaxHorsCombat(contenu: Contenu, h: Heros): number;
+export function retourContrat(contenu: Contenu, etat: EtatPartie, id: string): number;
+export function raisonCibleRefusee(c: Combat, x: Combattant, cible: Combattant, type: string, portee: "melee" | "distance"): string | undefined;
+export const RATION: { objet: string; malusPv: number };
 export function versDate(contenu: Contenu, jour: number): { annee: number; mois: number; jour: number };
 export function age(h: Heros, annee: number): number;
 

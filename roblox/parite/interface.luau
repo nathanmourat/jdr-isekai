@@ -15,6 +15,27 @@ local function essai(nom, f)
 	end
 end
 for _, etat in sortie.points do
+	for cle, _ in etat.scenes do
+		essai("dialogue " .. cle, function()
+			moteur.noeudAffiche(contenu, etat, cle)
+			moteur.joueursAttendusDialogue(etat, cle)
+			moteur.joueursDuPari(etat, cle)
+			moteur.partMinimaleDePari(etat, cle, 20)
+			moteur.choixVisibles(contenu, etat, cle)
+		end)
+	end
+	for _, entree in etat.combats do
+		local c = entree.combat
+		essai("raisonCibleRefusee", function()
+			for _, x in c.combattants do
+				for _, y in c.combattants do
+					moteur.raisonCibleRefusee(c, x, y, "ennemi", "melee")
+					moteur.raisonCibleRefusee(c, x, y, "allie", "distance")
+					moteur.raisonCibleRefusee(c, x, y, "allie_ko", "distance")
+				end
+			end
+		end)
+	end
 	local tous = {}
 	for _, h in moteur.listeHeros(etat) do table.insert(tous, h.id) end
 	for _, h in moteur.listeHeros(etat) do
@@ -36,6 +57,10 @@ for _, etat in sortie.points do
 		for _, co in etat.compagnonsRencontres do essai("palier", function() moteur.palierCompagnon(contenu, etat, h.id, co) end) end
 		for o, _ in h.inventaire do essai("prixVente", function() moteur.prixVente(contenu, h, o) end) end
 		essai("bonusEquipement", function() moteur.bonusEquipement(contenu, h) end)
+		-- rattrapage des tests 3 et 4 : PV hors combat, contrats qui reviennent, cadeaux et renforts (Roblox)
+		essai("pvHorsCombat", function() moteur.pvHorsCombat(contenu, h); moteur.pvMaxHorsCombat(contenu, h) end)
+		for id, _ in contenu.contrats do essai("retourContrat", function() moteur.retourContrat(contenu, etat, id) end) end
+		essai("exporterHeros", function() moteur.exporterHeros(etat, h.id) end)
 		for id, o in contenu.objets do
 			if o.type == "equipement" then
 				essai("objet " .. id, function()

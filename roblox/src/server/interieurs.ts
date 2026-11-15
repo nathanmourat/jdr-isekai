@@ -28,6 +28,8 @@ const COSTUMES_PNJ: Record<string, Costume> = {
 	seraphine: { peau: rgb(240, 210, 190), haut: rgb(150, 190, 240), bas: rgb(150, 190, 240), couronne: true },
 	gareth: { peau: rgb(210, 165, 125), haut: rgb(110, 130, 80), bas: rgb(100, 80, 55), chapeau: rgb(200, 170, 100) },
 	ferrand: { peau: rgb(225, 190, 160), haut: rgb(110, 50, 130), bas: rgb(60, 30, 70) },
+	// Orlan Cassebrune : gilet moutarde rapiécé, chapeau à larges bords, petit et rond (test 4)
+	orlan: { peau: rgb(235, 190, 160), haut: rgb(200, 160, 50), bas: rgb(110, 80, 50), chapeau: rgb(90, 60, 40), echelle: 0.9 },
 	halvine: { peau: rgb(235, 200, 175), haut: rgb(90, 120, 110), bas: rgb(70, 60, 50), tablier: rgb(170, 130, 80), echelle: 0.85 },
 	lina: { peau: rgb(230, 195, 165), haut: rgb(150, 100, 70), bas: rgb(100, 80, 60), tablier: rgb(190, 170, 140) },
 	tobin: { peau: rgb(235, 205, 180), haut: rgb(200, 195, 180), bas: rgb(120, 115, 105) },
@@ -239,6 +241,8 @@ function construireSalle(lieu: string, base: Vector3) {
 			cheminee(m, base.add(new Vector3(-22.5, 0, -6)), CFrame.Angles(0, math.rad(-90), 0));
 			for (const [x, z] of [[-12, 4], [4, 6], [-10, 12], [8, 12]] as const) tableBancs(m, base.add(new Vector3(x, 0, z)), 7);
 			if (pnjDuLieu.includes("ferrand")) pnj(m, lieu, "ferrand", base.add(new Vector3(-10, 0, 9)), base.add(new Vector3(-10, 0, 12)));
+			// le colporteur de « reliques » s'installe près de la cheminée (chaque joueur le voit selon sa partie)
+			if (pnjDuLieu.includes("orlan")) pnj(m, lieu, "orlan", base.add(new Vector3(-17, 0, -2)), base.add(new Vector3(-8, 0, -2)));
 			for (const [x, z, i] of [[-12, 1, 0], [4, 9, 2], [8, 9, 3]] as const) figurant(m, TENUES[i], base.add(new Vector3(x, 0, z)), base.add(new Vector3(x, 0, z + (z < 6 ? 3 : -3))));
 			// escalier vers l'étage
 			for (let i = 0; i < 8; i++) bloc(new Vector3(5, 1, 2), base.add(new Vector3(20, 0.5 + i, 14 - i * 2)), C.bois, { parent: m, matiere: Enum.Material.WoodPlanks });

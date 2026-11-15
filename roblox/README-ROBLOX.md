@@ -384,6 +384,21 @@ Le propriétaire est reconnu tout seul : le créateur du jeu (ou le rang 255 du 
 - [ ] « Arrêter le serveur… » → « Confirmer » : tout le monde est renvoyé 10 s plus tard, progression sauvegardée.
 - [ ] Avec la sauvegarde activée : grades, bannissements et sourdines sont gardés d'un serveur à l'autre.
 
+### Liste de contrôle — rattrapage des tests 3 et 4 du web (15/11)
+- [ ] **Dialogue à plusieurs** : « Continuer » devient « Prêt ✔ » ; « Prêts : 1/2 · en attente de Player2… » ; la scène avance quand tout le monde est prêt. Après 20 s d'attente, le meneur a « Passer quand même (meneur) ».
+- [ ] Après un vote : pendant 3 s, qui a choisi quoi (★ pour le choix retenu) et « Choix du groupe : … ». Après une réponse à un personnage : « Player1 a répondu : … ».
+- [ ] **Choix payants** : le prix s'affiche (« (2 or) ») ; sans assez d'or, le choix est grisé avec « Pas assez d'or : il faut … ».
+- [ ] **Pari partagé** (Chaudron Fêlé, chapitre 1) : « Je mise / Je ne mise pas » pour chacun, avec la répartition de la mise.
+- [ ] Une scène terminée montre ses dernières répliques avant « Terminer la scène ».
+- [ ] **PV gardés entre les combats** : PV en vert / rouge dans la barre du haut et dans « 👥 Groupe » ; sous la moitié, un avertissement rouge.
+- [ ] **Se soigner** : à la taverne « 🍲 Manger (3 or) » (+30 %) ; au Temple « ✨ Se faire soigner (15 or) » (tous les PV et la blessure) avec les répliques de Sœur Elianne en fenêtres ; dans le sac, « Utiliser (hors combat) » sur une potion, « Manger (+15 % PV) » sur une ration.
+- [ ] **Lancer de dé** : à chaque test (scène, étape de contrat, piège de donjon), une fenêtre montre le dé qui roule, puis « jet + bonus = total contre difficulté » et Réussi / Échoué, chez tous les joueurs de la campagne.
+- [ ] **Gains** : petites notifications en haut à droite (or, XP, niveau, objets, PV), après le dé.
+- [ ] **Combat** : cliquer sur un combattant qu'on ne peut pas viser affiche la raison (« Hors de portée… », « déjà K.O. », « caché », « provoqué par … »).
+- [ ] **Contrats** : un contrat rempli affiche « Rempli : revient dans 5 jours » ; les contrats uniques ne reviennent pas.
+- [ ] **Orlan Cassebrune** (gilet moutarde, chapeau) est dans la taverne quand il doit y être (après l'examen de la Guilde) ; la scène des reliques se lance en lui parlant.
+- [ ] Héros d'une ancienne campagne : la barre demande « … est-il un homme ou une femme ? ».
+
 ### Liste de contrôle — examens de rang et maîtrises d'équipement (test 2, changements 10 et 11)
 - [ ] Dans n'importe quel comptoir de la Guilde, le panneau « 🎖 Rang de Guilde » montre le rang suivant, ce qu'il manque (points, niveau) et le bouton de l'examen quand tout est prêt.
 - [ ] Rangs E, D et A : un combat contre un examinateur (A : Dame Rowena en personne). En cas d'échec, on retente le lendemain.
@@ -392,7 +407,7 @@ Le propriétaire est reconnu tout seul : le créateur du jeu (ou le rang 255 du 
 - [ ] Dans le sac et les boutiques, un objet non maîtrisé par ta classe affiche un avertissement orange (malus), un objet interdit un message rouge.
 
 ### À reprendre — test 3 de la version web (15/11, écrit par la session web)
-**Fait côté Roblox (15/11)** : `moteur.lua` et `contenu.lua` régénérés (parités OK), choix « un homme / une femme » à la création. **Reste** : « Prêts : 2/3 » des dialogues (`pret_dialogue` ; « Continuer » marche toujours), repas / Temple / potions hors combat (`se_soigner` ; en attendant, les PV remontent de 10 % par jour et au lit), notifications de gain.
+**Fait côté Roblox (15/11)** : tout (voir la liste de contrôle « rattrapage des tests 3 et 4 » plus haut).
 Le moteur a changé : régénérer `moteur.lua` (`npm run roblox:moteur`, puis `npm run roblox:parite`), puis adapter l'interface Roblox.
 - **Nouvelle action `pret_dialogue`** (`{ joueur, cle }`) : dans une scène de groupe, « Continuer » envoie `pret_dialogue` ; la scène avance quand tous les joueurs présents (avec un héros dans la scène) sont prêts. Fonction `joueursAttendusDialogue(etat, cle)` pour afficher « Prêts : 2/3 » et les pseudos attendus. L'action `continuer` existe toujours (solo, et « Passer quand même » du meneur après 20 secondes).
 - **`EtatScene` a trois champs facultatifs** : `prets` (joueurs prêts), `resultatVote` (`{ choix: [{ texte, joueurs }], retenu }`, montré 3 secondes : qui a choisi quoi, « Choix du groupe : … ») et `reponseParole` (« <pseudo> a répondu : … »). Pas de changement de format de sauvegarde.
@@ -403,7 +418,7 @@ Le moteur a changé : régénérer `moteur.lua` (`npm run roblox:moteur`, puis `
 - Interface (à refaire à la manière de Roblox, si utile) : notifications de gain de 3 secondes (`src/ui/gains.ts` compare l'état avant et après), PV/mana du groupe hors combat (`src/ui/sante.ts`), confirmation avant un combat si un héros a moins de 50 % de ses PV.
 
 ### À reprendre — test 4 de la version web (15/11, écrit par la session web)
-**Fait côté Roblox (15/11)** : moteur et contenu régénérés (contrats répétables, reliques d'Orlan, effets à l'impact). **Reste** : lancer de dé affiché, `raisonCibleRefusee`, répliques des soins du Temple, Orlan dans la taverne, salle de la cave de la tannerie.
+**Fait côté Roblox (15/11)** : tout, sauf une salle intérieure pour la cave de la tannerie (le combat de la cave se joue devant la tannerie abandonnée).
 Le moteur a changé : régénérer `moteur.lua` (`npm run roblox:moteur`, puis `npm run roblox:parite`) et le contenu (`npm run roblox:contenu`), puis adapter l'interface Roblox.
 - **Effets à l'impact (combat)** : après un effet de dégâts, un état posé sur un adversaire (poison, saignement, gel…) ne vaut que pour les cibles réellement touchées ; « Œil du faucon » ne marque plus sur un coup raté (`appliquerEffets`, `attaqueSimple`). Les parités de combat peuvent changer : c'est voulu.
 - **Choix de la cible** : nouvelle fonction `raisonCibleRefusee(combat, acteur, cible, type, portee)` (« Hors de portée… », « déjà K.O. », « caché », « provoqué par X »). À montrer quand un joueur vise un combattant impossible.

@@ -6,9 +6,9 @@
  *  - « Proposer » : on écrit son action en français, l'IA maison la comprend (3 essais impossibles par tour).
  */
 import { CONTENU } from "shared/donnees";
-import { actionsDisponibles, interpreter, NOMS_ETATS, propositionsScript, type ActionCombat, type Combat, type Combattant, type ContexteIA, type Interpretation, type Proposition } from "shared/moteur";
+import { actionsDisponibles, interpreter, NOMS_ETATS, propositionsScript, raisonCibleRefusee, type ActionCombat, type Combat, type Combattant, type ContexteIA, type Interpretation, type Proposition } from "shared/moteur";
 import { affichage } from "../local";
-import { agir, jeu, monHeros } from "../partie";
+import { agir, jeu, monHeros, montrerErreur } from "../partie";
 import { proposerCibles } from "../rendu/arene";
 import { barre, bouton, champ, colonne, COULEURS, esc, ligne, texte } from "./kit";
 
@@ -147,14 +147,30 @@ export function vueCombat(calque: Frame, cle: string, redessiner: () => void) {
 	if (ui.menu === "cible" && ui.visee !== undefined) {
 		const v = ui.visee;
 		let cibles: string[] = [];
-		if (v.type === "attaque") cibles = acteur.attaque.portee === "melee" ? dispo.ciblesMelee : dispo.ciblesDistance;
-		else if (v.type === "potion") cibles = dispo.allies;
-		else if (v.type === "pacifier") cibles = dispo.pacifier;
+		// ce que vise l'action, pour expliquer un clic sur une cible impossible
+		let typeCible = "ennemi";
+		let portee: "melee" | "distance" = "distance";
+		if (v.type === "attaque") {
+			cibles = acteur.attaque.portee === "melee" ? dispo.ciblesMelee : dispo.ciblesDistance;
+			portee = acteur.attaque.portee === "melee" ? "melee" : "distance";
+		} else if (v.type === "potion") {
+			cibles = dispo.allies;
+			typeCible = "allie";
+		} else if (v.type === "pacifier") cibles = dispo.pacifier;
 		else {
 			const k = dispo.competences.find((x) => x.comp.id === v.comp)!.comp;
 			cibles = k.cible === "ennemi" ? (k.portee === "melee" ? dispo.ciblesMelee : dispo.ciblesDistance) : k.cible === "allie" ? dispo.allies : dispo.alliesKo;
+			typeCible = k.cible;
+			portee = k.portee === "melee" ? "melee" : "distance";
 		}
-		proposerCibles(cibles, (id) => viser(cle, acteur, v, id));
+		proposerCibles(
+			cibles,
+			(id) => viser(cle, acteur, v, id),
+			(id) => {
+				const x = combat.combattants.find((y) => y.id === id);
+				if (x) montrerErreur(raisonCibleRefusee(combat, acteur, x, typeCible, portee) ?? "Cible impossible");
+			},
+		);
 		texte(sous, cibles.size() > 0 ? "🎯 Choisis une cible : clique sur un personnage (contour doré) ou ci-dessous." : "Aucune cible possible.", 14, { couleur: COULEURS.or });
 		const l = ligne(sous);
 		for (const id of cibles) bouton(l, esc(nom(id)), () => viser(cle, acteur, v, id), { hauteur: 34, taille: 14 });
