@@ -1,49 +1,237 @@
 # Textes de content/monde/aubeclaire.yaml
 # Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
 - fr: Royaume d'Aubeclaire
+  en: Kingdom of Aubeclaire
+  es: Reino de Aubeclaire
+  de: Königreich Aubeclaire
+  ja: オーブクレール王国
 - fr: Ville de Lysmont
+  en: City of Lysmont
+  es: Ciudad de Lysmont
+  de: Stadt Lysmont
+  ja: 王都リスモン
 - fr: "La capitale d'Aubeclaire : tours blanches, toits bleus, et toujours du monde dans les rues."
+  en: "The capital of Aubeclaire: white towers, blue roofs, and always a crowd in the streets."
+  es: "La capital de Aubeclaire: torres blancas, tejados azules y siempre gente en las calles."
+  de: "Die Hauptstadt von Aubeclaire: weiße Türme, blaue Dächer und immer Gedränge in den Straßen."
+  ja: オーブクレールの王都。白い塔と青い屋根、通りはいつもにぎやか。
 - fr: Temple du Seuil
+  en: Temple of the Threshold
+  es: Templo del Umbral
+  de: Tempel der Schwelle
+  ja: 境界の神殿
 - fr: Le grand temple blanc où l'Ordre accomplit l'Appel.
+  en: The great white temple where the Order performs the Calling.
+  es: El gran templo blanco donde la Orden realiza la Llamada.
+  de: Der große weiße Tempel, in dem der Orden den Ruf vollzieht.
+  ja: 教団が召喚の儀を行う白い大神殿。
 - fr: Place de Lysmont
+  en: Lysmont Square
+  es: Plaza de Lysmont
+  de: Platz von Lysmont
+  ja: リスモン広場
 - fr: "Le cœur de la capitale : fontaine, étals, rumeurs."
+  en: "The heart of the capital: fountain, stalls, rumours."
+  es: "El corazón de la capital: fuente, puestos, rumores."
+  de: "Das Herz der Hauptstadt: Brunnen, Stände, Gerüchte."
+  ja: 王都の中心。噴水、屋台、噂話。
 - fr: Guilde de la Rose des Vents
+  en: Guild of the Compass Rose
+  es: Gremio de la Rosa de los Vientos
+  de: Gilde der Windrose
+  ja: 風の薔薇ギルド
 - fr: "Le hall des aventuriers : contrats, comptoir et bagarres."
+  en: "The adventurers' hall: contracts, counter and brawls."
+  es: "El salón de los aventureros: contratos, mostrador y peleas."
+  de: "Die Halle der Abenteurer: Aufträge, Tresen und Raufereien."
+  ja: 冒険者の集う館。依頼、カウンター、そして喧嘩。
 - fr: Le Chaudron Fêlé
+  en: The Cracked Cauldron
+  es: El Caldero Rajado
+  de: Der Gesprungene Kessel
+  ja: ひび割れ釜亭
 - fr: "La taverne et l'auberge de Bram : on y mange bien, on y parle trop, et on y dort à l'étage."
+  en: "Bram's tavern and inn: the food's good, the talk's too much, and you sleep upstairs."
+  es: "La taberna y posada de Bram: se come bien, se habla demasiado y se duerme arriba."
+  de: "Brams Taverne und Gasthaus: Man isst gut, redet zu viel und schläft oben."
+  ja: ブラムの酒場兼宿屋。料理はうまく、おしゃべりは多すぎ、寝床は二階。
 - fr: Le Comptoir de Halvine
+  en: Halvine's Counter
+  es: El Mostrador de Halvine
+  de: Halvines Kontor
+  ja: アルヴィーヌの店
 - fr: "Une boutique encombrée du sol au plafond : potions, armes, cadeaux, et une balance qui ne ment jamais."
+  en: "A shop crammed from floor to ceiling: potions, weapons, gifts, and a pair of scales that never lies."
+  es: "Una tienda abarrotada del suelo al techo: pociones, armas, regalos y una balanza que nunca miente."
+  de: "Ein Laden, vom Boden bis zur Decke vollgestopft: Tränke, Waffen, Geschenke und eine Waage, die nie lügt."
+  ja: 床から天井まで品物でぎっしりの店。ポーション、武器、贈り物、そして決して嘘をつかない天秤。
 - fr: Château de Lysmont
+  en: Lysmont Castle
+  es: Castillo de Lysmont
+  de: Schloss Lysmont
+  ja: リスモン城
 - fr: Le siège de la Couronne, tours blanches et toits bleus.
+  en: The seat of the Crown, white towers and blue roofs.
+  es: La sede de la Corona, torres blancas y tejados azules.
+  de: Der Sitz der Krone, weiße Türme und blaue Dächer.
+  ja: 王家の居城。白い塔と青い屋根。
 - fr: Quartier des Tanneurs
+  en: Tanners' Quarter
+  es: Barrio de los Curtidores
+  de: Gerberviertel
+  ja: 皮なめし街
 - fr: Ruelles pauvres et cuves de teinture. On y disparaît, ces temps-ci.
+  en: Poor alleys and dye vats. People disappear there, these days.
+  es: Callejas pobres y cubas de tinte. Últimamente, allí desaparece gente.
+  de: Arme Gassen und Färbebottiche. In letzter Zeit verschwinden dort Leute.
+  ja: 貧しい路地と染め桶。近ごろ、人が消える。
 - fr: Arène de Lysmont
+  en: Lysmont Arena
+  es: Arena de Lysmont
+  de: Arena von Lysmont
+  ja: リスモン闘技場
 - fr: Le sable du tournoi des écuyers.
+  en: The sand of the squires' tournament.
+  es: La arena del torneo de escuderos.
+  de: Der Sand des Knappenturniers.
+  ja: 従士たちの大会の砂場。
 - fr: Combe-aux-Saules
+  en: Combe-aux-Saules
+  es: Combe-aux-Saules
+  de: Combe-aux-Saules
+  ja: コンブ＝オ＝ソール
 - fr: Forêt de saules au sud-ouest, fermes isolées et loups affamés.
+  en: A willow forest to the south-west, isolated farms and hungry wolves.
+  es: Un bosque de sauces al suroeste, granjas aisladas y lobos hambrientos.
+  de: Ein Weidenwald im Südwesten, abgelegene Höfe und hungrige Wölfe.
+  ja: 南西の柳の森。ぽつんとした農場と飢えた狼。
 - fr: Crypte de la Fontaine
+  en: Fountain Crypt
+  es: Cripta de la Fuente
+  de: Brunnenkrypta
+  ja: 泉の地下墓所
 - fr: Des ruines couvertes de lierre, un escalier qui descend dans le noir.
+  en: Ivy-covered ruins, a staircase leading down into the dark.
+  es: Ruinas cubiertas de hiedra, una escalera que baja a la oscuridad.
+  de: Efeubewachsene Ruinen, eine Treppe, die ins Dunkel hinabführt.
+  ja: 蔦に覆われた廃墟と、闇へ下りる階段。
 - fr: Lisière de la Combe
+  en: Edge of the Combe
+  es: Linde de la Combe
+  de: Rand der Combe
+  ja: コンブの森のはずれ
 - fr: Ronces, souches et empreintes dans la terre meuble.
+  en: Brambles, stumps and tracks in the soft earth.
+  es: Zarzas, tocones y huellas en la tierra blanda.
+  de: Dornengestrüpp, Baumstümpfe und Spuren im weichen Boden.
+  ja: 茨と切り株、柔らかい土の上の足跡。
 - fr: Ruisseau aux Saules
+  en: Willow Brook
+  es: Arroyo de los Sauces
+  de: Weidenbach
+  ja: 柳の小川
 - fr: Une eau froide et claire sous les branches tombantes.
+  en: Cold, clear water under drooping branches.
+  es: Un agua fría y clara bajo las ramas colgantes.
+  de: Kaltes, klares Wasser unter herabhängenden Zweigen.
+  ja: 垂れ下がる枝の下を流れる冷たく澄んだ水。
 - fr: Vieux saule creux
+  en: Old hollow willow
+  es: Viejo sauce hueco
+  de: Alte hohle Weide
+  ja: 古い虚ろの柳
 - fr: Un saule énorme, aux racines creusées comme une grotte.
+  en: A huge willow, its roots hollowed out like a cave.
+  es: Un sauce enorme, con las raíces excavadas como una cueva.
+  de: Eine riesige Weide, deren Wurzeln wie eine Höhle ausgehöhlt sind.
+  ja: 根が洞窟のようにえぐれた巨大な柳。
 - fr: Route du nord
+  en: North road
+  es: Camino del norte
+  de: Nordstraße
+  ja: 北の街道
 - fr: Une route pavée qui file vers le Mur d'Aube, bordée de fossés.
+  en: A paved road running towards the Dawnwall, lined with ditches.
+  es: Un camino empedrado que corre hacia el Muro del Alba, bordeado de zanjas.
+  de: Eine gepflasterte Straße zum Morgenwall, von Gräben gesäumt.
+  ja: 暁の壁へと続く、溝に縁どられた石畳の道。
 - fr: Gué de Valmont
+  en: Valmont Ford
+  es: Vado de Valmont
+  de: Furt von Valmont
+  ja: ヴァルモンの浅瀬
 - fr: La rivière s'élargit ; les chariots passent à gué, lentement.
+  en: The river widens; the carts cross the ford, slowly.
+  es: El río se ensancha; los carros cruzan el vado, despacio.
+  de: Der Fluss wird breiter; die Karren überqueren langsam die Furt.
+  ja: 川幅が広がり、荷車がゆっくりと浅瀬を渡る。
 - fr: Champs de blé du nord
+  en: Northern wheat fields
+  es: Trigales del norte
+  de: Weizenfelder im Norden
+  ja: 北の麦畑
 - fr: Des champs dorés, retournés par endroits comme par une charrue folle.
+  en: Golden fields, churned up here and there as if by a mad plough.
+  es: Campos dorados, removidos aquí y allá como por un arado enloquecido.
+  de: Goldene Felder, hier und da aufgewühlt wie von einem verrückten Pflug.
+  ja: 黄金色の畑。ところどころ、狂った鋤に掘り返されたように荒れている。
 - fr: Grotte des mineurs
+  en: Miners' cave
+  es: Cueva de los mineros
+  de: Bergmannshöhle
+  ja: 坑夫の洞窟
 - fr: Une entrée de mine étayée de poutres, d'où sort un air froid.
+  en: A mine entrance propped up with beams, from which cold air flows.
+  es: Una entrada de mina apuntalada con vigas, de la que sale un aire frío.
+  de: Ein mit Balken abgestützter Mineneingang, aus dem kalte Luft strömt.
+  ja: 梁で支えられた坑道の入口から、冷たい風が流れ出る。
 - fr: Collines à lune-sauge
+  en: Moonsage hills
+  es: Colinas de salvia lunar
+  de: Mondsalbei-Hügel
+  ja: 月セージの丘
 - fr: Des collines pelées où pousse une herbe argentée, visible surtout au crépuscule.
+  en: Bare hills where a silvery grass grows, best seen at dusk.
+  es: Colinas peladas donde crece una hierba plateada, visible sobre todo al atardecer.
+  de: Kahle Hügel, auf denen ein silbriges Kraut wächst, vor allem in der Dämmerung zu sehen.
+  ja: 銀色の草が生える禿げた丘。夕暮れどきによく見える。
 - fr: Nid sous la crypte
+  en: Nest beneath the crypt
+  es: Nido bajo la cripta
+  de: Nest unter der Krypta
+  ja: 地下墓所の巣
 - fr: Un boyau latéral tapissé de toiles épaisses.
+  en: A side tunnel lined with thick webs.
+  es: Un pasadizo lateral tapizado de gruesas telarañas.
+  de: Ein Seitengang, mit dicken Netzen ausgekleidet.
+  ja: 厚い蜘蛛の巣に覆われた脇道。
 - fr: Égouts de Lysmont
+  en: Lysmont sewers
+  es: Alcantarillas de Lysmont
+  de: Kanalisation von Lysmont
+  ja: リスモンの下水道
 - fr: Une grille soulevée derrière la fontaine, un escalier glissant, une odeur tenace.
+  en: A grate lifted behind the fountain, slippery stairs, a stubborn smell.
+  es: Una reja levantada detrás de la fuente, una escalera resbaladiza, un olor persistente.
+  de: Ein angehobenes Gitter hinter dem Brunnen, eine rutschige Treppe, ein hartnäckiger Gestank.
+  ja: 噴水の裏の持ち上げられた鉄格子、滑る階段、しつこい臭い。
 - fr: Marché de Lysmont
+  en: Lysmont Market
+  es: Mercado de Lysmont
+  de: Markt von Lysmont
+  ja: リスモン市場
 - fr: Des étals serrés, des cris, et deux marchands qui en viennent presque aux mains.
+  en: Crowded stalls, shouting, and two merchants almost coming to blows.
+  es: Puestos apretados, gritos y dos mercaderes que casi llegan a las manos.
+  de: Dicht gedrängte Stände, Geschrei und zwei Händler, die fast handgreiflich werden.
+  ja: ひしめく屋台、呼び声、つかみ合い寸前の二人の商人。
 - fr: Tannerie abandonnée
+  en: Abandoned tannery
+  es: Curtiduría abandonada
+  de: Verlassene Gerberei
+  ja: 廃なめし工房
 - fr: Volets cloués, cuves à sec… et une trappe de cave qui a servi récemment.
+  en: Nailed shutters, dry vats… and a cellar trapdoor that was used recently.
+  es: Postigos clavados, cubas secas… y una trampilla de sótano usada hace poco.
+  de: Zugenagelte Fensterläden, trockene Bottiche … und eine Kellerluke, die kürzlich benutzt wurde.
+  ja: 釘付けの鎧戸、干上がった桶……そして最近使われた地下室の落とし戸。

@@ -1,61 +1,297 @@
 # Textes de content/monde/pnj.yaml
 # Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
 - fr: Grand Prieur Auréliath
+  en: Grand Prior Auréliath
+  es: Gran Prior Auréliath
+  de: Großprior Auréliath
+  ja: 大修道院長オレリアス
 - fr: Ordre de la Lumière Sereine
+  en: Order of the Serene Light
+  es: Orden de la Luz Serena
+  de: Orden des Heiteren Lichts
+  ja: 静謐なる光の教団
 - fr: Crâne rasé, barbe blanche, sourire bienveillant un peu trop parfait.
+  en: Shaven head, white beard, a kindly smile that's a little too perfect.
+  es: Cráneo rapado, barba blanca, sonrisa bondadosa un poco demasiado perfecta.
+  de: Kahl geschorener Kopf, weißer Bart, ein gütiges Lächeln, das etwas zu perfekt ist.
+  ja: 剃り上げた頭、白い髭、少し完璧すぎる慈愛の笑み。
 - fr: Dame Rowena
+  en: Lady Rowena
+  es: Dama Rowena
+  de: Dame Rowena
+  ja: ロウェナ夫人
 - fr: Maîtresse de la Guilde
+  en: Guildmistress
+  es: Maestra del Gremio
+  de: Gildenmeisterin
+  ja: ギルドマスター
 - fr: Cheveux gris coupés court, cicatrice sur l'œil, pipe éteinte entre les dents.
+  en: Short grey hair, a scar over one eye, an unlit pipe between her teeth.
+  es: Pelo gris corto, cicatriz sobre el ojo, pipa apagada entre los dientes.
+  de: Kurzes graues Haar, eine Narbe über dem Auge, eine erloschene Pfeife zwischen den Zähnen.
+  ja: 短い灰色の髪、片目の傷、火の消えたパイプをくわえている。
 - fr: Edmund IV
+  en: Edmund IV
+  es: Edmundo IV
+  de: Edmund IV.
+  ja: エドマンド4世
 - fr: Roi d'Aubeclaire
+  en: King of Aubeclaire
+  es: Rey de Aubeclaire
+  de: König von Aubeclaire
+  ja: オーブクレール国王
 - fr: Couronne lourde, barbe grise, regard fatigué et dur.
+  en: Heavy crown, grey beard, a tired, hard gaze.
+  es: Corona pesada, barba gris, mirada cansada y dura.
+  de: Schwere Krone, grauer Bart, ein müder, harter Blick.
+  ja: 重い王冠、灰色の髭、疲れた厳しいまなざし。
 - fr: Séraphine d'Aubeclaire
+  en: Séraphine of Aubeclaire
+  es: Serafina de Aubeclaire
+  de: Séraphine von Aubeclaire
+  ja: セラフィーヌ・ド・オーブクレール
 - fr: Princesse
+  en: Princess
+  es: Princesa
+  de: Prinzessin
+  ja: 王女
 - fr: Longs cheveux blond pâle, petit diadème, robe blanche et or. Seconde de la lignée, espiègle sous l'étiquette.
+  en: Long pale blonde hair, a small tiara, a white and gold gown. Second in line, mischievous beneath the etiquette.
+  es: Largo cabello rubio pálido, pequeña diadema, vestido blanco y oro. Segunda en la línea sucesoria, traviesa bajo la etiqueta.
+  de: Langes hellblondes Haar, ein kleines Diadem, ein weiß-goldenes Kleid. Zweite in der Thronfolge, verschmitzt unter der Etikette.
+  ja: 淡い金の長い髪、小さなティアラ、白と金のドレス。王位継承第二位で、作法の陰でいたずら好き。
 - fr: Sœur Elianne
+  en: Sister Elianne
+  es: Hermana Elianne
+  de: Schwester Elianne
+  ja: シスター・エリアンヌ
 - fr: Prêtresse
+  en: Priestess
+  es: Sacerdotisa
+  de: Priesterin
+  ja: 女神官
 - fr: Cheveux noirs au carré sous un voile clair, chapelet de perles bleues. Douce, patiente, têtue quand il s'agit de justice.
+  en: Black bobbed hair under a pale veil, a rosary of blue beads. Gentle, patient, stubborn when it comes to justice.
+  es: Melena negra bajo un velo claro, rosario de cuentas azules. Dulce, paciente, terca cuando se trata de justicia.
+  de: Schwarzer Bob unter einem hellen Schleier, ein Rosenkranz aus blauen Perlen. Sanft, geduldig, stur, wenn es um Gerechtigkeit geht.
+  ja: 淡いヴェールの下に黒髪のボブ、青い数珠。穏やかで辛抱強く、正義のことになると頑固。
 - fr: Que la Lumière vous garde. Le Temple vend peu de choses, mais elles soignent.
+  en: May the Light keep you. The Temple sells little, but what it sells heals.
+  es: Que la Luz os guarde. El Templo vende pocas cosas, pero curan.
+  de: Möge das Licht euch behüten. Der Tempel verkauft wenig, aber was er verkauft, heilt.
+  ja: 光のご加護を。神殿の品は少ないけれど、どれも傷を癒やします。
 - fr: Kaya Lunecroc
+  en: Kaya Mooncrest
+  es: Kaya Colmillo de Luna
+  de: Kaya Mondzahn
+  ja: カヤ・ルヌクロ
 - fr: Aventurière ourvalis, rang E
+  en: Ourvalis adventurer, rank E
+  es: Aventurera ourvalis, rango E
+  de: Ourvalis-Abenteurerin, Rang E
+  ja: ウルヴァリスの冒険者、ランクE
 - fr: Oreilles et queue de loup argentées, bandeau rouge, épée à la hanche. Franche jusqu'à la gaffe.
+  en: Silver wolf ears and tail, a red headband, a sword at her hip. Frank to the point of blundering.
+  es: Orejas y cola de lobo plateadas, cinta roja, espada al cinto. Franca hasta meter la pata.
+  de: Silberne Wolfsohren und -schwanz, rotes Stirnband, Schwert an der Hüfte. Ehrlich bis zum Fettnäpfchen.
+  ja: 銀色の狼の耳と尾、赤い鉢巻、腰に剣。正直すぎて失言する。
 - fr: Vorthak
+  en: Vorthak
+  es: Vorthak
+  de: Vorthak
+  ja: ヴォルサック
 - fr: Émissaire des Cendres
+  en: Envoy of the Ashes
+  es: Emisario de las Cenizas
+  de: Gesandter der Asche
+  ja: 灰の使者
 - fr: Démon en armure noire aux flammes violettes.
+  en: A demon in black armour with purple flames.
+  es: Un demonio con armadura negra de llamas violetas.
+  de: Ein Dämon in schwarzer Rüstung mit violetten Flammen.
+  ja: 紫の炎をまとう黒い鎧の悪魔。
 - fr: Ferrand
+  en: Ferrand
+  es: Ferrand
+  de: Ferrand
+  ja: フェラン
 - fr: Expert en antiquités
+  en: Antiquities expert
+  es: Experto en antigüedades
+  de: Antiquitätenexperte
+  ja: 骨董鑑定士
 - fr: "Moustache noire, bagues à tous les doigts, lunettes cerclées d'or, manteau violet et or : il reconnaît une fausse pièce au premier coup d'œil."
+  en: "Black moustache, rings on every finger, gold-rimmed spectacles, a purple and gold coat: he spots a fake at first glance."
+  es: "Bigote negro, anillos en todos los dedos, gafas con montura dorada, abrigo violeta y oro: reconoce una falsificación a la primera."
+  de: "Schwarzer Schnurrbart, Ringe an allen Fingern, goldgefasste Brille, violett-goldener Mantel: Er erkennt eine Fälschung auf den ersten Blick."
+  ja: 黒い口髭、全部の指に指輪、金縁眼鏡、紫と金の外套。偽物は一目で見抜く。
 - fr: Un objet dont vous ignorez tout ? Dix pièces, et je vous dis ce qu'il vaut vraiment.
+  en: An item you know nothing about? Ten coins, and I'll tell you what it's really worth.
+  es: ¿Un objeto del que no sabéis nada? Diez monedas y os digo lo que vale de verdad.
+  de: Ein Gegenstand, über den ihr nichts wisst? Zehn Münzen, und ich sage euch, was er wirklich wert ist.
+  ja: 正体のわからない品かね？十枚で、本当の値打ちを教えてやろう。
 - fr: Orlan Cassebrune
+  en: Orlan Cassebrune
+  es: Orlan Cassebrune
+  de: Orlan Cassebrune
+  ja: オルラン・カスブリュヌ
 - fr: Colporteur de merveilles
+  en: Peddler of marvels
+  es: Buhonero de maravillas
+  de: Hausierer der Wunder
+  ja: 驚異の行商人
 - fr: Petit homme rond aux joues rouges, chapeau à larges bords couvert de breloques, gilet moutarde rapiécé, énorme sacoche en bandoulière, sourire de vendeur.
+  en: A small round man with red cheeks, a wide-brimmed hat covered in trinkets, a patched mustard waistcoat, a huge satchel across his body, a salesman's smile.
+  es: Hombrecillo regordete de mejillas rojas, sombrero de ala ancha lleno de baratijas, chaleco mostaza remendado, enorme bolsa en bandolera, sonrisa de vendedor.
+  de: Ein kleiner rundlicher Mann mit roten Wangen, ein breitkrempiger Hut voller Anhänger, eine geflickte senfgelbe Weste, eine riesige Umhängetasche, ein Verkäuferlächeln.
+  ja: 赤ら顔の小太りの男。小物だらけのつば広帽子、つぎはぎの芥子色のベスト、大きな肩掛け鞄、商売人の笑み。
 - fr: Dame Halvine Corbelet
+  en: Lady Halvine Corbelet
+  es: Dama Halvine Corbelet
+  de: Dame Halvine Corbelet
+  ja: アルヴィーヌ・コルブレ夫人
 - fr: Marchande du Comptoir
+  en: Counter merchant
+  es: Comerciante del Mostrador
+  de: Händlerin im Kontor
+  ja: 店の女主人
 - fr: Petite femme vive aux lunettes rondes, tablier plein de poches, boulier à la main, compte plus vite que lui.
+  en: A lively little woman with round glasses, an apron full of pockets, an abacus in hand — and she counts faster than it does.
+  es: Mujercita vivaz de gafas redondas, delantal lleno de bolsillos, ábaco en mano, que cuenta más rápido que él.
+  de: Eine flinke kleine Frau mit runder Brille, einer Schürze voller Taschen und einem Abakus in der Hand — sie rechnet schneller als er.
+  ja: 丸眼鏡の小柄で快活な女性。ポケットだらけの前掛け、手には算盤——算盤より速く計算する。
 - fr: Bienvenue au Comptoir ! Regardez tout, touchez peu, et payez comptant.
+  en: Welcome to the Counter! Look at everything, touch little, and pay cash.
+  es: ¡Bienvenidos al Mostrador! Mirad todo, tocad poco y pagad al contado.
+  de: Willkommen im Kontor! Alles ansehen, wenig anfassen und bar bezahlen.
+  ja: いらっしゃい！よく見て、あまり触らず、お代は現金でね。
 - fr: Bram
+  en: Bram
+  es: Bram
+  de: Bram
+  ja: ブラム
 - fr: Tavernier du Chaudron Fêlé
+  en: Innkeeper of the Cracked Cauldron
+  es: Tabernero del Caldero Rajado
+  de: Wirt des Gesprungenen Kessels
+  ja: ひび割れ釜亭の主人
 - fr: Colosse jovial au crâne lisse et à la grande barbe brune, tablier taché, chope à la main, cœur d'or.
+  en: A jovial giant with a smooth scalp and a big brown beard, a stained apron, a tankard in hand, a heart of gold.
+  es: Un coloso jovial de cráneo liso y gran barba castaña, delantal manchado, jarra en mano y corazón de oro.
+  de: Ein fröhlicher Riese mit glatter Glatze und großem braunem Bart, fleckiger Schürze, einem Krug in der Hand und einem Herz aus Gold.
+  ja: つるつる頭に立派な茶色の髭の陽気な大男。染みだらけの前掛け、手にはジョッキ、心は黄金。
 - fr: Installez-vous ! Ici on mange chaud, et le lit est à l'étage.
+  en: Make yourselves at home! The food's hot here, and the bed's upstairs.
+  es: ¡Poneos cómodos! Aquí se come caliente, y la cama está arriba.
+  de: Macht es euch gemütlich! Hier isst man warm, und das Bett ist oben.
+  ja: さあ座った座った！ここの飯は温かいし、寝床は二階だ。
 - fr: Maître Barnoul Kestrin
+  en: Master Barnoul Kestrin
+  es: Maese Barnoul Kestrin
+  de: Meister Barnoul Kestrin
+  ja: バルヌール・ケストラン親方
 - fr: Intendant de la Guilde
+  en: Guild Quartermaster
+  es: Intendente del Gremio
+  de: Quartiermeister der Gilde
+  ja: ギルドの補給係
 - fr: Costaud, peau mate, barbe brune, tablier de cuir, un registre à la main, l'air sévère. Rien ne sort de la réserve sans sa signature.
+  en: Burly, dark-skinned, brown beard, leather apron, a ledger in hand, a stern look. Nothing leaves the stores without his signature.
+  es: Fornido, piel morena, barba castaña, delantal de cuero, un registro en la mano, aire severo. Nada sale de la reserva sin su firma.
+  de: Kräftig, dunkle Haut, brauner Bart, Lederschürze, ein Register in der Hand, strenge Miene. Nichts verlässt das Lager ohne seine Unterschrift.
+  ja: がっしりした褐色の肌の男。茶色の髭、革の前掛け、手には帳簿、厳しい顔つき。署名なしでは何ひとつ倉庫から出さない。
 - fr: Nom, rang, et ce qu'il vous faut. Tout est noté dans le registre.
+  en: Name, rank, and what you need. Everything goes in the ledger.
+  es: Nombre, rango y lo que necesitáis. Todo se anota en el registro.
+  de: Name, Rang und was ihr braucht. Alles kommt ins Register.
+  ja: 名前、ランク、必要な物。全部帳簿につけるからな。
 - fr: Lina
+  en: Lina
+  es: Lina
+  de: Lina
+  ja: リナ
 - fr: Jeune tanneuse
+  en: Young tanner
+  es: Joven curtidora
+  de: Junge Gerberin
+  ja: 若い皮なめし職人
 - fr: Disparue du quartier des Tanneurs.
+  en: Missing from the Tanners' Quarter.
+  es: Desaparecida del barrio de los Curtidores.
+  de: Aus dem Gerberviertel verschwunden.
+  ja: 皮なめし街から姿を消した。
 - fr: Tobin
+  en: Tobin
+  es: Tobin
+  de: Tobin
+  ja: トビン
 - fr: Apprenti de l'Ordre
+  en: Apprentice of the Order
+  es: Aprendiz de la Orden
+  de: Lehrling des Ordens
+  ja: 教団の見習い
 - fr: Dix-neuf ans, cheveux roux en bataille, taches de rousseur, un livre toujours sous le bras. Curieux, trop curieux.
+  en: Nineteen, messy red hair, freckles, always a book under his arm. Curious, too curious.
+  es: Diecinueve años, pelo pelirrojo revuelto, pecas, siempre un libro bajo el brazo. Curioso, demasiado curioso.
+  de: Neunzehn, zerzaustes rotes Haar, Sommersprossen, immer ein Buch unter dem Arm. Neugierig, zu neugierig.
+  ja: 十九歳。ぼさぼさの赤毛にそばかす、いつも本を小脇に抱えている。好奇心旺盛——旺盛すぎる。
 - fr: Gareth
+  en: Gareth
+  es: Gareth
+  de: Gareth
+  ja: ガレス
 - fr: Fermier de la Combe-aux-Saules
+  en: Farmer of Combe-aux-Saules
+  es: Granjero de Combe-aux-Saules
+  de: Bauer aus Combe-aux-Saules
+  ja: コンブ＝オ＝ソールの農夫
 - fr: Mains calleuses, chapeau de paille, salopette bleue et fourche à la main.
+  en: Calloused hands, straw hat, blue overalls and a pitchfork in hand.
+  es: Manos callosas, sombrero de paja, peto azul y horca en mano.
+  de: Schwielige Hände, Strohhut, blaue Latzhose und eine Heugabel in der Hand.
+  ja: たこだらけの手、麦わら帽子、青いオーバーオール、手には干し草フォーク。
 - fr: Maître Orlo
+  en: Master Orlo
+  es: Maese Orlo
+  de: Meister Orlo
+  ja: オルロ師
 - fr: Mentor d'enfance
+  en: Childhood mentor
+  es: Mentor de la infancia
+  de: Mentor aus Kindertagen
+  ja: 幼い日の師
 - fr: Vieux bibliothécaire bourru.
+  en: A gruff old librarian.
+  es: Viejo bibliotecario gruñón.
+  de: Ein alter, brummiger Bibliothekar.
+  ja: 無愛想な老司書。
 - fr: Cassian
+  en: Cassian
+  es: Cassian
+  de: Cassian
+  ja: カシアン
 - fr: Rival d'enfance
+  en: Childhood rival
+  es: Rival de la infancia
+  de: Rivale aus Kindertagen
+  ja: 幼い日のライバル
 - fr: Fils de garde, fier et rapide.
+  en: A guard's son, proud and quick.
+  es: Hijo de un guardia, orgulloso y rápido.
+  de: Sohn eines Wächters, stolz und schnell.
+  ja: 衛兵の息子。誇り高く足が速い。
 - fr: Pipa
+  en: Pipa
+  es: Pipa
+  de: Pipa
+  ja: ピパ
 - fr: Amie d'enfance
+  en: Childhood friend
+  es: Amiga de la infancia
+  de: Freundin aus Kindertagen
+  ja: 幼なじみ
 - fr: Rieuse, intrépide, toujours une égratignure au genou.
+  en: Giggly, fearless, always a scrape on her knee.
+  es: Risueña, intrépida, siempre con un rasguño en la rodilla.
+  de: Kichernd, furchtlos, immer eine Schramme am Knie.
+  ja: よく笑い、怖いもの知らずで、膝にはいつもすり傷。

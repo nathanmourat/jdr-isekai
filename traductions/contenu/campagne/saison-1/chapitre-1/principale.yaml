@@ -1,128 +1,632 @@
 # Textes de content/campagne/saison-1/chapitre-1/principale.yaml
 # Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
 - fr: L'Appel
+  en: The Calling
+  es: La Llamada
+  de: Der Ruf
+  ja: 召喚
 - fr: Printemps 1012. Un cercle de lumière bleue embrase le sol du Temple du Seuil. Des chants montent, des vitraux vibrent… puis le silence.
+  en: Spring 1012. A circle of blue light blazes across the floor of the Temple of the Threshold. Chants rise, stained-glass windows tremble… then silence.
+  es: Primavera de 1012. Un círculo de luz azul incendia el suelo del Templo del Umbral. Se elevan cantos, vibran las vidrieras… y luego, silencio.
+  de: Frühling 1012. Ein Kreis aus blauem Licht lodert über den Boden des Tempels der Schwelle. Gesänge steigen auf, Buntglasfenster beben … dann Stille.
+  ja: 1012年、春。境界の神殿の床に青い光の円が燃え上がる。歌声が高まり、ステンドグラスが震え……そして静寂。
 - fr: "Au centre du cercle, des silhouettes se relèvent, hagardes : les invoqués. À la lisière de la lumière, d'autres jeunes gens, attirés ici par une résonance qu'ils ne savent pas nommer : les réincarnés."
+  en: "At the centre of the circle, figures get to their feet, dazed: the summoned. At the edge of the light, other young people, drawn here by a resonance they cannot name: the reincarnated."
+  es: "En el centro del círculo, unas siluetas se incorporan, aturdidas: los invocados. En el borde de la luz, otros jóvenes, atraídos aquí por una resonancia que no saben nombrar: los reencarnados."
+  de: "In der Mitte des Kreises richten sich benommene Gestalten auf: die Beschworenen. Am Rand des Lichts stehen andere junge Leute, hergelockt von einem Widerhall, den sie nicht benennen können: die Wiedergeborenen."
+  ja: 円の中心で、呆然とした人影が身を起こす。召喚者たちだ。光の縁には、名づけようのない共鳴に引き寄せられた若者たち。転生者たちだ。
 - fr: "« Bienvenue à Velmaris, [[{{Appelé|Appelée}}||{{groupe:Appelés|Appelées|Appelés}}]]. Je suis Auréliath, Grand Prieur de l'Ordre de la Lumière Sereine. [[N'aie||N'ayez]] crainte : la Lumière [[t'a {{choisi|choisie}}||vous a {{groupe:choisis|choisies|choisis}}]]. »"
+  en: "“Welcome to Velmaris, [[Summoned One||Summoned Ones]]. I am Auréliath, Grand Prior of the Order of the Serene Light. Fear not: the Light has chosen [[you||you all]].”"
+  es: "«Bienvenid[[{{o|a}}||{{groupe:os|as|os}}]] a Velmaris, [[{{Llamado|Llamada}}||{{groupe:Llamados|Llamadas|Llamados}}]]. Soy Auréliath, Gran Prior de la Orden de la Luz Serena. [[No temas||No temáis]]: la Luz [[te ha {{elegido|elegida}}||os ha {{groupe:elegido|elegido|elegido}}]].»"
+  de: "„Willkommen in Velmaris, [[{{Gerufener|Gerufene}}||{{groupe:Gerufene|Gerufene|Gerufene}}]]. Ich bin Auréliath, Großprior des Ordens des Heiteren Lichts. [[Fürchte dich||Fürchtet euch]] nicht: Das Licht hat [[dich||euch]] erwählt.“"
+  ja: 「ヴェルマリスへようこそ、召喚されし[[者||者たち]]よ。我は静謐なる光の教団の大修道院長、オレリアス。恐れることはない。光が[[そなた||そなたたち]]を選んだのだ」
 - fr: « Le Souverain des Cendres s'est éveillé au nord. Le Mur d'Aube faiblit. Le royaume a besoin de héros. »
+  en: “The Ash Sovereign has awakened in the north. The Dawnwall is weakening. The kingdom needs heroes.”
+  es: «El Soberano de las Cenizas ha despertado en el norte. El Muro del Alba se debilita. El reino necesita héroes.»
+  de: „Der Aschenherrscher ist im Norden erwacht. Der Morgenwall wird schwächer. Das Königreich braucht Helden.“
+  ja: 「北で灰の君主が目覚めた。暁の壁は弱まっている。王国には英雄が必要なのだ」
 - fr: Une jeune femme en armure argentée s'avance, la main sur le pommeau. « Capitaine Aveline de Castelroc. Je suis chargée de [[ta||votre]] sécurité. » Son regard s'attarde sur [[toi||vous]], méfiant.
+  en: A young woman in silver armour steps forward, her hand on the pommel. “Captain Aveline de Castelroc. I am charged with your safety.” Her gaze lingers on [[you||you all]], wary.
+  es: Una joven con armadura plateada se adelanta, con la mano en el pomo. «Capitana Aveline de Castelroc. Estoy a cargo de [[tu||vuestra]] seguridad.» Su mirada se detiene en [[ti||vosotros]], desconfiada.
+  de: Eine junge Frau in silberner Rüstung tritt vor, die Hand am Schwertknauf. „Hauptmann Aveline de Castelroc. Ich bin für [[deine||eure]] Sicherheit zuständig.“ Ihr Blick ruht misstrauisch auf [[dir||euch]].
+  ja: 銀の鎧の若い女性が柄に手をかけて進み出る。「アヴリーヌ・ド・カステルロック隊長だ。[[あなた||あなたたち]]の護衛を任されている」その視線は疑わしげに[[あなた||あなたたち]]に留まる。
 - fr: « Un monde de magie ? Génial. Où est-ce qu'on signe ? » (enthousiaste)
+  en: “A world of magic? Awesome. Where do we sign?” (enthusiastic)
+  es: «¿Un mundo de magia? Genial. ¿Dónde se firma?» (entusiasta)
+  de: „Eine Welt voller Magie? Genial. Wo unterschreibt man?“ (begeistert)
+  ja: 「魔法の世界？最高じゃん。どこにサインすればいい？」（乗り気）
 - fr: « Personne ne [[m'a demandé mon||nous a demandé notre]] avis. Qui a décidé de [[m'arracher à ma vie||nous arracher à nos vies]] ? » (méfiant)
+  en: “Nobody asked [[me||us]]. Who decided to tear [[me from my life||us from our lives]]?” (wary)
+  es: «Nadie [[me ha pedido mi||nos ha pedido nuestra]] opinión. ¿Quién decidió [[arrancarme de mi vida||arrancarnos de nuestras vidas]]?» (desconfiado)
+  de: „Niemand hat [[mich||uns]] gefragt. Wer hat beschlossen, [[mich aus meinem Leben||uns aus unseren Leben]] zu reißen?“ (misstrauisch)
+  ja: 「誰も[[俺||俺たち]]の意見なんて聞いてない。[[俺||俺たち]]を元の生活から引きはがすって、誰が決めた？」（警戒）
 - fr: « Excusez-moi, il y a des toilettes dans ce monde ? » (humour)
+  en: “Excuse me, are there toilets in this world?” (humour)
+  es: «Perdone, ¿hay baños en este mundo?» (humor)
+  de: „Entschuldigung, gibt es in dieser Welt Toiletten?“ (Humor)
+  ja: 「すみません、この世界ってトイレあります？」（冗談）
 - fr: Le Grand Prieur sourit largement. « Voilà l'esprit des héros ! »
+  en: The Grand Prior smiles broadly. “That's the spirit of heroes!”
+  es: El Gran Prior sonríe ampliamente. «¡Ese es el espíritu de los héroes!»
+  de: Der Großprior lächelt breit. „Das ist der Geist der Helden!“
+  ja: 大修道院長は満面の笑みを浮かべる。「それこそ英雄の心意気だ！」
 - fr: Aveline soupire. « Les derniers à avoir dit ça sont enterrés sous le Mur d'Aube. »
+  en: Aveline sighs. “The last ones to say that are buried under the Dawnwall.”
+  es: Aveline suspira. «Los últimos que dijeron eso están enterrados bajo el Muro del Alba.»
+  de: Aveline seufzt. „Die Letzten, die das gesagt haben, liegen unter dem Morgenwall begraben.“
+  ja: アヴリーヌがため息をつく。「最後にそう言った連中は、暁の壁の下に埋まっている」
 - fr: Le sourire du Grand Prieur se fige une fraction de seconde. « La Lumière a ses raisons. [[Tu les comprendras||Vous les comprendrez]]. »
+  en: The Grand Prior's smile freezes for a split second. “The Light has its reasons. You will understand them.”
+  es: La sonrisa del Gran Prior se congela una fracción de segundo. «La Luz tiene sus razones. [[Las comprenderás||Las comprenderéis]].»
+  de: Das Lächeln des Großpriors erstarrt für den Bruchteil einer Sekunde. „Das Licht hat seine Gründe. [[Du wirst sie verstehen||Ihr werdet sie verstehen]].“
+  ja: 大修道院長の笑みが一瞬こわばる。「光には光の理由がある。いずれわかるだろう」
 - fr: Aveline [[te||vous]] jette un regard nouveau. Presque… approbateur.
+  en: Aveline gives [[you||you all]] a new look. Almost… approving.
+  es: Aveline [[te||os]] lanza una mirada nueva. Casi… de aprobación.
+  de: Aveline wirft [[dir||euch]] einen neuen Blick zu. Fast … anerkennend.
+  ja: アヴリーヌが[[あなた||あなたたち]]を見直したように見る。ほとんど……認めるような目で。
 - fr: Un acolyte s'étrangle. Auréliath cligne des yeux.
+  en: An acolyte chokes. Auréliath blinks.
+  es: Un acólito se atraganta. Auréliath parpadea.
+  de: Ein Akolyth verschluckt sich. Auréliath blinzelt.
+  ja: 侍祭がむせ、オレリアスは目をしばたたかせる。
 - fr: "Aveline détourne la tête, mais [[tu l'as||vous l'avez]] vue : elle a souri. « Par ici. Et oui, il y en a. »"
+  en: "Aveline turns her head away, but you saw it: she smiled. “This way. And yes, there are.”"
+  es: "Aveline aparta la cara, pero [[la has||la habéis]] visto: ha sonreído. «Por aquí. Y sí, los hay.»"
+  de: "Aveline wendet den Kopf ab, aber [[du hast||ihr habt]] es gesehen: Sie hat gelächelt. „Hier entlang. Und ja, gibt es.“"
+  ja: アヴリーヌは顔をそむけたが、見えた。笑っていた。「こっちだ。……ああ、あるとも」
 - fr: Le Grand Prieur lève une main. Son regard [[te détaille longuement||parcourt vos visages un à un, puis s'arrête]].
+  en: The Grand Prior raises a hand. His gaze [[studies you at length||moves over your faces one by one, then stops]].
+  es: El Gran Prior levanta una mano. Su mirada [[te examina largamente||recorre vuestros rostros uno a uno y luego se detiene]].
+  de: Der Großprior hebt eine Hand. Sein Blick [[mustert dich lange||wandert über eure Gesichter, eines nach dem anderen, und bleibt dann stehen]].
+  ja: 大修道院長が片手を上げる。その目は[[あなたをじっと見つめる||一人ひとりの顔をなぞり、やがて止まる]]。
 - fr: "« {pseudo}. Je sens quelque chose s'éveiller en toi. Dis-moi : que sais-tu de la magie de ce monde ? »"
+  en: "“{pseudo}. I sense something awakening in you. Tell me: what do you know of this world's magic?”"
+  es: "«{pseudo}. Siento que algo despierta en ti. Dime: ¿qué sabes de la magia de este mundo?»"
+  de: "„{pseudo}. Ich spüre, dass etwas in dir erwacht. Sag mir: Was weißt du über die Magie dieser Welt?“"
+  ja: 「{pseudo}。そなたの中で何かが目覚めつつあるのを感じる。言うてみよ。この世界の魔法について何を知っておる？」
 - fr: « Je la sens crépiter au bout de mes doigts. Le feu, le givre… ils me répondent déjà. »
+  en: “I can feel it crackling at my fingertips. Fire, frost… they already answer me.”
+  es: «La siento crepitar en la punta de los dedos. El fuego, la escarcha… ya me responden.»
+  de: „Ich spüre sie an meinen Fingerspitzen knistern. Feuer, Frost … sie gehorchen mir schon.“
+  ja: 「指先でぱちぱちしてるのがわかる。炎も、霜も……もう応えてくれる」
 - fr: « Quelque chose m'accompagne depuis mon arrivée. Une présence, à mes côtés. »
+  en: “Something has been with me since I arrived. A presence, at my side.”
+  es: «Algo me acompaña desde que llegué. Una presencia, a mi lado.»
+  de: „Seit meiner Ankunft begleitet mich etwas. Eine Gegenwart, an meiner Seite.“
+  ja: 「来たときから何かがそばにいる。気配が、すぐ隣に」
 - fr: « Je sais seulement que mes mains apaisent la douleur. Le reste, je l'apprendrai. »
+  en: “I only know that my hands soothe pain. The rest, I'll learn.”
+  es: «Solo sé que mis manos calman el dolor. Lo demás, lo aprenderé.»
+  de: „Ich weiß nur, dass meine Hände Schmerzen lindern. Den Rest lerne ich noch.“
+  ja: 「この手が痛みを和らげることしか知らない。あとはこれから学ぶよ」
 - fr: « La magie ? Chez moi, ça s'appelle une bonne chanson au bon moment. »
+  en: “Magic? Where I come from, it's called a good song at the right moment.”
+  es: «¿Magia? De donde vengo, se llama una buena canción en el momento justo.»
+  de: „Magie? Bei mir zu Hause nennt man das ein gutes Lied im richtigen Moment.“
+  ja: 「魔法？うちの世界じゃ、いいタイミングのいい歌のことをそう呼ぶんだ」
 - fr: « De la magie ? Montrez-moi vos fioles, je vous dirai ce que j'en pense. »
+  en: “Magic? Show me your vials, I'll tell you what I think of it.”
+  es: «¿Magia? Enséñeme sus frascos y le diré lo que pienso.»
+  de: „Magie? Zeigt mir eure Phiolen, dann sage ich euch, was ich davon halte.“
+  ja: 「魔法？薬瓶を見せてくれたら感想を言うよ」
 - fr: « Je préfère l'acier. La magie, je la laisse à ceux qui ont le temps de réciter. »
+  en: “I prefer steel. I'll leave magic to those who have time to recite.”
+  es: «Prefiero el acero. La magia se la dejo a quienes tienen tiempo de recitar.»
+  de: „Ich bevorzuge Stahl. Magie überlasse ich denen, die Zeit zum Aufsagen haben.“
+  ja: 「鋼のほうが好きだね。魔法は呪文を唱える暇のある連中に任せるよ」
 - fr: « Les anciens parlent du Voile et de ses dangers. Je sais qu'on ne joue pas avec. »
+  en: “The elders speak of the Veil and its dangers. I know you don't play with it.”
+  es: «Los ancianos hablan del Velo y de sus peligros. Sé que con él no se juega.»
+  de: „Die Alten sprechen vom Schleier und seinen Gefahren. Ich weiß, dass man damit nicht spielt.“
+  ja: 「長老たちはヴェールとその危険を語る。軽々しく扱うものじゃないってことは知ってる」
 - fr: « Rien du tout. Mais j'apprends vite. »
+  en: “Nothing at all. But I learn fast.”
+  es: «Nada de nada. Pero aprendo rápido.»
+  de: „Gar nichts. Aber ich lerne schnell.“
+  ja: 「何も知らない。でも覚えは早いよ」
 - fr: « Assez pour me méfier de ceux qui s'en servent sur les autres sans demander. »
+  en: “Enough to distrust those who use it on others without asking.”
+  es: «Lo bastante para desconfiar de quienes la usan sobre otros sin preguntar.»
+  de: „Genug, um denen zu misstrauen, die sie ungefragt an anderen anwenden.“
+  ja: 「断りもなく人に使う連中を疑うくらいには知ってる」
 - fr: « Ça dépend. Elle fait aussi le café ? »
+  en: “Depends. Does it make coffee too?”
+  es: «Depende. ¿También hace café?»
+  de: „Kommt drauf an. Kocht sie auch Kaffee?“
+  ja: 「場合によるね。コーヒーも淹れてくれる？」
 - fr: "« [[Repose-toi||Reposez-vous]]. Demain, la Couronne [[te||vous]] recevra. En attendant, la Guilde de la Rose des Vents [[t'ouvrira ses portes : tu y apprendras||vous ouvrira ses portes : vous y apprendrez]] à survivre. »"
+  en: "“Rest now. Tomorrow, the Crown will receive [[you||you all]]. In the meantime, the Guild of the Compass Rose will open its doors to [[you: there you'll||you: there you'll]] learn to survive.”"
+  es: "«[[Descansa||Descansad]]. Mañana la Corona [[te||os]] recibirá. Mientras tanto, el Gremio de la Rosa de los Vientos [[te abrirá sus puertas: allí aprenderás||os abrirá sus puertas: allí aprenderéis]] a sobrevivir.»"
+  de: "„[[Ruh dich aus||Ruht euch aus]]. Morgen empfängt [[dich||euch]] die Krone. Bis dahin öffnet [[dir||euch]] die Gilde der Windrose ihre Tore: Dort [[lernst du||lernt ihr]] zu überleben.“"
+  ja: 「今は休むがよい。明日、王家が[[そなた||そなたたち]]を迎える。それまでは風の薔薇ギルドが門を開こう。そこで生き延びる術を学ぶのだ」
 - fr: "Ce soir-là, en contemplant les tours blanches de Lysmont depuis la fenêtre du temple, [[tu vois flotter devant tes yeux une fenêtre translucide : ton niveau, tes capacités… et ton don.||chacun de vous voit flotter devant ses yeux une fenêtre translucide : votre niveau, vos capacités… et votre don.]]"
+  en: "That evening, gazing at Lysmont's white towers from the temple window, [[you see a translucent window floating before your eyes: your level, your abilities… and your gift.||each of you sees a translucent window floating before your eyes: your level, your abilities… and your gift.]]"
+  es: "Esa noche, contemplando las torres blancas de Lysmont desde la ventana del templo, [[ves flotar ante tus ojos una ventana translúcida: tu nivel, tus capacidades… y tu don.||cada uno de vosotros ve flotar ante sus ojos una ventana translúcida: vuestro nivel, vuestras capacidades… y vuestro don.]]"
+  de: "An diesem Abend, als [[du||ihr]] vom Tempelfenster aus die weißen Türme von Lysmont betrachtet, [[siehst du ein durchscheinendes Fenster vor deinen Augen schweben: dein Level, deine Fähigkeiten … und deine Gabe.||sieht jeder von euch ein durchscheinendes Fenster vor seinen Augen schweben: euer Level, eure Fähigkeiten … und eure Gabe.]]"
+  ja: その夜、神殿の窓からリスモンの白い塔を眺めていると、[[目の前に半透明のウィンドウが浮かんだ。レベル、能力……そして天賦。||それぞれの目の前に半透明のウィンドウが浮かんだ。レベル、能力……そして天賦。]]
 - fr: "L'Appel : {groupe} arrivent au Temple du Seuil. La capitaine Aveline de Castelroc est chargée de leur sécurité."
+  en: "The Calling: {groupe} arrive at the Temple of the Threshold. Captain Aveline de Castelroc is charged with their safety."
+  es: "La Llamada: {groupe} llegan al Templo del Umbral. La capitana Aveline de Castelroc está a cargo de su seguridad."
+  de: "Der Ruf: {groupe} treffen im Tempel der Schwelle ein. Hauptmann Aveline de Castelroc ist für ihre Sicherheit zuständig."
+  ja: 召喚：{groupe}が境界の神殿に現れた。アヴリーヌ・ド・カステルロック隊長が護衛を任される。
 - fr: L'examen de la Guilde
+  en: The Guild Exam
+  es: El examen del Gremio
+  de: Die Gildenprüfung
+  ja: ギルドの試験
 - fr: Le hall de la Guilde de la Rose des Vents sent la bière, le cuir et la sueur. Des dizaines de regards se tournent vers vous.
+  en: The hall of the Guild of the Compass Rose smells of beer, leather and sweat. Dozens of eyes turn towards you.
+  es: El salón del Gremio de la Rosa de los Vientos huele a cerveza, cuero y sudor. Decenas de miradas se vuelven hacia vosotros.
+  de: Die Halle der Gilde der Windrose riecht nach Bier, Leder und Schweiß. Dutzende Blicke richten sich auf euch.
+  ja: 風の薔薇ギルドの広間は、エールと革と汗の匂いがする。何十もの視線がこちらを向く。
 - fr: « Ah. [[{{Un Appelé|Une Appelée}}||{{groupe:Les Appelés|Les Appelées|Les Appelés}}]]. » Dame Rowena mâchonne sa pipe éteinte. « Ici, [[ton don ne vaut rien tant que tu n'as pas prouvé que tu sais||votre don ne vaut rien tant que vous n'avez pas prouvé que vous savez]] tenir debout. »
+  en: “Ah. [[A Summoned One||Summoned Ones]].” Lady Rowena chews on her unlit pipe. “Here, [[your gift is worth nothing until you've proven you can||your gift is worth nothing until you've proven you can]] stay on your feet.”
+  es: «Ah. [[{{Un Llamado|Una Llamada}}||{{groupe:Los Llamados|Las Llamadas|Los Llamados}}]].» Dama Rowena mordisquea su pipa apagada. «Aquí, [[tu don no vale nada mientras no hayas demostrado que sabes||vuestro don no vale nada mientras no hayáis demostrado que sabéis]] mantenerte en pie.»
+  de: „Ah. [[{{Ein Gerufener|Eine Gerufene}}||{{groupe:Gerufene|Gerufene|Gerufene}}]].“ Dame Rowena kaut auf ihrer erloschenen Pfeife. „Hier ist [[deine Gabe nichts wert, solange du nicht bewiesen hast, dass du||eure Gabe nichts wert, solange ihr nicht bewiesen habt, dass ihr]] auf den Beinen bleiben [[kannst||könnt]].“
+  ja: 「ほう。召喚者[[か||たちか]]」ロウェナ夫人は火の消えたパイプを噛む。「ここじゃ、立っていられると証明するまで、天賦なんぞ何の価値もないよ」
 - fr: Une jeune femme aux oreilles de loup argentées [[te||vous]] dévisage, adossée à un pilier. « Pff. [[{{Il a l'air tout mou|Elle a l'air toute molle}}||{{groupe:Ils ont l'air tout mous|Elles ont l'air toutes molles|Ils ont l'air tout mous}}]]. Je parie dix pièces [[{{qu'il tombe|qu'elle tombe}}||{{groupe:qu'ils tombent|qu'elles tombent|qu'ils tombent}}]] au premier coup. »
+  en: A young woman with silver wolf ears stares at [[you||you all]], leaning against a pillar. “Pfff. [[Looks soft||They look soft]]. I bet ten coins [[they drop||they drop]] at the first hit.”
+  es: Una joven con orejas de lobo plateadas [[te||os]] observa, apoyada en un pilar. «Pff. [[{{Parece blandito|Parece blandita}}||{{groupe:Parecen blanditos|Parecen blanditas|Parecen blanditos}}]]. Apuesto diez monedas a que [[cae||caen]] al primer golpe.»
+  de: Eine junge Frau mit silbernen Wolfsohren mustert [[dich||euch]], an eine Säule gelehnt. „Pff. [[{{Er sieht ganz weich aus|Sie sieht ganz weich aus}}||{{groupe:Die sehen ganz weich aus|Die sehen ganz weich aus|Die sehen ganz weich aus}}]]. Ich wette zehn Münzen, dass [[{{er|sie}}||{{groupe:sie|sie|sie}}]] beim ersten Schlag [[umfällt||umfallen]].“
+  ja: 柱にもたれた銀色の狼耳の若い女性が、[[あなた||あなたたち]]をじろじろ見る。「ふん。ふにゃふにゃじゃん。最初の一発で倒れる方に十枚賭けるね」
 - fr: Elle vous fixe un instant de plus, puis son regard s'adoucit. « …Un Ourvalis ? Hé. Bonne chance, alors. »
+  en: She stares at you a moment longer, then her gaze softens. “…An Ourvalis? Hey. Good luck, then.”
+  es: Os mira un instante más y luego su mirada se suaviza. «…¿Un ourvalis? Eh. Buena suerte, entonces.»
+  de: Sie mustert euch noch einen Moment, dann wird ihr Blick weicher. „… Ein Ourvalis? Hey. Dann viel Glück.“
+  ja: 彼女はもう少しこちらを見つめ、それから目をやわらげた。「……ウルヴァリス？へえ。じゃ、がんばりな」
 - fr: "« L'examen est simple : [[tu affrontes||vous affrontez]] notre golem d'entraînement. S'il [[te||vous]] met au tapis, [[reviens||revenez]] dans un an. »"
+  en: "“The exam is simple: [[you face||you face]] our training golem. If it knocks [[you||you]] down, come back in a year.”"
+  es: "«El examen es sencillo: [[te enfrentas||os enfrentáis]] a nuestro gólem de entrenamiento. Si [[te||os]] tumba, [[vuelve||volved]] dentro de un año.»"
+  de: "„Die Prüfung ist einfach: [[Du trittst||Ihr tretet]] gegen unseren Übungsgolem an. Wenn er [[dich||euch]] umhaut, [[komm||kommt]] in einem Jahr wieder.“"
+  ja: 「試験は簡単さ。うちの訓練用ゴーレムと戦う。床に転がされたら、一年後にまた来な」
 - fr: Kaya fait sauter une pièce dans sa main. « Allez, soyons joueurs. Vingt pièces, pour [[toi||tout le groupe]], que [[tu ne tiens||vous ne tenez]] pas debout jusqu'au bout. [[Tu suis||Qui suit]] ? »
+  en: Kaya flips a coin in her hand. “Come on, let's make it interesting. Twenty coins, for [[you||the whole group]], that [[you won't stay||you won't stay]] standing to the end. [[You in||Who's in]]?”
+  es: Kaya hace saltar una moneda en la mano. «Venga, juguemos. Veinte monedas, para [[ti||todo el grupo]], a que no [[aguantas||aguantáis]] en pie hasta el final. [[¿Te apuntas||¿Quién se apunta]]?»
+  de: Kaya wirft eine Münze in die Luft. „Los, machen wir's spannend. Zwanzig Münzen, für [[dich||die ganze Gruppe]], dass [[du nicht||ihr nicht]] bis zum Ende auf den Beinen [[bleibst||bleibt]]. [[Machst du mit||Wer macht mit]]?“
+  ja: カヤが手の中でコインを弾く。「よし、賭けようか。[[あんた||あんたたち全員]]が最後まで立っていられない方に二十枚。乗る？」
 - fr: « Personne ne parie ? Tss. Prudent[[||s]], en plus d'être mou[[||s]]. » Elle range sa pièce, presque déçue.
+  en: “Nobody's betting? Tsk. Cautious, on top of being soft.” She puts her coin away, almost disappointed.
+  es: «¿Nadie apuesta? Tss. [[{{Prudente|Prudente}}||{{groupe:Prudentes|Prudentes|Prudentes}}]], además de [[{{blandito|blandita}}||{{groupe:blanditos|blanditas|blanditos}}]].» Guarda la moneda, casi decepcionada.
+  de: „Keiner wettet? Tss. Vorsichtig und dazu noch weich.“ Sie steckt die Münze weg, fast enttäuscht.
+  ja: 「誰も賭けないの？ちぇっ。ふにゃふにゃな上に臆病とはね」彼女はほとんどがっかりした様子でコインをしまう。
 - fr: Rowena pointe sa pipe vers {nom}. « Toi, {pseudo}. Ce golem fait deux fois ta taille. Tu comptes t'y prendre comment ? »
+  en: Rowena points her pipe at {nom}. “You, {pseudo}. That golem is twice your size. How do you plan to go about it?”
+  es: Rowena apunta con la pipa a {nom}. «Tú, {pseudo}. Ese gólem te dobla en tamaño. ¿Cómo piensas hacerlo?»
+  de: Rowena zeigt mit der Pfeife auf {nom}. „Du, {pseudo}. Der Golem ist doppelt so groß wie du. Wie willst du das anstellen?“
+  ja: ロウェナがパイプで{nom}を指す。「あんた、{pseudo}。あのゴーレムはあんたの倍はある。どうやって相手する気だい？」
 - fr: « Je me mets devant et j'encaisse. [[Je frapperai quand il fatiguera.||Les autres frapperont pendant ce temps.]] »
+  en: “I stand in front and take the hits. [[I'll strike when it tires.||The others will strike in the meantime.]]”
+  es: «Me pongo delante y aguanto. [[Golpearé cuando se canse.||Los demás golpearán mientras tanto.]]»
+  de: „Ich stelle mich vorne hin und stecke ein. [[Ich schlage zu, wenn er müde wird.||Die anderen schlagen in der Zwischenzeit zu.]]“
+  ja: 「前に立って受け止める。[[疲れたところを叩く。||その間にみんなが攻撃する。]]」
 - fr: « Je cogne fort. Et s'il tient encore debout, je recommence. »
+  en: “I hit hard. And if it's still standing, I do it again.”
+  es: «Golpeo fuerte. Y si sigue en pie, vuelvo a empezar.»
+  de: „Ich schlage hart zu. Und wenn er dann noch steht, noch mal.“
+  ja: 「思いっきり殴る。まだ立ってたら、もう一回」
 - fr: « Je cherche le point faible. Tout le monde en a un, même l'argile. »
+  en: “I look for the weak spot. Everyone has one, even clay.”
+  es: «Busco el punto débil. Todo el mundo tiene uno, hasta la arcilla.»
+  de: „Ich suche den Schwachpunkt. Jeder hat einen, sogar Lehm.“
+  ja: 「弱点を探す。誰にだってある。粘土にもね」
 - fr: « De loin. Très loin. Avec quelque chose qui explose. »
+  en: “From afar. Very far. With something that explodes.”
+  es: «De lejos. Muy lejos. Con algo que explote.»
+  de: „Aus der Ferne. Sehr weit weg. Mit etwas, das explodiert.“
+  ja: 「遠くから。うんと遠くから。爆発するもので」
 - fr: « Je tiens debout plus longtemps que lui.[[|| Et je garde les autres debout.]] »
+  en: “I stay on my feet longer than it does.[[|| And I keep the others standing.]]”
+  es: «Aguanto en pie más que él.[[|| Y mantengo a los demás en pie.]]»
+  de: „Ich bleibe länger stehen als er.[[|| Und ich halte die anderen auf den Beinen.]]“
+  ja: 「あいつより長く立っていられる。[[|| みんなのことも立たせておく。]]」
 - fr: « Avec prudence. Je regarde d'abord comment il bouge. »
+  en: “Carefully. First I watch how it moves.”
+  es: «Con prudencia. Primero miro cómo se mueve.»
+  de: „Vorsichtig. Zuerst schaue ich, wie er sich bewegt.“
+  ja: 「慎重に。まずは動きを見る」
 - fr: « On verra bien une fois dedans. »
+  en: “We'll see once we're in there.”
+  es: «Ya veremos una vez dentro.»
+  de: „Mal sehen, wenn's so weit ist.“
+  ja: 「やってみればわかるさ」
 - fr: « Vous n'auriez pas un golem plus petit ? »
+  en: “You wouldn't have a smaller golem?”
+  es: «¿No tendrían un gólem más pequeño?»
+  de: „Habt ihr keinen kleineren Golem?“
+  ja: 「もっと小さいゴーレムはないんですか？」
 - fr: Le golem d'argile se met en marche dans un grincement.
+  en: The clay golem lurches into motion with a creak.
+  es: El gólem de arcilla se pone en marcha con un chirrido.
+  de: Der Lehmgolem setzt sich knirschend in Bewegung.
+  ja: 粘土のゴーレムがきしみを上げて動き出す。
 - fr: « Pas mal. Pas mal du tout. » Elle tamponne une carte de cuivre. « Rang F. Les contrats sont au tableau. Ne mourez pas bêtement. »
+  en: “Not bad. Not bad at all.” She stamps a copper card. “Rank F. The contracts are on the board. Don't die stupidly.”
+  es: «Nada mal. Nada mal.» Sella una tarjeta de cobre. «Rango F. Los contratos están en el tablón. No muráis tontamente.»
+  de: „Nicht schlecht. Gar nicht schlecht.“ Sie stempelt eine Kupferkarte. „Rang F. Die Aufträge hängen am Brett. Sterbt nicht dumm.“
+  ja: 「悪くない。まったく悪くないよ」彼女は銅のカードに判を押す。「ランクF。依頼は掲示板だ。つまらない死に方はするんじゃないよ」
 - fr: Kaya rend la mise et y ajoute vingt pièces de sa poche, en grommelant. « Ouais, bon. [[Tu as||Vous avez]] de la chance. »
+  en: Kaya hands back the stake and adds twenty coins from her own pocket, grumbling. “Yeah, well. You got lucky.”
+  es: Kaya devuelve la apuesta y añade veinte monedas de su bolsillo, refunfuñando. «Ya, bueno. [[Has tenido||Habéis tenido]] suerte.»
+  de: Kaya gibt den Einsatz zurück und legt grummelnd zwanzig Münzen aus eigener Tasche dazu. „Ja, schon gut. [[Du hattest||Ihr hattet]] Glück.“
+  ja: カヤはぶつぶつ言いながら賭け金を返し、自分の財布から二十枚足した。「ま、運がよかったね」
 - fr: "{groupe} réussissent l'examen de la Guilde : rang F."
+  en: "{groupe} pass the Guild exam: rank F."
+  es: "{groupe} aprueban el examen del Gremio: rango F."
+  de: "{groupe} bestehen die Gildenprüfung: Rang F."
+  ja: "{groupe}はギルドの試験に合格した：ランクF。"
 - fr: « Bon. Le golem [[t'a {{laminé|laminée}}||vous a {{groupe:laminés|laminées|laminés}}]]. » Elle soupire. « Mais [[tu t'es {{relevé|relevée}}||vous vous êtes {{groupe:relevés|relevées|relevés}}]]. C'est ce que je cherche. Rang F, à l'essai. »
+  en: “Well. The golem flattened [[you||you all]].” She sighs. “But [[you got back up||you got back up]]. That's what I'm looking for. Rank F, on probation.”
+  es: «Bueno. El gólem [[te ha {{machacado|machacado}}||os ha {{groupe:machacado|machacado|machacado}}]].» Suspira. «Pero [[te has {{levantado|levantado}}||os habéis {{groupe:levantado|levantado|levantado}}]]. Eso es lo que busco. Rango F, a prueba.»
+  de: „Na ja. Der Golem hat [[dich||euch]] plattgemacht.“ Sie seufzt. „Aber [[du bist||ihr seid]] wieder aufgestanden. Genau das suche ich. Rang F, auf Probe.“
+  ja: 「やれやれ。ゴーレムにのされたね」彼女はため息をつく。「でも立ち上がった。あたしが見たいのはそれさ。ランクF、仮登録だ」
 - fr: Kaya empoche les vingt pièces avec un grand sourire. « Sans rancune. »
+  en: Kaya pockets the twenty coins with a big grin. “No hard feelings.”
+  es: Kaya se guarda las veinte monedas con una gran sonrisa. «Sin rencores.»
+  de: Kaya steckt die zwanzig Münzen mit breitem Grinsen ein. „Nichts für ungut.“
+  ja: カヤはにんまりと二十枚をポケットにしまう。「恨みっこなしね」
 - fr: "{groupe} entrent à la Guilde « à l'essai »."
+  en: "{groupe} join the Guild “on probation”."
+  es: "{groupe} entran en el Gremio «a prueba»."
+  de: "{groupe} treten der Gilde „auf Probe“ bei."
+  ja: "{groupe}はギルドに「仮登録」で加入した。"
 - fr: "« Maintenant, au travail : contrats, entraînement, premières cicatrices. Et quand vous voudrez que les mois passent, prenez une chambre au Chaudron Fêlé. Le temps ne file que si vous le décidez. »"
+  en: "“Now, to work: contracts, training, first scars. And when you want the months to pass, take a room at the Cracked Cauldron. Time only moves on if you decide it does.”"
+  es: "«Ahora, a trabajar: contratos, entrenamiento, primeras cicatrices. Y cuando queráis que pasen los meses, tomad una habitación en el Caldero Rajado. El tiempo solo corre si vosotros lo decidís.»"
+  de: "„Jetzt an die Arbeit: Aufträge, Training, erste Narben. Und wenn ihr wollt, dass die Monate vergehen, nehmt ein Zimmer im Gesprungenen Kessel. Die Zeit vergeht nur, wenn ihr es beschließt.“"
+  ja: 「さあ、仕事だ。依頼、訓練、最初の傷。月日を進めたくなったら、ひび割れ釜亭に部屋を取りな。時が流れるのは、あんたたちがそう決めたときだけさ」
 - fr: Aveline passera souvent « par hasard » à la Guilde. Officiellement pour vous surveiller.
+  en: Aveline will often drop by the Guild “by chance”. Officially, to keep an eye on you.
+  es: Aveline pasará a menudo «por casualidad» por el Gremio. Oficialmente, para vigilaros.
+  de: Aveline wird oft „zufällig“ bei der Gilde vorbeischauen. Offiziell, um euch im Auge zu behalten.
+  ja: アヴリーヌはよく「たまたま」ギルドに立ち寄るようになる。表向きは監視のためだ。
 - fr: On raconte que des lueurs étranges apparaissent parfois sous les ruines de la Crypte de la Fontaine, à l'automne. La Guilde vous y enverra en Brumaire 1013.
+  en: They say strange glows sometimes appear beneath the ruins of the Fountain Crypt in autumn. The Guild will send you there in Brumaire 1013.
+  es: Dicen que a veces aparecen extraños destellos bajo las ruinas de la Cripta de la Fuente, en otoño. El Gremio os enviará allí en Brumario de 1013.
+  de: Man erzählt, dass im Herbst manchmal seltsame Lichter unter den Ruinen der Brunnenkrypta erscheinen. Die Gilde schickt euch im Nebelmond 1013 dorthin.
+  ja: 秋になると、泉の地下墓所の廃墟の下に奇妙な光が現れることがあるという。1013年の霧月、ギルドはあなたたちをそこへ送り出す。
 - fr: La Crypte de la Fontaine
+  en: The Fountain Crypt
+  es: La Cripta de la Fuente
+  de: Die Brunnenkrypta
+  ja: 泉の地下墓所
 - fr: L'automne est là. Des paysans ont vu des lueurs violettes sous les ruines de la Crypte de la Fontaine. Rowena [[t'a||vous a]] confié l'affaire.
+  en: Autumn has come. Peasants have seen purple glows beneath the ruins of the Fountain Crypt. Rowena has entrusted [[you||you]] with the matter.
+  es: Ha llegado el otoño. Unos campesinos han visto destellos violetas bajo las ruinas de la Cripta de la Fuente. Rowena [[te ha||os ha]] confiado el asunto.
+  de: Der Herbst ist da. Bauern haben violette Lichter unter den Ruinen der Brunnenkrypta gesehen. Rowena hat [[dir||euch]] die Sache anvertraut.
+  ja: 秋が来た。農民たちが泉の地下墓所の廃墟の下に紫の光を見たという。ロウェナはこの件をあなた[[||たち]]に任せた。
 - fr: "Aveline [[t'attend||vous attend]] à l'entrée, en armure complète. « Ordre du roi : je [[t'accompagne||vous accompagne]]. Et… je n'allais pas [[te laisser descendre {{seul|seule}}||vous laisser descendre {{groupe:seuls|seules|seuls}}]]. »"
+  en: "Aveline is waiting for [[you||you]] at the entrance, in full armour. “King's orders: I'm coming with [[you||you]]. And… I wasn't going to let [[you go down alone||you go down alone]].”"
+  es: "Aveline [[te espera||os espera]] en la entrada, con la armadura completa. «Orden del rey: [[te acompaño||os acompaño]]. Y… no iba a [[dejarte bajar {{solo|sola}}||dejaros bajar {{groupe:solos|solas|solos}}]].»"
+  de: "Aveline wartet in voller Rüstung am Eingang auf [[dich||euch]]. „Befehl des Königs: Ich begleite [[dich||euch]]. Und … ich hätte [[dich nicht allein hinuntersteigen lassen||euch nicht allein hinuntersteigen lassen]].“"
+  ja: アヴリーヌが完全武装で入口に待っていた。「王命だ。私も同行する。それに……一人[[||たちだけ]]で降りさせるつもりはなかった」
 - fr: L'escalier s'enfonce dans le noir. Une odeur d'eau croupie et de vieille pierre monte des profondeurs.
+  en: The staircase plunges into darkness. A smell of stagnant water and old stone rises from the depths.
+  es: La escalera se hunde en la oscuridad. Un olor a agua estancada y piedra vieja sube de las profundidades.
+  de: Die Treppe führt ins Dunkel. Ein Geruch nach abgestandenem Wasser und altem Stein steigt aus der Tiefe auf.
+  ja: 階段は闇へと沈んでいく。淀んだ水と古い石の匂いが底から立ちのぼる。
 - fr: Descendre dans la crypte.
+  en: Go down into the crypt.
+  es: Bajar a la cripta.
+  de: In die Krypta hinabsteigen.
+  ja: 地下墓所へ降りる。
 - fr: Aveline s'arrête sur la première marche et se tourne vers {nom}. « {pseudo}, c'est toi qui ouvres la marche, ou c'est moi ? »
+  en: Aveline stops on the first step and turns to {nom}. “{pseudo}, are you leading the way, or am I?”
+  es: Aveline se detiene en el primer escalón y se vuelve hacia {nom}. «{pseudo}, ¿abres tú la marcha o la abro yo?»
+  de: Aveline bleibt auf der ersten Stufe stehen und dreht sich zu {nom} um. „{pseudo}, gehst du voran oder ich?“
+  ja: アヴリーヌは最初の段で立ち止まり、{nom}を振り返る。「{pseudo}、先頭はきみか、それとも私か？」
 - fr: « Moi. Je passe devant, sans bruit. Si quelque chose bouge, je le verrai avant qu'il nous voie. »
+  en: “Me. I go ahead, silently. If something moves, I'll see it before it sees us.”
+  es: «Yo. Voy delante, sin ruido. Si algo se mueve, lo veré antes de que nos vea.»
+  de: „Ich. Ich gehe lautlos voran. Wenn sich etwas bewegt, sehe ich es, bevor es uns sieht.“
+  ja: 「私だ。音を立てずに先に行く。何か動けば、向こうが気づく前に見つける」
 - fr: « Moi. Mon bouclier d'abord, tout le monde derrière. »
+  en: “Me. My shield first, everyone behind.”
+  es: «Yo. Primero mi escudo, todos detrás.»
+  de: „Ich. Mein Schild zuerst, alle anderen dahinter.“
+  ja: 「俺だ。盾を先に、みんなは後ろへ」
 - fr: « Passe devant. Je couvre depuis l'arrière, une flèche encochée. »
+  en: “You go first. I'll cover from the back, an arrow nocked.”
+  es: «Pasa delante. Yo cubro desde atrás, con una flecha preparada.»
+  de: „Geh du voran. Ich decke von hinten, einen Pfeil auf der Sehne.“
+  ja: 「先に行って。矢をつがえて後ろを守る」
 - fr: « Un escalier sous terre ? Laisse faire un nain. »
+  en: “A staircase underground? Leave it to a dwarf.”
+  es: «¿Una escalera bajo tierra? Dejádselo a un enano.»
+  de: „Eine Treppe unter die Erde? Das überlasst mal einem Zwerg.“
+  ja: 「地下の階段？ドワーフに任せな」
 - fr: « Je vois dans le noir. Je guide, tu me suis. »
+  en: “I can see in the dark. I'll guide, you follow me.”
+  es: «Veo en la oscuridad. Yo guío, tú me sigues.»
+  de: „Ich sehe im Dunkeln. Ich führe, du folgst mir.“
+  ja: 「暗闇でも見える。私が案内するからついてきて」
 - fr: « Ensemble, côte à côte. »
+  en: “Together, side by side.”
+  es: «Juntos, codo con codo.»
+  de: „Gemeinsam, Seite an Seite.“
+  ja: 「一緒に、並んで行こう」
 - fr: « Après toi, capitaine. C'est toi qui as l'armure. »
+  en: “After you, captain. You're the one with the armour.”
+  es: «Después de ti, capitana. Tú eres la de la armadura.»
+  de: „Nach dir, Hauptmann. Du hast schließlich die Rüstung.“
+  ja: 「お先にどうぞ、隊長。鎧を着てるのはそっちだろ」
 - fr: « On tire à pile ou face ? »
+  en: “Shall we flip a coin?”
+  es: «¿Lo echamos a cara o cruz?»
+  de: „Werfen wir eine Münze?“
+  ja: 「コインで決める？」
 - fr: Vous remontez à la surface, couverts de poussière. Dans votre sac, le sceau cendré pulse d'une lumière violette, comme un cœur.
+  en: You climb back to the surface, covered in dust. In your bag, the ashen seal pulses with a purple light, like a heart.
+  es: Volvéis a la superficie cubiertos de polvo. En vuestra bolsa, el sello cenizo late con una luz violeta, como un corazón.
+  de: Staubbedeckt steigt ihr wieder an die Oberfläche. In eurer Tasche pulsiert das Aschensiegel in violettem Licht, wie ein Herz.
+  ja: 埃まみれで地上に戻る。袋の中で、灰の封印が心臓のように紫の光を脈打たせている。
 - fr: « Ce symbole… » Aveline pâlit. « On l'a trouvé sur les ruines de Valgrane, il y a dix ans. Le jour où mon père… » Elle se tait.
+  en: “That symbol…” Aveline turns pale. “It was found on the ruins of Valgrane, ten years ago. The day my father…” She falls silent.
+  es: «Ese símbolo…» Aveline palidece. «Lo encontraron en las ruinas de Valgrane, hace diez años. El día en que mi padre…» Se calla.
+  de: „Dieses Symbol …“ Aveline wird blass. „Man hat es vor zehn Jahren auf den Ruinen von Valgrane gefunden. An dem Tag, als mein Vater …“ Sie verstummt.
+  ja: 「この紋章……」アヴリーヌの顔から血の気が引く。「十年前、ヴァルグランの廃墟で見つかったものだ。父が……あの日」彼女は口をつぐむ。
 - fr: Dans la Crypte de la Fontaine, {groupe} découvrent un sceau cendré.
+  en: In the Fountain Crypt, {groupe} discover an ashen seal.
+  es: En la Cripta de la Fuente, {groupe} descubren un sello cenizo.
+  de: In der Brunnenkrypta entdecken {groupe} ein Aschensiegel.
+  ja: 泉の地下墓所で、{groupe}は灰の封印を見つけた。
 - fr: Remettre le sceau à l'Ordre, comme le veut la loi.
+  en: Hand the seal over to the Order, as the law requires.
+  es: Entregar el sello a la Orden, como manda la ley.
+  de: Das Siegel dem Orden übergeben, wie es das Gesetz verlangt.
+  ja: 法に従い、封印を教団に渡す。
 - fr: "Le confier à la Guilde : Rowena saura quoi en faire."
+  en: "Entrust it to the Guild: Rowena will know what to do with it."
+  es: "Confiárselo al Gremio: Rowena sabrá qué hacer con él."
+  de: "Es der Gilde anvertrauen: Rowena wird wissen, was damit zu tun ist."
+  ja: ギルドに託す。ロウェナならどうすべきかわかるはず。
 - fr: Le garder et l'étudier vous-mêmes, en secret.
+  en: Keep it and study it yourselves, in secret.
+  es: Guardarlo y estudiarlo vosotros mismos, en secreto.
+  de: Es behalten und selbst insgeheim untersuchen.
+  ja: 手元に置き、ひそかに自分たちで調べる。
 - fr: L'hiver approche. Le sceau ne quitte pas vos pensées. Toute la ville parle déjà de la prochaine Fête des Lanternes, le 15 Floréal 1014.
+  en: Winter is coming. The seal never leaves your thoughts. The whole city is already talking about the next Lantern Festival, on 15 Floreal 1014.
+  es: Se acerca el invierno. El sello no se os va de la cabeza. Toda la ciudad habla ya de la próxima Fiesta de las Linternas, el 15 de Floreal de 1014.
+  de: Der Winter naht. Das Siegel geht euch nicht aus dem Kopf. Die ganze Stadt spricht schon vom nächsten Laternenfest am 15. Blütenmond 1014.
+  ja: 冬が近づく。封印のことが頭を離れない。町中がもう、1014年花月15日の次の灯籠祭の話でもちきりだ。
 - fr: La Nuit des Lanternes
+  en: The Night of Lanterns
+  es: La Noche de las Linternas
+  de: Die Nacht der Laternen
+  ja: 灯籠の夜
 - fr: 15 Floréal 1014, Fête des Lanternes. Des milliers de lanternes de papier s'élèvent au-dessus de Lysmont, chacune portant le nom d'un disparu.
+  en: 15 Floreal 1014, Lantern Festival. Thousands of paper lanterns rise above Lysmont, each bearing the name of someone lost.
+  es: 15 de Floreal de 1014, Fiesta de las Linternas. Miles de linternas de papel se elevan sobre Lysmont, cada una con el nombre de un desaparecido.
+  de: 15. Blütenmond 1014, Laternenfest. Tausende Papierlaternen steigen über Lysmont auf, jede trägt den Namen eines Verstorbenen.
+  ja: 1014年花月15日、灯籠祭。何千もの紙灯籠がリスモンの空へ昇る。ひとつひとつに、亡き人の名が記されている。
 - fr: Bram, le tavernier, distribue des brochettes en riant. « Ce soir, c'est la maison qui régale ! »
+  en: Bram, the innkeeper, hands out skewers, laughing. “Tonight, it's on the house!”
+  es: Bram, el tabernero, reparte brochetas riendo. «¡Esta noche invita la casa!»
+  de: Bram, der Wirt, verteilt lachend Spieße. „Heute Abend geht alles aufs Haus!“
+  ja: 酒場の主人ブラムが笑いながら串焼きを配る。「今夜は店のおごりだ！」
 - fr: Sur le balcon du château, une jeune femme blonde vous fait un petit signe discret. La princesse Séraphine.
+  en: On the castle balcony, a young blonde woman gives you a small, discreet wave. Princess Séraphine.
+  es: En el balcón del castillo, una joven rubia os hace una señal discreta. La princesa Serafina.
+  de: Auf dem Schlossbalkon winkt euch eine junge blonde Frau unauffällig zu. Prinzessin Séraphine.
+  ja: 城のバルコニーで、金髪の若い女性がそっと手を振る。セラフィーヌ王女だ。
 - fr: Aveline est là elle aussi, en civil pour une fois, une lanterne éteinte entre les doigts.
+  en: Aveline is there too, in plain clothes for once, an unlit lantern between her fingers.
+  es: Aveline también está, de paisano por una vez, con una linterna apagada entre los dedos.
+  de: Auch Aveline ist da, ausnahmsweise in Zivil, eine erloschene Laterne zwischen den Fingern.
+  ja: アヴリーヌもいた。珍しく私服姿で、火の入っていない灯籠を指に挟んでいる。
 - fr: « C'est… pour mon père. » Elle hésite, sans vous regarder. « Vous voulez bien rester un moment ? »
+  en: “It's… for my father.” She hesitates, not looking at you. “Would you stay a while?”
+  es: «Es… por mi padre.» Duda, sin miraros. «¿Os quedáis un momento?»
+  de: „Das ist … für meinen Vater.“ Sie zögert, ohne euch anzusehen. „Würdet ihr einen Moment bleiben?“
+  ja: 「これは……父のためだ」彼女はこちらを見ずにためらう。「少し、一緒にいてくれないか？」
 - fr: Lâcher une lanterne avec Aveline, en silence.
+  en: Release a lantern with Aveline, in silence.
+  es: Soltar una linterna con Aveline, en silencio.
+  de: Mit Aveline schweigend eine Laterne aufsteigen lassen.
+  ja: アヴリーヌと黙って灯籠を放つ。
 - fr: "Profiter de la fête : danses, musique, brochettes."
+  en: "Enjoy the festival: dancing, music, skewers."
+  es: "Disfrutar de la fiesta: bailes, música, brochetas."
+  de: "Das Fest genießen: Tanz, Musik, Spieße."
+  ja: 祭りを楽しむ。踊り、音楽、串焼き。
 - fr: "Vos lanternes montent côte à côte. Aveline murmure : « Il s'appelait Gauvain. Il n'était pas un traître. » Pour la première fois, sa voix tremble."
+  en: "Your lanterns rise side by side. Aveline murmurs: “His name was Gauvain. He was not a traitor.” For the first time, her voice trembles."
+  es: "Vuestras linternas suben una junto a otra. Aveline murmura: «Se llamaba Gauvain. No era un traidor.» Por primera vez, le tiembla la voz."
+  de: "Eure Laternen steigen Seite an Seite auf. Aveline murmelt: „Er hieß Gauvain. Er war kein Verräter.“ Zum ersten Mal zittert ihre Stimme."
+  ja: 灯籠が並んで昇っていく。アヴリーヌがつぶやく。「父の名はゴーヴァン。裏切り者などではなかった」初めて、その声が震えた。
 - fr: Elle s'essuie les yeux d'un revers de main. « …Merci. N'en parlez à personne. »
+  en: She wipes her eyes with the back of her hand. “…Thank you. Don't tell anyone.”
+  es: Se seca los ojos con el dorso de la mano. «…Gracias. No se lo contéis a nadie.»
+  de: Sie wischt sich mit dem Handrücken über die Augen. „… Danke. Erzählt es niemandem.“
+  ja: 彼女は手の甲で目をぬぐう。「……ありがとう。誰にも言うなよ」
 - fr: Soudain, les lanternes virent au violet. Un cri. Puis une explosion de cendres au centre de la place.
+  en: Suddenly, the lanterns turn purple. A scream. Then an explosion of ash in the middle of the square.
+  es: De pronto, las linternas se vuelven violetas. Un grito. Luego una explosión de ceniza en el centro de la plaza.
+  de: Plötzlich färben sich die Laternen violett. Ein Schrei. Dann eine Aschenexplosion mitten auf dem Platz.
+  ja: 突然、灯籠が紫に変わった。悲鳴。そして広場の中央で灰が爆ぜる。
 - fr: Des gobelins cendrés surgissent des égouts, guidés par des cultistes. La foule panique.
+  en: Ashen goblins burst out of the sewers, led by cultists. The crowd panics.
+  es: Goblins cenicientos surgen de las alcantarillas, guiados por sectarios. La multitud entra en pánico.
+  de: Aschengoblins stürmen aus der Kanalisation, angeführt von Kultisten. Die Menge gerät in Panik.
+  ja: 教団員に率いられた灰のゴブリンが下水道からあふれ出す。群衆は恐慌に陥る。
 - fr: « Protégez les civils ! » hurle Aveline en dégainant.
+  en: “Protect the civilians!” Aveline shouts, drawing her sword.
+  es: «¡Proteged a los civiles!», grita Aveline desenvainando.
+  de: „Schützt die Zivilisten!“, ruft Aveline und zieht ihr Schwert.
+  ja: 「民を守れ！」アヴリーヌが剣を抜いて叫ぶ。
 - fr: Couvrir la fuite des civils, même si les cultistes s'échappent.
+  en: Cover the civilians' escape, even if the cultists get away.
+  es: Cubrir la huida de los civiles, aunque los sectarios escapen.
+  de: Die Flucht der Zivilisten decken, auch wenn die Kultisten entkommen.
+  ja: 教団員を取り逃がしても、民の避難を守る。
 - fr: Foncer sur le cultiste qui dirige l'attaque, coûte que coûte.
+  en: Charge the cultist leading the attack, whatever it takes.
+  es: Lanzarse contra el sectario que dirige el ataque, cueste lo que cueste.
+  de: Den Kultisten, der den Angriff anführt, um jeden Preis angreifen.
+  ja: 何としても襲撃を指揮する教団員に突撃する。
 - fr: Vous tombez sous le nombre. Quand vous rouvrez les yeux, la garde a repoussé les gobelins… mais le Chaudron Fêlé est en flammes.
+  en: You fall to their numbers. When you open your eyes again, the guard has pushed back the goblins… but the Cracked Cauldron is in flames.
+  es: Caéis ante su número. Cuando volvéis a abrir los ojos, la guardia ha rechazado a los goblins… pero el Caldero Rajado está en llamas.
+  de: Ihr unterliegt der Übermacht. Als ihr die Augen wieder öffnet, hat die Garde die Goblins zurückgeschlagen … aber der Gesprungene Kessel steht in Flammen.
+  ja: 数に押されて倒れる。目を開けたとき、衛兵がゴブリンを押し返していた……だが、ひび割れ釜亭は炎に包まれていた。
 - fr: Les flammes s'ouvrent. Une silhouette en armure noire s'avance, une épée nimbée de feu violet à la main.
+  en: The flames part. A figure in black armour steps forward, a sword wreathed in purple fire in hand.
+  es: Las llamas se abren. Una silueta con armadura negra avanza, con una espada envuelta en fuego violeta en la mano.
+  de: Die Flammen teilen sich. Eine Gestalt in schwarzer Rüstung tritt vor, ein von violettem Feuer umhülltes Schwert in der Hand.
+  ja: 炎が割れ、黒い鎧の人影が進み出る。その手には紫の炎をまとった剣。
 - fr: « Alors c'est vous, les nouveaux jouets de l'Ordre. » Il rit. « Le Souverain m'a demandé de vous saluer. »
+  en: “So you're the Order's new toys.” He laughs. “The Sovereign asked me to give you his regards.”
+  es: «Así que vosotros sois los nuevos juguetes de la Orden.» Se ríe. «El Soberano me ha pedido que os salude.»
+  de: „Ihr seid also die neuen Spielzeuge des Ordens.“ Er lacht. „Der Herrscher lässt euch grüßen.“
+  ja: 「なるほど、貴様らが教団の新しいおもちゃか」彼は笑う。「君主からよろしくとのことだ」
 - fr: « Le sceau. Vous l'avez. Je le sens. Rendez-le-moi, et je laisse vivre cette ville une année de plus. »
+  en: “The seal. You have it. I can feel it. Give it back to me, and I'll let this city live one more year.”
+  es: «El sello. Lo tenéis. Lo siento. Devolvédmelo y dejaré vivir a esta ciudad un año más.»
+  de: „Das Siegel. Ihr habt es. Ich spüre es. Gebt es mir zurück, und ich lasse diese Stadt noch ein Jahr leben.“
+  ja: 「封印だ。貴様らが持っている。感じるぞ。返せば、この町をあと一年生かしておいてやろう」
 - fr: « Viens le chercher. »
+  en: “Come and get it.”
+  es: «Ven a buscarlo.»
+  de: „Hol es dir doch.“
+  ja: 「取りに来いよ」
 - fr: « Pourquoi vous attaquez Lysmont ? Qu'est-ce que vous voulez vraiment ? » (Esprit, difficulté 17)
+  en: “Why are you attacking Lysmont? What do you really want?” (Spirit, difficulty 17)
+  es: «¿Por qué atacáis Lysmont? ¿Qué queréis de verdad?» (Espíritu, dificultad 17)
+  de: „Warum greift ihr Lysmont an? Was wollt ihr wirklich?“ (Geist, Schwierigkeit 17)
+  ja: 「なぜリスモンを襲う？本当の狙いは何だ？」（精神、難易度17）
 - fr: Il incline la tête, amusé. « Ce que nous voulons ? Demandez à votre Grand Prieur combien coûte un Appel. Demandez-lui qui paie. »
+  en: He tilts his head, amused. “What we want? Ask your Grand Prior what a Calling costs. Ask him who pays.”
+  es: Inclina la cabeza, divertido. «¿Lo que queremos? Preguntad a vuestro Gran Prior cuánto cuesta una Llamada. Preguntadle quién paga.»
+  de: Er neigt amüsiert den Kopf. „Was wir wollen? Fragt euren Großprior, was ein Ruf kostet. Fragt ihn, wer bezahlt.“
+  ja: 彼は面白がるように首をかしげる。「狙いだと？貴様らの大修道院長に、召喚にいくらかかるか聞いてみろ。誰が払うのかもな」
 - fr: Vorthak recule, son armure fendue. « Intéressant… très intéressant. » Il disparaît dans un tourbillon de cendres.
+  en: Vorthak steps back, his armour cracked. “Interesting… very interesting.” He vanishes in a whirl of ash.
+  es: Vorthak retrocede, con la armadura agrietada. «Interesante… muy interesante.» Desaparece en un torbellino de ceniza.
+  de: Vorthak weicht zurück, seine Rüstung gespalten. „Interessant … sehr interessant.“ Er verschwindet in einem Aschewirbel.
+  ja: 鎧を割られたヴォルサックが後ずさる。「面白い……実に面白い」彼は灰の渦の中に消えた。
 - fr: Aveline s'appuie sur son épée, essoufflée, et vous regarde avec un sourire épuisé. « Vous… vous avez été incroyables. »
+  en: Aveline leans on her sword, out of breath, and looks at you with an exhausted smile. “You… you were incredible.”
+  es: Aveline se apoya en la espada, sin aliento, y os mira con una sonrisa agotada. «Vosotros… habéis estado increíbles.»
+  de: Aveline stützt sich keuchend auf ihr Schwert und sieht euch mit erschöpftem Lächeln an. „Ihr … ihr wart unglaublich.“
+  ja: アヴリーヌは息を切らして剣にもたれ、疲れきった笑みを向ける。「きみたちは……すごかった」
 - fr: Vorthak vous balaie comme des fétus de paille, puis s'en va, l'air ennuyé. « Revenez quand vous serez dignes de mon temps. »
+  en: Vorthak sweeps you aside like straws, then leaves, looking bored. “Come back when you're worth my time.”
+  es: Vorthak os barre como briznas de paja y luego se marcha, con aire aburrido. «Volved cuando seáis dignos de mi tiempo.»
+  de: Vorthak fegt euch weg wie Strohhalme und geht dann gelangweilt davon. „Kommt wieder, wenn ihr meine Zeit wert seid.“
+  ja: ヴォルサックはわらくずのように一行を払いのけ、退屈そうに去っていく。「俺の時間に見合うようになったら、また来い」
 - fr: À l'aube, Lysmont compte ses morts. Les lanternes calcinées jonchent les pavés.
+  en: At dawn, Lysmont counts its dead. Charred lanterns litter the cobblestones.
+  es: Al amanecer, Lysmont cuenta a sus muertos. Las linternas calcinadas cubren los adoquines.
+  de: Im Morgengrauen zählt Lysmont seine Toten. Verkohlte Laternen übersäen das Pflaster.
+  ja: 夜明け、リスモンは死者を数える。焼け焦げた灯籠が石畳に散らばっている。
 - fr: Bram, couvert de suie, vous serre la main à vous broyer les os. « Vous avez sauvé ma taverne. Ici, vous ne paierez plus jamais une bière. »
+  en: Bram, covered in soot, shakes your hand hard enough to crush your bones. “You saved my tavern. Here, you'll never pay for a beer again.”
+  es: Bram, cubierto de hollín, os estrecha la mano hasta casi romperos los huesos. «Habéis salvado mi taberna. Aquí no volveréis a pagar una cerveza.»
+  de: Bram, voller Ruß, schüttelt euch die Hand, dass die Knochen knacken. „Ihr habt meine Taverne gerettet. Hier zahlt ihr nie wieder für ein Bier.“
+  ja: 煤まみれのブラムが、骨が砕けそうなほど強く握手する。「店を救ってくれた。ここじゃもう二度とエール代はいらねえ」
 - fr: Le Chaudron Fêlé n'est plus que cendres. Bram n'a pas survécu.
+  en: The Cracked Cauldron is nothing but ashes. Bram didn't survive.
+  es: El Caldero Rajado no es más que cenizas. Bram no ha sobrevivido.
+  de: Vom Gesprungenen Kessel ist nur Asche übrig. Bram hat nicht überlebt.
+  ja: ひび割れ釜亭は灰になった。ブラムは助からなかった。
 - fr: "Fête des Lanternes : Vorthak, émissaire des Cendres, attaque Lysmont."
+  en: "Lantern Festival: Vorthak, envoy of the Ashes, attacks Lysmont."
+  es: "Fiesta de las Linternas: Vorthak, emisario de las Cenizas, ataca Lysmont."
+  de: "Laternenfest: Vorthak, Gesandter der Asche, greift Lysmont an."
+  ja: 灯籠祭：灰の使者ヴォルサックがリスモンを襲撃。
 - fr: Le Serment
+  en: The Oath
+  es: El Juramento
+  de: Der Eid
+  ja: 誓い
 - fr: Nivôse 1014. La salle du trône est glaciale. Le roi Edmund IV vous toise depuis son trône doré.
+  en: Nivose 1014. The throne room is icy. King Edmund IV looks down on you from his golden throne.
+  es: Nivoso de 1014. La sala del trono está helada. El rey Edmundo IV os observa desde su trono dorado.
+  de: Schneemond 1014. Der Thronsaal ist eisig. König Edmund IV. mustert euch von seinem goldenen Thron herab.
+  ja: 1014年雪月。玉座の間は凍えるように寒い。エドマンド4世が黄金の玉座から一行を見下ろす。
 - fr: "« Vous avez défendu ma capitale. Bien. Mais un héros sans maître est une épée sans fourreau : dangereux. »"
+  en: "“You defended my capital. Good. But a hero without a master is a sword without a sheath: dangerous.”"
+  es: "«Habéis defendido mi capital. Bien. Pero un héroe sin señor es una espada sin vaina: peligrosa.»"
+  de: "„Ihr habt meine Hauptstadt verteidigt. Gut. Aber ein Held ohne Herrn ist ein Schwert ohne Scheide: gefährlich.“"
+  ja: 「余の都を守ったそうだな。よかろう。だが主なき英雄は鞘なき剣。危険だ」
 - fr: « Agenouillez-vous et jurez fidélité à la Couronne. Vous aurez titres, or, et l'honneur de mourir pour Aubeclaire. »
+  en: “Kneel and swear fealty to the Crown. You'll have titles, gold, and the honour of dying for Aubeclaire.”
+  es: «Arrodillaos y jurad fidelidad a la Corona. Tendréis títulos, oro y el honor de morir por Aubeclaire.»
+  de: „Kniet nieder und schwört der Krone Treue. Ihr bekommt Titel, Gold und die Ehre, für Aubeclaire zu sterben.“
+  ja: 「ひざまずき、王家に忠誠を誓え。爵位と金、そしてオーブクレールのために死ぬ栄誉を与えよう」
 - fr: La princesse Séraphine, debout à côté du trône, serre les poings. Elle croise votre regard et secoue très légèrement la tête.
+  en: Princess Séraphine, standing beside the throne, clenches her fists. She catches your eye and very slightly shakes her head.
+  es: La princesa Serafina, de pie junto al trono, aprieta los puños. Cruza vuestra mirada y niega muy levemente con la cabeza.
+  de: Prinzessin Séraphine steht neben dem Thron und ballt die Fäuste. Sie fängt euren Blick auf und schüttelt ganz leicht den Kopf.
+  ja: 玉座の横に立つセラフィーヌ王女が拳を握りしめる。こちらと目が合うと、ごくわずかに首を横に振った。
 - fr: Aveline, au garde-à-vous, fixe un point droit devant elle. Mais ses jointures blanchissent sur son épée.
+  en: Aveline, standing at attention, stares at a point straight ahead. But her knuckles whiten on her sword.
+  es: Aveline, firme, mira fijamente al frente. Pero sus nudillos se ponen blancos sobre la espada.
+  de: Aveline steht stramm und starrt geradeaus. Doch ihre Knöchel werden am Schwert weiß.
+  ja: 直立不動のアヴリーヌはまっすぐ前を見据えている。だが剣を握る指の関節は白くなっていた。
 - fr: Jurer fidélité à la Couronne.
+  en: Swear fealty to the Crown.
+  es: Jurar fidelidad a la Corona.
+  de: Der Krone Treue schwören.
+  ja: 王家に忠誠を誓う。
 - fr: "Refuser poliment : vous resterez des aventuriers libres, fidèles à la Guilde."
+  en: "Politely refuse: you'll remain free adventurers, loyal to the Guild."
+  es: "Rechazar con educación: seguiréis siendo aventureros libres, fieles al Gremio."
+  de: "Höflich ablehnen: Ihr bleibt freie Abenteurer, der Gilde treu."
+  ja: 丁重に断る。ギルドに忠実な自由の冒険者であり続ける。
 - fr: "Négocier : une alliance d'égal à égal, pas un serment de vassal. (Charisme, difficulté 18)"
+  en: "Negotiate: an alliance between equals, not a vassal's oath. (Charisma, difficulty 18)"
+  es: "Negociar: una alianza de igual a igual, no un juramento de vasallo. (Carisma, dificultad 18)"
+  de: "Verhandeln: ein Bündnis unter Gleichen, kein Vasalleneid. (Charisma, Schwierigkeit 18)"
+  ja: 交渉する。臣下の誓いではなく、対等な同盟を。（魅力、難易度18）
 - fr: Faire semblant de jurer, en croisant les doigts dans votre dos.
+  en: Pretend to swear, fingers crossed behind your back.
+  es: Fingir que juráis, cruzando los dedos a la espalda.
+  de: So tun, als würdet ihr schwören, mit gekreuzten Fingern hinter dem Rücken.
+  ja: 背中で指を交差させて、誓うふりをする。
 - fr: « Relevez-vous, chevaliers d'Aubeclaire. » Le roi sourit enfin. Séraphine détourne les yeux.
+  en: “Rise, knights of Aubeclaire.” The king finally smiles. Séraphine looks away.
+  es: «Levantaos, caballeros de Aubeclaire.» El rey sonríe por fin. Serafina aparta la mirada.
+  de: „Erhebt euch, Ritter von Aubeclaire.“ Endlich lächelt der König. Séraphine wendet den Blick ab.
+  ja: 「立つがよい、オーブクレールの騎士たちよ」王はようやく笑みを見せた。セラフィーヌは目をそらす。
 - fr: Un silence de mort. « …Soit. La Guilde répondra de vous. Ne me décevez pas. »
+  en: A deathly silence. “…So be it. The Guild will answer for you. Don't disappoint me.”
+  es: Un silencio sepulcral. «…Sea. El Gremio responderá por vosotros. No me decepcionéis.»
+  de: Totenstille. „… Nun gut. Die Gilde bürgt für euch. Enttäuscht mich nicht.“
+  ja: 死のような沈黙。「……よかろう。ギルドがおまえたちの責任を負う。失望させるな」
 - fr: En sortant, Séraphine vous rattrape dans un couloir. « C'était courageux. Ou stupide. Les deux me plaisent. »
+  en: On the way out, Séraphine catches up with you in a corridor. “That was brave. Or stupid. I like both.”
+  es: Al salir, Serafina os alcanza en un pasillo. «Ha sido valiente. O estúpido. Me gustan las dos cosas.»
+  de: Beim Hinausgehen holt Séraphine euch in einem Gang ein. „Das war mutig. Oder dumm. Beides gefällt mir.“
+  ja: 退出すると、セラフィーヌが廊下で追いついてきた。「勇敢だったわ。それとも愚かだったのかしら。どちらも好きよ」
 - fr: Le roi plisse les yeux… puis éclate d'un rire bref. « Vous avez du cran. Une alliance, donc. Mais je m'en souviendrai. »
+  en: The king narrows his eyes… then lets out a short laugh. “You have nerve. An alliance, then. But I'll remember this.”
+  es: El rey entorna los ojos… y suelta una breve carcajada. «Tenéis agallas. Una alianza, pues. Pero lo recordaré.»
+  de: Der König kneift die Augen zusammen … und lacht dann kurz auf. „Ihr habt Mut. Also ein Bündnis. Aber das merke ich mir.“
+  ja: 王は目を細め……それから短く笑った。「度胸があるな。では同盟だ。だが覚えておくぞ」
 - fr: « Des conditions ? À MOI ? » Le roi se lève, furieux. « Hors de ma vue ! »
+  en: “Conditions? To ME?” The king rises, furious. “Out of my sight!”
+  es: «¿Condiciones? ¿A MÍ?» El rey se levanta, furioso. «¡Fuera de mi vista!»
+  de: „Bedingungen? MIR?“ Der König erhebt sich wütend. „Aus meinen Augen!“
+  ja: 「条件だと？余に向かって？」王は激怒して立ち上がる。「下がれ！」
 - fr: Vous prononcez les mots du serment. Personne ne remarque vos doigts croisés… sauf Aveline, juste derrière vous. Son visage se ferme.
+  en: You speak the words of the oath. No one notices your crossed fingers… except Aveline, right behind you. Her face closes.
+  es: Pronunciáis las palabras del juramento. Nadie se fija en vuestros dedos cruzados… salvo Aveline, justo detrás. Su rostro se cierra.
+  de: Ihr sprecht die Worte des Eids. Niemand bemerkt eure gekreuzten Finger … außer Aveline, direkt hinter euch. Ihre Miene verschließt sich.
+  ja: 誓いの言葉を口にする。交差させた指に気づく者はいない……すぐ後ろにいたアヴリーヌを除いて。彼女の表情が固くなる。
 - fr: Ce soir-là, sur les remparts, vous regardez les étoiles d'un ciel qui n'est pas le vôtre.
+  en: That evening, on the ramparts, you look at the stars of a sky that isn't yours.
+  es: Esa noche, en las murallas, contempláis las estrellas de un cielo que no es el vuestro.
+  de: An diesem Abend betrachtet ihr auf den Wällen die Sterne eines Himmels, der nicht eurer ist.
+  ja: その夜、城壁の上で、自分たちのものではない空の星を見上げる。
 - fr: « Le printemps prochain, on m'envoie à la frontière sud. » Aveline hésite. « J'aimerais… que vous veniez. » Elle rougit. « Pour la mission, évidemment. »
+  en: “Next spring, they're sending me to the southern border.” Aveline hesitates. “I'd like… you to come.” She blushes. “For the mission, obviously.”
+  es: «La próxima primavera me envían a la frontera sur.» Aveline duda. «Me gustaría… que vinierais.» Se sonroja. «Por la misión, evidentemente.»
+  de: „Nächsten Frühling schickt man mich an die Südgrenze.“ Aveline zögert. „Ich würde mir wünschen … dass ihr mitkommt.“ Sie errötet. „Für die Mission, natürlich.“
+  ja: 「来年の春、南の国境へ送られることになった」アヴリーヌはためらう。「きみたちにも……来てほしい」彼女は頬を染める。「任務のためだ、もちろん」
 - fr: "Deux ans ont passé depuis l'Appel. Velmaris n'est plus un monde étranger : c'est le vôtre, désormais. Et il brûle déjà au nord."
+  en: "Two years have passed since the Calling. Velmaris is no longer a foreign world: it's yours now. And it's already burning in the north."
+  es: "Han pasado dos años desde la Llamada. Velmaris ya no es un mundo extraño: ahora es el vuestro. Y ya arde en el norte."
+  de: "Zwei Jahre sind seit dem Ruf vergangen. Velmaris ist keine fremde Welt mehr: Es ist jetzt eure. Und im Norden brennt es bereits."
+  ja: 召喚から二年が過ぎた。ヴェルマリスはもう異世界ではない。今はきみたちの世界だ。そして北では、すでに炎が上がっている。
