@@ -10,12 +10,12 @@ import { affichage } from "./local";
 import { effacerMessages, jeu, monHeros, surChangement } from "./partie";
 import { afficherArene, cacherArene, definirEquipements } from "./rendu/arene";
 import type { EquipementPorte } from "shared/equipement3d";
-import { afficherDonjon, cacherDonjon } from "./rendu/donjon3d";
+import { afficherDonjon, cacherDonjon, retraitCombat } from "./rendu/donjon3d";
 import { animerDecor } from "./rendu/ambiance";
 import { allerAuLieu, entrerDans, majMarqueurs, majPnj, sortirDe, surInteraction } from "./rendu/marqueurs";
 import { vueCombat } from "./ui/combat";
 import { vueDialogue } from "./ui/dialogue";
-import { activerClavier, vueDonjon } from "./ui/donjon";
+import { vueDonjon } from "./ui/donjon";
 import { ecranAccueil, ecranCreation } from "./ui/ecrans";
 import { COULEURS, vider } from "./ui/kit";
 import { barreHaut, panneauLateral } from "./ui/monde";
@@ -168,6 +168,9 @@ function redessiner() {
 	else if (etat.tempsLibre) vue = "temps-libre";
 	else if (etat.finChapitre !== undefined) vue = "fin-chapitre";
 	else vue = "monde";
+	// combat d'un donjon : on se bat sur place, le donjon reste construit et les avatars se mettent à l'écart
+	const combatDonjon = vue === "combat" && etat?.donjon !== undefined && etat.combats[combatCle!]?.contexte.origine === "donjon";
+	retraitCombat(combatDonjon);
 
 	for (const p of [pagePleine, pageLaterale, pageBas, barre]) vider(p);
 	for (const e of calqueCombat.GetChildren()) e.Destroy();
@@ -199,6 +202,8 @@ function redessiner() {
 		} else if (vue === "donjon") {
 			laterale.Visible = true;
 			vueDonjon(pageLaterale);
+			// panneau compact : on doit voir où l'on marche
+			laterale.Size = etroit ? new UDim2(0.6, 0, 0, 170) : new UDim2(0, 380, 0, 230);
 			afficherDonjon(etat!.donjon!);
 		} else if (vue === "scene-groupe" || vue === "scene-moi") {
 			vueDialogue(pageBas, vue === "scene-groupe" ? "groupe" : h!.id, redessiner);
@@ -208,9 +213,8 @@ function redessiner() {
 	}
 
 	if (vue !== "combat") cacherArene();
-	if (vue !== "donjon") cacherDonjon();
-	if (vue !== "combat" && vue !== "donjon") cameraNormale();
-	activerClavier(vue === "donjon");
+	if (vue !== "donjon" && !combatDonjon) cacherDonjon();
+	if (vue !== "combat") cameraNormale();
 	majMarqueurs(vue === "monde");
 	majPnj();
 	majSons(vue, affichage.dans);

@@ -108,7 +108,7 @@ Fais d'abord la liste R1 ci-dessus, puis continue avec la même partie.
 - [ ] Victoire → bilan → « Continuer » → retour à Lysmont.
 
 **Donjon, temps libre, fin de chapitre (R4)**
-- [ ] Crypte de la Fontaine : vue de dessus, brouillard, boule dorée = le groupe. Le meneur se déplace avec les flèches à l'écran ou ZQSD.
+- [ ] Crypte de la Fontaine : donjon en 3D où l'on marche (voir « Donjons en 3D » plus bas).
 - [ ] Temps libre (après certaines scènes) : chacun choisit ses activités, puis « Ce qui s'est passé », puis « Reprendre l'aventure ».
 - [ ] Panneau Personnage : « +1 » sur une caractéristique et « Améliorer » une compétence quand on a des points ; équiper ou vendre un objet.
 - [ ] Panneau Compagnons : Aveline, son palier (Inconnue → … → Amie fidèle → Lien indéfectible), cadeaux, « L'emmener en combat ».
@@ -131,7 +131,7 @@ Roblox interdit de le régler par script. Dans Studio : **Explorer → Lighting*
   - ennemis humanoïdes en personnages costumés (bandit, cultiste, squelette, gobelin, Vorthak cornu) ;
   - bêtes et golems construits en pièces (loups, rat, sanglier, araignée, chauve-souris, gelée, feu follet, golems).
 - **Combat** :
-  - il a lieu **sur place**, à l'arène, à la Combe, aux Tanneurs, ou dans une salle de crypte pour le donjon ;
+  - il a lieu **sur place**, à l'arène, à la Combe, aux Tanneurs, ou au milieu de la salle du donjon où se trouve le groupe ;
   - gros menu en bas, ordre des tours en haut, équipe à gauche ;
   - **clic sur un personnage** pour le viser ;
   - chiffres de dégâts, éclats de couleur selon l'élément, coups critiques qui secouent la caméra, chutes au K.O.
@@ -344,6 +344,19 @@ Le monde est trois fois plus grand (1,8 stud par pixel de la carte au lieu de 0,
 - [ ] Les chevaux sont devant le châtelet, sur la butte (pas en l'air ni dans la pente).
 - [ ] Dans les autres régions : rues courbes, **palais sur une butte** (sauf l'arbre-palais de Sylvenoire), une maison sur quatre habitée.
 - [ ] Le jeu ne rame pas plus qu'avant en arrivant sur la place (sinon, me dire le nombre d'images par seconde : Maj + F5).
+
+### Liste de contrôle — donjons en 3D (15/11)
+Les 5 donjons (Crypte de la Fontaine, Ruines de Sel, Bibliothèque des Racines, Mille Marches, Citadelle d'Obsidienne) se visitent à pied, avec son avatar. Une case de la carte = 12 × 12 studs ; murs de 18 studs, plafond.
+- [ ] En entrant, tout le groupe apparaît au pied de l'escalier (« ↑ Sortie »). Chaque donjon a son ambiance : crypte grise, ruines de sel claires, bibliothèque en bois aux flammes vertes, granite des Mille Marches, obsidienne aux flammes violettes.
+- [ ] **Le meneur porte le groupe** : quand il entre dans une case, les événements se déclenchent sous ses pieds (texte, piège, coffre, combat). Les autres marchent librement ; une **lueur dorée** montre où est le groupe ; le bouton « Rejoindre le groupe » y téléporte.
+- [ ] Brouillard : les **torches s'allument** au fur et à mesure qu'on découvre les salles ; les **monstres** apparaissent debout dans les salles découvertes, avec « ⚔ nom de la rencontre » au-dessus.
+- [ ] **Coffres** : ils brillent tant qu'ils sont fermés ; le meneur marche dessus → le couvercle s'ouvre, l'or disparaît, le panneau dit qui reçoit quoi. Le sceau de la crypte est une pierre noire sur un autel.
+- [ ] **Pièges** : une dalle plus sombre ; une fois déclenché, des pointes sortent.
+- [ ] **Porte de bronze** (verrouillée) : elle bloque le passage tant que personne n'a de clé, puis s'ouvre toute seule.
+- [ ] **Combat sur place** : au milieu de la salle, les murs côté caméra disparaissent, les avatars se mettent à l'écart ; après la victoire, chacun revient où il était et le monstre a disparu. Défaite : tout le monde se retrouve à l'escalier d'entrée.
+- [ ] Sortie (escalier, avec l'objectif) : chacun revient là où il était avant d'entrer.
+- [ ] À 2 parties en même temps sur le serveur : chaque groupe a son propre exemplaire du donjon (on ne voit pas les autres).
+- [ ] Ça ne rame pas (Maj + F5).
 
 ### Liste de contrôle — examens de rang et maîtrises d'équipement (test 2, changements 10 et 11)
 - [ ] Dans n'importe quel comptoir de la Guilde, le panneau « 🎖 Rang de Guilde » montre le rang suivant, ce qu'il manque (points, niveau) et le bouton de l'examen quand tout est prêt.

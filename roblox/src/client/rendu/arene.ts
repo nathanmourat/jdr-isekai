@@ -10,6 +10,7 @@ import { CONTENU } from "shared/donnees";
 import { LIEU_DU_DECOR, ORIGINES, positionLieu, regionDuLieu, trouverLieu } from "shared/geo";
 import type { Combat, Combattant, EvenementCombat } from "shared/moteur";
 import { jouer } from "../sons";
+import { montrerMurs, repereDonjon } from "./donjon3d";
 
 const COULEUR_ELEMENT: Record<string, Color3> = {
 	physique: Color3.fromRGB(255, 255, 255),
@@ -75,6 +76,9 @@ function entreeDe(lieu: string): Vector3 | undefined {
 
 /** Repère du combat : origine au sol, axe X = de la gauche (héros) vers la droite (ennemis). */
 function choisirRepere(combat: Combat, enDonjon: boolean): CFrame {
+	// dans un donjon : on se bat sur place, au milieu de la salle
+	const ici = enDonjon ? repereDonjon() : undefined;
+	if (ici) return ici;
 	if (enDonjon || combat.fond === "crypte") {
 		const o = new Vector3(0, 600, 0);
 		construireSalleCrypte(o);
@@ -488,6 +492,7 @@ UserInputService.InputBegan.Connect((entree, traite) => {
 
 /** Retire le combat (fin du combat ou changement d'écran). */
 export function cacherArene() {
+	if (dossier) montrerMurs();
 	dossier?.Destroy();
 	dossier = undefined;
 	combatAffiche = "";

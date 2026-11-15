@@ -203,7 +203,7 @@ export interface Contenu {
 	races: Record<string, RaceDef>;
 	dons: Record<string, DonDef>;
 	objets: Record<string, ObjetDef>;
-	rencontres: Record<string, { id: string; nom: string; fond: string }>;
+	rencontres: Record<string, { id: string; nom: string; fond: string; ennemis: { id: string }[] }>;
 	ennemis: Record<string, { id: string; nom: string; categorie: string; boss: boolean }>;
 	scenes: Record<string, SceneDef>;
 	quetes: Record<string, { id: string; titre: string; type: string; resume: string; etapes: { id: string; objectif: string; scene?: string; lieu?: string }[] }>;
@@ -212,7 +212,7 @@ export interface Contenu {
 	regions: Record<string, RegionDef>;
 	contrats: Record<string, ContratDef>;
 	activites: Record<string, { id: string; nom: string; description: string; disponible_si?: Condition; choix_compagnon?: boolean }>;
-	donjons: Record<string, { id: string; nom: string; carte: string[]; legende: Record<string, string>; depart: { x: number; y: number } }>;
+	donjons: Record<string, DonjonDef>;
 	ambiance: Record<string, { id: string; lieu?: string; moment: "jour" | "nuit" | "toujours"; qui: "villageois" | "garde" | "marchand" | "client" | "pretre"; texte: string; si?: Condition }>;
 	[cle: string]: unknown;
 }
@@ -332,12 +332,36 @@ export interface ContexteCombat {
 	bilan?: string[];
 }
 
+export interface EvenementDonjon {
+	id: string;
+	x: number;
+	y: number;
+	type: "combat" | "coffre" | "piege" | "scene" | "sortie" | "texte";
+	rencontre?: string;
+	objets: string[];
+	or: number;
+	texte?: string;
+	unique: boolean;
+}
+
+export interface DonjonDef {
+	id: string;
+	nom: string;
+	tileset: string;
+	carte: string[];
+	legende: Record<string, string>;
+	depart: { x: number; y: number };
+	evenements: EvenementDonjon[];
+}
+
 export interface EtatDonjon {
 	id: string;
 	x: number;
 	y: number;
+	faits: string[];
 	messages: string[];
 	vus: string[];
+	defaites?: number;
 }
 
 export interface TempsLibre {
