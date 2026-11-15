@@ -9,8 +9,8 @@
 |---|---|---|
 | 1 | Royaume d'Aubeclaire | ✅ validé le 14/11 |
 | 2 | Concorde de Qarzim (Marche des Sables) | ✅ validé le 15/11 |
-| 3 | Sylvenoire (elfes) | en discussion |
-| 4 | Monts Grisfer (nains) | à faire |
+| 3 | Sylvenoire (elfes) | ✅ validé le 15/11 |
+| 4 | Monts Grisfer (nains) | en discussion |
 | 5 | Archipel des Brumes | à faire |
 | 6 | État démoniaque | à faire |
 | 7 | État de la Lumière (nouveau) | à faire |
@@ -65,13 +65,13 @@ Le plus grand royaume humain, au centre de Velmaris. Une **façade noble et lumi
 | **Concorde de Qarzim** | **Partenaire économique** | Commerce vital, dette croissante (Maison Dorvalle) |
 | **Archipel des Brumes** | Neutre | Accords de pêche ; pirates tolérés quand ils arrangent la Couronne |
 | **Domaine nocturne** | Neutre | Officiellement aucun lien ; officieusement, des vampires à la cour |
-| **Sylvenoire** | **Tension** | La **guerre des Racines** : Aubeclaire a voulu défricher la forêt de l'ouest ; un **massacre** dans un village elfe frontalier a fermé les frontières. Les demi-elfes, nés de la paix d'avant, en paient encore le prix. |
+| **Sylvenoire** | **Tension** | La **guerre des Racines** (vers 962 AV) : poussé par l'Ordre, Aubeclaire voulait le **Cœur Immobile**, le fragment de Sérène qui protège la forêt. Ses soldats ont rasé le village de **Thessaëlle** ; la forêt a écrasé « la Colonne perdue ». Chacun accuse l'autre. Les demi-elfes, nés de la paix d'avant, en paient encore le prix. |
 | **Monts Grisfer** | **Ancienne tension** | Les nains ont bâti le **Mur d'Aube** (702) ; Aubeclaire n'a jamais payé toute sa dette et s'en est attribué la gloire. On leur achète toujours des armes, à prix fort et avec rancune. |
 | **État démoniaque** | **Ennemi majeur** | Le Mur d'Aube est la frontière |
 
 ### À créer plus tard
 - Les chefs des Maisons Clairmont et Ventaile.
-- La date et le récit de la guerre des Racines et du massacre.
+- Le récit complet de la guerre des Racines (voir Sylvenoire).
 - Les provinces de chaque Maison sur la carte.
 
 ---
@@ -123,3 +123,66 @@ Une **ligue marchande** de cités-oasis au cœur d'un **désert mystique et mort
 - Les noms des **sept cités-oasis** et de leurs familles.
 - Le récit de la **guerre des Puits** et du pacte avec les vampires.
 - Les tarifs et les légendes des **Routes de la Concorde** (péages, caravansérails célèbres).
+
+---
+
+## 3. Sylvenoire — « la forêt qui se tait » ✅
+
+### En bref
+Une forêt primaire d'arbres géants, cachée sous une **brume bleue**. Un peuple ancien, **figé et hautain**, gouverné par une reine sortie du peuple qui tient tête à une vieille noblesse. Sous les racines dort un secret : **ce qui protège la forêt est aussi ce qui a déchiré le monde**.
+
+### Ce qui vient de la V1
+- **Elfes sylvains** et **dryades** ; la cité-arbre d'**Ithrael**, la **Bibliothèque des Racines**, la **Clairière de la Déchirure**.
+- La **Reine-Sève** règne (seulement nommée en V1).
+- En **l'an 0**, un **rituel elfe** lancé contre les dragons-rois a provoqué la **Déchirure** et fait naître les Terres Cendrées. Le sujet est **tabou** ; **Ilyssë** (compagne) a été bannie pour l'avoir étudié.
+- Chapitre 3 : la Légion attaque la forêt ; les héros affrontent **Morra**.
+- En V2 (cosmologie) : culte de l'**Arbre-Monde** et d'**Aurévane** (la Création), qui dormirait dans ses racines ; leur version de la Rupture accuse le Chaos.
+
+### Le pouvoir : une reine du peuple face aux Lignées
+- **Les Lignées Premières** : les familles de sang ancien (noble ou royal). Elles dominent le **Conseil des Racines**, qui décide de la politique, des lois et de la diplomatie.
+- **La Reine-Sève Vaëlle** (nom modifiable) : **élue par l'Arbre-Monde**, et **née du peuple**, sans lignée. Les Lignées la jugent illégitime mais ne peuvent pas la renverser : on ne conteste pas le choix de l'Arbre.
+- **Son pouvoir** : elle seule **entend l'Arbre-Monde** et peut réveiller les **arbres-gardiens**. Par son autorité et ce pouvoir, elle échappe à l'influence des Lignées.
+- **Là où elle a perdu** : la **Bibliothèque des Racines** reste aux mains du Conseil. C'est le Conseil qui a banni Ilyssë ; la reine n'a pas pu l'empêcher.
+- **Le secret des Lignées** : ce sont **leurs propres ancêtres** qui ont mené le rituel de l'an 0. Elles gardent le silence à tout prix ; le peuple et la reine penchent vers la vérité.
+
+### Ambiance et lois
+- **Figée et hautaine** envers les étrangers… et à l'intérieur : les Lignées méprisent le peuple (le « **sang jeune** »), et plus encore les **demi-elfes**.
+- Un étranger n'entre que **sur invitation** ; **couper un arbre vivant** est un crime grave ; **parler de la Déchirure** peut valoir le bannissement.
+- **Armée** : les **Gardes-Sève** (archers et mages), les dryades, et la forêt elle-même avec ses **arbres-gardiens**.
+
+### Le Cœur Immobile : le bouclier de Sylvenoire
+- Sous la Clairière de la Déchirure dort un **énorme fragment de Sérène**, un cristal d'éther géant : le **Cœur Immobile**.
+- **C'est lui qui produit la brume bleue** : un voile qui **cache la forêt** (les intrus tournent en rond et ressortent là où ils sont entrés) et qui la **protège** (les sorts et les armées s'y épuisent). Seuls les invités, guidés par un Garde-Sève, trouvent le chemin d'Ithrael.
+- **Pourquoi les elfes ne le céderont jamais** : sans le Cœur, Sylvenoire est **à découvert**. Le perdre, c'est perdre le royaume.
+- **L'ironie** : les elfes sont protégés par un morceau de l'anomalie, et ils l'ignorent (sauf peut-être les Lignées).
+- **Secret (à garder ou non)** : le rituel de l'an 0 **utilisait ce même fragment**. C'est pour ça qu'il a déchiré le monde.
+- **Idée pour la V1/V2** : au chapitre 3, si la Légion réussit à entrer, c'est que **la brume faiblit**. Pourquoi ? (Le Cœur s'épuise, quelqu'un le vole par morceaux, ou l'extraction de Qarzim affaiblit tous les fragments.)
+
+### La guerre des Racines (vers 962 AV)
+- **Il y a environ 50 ans** : tous les elfes s'en souviennent ; quelques vétérans humains sont encore en vie.
+- **La vraie raison** : Aubeclaire voulait le **Cœur Immobile**. C'est l'**Ordre** qui a poussé le roi de l'époque : ce cristal aurait alimenté des dizaines d'**Appels**.
+- **Le massacre** : des soldats d'Aubeclaire ont rasé **Thessaëlle**, un village elfe frontalier, pour ouvrir la route vers la Clairière.
+- **La riposte** : les arbres-gardiens ont écrasé une colonne entière de soldats, « **la Colonne perdue** ».
+- **Chacun renvoie la pierre** : Aubeclaire ne parle que de la Colonne perdue et dit que les elfes ont frappé les premiers ; les elfes parlent de Thessaëlle. **Personne ne parle du cristal.**
+- L'**État de la Lumière** a **béni la guerre** et couvert le massacre.
+
+### Religion
+- **L'Arbre-Monde** et **Aurévane** (la Création) ; **Thalwen** (la Vie) est très honorée.
+- **L'Ordre** est mal vu : on se souvient de son rôle dans la guerre des Racines.
+
+### Relations
+
+| Avec | Relation | Pourquoi |
+|---|---|---|
+| **Aubeclaire** | **Tension** | La guerre des Racines et le massacre de Thessaëlle |
+| **Monts Grisfer** | **Allié** | Pendant la guerre, les nains ont **refusé de vendre des armes** à Aubeclaire et ont **accueilli des réfugiés**. Rancune commune envers Aubeclaire. Échanges : métal et pierre contre remèdes, sève et bois tombé. |
+| **Concorde de Qarzim** | Neutre | Peu d'échanges ; les elfes désapprouvent en silence l'extraction des cristaux |
+| **Archipel des Brumes** | Neutre | Peu de contacts |
+| **État de la Lumière** | **Méfiance** | Allié d'Aubeclaire et de l'Ordre ; il a béni la guerre des Racines. Pas de guerre, mais des relations froides. |
+| **État démoniaque** | **Tension sans conflit** | ⚠️ La Légion attaque la forêt au chapitre 3 (V1) : la Légion agit seule, ou l'État la laisse faire en le niant. **À trancher avec l'État démoniaque.** |
+| **Domaine nocturne** | **Ennemi** | Les elfes vénèrent la Vie ; les vampires ont refusé la Mort et vivent de la vie des autres. Le **sang elfe**, chargé d'éther, est le plus recherché : « **la Chasse Pâle** », des enlèvements à la lisière. Un vampire se tue à vue. |
+
+### À créer plus tard
+- Les grandes familles des **Lignées Premières** et leurs chefs.
+- Ce qui affaiblit la brume au chapitre 3.
+- Le récit complet de la guerre des Racines (le roi de l'époque, le chef de la Colonne perdue).
