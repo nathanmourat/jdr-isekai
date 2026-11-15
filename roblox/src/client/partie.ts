@@ -4,7 +4,7 @@
 import { Players } from "@rbxts/services";
 import { CONTENU } from "shared/donnees";
 import { appliquer, rejouer, type Action, type EtatPartie, type Heros } from "shared/moteur";
-import { idJoueur, reseau, type ActionJoueur, type Commande, type ReponseCommande } from "shared/reseau";
+import { idJoueur, reseau, type ActionJoueur, type Commande, type EtatGroupe, type ReponseCommande } from "shared/reseau";
 
 const r = reseau();
 const moi = idJoueur(Players.LocalPlayer);
@@ -20,6 +20,8 @@ export const jeu = {
 	etat: undefined as EtatPartie | undefined,
 	erreur: undefined as string | undefined,
 	info: undefined as string | undefined,
+	/** Mon groupe et mes invitations (envoyés par le serveur). */
+	groupe: undefined as EtatGroupe | undefined,
 	moi,
 };
 
@@ -120,3 +122,24 @@ r.nouvellesActions.OnClientEvent.Connect((debut, actions) => {
 });
 
 r.erreur.OnClientEvent.Connect((m) => montrerErreur(m));
+
+// le serveur change la campagne jouée (arrivée, entrée dans un groupe, retour chez soi)
+r.campagne.OnClientEvent.Connect((c) => {
+	ouvrir({ ok: true, partie: c });
+	prevenir();
+});
+r.groupe.OnClientEvent.Connect((g) => {
+	jeu.groupe = g;
+	prevenir();
+});
+
+/** Commande de groupe : affiche l'erreur, ou l'information (« Invitation envoyée… »). */
+export function commandeGroupe(c: Commande) {
+	task.spawn(() => {
+		const [ok, rep] = pcall(() => r.commande.InvokeServer(c));
+		if (!ok) jeu.erreur = "Le serveur ne répond pas. Réessaie.";
+		else if (!rep.ok) jeu.erreur = rep.erreur;
+		else jeu.info = rep.info;
+		prevenir();
+	});
+}

@@ -74,14 +74,17 @@ Sans ces réglages, le jeu marche quand même, mais les parties sont **perdues �
 1. Onglet **Test** → **Clients et serveurs** (*Clients and Servers*) → choisis **2 joueurs** → **Démarrer** (*Start*). Trois fenêtres s'ouvrent : le serveur, Player1 et Player2.
 2. Fais les vérifications ci-dessous dans les fenêtres Player1 et Player2.
 
-**Un serveur = un groupe (15/11).** Plus de création de partie, de code ni de pseudo : en arrivant sur le serveur, on entre directement dans **la campagne du serveur**. Serveur privé : la campagne appartient au serveur privé et reprend à chaque visite. Serveur public : c'est la campagne de l'**hôte** (le premier joueur arrivé, sauvegardée chez lui) ; les autres y entrent avec leur héros. Le héros porte le **nom affiché Roblox** du joueur.
-- [ ] En arrivant : « Chargement de la campagne du serveur… », puis directement l'écran « Création de ton héros » (titre « Campagne de Player1 »), **sans case de nom** : « Ton héros porte ton nom Roblox : Player1 ».
-- [ ] **Player1** : crée un héros (origine, race, classe, don) → la **fiche** s'affiche ; le héros s'appelle Player1.
-- [ ] **Player2** (arrivé en même temps) : il est dans la **même campagne** ; dans la liste des dons, celui de Player1 est **grisé**, avec « pris par … ».
-- [ ] **Player2** : crée son héros → chez **Player1**, la liste « Joueurs » (panneau Partie) montre Player2 🟢 **sans recharger**. Le panneau Partie n'a plus de code ni de bouton « Quitter la partie ».
-- [ ] Avec la sauvegarde activée : arrête le test, relance-le → la campagne de Player1 (l'hôte) revient avec les deux héros.
-- [ ] Un 7ᵉ joueur sur le serveur est renvoyé avec « Ce serveur est complet (6 joueurs au plus) ». À régler aussi sur le site Roblox : **nombre maximum de joueurs = 6** (*Creator Dashboard → ton expérience → Places → Max Players*).
-- [ ] Serveur privé (une fois le jeu publié) : crée un serveur privé sur la page du jeu, joues-y, quitte, reviens → la campagne reprend ; un ami invité sur ce serveur privé y entre directement.
+**Comme les RPG Roblox habituels (15/11).** Chaque joueur a **sa propre campagne** (son héros, son histoire), sauvegardée sur son compte Roblox. Le serveur est un **monde partagé** : on croise les autres joueurs, chacun avec sa progression. Les **groupes** (6 au plus) se forment dans le jeu : le groupe joue la **campagne du chef** ; les héros des autres y viennent en renfort, et **leurs gains (XP, niveaux, or, objets, compétences, rang, points de Guilde) rentrent avec eux** dans leur propre campagne quand ils quittent le groupe. L'histoire de la campagne d'un renfort n'avance pas. Pas de code de partie ni de pseudo : le héros porte le nom affiché Roblox. Les donjons et les combats d'un groupe ne sont vus que par lui.
+- [ ] En arrivant : « Chargement de ta campagne… », puis « Création de ton héros — Campagne de Player1 » : pas de case de nom, choix « Un homme / Une femme », origine, race, classe, don.
+- [ ] **Player1** et **Player2** créent chacun leur héros : chacun est **seul dans sa campagne** (menu « 👥 Groupe » : « Tu joues seul »). Le même don peut être pris par les deux (ce sont deux campagnes).
+- [ ] **Player1** : menu « 👥 Groupe » → « Inviter » à côté de Player2 (ou approche-toi de Player2 : invite « Inviter dans le groupe », touche **G**).
+- [ ] **Player2** : bandeau doré « Player1 t'invite dans son groupe » → **Accepter** → il passe dans la campagne de Player1 (même date, même histoire) ; « Héros de cette campagne » montre Player2 « · renfort ». « Refuser » ou 60 s sans réponse : rien ne se passe.
+- [ ] Ensemble : une scène de groupe (votes des deux), un combat (les deux héros), un donjon (les deux voient le même donjon ; seul le chef porte le groupe).
+- [ ] **Player2** : « Quitter le groupe » → il revient dans **sa** campagne, avec l'XP, l'or et les objets gagnés en groupe ; son histoire n'a pas bougé. Le journal dit « … revient d'une aventure en groupe ».
+- [ ] **Player1** (chef) : « Dissoudre le groupe » → tout le monde rentre chez soi. Si le chef quitte le serveur, pareil.
+- [ ] Pendant un combat de groupe, « Quitter le groupe » est refusé (« Attends la fin du combat… »).
+- [ ] Avec la sauvegarde activée : arrête le test pendant que Player2 est dans le groupe, relance-le → Player2 retrouve sa campagne **avec** ses gains du groupe (copie de secours `retourEnAttente`).
+- [ ] À régler sur le site Roblox : **nombre maximum de joueurs par serveur** (*Creator Dashboard → ton expérience → Places → Max Players*), par exemple 20 (les groupes, eux, sont limités à 6 par le jeu).
 - [ ] Aucune ligne rouge dans Output (fenêtres du serveur et des joueurs).
 
 ## Liste de contrôle — étapes R2 à R5 (tout le chapitre 1 sur Roblox)
@@ -365,6 +368,7 @@ Les 5 donjons (Crypte de la Fontaine, Ruines de Sel, Bibliothèque des Racines, 
 - [ ] Dans le sac et les boutiques, un objet non maîtrisé par ta classe affiche un avertissement orange (malus), un objet interdit un message rouge.
 
 ### À reprendre — test 3 de la version web (15/11, écrit par la session web)
+**Fait côté Roblox (15/11)** : `moteur.lua` et `contenu.lua` régénérés (parités OK), choix « un homme / une femme » à la création. **Reste** : « Prêts : 2/3 » des dialogues (`pret_dialogue` ; « Continuer » marche toujours), repas / Temple / potions hors combat (`se_soigner` ; en attendant, les PV remontent de 10 % par jour et au lit), notifications de gain.
 Le moteur a changé : régénérer `moteur.lua` (`npm run roblox:moteur`, puis `npm run roblox:parite`), puis adapter l'interface Roblox.
 - **Nouvelle action `pret_dialogue`** (`{ joueur, cle }`) : dans une scène de groupe, « Continuer » envoie `pret_dialogue` ; la scène avance quand tous les joueurs présents (avec un héros dans la scène) sont prêts. Fonction `joueursAttendusDialogue(etat, cle)` pour afficher « Prêts : 2/3 » et les pseudos attendus. L'action `continuer` existe toujours (solo, et « Passer quand même » du meneur après 20 secondes).
 - **`EtatScene` a trois champs facultatifs** : `prets` (joueurs prêts), `resultatVote` (`{ choix: [{ texte, joueurs }], retenu }`, montré 3 secondes : qui a choisi quoi, « Choix du groupe : … ») et `reponseParole` (« <pseudo> a répondu : … »). Pas de changement de format de sauvegarde.
@@ -375,6 +379,7 @@ Le moteur a changé : régénérer `moteur.lua` (`npm run roblox:moteur`, puis `
 - Interface (à refaire à la manière de Roblox, si utile) : notifications de gain de 3 secondes (`src/ui/gains.ts` compare l'état avant et après), PV/mana du groupe hors combat (`src/ui/sante.ts`), confirmation avant un combat si un héros a moins de 50 % de ses PV.
 
 ### À reprendre — test 4 de la version web (15/11, écrit par la session web)
+**Fait côté Roblox (15/11)** : moteur et contenu régénérés (contrats répétables, reliques d'Orlan, effets à l'impact). **Reste** : lancer de dé affiché, `raisonCibleRefusee`, répliques des soins du Temple, Orlan dans la taverne, salle de la cave de la tannerie.
 Le moteur a changé : régénérer `moteur.lua` (`npm run roblox:moteur`, puis `npm run roblox:parite`) et le contenu (`npm run roblox:contenu`), puis adapter l'interface Roblox.
 - **Effets à l'impact (combat)** : après un effet de dégâts, un état posé sur un adversaire (poison, saignement, gel…) ne vaut que pour les cibles réellement touchées ; « Œil du faucon » ne marque plus sur un coup raté (`appliquerEffets`, `attaqueSimple`). Les parités de combat peuvent changer : c'est voulu.
 - **Choix de la cible** : nouvelle fonction `raisonCibleRefusee(combat, acteur, cible, type, portee)` (« Hors de portée… », « déjà K.O. », « caché », « provoqué par X »). À montrer quand un joueur vise un combattant impossible.

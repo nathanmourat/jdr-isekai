@@ -16,13 +16,37 @@ export interface ResumePartie {
 	nom: string;
 }
 
-/** Seule commande : « synchro » (la campagne du serveur, entière). Pas de création ni de code sur Roblox. */
-export type Commande = { type: "synchro" };
+/** Commandes : la campagne en cours (synchro) et les groupes. Pas de création ni de code de partie sur Roblox. */
+export type Commande =
+	| { type: "synchro" }
+	| { type: "inviter"; cible: number }
+	| { type: "repondre_invitation"; accepter: boolean }
+	| { type: "quitter_groupe" };
+
+/** Ce que chaque joueur sait des groupes du serveur (UserId Roblox). */
+export interface EtatGroupe {
+	/** Mon groupe (le chef d'abord), ou rien si je joue seul. */
+	membres?: number[];
+	/** Invitation reçue (60 s pour répondre). */
+	invitation?: { chef: number; nom: string };
+	/** Joueurs du serveur qui sont déjà dans un groupe. */
+	occupes: number[];
+	/** Vrai si j'ai déjà créé mon héros (sinon je ne peux ni inviter ni être invité). */
+	pret: boolean;
+}
+
+/** Campagne envoyée à un joueur (à son arrivée, en entrant dans un groupe, en le quittant). */
+export interface CampagneEnvoyee {
+	code: string;
+	nom: string;
+	depart: EtatPartie;
+	actions: Action[];
+}
 
 export interface ReponseCommande {
 	ok: boolean;
 	erreur?: string;
-	/** Campagne du serveur (synchro) */
+	/** Campagne en cours (synchro) */
 	partie?: { code: string; nom: string; depart: EtatPartie; actions: Action[] };
 	/** Message d'information (ex. sauvegarde désactivée dans Studio) */
 	info?: string;
@@ -37,7 +61,7 @@ export function reseau() {
 		if (RunService.IsServer()) {
 			dossier = new Instance("Folder");
 			dossier.Name = NOM_DOSSIER;
-			for (const nom of ["Action", "NouvellesActions", "Erreur"]) {
+			for (const nom of ["Action", "NouvellesActions", "Erreur", "Campagne", "Groupe"]) {
 				const e = new Instance("RemoteEvent");
 				e.Name = nom;
 				e.Parent = dossier;
@@ -57,7 +81,11 @@ export function reseau() {
 		nouvellesActions: dossier.WaitForChild("NouvellesActions") as RemoteEvent<(debut: number, actions: Action[]) => void>,
 		/** serveur → joueur : action refusée (message en français) */
 		erreur: dossier.WaitForChild("Erreur") as RemoteEvent<(message: string) => void>,
-		/** joueur → serveur : demander la campagne du serveur (synchro) */
+		/** serveur → joueur : la campagne qu'il joue maintenant (la sienne ou celle de son chef de groupe) */
+		campagne: dossier.WaitForChild("Campagne") as RemoteEvent<(c: CampagneEnvoyee) => void>,
+		/** serveur → joueur : son groupe, ses invitations */
+		groupe: dossier.WaitForChild("Groupe") as RemoteEvent<(g: EtatGroupe) => void>,
+		/** joueur → serveur : sa campagne (synchro), inviter, répondre, quitter le groupe */
 		commande: dossier.WaitForChild("Commande") as RemoteFunction<(c: Commande) => ReponseCommande>,
 	};
 }

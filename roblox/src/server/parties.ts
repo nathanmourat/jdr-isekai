@@ -1,15 +1,18 @@
 /**
- * La campagne du serveur : état, membres, application des actions et sauvegarde.
- * Sur Roblox, un serveur = un groupe (6 joueurs au plus) : pas de code de partie ni de pseudo à choisir.
- * Serveur privé : la campagne est attachée au serveur privé. Serveur public : c'est celle de l'hôte
- * (le premier joueur arrivé), et les autres y entrent avec leur héros.
+ * Campagnes ouvertes sur ce serveur, comme dans les RPG Roblox habituels :
+ *  - chaque joueur a SA campagne (son héros, son histoire), sauvegardée sur son compte : clé « joueur-u<UserId> » ;
+ *  - le serveur est un monde partagé : on croise les autres joueurs, chacun avec sa progression ;
+ *  - les groupes se forment dans le jeu (invitation, 6 joueurs au plus) : le groupe joue la campagne du chef,
+ *    les héros des autres y viennent en renfort (action `invite_arrive`) ;
+ *  - en quittant le groupe, chacun rapporte ses gains (XP, niveaux, or, objets, compétences) dans sa propre
+ *    campagne (action `heros_retour`). Une copie des gains est gardée dans sa sauvegarde pendant qu'il est en
+ *    groupe (`retourEnAttente`) : rien n'est perdu si le serveur s'arrête brutalement.
+ * Pas de code de partie ni de pseudo à choisir : le pseudo et le nom du héros sont le nom affiché Roblox.
  */
 import { HttpService, Players, TextService } from "@rbxts/services";
 import { CONTENU } from "shared/donnees";
-import { appliquer, FORMAT, jourPeutPasser, nouvellePartie, rejouer, verifierSauvegarde, type Action, type EtatPartie } from "shared/moteur";
-
-const MAX_JOUEURS = 6;
-import { idJoueur, reseau, type ActionJoueur } from "shared/reseau";
+import { appliquer, exporterHeros, FORMAT, jourPeutPasser, nouvellePartie, rejouer, verifierSauvegarde, type Action, type EtatPartie } from "shared/moteur";
+import { idJoueur, reseau, type ActionJoueur, type EtatGroupe } from "shared/reseau";
 import { chargerEtVerrouiller, enregistrer, type DonneesPartie } from "./stockage";
 
 const r = reseau();
@@ -68,8 +71,10 @@ export function messageErreur(e: unknown): string {
 }
 
 export const ouvertes = new Map<string, PartieOuverte>();
-/** Partie dans laquelle se trouve chaque joueur de ce serveur. */
+/** Campagne que chaque joueur joue en ce moment : la sienne, ou celle de son chef de groupe. */
 export const partieDe = new Map<Player, PartieOuverte>();
+/** Campagne personnelle de chaque joueur présent (ouverte tant qu'il est sur le serveur). */
+const campagnePerso = new Map<Player, PartieOuverte>();
 
 /** Texte écrit par un joueur et vu par les autres : filtré par Roblox (obligatoire). */
 export function filtrer(texte: string, auteur: Player): string {
@@ -80,45 +85,44 @@ export function filtrer(texte: string, auteur: Player): string {
 	return res as string;
 }
 
-// ───────────────────────────── Une campagne par serveur ─────────────────────────────
+// ───────────────────────────── Campagne personnelle ─────────────────────────────
 
-/** La campagne de ce serveur (une seule : tous les joueurs du serveur forment le groupe). */
-let partieServeur: PartieOuverte | undefined;
+const MAX_GROUPE = 6;
 const enAttente: Player[] = [];
 let occupe = false;
 
-/** Clé de sauvegarde : le serveur privé lui-même, sinon l'hôte (premier joueur arrivé sur le serveur). */
-function cleDuServeur(hote: Player): { cle: string; nom: string } {
-	if (game.PrivateServerId !== "") {
-		let proprio = "ses amis";
-		if (game.PrivateServerOwnerId !== 0) {
-			const [ok, n] = pcall(() => Players.GetNameFromUserIdAsync(game.PrivateServerOwnerId as never));
-			if (ok) proprio = n as string;
-		}
-		return { cle: `prive-${game.PrivateServerId}`, nom: `Serveur privé de ${proprio}` };
-	}
-	return { cle: `hote-${idJoueur(hote)}`, nom: `Campagne de ${hote.DisplayName}` };
+function envoyerCampagne(j: Player, p: PartieOuverte) {
+	r.campagne.FireClient(j, p.resume());
 }
 
-function ouvrirPartieDuServeur(hote: Player): PartieOuverte {
-	const { cle, nom } = cleDuServeur(hote);
-	// un joueur (ou un serveur privé) n'est que sur un serveur à la fois : on reprend la partie même si
-	// un ancien serveur arrêté brutalement l'a laissée verrouillée
+function ouvrirCampagnePerso(j: Player): PartieOuverte {
+	const cle = `joueur-${idJoueur(j)}`;
+	// un joueur n'est que sur un serveur à la fois : on reprend sa campagne même si un serveur arrêté
+	// brutalement l'a laissée verrouillée
 	const d = chargerEtVerrouiller(cle, true);
 	let p: PartieOuverte;
 	if (typeIs(d, "string")) {
-		const depart = nouvellePartie(CONTENU, cle, nom, HttpService.GenerateGUID(false));
-		p = new PartieOuverte({ code: cle, nom, depart, actions: [] });
-		enregistrer(p.donnees);
+		const depart = nouvellePartie(CONTENU, cle, `Campagne de ${j.DisplayName}`, HttpService.GenerateGUID(false));
+		p = new PartieOuverte({ code: cle, nom: `Campagne de ${j.DisplayName}`, depart, actions: [] });
 	} else p = new PartieOuverte(d);
 	ouvertes.set(cle, p);
+	const id = idJoueur(j);
+	if (p.etat.joueurs[id] === undefined) {
+		const err = p.jouer({ type: "rejoindre", joueur: id, pseudo: j.DisplayName });
+		if (err !== undefined) throw err;
+	} else if (!p.etat.joueurs[id].present) p.jouer({ type: "presence", joueur: id, present: true });
+	// gains d'un groupe que le serveur n'a pas eu le temps de rapporter (arrêt brutal) : on les rapporte maintenant
+	const v = p.donnees.retourEnAttente;
+	if (v !== undefined) {
+		const err = p.jouer({ type: "heros_retour", joueur: id, voyageur: v });
+		if (err !== undefined) warn(`[Velmaris] Retour en attente de ${j.Name} : ${err}`);
+		p.donnees.retourEnAttente = undefined;
+	}
+	pcall(() => enregistrer(p.donnees));
 	return p;
 }
 
-/**
- * Un joueur arrive sur le serveur : il entre automatiquement dans la campagne du serveur
- * (chargée ou créée à l'arrivée du premier joueur). Les arrivées sont traitées une par une.
- */
+/** Un joueur arrive sur le serveur : on ouvre sa campagne (créée la première fois). Les arrivées passent une par une. */
 export function accueillir(joueur: Player) {
 	enAttente.push(joueur);
 	if (occupe) return;
@@ -128,62 +132,189 @@ export function accueillir(joueur: Player) {
 			const j = enAttente.shift()!;
 			if (j.Parent !== Players) continue;
 			const [ok, err] = pcall(() => {
-				if (!partieServeur) partieServeur = ouvrirPartieDuServeur(j);
-				if (partieServeur.membres.size() >= MAX_JOUEURS) {
-					j.Kick("Ce serveur est complet (6 joueurs au plus). Rejoins un autre serveur.");
-					return;
-				}
-				entrer(j, partieServeur);
+				const p = ouvrirCampagnePerso(j);
+				campagnePerso.set(j, p);
+				p.membres.add(j);
+				partieDe.set(j, p);
+				envoyerCampagne(j, p);
 			});
 			if (!ok) {
 				warn(`[Velmaris] Arrivée de ${j.Name} : ${messageErreur(err)}`);
-				const m = messageErreur(err);
-				// la campagne a déjà ses 6 héros : ce joueur ne peut pas y entrer
-				if (m.find("complète", 1, true)[0] !== undefined) j.Kick(`La campagne de ce serveur a déjà ses 6 héros. Rejoins un autre serveur.`);
-				else r.erreur.FireClient(j, m);
+				r.erreur.FireClient(j, `Ta campagne n'a pas pu être chargée : ${messageErreur(err)}`);
 			}
 		}
 		occupe = false;
+		diffuserGroupes();
 	});
 }
 
-/** Fait entrer un joueur dans une partie : il « rejoint » la première fois, puis il est marqué présent. */
-export function entrer(joueur: Player, p: PartieOuverte) {
-	sortir(joueur);
-	p.membres.add(joueur);
-	partieDe.set(joueur, p);
-	const id = idJoueur(joueur);
-	const j = p.etat.joueurs[id];
-	if (j === undefined) {
-		// pseudo = nom affiché Roblox (déjà filtré par Roblox), rendu unique dans la partie
-		let pseudo = joueur.DisplayName;
-		const pris = (x: string) => p.etat.ordreJoueurs.some((o) => p.etat.joueurs[o].pseudo.lower() === x.lower());
-		for (let n = 2; pris(pseudo); n++) pseudo = `${joueur.DisplayName}${n}`;
-		const err = p.jouer({ type: "rejoindre", joueur: id, pseudo });
-		if (err !== undefined) {
-			p.membres.delete(joueur);
-			partieDe.delete(joueur);
-			throw err;
-		}
-	} else if (!j.present) {
-		p.jouer({ type: "presence", joueur: id, present: true });
-	}
-}
-
-/** Retire un joueur de sa partie (il devient « absent »). La partie est fermée quand il n'y a plus personne. */
+/** Le joueur quitte le serveur : il quitte son groupe (ses gains rentrent avec lui), puis sa campagne est enregistrée. */
 export function sortir(joueur: Player) {
-	const p = partieDe.get(joueur);
-	if (!p) return;
+	const i = enAttente.indexOf(joueur);
+	if (i >= 0) enAttente.remove(i);
+	invitations.delete(joueur);
+	quitterGroupe(joueur, true);
+	const p = campagnePerso.get(joueur);
 	partieDe.delete(joueur);
+	campagnePerso.delete(joueur);
+	if (!p) return;
 	p.membres.delete(joueur);
 	const id = idJoueur(joueur);
 	if (p.etat.joueurs[id]?.present) p.jouer({ type: "presence", joueur: id, present: false });
-	if (p.membres.size() === 0) {
-		pcall(() => enregistrer(p.donnees, true));
-		p.modifiee = false;
-		ouvertes.delete(p.donnees.code);
-		// serveur vide : le prochain joueur qui arrive devient l'hôte (sa campagne sera chargée)
-		if (partieServeur === p) partieServeur = undefined;
+	pcall(() => enregistrer(p.donnees, true));
+	p.modifiee = false;
+	ouvertes.delete(p.donnees.code);
+	diffuserGroupes();
+}
+
+// ───────────────────────────── Groupes ─────────────────────────────
+
+interface Groupe {
+	chef: Player;
+	/** Le chef d'abord. */
+	membres: Player[];
+}
+const groupeDe = new Map<Player, Groupe>();
+const invitations = new Map<Player, { chef: Player; expire: number }>();
+
+function aUnHeros(j: Player): boolean {
+	const p = campagnePerso.get(j);
+	return p !== undefined && p.etat.joueurs[idJoueur(j)]?.herosId !== undefined;
+}
+
+/** Informe chaque joueur : son groupe, l'invitation qu'il a reçue, et qui est déjà en groupe sur le serveur. */
+export function diffuserGroupes() {
+	const occupes: number[] = [];
+	for (const [j] of groupeDe) occupes.push(j.UserId);
+	for (const j of Players.GetPlayers()) {
+		const g = groupeDe.get(j);
+		const inv = invitations.get(j);
+		const info: EtatGroupe = {
+			membres: g ? g.membres.map((m) => m.UserId) : undefined,
+			invitation: inv && inv.expire > os.time() ? { chef: inv.chef.UserId, nom: inv.chef.DisplayName } : undefined,
+			occupes,
+			pret: aUnHeros(j),
+		};
+		r.groupe.FireClient(j, info);
+	}
+}
+
+export function inviter(chef: Player, cible: Player): string | undefined {
+	if (chef === cible) return "Tu ne peux pas t'inviter toi-même.";
+	if (!aUnHeros(chef)) return "Crée d'abord ton héros.";
+	const g = groupeDe.get(chef);
+	if (g && g.chef !== chef) return `Seul le chef du groupe (${g.chef.DisplayName}) peut inviter.`;
+	if (g && g.membres.size() >= MAX_GROUPE) return `Ton groupe est complet (${MAX_GROUPE} joueurs).`;
+	if (groupeDe.has(cible)) return `${cible.DisplayName} est déjà dans un groupe.`;
+	if (!aUnHeros(cible)) return `${cible.DisplayName} n'a pas encore créé son héros.`;
+	invitations.set(cible, { chef, expire: os.time() + 60 });
+	diffuserGroupes();
+	task.delay(61, diffuserGroupes);
+	return undefined;
+}
+
+/** Le héros d'un joueur part en renfort dans la campagne du chef. */
+function rejoindreGroupe(chef: Player, j: Player): string | undefined {
+	const perso = campagnePerso.get(j);
+	const campagneChef = campagnePerso.get(chef);
+	if (!perso || !campagneChef) return "Campagne introuvable.";
+	const id = idJoueur(j);
+	const herosId = perso.etat.joueurs[id]?.herosId;
+	if (herosId === undefined) return "Crée d'abord ton héros.";
+	if (perso.etat.combats["groupe"] !== undefined || perso.etat.combats[herosId] !== undefined) return "Termine d'abord ton combat.";
+	const voyageur = exporterHeros(perso.etat, herosId);
+	const err = campagneChef.jouer({ type: "invite_arrive", joueur: id, pseudo: j.DisplayName, voyageur });
+	if (err !== undefined) return err;
+	let g = groupeDe.get(chef);
+	if (!g) {
+		g = { chef, membres: [chef] };
+		groupeDe.set(chef, g);
+	}
+	g.membres.push(j);
+	groupeDe.set(j, g);
+	perso.membres.delete(j);
+	campagneChef.membres.add(j);
+	partieDe.set(j, campagneChef);
+	perso.donnees.retourEnAttente = voyageur;
+	perso.modifiee = true;
+	envoyerCampagne(j, campagneChef);
+	return undefined;
+}
+
+export function repondreInvitation(j: Player, accepter: boolean): string | undefined {
+	const inv = invitations.get(j);
+	invitations.delete(j);
+	let err: string | undefined;
+	if (!inv || inv.expire < os.time()) err = "Cette invitation a expiré.";
+	else if (accepter) {
+		if (inv.chef.Parent !== Players) err = "Ce joueur a quitté le serveur.";
+		else if (groupeDe.has(j)) err = "Tu es déjà dans un groupe.";
+		else {
+			const g = groupeDe.get(inv.chef);
+			if (g && g.chef !== inv.chef) err = "Ce joueur n'est plus chef de son groupe.";
+			else if (g && g.membres.size() >= MAX_GROUPE) err = "Ce groupe est complet.";
+			else err = rejoindreGroupe(inv.chef, j);
+		}
+	}
+	diffuserGroupes();
+	return err;
+}
+
+/** Ramène le héros d'un membre dans sa propre campagne, avec ses gains. */
+function rentrer(j: Player, g: Groupe, depart: boolean) {
+	const campagneChef = campagnePerso.get(g.chef);
+	const perso = campagnePerso.get(j);
+	const id = idJoueur(j);
+	g.membres = g.membres.filter((m) => m !== j);
+	groupeDe.delete(j);
+	if (campagneChef && perso) {
+		const herosId = campagneChef.etat.joueurs[id]?.herosId;
+		if (herosId !== undefined) {
+			const v = exporterHeros(campagneChef.etat, herosId);
+			const err = perso.jouer({ type: "heros_retour", joueur: id, voyageur: v });
+			if (err !== undefined) {
+				warn(`[Velmaris] Retour de ${j.Name} : ${err}`);
+				perso.donnees.retourEnAttente = v;
+			} else perso.donnees.retourEnAttente = undefined;
+			perso.modifiee = true;
+		}
+		campagneChef.membres.delete(j);
+		if (campagneChef.etat.joueurs[id]?.present) campagneChef.jouer({ type: "presence", joueur: id, present: false });
+	}
+	if (perso && !depart) {
+		perso.membres.add(j);
+		partieDe.set(j, perso);
+		envoyerCampagne(j, perso);
+	}
+}
+
+/** Quitter son groupe (le chef qui part dissout le groupe : chacun rentre chez lui). */
+export function quitterGroupe(j: Player, depart = false): string | undefined {
+	const g = groupeDe.get(j);
+	if (!g) return depart ? undefined : "Tu n'es dans aucun groupe.";
+	const campagneChef = campagnePerso.get(g.chef);
+	if (!depart && campagneChef && campagneChef.etat.combats["groupe"] !== undefined) return "Attends la fin du combat pour quitter le groupe.";
+	if (g.chef === j) {
+		for (const m of [...g.membres]) if (m !== j) rentrer(m, g, false);
+		groupeDe.delete(j);
+	} else {
+		rentrer(j, g, depart);
+		if (g.membres.size() <= 1) groupeDe.delete(g.chef);
+	}
+	diffuserGroupes();
+	return undefined;
+}
+
+/** Pendant qu'un joueur est en groupe, sa sauvegarde garde une copie de ses gains (en cas d'arrêt brutal du serveur). */
+function majRetoursEnAttente() {
+	for (const [j, g] of groupeDe) {
+		if (g.chef === j) continue;
+		const campagneChef = campagnePerso.get(g.chef);
+		const perso = campagnePerso.get(j);
+		const herosId = campagneChef?.etat.joueurs[idJoueur(j)]?.herosId;
+		if (!campagneChef || !perso || herosId === undefined) continue;
+		perso.donnees.retourEnAttente = exporterHeros(campagneChef.etat, herosId);
+		perso.modifiee = true;
 	}
 }
 
@@ -197,7 +328,9 @@ export function actionDuJoueur(joueur: Player, brute: ActionJoueur) {
 	// textes écrits par le joueur et visibles par les autres : filtrés
 	// sur Roblox, le héros porte le nom affiché du joueur (déjà filtré par Roblox)
 	if (action.type === "creer_heros" && typeIs(action.heros, "table")) action.heros = { ...(action.heros as object), nom: joueur.DisplayName, portrait: undefined };
-	if (action.type === "rejoindre" || action.type === "portrait") return r.erreur.FireClient(joueur, "Action non disponible sur Roblox.");
+	// rejoindre, renforts et retours : c'est le serveur seul qui les décide
+	if (action.type === "rejoindre" || action.type === "portrait" || action.type === "invite_arrive" || action.type === "heros_retour")
+		return r.erreur.FireClient(joueur, "Action non disponible sur Roblox.");
 	const err = p.jouer(action);
 	if (err !== undefined) r.erreur.FireClient(joueur, err);
 }
@@ -231,6 +364,7 @@ export function boucleSauvegarde() {
 	while (true) {
 		task.wait(10);
 		tours++;
+		if (tours % 3 === 0) pcall(majRetoursEnAttente);
 		for (const [, p] of ouvertes) {
 			if (p.modifiee || tours % 6 === 0) {
 				p.modifiee = false;
@@ -245,6 +379,7 @@ export function boucleSauvegarde() {
 }
 
 export function toutEnregistrer() {
+	pcall(majRetoursEnAttente);
 	for (const [, p] of ouvertes) pcall(() => enregistrer(p.donnees, true));
 }
 

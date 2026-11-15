@@ -3,7 +3,7 @@
  * compagnons, carte, partie) ; le panneau d'un lieu s'ouvre quand on entre dans un bâtiment.
  * Même contenu que la version web (src/ui/panneaux et src/ui/vues/Lieu.svelte).
  */
-import { Workspace } from "@rbxts/services";
+import { Players, Workspace } from "@rbxts/services";
 import { CONTENU } from "shared/donnees";
 import { tousLesLieux } from "shared/geo";
 import { ficheObjet, type ActionObjet } from "./objets";
@@ -42,7 +42,7 @@ import {
 	type Heros,
 	type RegionDef,
 } from "shared/moteur";
-import { agir, commander, jeu, monHeros } from "../partie";
+import { agir, commandeGroupe, jeu, monHeros } from "../partie";
 import { affichage, type Panneau } from "../local";
 import { barre, bouton, carte, colonne, COULEURS, esc, ligne, texte } from "./kit";
 
@@ -62,7 +62,7 @@ const ONGLETS: [Panneau, string][] = [
 	["compagnons", "Compagnons"],
 	["quetes", "Quêtes"],
 	["journal", "Journal"],
-	["partie", "Partie"],
+	["partie", "👥 Groupe"],
 ];
 
 function lieux() {
@@ -99,6 +99,14 @@ export function barreHaut(parent: Frame, redessiner: () => void, allerA: (lieu: 
 			affichage.panneau = undefined;
 			redessiner();
 		}, { hauteur: 30, taille: 14 });
+	}
+	// invitation dans un groupe (60 s pour répondre)
+	const inv = jeu.groupe?.invitation;
+	if (inv) {
+		const li = ligne(c, 8);
+		texte(li, `👥 <b>${esc(inv.nom)}</b> t'invite dans son groupe (vous jouerez sa campagne, tes gains te suivent).`, 15, { largeur: new UDim(1, -230), couleur: COULEURS.or });
+		bouton(li, "Accepter", () => commandeGroupe({ type: "repondre_invitation", accepter: true }), { principal: true, hauteur: 30, taille: 14 });
+		bouton(li, "Refuser", () => commandeGroupe({ type: "repondre_invitation", accepter: false }), { hauteur: 30, taille: 14 });
 	}
 	// proposition de dormir à l'auberge : chacun doit répondre, où qu'il soit
 	const repos = etat.repos;
@@ -588,26 +596,61 @@ function vueCompagnons(parent: Frame) {
 
 // ───────────────────────────── Partie ─────────────────────────────
 
-function vuePartie(parent: Frame, redessiner: () => void) {
+function nomDe(userId: number): string {
+	return Players.GetPlayerByUserId(userId)?.DisplayName ?? "un joueur parti";
+}
+
+/** Groupe : ma campagne ou celle du chef, membres, invitations, joueurs du serveur. */
+function vuePartie(parent: Frame, _redessiner: () => void) {
 	const etat = jeu.etat!;
+	const g = jeu.groupe;
+	const moi = Players.LocalPlayer.UserId;
+	const chef = g?.membres?.[0];
+	const enRenfort = chef !== undefined && chef !== moi;
 	const c = carte(parent, esc(jeu.nom));
-	const prive = (jeu.code ?? "").sub(1, 6) === "prive-";
 	texte(
 		c,
-		prive
-			? "Serveur privé : la campagne appartient à ce serveur. Tes amis la rejoignent en entrant sur le serveur."
-			: "Serveur public : c'est la campagne de l'hôte (le premier joueur arrivé). Elle est gardée dans sa sauvegarde.",
+		enRenfort
+			? `Tu joues la campagne de <b>${esc(nomDe(chef!))}</b>, en renfort. Ton XP, ton or, tes objets et tes compétences rentreront avec toi dans ta campagne quand tu quitteras le groupe. L'histoire de ta campagne, elle, n'avance pas.`
+			: "Ta campagne : ton héros et ton histoire, sauvegardés sur ton compte Roblox. Invite d'autres joueurs du serveur pour la jouer en groupe.",
 		14,
 		{ couleur: COULEURS.texte2 },
 	);
 	texte(c, `Session ${etat.session}${etat.meneur !== undefined ? ` · meneur du jour : ${esc(etat.joueurs[etat.meneur]?.pseudo ?? "?")}` : ""}`, 14);
-	const j = carte(parent, "Joueurs");
+
+	// mon groupe
+	const gr = carte(parent, "👥 Mon groupe");
+	if (!g?.membres) texte(gr, "Tu joues seul. Invite quelqu'un ci-dessous, ou approche-toi d'un joueur (touche E).", 14, { couleur: COULEURS.texte2 });
+	else {
+		for (const [i, u] of ipairs(g.membres)) {
+			const id = `u${u}`;
+			const hj: Heros | undefined = etat.joueurs[id]?.herosId !== undefined ? etat.heros[etat.joueurs[id].herosId!] : undefined;
+			texte(gr, `${i === 1 ? "★" : "•"} <b>${esc(nomDe(u))}</b>${hj ? ` — ${CONTENU.classes[hj.classe].nom}, niv. ${hj.niveau}` : ""}${i === 1 ? " (chef)" : ""}`, 15);
+		}
+		bouton(gr, chef === moi ? "Dissoudre le groupe" : "Quitter le groupe", () => commandeGroupe({ type: "quitter_groupe" }), { hauteur: 32, taille: 14 });
+	}
+
+	// les joueurs du serveur
+	const autres = Players.GetPlayers().filter((p) => p !== Players.LocalPlayer);
+	const sv = carte(parent, `Joueurs sur ce serveur (${autres.size() + 1})`);
+	if (autres.size() === 0) texte(sv, "Personne d'autre pour l'instant.", 14, { couleur: COULEURS.texte2 });
+	const peutInviter = g?.pret === true && (chef === undefined || chef === moi) && (g?.membres?.size() ?? 1) < 6;
+	for (const p of autres) {
+		const l = ligne(sv, 8);
+		const dansMonGroupe = g?.membres?.includes(p.UserId) === true;
+		const occupe = g?.occupes.includes(p.UserId) === true;
+		texte(l, `<b>${esc(p.DisplayName)}</b>${dansMonGroupe ? " — dans ton groupe" : occupe ? " — déjà en groupe" : ""}`, 15, { largeur: new UDim(1, -120) });
+		if (peutInviter && !dansMonGroupe && !occupe) bouton(l, "Inviter", () => commandeGroupe({ type: "inviter", cible: p.UserId }), { hauteur: 30, taille: 14 });
+	}
+
+	// les héros de cette campagne
+	const j = carte(parent, "Héros de cette campagne");
 	for (const id of etat.ordreJoueurs) {
 		const jj = etat.joueurs[id];
 		const hj: Heros | undefined = jj.herosId !== undefined ? etat.heros[jj.herosId] : undefined;
-		texte(j, `${jj.present ? "🟢" : "⚪"} <b>${esc(jj.pseudo)}</b> — ${hj ? `${esc(hj.nom)} (${CONTENU.classes[hj.classe].nom}, niv. ${hj.niveau})` : "crée son héros…"}`, 15);
+		texte(j, `${jj.present ? "🟢" : "⚪"} <b>${esc(jj.pseudo)}</b> — ${hj ? `${esc(hj.nom)} (${CONTENU.classes[hj.classe].nom}, niv. ${hj.niveau})${hj.invite === true ? " · renfort" : ""}` : "crée son héros…"}`, 15);
 	}
 	const a = carte(parent, "Actions");
 	bouton(a, "Nouvelle session (le meneur change)", () => agir({ type: "nouvelle_session" }), { hauteur: 34 });
-	texte(a, "Pour arrêter, quitte simplement le serveur : la campagne est sauvegardée toute seule.", 13, { couleur: COULEURS.texte2 });
+	texte(a, "Pour arrêter, quitte simplement le serveur : tout est sauvegardé sur ton compte.", 13, { couleur: COULEURS.texte2 });
 }

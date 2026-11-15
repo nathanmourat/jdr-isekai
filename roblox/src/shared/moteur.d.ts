@@ -247,8 +247,24 @@ export interface Heros {
 	varianteActive: Record<string, string | undefined>;
 	/** grimoire personnel (fusions connues de ce héros) */
 	grimoire: Record<string, Technique>;
+	/** sexe du héros (test 3 du web) */
+	sexe?: "m" | "f";
+	sexeChoisi?: boolean;
+	/** PV gardés entre les combats (absent = pleins) */
+	pv?: number;
+	/** héros venu en renfort d'une autre campagne (groupe Roblox) */
+	invite?: boolean;
 	[cle: string]: unknown;
 }
+
+/** Photo d'un héros pour l'emmener dans la campagne de son chef de groupe, puis l'en ramener (voyage.ts). */
+export interface HerosVoyageur {
+	heros: Heros;
+	pointsGuilde: number;
+	rang?: string;
+	affinites: Record<string, unknown>;
+}
+export function exporterHeros(etat: EtatPartie, herosId: string): HerosVoyageur;
 
 export interface Joueur {
 	id: string;
@@ -420,6 +436,7 @@ export interface OptionsHeros {
 	race: string;
 	don: string;
 	origine: "invoque" | "reincarne";
+	sexe?: "m" | "f";
 	age?: number;
 	libres?: { plus: Partial<Caracs>; moins: Partial<Caracs> };
 }

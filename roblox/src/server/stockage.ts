@@ -1,13 +1,13 @@
 /**
  * Sauvegarde des parties dans les DataStores Roblox.
- *  - « VelmarisParties_v1 » : clé → { nom, depart, actions, verrou } ; clé = « prive-<id du serveur privé> »
- *    ou « hote-u<UserId> » (campagne de l'hôte d'un serveur public)
+ *  - « VelmarisParties_v1 » : clé → { nom, depart, actions, retourEnAttente, verrou } ; clé = « joueur-u<UserId> »
+ *    (la campagne personnelle de chaque joueur)
  *  - « VelmarisJoueurs_v1 » : u<UserId> → { parties: [{ code, nom }] }
  * Dans Studio sans accès aux services (jeu non publié ou option désactivée), on garde tout en mémoire :
  * le jeu marche, mais rien n'est conservé après l'arrêt.
  */
 import { DataStoreService, HttpService, RunService } from "@rbxts/services";
-import type { Action, EtatPartie } from "shared/moteur";
+import type { Action, EtatPartie, HerosVoyageur } from "shared/moteur";
 import type { ResumePartie } from "shared/reseau";
 
 export interface DonneesPartie {
@@ -15,6 +15,8 @@ export interface DonneesPartie {
 	nom: string;
 	depart: EtatPartie;
 	actions: Action[];
+	/** Gains du héros pendant qu'il est dans le groupe d'un autre joueur (rapportés au prochain chargement si besoin). */
+	retourEnAttente?: HerosVoyageur;
 	/** Serveur qui a la partie ouverte (évite que deux serveurs l'écrivent en même temps). */
 	verrou?: { serveur: string; expire: number };
 }

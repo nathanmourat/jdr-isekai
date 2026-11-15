@@ -22,6 +22,7 @@ import { apprendre, creerTechnique, idFusion, peutApprendre, type Technique } fr
 import { competencesConnues as connuesDe } from './personnage';
 import { exemplaires, problemeEquipement } from './equipement';
 import { anneeDepart, chapitreDe, fetesEntre, formaterDate, joursParMois, versDate, versJour } from './temps';
+import { recopierAutour, recopierProgression, type HerosVoyageur } from './voyage';
 
 export const VERSION_ETAT = 9;
 export const MAX_JOUEURS = 6;
@@ -188,6 +189,10 @@ export type Action =
   | { type: 'valider_temps_libre'; joueur: string }
   /** Un jour du monde passe (minuteur de jeu actif). `jour` = jour courant vu par l'expéditeur : évite les doublons. */
   | { type: 'jour_passe'; joueur: string; jour: number }
+  /** Roblox : le héros d'un autre joueur arrive en renfort dans cette campagne (groupe du chef), voir voyage.ts. */
+  | { type: 'invite_arrive'; joueur: string; pseudo: string; voyageur: HerosVoyageur }
+  /** Roblox : le héros revient de la campagne de son chef de groupe avec ses gains, voir voyage.ts. */
+  | { type: 'heros_retour'; joueur: string; voyageur: HerosVoyageur }
   /** Dormir à l'auberge : `mois` choisi, ou `histoire: true` pour aller jusqu'au prochain événement de l'histoire. */
   | { type: 'proposer_repos'; joueur: string; mois?: number; histoire?: boolean }
   | { type: 'repondre_repos'; joueur: string; accepte: boolean }
@@ -1290,7 +1295,7 @@ export function appliquer(contenu: Contenu, etatAvant: EtatPartie, action: Actio
   if (etat.grimoire) repartirAncienGrimoire(contenu, etat); // parties d'avant le grimoire personnel
   if (etat.repos === undefined) etat.repos = null; // parties créées avant le repos à l'auberge
   const j = etat.joueurs[action.joueur];
-  if (action.type !== 'rejoindre' && !j) refuser('Joueur inconnu : rejoignez la partie d\'abord');
+  if (action.type !== 'rejoindre' && action.type !== 'invite_arrive' && !j) refuser('Joueur inconnu : rejoignez la partie d\'abord');
 
   switch (action.type) {
     case 'rejoindre': {
@@ -1303,6 +1308,40 @@ export function appliquer(contenu: Contenu, etatAvant: EtatPartie, action: Actio
       etat.ordreJoueurs.push(action.joueur);
       etat.meneur ??= action.joueur;
       journal(contenu, etat, `${pseudo} rejoint la partie.`);
+      break;
+    }
+    case 'invite_arrive': {
+      const presents = valeurs(etat.joueurs).filter((x) => x.present).length;
+      if (!(j?.present ?? false) && presents >= MAX_JOUEURS) refuser(`Le groupe est complet (${MAX_JOUEURS} joueurs maximum)`);
+      let jj = j;
+      if (jj === undefined) {
+        let pseudo = action.pseudo.trim().slice(0, 24);
+        if (!vrai(pseudo)) pseudo = 'Renfort';
+        const base = pseudo;
+        for (let n = 2; valeurs(etat.joueurs).some((x) => x.pseudo.toLowerCase() === pseudo.toLowerCase()); n++) pseudo = `${base}${n}`;
+        jj = { id: action.joueur, pseudo, herosId: null, present: true };
+        etat.joueurs[action.joueur] = jj;
+        etat.ordreJoueurs.push(action.joueur);
+      }
+      jj.present = true;
+      const id = vrai(jj.herosId) ? jj.herosId : `h${etat.ordreJoueurs.indexOf(action.joueur) + 1}`;
+      const h = copieProfonde(action.voyageur.heros);
+      h.id = id;
+      h.joueurId = action.joueur;
+      h.invite = true;
+      h.siAbsent = 'camp'; // absent, un renfort reste au camp (il est reparti dans sa propre campagne)
+      etat.heros[id] = h;
+      jj.herosId = id;
+      recopierAutour(etat, id, action.voyageur);
+      etat.equipe[id] ??= null;
+      journal(contenu, etat, `${h.nom} rejoint le groupe en renfort (niveau ${h.niveau}).`);
+      break;
+    }
+    case 'heros_retour': {
+      const h = herosDuJoueur(etat, action.joueur);
+      recopierProgression(h, action.voyageur.heros);
+      recopierAutour(etat, h.id, action.voyageur);
+      journal(contenu, etat, `${h.nom} revient d'une aventure en groupe (niveau ${h.niveau}).`);
       break;
     }
     case 'presence':

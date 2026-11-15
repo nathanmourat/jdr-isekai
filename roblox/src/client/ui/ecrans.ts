@@ -1,5 +1,5 @@
 /**
- * Écrans plein écran : chargement de la campagne du serveur et création du héros.
+ * Écrans plein écran : chargement de la campagne du joueur et création du héros.
  */
 import { CONTENU } from "shared/donnees";
 import { caracsDeDepart, listeHeros, type Carac, type Caracs, type OptionsHeros } from "shared/moteur";
@@ -26,11 +26,11 @@ function trie<T extends { nom: string }>(o: Record<string, T>): T[] {
 export function ecranAccueil(racine: Frame, _redessiner: () => void) {
 	const c = colonne(racine, 12);
 	texte(c, "Les Appelés de Velmaris", 34, { gras: true, couleur: COULEURS.or, centre: true });
-	texte(c, "JDR isekai en coopération, de 1 à 6 joueurs par serveur.", 16, { couleur: COULEURS.texte2, centre: true });
-	texte(c, "Chargement de la campagne du serveur…", 18, { centre: true });
+	texte(c, "JDR isekai en coopération : joue seul ou en groupe (6 au plus).", 16, { couleur: COULEURS.texte2, centre: true });
+	texte(c, "Chargement de ta campagne…", 18, { centre: true });
 	texte(
 		c,
-		"Serveur privé : la campagne de ce serveur reprend là où vous l'aviez laissée.\nServeur public : vous jouez la campagne du premier joueur arrivé, chacun avec son héros.",
+		"Ton héros et ton histoire sont sauvegardés sur ton compte Roblox.\nEn groupe, vous jouez la campagne du chef ; tes gains te suivent dans ta campagne.",
 		14,
 		{ couleur: COULEURS.texte2, centre: true },
 	);
@@ -39,6 +39,7 @@ export function ecranAccueil(racine: Frame, _redessiner: () => void) {
 // ───────────────────────────── Création du héros ─────────────────────────────
 
 const creation = {
+	sexe: "m" as "m" | "f",
 	origine: "invoque" as "invoque" | "reincarne",
 	age: "20",
 	race: "humain",
@@ -65,6 +66,9 @@ export function ecranCreation(racine: Frame, redessiner: () => void) {
 	// 1. Identité
 	const id = carte(c, "1. Origine");
 	texte(id, `Ton héros porte ton nom Roblox : <b>${esc(Players.LocalPlayer.DisplayName)}</b>.`, 15);
+	const ls = ligne(id);
+	bouton(ls, "Un homme", () => ((creation.sexe = "m"), redessiner()), { choisi: creation.sexe === "m" });
+	bouton(ls, "Une femme", () => ((creation.sexe = "f"), redessiner()), { choisi: creation.sexe === "f" });
 	const lo = ligne(id);
 	bouton(lo, "Invoqué (adulte, appelé par l'Ordre)", () => ((creation.origine = "invoque"), redessiner()), { choisi: creation.origine === "invoque" });
 	bouton(lo, "Réincarné (né dans ce monde en 994)", () => ((creation.origine = "reincarne"), redessiner()), { choisi: creation.origine === "reincarne" });
@@ -129,7 +133,7 @@ export function ecranCreation(racine: Frame, redessiner: () => void) {
 		rc,
 		"Créer mon héros",
 		() => {
-			const heros: OptionsHeros = { nom: Players.LocalPlayer.DisplayName, classe: creation.classe, race: creation.race, don: creation.don, origine: creation.origine, libres: opt };
+			const heros: OptionsHeros = { nom: Players.LocalPlayer.DisplayName, sexe: creation.sexe, classe: creation.classe, race: creation.race, don: creation.don, origine: creation.origine, libres: opt };
 			if (creation.don === "") return agirErreur("Choisis un don.");
 			if (creation.origine === "invoque") heros.age = tonumber(creation.age) ?? 20;
 			agir({ type: "creer_heros", heros });

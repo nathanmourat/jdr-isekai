@@ -12,6 +12,7 @@ import { afficherArene, cacherArene, definirEquipements } from "./rendu/arene";
 import type { EquipementPorte } from "shared/equipement3d";
 import { afficherDonjon, cacherDonjon, retraitCombat } from "./rendu/donjon3d";
 import { animerDecor } from "./rendu/ambiance";
+import { majInvitesJoueurs, preparerInvitesJoueurs } from "./rendu/joueurs";
 import { allerAuLieu, entrerDans, majMarqueurs, majPnj, sortirDe, surInteraction } from "./rendu/marqueurs";
 import { vueCombat } from "./ui/combat";
 import { vueDialogue } from "./ui/dialogue";
@@ -216,6 +217,7 @@ function redessiner() {
 	if (vue !== "donjon" && !combatDonjon) cacherDonjon();
 	if (vue !== "combat") cameraNormale();
 	majMarqueurs(vue === "monde");
+	majInvitesJoueurs();
 	majPnj();
 	majSons(vue, affichage.dans);
 	// le panneau latéral commence juste sous la barre du haut (sa hauteur varie avec son contenu)
@@ -267,6 +269,7 @@ surChangement(redessiner);
 attendreCampagne();
 surveillerButin();
 animerDecor();
+preparerInvitesJoueurs();
 redessiner();
 // l'ambiance sonore suit aussi le jour et la nuit, même sans action dans la partie
 task.spawn(() => {

@@ -1,10 +1,11 @@
 /**
  * Serveur Roblox des Appelés de Velmaris :
- * une campagne par serveur (serveur privé, ou campagne de l'hôte), actions vérifiées par le moteur, sauvegarde DataStore.
+ * une campagne par joueur (sauvegardée sur son compte), monde partagé, groupes formés dans le jeu
+ * (le groupe joue la campagne du chef), actions vérifiées par le moteur, sauvegarde DataStore.
  */
 import { Players } from "@rbxts/services";
 import { reseau, type Commande, type ReponseCommande } from "shared/reseau";
-import { accueillir, actionDuJoueur, boucleJours, boucleSauvegarde, messageErreur, partieDe, sortir, toutEnregistrer } from "./parties";
+import { accueillir, actionDuJoueur, boucleJours, boucleSauvegarde, diffuserGroupes, inviter, messageErreur, partieDe, quitterGroupe, repondreInvitation, sortir, toutEnregistrer } from "./parties";
 import { sauvegardeActive } from "./stockage";
 import { construireMonde } from "./monde";
 import { preparerModeles } from "./modeles";
@@ -44,10 +45,25 @@ r.commande.OnServerInvoke = (joueur: Player, c: unknown): ReponseCommande => {
 		const info = sauvegardeActive() ? undefined : INFO_MEMOIRE;
 		switch (cmd.type) {
 			case "synchro": {
-				// la campagne du serveur se charge à l'arrivée du joueur : il redemande jusqu'à ce qu'elle soit prête
+				// la campagne se charge à l'arrivée du joueur : il redemande jusqu'à ce qu'elle soit prête
 				const p = partieDe.get(joueur);
 				if (!p) return { ok: false, erreur: "La campagne se charge…" };
+				task.defer(diffuserGroupes);
 				return { ok: true, partie: p.resume(), info };
+			}
+			case "inviter": {
+				const cible = typeIs(cmd.cible, "number") ? Players.GetPlayerByUserId(cmd.cible) : undefined;
+				if (!cible) return { ok: false, erreur: "Ce joueur n'est plus sur le serveur." };
+				const err = inviter(joueur, cible);
+				return err !== undefined ? { ok: false, erreur: err } : { ok: true, info: `Invitation envoyée à ${cible.DisplayName}.` };
+			}
+			case "repondre_invitation": {
+				const err = repondreInvitation(joueur, cmd.accepter === true);
+				return err !== undefined ? { ok: false, erreur: err } : { ok: true };
+			}
+			case "quitter_groupe": {
+				const err = quitterGroupe(joueur);
+				return err !== undefined ? { ok: false, erreur: err } : { ok: true };
 			}
 		}
 		return { ok: false, erreur: "Commande inconnue." };
@@ -57,7 +73,7 @@ r.commande.OnServerInvoke = (joueur: Player, c: unknown): ReponseCommande => {
 };
 
 r.action.OnServerEvent.Connect((joueur, a) => actionDuJoueur(joueur, a as never));
-// chaque joueur qui arrive entre directement dans la campagne du serveur
+// chaque joueur qui arrive retrouve sa campagne (créée la première fois)
 Players.GetPlayers().forEach(accueillir);
 Players.PlayerAdded.Connect(accueillir);
 Players.PlayerRemoving.Connect((joueur) => sortir(joueur));

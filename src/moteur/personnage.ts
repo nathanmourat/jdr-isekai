@@ -58,6 +58,8 @@ export interface Heros {
   maitrise: Record<string, number>;
   /** Ultime débloqué par la quête de classe (absent dans les anciennes sauvegardes). */
   ultime?: boolean;
+  /** Roblox : héros venu en renfort d'une autre campagne (groupe du chef), voir voyage.ts. */
+  invite?: boolean;
 }
 
 export interface OptionsCreation {

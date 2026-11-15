@@ -1,5 +1,3 @@
---!nocheck
--- Fichier GÉNÉRÉ par `npm run moteur` à partir de src/moteur (TypeScript). Ne pas modifier à la main.
 --[[ Generated with https://github.com/TypeScriptToLua/TypeScriptToLua ]]
 
 local ____modules = {}
@@ -673,7 +671,7 @@ do
     end
     local function doNothing(self)
     end
-    local ____pcall = pcall
+    local ____pcall = _G.pcall
     __TS__Promise = __TS__Class()
     __TS__Promise.name = "__TS__Promise"
     function __TS__Promise.prototype.____constructor(self, executor)
@@ -820,7 +818,7 @@ end
 
 local __TS__AsyncAwaiter, __TS__Await
 do
-    local ____coroutine = coroutine or ({})
+    local ____coroutine = _G.coroutine or ({})
     local cocreate = ____coroutine.create
     local coresume = ____coroutine.resume
     local costatus = ____coroutine.status
@@ -967,8 +965,8 @@ end
 
 local __TS__DescriptorGet
 do
-    local getmetatable = getmetatable
-    local ____rawget = rawget
+    local getmetatable = _G.getmetatable
+    local ____rawget = _G.rawget
     function __TS__DescriptorGet(self, metatable, key)
         while metatable do
             local rawResult = ____rawget(metatable, key)
@@ -992,9 +990,9 @@ end
 
 local __TS__DescriptorSet
 do
-    local getmetatable = getmetatable
-    local ____rawget = rawget
-    local rawset = rawset
+    local getmetatable = _G.getmetatable
+    local ____rawget = _G.rawget
+    local rawset = _G.rawset
     function __TS__DescriptorSet(self, metatable, key, value)
         while metatable do
             local descriptors = ____rawget(metatable, "_descriptors")
@@ -1023,7 +1021,7 @@ end
 
 local __TS__SetDescriptor
 do
-    local getmetatable = getmetatable
+    local getmetatable = _G.getmetatable
     local function descriptorIndex(self, key)
         return __TS__DescriptorGet(
             self,
@@ -1128,7 +1126,7 @@ end
 local Error, RangeError, ReferenceError, SyntaxError, TypeError, URIError
 do
     local function getErrorStack(self, constructor)
-        if debug == nil or debug.getinfo == nil then
+        if debug == nil then
             return nil
         end
         local level = 1
@@ -1156,7 +1154,7 @@ do
     local function wrapErrorToString(self, getDescription)
         return function(self)
             local description = getDescription(self)
-            local caller = debug.getinfo and debug.getinfo(3, "f")
+            local caller = debug.getinfo(3, "f")
             local isClassicLua = __TS__StringIncludes(_VERSION, "Lua 5.0")
             if isClassicLua or caller and caller.func ~= error then
                 return description
@@ -3282,6 +3280,9 @@ ____exports.zCondition = z:lazy(function() return z:object({
         jour = z:number():default(1)
     }):optional(),
     rang_guilde_min = z:string():optional(),
+    minuteur_passe = z:string():optional(),
+    minuteur_actif = z:string():optional(),
+    or_min_chapitre = z:number():optional(),
     groupe_min = z:number():optional(),
     groupe_max = z:number():optional(),
     ou = z:array(____exports.zCondition):optional()
@@ -3346,7 +3347,18 @@ ____exports.zConsequence = z:object({
     debloquer_ultime = z:boolean():optional(),
     rang_guilde = z:string():optional(),
     gain_pari = z:number():min(0):optional(),
-    perte_pari = z:boolean():optional()
+    perte_pari = z:boolean():optional(),
+    minuteur = z:object({
+        id = z:string(),
+        jours = z:number():int():min(0)
+    }):optional(),
+    retirer_minuteur = z:string():optional(),
+    tirage = z:object({
+        flag = z:string(),
+        chance = z:number():min(0):max(1)
+    }):optional(),
+    tirage_un = z:array(z:string()):min(1):optional(),
+    prix_chapitre = z:number():int():min(1):optional()
 })
 ____exports.zReplique = z:object({
     qui = z:string():default("narrateur"),
@@ -3599,6 +3611,7 @@ ____exports.zContrat = z:object({
     rang_min = z:string():default("F"),
     examen_rang = z:string():optional(),
     niveau = z:number({error = "niveau conseillé obligatoire (champ « niveau »)"}):int():min(1),
+    repetable = z:boolean():default(true),
     etapes = z:array(____exports.zEtapeContrat):default({}),
     rencontre = z:string():optional(),
     test = z:object({
@@ -3639,6 +3652,36 @@ ____exports.zActivite = z:object({
         ):default({})
     }),
     choix_compagnon = z:boolean():default(false)
+})
+--- Fond de combat (content/config/fonds.yaml) : décor de lieu équivalent, en attendant le vrai fond, et type pour le fond générique.
+____exports.zFondCombat = z:object({
+    decor = z:union({
+        z:string(),
+        z:array(z:string()):min(1)
+    }):optional(),
+    type = z:enum({"exterieur", "interieur"}):default("exterieur")
+})
+____exports.zFondsCombat = z:record(
+    z:string(),
+    ____exports.zFondCombat
+)
+--- Effets d'un portrait animé de dialogue (content/config/portraits.yaml). Affichage seulement.
+____exports.zEffetsPortrait = z:object({
+    lueur = z:string():regex(nil, "couleur attendue au format \"#rrggbb\""):nullable():default(nil),
+    particules = z:enum({
+        "lucioles",
+        "braises",
+        "magie",
+        "neige",
+        "ombre"
+    }):nullable():default(nil)
+})
+____exports.zPortraits = z:object({
+    defaut = ____exports.zEffetsPortrait:default({lueur = nil, particules = nil}),
+    personnages = z:record(
+        z:string(),
+        ____exports.zEffetsPortrait
+    ):default({})
 })
 ____exports.zDifficulte = z:object({
     puissance = z:number(),
@@ -3772,6 +3815,28 @@ ____exports.zConfig = z:object({
     mort_douce = z:object({
         perte_or_pourcent = z:number(),
         blessure_pv_pourcent = z:number()
+    }),
+    contrats = z:object({retour_jours = z:number():int():min(0):default(5)}):default({retour_jours = 5}),
+    soins = z:object({
+        regen_jour_pourcent = z:number():default(10),
+        pv_apres_ko_pourcent = z:number():default(20),
+        repas = z:object({
+            prix = z:number(),
+            pourcent = z:number()
+        }):default({prix = 3, pourcent = 30}),
+        ration_pourcent = z:number():default(15),
+        temple = z:object({
+            prix = z:number(),
+            pnj = z:string():default("elianne"),
+            repliques = z:array(z:string()):default({}),
+            repliques_blessure = z:array(z:string()):default({})
+        }):default({prix = 15, pnj = "elianne", repliques = {}, repliques_blessure = {}})
+    }):default({
+        regen_jour_pourcent = 10,
+        pv_apres_ko_pourcent = 20,
+        repas = {prix = 3, pourcent = 30},
+        ration_pourcent = 15,
+        temple = {prix = 15, pnj = "elianne", repliques = {}, repliques_blessure = {}}
     }),
     graphismes = z:record(
         z:string(),
@@ -4579,6 +4644,8 @@ function ____exports.creerHeros(contenu, o)
         race = o.race,
         don = o.don,
         origine = o.origine,
+        sexe = (if o.sexe == "f" then "f" else "m"),
+        sexeChoisi = o.sexe == "m" or o.sexe == "f",
         anneeNaissance = o.anneeCampagne - age,
         niveau = 1,
         xp = 0,
@@ -5701,29 +5768,29 @@ function invoquer(contenu, combat, maitre, creature, duree)
 end
 function resoudreCibles(combat, rng, s, ____type, cibleChoisie, portee)
     repeat
-        local ____switch193 = ____type
-        local ____cond193 = ____switch193 == "soi"
-        if ____cond193 then
+        local ____switch212 = ____type
+        local ____cond212 = ____switch212 == "soi"
+        if ____cond212 then
             return {s}
         end
-        ____cond193 = ____cond193 or ____switch193 == "tous_allies"
-        if ____cond193 then
+        ____cond212 = ____cond212 or ____switch212 == "tous_allies"
+        if ____cond212 then
             return ____exports.allies(combat, s)
         end
-        ____cond193 = ____cond193 or ____switch193 == "tous_ennemis"
-        if ____cond193 then
+        ____cond212 = ____cond212 or ____switch212 == "tous_ennemis"
+        if ____cond212 then
             return ____exports.adversaires(combat, s)
         end
-        ____cond193 = ____cond193 or ____switch193 == "ennemi_aleatoire"
-        if ____cond193 then
+        ____cond212 = ____cond212 or ____switch212 == "ennemi_aleatoire"
+        if ____cond212 then
             return {}
         end
-        ____cond193 = ____cond193 or ____switch193 == "allie_ko"
-        if ____cond193 then
+        ____cond212 = ____cond212 or ____switch212 == "allie_ko"
+        if ____cond212 then
             return (if cibleChoisie then {cibleChoisie} else {})
         end
-        ____cond193 = ____cond193 or ____switch193 == "allie"
-        if ____cond193 then
+        ____cond212 = ____cond212 or ____switch212 == "allie"
+        if ____cond212 then
             return {cibleChoisie or s}
         end
         do
@@ -5785,9 +5852,13 @@ function appliquerEffets(contenu, combat, rng, s, comp, rang, cibleChoisie, depu
     if depuisObjet and ____exports.aPouvoir(s, "prisme") then
         multObjet = multObjet * 1.25
     end
+    local degatsVus = false
+    local touchees = {}
+    s.compteurs.dernierCoupTouche = 0
     for ____, ef in ipairs(comp.effets) do
         local typeCible = (if ef.cible ~= nil and ef.cible then ef.cible else comp.cible)
         if ef.type == "degats" then
+            degatsVus = true
             local n = ef.coups
             do
                 local k = 0
@@ -5846,6 +5917,8 @@ function appliquerEffets(contenu, combat, rng, s, comp, rang, cibleChoisie, depu
                             })
                             continue
                         end
+                        touchees[#touchees + 1] = cible.id
+                        s.compteurs.dernierCoupTouche = 1
                         local furtif = aEtat(s, "furtif")
                         local critique = ef.critique_garanti or furtif or chance(
                             rng,
@@ -5944,6 +6017,9 @@ function appliquerEffets(contenu, combat, rng, s, comp, rang, cibleChoisie, depu
             ))
             for ____, cible in ipairs(cibles) do
                 if not actif(cible) then
+                    continue
+                end
+                if degatsVus and cible.camp ~= s.camp and not __TS__ArrayIncludes(touchees, cible.id) then
                     continue
                 end
                 local p = ef.chance
@@ -6151,6 +6227,7 @@ function attaqueSimple(contenu, combat, rng, s, cible)
         1,
         cible
     )
+    local premierCoupTouche = (s.compteurs.dernierCoupTouche or 0) > 0
     s.phrase = nil
     s.effetAttaque = nil
     local c = (if vrai(s.derniereCible) then __TS__ArrayFind(
@@ -6207,7 +6284,7 @@ function attaqueSimple(contenu, combat, rng, s, cible)
         s.compteurs.runes = math.min(s.passif.parametres.max or 3, (s.compteurs.runes or 0) + 1)
     end
     local ____opt_91 = s.passif
-    if (____opt_91 and ____opt_91.id) == "oeil-du-faucon" and c and actif(c) and chance(rng, s.passif.parametres.chance_marque or 0.3) then
+    if (____opt_91 and ____opt_91.id) == "oeil-du-faucon" and c and actif(c) and premierCoupTouche and chance(rng, s.passif.parametres.chance_marque or 0.3) then
         ajouterEtat(combat, c, {
             id = "marque",
             duree = 2,
@@ -6593,9 +6670,9 @@ function pacifiable(x, c)
 end
 function executer(contenu, combat, rng, x, a)
     repeat
-        local ____switch369 = a.type
-        local ____cond369 = ____switch369 == "attaque"
-        if ____cond369 then
+        local ____switch389 = a.type
+        local ____cond389 = ____switch389 == "attaque"
+        if ____cond389 then
             do
                 log(combat, {
                     type = "action",
@@ -6617,8 +6694,8 @@ function executer(contenu, combat, rng, x, a)
                 return false
             end
         end
-        ____cond369 = ____cond369 or ____switch369 == "competence"
-        if ____cond369 then
+        ____cond389 = ____cond389 or ____switch389 == "competence"
+        if ____cond389 then
             do
                 local k = ____exports.competenceCombattant(contenu, x, a.competence)
                 x.mana = x.mana - ____exports.coutMana(x, k.comp)
@@ -6668,8 +6745,8 @@ function executer(contenu, combat, rng, x, a)
                 return false
             end
         end
-        ____cond369 = ____cond369 or ____switch369 == "objet"
-        if ____cond369 then
+        ____cond389 = ____cond389 or ____switch389 == "objet"
+        if ____cond389 then
             do
                 local cible = (if vrai(a.cible) then __TS__ArrayFind(
                     combat.combattants,
@@ -6732,8 +6809,8 @@ function executer(contenu, combat, rng, x, a)
                 return false
             end
         end
-        ____cond369 = ____cond369 or ____switch369 == "defendre"
-        if ____cond369 then
+        ____cond389 = ____cond389 or ____switch389 == "defendre"
+        if ____cond389 then
             ajouterEtat(combat, x, {
                 id = "garde",
                 duree = 2,
@@ -6748,14 +6825,14 @@ function executer(contenu, combat, rng, x, a)
             log(combat, {type = "action", source = x.id, texte = x.nom .. " se met en garde."})
             return false
         end
-        ____cond369 = ____cond369 or ____switch369 == "changer_rang"
-        if ____cond369 then
+        ____cond389 = ____cond389 or ____switch389 == "changer_rang"
+        if ____cond389 then
             x.rang = (if x.rang == "avant" then "arriere" else "avant")
             log(combat, {type = "action", source = x.id, texte = ((x.nom .. " passe au rang ") .. (if x.rang == "avant" then "avant" else "arrière")) .. "."})
             return false
         end
-        ____cond369 = ____cond369 or ____switch369 == "pacifier"
-        if ____cond369 then
+        ____cond389 = ____cond389 or ____switch389 == "pacifier"
+        if ____cond389 then
             do
                 local c = ____exports.trouver(combat, a.cible)
                 c.parti = true
@@ -6763,8 +6840,8 @@ function executer(contenu, combat, rng, x, a)
                 return false
             end
         end
-        ____cond369 = ____cond369 or ____switch369 == "viser"
-        if ____cond369 then
+        ____cond389 = ____cond389 or ____switch389 == "viser"
+        if ____cond389 then
             do
                 local v = ____exports.VISEES[a.partie]
                 local c = ____exports.trouver(combat, a.cible)
@@ -6823,8 +6900,8 @@ function executer(contenu, combat, rng, x, a)
                 return false
             end
         end
-        ____cond369 = ____cond369 or ____switch369 == "se_cacher"
-        if ____cond369 then
+        ____cond389 = ____cond389 or ____switch389 == "se_cacher"
+        if ____cond389 then
             do
                 if chance(
                     rng,
@@ -6844,8 +6921,8 @@ function executer(contenu, combat, rng, x, a)
                 return false
             end
         end
-        ____cond369 = ____cond369 or ____switch369 == "fuir"
-        if ____cond369 then
+        ____cond389 = ____cond389 or ____switch389 == "fuir"
+        if ____cond389 then
             do
                 local p = 0.5 + 0.03 * (x.caracs.AGI - math.max(table.unpack(__TS__ArrayMap(
                     ____exports.adversaires(combat, x),
@@ -6873,35 +6950,35 @@ function conditionIA(combat, x, comp)
     local q = comp.ia.quand
     local amis = ____exports.allies(combat, x)
     repeat
-        local ____switch402 = q
-        local ____cond402 = ____switch402 == "allie_blesse"
-        if ____cond402 then
+        local ____switch422 = q
+        local ____cond422 = ____switch422 == "allie_blesse"
+        if ____cond422 then
             return __TS__ArraySome(
                 amis,
                 function(____, a) return a.pv / a.pvMax < 0.6 and a.type ~= "invocation" end
             )
         end
-        ____cond402 = ____cond402 or ____switch402 == "soi_blesse"
-        if ____cond402 then
+        ____cond422 = ____cond422 or ____switch422 == "soi_blesse"
+        if ____cond422 then
             return x.pv / x.pvMax < 0.5
         end
-        ____cond402 = ____cond402 or ____switch402 == "plusieurs_ennemis"
-        if ____cond402 then
+        ____cond422 = ____cond422 or ____switch422 == "plusieurs_ennemis"
+        if ____cond422 then
             return #____exports.adversaires(combat, x) >= 2
         end
-        ____cond402 = ____cond402 or ____switch402 == "debut_combat"
-        if ____cond402 then
+        ____cond422 = ____cond422 or ____switch422 == "debut_combat"
+        if ____cond422 then
             return combat.tour <= 2
         end
-        ____cond402 = ____cond402 or ____switch402 == "cible_faible"
-        if ____cond402 then
+        ____cond422 = ____cond422 or ____switch422 == "cible_faible"
+        if ____cond422 then
             return __TS__ArraySome(
                 ____exports.adversaires(combat, x),
                 function(____, a) return a.pv / a.pvMax < 0.4 end
             )
         end
-        ____cond402 = ____cond402 or ____switch402 == "allie_ko"
-        if ____cond402 then
+        ____cond422 = ____cond422 or ____switch422 == "allie_ko"
+        if ____cond422 then
             return __TS__ArraySome(
                 combat.combattants,
                 function(____, a) return a.camp == x.camp and a.ko and a.type ~= "invocation" end
@@ -7540,6 +7617,69 @@ ____exports.adversaires = function(c, x) return __TS__ArrayFilter(
     c.combattants,
     function(____, y) return y.camp ~= x.camp and actif(y) end
 ) end
+--- Pourquoi un combattant ne peut pas être visé (test 4) : mêmes règles que ciblesValides, expliquées au joueur.
+-- type : ce que vise l'action (« ennemi », « allie », « allie_ko », ou une action sans cible à choisir).
+-- Renvoie null si la cible est valide.
+function ____exports.raisonCibleRefusee(c, x, cible, ____type, portee)
+    if ____type ~= "ennemi" and ____type ~= "allie" and ____type ~= "allie_ko" then
+        return "Cette action ne se dirige pas : pas de cible à choisir"
+    end
+    if cible.parti then
+        return cible.nom .. " a quitté le combat"
+    end
+    if ____type == "allie_ko" then
+        if cible.camp ~= x.camp then
+            return "Cette action ne vise que les alliés K.O."
+        end
+        if not cible.ko then
+            return cible.nom .. " n'est pas K.O."
+        end
+        if cible.type == "invocation" then
+            return "Une invocation ne peut pas être relevée"
+        end
+        return nil
+    end
+    if cible.ko then
+        return cible.nom .. " est déjà K.O."
+    end
+    if ____type == "allie" then
+        return (if cible.camp == x.camp then nil else "Cette action ne vise que les alliés")
+    end
+    if cible.camp == x.camp then
+        return "Cette action ne vise que les ennemis"
+    end
+    if __TS__ArraySome(
+        ____exports.ciblesValides(c, x, "ennemi", portee),
+        function(____, y) return y.id == cible.id end
+    ) then
+        return nil
+    end
+    local liste = ____exports.adversaires(c, x)
+    local visibles = __TS__ArrayFilter(
+        liste,
+        function(____, y) return not aEtat(y, "furtif") end
+    )
+    if #visibles > 0 and aEtat(cible, "furtif") then
+        return cible.nom .. " est caché : impossible de le viser"
+    end
+    local prov = __TS__ArrayFind(
+        x.etats,
+        function(____, e) return e.id == "provoque" end
+    )
+    if prov then
+        local src = __TS__ArrayFind(
+            (if #visibles > 0 then visibles else liste),
+            function(____, y) return y.id == prov.source end
+        )
+        if src then
+            return ((x.nom .. " est provoqué par ") .. src.nom) .. " : il doit l'attaquer"
+        end
+    end
+    if portee == "melee" then
+        return "Hors de portée : au corps à corps, il faut d'abord vaincre les ennemis du premier rang"
+    end
+    return "Cible impossible"
+end
 ELEMENTS_MAGIQUES = {
     "feu",
     "glace",
@@ -7816,9 +7956,9 @@ function ____exports.estimerAction(contenu, combat, a)
         return c
     end
     repeat
-        local ____switch483 = a.type
-        local ____cond483 = ____switch483 == "attaque" or ____switch483 == "viser"
-        if ____cond483 then
+        local ____switch503 = a.type
+        local ____cond503 = ____switch503 == "attaque" or ____switch503 == "viser"
+        if ____cond503 then
             do
                 local c = verifierCible(a.cible, x.attaque.portee)
                 if type(c) == "string" then
@@ -7844,8 +7984,8 @@ function ____exports.estimerAction(contenu, combat, a)
                 return res
             end
         end
-        ____cond483 = ____cond483 or ____switch483 == "competence"
-        if ____cond483 then
+        ____cond503 = ____cond503 or ____switch503 == "competence"
+        if ____cond503 then
             do
                 local k = ____exports.competenceCombattant(contenu, x, a.competence)
                 res.mana = ____exports.coutMana(x, k.comp)
@@ -7908,15 +8048,15 @@ function ____exports.estimerAction(contenu, combat, a)
                 return res
             end
         end
-        ____cond483 = ____cond483 or ____switch483 == "se_cacher"
-        if ____cond483 then
+        ____cond503 = ____cond503 or ____switch503 == "se_cacher"
+        if ____cond503 then
             res.reussite = ____exports.chanceSeCacher(combat, x)
             local ____res_effets_148 = res.effets
             ____res_effets_148[#____res_effets_148 + 1] = "furtif : impossible à cibler, prochaine attaque critique"
             return res
         end
-        ____cond483 = ____cond483 or ____switch483 == "fuir"
-        if ____cond483 then
+        ____cond503 = ____cond503 or ____switch503 == "fuir"
+        if ____cond503 then
             res.reussite = math.min(
                 0.9,
                 math.max(
@@ -7929,8 +8069,8 @@ function ____exports.estimerAction(contenu, combat, a)
             )
             return res
         end
-        ____cond483 = ____cond483 or ____switch483 == "objet"
-        if ____cond483 then
+        ____cond503 = ____cond503 or ____switch503 == "objet"
+        if ____cond503 then
             if a.objet == "potion" then
                 local ____temp_151 = 16 * 1.5
                 local ____opt_149 = x.passif
@@ -7942,8 +8082,8 @@ function ____exports.estimerAction(contenu, combat, a)
             end
             return res
         end
-        ____cond483 = ____cond483 or ____switch483 == "defendre"
-        if ____cond483 then
+        ____cond503 = ____cond503 or ____switch503 == "defendre"
+        if ____cond503 then
             local ____res_effets_152 = res.effets
             ____res_effets_152[#____res_effets_152 + 1] = "−50 % de dégâts reçus jusqu'au prochain tour, +10 % de mana"
             return res
@@ -8071,6 +8211,76 @@ function ____exports.chapitreDe(contenu, jourAbsolu)
 end
 return ____exports
  end,
+["src.moteur.voyage"] = function(...) 
+local ____lualib = require("lualib_bundle")
+local Error = ____lualib.Error
+local RangeError = ____lualib.RangeError
+local ReferenceError = ____lualib.ReferenceError
+local SyntaxError = ____lualib.SyntaxError
+local TypeError = ____lualib.TypeError
+local URIError = ____lualib.URIError
+local __TS__New = ____lualib.__TS__New
+local ____exports = {}
+local ____outils = require("src.moteur.outils")
+local copieProfonde = ____outils.copieProfonde
+local entrees = ____outils.entrees
+local vrai = ____outils.vrai
+--- Photo d'un héros, pour l'emmener dans une autre campagne (ou l'en ramener).
+function ____exports.exporterHeros(etat, herosId)
+    local h = etat.heros[herosId]
+    if not vrai(h) then
+        error(
+            __TS__New(Error, "Héros introuvable"),
+            0
+        )
+    end
+    local rang = (etat.rangs or ({}))[herosId]
+    return {
+        heros = copieProfonde(h),
+        pointsGuilde = etat.pointsGuilde[herosId] or 0,
+        rang = (if vrai(rang) then rang else nil),
+        affinites = copieProfonde(etat.affinites[herosId] or ({}))
+    }
+end
+--- Recopie la progression d'un héros voyageur sur un héros (même personnage, autre campagne).
+function ____exports.recopierProgression(cible, v)
+    cible.niveau = v.niveau
+    cible.xp = v.xp
+    cible.caracsBonus = copieProfonde(v.caracsBonus)
+    cible.pointsCaracDispo = v.pointsCaracDispo
+    cible.pointsCompetenceDispo = v.pointsCompetenceDispo
+    cible.rangsCompetences = copieProfonde(v.rangsCompetences)
+    cible.branche = v.branche
+    cible.equipement = copieProfonde(v.equipement)
+    cible.inventaire = copieProfonde(v.inventaire)
+    cible["or"] = v["or"]
+    cible.blessure = v.blessure
+    cible.pv = v.pv
+    cible.variantes = copieProfonde(v.variantes)
+    cible.varianteActive = copieProfonde(v.varianteActive)
+    cible.equipees = (if v.equipees == nil then nil else copieProfonde(v.equipees))
+    cible.grimoire = copieProfonde(v.grimoire or ({}))
+    cible.maitrise = copieProfonde(v.maitrise or ({}))
+    cible.ultime = v.ultime
+end
+--- Recopie aussi ce qui est rangé hors du héros (points de Guilde, rang, affinités).
+function ____exports.recopierAutour(etat, herosId, v)
+    etat.pointsGuilde[herosId] = v.pointsGuilde
+    if vrai(v.rang) then
+        etat.rangs[herosId] = v.rang
+    end
+    local ____etat_affinites_0, ____herosId_1 = etat.affinites, herosId
+    if ____etat_affinites_0[____herosId_1] == nil then
+        ____etat_affinites_0[____herosId_1] = {}
+    end
+    for ____, ____value in ipairs(entrees(v.affinites)) do
+        local co = ____value[1]
+        local a = ____value[2]
+        etat.affinites[herosId][co] = copieProfonde(a)
+    end
+end
+return ____exports
+ end,
 ["src.moteur.partie"] = function(...) 
 local ____lualib = require("lualib_bundle")
 local __TS__Class = ____lualib.__TS__Class
@@ -8091,9 +8301,9 @@ local __TS__ArraySome = ____lualib.__TS__ArraySome
 local __TS__ArrayIncludes = ____lualib.__TS__ArrayIncludes
 local __TS__ArrayIndexOf = ____lualib.__TS__ArrayIndexOf
 local __TS__StringStartsWith = ____lualib.__TS__StringStartsWith
+local __TS__StringSplit = ____lualib.__TS__StringSplit
 local __TS__ArrayFind = ____lualib.__TS__ArrayFind
 local __TS__StringSlice = ____lualib.__TS__StringSlice
-local __TS__StringSplit = ____lualib.__TS__StringSplit
 local __TS__StringReplaceAll = ____lualib.__TS__StringReplaceAll
 local __TS__ArraySlice = ____lualib.__TS__ArraySlice
 local __TS__ArrayForEach = ____lualib.__TS__ArrayForEach
@@ -8116,7 +8326,7 @@ local Map = ____lualib.Map
 local __TS__Iterator = ____lualib.__TS__Iterator
 local __TS__InstanceOf = ____lualib.__TS__InstanceOf
 local ____exports = {}
-local journal, promouvoir, annonceExamen, appliquerConsequence, avancerTemps, accorder, participantsGroupe, entrerNoeud, repondreParole, resoudrePari, terminerScene, resoudreChoix, decouvrirGout, lancerCombat, reveler, repartirAncienGrimoire, avancerContrat, quantiteValide, declencherEtapes, resoudreVote, dejaUnique, refuser, ordreRangs
+local journal, promouvoir, annonceExamen, appliquerConsequence, avancerTemps, accorderSexe, accorder, participantsGroupe, entrerNoeud, repondreParole, resoudrePari, terminerScene, resoudreChoix, decouvrirGout, lancerCombat, reveler, repartirAncienGrimoire, avancerContrat, noterContratRempli, quantiteValide, declencherEtapes, verifierAvancee, avancerScene, noterTest, soignerHeros, trouverLieuPartie, resoudreVote, dejaUnique, refuser, ordreRangs, PALIERS_ROMAINS
 local ____affinite = require("src.moteur.affinite")
 local affiniteVide = ____affinite.affiniteVide
 local modifierAffinite = ____affinite.modifierAffinite
@@ -8149,6 +8359,7 @@ local rangMaitrise = ____personnage.rangMaitrise
 local repartirPoint = ____personnage.repartirPoint
 local xpPourNiveau = ____personnage.xpPourNiveau
 local ____rng = require("src.moteur.rng")
+local auHasard = ____rng.chance
 local choisirAuHasard = ____rng.choisir
 local creerRng = ____rng.creerRng
 local de = ____rng.de
@@ -8176,6 +8387,9 @@ local formaterDate = ____temps.formaterDate
 local joursParMois = ____temps.joursParMois
 local versDate = ____temps.versDate
 local versJour = ____temps.versJour
+local ____voyage = require("src.moteur.voyage")
+local recopierAutour = ____voyage.recopierAutour
+local recopierProgression = ____voyage.recopierProgression
 function ____exports.listeHeros(etat)
     local res = {}
     for ____, j in ipairs(etat.ordreJoueurs) do
@@ -8345,13 +8559,25 @@ function ____exports.conditionHeros(contenu, etat, c, h)
     if c.date_min and etat.jour < versJour(contenu, c.date_min) then
         return false
     end
+    if vrai(c.minuteur_passe) then
+        local t = (etat.minuteurs or ({}))[c.minuteur_passe]
+        if t == nil or etat.jour < t then
+            return false
+        end
+    end
+    if vrai(c.minuteur_actif) then
+        local t = (etat.minuteurs or ({}))[c.minuteur_actif]
+        if t == nil or etat.jour >= t then
+            return false
+        end
+    end
     if c.ou and not __TS__ArraySome(
         c.ou,
         function(____, x) return ____exports.conditionHeros(contenu, etat, x, h) end
     ) then
         return false
     end
-    local besoinHeros = vrai(c.race) or vrai(c.classe) or vrai(c.origine) or vrai(c.don) or vrai(c.affinite_min) or vrai(c.affinite_palier) or vrai(c.carac_min) or vrai(c.objet) or vrai(c.rang_guilde_min) or c.niveau_min ~= nil or c.or_min ~= nil
+    local besoinHeros = vrai(c.race) or vrai(c.classe) or vrai(c.origine) or vrai(c.don) or vrai(c.affinite_min) or vrai(c.affinite_palier) or vrai(c.carac_min) or vrai(c.objet) or vrai(c.rang_guilde_min) or c.niveau_min ~= nil or c.or_min ~= nil or c.or_min_chapitre ~= nil
     if not besoinHeros then
         return true
     end
@@ -8404,6 +8630,9 @@ function ____exports.conditionHeros(contenu, etat, c, h)
     if c.or_min ~= nil and h["or"] < c.or_min then
         return false
     end
+    if c.or_min_chapitre ~= nil and h["or"] < c.or_min_chapitre * etat.chapitre then
+        return false
+    end
     if vrai(c.objet) and not ((h.inventaire[c.objet] or 0) > 0) then
         return false
     end
@@ -8414,6 +8643,25 @@ function ____exports.conditionHeros(contenu, etat, c, h)
         return false
     end
     return true
+end
+--- Une condition dans une scène : vraie si au moins un héros participant la remplit.
+function ____exports.conditionScene(contenu, etat, c, heros)
+    if not c then
+        return true
+    end
+    if c.groupe_min ~= nil and #heros < c.groupe_min then
+        return false
+    end
+    if c.groupe_max ~= nil and #heros > c.groupe_max then
+        return false
+    end
+    if #heros == 0 then
+        return ____exports.conditionHeros(contenu, etat, c, nil)
+    end
+    return __TS__ArraySome(
+        heros,
+        function(____, h) return ____exports.conditionHeros(contenu, etat, c, etat.heros[h]) end
+    )
 end
 function appliquerConsequence(contenu, etat, eff, heros, messages)
     local hs = __TS__ArrayMap(
@@ -8434,6 +8682,35 @@ function appliquerConsequence(contenu, etat, eff, heros, messages)
     end
     if vrai(eff.retirer_flag) then
         __TS__Delete(etat.flags, eff.retirer_flag)
+    end
+    if eff.minuteur ~= nil then
+        if etat.minuteurs == nil then
+            etat.minuteurs = {}
+        end
+        etat.minuteurs[eff.minuteur.id] = etat.jour + eff.minuteur.jours
+    end
+    if vrai(eff.retirer_minuteur) and etat.minuteurs ~= nil then
+        __TS__Delete(etat.minuteurs, eff.retirer_minuteur)
+    end
+    if eff.tirage ~= nil then
+        if auHasard(etat.rng, eff.tirage.chance) == true then
+            etat.flags[eff.tirage.flag] = true
+        else
+            __TS__Delete(etat.flags, eff.tirage.flag)
+        end
+    end
+    if eff.tirage_un ~= nil then
+        for ____, f in ipairs(eff.tirage_un) do
+            __TS__Delete(etat.flags, f)
+        end
+        etat.flags[choisirAuHasard(etat.rng, eff.tirage_un)] = true
+    end
+    if vrai(eff.prix_chapitre) then
+        for ____, h in ipairs(hs) do
+            local prix = eff.prix_chapitre * etat.chapitre
+            h["or"] = math.max(0, h["or"] - prix)
+            messages[#messages + 1] = ((h.nom .. " perd ") .. tostring(prix)) .. " pièces d'or"
+        end
     end
     if vrai(eff.rang_guilde) then
         for ____, h in ipairs(hs) do
@@ -8498,7 +8775,14 @@ function appliquerConsequence(contenu, etat, eff, heros, messages)
             messages[#messages + 1] = ((((h.nom .. " ") .. (if eff["or"] > 0 then "gagne" else "perd")) .. " ") .. tostring(math.abs(eff["or"]))) .. " pièces d'or"
         end
     end
-    for ____, o in ipairs(liste(eff.objet)) do
+    for ____, brut in ipairs(liste(eff.objet)) do
+        local o = table.concat(
+            __TS__StringSplit(brut, "{palier}"),
+            PALIERS_ROMAINS[math.max(
+                0,
+                math.min(#PALIERS_ROMAINS - 1, etat.chapitre - 1)
+            ) + 1] or ","
+        )
         local h = hs[1]
         if h ~= nil then
             if dejaUnique(contenu, etat, o) then
@@ -8683,6 +8967,11 @@ end
 function avancerTemps(contenu, etat, jours)
     local avant = etat.jour
     etat.jour = etat.jour + jours
+    if jours > 0 then
+        for ____, h in ipairs(____exports.listeHeros(etat)) do
+            soignerHeros(contenu, h, contenu.config.soins.regen_jour_pourcent * jours / 100)
+        end
+    end
     for ____, f in ipairs(fetesEntre(contenu, avant, etat.jour)) do
         local ____etat_journal_50 = etat.journal
         ____etat_journal_50[#____etat_journal_50 + 1] = {
@@ -8709,6 +8998,52 @@ function ____exports.nomFaction(f)
         troupes = "Troupes des domaines",
         legion = "Légion Cendrée"
     })[f] or f
+end
+function accorderSexe(texte, concerne, groupe)
+    local res = ""
+    local reste = texte
+    do
+        local garde = 0
+        while garde < 200 do
+            local i = (string.find(reste, "{{", nil, true) or 0) - 1
+            if i < 0 then
+                break
+            end
+            local j = (string.find(
+                reste,
+                "}}",
+                math.max(i + 1, 1),
+                true
+            ) or 0) - 1
+            if j < 0 then
+                break
+            end
+            local corps = __TS__StringSlice(reste, i + 2, j)
+            local choix
+            if __TS__StringStartsWith(corps, "groupe:") then
+                corps = string.sub(corps, 8)
+                local m = __TS__StringSplit(corps, "|")
+                local femmes = #__TS__ArrayFilter(
+                    groupe,
+                    function(____, h) return h.sexe == "f" end
+                )
+                if #groupe > 0 and femmes == #groupe then
+                    choix = m[2] or m[1]
+                elseif femmes > 0 then
+                    choix = m[3] or m[1]
+                else
+                    choix = m[1]
+                end
+            else
+                local m = __TS__StringSplit(corps, "|")
+                choix = (if concerne and concerne.sexe == "f" then m[2] or m[1] else m[1])
+            end
+            res = res .. __TS__StringSlice(reste, 0, i) .. choix
+            reste = __TS__StringSlice(reste, j + 2)
+            garde = garde + 1
+        end
+    end
+    return res .. reste
 end
 function accorder(texte, seul)
     local res = ""
@@ -8743,13 +9078,31 @@ end
 ---
 -- @param interroge héros à qui un personnage s'adresse : {pseudo} = pseudo de son joueur, {nom} = son nom
 function ____exports.remplacerVariables(contenu, etat, texteBrut, heros, interroge)
-    local texte = accorder(texteBrut, #heros <= 1)
     local hi = (if vrai(interroge) then etat.heros[interroge] else nil)
+    local herosScene = __TS__ArrayFilter(
+        __TS__ArrayMap(
+            heros,
+            function(____, h) return etat.heros[h] end
+        ),
+        function(____, x) return vrai(x) end
+    )
+    local ____vrai_result_59 = vrai(etat.meneur)
+    if ____vrai_result_59 then
+        local ____vrai_58 = vrai
+        local ____opt_56 = etat.joueurs[etat.meneur]
+        ____vrai_result_59 = ____vrai_58(____opt_56 and ____opt_56.herosId)
+    end
+    local herosMeneur = (if ____vrai_result_59 then etat.heros[etat.joueurs[etat.meneur].herosId] or nil else nil)
+    local concerne = hi or (if #herosScene == 1 then herosScene[1] else herosMeneur or herosScene[1] or nil)
+    local texte = accorder(
+        accorderSexe(texteBrut, concerne, herosScene),
+        #heros <= 1
+    )
     if hi then
-        local ____texte_58 = texte
-        local ____opt_56 = etat.joueurs[hi.joueurId]
+        local ____texte_62 = texte
+        local ____opt_60 = etat.joueurs[hi.joueurId]
         texte = __TS__StringReplaceAll(
-            __TS__StringReplaceAll(____texte_58, "{pseudo}", ____opt_56 and ____opt_56.pseudo or hi.nom),
+            __TS__StringReplaceAll(____texte_62, "{pseudo}", ____opt_60 and ____opt_60.pseudo or hi.nom),
             "{nom}",
             hi.nom
         )
@@ -8758,8 +9111,8 @@ function ____exports.remplacerVariables(contenu, etat, texteBrut, heros, interro
         __TS__ArrayMap(
             heros,
             function(____, h)
-                local ____opt_59 = etat.heros[h]
-                return ____opt_59 and ____opt_59.nom
+                local ____opt_63 = etat.heros[h]
+                return ____opt_63 and ____opt_63.nom
             end
         ),
         function(____, n) return vrai(n) end
@@ -8768,13 +9121,13 @@ function ____exports.remplacerVariables(contenu, etat, texteBrut, heros, interro
         __TS__ArraySlice(noms, 0, -1),
         ", "
     ) .. " et ") .. noms[#noms])
-    local ____vrai_result_64 = vrai(etat.meneur)
-    if ____vrai_result_64 then
-        local ____vrai_63 = vrai
-        local ____opt_61 = etat.joueurs[etat.meneur]
-        ____vrai_result_64 = ____vrai_63(____opt_61 and ____opt_61.herosId)
+    local ____vrai_result_68 = vrai(etat.meneur)
+    if ____vrai_result_68 then
+        local ____vrai_67 = vrai
+        local ____opt_65 = etat.joueurs[etat.meneur]
+        ____vrai_result_68 = ____vrai_67(____opt_65 and ____opt_65.herosId)
     end
-    local meneur = (if ____vrai_result_64 then etat.heros[etat.joueurs[etat.meneur].herosId].nom else noms[1] or "")
+    local meneur = (if ____vrai_result_68 then etat.heros[etat.joueurs[etat.meneur].herosId].nom else noms[1] or "")
     local h0 = (if vrai(heros[1]) then etat.heros[heros[1]] else nil)
     return __TS__StringReplaceAll(
         __TS__StringReplaceAll(
@@ -8803,8 +9156,8 @@ function participantsGroupe(etat)
         __TS__ArrayFilter(
             ____exports.listeHeros(etat),
             function(____, h)
-                local ____opt_65 = etat.joueurs[h.joueurId]
-                return ____opt_65 and ____opt_65.present or h.siAbsent == "ia"
+                local ____opt_69 = etat.joueurs[h.joueurId]
+                return ____opt_69 and ____opt_69.present or h.siAbsent == "ia"
             end
         ),
         function(____, h) return h.id end
@@ -8819,6 +9172,9 @@ function entrerNoeud(contenu, etat, cle, noeudId)
     es.messages = {}
     es.parole = nil
     es.pari = nil
+    es.prets = {}
+    es.resultatVote = nil
+    es.reponseParole = nil
     for ____, eff in ipairs(n.effets) do
         appliquerConsequence(
             contenu,
@@ -8858,25 +9214,25 @@ function entrerNoeud(contenu, etat, cle, noeudId)
                 end
             end
         )
-        local ____array_67 = __TS__SparseArrayNew(table.unpack(specifiques))
+        local ____array_71 = __TS__SparseArrayNew(table.unpack(specifiques))
         __TS__SparseArrayPush(
-            ____array_67,
+            ____array_71,
             table.unpack(generiques)
         )
         es.parole = {
             heros = elu,
             reponses = __TS__ArraySlice(
-                {__TS__SparseArraySpread(____array_67)},
+                {__TS__SparseArraySpread(____array_71)},
                 0,
                 3
             )
         }
-        local ____opt_68 = etat.joueurs[h.joueurId]
-        local ____temp_70 = ____opt_68 and ____opt_68.present
-        if ____temp_70 == nil then
-            ____temp_70 = false
+        local ____opt_72 = etat.joueurs[h.joueurId]
+        local ____temp_74 = ____opt_72 and ____opt_72.present
+        if ____temp_74 == nil then
+            ____temp_74 = false
         end
-        if not ____temp_70 then
+        if not ____temp_74 then
             repondreParole(contenu, etat, cle, es.parole.reponses[1])
         end
         return
@@ -8945,6 +9301,16 @@ function repondreParole(contenu, etat, cle, index)
         etat.scenes[cle].messages,
         table.unpack(msgs)
     )
+    etat.scenes[cle].reponseParole = {
+        joueur = etat.heros[p.heros].joueurId,
+        texte = ____exports.remplacerVariables(
+            contenu,
+            etat,
+            rep.texte,
+            es.heros,
+            p.heros
+        )
+    }
 end
 --- Joueurs qui doivent répondre au pari de la scène : présents, avec un héros dans la scène, dans l'ordre de la partie.
 function ____exports.joueursDuPari(etat, cle)
@@ -9021,8 +9387,8 @@ function resoudrePari(contenu, etat, cle)
             function(____, h, i)
                 h["or"] = h["or"] - parts[i + 1]
                 etat.mises[h.id] = (etat.mises[h.id] or 0) + parts[i + 1]
-                local ____etat_mouvementsOr_71 = etat.mouvementsOr
-                ____etat_mouvementsOr_71[#____etat_mouvementsOr_71 + 1] = {heros = h.id, montant = -parts[i + 1], raison = "mise"}
+                local ____etat_mouvementsOr_75 = etat.mouvementsOr
+                ____etat_mouvementsOr_75[#____etat_mouvementsOr_75 + 1] = {heros = h.id, montant = -parts[i + 1], raison = "mise"}
                 msgs[#msgs + 1] = ((((h.nom .. " mise ") .. tostring(parts[i + 1])) .. " pièce") .. (if parts[i + 1] > 1 then "s" else "")) .. " d'or."
             end
         )
@@ -9040,8 +9406,8 @@ function terminerScene(contenu, etat, cle)
     local es = etat.scenes[cle]
     local s = contenu.scenes[es.sceneId]
     if not s.repetable then
-        local ____etat_scenesVues_72 = etat.scenesVues
-        ____etat_scenesVues_72[#____etat_scenesVues_72 + 1] = (if s.type == "individuel" then (s.id .. "@") .. es.heros[1] else s.id)
+        local ____etat_scenesVues_76 = etat.scenesVues
+        ____etat_scenesVues_76[#____etat_scenesVues_76 + 1] = (if s.type == "individuel" then (s.id .. "@") .. es.heros[1] else s.id)
     end
     es.noeudFin = es.noeud
     es.noeud = "__fin__"
@@ -9059,8 +9425,8 @@ function resoudreChoix(contenu, etat, cle, index, votants)
     local ch = n.choix[index + 1]
     local herosVotants = {}
     for ____, j in ipairs(votants) do
-        local ____opt_73 = etat.joueurs[j]
-        local h = ____opt_73 and ____opt_73.herosId
+        local ____opt_77 = etat.joueurs[j]
+        local h = ____opt_77 and ____opt_77.herosId
         if vrai(h) and __TS__ArrayIncludes(es.heros, h) then
             herosVotants[#herosVotants + 1] = h
         end
@@ -9119,6 +9485,26 @@ function resoudreChoix(contenu, etat, cle, index, votants)
             reussi = reussi,
             heros = meilleur.id
         }
+        local ____noterTest_89 = noterTest
+        local ____etat_88 = etat
+        local ____meilleur_id_81 = meilleur.id
+        local ____ch_test_carac_82 = ch.test.carac
+        local ____jet_83 = jet
+        local ____temp_84 = total - jet
+        local ____total_85 = total
+        local ____ch_test_difficulte_86 = ch.test.difficulte
+        local ____reussi_87 = reussi
+        local ____opt_79 = contenu.scenes[es.sceneId]
+        ____noterTest_89(____etat_88, {
+            heros = ____meilleur_id_81,
+            carac = ____ch_test_carac_82,
+            jet = ____jet_83,
+            bonus = ____temp_84,
+            total = ____total_85,
+            difficulte = ____ch_test_difficulte_86,
+            reussi = ____reussi_87,
+            quoi = ____opt_79 and ____opt_79.titre or ""
+        })
         suite = (if reussi then ch.test.reussite else ch.test.echec)
     end
     entrerNoeud(contenu, etat, cle, suite)
@@ -9128,13 +9514,13 @@ function resoudreChoix(contenu, etat, cle, index, votants)
     )
 end
 function decouvrirGout(etat, compagnon, objet)
-    local ____etat_goutsConnus_79, ____compagnon_80 = etat.goutsConnus, compagnon
-    if ____etat_goutsConnus_79[____compagnon_80] == nil then
-        ____etat_goutsConnus_79[____compagnon_80] = {}
+    local ____etat_goutsConnus_94, ____compagnon_95 = etat.goutsConnus, compagnon
+    if ____etat_goutsConnus_94[____compagnon_95] == nil then
+        ____etat_goutsConnus_94[____compagnon_95] = {}
     end
     if not __TS__ArrayIncludes(etat.goutsConnus[compagnon], objet) then
-        local ____etat_goutsConnus_compagnon_81 = etat.goutsConnus[compagnon]
-        ____etat_goutsConnus_compagnon_81[#____etat_goutsConnus_compagnon_81 + 1] = objet
+        local ____etat_goutsConnus_compagnon_96 = etat.goutsConnus[compagnon]
+        ____etat_goutsConnus_compagnon_96[#____etat_goutsConnus_compagnon_96 + 1] = objet
     end
 end
 --- Vrai si un combat dans ce lieu se passe « en route » (hors d'une ville) : chaque héros y mange une ration.
@@ -9161,12 +9547,12 @@ function lancerCombat(contenu, etat, rencontre, cle, contexte, lieu, participant
     local allies = {}
     for ____, id in ipairs(herosIds) do
         local h = etat.heros[id]
-        local ____opt_82 = etat.joueurs[h.joueurId]
-        local ____temp_84 = ____opt_82 and ____opt_82.present
-        if ____temp_84 == nil then
-            ____temp_84 = false
+        local ____opt_97 = etat.joueurs[h.joueurId]
+        local ____temp_99 = ____opt_97 and ____opt_97.present
+        if ____temp_99 == nil then
+            ____temp_99 = false
         end
-        local present = ____temp_84
+        local present = ____temp_99
         allies[#allies + 1] = combattantHeros(contenu, h, present, h.grimoire)
         local co = etat.equipe[id]
         if vrai(co) and __TS__ArrayIncludes(etat.compagnonsRencontres, co) then
@@ -9187,6 +9573,20 @@ function lancerCombat(contenu, etat, rencontre, cle, contexte, lieu, participant
         etat.rng,
         (cle .. ":") .. tostring(etat.numeroAction)
     )
+    if contexte.origine ~= "examen" then
+        for ____, x in ipairs(combat.combattants) do
+            if x.type ~= "heros" or not vrai(x.herosId) then
+                continue
+            end
+            local pv = etat.heros[x.herosId].pv
+            if pv ~= nil then
+                x.pv = math.max(
+                    1,
+                    math.min(x.pvMax, pv)
+                )
+            end
+        end
+    end
     if ____exports.lieuHorsVille(contenu, lieu) then
         for ____, x in ipairs(combat.combattants) do
             if x.type ~= "heros" or not vrai(x.herosId) then
@@ -9194,17 +9594,17 @@ function lancerCombat(contenu, etat, rencontre, cle, contexte, lieu, participant
             end
             local h = etat.heros[x.herosId]
             if (h.inventaire[____exports.RATION.objet] or 0) > 0 then
-                local ____h_inventaire_85, ____exports_RATION_objet_86 = h.inventaire, ____exports.RATION.objet
-                ____h_inventaire_85[____exports_RATION_objet_86] = ____h_inventaire_85[____exports_RATION_objet_86] - 1
-                local ____etat_dernieresNouvelles_87 = etat.dernieresNouvelles
-                ____etat_dernieresNouvelles_87[#____etat_dernieresNouvelles_87 + 1] = h.nom .. " mange une ration de voyage en route."
+                local ____h_inventaire_100, ____exports_RATION_objet_101 = h.inventaire, ____exports.RATION.objet
+                ____h_inventaire_100[____exports_RATION_objet_101] = ____h_inventaire_100[____exports_RATION_objet_101] - 1
+                local ____etat_dernieresNouvelles_102 = etat.dernieresNouvelles
+                ____etat_dernieresNouvelles_102[#____etat_dernieresNouvelles_102 + 1] = h.nom .. " mange une ration de voyage en route."
             else
                 x.pv = math.max(
                     1,
                     x.pv - math.floor(x.pvMax * ____exports.RATION.malusPv + 0.5)
                 )
-                local ____etat_dernieresNouvelles_88 = etat.dernieresNouvelles
-                ____etat_dernieresNouvelles_88[#____etat_dernieresNouvelles_88 + 1] = ((h.nom .. " n'a pas de ration : la route l'a fatigué (−") .. tostring(math.floor(____exports.RATION.malusPv * 100 + 0.5))) .. " % de PV au début du combat)."
+                local ____etat_dernieresNouvelles_103 = etat.dernieresNouvelles
+                ____etat_dernieresNouvelles_103[#____etat_dernieresNouvelles_103 + 1] = ((h.nom .. " n'a pas de ration : la route l'a fatigué (−") .. tostring(math.floor(____exports.RATION.malusPv * 100 + 0.5))) .. " % de PV au début du combat)."
             end
         end
     end
@@ -9222,8 +9622,8 @@ function reveler(etat, x, y)
                 while dx <= 3 do
                     local k = (tostring(x + dx) .. ",") .. tostring(y + dy)
                     if not __TS__ArrayIncludes(etat.donjon.vus, k) then
-                        local ____etat_donjon_vus_101 = etat.donjon.vus
-                        ____etat_donjon_vus_101[#____etat_donjon_vus_101 + 1] = k
+                        local ____etat_donjon_vus_116 = etat.donjon.vus
+                        ____etat_donjon_vus_116[#____etat_donjon_vus_116 + 1] = k
                     end
                     dx = dx + 1
                 end
@@ -9251,8 +9651,8 @@ function repartirAncienGrimoire(contenu, etat)
 end
 --- Étape en cours du contrat d'un héros (null s'il n'a pas de contrat).
 function ____exports.etapeContrat(contenu, etat, herosId)
-    local ____opt_153 = etat.contrats
-    local st = ____opt_153 and ____opt_153[herosId]
+    local ____opt_196 = etat.contrats
+    local st = ____opt_196 and ____opt_196[herosId]
     if not st then
         return nil
     end
@@ -9274,8 +9674,8 @@ function avancerContrat(contenu, etat, h)
     local ct = contenu.contrats[st.id]
     st.etape = st.etape + 1
     if st.etape < #ct.etapes then
-        local ____etat_dernieresNouvelles_155 = etat.dernieresNouvelles
-        ____etat_dernieresNouvelles_155[#____etat_dernieresNouvelles_155 + 1] = (("Contrat « " .. ct.titre) .. " » : ") .. ct.etapes[st.etape + 1].objectif
+        local ____etat_dernieresNouvelles_198 = etat.dernieresNouvelles
+        ____etat_dernieresNouvelles_198[#____etat_dernieresNouvelles_198 + 1] = (("Contrat « " .. ct.titre) .. " » : ") .. ct.etapes[st.etape + 1].objectif
         return
     end
     local msgs = {}
@@ -9288,18 +9688,18 @@ function avancerContrat(contenu, etat, h)
     )
     __TS__Delete(etat.contrats, h.id)
     if vrai(ct.examen_rang) then
-        local ____etat_dernieresNouvelles_157 = etat.dernieresNouvelles
-        local ____array_156 = __TS__SparseArrayNew(
+        local ____etat_dernieresNouvelles_200 = etat.dernieresNouvelles
+        local ____array_199 = __TS__SparseArrayNew(
             ("Épreuve réussie : " .. ct.titre) .. ".",
             table.unpack(msgs)
         )
         __TS__SparseArrayPush(
-            ____array_156,
+            ____array_199,
             promouvoir(contenu, etat, h, ct.examen_rang)
         )
         __TS__ArrayPush(
-            ____etat_dernieresNouvelles_157,
-            __TS__SparseArraySpread(____array_156)
+            ____etat_dernieresNouvelles_200,
+            __TS__SparseArraySpread(____array_199)
         )
         return
     end
@@ -9309,6 +9709,24 @@ function avancerContrat(contenu, etat, h)
         table.unpack(msgs)
     )
     journal(contenu, etat, ((h.nom .. " remplit le contrat « ") .. ct.titre) .. " ».")
+    noterContratRempli(etat, ct)
+end
+function noterContratRempli(etat, ct)
+    if etat.contratsTermines == nil then
+        etat.contratsTermines = {}
+    end
+    etat.contratsTermines[ct.id] = (if ct.repetable == false then -1 else etat.jour)
+end
+--- Le contrat est-il au tableau ? 0 = oui ; -1 = rempli, il ne revient jamais ; n > 0 = il revient dans n jours.
+function ____exports.retourContrat(contenu, etat, id)
+    local fait = (etat.contratsTermines or ({}))[id]
+    if fait == nil then
+        return 0
+    end
+    if fait < 0 then
+        return -1
+    end
+    return math.max(0, fait + contenu.config.contrats.retour_jours - etat.jour)
 end
 function quantiteValide(q)
     if q == nil then
@@ -9339,9 +9757,95 @@ function declencherEtapes(contenu, etat, correspond)
             continue
         end
         q.etape = def.etapes[i + 1 + 1].id
-        local ____etat_dernieresNouvelles_158 = etat.dernieresNouvelles
-        ____etat_dernieresNouvelles_158[#____etat_dernieresNouvelles_158 + 1] = (("Quête « " .. def.titre) .. " » : ") .. def.etapes[i + 1 + 1].objectif
+        local ____etat_dernieresNouvelles_201 = etat.dernieresNouvelles
+        ____etat_dernieresNouvelles_201[#____etat_dernieresNouvelles_201 + 1] = (("Quête « " .. def.titre) .. " » : ") .. def.etapes[i + 1 + 1].objectif
     end
+end
+function verifierAvancee(contenu, etat, cle)
+    if etat.combats[cle] then
+        refuser("Un combat est en cours")
+    end
+    local n = ____exports.noeudCourant(contenu, etat, cle) or refuser("Rien à continuer")
+    if not vrai(n.suite) then
+        refuser("Il faut faire un choix")
+    end
+    if cle == "groupe" and etat.donjon then
+        refuser("Le groupe explore un donjon")
+    end
+    return n
+end
+function avancerScene(contenu, etat, cle)
+    local n = verifierAvancee(contenu, etat, cle)
+    local dest = n.suite
+    for ____, a in ipairs(n.aiguillage or ({})) do
+        if ____exports.conditionScene(contenu, etat, a.si, etat.scenes[cle].heros) then
+            dest = a.aller
+            break
+        end
+    end
+    entrerNoeud(contenu, etat, cle, dest)
+end
+--- Joueurs présents (avec un héros dans la scène) qui n'ont pas encore cliqué « Continuer ». Les absents ne comptent pas.
+function ____exports.joueursAttendusDialogue(etat, cle)
+    local es = etat.scenes[cle]
+    if not es then
+        return {}
+    end
+    local prets = es.prets or ({})
+    return __TS__ArrayFilter(
+        etat.ordreJoueurs,
+        function(____, x)
+            local jx = etat.joueurs[x]
+            return jx.present and vrai(jx.herosId) and __TS__ArrayIncludes(es.heros, jx.herosId) and not __TS__ArrayIncludes(prets, x)
+        end
+    )
+end
+function noterTest(etat, t)
+    if etat.tests == nil then
+        etat.tests = {}
+    end
+    local ____etat_tests_202 = etat.tests
+    ____etat_tests_202[#____etat_tests_202 + 1] = t
+end
+--- PV max d'un héros hors combat (blessure comprise), calculés comme au début d'un combat.
+function ____exports.pvMaxHorsCombat(contenu, h)
+    return combattantHeros(contenu, h, true, h.grimoire or ({})).pvMax
+end
+function soignerHeros(contenu, h, part)
+    if h.pv == nil or part <= 0 then
+        return 0
+    end
+    local max = ____exports.pvMaxHorsCombat(contenu, h)
+    local avant = math.min(max, h.pv)
+    local apres = math.min(
+        max,
+        avant + math.max(
+            1,
+            math.floor(max * part + 0.5)
+        )
+    )
+    if apres >= max then
+        __TS__Delete(h, "pv")
+    else
+        h.pv = apres
+    end
+    return apres - avant
+end
+--- Hors combat, une potion rend une part des PV max selon sa puissance (petite 25 %, normale 47 %, grande 94 %).
+function ____exports.partSoinObjet(soin)
+    return math.min(1, (soin.puissance or 16) / 64)
+end
+function trouverLieuPartie(contenu, id)
+    for ____, r in ipairs(valeurs(contenu.regions)) do
+        local l = __TS__ArrayFind(
+            r.lieux,
+            function(____, x) return x.id == id end
+        )
+        if l then
+            return l
+        end
+    end
+    return nil
 end
 function resoudreVote(contenu, etat)
     local es = etat.scenes.groupe
@@ -9349,14 +9853,14 @@ function resoudreVote(contenu, etat)
     for ____, ____value in ipairs(entrees(es.votes)) do
         local joueur = ____value[1]
         local idx = ____value[2]
-        local ____comptes_set_161 = comptes.set
-        local ____idx_160 = idx
-        local ____array_159 = __TS__SparseArrayNew(table.unpack(comptes:get(idx) or ({})))
-        __TS__SparseArrayPush(____array_159, joueur)
-        ____comptes_set_161(
+        local ____comptes_set_205 = comptes.set
+        local ____idx_204 = idx
+        local ____array_203 = __TS__SparseArrayNew(table.unpack(comptes:get(idx) or ({})))
+        __TS__SparseArrayPush(____array_203, joueur)
+        ____comptes_set_205(
             comptes,
-            ____idx_160,
-            {__TS__SparseArraySpread(____array_159)}
+            ____idx_204,
+            {__TS__SparseArraySpread(____array_203)}
         )
     end
     local meilleur = -1
@@ -9369,6 +9873,17 @@ function resoudreVote(contenu, etat)
             max = #v
         end
     end
+    local n = ____exports.noeudCourant(contenu, etat, "groupe")
+    local resultat = (if n then {
+        choix = __TS__ArrayMap(
+            n.choix,
+            function(____, ch, i) return {
+                texte = ____exports.remplacerVariables(contenu, etat, ch.texte, es.heros),
+                joueurs = comptes:get(i) or ({})
+            } end
+        ),
+        retenu = meilleur
+    } else nil)
     resoudreChoix(
         contenu,
         etat,
@@ -9376,6 +9891,10 @@ function resoudreVote(contenu, etat)
         meilleur,
         comptes:get(meilleur) or ({})
     )
+    local apres = etat.scenes.groupe
+    if apres and resultat then
+        apres.resultatVote = resultat
+    end
 end
 function ____exports.prixAchat(contenu, h, objet)
     local p = contenu.objets[objet].prix
@@ -9393,13 +9912,13 @@ function ____exports.prixVente(contenu, h, objet)
     )
 end
 function dejaUnique(contenu, etat, objet)
-    local ____opt_162 = contenu.objets[objet]
-    return (____opt_162 and ____opt_162.unique_par_partie) == true and exemplaires(
+    local ____opt_206 = contenu.objets[objet]
+    return (____opt_206 and ____opt_206.unique_par_partie) == true and exemplaires(
         ____exports.listeHeros(etat),
         objet
     ) > 0
 end
-____exports.VERSION_ETAT = 7
+____exports.VERSION_ETAT = 9
 ____exports.MAX_JOUEURS = 6
 ____exports.ErreurAction = __TS__Class()
 local ErreurAction = ____exports.ErreurAction
@@ -9458,7 +9977,8 @@ function ____exports.nouvellePartie(contenu, id, nom, graine)
         objetsConnus = {},
         goutsConnus = {},
         rangs = {},
-        examensRates = {}
+        examensRates = {},
+        contratsTermines = {}
     }
 end
 function ____exports.herosDuJoueur(etat, joueur)
@@ -9502,25 +10022,14 @@ function ____exports.candidatsExamen(contenu, etat, herosId)
         function(____, x) return x.id end
     )
 end
---- Une condition dans une scène : vraie si au moins un héros participant la remplit.
-function ____exports.conditionScene(contenu, etat, c, heros)
-    if not c then
-        return true
-    end
-    if c.groupe_min ~= nil and #heros < c.groupe_min then
-        return false
-    end
-    if c.groupe_max ~= nil and #heros > c.groupe_max then
-        return false
-    end
-    if #heros == 0 then
-        return ____exports.conditionHeros(contenu, etat, c, nil)
-    end
-    return __TS__ArraySome(
-        heros,
-        function(____, h) return ____exports.conditionHeros(contenu, etat, c, etat.heros[h]) end
-    )
-end
+PALIERS_ROMAINS = {
+    "i",
+    "ii",
+    "iii",
+    "iv",
+    "v",
+    "vi"
+}
 --- Vrai si le minuteur de jeu actif peut encore faire passer un jour (il ne change jamais de mois).
 function ____exports.jourPeutPasser(contenu, etat)
     if etat.tempsLibre ~= nil then
@@ -9689,18 +10198,18 @@ function ____exports.choixVisibles(contenu, etat, cle)
 end
 --- Vrai si l'effet de cet objet est connu du joueur (un objet mystérieux reste « ??? » tant qu'il n'est pas découvert).
 function ____exports.objetConnu(contenu, etat, objet)
-    local ____opt_75 = contenu.objets[objet]
-    return not (____opt_75 and ____opt_75.mystere) or __TS__ArrayIncludes(etat.objetsConnus or ({}), objet)
+    local ____opt_90 = contenu.objets[objet]
+    return not (____opt_90 and ____opt_90.mystere) or __TS__ArrayIncludes(etat.objetsConnus or ({}), objet)
 end
 local function decouvrirObjet(contenu, etat, objet)
     if ____exports.objetConnu(contenu, etat, objet) then
         return
     end
-    local ____etat_objetsConnus_77 = etat.objetsConnus
-    ____etat_objetsConnus_77[#____etat_objetsConnus_77 + 1] = objet
+    local ____etat_objetsConnus_92 = etat.objetsConnus
+    ____etat_objetsConnus_92[#____etat_objetsConnus_92 + 1] = objet
     local o = contenu.objets[objet]
-    local ____etat_dernieresNouvelles_78 = etat.dernieresNouvelles
-    ____etat_dernieresNouvelles_78[#____etat_dernieresNouvelles_78 + 1] = (("Objet identifié : " .. o.nom) .. ". ") .. o.description
+    local ____etat_dernieresNouvelles_93 = etat.dernieresNouvelles
+    ____etat_dernieresNouvelles_93[#____etat_dernieresNouvelles_93 + 1] = (("Objet identifié : " .. o.nom) .. ". ") .. o.description
 end
 --- Réaction connue d'un compagnon à un cadeau (null tant qu'on ne l'a pas découverte).
 function ____exports.goutConnu(contenu, etat, compagnon, objet)
@@ -9712,9 +10221,9 @@ end
 --- Ration de voyage : il en faut une par héros pour un combat hors de la ville ; sans ration, on part fatigué.
 ____exports.RATION = {objet = "ration", malusPv = 0.15}
 local function terminerCombat(contenu, etat, cle)
-    local ____etat_combats_cle_89 = etat.combats[cle]
-    local combat = ____etat_combats_cle_89.combat
-    local contexte = ____etat_combats_cle_89.contexte
+    local ____etat_combats_cle_104 = etat.combats[cle]
+    local combat = ____etat_combats_cle_104.combat
+    local contexte = ____etat_combats_cle_104.contexte
     local bilan = {}
     local heros = __TS__ArrayMap(
         __TS__ArrayFilter(
@@ -9728,6 +10237,16 @@ local function terminerCombat(contenu, etat, cle)
         function(____, x) return x.type == "heros" end
     )) do
         local h = etat.heros[c.herosId]
+        if contexte.origine ~= "examen" then
+            local ko = c.pv <= 0 or c.ko
+            h.pv = (if ko then math.max(
+                1,
+                math.floor(c.pvMax * contenu.config.soins.pv_apres_ko_pourcent / 100 + 0.5)
+            ) else math.max(1, c.pv))
+            if h.pv >= ____exports.pvMaxHorsCombat(contenu, h) then
+                __TS__Delete(h, "pv")
+            end
+        end
         local utilisees = c.compteurs.potionsUtilisees or 0
         if vrai(utilisees) then
             h.inventaire["potion-soin-petite"] = math.max(0, (h.inventaire["potion-soin-petite"] or 0) - utilisees)
@@ -9752,9 +10271,9 @@ local function terminerCombat(contenu, etat, cle)
             gagnerMaitrise(contenu, h, id, n)
             local apres = rangMaitrise(contenu, h.maitrise[id] or 0)
             if apres > avant then
-                local ____h_nom_92 = h.nom
-                local ____opt_90 = contenu.competences[id]
-                bilan[#bilan + 1] = ((((((____h_nom_92 .. " maîtrise mieux « ") .. (____opt_90 and ____opt_90.nom or id)) .. " » : maîtrise ") .. tostring(apres)) .. "/") .. tostring(#contenu.config.maitrise.seuils)) .. "."
+                local ____h_nom_107 = h.nom
+                local ____opt_105 = contenu.competences[id]
+                bilan[#bilan + 1] = ((((((____h_nom_107 .. " maîtrise mieux « ") .. (____opt_105 and ____opt_105.nom or id)) .. " » : maîtrise ") .. tostring(apres)) .. "/") .. tostring(#contenu.config.maitrise.seuils)) .. "."
             end
         end
     end
@@ -9792,9 +10311,9 @@ local function terminerCombat(contenu, etat, cle)
     contexte.bilan = bilan
 end
 local function apresCombat(contenu, etat, cle)
-    local ____etat_combats_cle_93 = etat.combats[cle]
-    local combat = ____etat_combats_cle_93.combat
-    local contexte = ____etat_combats_cle_93.contexte
+    local ____etat_combats_cle_108 = etat.combats[cle]
+    local combat = ____etat_combats_cle_108.combat
+    local contexte = ____etat_combats_cle_108.contexte
     __TS__Delete(etat.combats, cle)
     local victoire = combat.resultat == "victoire"
     if contexte.origine == "examen" and contexte.examen then
@@ -9804,8 +10323,8 @@ local function apresCombat(contenu, etat, cle)
                 continue
             end
             if victoire then
-                local ____etat_dernieresNouvelles_94 = etat.dernieresNouvelles
-                ____etat_dernieresNouvelles_94[#____etat_dernieresNouvelles_94 + 1] = promouvoir(contenu, etat, etat.heros[id], contexte.examen.rang)
+                local ____etat_dernieresNouvelles_109 = etat.dernieresNouvelles
+                ____etat_dernieresNouvelles_109[#____etat_dernieresNouvelles_109 + 1] = promouvoir(contenu, etat, etat.heros[id], contexte.examen.rang)
             else
                 etat.examensRates[id] = etat.jour
             end
@@ -9818,36 +10337,36 @@ local function apresCombat(contenu, etat, cle)
         )
     elseif contexte.origine == "donjon" and etat.donjon then
         if victoire and vrai(contexte.evenementDonjon) then
-            local ____etat_donjon_faits_95 = etat.donjon.faits
-            ____etat_donjon_faits_95[#____etat_donjon_faits_95 + 1] = contexte.evenementDonjon
+            local ____etat_donjon_faits_110 = etat.donjon.faits
+            ____etat_donjon_faits_110[#____etat_donjon_faits_110 + 1] = contexte.evenementDonjon
         end
         etat.donjon.messages = {table.unpack(contexte.bilan or ({}))}
         if not victoire then
             local d = etat.donjon
             local defaites = (d.defaites or 0) + (if combat.resultat == "defaite" then 1 else 0)
-            local ____array_96 = __TS__SparseArrayNew(table.unpack(contexte.bilan or ({})))
-            __TS__SparseArrayPush(____array_96, "Vous reprenez connaissance près de l'escalier d'entrée. Les ennemis vaincus ne se relèveront pas.")
-            local msg = (if combat.resultat == "defaite" then {__TS__SparseArraySpread(____array_96)} else {"Le groupe se replie vers l'entrée."})
+            local ____array_111 = __TS__SparseArrayNew(table.unpack(contexte.bilan or ({})))
+            __TS__SparseArrayPush(____array_111, "Vous reprenez connaissance près de l'escalier d'entrée. Les ennemis vaincus ne se relèveront pas.")
+            local msg = (if combat.resultat == "defaite" then {__TS__SparseArraySpread(____array_111)} else {"Le groupe se replie vers l'entrée."})
             if defaites >= 3 and vrai(d.abandon) then
                 msg[#msg + 1] = "Le groupe est épuisé. Vous pouvez renoncer et remonter par l'escalier d'entrée : l'histoire continuera sans ce que vous cherchiez ici."
             end
             etat.donjon = __TS__ObjectAssign({}, d, {x = contenu.donjons[d.id].depart.x, y = contenu.donjons[d.id].depart.y, messages = msg, defaites = defaites})
         end
     else
-        local ____temp_99 = contexte.origine == "contrat" and vrai(contexte.contrat)
-        if ____temp_99 then
-            local ____opt_97 = etat.contrats[cle]
-            ____temp_99 = (____opt_97 and ____opt_97.id) == contexte.contrat
+        local ____temp_114 = contexte.origine == "contrat" and vrai(contexte.contrat)
+        if ____temp_114 then
+            local ____opt_112 = etat.contrats[cle]
+            ____temp_114 = (____opt_112 and ____opt_112.id) == contexte.contrat
         end
-        if ____temp_99 then
+        if ____temp_114 then
             local st = etat.contrats[cle]
             if victoire then
                 st.notes = {table.unpack(contexte.bilan or ({}))}
                 avancerContrat(contenu, etat, etat.heros[cle])
             else
-                local ____array_100 = __TS__SparseArrayNew(table.unpack(contexte.bilan or ({})))
-                __TS__SparseArrayPush(____array_100, (if combat.resultat == "defaite" then "Vous êtes repoussé. Reprenez des forces, puis revenez : le contrat tient toujours." else "Vous vous repliez. Le contrat tient toujours : revenez quand vous êtes prêt."))
-                st.notes = {__TS__SparseArraySpread(____array_100)}
+                local ____array_115 = __TS__SparseArrayNew(table.unpack(contexte.bilan or ({})))
+                __TS__SparseArrayPush(____array_115, (if combat.resultat == "defaite" then "Vous êtes repoussé. Reprenez des forces, puis revenez : le contrat tient toujours." else "Vous vous repliez. Le contrat tient toujours : revenez quand vous êtes prêt."))
+                st.notes = {__TS__SparseArraySpread(____array_115)}
             end
         elseif contexte.origine == "contrat" and vrai(contexte.contrat) then
             local h = etat.heros[cle]
@@ -9948,9 +10467,9 @@ local function deplacerDonjon(contenu, etat, dx, dy)
     end
     local heros = participantsGroupe(etat)
     repeat
-        local ____switch369 = ev.type
-        local ____cond369 = ____switch369 == "combat"
-        if ____cond369 then
+        local ____switch409 = ev.type
+        local ____cond409 = ____switch409 == "combat"
+        if ____cond409 then
             lancerCombat(
                 contenu,
                 etat,
@@ -9968,16 +10487,16 @@ local function deplacerDonjon(contenu, etat, dx, dy)
                 }
             )
             if vrai(ev.texte) then
-                local ____dj_messages_106 = dj.messages
-                ____dj_messages_106[#____dj_messages_106 + 1] = ev.texte
+                local ____dj_messages_121 = dj.messages
+                ____dj_messages_121[#____dj_messages_121 + 1] = ev.texte
             end
             return
         end
-        ____cond369 = ____cond369 or ____switch369 == "coffre"
-        if ____cond369 then
+        ____cond409 = ____cond409 or ____switch409 == "coffre"
+        if ____cond409 then
             do
-                local ____dj_faits_107 = dj.faits
-                ____dj_faits_107[#____dj_faits_107 + 1] = ev.id
+                local ____dj_faits_122 = dj.faits
+                ____dj_faits_122[#____dj_faits_122 + 1] = ev.id
                 local msgs = {ev.texte or "Un coffre !"}
                 if vrai(ev["or"]) then
                     appliquerConsequence(
@@ -10002,11 +10521,11 @@ local function deplacerDonjon(contenu, etat, dx, dy)
                 return
             end
         end
-        ____cond369 = ____cond369 or ____switch369 == "piege"
-        if ____cond369 then
+        ____cond409 = ____cond409 or ____switch409 == "piege"
+        if ____cond409 then
             do
-                local ____dj_faits_108 = dj.faits
-                ____dj_faits_108[#____dj_faits_108 + 1] = ev.id
+                local ____dj_faits_123 = dj.faits
+                ____dj_faits_123[#____dj_faits_123 + 1] = ev.id
                 local t2 = ev.test or ({carac = "AGI", difficulte = 15})
                 local meilleur = __TS__ArrayReduce(
                     __TS__ArrayMap(
@@ -10017,6 +10536,16 @@ local function deplacerDonjon(contenu, etat, dx, dy)
                 )
                 local jet = de(etat.rng, 20)
                 local total = jet + caracsTotales(contenu, meilleur)[t2.carac]
+                noterTest(etat, {
+                    heros = meilleur.id,
+                    carac = t2.carac,
+                    jet = jet,
+                    bonus = total - jet,
+                    total = total,
+                    difficulte = t2.difficulte,
+                    reussi = total >= t2.difficulte,
+                    quoi = "Un piège !"
+                })
                 if total >= t2.difficulte then
                     dj.messages = {(((((((((((((ev.texte or "Un piège !") .. " ") .. meilleur.nom) .. " le repère à temps (") .. t2.carac) .. " : ") .. tostring(jet)) .. " + ") .. tostring(total - jet)) .. " = ") .. tostring(total)) .. " ≥ ") .. tostring(t2.difficulte)) .. ")."}
                 else
@@ -10028,17 +10557,17 @@ local function deplacerDonjon(contenu, etat, dx, dy)
                 return
             end
         end
-        ____cond369 = ____cond369 or ____switch369 == "texte"
-        if ____cond369 then
+        ____cond409 = ____cond409 or ____switch409 == "texte"
+        if ____cond409 then
             if ev.unique then
-                local ____dj_faits_109 = dj.faits
-                ____dj_faits_109[#____dj_faits_109 + 1] = ev.id
+                local ____dj_faits_124 = dj.faits
+                ____dj_faits_124[#____dj_faits_124 + 1] = ev.id
             end
             dj.messages = {ev.texte or ""}
             return
         end
-        ____cond369 = ____cond369 or ____switch369 == "sortie"
-        if ____cond369 then
+        ____cond409 = ____cond409 or ____switch409 == "sortie"
+        if ____cond409 then
             do
                 local cle = dj.sceneCle
                 local sortie = dj.sortie
@@ -10049,10 +10578,10 @@ local function deplacerDonjon(contenu, etat, dx, dy)
                 return
             end
         end
-        ____cond369 = ____cond369 or ____switch369 == "scene"
-        if ____cond369 then
-            local ____dj_faits_110 = dj.faits
-            ____dj_faits_110[#____dj_faits_110 + 1] = ev.id
+        ____cond409 = ____cond409 or ____switch409 == "scene"
+        if ____cond409 then
+            local ____dj_faits_125 = dj.faits
+            ____dj_faits_125[#____dj_faits_125 + 1] = ev.id
             dj.messages = {ev.texte or ""}
             return
         end
@@ -10166,12 +10695,14 @@ local function resoudreTempsLibre(contenu, etat)
     avancerTemps(contenu, etat, tl.jusqua - etat.jour)
     for ____, h in ipairs(____exports.listeHeros(etat)) do
         h.blessure = false
+        __TS__Delete(h, "pv")
     end
 end
 function ____exports.appliquer(contenu, etatAvant, action)
     local etat = copieProfonde(etatAvant)
     etat.dernieresNouvelles = {}
     etat.mouvementsOr = {}
+    etat.tests = {}
     if etat.mises == nil then
         etat.mises = {}
     end
@@ -10186,6 +10717,12 @@ function ____exports.appliquer(contenu, etatAvant, action)
     end
     if etat.examensRates == nil then
         etat.examensRates = {}
+    end
+    if etat.contratsTermines == nil then
+        etat.contratsTermines = {}
+    end
+    if etat.minuteurs == nil then
+        etat.minuteurs = {}
     end
     if etat.contrats == nil then
         etat.contrats = {}
@@ -10205,13 +10742,13 @@ function ____exports.appliquer(contenu, etatAvant, action)
         etat.repos = nil
     end
     local j = etat.joueurs[action.joueur]
-    if action.type ~= "rejoindre" and not j then
+    if action.type ~= "rejoindre" and action.type ~= "invite_arrive" and not j then
         refuser("Joueur inconnu : rejoignez la partie d'abord")
     end
     repeat
-        local ____switch414 = action.type
-        local ____cond414 = ____switch414 == "rejoindre"
-        if ____cond414 then
+        local ____switch454 = action.type
+        local ____cond454 = ____switch454 == "rejoindre"
+        if ____cond454 then
             do
                 if j ~= nil then
                     j.pseudo = action.pseudo
@@ -10236,8 +10773,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                     refuser("Ce pseudo est déjà pris dans cette partie")
                 end
                 etat.joueurs[action.joueur] = {id = action.joueur, pseudo = pseudo, herosId = nil, present = true}
-                local ____etat_ordreJoueurs_111 = etat.ordreJoueurs
-                ____etat_ordreJoueurs_111[#____etat_ordreJoueurs_111 + 1] = action.joueur
+                local ____etat_ordreJoueurs_126 = etat.ordreJoueurs
+                ____etat_ordreJoueurs_126[#____etat_ordreJoueurs_126 + 1] = action.joueur
                 if etat.meneur == nil then
                     etat.meneur = action.joueur
                 end
@@ -10245,18 +10782,94 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 break
             end
         end
-        ____cond414 = ____cond414 or ____switch414 == "presence"
-        if ____cond414 then
+        ____cond454 = ____cond454 or ____switch454 == "invite_arrive"
+        if ____cond454 then
+            do
+                local presents = #__TS__ArrayFilter(
+                    valeurs(etat.joueurs),
+                    function(____, x) return x.present end
+                )
+                local ____temp_129 = j and j.present
+                if ____temp_129 == nil then
+                    ____temp_129 = false
+                end
+                if not ____temp_129 and presents >= ____exports.MAX_JOUEURS then
+                    refuser(("Le groupe est complet (" .. tostring(____exports.MAX_JOUEURS)) .. " joueurs maximum)")
+                end
+                local jj = j
+                if jj == nil then
+                    local pseudo = string.sub(
+                        __TS__StringTrim(action.pseudo),
+                        1,
+                        24
+                    )
+                    if not vrai(pseudo) then
+                        pseudo = "Renfort"
+                    end
+                    local base = pseudo
+                    do
+                        local n = 2
+                        while __TS__ArraySome(
+                            valeurs(etat.joueurs),
+                            function(____, x) return string.lower(x.pseudo) == string.lower(pseudo) end
+                        ) do
+                            pseudo = base .. tostring(n)
+                            n = n + 1
+                        end
+                    end
+                    jj = {id = action.joueur, pseudo = pseudo, herosId = nil, present = true}
+                    etat.joueurs[action.joueur] = jj
+                    local ____etat_ordreJoueurs_130 = etat.ordreJoueurs
+                    ____etat_ordreJoueurs_130[#____etat_ordreJoueurs_130 + 1] = action.joueur
+                end
+                jj.present = true
+                local id = (if vrai(jj.herosId) then jj.herosId else "h" .. tostring(__TS__ArrayIndexOf(etat.ordreJoueurs, action.joueur) + 1))
+                local h = copieProfonde(action.voyageur.heros)
+                h.id = id
+                h.joueurId = action.joueur
+                h.invite = true
+                h.siAbsent = "camp"
+                etat.heros[id] = h
+                jj.herosId = id
+                recopierAutour(etat, id, action.voyageur)
+                local ____etat_equipe_131, ____id_132 = etat.equipe, id
+                if ____etat_equipe_131[____id_132] == nil then
+                    ____etat_equipe_131[____id_132] = nil
+                end
+                journal(
+                    contenu,
+                    etat,
+                    ((h.nom .. " rejoint le groupe en renfort (niveau ") .. tostring(h.niveau)) .. ")."
+                )
+                break
+            end
+        end
+        ____cond454 = ____cond454 or ____switch454 == "heros_retour"
+        if ____cond454 then
+            do
+                local h = ____exports.herosDuJoueur(etat, action.joueur)
+                recopierProgression(h, action.voyageur.heros)
+                recopierAutour(etat, h.id, action.voyageur)
+                journal(
+                    contenu,
+                    etat,
+                    ((h.nom .. " revient d'une aventure en groupe (niveau ") .. tostring(h.niveau)) .. ")."
+                )
+                break
+            end
+        end
+        ____cond454 = ____cond454 or ____switch454 == "presence"
+        if ____cond454 then
             j.present = action.present
             for ____, ____value in ipairs(entrees(etat.scenes)) do
                 local k = ____value[1]
                 local es = ____value[2]
-                local ____temp_114 = not es.pari
-                if not ____temp_114 then
-                    local ____opt_112 = ____exports.noeudCourant(contenu, etat, k)
-                    ____temp_114 = not (____opt_112 and ____opt_112.pari)
+                local ____temp_135 = not es.pari
+                if not ____temp_135 then
+                    local ____opt_133 = ____exports.noeudCourant(contenu, etat, k)
+                    ____temp_135 = not (____opt_133 and ____opt_133.pari)
                 end
-                if ____temp_114 then
+                if ____temp_135 then
                     continue
                 end
                 if __TS__ArrayEvery(
@@ -10268,8 +10881,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
             end
             break
         end
-        ____cond414 = ____cond414 or ____switch414 == "creer_heros"
-        if ____cond414 then
+        ____cond454 = ____cond454 or ____switch454 == "creer_heros"
+        if ____cond454 then
             do
                 if vrai(j.herosId) then
                     refuser("Vous avez déjà un héros")
@@ -10279,8 +10892,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                     ____exports.listeHeros(etat),
                     function(____, x) return x.don == h.don end
                 ) then
-                    local ____opt_115 = contenu.dons[h.don]
-                    refuser(("Le don « " .. (____opt_115 and ____opt_115.nom or h.don)) .. " » est déjà pris par un autre joueur")
+                    local ____opt_136 = contenu.dons[h.don]
+                    refuser(("Le don « " .. (____opt_136 and ____opt_136.nom or h.don)) .. " » est déjà pris par un autre joueur")
                 end
                 local existants = ____exports.listeHeros(etat)
                 local enCours = etat.jour > 0 or __TS__ArraySome(
@@ -10345,8 +10958,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 break
             end
         end
-        ____cond414 = ____cond414 or ____switch414 == "portrait"
-        if ____cond414 then
+        ____cond454 = ____cond454 or ____switch454 == "portrait"
+        if ____cond454 then
             do
                 local h = ____exports.herosDuJoueur(etat, action.joueur)
                 if vrai(action.image) and #action.image > 300000 then
@@ -10356,13 +10969,13 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 break
             end
         end
-        ____cond414 = ____cond414 or ____switch414 == "si_absent"
-        if ____cond414 then
+        ____cond454 = ____cond454 or ____switch454 == "si_absent"
+        if ____cond454 then
             ____exports.herosDuJoueur(etat, action.joueur).siAbsent = action.mode
             break
         end
-        ____cond414 = ____cond414 or ____switch414 == "lancer_scene"
-        if ____cond414 then
+        ____cond454 = ____cond454 or ____switch454 == "lancer_scene"
+        if ____cond454 then
             do
                 local s = contenu.scenes[action.scene] or refuser("Scène inconnue")
                 local h = ____exports.herosDuJoueur(etat, action.joueur)
@@ -10388,8 +11001,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                         messages = {},
                         parole = nil
                     }
-                    local ____opt_117 = etat.tempsLibre
-                    if ____opt_117 and ____opt_117.resultats then
+                    local ____opt_138 = etat.tempsLibre
+                    if ____opt_138 and ____opt_138.resultats then
                         etat.tempsLibre = nil
                     end
                     entrerNoeud(contenu, etat, "groupe", s.debut)
@@ -10414,8 +11027,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 break
             end
         end
-        ____cond414 = ____cond414 or ____switch414 == "choisir"
-        if ____cond414 then
+        ____cond454 = ____cond454 or ____switch454 == "choisir"
+        if ____cond454 then
             do
                 local es = etat.scenes[action.cle] or refuser("Aucune scène")
                 if action.cle ~= "groupe" and j.herosId ~= action.cle then
@@ -10463,8 +11076,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 break
             end
         end
-        ____cond414 = ____cond414 or ____switch414 == "repondre"
-        if ____cond414 then
+        ____cond454 = ____cond454 or ____switch454 == "repondre"
+        if ____cond454 then
             do
                 local es = etat.scenes[action.cle] or refuser("Aucune scène")
                 local p = es.parole or refuser("Personne ne vous pose de question")
@@ -10478,8 +11091,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 break
             end
         end
-        ____cond414 = ____cond414 or ____switch414 == "parier"
-        if ____cond414 then
+        ____cond454 = ____cond454 or ____switch454 == "parier"
+        if ____cond454 then
             do
                 local es = etat.scenes[action.cle] or refuser("Aucune scène")
                 local n = ____exports.noeudCourant(contenu, etat, action.cle)
@@ -10508,8 +11121,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 break
             end
         end
-        ____cond414 = ____cond414 or ____switch414 == "trancher"
-        if ____cond414 then
+        ____cond454 = ____cond454 or ____switch454 == "trancher"
+        if ____cond454 then
             do
                 if etat.meneur ~= action.joueur then
                     refuser("Seul le meneur du jour peut trancher")
@@ -10522,35 +11135,151 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 break
             end
         end
-        ____cond414 = ____cond414 or ____switch414 == "continuer"
-        if ____cond414 then
+        ____cond454 = ____cond454 or ____switch454 == "continuer"
+        if ____cond454 then
             do
                 if action.cle ~= "groupe" and j.herosId ~= action.cle then
                     refuser("Ce n'est pas votre scène")
                 end
-                if etat.combats[action.cle] then
-                    refuser("Un combat est en cours")
-                end
-                local n = ____exports.noeudCourant(contenu, etat, action.cle) or refuser("Rien à continuer")
-                if not vrai(n.suite) then
-                    refuser("Il faut faire un choix")
-                end
-                if action.cle == "groupe" and etat.donjon then
-                    refuser("Le groupe explore un donjon")
-                end
-                local dest = n.suite
-                for ____, a in ipairs(n.aiguillage or ({})) do
-                    if ____exports.conditionScene(contenu, etat, a.si, etat.scenes[action.cle].heros) then
-                        dest = a.aller
-                        break
-                    end
-                end
-                entrerNoeud(contenu, etat, action.cle, dest)
+                avancerScene(contenu, etat, action.cle)
                 break
             end
         end
-        ____cond414 = ____cond414 or ____switch414 == "quitter_scene"
-        if ____cond414 then
+        ____cond454 = ____cond454 or ____switch454 == "changer_sexe"
+        if ____cond454 then
+            do
+                local h = ____exports.herosDuJoueur(etat, action.joueur)
+                if action.sexe ~= "m" and action.sexe ~= "f" then
+                    refuser("Choix impossible")
+                end
+                if h.sexeChoisi ~= false and etat.jour >= 30 then
+                    refuser("Le sexe du héros ne peut plus changer après le premier mois de jeu")
+                end
+                h.sexe = action.sexe
+                h.sexeChoisi = true
+                break
+            end
+        end
+        ____cond454 = ____cond454 or ____switch454 == "se_soigner"
+        if ____cond454 then
+            do
+                local h = ____exports.herosDuJoueur(etat, action.joueur)
+                if etat.combats[h.id] or etat.combats.groupe then
+                    refuser("Pas pendant un combat")
+                end
+                local max = ____exports.pvMaxHorsCombat(contenu, h)
+                local pv = h.pv or max
+                local cfg = contenu.config.soins
+                local lieu = (if vrai(action.lieu) then trouverLieuPartie(contenu, action.lieu) else nil)
+                if action.moyen == "temple" then
+                    if not lieu or not __TS__StringStartsWith(lieu.id, "temple") then
+                        refuser("Il faut être dans un temple")
+                    end
+                    if pv >= max and not h.blessure then
+                        refuser(h.nom .. " est déjà en pleine forme")
+                    end
+                    if h["or"] < cfg.temple.prix then
+                        refuser(((("Pas assez d'or : les soins coûtent " .. tostring(cfg.temple.prix)) .. " or (vous en avez ") .. tostring(h["or"])) .. ")")
+                    end
+                    h["or"] = h["or"] - cfg.temple.prix
+                    local ____etat_mouvementsOr_140 = etat.mouvementsOr
+                    ____etat_mouvementsOr_140[#____etat_mouvementsOr_140 + 1] = {heros = h.id, montant = -cfg.temple.prix, raison = "soins"}
+                    h.blessure = false
+                    __TS__Delete(h, "pv")
+                    local ____etat_dernieresNouvelles_141 = etat.dernieresNouvelles
+                    ____etat_dernieresNouvelles_141[#____etat_dernieresNouvelles_141 + 1] = ((("Les prêtres soignent " .. h.nom) .. " : tous les PV sont rendus") .. (if pv < max then "" else " et la blessure est guérie")) .. "."
+                    break
+                end
+                local releve = (if action.moyen == "objet" and vrai(action.objet) then contenu.objets[action.objet] else nil)
+                local ____temp_145 = releve ~= nil
+                if ____temp_145 then
+                    local ____vrai_144 = vrai
+                    local ____opt_142 = releve.effets
+                    ____temp_145 = ____vrai_144(____opt_142 and __TS__ArraySome(
+                        releve.effets,
+                        function(____, e) return e.type == "relever" end
+                    ))
+                end
+                if ____temp_145 then
+                    if pv >= max and not h.blessure then
+                        refuser(h.nom .. " est déjà en pleine forme")
+                    end
+                    if (h.inventaire[releve.id] or 0) <= 0 then
+                        refuser("Objet impossible à utiliser")
+                    end
+                    local ____h_inventaire_146, ____releve_id_147 = h.inventaire, releve.id
+                    ____h_inventaire_146[____releve_id_147] = ____h_inventaire_146[____releve_id_147] - 1
+                    h.blessure = false
+                    __TS__Delete(h, "pv")
+                    local ____etat_dernieresNouvelles_148 = etat.dernieresNouvelles
+                    ____etat_dernieresNouvelles_148[#____etat_dernieresNouvelles_148 + 1] = ((h.nom .. " utilise : ") .. releve.nom) .. ". Tous les PV sont rendus, et la blessure est guérie."
+                    break
+                end
+                if pv >= max then
+                    refuser(h.nom .. " est déjà en pleine forme")
+                end
+                local part = 0
+                if action.moyen == "repas" then
+                    if not lieu or not vrai(lieu.auberge) then
+                        refuser("Il faut être dans une auberge")
+                    end
+                    if h["or"] < cfg.repas.prix then
+                        refuser(((("Pas assez d'or : le repas coûte " .. tostring(cfg.repas.prix)) .. " or (vous en avez ") .. tostring(h["or"])) .. ")")
+                    end
+                    h["or"] = h["or"] - cfg.repas.prix
+                    local ____etat_mouvementsOr_149 = etat.mouvementsOr
+                    ____etat_mouvementsOr_149[#____etat_mouvementsOr_149 + 1] = {heros = h.id, montant = -cfg.repas.prix, raison = "repas"}
+                    part = cfg.repas.pourcent / 100
+                elseif action.moyen == "ration" then
+                    if (h.inventaire[____exports.RATION.objet] or 0) <= 0 then
+                        refuser("Plus de ration dans le sac")
+                    end
+                    local ____h_inventaire_150, ____exports_RATION_objet_151 = h.inventaire, ____exports.RATION.objet
+                    ____h_inventaire_150[____exports_RATION_objet_151] = ____h_inventaire_150[____exports_RATION_objet_151] - 1
+                    part = cfg.ration_pourcent / 100
+                else
+                    local o = (if vrai(action.objet) then contenu.objets[action.objet] else nil)
+                    local ____opt_152 = o and o.effets
+                    local soin = ____opt_152 and __TS__ArrayFind(
+                        o and o.effets,
+                        function(____, e) return e.type == "soin" end
+                    )
+                    if not o or not soin or (h.inventaire[o.id] or 0) <= 0 then
+                        refuser("Objet impossible à utiliser")
+                    end
+                    local ____h_inventaire_158, ____o_id_159 = h.inventaire, o.id
+                    ____h_inventaire_158[____o_id_159] = ____h_inventaire_158[____o_id_159] - 1
+                    part = ____exports.partSoinObjet(soin)
+                end
+                local gagne = soignerHeros(contenu, h, part)
+                local ____etat_dernieresNouvelles_160 = etat.dernieresNouvelles
+                ____etat_dernieresNouvelles_160[#____etat_dernieresNouvelles_160 + 1] = ((((((h.nom .. " récupère ") .. tostring(gagne)) .. " PV (") .. tostring(h.pv or max)) .. "/") .. tostring(max)) .. ")."
+                break
+            end
+        end
+        ____cond454 = ____cond454 or ____switch454 == "pret_dialogue"
+        if ____cond454 then
+            do
+                if action.cle ~= "groupe" and j.herosId ~= action.cle then
+                    refuser("Ce n'est pas votre scène")
+                end
+                local es = etat.scenes[action.cle] or refuser("Aucune scène")
+                verifierAvancee(contenu, etat, action.cle)
+                if es.prets == nil then
+                    es.prets = {}
+                end
+                if not __TS__ArrayIncludes(es.prets, action.joueur) then
+                    local ____es_prets_161 = es.prets
+                    ____es_prets_161[#____es_prets_161 + 1] = action.joueur
+                end
+                if #____exports.joueursAttendusDialogue(etat, action.cle) == 0 then
+                    avancerScene(contenu, etat, action.cle)
+                end
+                break
+            end
+        end
+        ____cond454 = ____cond454 or ____switch454 == "quitter_scene"
+        if ____cond454 then
             do
                 local es = etat.scenes[action.cle]
                 if not es then
@@ -10566,8 +11295,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 break
             end
         end
-        ____cond414 = ____cond414 or ____switch414 == "combat"
-        if ____cond414 then
+        ____cond454 = ____cond454 or ____switch454 == "combat"
+        if ____cond454 then
             do
                 local entree = etat.combats[action.cle] or refuser("Aucun combat")
                 local acteur = __TS__ArrayFind(
@@ -10594,8 +11323,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 break
             end
         end
-        ____cond414 = ____cond414 or ____switch414 == "second_depart"
-        if ____cond414 then
+        ____cond454 = ____cond454 or ____switch454 == "second_depart"
+        if ____cond454 then
             do
                 local h = ____exports.herosDuJoueur(etat, action.joueur)
                 if h.don ~= "second-depart" then
@@ -10615,8 +11344,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 break
             end
         end
-        ____cond414 = ____cond414 or ____switch414 == "fin_combat"
-        if ____cond414 then
+        ____cond454 = ____cond454 or ____switch454 == "fin_combat"
+        if ____cond454 then
             do
                 local entree = etat.combats[action.cle] or refuser("Aucun combat")
                 if not entree.combat.resultat then
@@ -10626,21 +11355,21 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 break
             end
         end
-        ____cond414 = ____cond414 or ____switch414 == "donjon_deplacer"
-        if ____cond414 then
-            local ____temp_121 = etat.meneur ~= action.joueur
-            if ____temp_121 then
-                local ____opt_119 = etat.joueurs[etat.meneur or ""]
-                ____temp_121 = ____opt_119 and ____opt_119.present
+        ____cond454 = ____cond454 or ____switch454 == "donjon_deplacer"
+        if ____cond454 then
+            local ____temp_164 = etat.meneur ~= action.joueur
+            if ____temp_164 then
+                local ____opt_162 = etat.joueurs[etat.meneur or ""]
+                ____temp_164 = ____opt_162 and ____opt_162.present
             end
-            if ____temp_121 then
+            if ____temp_164 then
                 refuser("C'est le meneur du jour qui guide le groupe")
             end
             deplacerDonjon(contenu, etat, action.dx, action.dy)
             break
         end
-        ____cond414 = ____cond414 or ____switch414 == "temps_libre"
-        if ____cond414 then
+        ____cond454 = ____cond454 or ____switch454 == "temps_libre"
+        if ____cond454 then
             do
                 local tl = etat.tempsLibre or refuser("Pas de temps libre en cours")
                 if tl.resultats then
@@ -10677,8 +11406,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 break
             end
         end
-        ____cond414 = ____cond414 or ____switch414 == "valider_temps_libre"
-        if ____cond414 then
+        ____cond454 = ____cond454 or ____switch454 == "valider_temps_libre"
+        if ____cond454 then
             do
                 local tl = etat.tempsLibre or refuser("Pas de temps libre en cours")
                 if tl.resultats then
@@ -10697,8 +11426,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 break
             end
         end
-        ____cond414 = ____cond414 or ____switch414 == "jour_passe"
-        if ____cond414 then
+        ____cond454 = ____cond454 or ____switch454 == "jour_passe"
+        if ____cond454 then
             do
                 if action.jour ~= etat.jour then
                     refuser("Ce jour est déjà passé")
@@ -10708,13 +11437,13 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 end
                 avancerTemps(contenu, etat, 1)
                 local fete = fetesEntre(contenu, etat.jour - 1, etat.jour)[1]
-                local ____etat_dernieresNouvelles_122 = etat.dernieresNouvelles
-                ____etat_dernieresNouvelles_122[#____etat_dernieresNouvelles_122 + 1] = (if fete then ("Un nouveau jour se lève : " .. fete.nom) .. " !" else ("Un nouveau jour se lève : " .. formaterDate(contenu, etat.jour)) .. ".")
+                local ____etat_dernieresNouvelles_165 = etat.dernieresNouvelles
+                ____etat_dernieresNouvelles_165[#____etat_dernieresNouvelles_165 + 1] = (if fete then ("Un nouveau jour se lève : " .. fete.nom) .. " !" else ("Un nouveau jour se lève : " .. formaterDate(contenu, etat.jour)) .. ".")
                 break
             end
         end
-        ____cond414 = ____cond414 or ____switch414 == "proposer_repos"
-        if ____cond414 then
+        ____cond454 = ____cond454 or ____switch454 == "proposer_repos"
+        if ____cond454 then
             do
                 ____exports.herosDuJoueur(etat, action.joueur)
                 local pb = reposImpossible(etat)
@@ -10737,8 +11466,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 if #____exports.attenteRepos(etat) == 0 then
                     commencerRepos(contenu, etat)
                 else
-                    local ____etat_dernieresNouvelles_123 = etat.dernieresNouvelles
-                    ____etat_dernieresNouvelles_123[#____etat_dernieresNouvelles_123 + 1] = ((((j.pseudo .. " propose de dormir ") .. tostring(mois)) .. " mois à l'auberge. En attente de : ") .. table.concat(
+                    local ____etat_dernieresNouvelles_166 = etat.dernieresNouvelles
+                    ____etat_dernieresNouvelles_166[#____etat_dernieresNouvelles_166 + 1] = ((((j.pseudo .. " propose de dormir ") .. tostring(mois)) .. " mois à l'auberge. En attente de : ") .. table.concat(
                         __TS__ArrayMap(
                             ____exports.attenteRepos(etat),
                             function(____, x) return etat.joueurs[x].pseudo end
@@ -10749,15 +11478,15 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 break
             end
         end
-        ____cond414 = ____cond414 or ____switch414 == "repondre_repos"
-        if ____cond414 then
+        ____cond454 = ____cond454 or ____switch454 == "repondre_repos"
+        if ____cond454 then
             do
                 local r = etat.repos or refuser("Personne ne propose de dormir pour le moment")
                 ____exports.herosDuJoueur(etat, action.joueur)
                 if not action.accepte then
                     etat.repos = nil
-                    local ____etat_dernieresNouvelles_124 = etat.dernieresNouvelles
-                    ____etat_dernieresNouvelles_124[#____etat_dernieresNouvelles_124 + 1] = ((j.pseudo .. " préfère ne pas dormir ") .. tostring(r.mois)) .. " mois. Proposez une autre durée."
+                    local ____etat_dernieresNouvelles_167 = etat.dernieresNouvelles
+                    ____etat_dernieresNouvelles_167[#____etat_dernieresNouvelles_167 + 1] = ((j.pseudo .. " préfère ne pas dormir ") .. tostring(r.mois)) .. " mois. Proposez une autre durée."
                     break
                 end
                 local pb = reposImpossible(etat)
@@ -10765,8 +11494,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                     refuser(pb)
                 end
                 if not __TS__ArrayIncludes(r.accords, action.joueur) then
-                    local ____r_accords_125 = r.accords
-                    ____r_accords_125[#____r_accords_125 + 1] = action.joueur
+                    local ____r_accords_168 = r.accords
+                    ____r_accords_168[#____r_accords_168 + 1] = action.joueur
                 end
                 if #____exports.attenteRepos(etat) == 0 then
                     commencerRepos(contenu, etat)
@@ -10774,8 +11503,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 break
             end
         end
-        ____cond414 = ____cond414 or ____switch414 == "cadeau"
-        if ____cond414 then
+        ____cond454 = ____cond454 or ____switch454 == "cadeau"
+        if ____cond454 then
             do
                 local h = ____exports.herosDuJoueur(etat, action.joueur)
                 if not __TS__ArrayIncludes(etat.compagnonsRencontres, action.compagnon) then
@@ -10788,8 +11517,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 if not peutOffrir(contenu, a, etat.jour) then
                     refuser(("Un cadeau tous les " .. tostring(contenu.config.affinite.jours_entre_cadeaux)) .. " jours au plus")
                 end
-                local ____h_inventaire_126, ____action_objet_127 = h.inventaire, action.objet
-                ____h_inventaire_126[____action_objet_127] = ____h_inventaire_126[____action_objet_127] - 1
+                local ____h_inventaire_169, ____action_objet_170 = h.inventaire, action.objet
+                ____h_inventaire_169[____action_objet_170] = ____h_inventaire_169[____action_objet_170] - 1
                 local r = reactionCadeau(contenu, action.compagnon, action.objet)
                 local d = modifierAffinite(
                     contenu,
@@ -10802,13 +11531,13 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 )
                 a.dernierCadeau = etat.jour
                 decouvrirGout(etat, action.compagnon, action.objet)
-                local ____etat_dernieresNouvelles_128 = etat.dernieresNouvelles
-                ____etat_dernieresNouvelles_128[#____etat_dernieresNouvelles_128 + 1] = (((((contenu.compagnons[action.compagnon].nom .. " ") .. ({prefere = "adore", apprecie = "apprécie", neutre = "accepte poliment", deteste = "n'aime pas du tout"})[r]) .. " ce cadeau (") .. (if d >= 0 then "+" else "")) .. tostring(d)) .. ")."
+                local ____etat_dernieresNouvelles_171 = etat.dernieresNouvelles
+                ____etat_dernieresNouvelles_171[#____etat_dernieresNouvelles_171 + 1] = (((((contenu.compagnons[action.compagnon].nom .. " ") .. ({prefere = "adore", apprecie = "apprécie", neutre = "accepte poliment", deteste = "n'aime pas du tout"})[r]) .. " ce cadeau (") .. (if d >= 0 then "+" else "")) .. tostring(d)) .. ")."
                 break
             end
         end
-        ____cond414 = ____cond414 or ____switch414 == "equipe"
-        if ____cond414 then
+        ____cond454 = ____cond454 or ____switch454 == "equipe"
+        if ____cond454 then
             do
                 local h = ____exports.herosDuJoueur(etat, action.joueur)
                 if vrai(action.compagnon) then
@@ -10836,8 +11565,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 break
             end
         end
-        ____cond414 = ____cond414 or ____switch414 == "equiper"
-        if ____cond414 then
+        ____cond454 = ____cond454 or ____switch454 == "equiper"
+        if ____cond454 then
             do
                 local h = ____exports.herosDuJoueur(etat, action.joueur)
                 local o = contenu.objets[action.objet] or refuser("Objet inconnu")
@@ -10853,14 +11582,14 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 if vrai(ancien) then
                     h.inventaire[ancien] = (h.inventaire[ancien] or 0) + 1
                 end
-                local ____h_inventaire_129, ____o_id_130 = h.inventaire, o.id
-                ____h_inventaire_129[____o_id_130] = ____h_inventaire_129[____o_id_130] - 1
+                local ____h_inventaire_172, ____o_id_173 = h.inventaire, o.id
+                ____h_inventaire_172[____o_id_173] = ____h_inventaire_172[____o_id_173] - 1
                 h.equipement[emplacement] = o.id
                 break
             end
         end
-        ____cond414 = ____cond414 or ____switch414 == "desequiper"
-        if ____cond414 then
+        ____cond454 = ____cond454 or ____switch454 == "desequiper"
+        if ____cond454 then
             do
                 local h = ____exports.herosDuJoueur(etat, action.joueur)
                 local ancien = h.equipement[action.emplacement]
@@ -10871,8 +11600,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 break
             end
         end
-        ____cond414 = ____cond414 or ____switch414 == "acheter"
-        if ____cond414 then
+        ____cond454 = ____cond454 or ____switch454 == "acheter"
+        if ____cond454 then
             do
                 local h = ____exports.herosDuJoueur(etat, action.joueur)
                 local lieu = __TS__ArrayFind(
@@ -10886,8 +11615,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                     refuser("Cet objet n'est pas vendu ici")
                 end
                 local n = quantiteValide(action.quantite)
-                local ____opt_131 = contenu.objets[action.objet]
-                if ____opt_131 and ____opt_131.unique_par_partie and (n > 1 or dejaUnique(contenu, etat, action.objet)) then
+                local ____opt_174 = contenu.objets[action.objet]
+                if ____opt_174 and ____opt_174.unique_par_partie and (n > 1 or dejaUnique(contenu, etat, action.objet)) then
                     refuser("Cet objet est unique : il n'en existe qu'un dans la partie")
                 end
                 local prix = ____exports.prixAchat(contenu, h, action.objet) * n
@@ -10896,8 +11625,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 end
                 h["or"] = h["or"] - prix
                 h.inventaire[action.objet] = (h.inventaire[action.objet] or 0) + n
-                local ____etat_dernieresNouvelles_133 = etat.dernieresNouvelles
-                ____etat_dernieresNouvelles_133[#____etat_dernieresNouvelles_133 + 1] = (((((h.nom .. " achète ") .. (if n > 1 then tostring(n) .. " × " else "")) .. contenu.objets[action.objet].nom) .. " : −") .. tostring(prix)) .. " or."
+                local ____etat_dernieresNouvelles_176 = etat.dernieresNouvelles
+                ____etat_dernieresNouvelles_176[#____etat_dernieresNouvelles_176 + 1] = (((((h.nom .. " achète ") .. (if n > 1 then tostring(n) .. " × " else "")) .. contenu.objets[action.objet].nom) .. " : −") .. tostring(prix)) .. " or."
                 decouvrirObjet(contenu, etat, action.objet)
                 declencherEtapes(
                     contenu,
@@ -10907,8 +11636,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 break
             end
         end
-        ____cond414 = ____cond414 or ____switch414 == "vendre"
-        if ____cond414 then
+        ____cond454 = ____cond454 or ____switch454 == "vendre"
+        if ____cond454 then
             do
                 local h = ____exports.herosDuJoueur(etat, action.joueur)
                 local o = contenu.objets[action.objet] or refuser("Objet inconnu")
@@ -10923,11 +11652,11 @@ function ____exports.appliquer(contenu, etatAvant, action)
                     refuser("Vous n'en avez que " .. tostring(h.inventaire[o.id]))
                 end
                 local gain = ____exports.prixVente(contenu, h, o.id) * n
-                local ____h_inventaire_134, ____o_id_135 = h.inventaire, o.id
-                ____h_inventaire_134[____o_id_135] = ____h_inventaire_134[____o_id_135] - n
+                local ____h_inventaire_177, ____o_id_178 = h.inventaire, o.id
+                ____h_inventaire_177[____o_id_178] = ____h_inventaire_177[____o_id_178] - n
                 h["or"] = h["or"] + gain
-                local ____etat_dernieresNouvelles_136 = etat.dernieresNouvelles
-                ____etat_dernieresNouvelles_136[#____etat_dernieresNouvelles_136 + 1] = (((((h.nom .. " vend ") .. (if n > 1 then tostring(n) .. " × " else "")) .. o.nom) .. " : +") .. tostring(gain)) .. " or."
+                local ____etat_dernieresNouvelles_179 = etat.dernieresNouvelles
+                ____etat_dernieresNouvelles_179[#____etat_dernieresNouvelles_179 + 1] = (((((h.nom .. " vend ") .. (if n > 1 then tostring(n) .. " × " else "")) .. o.nom) .. " : +") .. tostring(gain)) .. " or."
                 declencherEtapes(
                     contenu,
                     etat,
@@ -10936,8 +11665,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 break
             end
         end
-        ____cond414 = ____cond414 or ____switch414 == "identifier"
-        if ____cond414 then
+        ____cond454 = ____cond454 or ____switch454 == "identifier"
+        if ____cond454 then
             do
                 local h = ____exports.herosDuJoueur(etat, action.joueur)
                 local o = contenu.objets[action.objet] or refuser("Objet inconnu")
@@ -10956,14 +11685,14 @@ function ____exports.appliquer(contenu, etatAvant, action)
                     refuser(("Pas assez d'or : l'identification coûte " .. tostring(prix)) .. " pièces")
                 end
                 h["or"] = h["or"] - prix
-                local ____etat_mouvementsOr_137 = etat.mouvementsOr
-                ____etat_mouvementsOr_137[#____etat_mouvementsOr_137 + 1] = {heros = h.id, montant = -prix, raison = "identification"}
+                local ____etat_mouvementsOr_180 = etat.mouvementsOr
+                ____etat_mouvementsOr_180[#____etat_mouvementsOr_180 + 1] = {heros = h.id, montant = -prix, raison = "identification"}
                 decouvrirObjet(contenu, etat, o.id)
                 break
             end
         end
-        ____cond414 = ____cond414 or ____switch414 == "utiliser"
-        if ____cond414 then
+        ____cond454 = ____cond454 or ____switch454 == "utiliser"
+        if ____cond454 then
             do
                 local h = ____exports.herosDuJoueur(etat, action.joueur)
                 if not ((h.inventaire[action.objet] or 0) > 0) then
@@ -10976,8 +11705,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 break
             end
         end
-        ____cond414 = ____cond414 or ____switch414 == "repartir"
-        if ____cond414 then
+        ____cond454 = ____cond454 or ____switch454 == "repartir"
+        if ____cond454 then
             do
                 local h = ____exports.herosDuJoueur(etat, action.joueur)
                 do
@@ -10994,8 +11723,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 break
             end
         end
-        ____cond414 = ____cond414 or ____switch414 == "ameliorer"
-        if ____cond414 then
+        ____cond454 = ____cond454 or ____switch454 == "ameliorer"
+        if ____cond454 then
             do
                 local h = ____exports.herosDuJoueur(etat, action.joueur)
                 do
@@ -11012,8 +11741,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 break
             end
         end
-        ____cond414 = ____cond414 or ____switch414 == "branche"
-        if ____cond414 then
+        ____cond454 = ____cond454 or ____switch454 == "branche"
+        if ____cond454 then
             do
                 local h = ____exports.herosDuJoueur(etat, action.joueur)
                 do
@@ -11030,8 +11759,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 break
             end
         end
-        ____cond414 = ____cond414 or ____switch414 == "contrat"
-        if ____cond414 then
+        ____cond454 = ____cond454 or ____switch454 == "contrat"
+        if ____cond454 then
             do
                 local h = ____exports.herosDuJoueur(etat, action.joueur)
                 local ct = contenu.contrats[action.contrat] or refuser("Contrat inconnu")
@@ -11050,14 +11779,23 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 if not ____exports.conditionHeros(contenu, etat, ct.disponible_si, h) then
                     refuser("Contrat indisponible")
                 end
+                if etat.numeroAction >= (etat.regleContratsDepuis or 0) then
+                    local retour = ____exports.retourContrat(contenu, etat, ct.id)
+                    if retour == -1 then
+                        refuser("Ce contrat a déjà été rempli : il ne reviendra pas")
+                    end
+                    if retour > 0 then
+                        refuser((("Ce contrat vient d'être rempli : il revient au tableau dans " .. tostring(retour)) .. " jour") .. (if retour > 1 then "s" else ""))
+                    end
+                end
                 if #ct.etapes > 0 then
                     if etat.contrats[h.id] then
-                        local ____opt_138 = contenu.contrats[etat.contrats[h.id].id]
-                        refuser("Terminez d'abord votre contrat en cours : " .. (____opt_138 and ____opt_138.titre or ""))
+                        local ____opt_181 = contenu.contrats[etat.contrats[h.id].id]
+                        refuser("Terminez d'abord votre contrat en cours : " .. (____opt_181 and ____opt_181.titre or ""))
                     end
                     etat.contrats[h.id] = {id = ct.id, etape = 0, notes = {}}
-                    local ____etat_dernieresNouvelles_140 = etat.dernieresNouvelles
-                    ____etat_dernieresNouvelles_140[#____etat_dernieresNouvelles_140 + 1] = (("Contrat accepté : " .. ct.titre) .. ". ") .. ct.etapes[1].objectif
+                    local ____etat_dernieresNouvelles_183 = etat.dernieresNouvelles
+                    ____etat_dernieresNouvelles_183[#____etat_dernieresNouvelles_183 + 1] = (("Contrat accepté : " .. ct.titre) .. ". ") .. ct.etapes[1].objectif
                 elseif vrai(ct.rencontre) then
                     lancerCombat(
                         contenu,
@@ -11078,6 +11816,16 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 elseif ct.test then
                     local jet = de(etat.rng, 20)
                     local total = jet + caracsTotales(contenu, h)[ct.test.carac]
+                    noterTest(etat, {
+                        heros = h.id,
+                        carac = ct.test.carac,
+                        jet = jet,
+                        bonus = total - jet,
+                        total = total,
+                        difficulte = ct.test.difficulte,
+                        reussi = total >= ct.test.difficulte,
+                        quoi = ct.titre
+                    })
                     local msgs = {}
                     if total >= ct.test.difficulte then
                         appliquerConsequence(
@@ -11093,6 +11841,7 @@ function ____exports.appliquer(contenu, etatAvant, action)
                             table.unpack(msgs)
                         )
                         journal(contenu, etat, ((h.nom .. " remplit le contrat « ") .. ct.titre) .. " ».")
+                        noterContratRempli(etat, ct)
                     else
                         appliquerConsequence(
                             contenu,
@@ -11111,8 +11860,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 break
             end
         end
-        ____cond414 = ____cond414 or ____switch414 == "examen_rang"
-        if ____cond414 then
+        ____cond454 = ____cond454 or ____switch454 == "examen_rang"
+        if ____cond454 then
             do
                 local h = ____exports.herosDuJoueur(etat, action.joueur)
                 local ex = ____exports.prochainExamen(contenu, etat, h.id) or refuser("Vous avez déjà le rang le plus haut")
@@ -11126,8 +11875,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 if def.type == "epreuve" then
                     local ct = contenu.contrats[def.contrat or ""] or refuser("Épreuve introuvable")
                     etat.contrats[h.id] = {id = ct.id, etape = 0, notes = {}}
-                    local ____etat_dernieresNouvelles_141 = etat.dernieresNouvelles
-                    ____etat_dernieresNouvelles_141[#____etat_dernieresNouvelles_141 + 1] = (((("Épreuve du rang " .. ex.rang) .. " : ") .. ct.titre) .. ". ") .. ct.etapes[1].objectif
+                    local ____etat_dernieresNouvelles_184 = etat.dernieresNouvelles
+                    ____etat_dernieresNouvelles_184[#____etat_dernieresNouvelles_184 + 1] = (((("Épreuve du rang " .. ex.rang) .. " : ") .. ct.titre) .. ". ") .. ct.etapes[1].objectif
                     break
                 end
                 if etat.combats.groupe or etat.combats[h.id] then
@@ -11146,8 +11895,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                     ____exports.candidatsExamen(contenu, etat, h.id),
                     function(____, id) return not etat.combats[id] end
                 )
-                local ____etat_dernieresNouvelles_142 = etat.dernieresNouvelles
-                ____etat_dernieresNouvelles_142[#____etat_dernieresNouvelles_142 + 1] = ((((("Examen du rang " .. ex.rang) .. " : ") .. table.concat(
+                local ____etat_dernieresNouvelles_185 = etat.dernieresNouvelles
+                ____etat_dernieresNouvelles_185[#____etat_dernieresNouvelles_185 + 1] = ((((("Examen du rang " .. ex.rang) .. " : ") .. table.concat(
                     __TS__ArrayMap(
                         candidats,
                         function(____, id) return etat.heros[id].nom end
@@ -11176,8 +11925,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 break
             end
         end
-        ____cond414 = ____cond414 or ____switch414 == "etape_contrat"
-        if ____cond414 then
+        ____cond454 = ____cond454 or ____switch454 == "etape_contrat"
+        if ____cond454 then
             do
                 local h = ____exports.herosDuJoueur(etat, action.joueur)
                 local x = ____exports.etapeContrat(contenu, etat, h.id) or refuser("Vous n'avez pas de contrat en cours")
@@ -11211,7 +11960,18 @@ function ____exports.appliquer(contenu, etatAvant, action)
                     local jet = de(etat.rng, 20)
                     local total = jet + caracsTotales(contenu, h)[e.test.carac]
                     local detail = (((((((e.test.carac .. " : dé ") .. tostring(jet)) .. " + ") .. tostring(total - jet)) .. " = ") .. tostring(total)) .. " contre ") .. tostring(e.test.difficulte)
-                    if jet == 20 or jet ~= 1 and total >= e.test.difficulte then
+                    local reussiEtape = jet == 20 or jet ~= 1 and total >= e.test.difficulte
+                    noterTest(etat, {
+                        heros = h.id,
+                        carac = e.test.carac,
+                        jet = jet,
+                        bonus = total - jet,
+                        total = total,
+                        difficulte = e.test.difficulte,
+                        reussi = reussiEtape,
+                        quoi = x.contrat.titre
+                    })
+                    if reussiEtape then
                         st.notes = {(("Réussi (" .. detail) .. "). ") .. e.test.reussite}
                         avancerContrat(contenu, etat, h)
                     else
@@ -11256,8 +12016,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 break
             end
         end
-        ____cond414 = ____cond414 or ____switch414 == "abandonner_contrat"
-        if ____cond414 then
+        ____cond454 = ____cond454 or ____switch454 == "abandonner_contrat"
+        if ____cond454 then
             do
                 local h = ____exports.herosDuJoueur(etat, action.joueur)
                 if not etat.contrats[h.id] then
@@ -11270,34 +12030,34 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 break
             end
         end
-        ____cond414 = ____cond414 or ____switch414 == "meneur"
-        if ____cond414 then
+        ____cond454 = ____cond454 or ____switch454 == "meneur"
+        if ____cond454 then
             if not etat.joueurs[action.nouveau] then
                 refuser("Joueur inconnu")
             end
             etat.meneur = action.nouveau
             break
         end
-        ____cond414 = ____cond414 or ____switch414 == "nouvelle_session"
-        if ____cond414 then
+        ____cond454 = ____cond454 or ____switch454 == "nouvelle_session"
+        if ____cond454 then
             do
                 etat.session = etat.session + 1
                 local idx = __TS__ArrayIndexOf(etat.ordreJoueurs, etat.meneur or "")
                 etat.meneur = etat.ordreJoueurs[(idx + 1) % #etat.ordreJoueurs + 1] or nil
-                local ____journal_147 = journal
-                local ____contenu_146 = contenu
-                local ____etat_session_145 = etat.session
-                local ____opt_143 = etat.joueurs[etat.meneur or ""]
-                ____journal_147(
-                    ____contenu_146,
+                local ____journal_190 = journal
+                local ____contenu_189 = contenu
+                local ____etat_session_188 = etat.session
+                local ____opt_186 = etat.joueurs[etat.meneur or ""]
+                ____journal_190(
+                    ____contenu_189,
                     etat,
-                    ((("Session " .. tostring(____etat_session_145)) .. " : ") .. (____opt_143 and ____opt_143.pseudo or "?")) .. " est le meneur du jour."
+                    ((("Session " .. tostring(____etat_session_188)) .. " : ") .. (____opt_186 and ____opt_186.pseudo or "?")) .. " est le meneur du jour."
                 )
                 break
             end
         end
-        ____cond414 = ____cond414 or ____switch414 == "fusionner"
-        if ____cond414 then
+        ____cond454 = ____cond454 or ____switch454 == "fusionner"
+        if ____cond454 then
             do
                 local h = ____exports.herosDuJoueur(etat, action.joueur)
                 local id = idFusion(action.parent, action.secondaire)
@@ -11317,8 +12077,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                     end
                 end
                 local entree = (if vrai(action.cle) then etat.combats[action.cle] else nil)
-                local ____opt_148 = entree
-                local acteur = ____opt_148 and __TS__ArrayFind(
+                local ____opt_191 = entree
+                local acteur = ____opt_191 and __TS__ArrayFind(
                     entree and entree.combat.combattants,
                     function(____, c) return c.herosId == h.id and c.type == "heros" end
                 )
@@ -11342,8 +12102,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                         acteur.competencesPropres,
                         function(____, k) return k.id == t.id end
                     ) then
-                        local ____acteur_competencesPropres_152 = acteur.competencesPropres
-                        ____acteur_competencesPropres_152[#____acteur_competencesPropres_152 + 1] = __TS__ObjectAssign({}, t)
+                        local ____acteur_competencesPropres_195 = acteur.competencesPropres
+                        ____acteur_competencesPropres_195[#____acteur_competencesPropres_195 + 1] = __TS__ObjectAssign({}, t)
                     end
                     acteur.compteurs["rang:" .. t.id] = h.rangsCompetences[t.parent] or 1
                     do
@@ -11364,8 +12124,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 break
             end
         end
-        ____cond414 = ____cond414 or ____switch414 == "apprendre_technique"
-        if ____cond414 then
+        ____cond454 = ____cond454 or ____switch454 == "apprendre_technique"
+        if ____cond454 then
             do
                 local h = ____exports.herosDuJoueur(etat, action.joueur)
                 local t = nil
@@ -11393,8 +12153,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 break
             end
         end
-        ____cond414 = ____cond414 or ____switch414 == "oublier_variante"
-        if ____cond414 then
+        ____cond454 = ____cond454 or ____switch454 == "oublier_variante"
+        if ____cond454 then
             do
                 local h = ____exports.herosDuJoueur(etat, action.joueur)
                 local t = h.grimoire[action.technique] or refuser("Technique inconnue")
@@ -11409,8 +12169,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 break
             end
         end
-        ____cond414 = ____cond414 or ____switch414 == "variante_active"
-        if ____cond414 then
+        ____cond454 = ____cond454 or ____switch454 == "variante_active"
+        if ____cond454 then
             do
                 local h = ____exports.herosDuJoueur(etat, action.joueur)
                 if vrai(action.technique) and not __TS__ArrayIncludes(h.variantes[action.competence] or ({}), action.technique) then
@@ -11420,8 +12180,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 break
             end
         end
-        ____cond414 = ____cond414 or ____switch414 == "equiper_competences"
-        if ____cond414 then
+        ____cond454 = ____cond454 or ____switch454 == "equiper_competences"
+        if ____cond454 then
             do
                 local h = ____exports.herosDuJoueur(etat, action.joueur)
                 local max = contenu.config.personnage.competences_equipees_max
@@ -11439,8 +12199,8 @@ function ____exports.appliquer(contenu, etatAvant, action)
                 break
             end
         end
-        ____cond414 = ____cond414 or ____switch414 == "chapitre_suivant"
-        if ____cond414 then
+        ____cond454 = ____cond454 or ____switch454 == "chapitre_suivant"
+        if ____cond454 then
             if not vrai(etat.finChapitre) then
                 refuser("Le chapitre n'est pas terminé")
             end
@@ -11450,6 +12210,11 @@ function ____exports.appliquer(contenu, etatAvant, action)
     until true
     etat.numeroAction = etat.numeroAction + 1
     return etat
+end
+--- PV actuels d'un héros hors combat.
+function ____exports.pvHorsCombat(contenu, h)
+    local max = ____exports.pvMaxHorsCombat(contenu, h)
+    return (if h.pv == nil then max else math.min(max, h.pv))
 end
 --- Rejoue une liste d'actions ; les actions invalides sont ignorées (et signalées).
 function ____exports.rejouer(contenu, depart, actions)
@@ -11871,6 +12636,7 @@ local VERSION_ETAT = ____partie.VERSION_ETAT
 local ____outils = require("src.moteur.outils")
 local cles = ____outils.cles
 local copieProfonde = ____outils.copieProfonde
+local valeurs = ____outils.valeurs
 function ____exports.migrer(s)
     local res = s
     while res.version < VERSION_ETAT do
@@ -11952,6 +12718,28 @@ ____exports.migrations = {
             d.examensRates = {}
         end
         s.version = 7
+        return s
+    end,
+    [7] = function(s)
+        local d = s.depart
+        for ____, h in ipairs(valeurs(d.heros or ({}))) do
+            if h.sexe == nil then
+                h.sexe = "m"
+            end
+            if h.sexeChoisi == nil then
+                h.sexeChoisi = false
+            end
+        end
+        s.version = 8
+        return s
+    end,
+    [8] = function(s)
+        local d = s.depart
+        if d.contratsTermines == nil then
+            d.contratsTermines = {}
+        end
+        d.regleContratsDepuis = #s.actions
+        s.version = 9
         return s
     end
 }
@@ -14499,6 +15287,14 @@ do
 end
 do
     local ____export = require("src.moteur.equipement")
+    for ____exportKey, ____exportValue in pairs(____export) do
+        if ____exportKey ~= "default" then
+            ____exports[____exportKey] = ____exportValue
+        end
+    end
+end
+do
+    local ____export = require("src.moteur.voyage")
     for ____exportKey, ____exportValue in pairs(____export) do
         if ____exportKey ~= "default" then
             ____exports[____exportKey] = ____exportValue
