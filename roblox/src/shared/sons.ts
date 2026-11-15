@@ -54,6 +54,10 @@ export const SONS = {
 	niveau: "",
 	/** Pièces d'or (achat, gain d'or) */
 	pieces: "",
+	/** Clic d'un bouton de la boutique */
+	clic: "",
+	/** Ouverture de la boutique */
+	boutique: "",
 };
 
 export type CleSon = keyof typeof SONS;

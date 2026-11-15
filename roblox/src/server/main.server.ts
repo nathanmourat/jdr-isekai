@@ -25,6 +25,7 @@ import {
 import { sauvegardeActive } from "./stockage";
 import { diffuser as diffuserModeration, preparerModeration, verifierArrivee } from "./moderation";
 import { preparerRecompenses } from "./recompenses";
+import { preparerBoutique } from "./boutique";
 import { construireMonde } from "./monde";
 import { preparerModeles } from "./modeles";
 import { construireInterieurs } from "./interieurs";
@@ -107,6 +108,7 @@ r.action.OnServerEvent.Connect((joueur, a) => actionDuJoueur(joueur, a as never)
 preparerModeration();
 // badges et bonus de connexion
 preparerRecompenses();
+preparerBoutique();
 // chaque joueur qui arrive (s'il n'est pas banni) retrouve sa campagne (créée la première fois)
 const arrivee = (p: Player) => {
 	if (!verifierArrivee(p)) return;

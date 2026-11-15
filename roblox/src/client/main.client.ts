@@ -30,6 +30,7 @@ import { barreHaut, panneauLateral } from "./ui/monde";
 import { vueFinChapitre, vueTempsLibre } from "./ui/temps";
 import { majSons } from "./sons";
 import { surveillerButin } from "./ui/objets";
+import { preparerBoutique } from "./ui/boutique";
 
 const joueur = Players.LocalPlayer;
 const gui = new Instance("ScreenGui");
@@ -330,6 +331,7 @@ animerDecor();
 demarrerMeteo();
 ecouterMessages();
 preparerInvitesJoueurs();
+preparerBoutique();
 redessiner();
 // l'ambiance sonore suit aussi le jour et la nuit, même sans action dans la partie
 task.spawn(() => {

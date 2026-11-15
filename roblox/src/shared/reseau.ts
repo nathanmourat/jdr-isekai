@@ -5,6 +5,7 @@
  *  - chaque joueur rejoue les actions avec le même moteur, donc tout le monde voit le même état.
  */
 import { ReplicatedStorage, RunService } from "@rbxts/services";
+import type { CommandeBoutique, EtatBoutique } from "./boutique";
 import type { CommandeModeration, EtatModeration } from "./grades";
 import type { Action, EtatPartie } from "./moteur";
 
@@ -85,12 +86,12 @@ export function reseau() {
 		if (RunService.IsServer()) {
 			dossier = new Instance("Folder");
 			dossier.Name = NOM_DOSSIER;
-			for (const nom of ["Action", "NouvellesActions", "Erreur", "Campagne", "Groupe", "EtatModeration", "Message"]) {
+			for (const nom of ["Action", "NouvellesActions", "Erreur", "Campagne", "Groupe", "EtatModeration", "Message", "EtatBoutique"]) {
 				const e = new Instance("RemoteEvent");
 				e.Name = nom;
 				e.Parent = dossier;
 			}
-			for (const nom of ["Commande", "Moderation"]) {
+			for (const nom of ["Commande", "Moderation", "Boutique"]) {
 				const f = new Instance("RemoteFunction");
 				f.Name = nom;
 				f.Parent = dossier;
@@ -119,6 +120,10 @@ export function reseau() {
 		etatModeration: dossier.WaitForChild("EtatModeration") as RemoteEvent<(e: EtatModeration) => void>,
 		/** serveur → joueur : annonce, avertissement, signalement reçu… (fenêtre au milieu de l'écran) */
 		message: dossier.WaitForChild("Message") as RemoteEvent<(m: MessageServeur) => void>,
+		/** joueur → serveur : boutique en Robux (porter, retirer, lancer une fête) */
+		boutique: dossier.WaitForChild("Boutique") as RemoteFunction<(c: CommandeBoutique) => ReponseCommande>,
+		/** serveur → joueur : ce qu'il possède et porte dans la boutique */
+		etatBoutique: dossier.WaitForChild("EtatBoutique") as RemoteEvent<(e: EtatBoutique) => void>,
 	};
 }
 

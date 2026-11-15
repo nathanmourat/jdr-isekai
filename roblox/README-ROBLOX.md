@@ -449,6 +449,32 @@ Une **pierre de voyage** (obélisque à rune bleue et cristal lumineux) au centr
 - [ ] **Après**, dans 🗺 Carte : « Y aller » pour les lieux proches d'une pierre activée (fondu au noir), « Guider » pour les autres ; la liste « 🌀 Pierres de voyage » permet de « Voyager » vers chaque pierre activée. Toucher une pierre (E) ouvre aussi cette liste.
 - [ ] La première fois dans une nouvelle région, le bouton de l'étape de l'histoire y téléporte (le voyage de la caravane) ; il faut ensuite activer la pierre de la ville.
 
+### Liste de contrôle — boutique en Robux (cosmétiques, 15/11)
+Code : `shared/boutique.ts` (catalogue), `shared/cosmetiques3d.ts` (effets 3D), `server/boutique.ts` (achats), `client/ui/boutique.ts` (fenêtre).
+**Règle : seulement des cosmétiques.** Rien ne se vend qui rende plus fort (pas d'or, d'XP, d'objet ni de niveau) ; le moteur ne voit jamais la boutique.
+
+Mettre un article en vente (quand tu veux) :
+1. Creator Dashboard → ton expérience → Monetization → **Passes** (achat unique, visible sur la page du jeu) ou **Developer Products** (articles nombreux, ou fêtes qu'on rachète).
+2. Le **prix se règle là-bas** : le jeu lit le vrai prix, rien n'est écrit dans le code.
+3. Colle le numéro dans `numero` de l'article (`shared/boutique.ts`), sans changer son `type` (« pass » ou « produit »).
+4. Un numéro à 0 = « Bientôt » dans la boutique. Vérifie les règles de Roblox sur la monétisation avant de vendre (elles changent).
+
+Dans Studio :
+- [ ] Touche **B** ou bouton « 🛍 Boutique » de la barre du haut : la fenêtre s'ouvre avec un léger zoom ; ✕, Échap ou un clic à côté la ferment.
+- [ ] Onglets Packs, Auras, Capes, Titres, Traces de pas, Effets de sorts, Fêtes, Ma collection ; cartes colorées selon la rareté, bordure qui tourne pour les épiques et légendaires, la carte grandit au survol.
+- [ ] Panneau de droite : grand aperçu qui « respire », couleurs, contenu du pack, description, boutons.
+- [ ] Propriétaire (Player1) : bandeau « tout est débloqué », « ★ Porter » sur tout, fêtes illimitées.
+- [ ] Porter une aura, une cape, un titre, une trace : visibles par Player2 ; « Retirer » les enlève ; on les garde après être mort et réapparu.
+- [ ] Titre au-dessus de l'étiquette « 👑 Propriétaire » (pas l'un sur l'autre).
+- [ ] « 👁 Essayer 10 secondes » : la fenêtre se ferme, l'effet apparaît chez toi seulement (Player2 ne le voit pas), compte à rebours, « Retour à la boutique ».
+- [ ] Effets de sorts portés : en combat, tes sorts et flèches ont une seconde traînée et des étoiles ; la couleur de l'élément reste au centre.
+- [ ] Fêtes : « Lancer maintenant » → feu d'artifice ou lanternes au-dessus de toi, vus par Player2 ; une seconde fête trop tôt est refusée (12 s).
+- [ ] Player2 (pas propriétaire) : « Bientôt en vente » puis « 🧪 Essai Studio » débloque l'article jusqu'à la fin du test ; « Ma collection » le montre.
+- [ ] Sur téléphone (émulateur) : cartes plus petites, le détail remplace la grille avec « ← Retour aux articles ».
+- [ ] Quand un numéro est rempli : le vrai prix s'affiche, « Acheter » ouvre la fenêtre d'achat de Roblox (achat de test gratuit dans Studio), puis « ✨ Merci ! ».
+- Sauvegarde : DataStore `VelmarisBoutique_v1` (possédés, portés, charges, reçus déjà traités : un achat n'est jamais compté deux fois).
+- Sons : emplacements `clic` et `boutique` dans `shared/sons.ts`.
+
 ### Liste de contrôle — examens de rang et maîtrises d'équipement (test 2, changements 10 et 11)
 - [ ] Dans n'importe quel comptoir de la Guilde, le panneau « 🎖 Rang de Guilde » montre le rang suivant, ce qu'il manque (points, niveau) et le bouton de l'examen quand tout est prêt.
 - [ ] Rangs E, D et A : un combat contre un examinateur (A : Dame Rowena en personne). En cas d'échec, on retente le lendemain.

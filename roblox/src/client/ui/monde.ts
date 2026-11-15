@@ -51,6 +51,7 @@ import { agir, commandeGroupe, commandeModeration, jeu, monHeros } from "../part
 import { RAISONS } from "shared/grades";
 import { OBJECTIFS_GROUPE } from "shared/reseau";
 import { vueModeration } from "./moderation";
+import { ouvrirBoutique } from "./boutique";
 import { messageLocal } from "./messages";
 import { NOMS_TEMPS, tempsActuel } from "../rendu/meteo";
 import { pierresConnues, teleportationPossible, voyagerVers } from "../rendu/voyage";
@@ -114,6 +115,7 @@ export function barreHaut(parent: Frame, redessiner: () => void, allerA: (lieu: 
 	if (affichage.barreReduite) {
 		const lr = ligne(c, 6);
 		for (const [id, nom] of ONGLETS) bouton(lr, nom, () => ((affichage.panneau = affichage.panneau === id ? undefined : id), (affichage.lieu = undefined), redessiner()), { choisi: affichage.panneau === id, hauteur: 28, taille: 13 });
+		bouton(lr, "🛍", () => ouvrirBoutique(), { hauteur: 28, taille: 13 });
 		return;
 	}
 	if (affichage.dans !== undefined) {
@@ -182,6 +184,8 @@ export function barreHaut(parent: Frame, redessiner: () => void, allerA: (lieu: 
 			{ choisi: affichage.panneau === id, hauteur: 32, taille: 14 },
 		);
 	}
+	// boutique en Robux (cosmétiques) : sa propre fenêtre, aussi avec la touche B
+	bouton(l3, "🛍 Boutique", () => ouvrirBoutique(), { hauteur: 32, taille: 14 });
 	if (etat.dernieresNouvelles.size() > 0) texte(c, etat.dernieresNouvelles.join("  ·  "), 14, { couleur: COULEURS.or });
 }
 

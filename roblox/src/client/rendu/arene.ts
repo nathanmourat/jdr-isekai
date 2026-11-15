@@ -10,6 +10,8 @@ import { CONTENU } from "shared/donnees";
 import { LIEU_DU_DECOR, ORIGINES, positionLieu, regionDuLieu, trouverLieu } from "shared/geo";
 import type { Combat, Combattant, EvenementCombat } from "shared/moteur";
 import { jouer } from "../sons";
+import { jeu } from "../partie";
+import { article, ATTRIBUT_COSMETIQUES, lireCosmetiques } from "shared/boutique";
 import { montrerMurs, repereDonjon } from "./donjon3d";
 
 const COULEUR_ELEMENT: Record<string, Color3> = {
@@ -308,8 +310,21 @@ function elementAction(attaquant: Combattant | undefined, competence: string | u
 	return k?.effets?.find((x) => x.element !== undefined)?.element ?? "arcane";
 }
 
+/** Couleurs de l'effet de sorts acheté en boutique par le joueur de ce héros (cosmétique, rien d'autre). */
+function couleursSorts(c: Combattant | undefined): Color3[] | undefined {
+	if (!c || c.type !== "heros" || c.herosId === undefined || !jeu.etat) return undefined;
+	for (const [id, j] of pairs(jeu.etat.joueurs)) {
+		if (j.herosId !== c.herosId) continue;
+		const uid = tonumber((id as string).sub(2));
+		const p = uid !== undefined ? Players.GetPlayerByUserId(uid) : undefined;
+		const style = lireCosmetiques(p?.GetAttribute(ATTRIBUT_COSMETIQUES)).sorts;
+		return style !== undefined ? article(style)?.couleurs : undefined;
+	}
+	return undefined;
+}
+
 /** Projectile (sort, flèche, fiole) qui file de la source à la cible, avec une traînée de la couleur de l'élément. */
-function projectile(source: Pion, cible: Pion, element: string) {
+function projectile(source: Pion, cible: Pion, element: string, style?: Color3[]) {
 	if (!dossier) return;
 	const couleur = COULEUR_ELEMENT[element] ?? new Color3(1, 1, 1);
 	const depart = source.racine.Position.add(new Vector3(0, 1.5, 0));
@@ -337,6 +352,33 @@ function projectile(source: Pion, cible: Pion, element: string) {
 	trainee.Lifetime = 0.25;
 	trainee.Transparency = new NumberSequence(0.1, 1);
 	trainee.Parent = balle;
+	// effet de sorts de la boutique : une seconde traînée et des étoiles (la couleur de l'élément reste au centre)
+	if (style && style.size() > 0) {
+		const b0 = new Instance("Attachment");
+		b0.Position = new Vector3(0, 0.8, 0);
+		b0.Parent = balle;
+		const b1 = new Instance("Attachment");
+		b1.Position = new Vector3(0, -0.8, 0);
+		b1.Parent = balle;
+		const t2 = new Instance("Trail");
+		t2.Attachment0 = b0;
+		t2.Attachment1 = b1;
+		const n = style.size();
+		t2.Color = n === 1 ? new ColorSequence(style[0]) : new ColorSequence(style.map((c, i) => new ColorSequenceKeypoint(i / (n - 1), c)));
+		t2.LightEmission = 1;
+		t2.Lifetime = 0.45;
+		t2.Transparency = new NumberSequence(0.3, 1);
+		t2.Parent = balle;
+		const etoiles = new Instance("ParticleEmitter");
+		etoiles.Color = t2.Color;
+		etoiles.LightEmission = 1;
+		etoiles.Rate = 60;
+		etoiles.Lifetime = new NumberRange(0.4, 0.8);
+		etoiles.Speed = new NumberRange(1, 3);
+		etoiles.SpreadAngle = new Vector2(180, 180);
+		etoiles.Size = new NumberSequence(0.3, 0);
+		etoiles.Parent = balle;
+	}
 	const l = new Instance("PointLight");
 	l.Color = couleur;
 	l.Range = 10;
@@ -465,7 +507,7 @@ function jouerEvenement(e: EvenementCombat): number {
 					const element = elementAction(attaquant, e.competence);
 					eclat(source, COULEUR_ELEMENT[element] ?? Color3.fromRGB(255, 230, 160), 12);
 					// sort, flèche ou fiole : un projectile file vers la cible
-					task.delay(0.12, () => projectile(source, cible, element));
+					task.delay(0.12, () => projectile(source, cible, element, couleursSorts(attaquant)));
 					if (e.competence !== undefined && e.competence !== "attaque") jouer("sort");
 				}
 			}
