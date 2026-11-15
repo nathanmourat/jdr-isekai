@@ -5,6 +5,7 @@
    * comme des tiroirs depuis la droite. La page ne défile jamais.
    */
   import { onMount } from 'svelte';
+  import LancerDe from '../LancerDe.svelte';
   import { annoncer, premierPlan } from '../premierPlan.svelte';
   import { activiteChangee, signatureActivite } from '../activite';
   import { jeu } from '../jeu.svelte';
@@ -269,6 +270,7 @@
   {/if}
   <!-- notifications empilées en haut à droite (gains de 5 s, puis messages), sans bloquer les clics -->
   <div class="pile-notifs"><Gains /><Notifications /></div>
+  <LancerDe />
   <PiecesAnimees />
 </div>
 

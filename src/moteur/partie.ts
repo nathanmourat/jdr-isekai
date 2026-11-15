@@ -141,6 +141,8 @@ export interface EtatPartie {
   /** Paris en cours : somme mise de côté par héros. */
   mises: Record<string, number>;
   mouvementsOr: MouvementOr[];
+  /** Tests de caractéristique de la dernière action (animation du lancer de dé ; vidé à chaque action, test 4). */
+  tests?: TestCarac[];
   /** Contrats à étapes en cours, par héros (un seul à la fois). */
   contrats: Record<string, ContratEnCours>;
   /** Objets mystérieux dont l'effet a été découvert (achat ou identification) : connus de toute la partie. */
@@ -905,6 +907,7 @@ function resoudreChoix(contenu: Contenu, etat: EtatPartie, cle: string, index: n
     const total = jet + caracsTotales(contenu, meilleur)[ch.test.carac];
     const reussi = jet === 20 || (jet !== 1 && total >= ch.test.difficulte);
     es.dernierTest = { carac: ch.test.carac, jet, total, difficulte: ch.test.difficulte, reussi, heros: meilleur.id };
+    noterTest(etat, { heros: meilleur.id, carac: ch.test.carac, jet, bonus: total - jet, total, difficulte: ch.test.difficulte, reussi, quoi: contenu.scenes[es.sceneId]?.titre ?? '' });
     suite = reussi ? ch.test.reussite : ch.test.echec;
   }
   entrerNoeud(contenu, etat, cle, suite!);
@@ -1158,6 +1161,7 @@ function deplacerDonjon(contenu: Contenu, etat: EtatPartie, dx: number, dy: numb
       const meilleur = heros.map((h) => etat.heros[h]).reduce((a, b) => (caracsTotales(contenu, b)[t2.carac] > caracsTotales(contenu, a)[t2.carac] ? b : a));
       const jet = de(etat.rng, 20);
       const total = jet + caracsTotales(contenu, meilleur)[t2.carac];
+      noterTest(etat, { heros: meilleur.id, carac: t2.carac, jet, bonus: total - jet, total, difficulte: t2.difficulte, reussi: total >= t2.difficulte, quoi: 'Un piège !' });
       if (total >= t2.difficulte) dj.messages = [`${ev.texte ?? 'Un piège !'} ${meilleur.nom} le repère à temps (${t2.carac} : ${jet} + ${total - jet} = ${total} ≥ ${t2.difficulte}).`];
       else {
         for (const h of heros) etat.heros[h].blessure = true;
@@ -1242,6 +1246,7 @@ export function appliquer(contenu: Contenu, etatAvant: EtatPartie, action: Actio
   const etat = copieProfonde(etatAvant);
   etat.dernieresNouvelles = [];
   etat.mouvementsOr = [];
+  etat.tests = [];
   etat.mises ??= {};
   etat.objetsConnus ??= [];
   etat.goutsConnus ??= {};
@@ -1667,6 +1672,7 @@ export function appliquer(contenu: Contenu, etatAvant: EtatPartie, action: Actio
       } else if (ct.test) {
         const jet = de(etat.rng, 20);
         const total = jet + caracsTotales(contenu, h)[ct.test.carac];
+        noterTest(etat, { heros: h.id, carac: ct.test.carac, jet, bonus: total - jet, total, difficulte: ct.test.difficulte, reussi: total >= ct.test.difficulte, quoi: ct.titre });
         const msgs: string[] = [];
         if (total >= ct.test.difficulte) {
           appliquerConsequence(contenu, etat, { or: ct.recompenses.or, xp: ct.recompenses.xp, points_guilde: ct.recompenses.points_guilde, objet: ct.recompenses.objets }, [h.id], msgs);
@@ -1715,7 +1721,9 @@ export function appliquer(contenu: Contenu, etatAvant: EtatPartie, action: Actio
         const jet = de(etat.rng, 20);
         const total = jet + caracsTotales(contenu, h)[e.test.carac];
         const detail = `${e.test.carac} : dé ${jet} + ${total - jet} = ${total} contre ${e.test.difficulte}`;
-        if (jet === 20 || (jet !== 1 && total >= e.test.difficulte)) {
+        const reussiEtape = jet === 20 || (jet !== 1 && total >= e.test.difficulte);
+        noterTest(etat, { heros: h.id, carac: e.test.carac, jet, bonus: total - jet, total, difficulte: e.test.difficulte, reussi: reussiEtape, quoi: x.contrat.titre });
+        if (reussiEtape) {
           st.notes = [`Réussi (${detail}). ${e.test.reussite}`];
           avancerContrat(contenu, etat, h);
         } else {
@@ -1929,6 +1937,18 @@ export function joueursAttendusDialogue(etat: EtatPartie, cle: string): string[]
     const jx = etat.joueurs[x];
     return jx.present && vrai(jx.herosId) && es.heros.includes(jx.herosId!) && !prets.includes(x);
   });
+}
+
+/** Un test de caractéristique (montré par l'animation du dé ; l'interface ne calcule rien). */
+export interface TestCarac {
+  heros: string; carac: Carac; jet: number; bonus: number; total: number; difficulte: number; reussi: boolean;
+  /** Ce qui est tenté (titre de la scène ou du contrat). */
+  quoi: string;
+}
+
+function noterTest(etat: EtatPartie, t: TestCarac) {
+  if (etat.tests === undefined) etat.tests = [];
+  etat.tests.push(t);
 }
 
 /** PV max d'un héros hors combat (blessure comprise), calculés comme au début d'un combat. */

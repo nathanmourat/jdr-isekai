@@ -11,13 +11,20 @@
   let compteur = 0;
   let dernier = -1;
 
+  /** Messages arrivés pendant un lancer de dé : ils attendent la fin de l'animation (ils dévoileraient le résultat). */
+  let enAttente: string[] = [];
   $effect(() => {
     const etat = jeu.etat;
-    if (!etat || etat.numeroAction === dernier) return;
-    const premier = dernier === -1;
-    dernier = etat.numeroAction;
-    if (premier) return; // à l'ouverture d'une partie, on ne rejoue pas les anciens messages
-    for (const texte of etat.dernieresNouvelles) {
+    const de = jeu.deEnCours;
+    if (etat && etat.numeroAction !== dernier) {
+      const premier = dernier === -1;
+      dernier = etat.numeroAction;
+      if (!premier) enAttente.push(...etat.dernieresNouvelles); // à l'ouverture d'une partie, on ne rejoue pas les anciens messages
+    }
+    if (de || !enAttente.length) return;
+    const textes = enAttente;
+    enAttente = [];
+    for (const texte of textes) {
       const id = ++compteur;
       messages.push({ id, texte, sortie: false });
       setTimeout(() => { const m = messages.find((x) => x.id === id); if (m) m.sortie = true; }, DUREE_MS);

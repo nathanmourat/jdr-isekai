@@ -3,6 +3,7 @@
  * L'état de la partie est recalculé à partir de la liste des actions (même moteur que les tests).
  */
 import type { Contenu } from '../contenu/charger';
+import type { TestCarac } from '../moteur/partie';
 import { contenuNavigateur } from '../contenu/navigateur';
 import { appliquer, ErreurAction, jourPeutPasser, type Action, type EtatPartie } from '../moteur/partie';
 import { creerSauvegarde } from '../sauvegarde/migrations';
@@ -34,6 +35,10 @@ class Jeu {
   erreur = $state<string | null>(null);
   /** Gains et pertes des dernières actions reçues (notifications courtes), avec un numéro unique. */
   gains = $state<(Gain & { id: number })[]>([]);
+  /** Tests de caractéristique à montrer (animation du dé, test 4), dans l'ordre. */
+  lancers = $state<(TestCarac & { id: number })[]>([]);
+  /** Un lancer de dé est à l'écran : les notifications de gain attendent la fin (pour ne pas dévoiler le résultat). */
+  deEnCours = $state(false);
   private numeroGain = 0;
   info = $state<string | null>(null);
   chargement = $state(false);
@@ -142,8 +147,13 @@ class Jeu {
     const { etat } = synchroniser(this.contenu, this.depart, this.etat, this.actions, toutes);
     // notifications de gain : pas au chargement d'une partie (on ne rejoue pas les anciens gains)
     if (avant && this.actions.length > 0) {
+      // un lancer de dé arrive : les notifications attendront la fin de l'animation
+      if ((etat.tests ?? []).length) this.deEnCours = true;
       const nouveaux = calculerGains(this.contenu, avant, etat).map((g) => ({ ...g, id: ++this.numeroGain }));
       if (nouveaux.length) this.gains = [...this.gains, ...nouveaux].slice(-8);
+      // lancers de dé de la dernière action (tous les joueurs présents les voient)
+      const tests = etat.tests ?? [];
+      if (tests.length) this.lancers = [...this.lancers, ...tests.map((t) => ({ ...t, id: ++this.numeroGain }))].slice(-4);
     }
     this.actions = toutes.slice();
     this.etat = etat;
