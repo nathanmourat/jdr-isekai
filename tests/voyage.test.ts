@@ -136,3 +136,14 @@ describe('Histoire partagée (Roblox)', () => {
     expect(e.flags['flag-test']).toBeUndefined();
   });
 });
+
+describe('Bonus de connexion (Roblox)', () => {
+  it('ajoute l\'or et l\'objet de la série', () => {
+    const solo = campagneSolo('bonus', 'u1', 'Alice', Object.keys(c.dons)[0], Object.keys(c.classes)[0]);
+    const or0 = solo.etat.heros.h1.or;
+    const e = appliquer(c, solo.etat, { type: 'bonus_connexion', joueur: 'u1', serie: 3, or: 20, objet: 'potion-soin-petite' });
+    expect(e.heros.h1.or).toBe(or0 + 20);
+    expect(e.heros.h1.inventaire['potion-soin-petite']).toBeGreaterThanOrEqual(1);
+    expect(e.dernieresNouvelles.join(' ')).toMatch(/3 jours de suite/);
+  });
+});

@@ -54,6 +54,7 @@ export class PartieOuverte {
 		this.donnees.actions.push(action);
 		this.modifiee = true;
 		for (const p of this.membres) r.nouvellesActions.FireClient(p, debut, [action]);
+		for (const f of ecouteursAction) task.spawn(f, this);
 		return undefined;
 	}
 
@@ -68,6 +69,12 @@ export function messageErreur(e: unknown): string {
 		if (typeIs(m, "string")) return m;
 	}
 	return tostring(e);
+}
+
+/** Fonctions appelées après chaque action acceptée (badges…). */
+const ecouteursAction: ((p: PartieOuverte) => void)[] = [];
+export function surAction(f: (p: PartieOuverte) => void) {
+	ecouteursAction.push(f);
 }
 
 export const ouvertes = new Map<string, PartieOuverte>();
@@ -182,6 +189,9 @@ interface Groupe {
 	membres: Player[];
 }
 const groupeDe = new Map<Player, Groupe>();
+export function enGroupe(p: Player): boolean {
+	return groupeDe.has(p);
+}
 /** Point de l'histoire du chef quand chaque membre est arrivé (pour faire avancer l'histoire du membre au retour). */
 const histoireAvant = new Map<Player, PointHistoire>();
 const invitations = new Map<Player, { chef: Player; expire: number }>();
@@ -405,7 +415,7 @@ export function actionDuJoueur(joueur: Player, brute: ActionJoueur) {
 	// sur Roblox, le héros porte le nom affiché du joueur (déjà filtré par Roblox)
 	if (action.type === "creer_heros" && typeIs(action.heros, "table")) action.heros = { ...(action.heros as object), nom: joueur.DisplayName, portrait: undefined };
 	// rejoindre, renforts et retours : c'est le serveur seul qui les décide
-	if (action.type === "rejoindre" || action.type === "portrait" || action.type === "invite_arrive" || action.type === "heros_retour" || action.type === "cadeau_admin")
+	if (action.type === "rejoindre" || action.type === "portrait" || action.type === "invite_arrive" || action.type === "heros_retour" || action.type === "cadeau_admin" || action.type === "bonus_connexion" || action.type === "histoire_retour")
 		return r.erreur.FireClient(joueur, "Action non disponible sur Roblox.");
 	const err = p.jouer(action);
 	if (err !== undefined) r.erreur.FireClient(joueur, err);

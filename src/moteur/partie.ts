@@ -197,6 +197,8 @@ export type Action =
   | { type: 'histoire_retour'; joueur: string; delta: DeltaHistoire }
   /** Roblox : cadeau du propriétaire du jeu (outil de test réservé au propriétaire, décidé par le serveur). */
   | { type: 'cadeau_admin'; joueur: string; or?: number; xp?: number; objet?: string; quantite?: number }
+  /** Roblox : bonus de connexion quotidienne (série de jours), décidé par le serveur. */
+  | { type: 'bonus_connexion'; joueur: string; serie: number; or: number; objet?: string; quantite?: number }
   /** Dormir à l'auberge : `mois` choisi, ou `histoire: true` pour aller jusqu'au prochain événement de l'histoire. */
   | { type: 'proposer_repos'; joueur: string; mois?: number; histoire?: boolean }
   | { type: 'repondre_repos'; joueur: string; accepte: boolean }
@@ -1360,6 +1362,19 @@ export function appliquer(contenu: Contenu, etatAvant: EtatPartie, action: Actio
       const n = action.delta.scenes.length;
       etat.dernieresNouvelles.push(`L'histoire vécue avec le groupe compte aussi pour toi : ${n} scène${n > 1 ? 's' : ''} de plus dans ta campagne.`);
       journal(contenu, etat, `Le groupe a fait avancer l'histoire (${n} scène${n > 1 ? 's' : ''}).`);
+      break;
+    }
+    case 'bonus_connexion': {
+      const h = herosDuJoueur(etat, action.joueur);
+      const or = Math.max(0, Math.floor(action.or));
+      h.or += or;
+      const msgs = [`+${or} or`];
+      if (vrai(action.objet) && contenu.objets[action.objet] && !dejaUnique(contenu, etat, action.objet)) {
+        const q = Math.max(1, Math.floor(action.quantite ?? 1));
+        h.inventaire[action.objet] = (h.inventaire[action.objet] ?? 0) + q;
+        msgs.push(`${contenu.objets[action.objet].nom} ×${q}`);
+      }
+      etat.dernieresNouvelles.push(`Bonus de connexion (${action.serie} jour${action.serie > 1 ? 's' : ''} de suite) pour ${h.nom} : ${msgs.join(', ')}.`);
       break;
     }
     case 'cadeau_admin': {

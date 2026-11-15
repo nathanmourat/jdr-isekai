@@ -24,6 +24,7 @@ import {
 } from "./parties";
 import { sauvegardeActive } from "./stockage";
 import { diffuser as diffuserModeration, preparerModeration, verifierArrivee } from "./moderation";
+import { preparerRecompenses } from "./recompenses";
 import { construireMonde } from "./monde";
 import { preparerModeles } from "./modeles";
 import { construireInterieurs } from "./interieurs";
@@ -99,6 +100,8 @@ r.commande.OnServerInvoke = (joueur: Player, c: unknown): ReponseCommande => {
 r.action.OnServerEvent.Connect((joueur, a) => actionDuJoueur(joueur, a as never));
 // modération : grades, bannissements, sourdines, journal
 preparerModeration();
+// badges et bonus de connexion
+preparerRecompenses();
 // chaque joueur qui arrive (s'il n'est pas banni) retrouve sa campagne (créée la première fois)
 const arrivee = (p: Player) => {
 	if (!verifierArrivee(p)) return;
