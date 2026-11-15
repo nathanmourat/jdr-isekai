@@ -431,6 +431,17 @@ Le propriétaire est reconnu tout seul : le créateur du jeu (ou le rang 255 du 
 - [ ] La barre du haut affiche le temps (☀ 🌧 ❄ 🌫 🏜 🌋). Aubeclaire : pluie au printemps et en automne, neige en hiver. Marche des Sables : tempêtes de sable. Sylvenoire et Archipel : brouillard et pluie. Monts Grisfer : neige. Mur d'Aube et Terres Cendrées : cendres.
 - [ ] Pas de météo dans les salles ni dans les donjons. Le temps change chaque jour de la campagne, le même pour tout le groupe.
 
+### Liste de contrôle — habitants habillés selon leur culture (15/11)
+Chaque région a ses costumes (`src/server/cultures.ts`) : habitants des maisons, figurants des auberges, Guildes, ports et palais, PNJ sans costume dédié, et **villageois qui se promènent dans chaque ville** (10 par ville, dont 2 gardes ; ils n'apparaissent que lorsqu'un joueur est dans la région).
+- [ ] **Aubeclaire** (Lysmont) : laine et lin, tabliers, capuches, chapeaux de paille ; gardes en armure.
+- [ ] **Marche des Sables** (Qarzim) : turbans, voiles contre le sable, robes claires, ceintures safran et indigo ; des **Vulpins** (pelage roux, oreilles et queue de renard) et des **Ourvalis** (grands, oreilles d'ours).
+- [ ] **Sylvenoire** : elfes aux oreilles pointues, verts mousse et argent, capes, couronnes de feuilles ; gardes archers.
+- [ ] **Monts Grisfer** (Karak-Dûm) : nains petits et barbus (roux, noirs, blancs), cols de fourrure, tabliers de forge.
+- [ ] **Archipel des Brumes** (Port-Vérane) : bandanas, tricornes à plume, chemises blanches, ceintures rouges.
+- [ ] **Mur d'Aube** : soldats en tabard doré, réfugiés en capes grises.
+- [ ] **Terres Cendrées** : peuple des Cendres (cornes, peaux grises, yeux de braise, capes noires) et soldats du camp de l'Aube.
+- [ ] En quittant une région (plus personne à moins de 1 600 studs), ses villageois disparaissent ; ils reviennent quand on y retourne.
+
 ### Liste de contrôle — examens de rang et maîtrises d'équipement (test 2, changements 10 et 11)
 - [ ] Dans n'importe quel comptoir de la Guilde, le panneau « 🎖 Rang de Guilde » montre le rang suivant, ce qu'il manque (points, niveau) et le bouton de l'examen quand tout est prêt.
 - [ ] Rangs E, D et A : un combat contre un examinateur (A : Dame Rowena en personne). En cas d'échec, on retente le lendemain.

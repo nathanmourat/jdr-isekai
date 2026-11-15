@@ -13,6 +13,7 @@ import type { LieuDef } from "shared/moteur";
 import { genre } from "./genres";
 import { banniere, bloc, C, tonneau, VERTICAL } from "./decor";
 import { COSTUMES, humanoide, type Costume } from "./modeles";
+import { tenueDe } from "./cultures";
 
 const rgb = (r: number, g: number, b: number) => Color3.fromRGB(r, g, b);
 const HAUTEUR = -300;
@@ -161,7 +162,10 @@ export function tapis(m: Model, pos: Vector3, taille: Vector2, couleur: Color3) 
 }
 
 function pnj(m: Model, lieu: string, id: string, position: Vector3, regard: Vector3, action = "parler") {
-	const costume = COSTUMES_PNJ[id] ?? COSTUMES[id] ?? { peau: rgb(225, 190, 160), haut: rgb(120, 100, 80), bas: rgb(80, 70, 60) };
+	// sans costume dédié : un costume de la culture de sa région (turban, barbe de nain, oreilles d'elfe…)
+	let n = 0;
+	for (let i = 1; i <= id.size(); i++) n += string.byte(id, i)[0] ?? 0;
+	const costume = COSTUMES_PNJ[id] ?? COSTUMES[id] ?? tenueDe(regionDuLieu(lieu), n);
 	const [ok, modele] = pcall(() => humanoide(`pnj-${id}`, costume));
 	if (!ok) return;
 	const p = modele as Model;
@@ -430,6 +434,12 @@ function salleRegionale(l: LieuDef, base: Vector3, pnjDuLieu: string[]) {
 			comptoir(m, fond, 12);
 			point(m, fond.add(new Vector3(0, 2, 3)), l.id, "boutique", "Acheter", l.nom);
 		}
+	}
+	// des habitants de la région, habillés selon sa culture (auberges, Guildes, marchés, palais)
+	if (g === "auberge" || g === "guilde" || g === "port" || g === "palais") {
+		const region = regionDuLieu(l.id);
+		for (const [x, z, k] of [[-12, 6, 0], [12, 7, 1], [-6, 11, 2]] as const)
+			figurant(m, tenueDe(region, k + l.id.size()), base.add(new Vector3(x, 0, z)), base.add(new Vector3(0, 0, z - 4)));
 	}
 	// les PNJ du lieu, en arc de cercle face à la porte (leur visibilité suit la partie : client/rendu/marqueurs.ts)
 	pnjDuLieu.forEach((id, k) => {

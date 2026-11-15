@@ -55,6 +55,27 @@ export interface Costume {
 	oreilles?: Color3;
 	/** cape dans le dos */
 	cape?: Color3;
+	// ── accessoires des cultures de Velmaris (server/cultures.ts) ──
+	/** turban enroulé (Marche des Sables) */
+	turban?: Color3;
+	/** voile sur le bas du visage, contre le sable */
+	voile?: Color3;
+	/** large ceinture d'étoffe nouée à la taille */
+	ceinture?: Color3;
+	/** barbe (nains des Monts Grisfer) */
+	barbe?: Color3;
+	/** col de fourrure sur les épaules (montagne) */
+	fourrure?: Color3;
+	/** couronne de feuilles tressées (elfes de Sylvenoire) */
+	couronneFeuilles?: Color3;
+	/** bandana noué sur la tête (marins de l'Archipel) */
+	bandana?: Color3;
+	/** tricorne (capitaines de l'Archipel) */
+	tricorne?: Color3;
+	/** oreilles pointues de renard et queue touffue (Vulpins) */
+	renard?: Color3;
+	/** oreilles rondes d'ours (Ourvalis) */
+	ours?: Color3;
 }
 
 export function humanoide(nom: string, c: Costume): Model {
@@ -120,6 +141,53 @@ export function humanoide(nom: string, c: Costume): Model {
 		souder(torse, cape);
 		const col = piece(m, "Col", new Vector3(2.1, 0.3, 1.3).mul(e), torse.CFrame.mul(new CFrame(0, 0.95 * e, 0)), c.cape, { matiere: Enum.Material.Fabric });
 		souder(torse, col);
+	}
+	// accessoires des cultures
+	const coiffe = (nom: string, taille: Vector3, decalage: CFrame, couleur: Color3, matiere: Enum.Material = Enum.Material.Fabric, forme?: Enum.PartType) => {
+		if (!tete) return;
+		const p = piece(m, nom, taille.mul(e), tete.CFrame.mul(new CFrame(decalage.Position.mul(e))).mul(decalage.Rotation), couleur, { matiere, forme });
+		souder(tete, p);
+	};
+	if (c.turban) {
+		coiffe("Turban", new Vector3(1.45, 0.7, 1.45), new CFrame(0, 0.55, 0.05), c.turban);
+		coiffe("TurbanHaut", new Vector3(1.1, 0.45, 1.1), new CFrame(0, 0.95, 0.05), c.turban);
+	}
+	if (c.voile) coiffe("Voile", new Vector3(1.25, 0.55, 0.12), new CFrame(0, -0.3, -0.6), c.voile);
+	if (c.couronneFeuilles) {
+		for (let i = 0; i < 8; i++) {
+			const a = (i / 8) * math.pi * 2;
+			coiffe("Feuille", new Vector3(0.35, 0.12, 0.25), new CFrame(math.cos(a) * 0.62, 0.5, math.sin(a) * 0.62).mul(CFrame.Angles(0, -a, math.rad(25))), c.couronneFeuilles, Enum.Material.Grass);
+		}
+	}
+	if (c.bandana) {
+		coiffe("Bandana", new Vector3(1.32, 0.45, 1.32), new CFrame(0, 0.45, 0), c.bandana);
+		coiffe("Noeud", new Vector3(0.3, 0.5, 0.15), new CFrame(0, 0.3, 0.68).mul(CFrame.Angles(math.rad(20), 0, 0)), c.bandana);
+	}
+	if (c.tricorne) {
+		coiffe("Tricorne", new Vector3(1.9, 0.25, 1.9), new CFrame(0, 0.7, 0), c.tricorne, Enum.Material.Fabric, Enum.PartType.Block);
+		coiffe("TricorneHaut", new Vector3(1.2, 0.6, 1.2), new CFrame(0, 0.95, 0), c.tricorne);
+		coiffe("Plume", new Vector3(0.12, 0.9, 0.12), new CFrame(0.5, 1.2, 0.2).mul(CFrame.Angles(0, 0, math.rad(-30))), rgb(230, 230, 220));
+	}
+	if (c.barbe) coiffe("Barbe", new Vector3(1.05, 1.0, 0.45), new CFrame(0, -0.55, -0.45), c.barbe, Enum.Material.Fabric);
+	if (c.renard) {
+		for (const cote of [-1, 1]) coiffe("OreilleRenard", new Vector3(0.3, 0.6, 0.15), new CFrame(cote * 0.4, 0.85, 0).mul(CFrame.Angles(0, 0, math.rad(-cote * 12))), c.renard, Enum.Material.SmoothPlastic, Enum.PartType.Block);
+	}
+	if (c.ours) {
+		for (const cote of [-1, 1]) coiffe("OreilleOurs", new Vector3(0.35, 0.35, 0.2), new CFrame(cote * 0.5, 0.7, 0), c.ours, Enum.Material.SmoothPlastic, Enum.PartType.Ball);
+	}
+	if (torse) {
+		if (c.ceinture) {
+			const ce = piece(m, "Ceinture", new Vector3(2.15, 0.45, 1.2).mul(e), torse.CFrame.mul(new CFrame(0, -0.75 * e, 0)), c.ceinture, { matiere: Enum.Material.Fabric });
+			souder(torse, ce);
+		}
+		if (c.fourrure) {
+			const f = piece(m, "Fourrure", new Vector3(2.4, 0.55, 1.5).mul(e), torse.CFrame.mul(new CFrame(0, 0.85 * e, 0)), c.fourrure, { matiere: Enum.Material.Fabric });
+			souder(torse, f);
+		}
+		if (c.renard) {
+			const queue = piece(m, "Queue", new Vector3(0.45, 0.45, 1.7).mul(e), torse.CFrame.mul(new CFrame(0, -1.5 * e, 1.0 * e)).mul(CFrame.Angles(math.rad(35), 0, 0)), c.renard, { matiere: Enum.Material.Fabric });
+			souder(torse, queue);
+		}
 	}
 	if (c.equipement !== undefined) pcall(() => equiperPersonnage(m, CONTENU, c.equipement, c.classe));
 	else if (c.classe !== undefined) arme(m, c.classe);

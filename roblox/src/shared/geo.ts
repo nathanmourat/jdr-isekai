@@ -29,6 +29,20 @@ export const ORIGINES: Record<string, Vector3> = {
 	"terres-cendrees": new Vector3(0, 0, -12000),
 };
 
+/** Région la plus proche d'un point du monde (les régions sont espacées de 6 000 studs). */
+export function regionDePosition(p: Vector3): string {
+	let meilleure = "aubeclaire";
+	let d = math.huge;
+	for (const [id, o] of pairs(ORIGINES)) {
+		const x = new Vector3(p.X - o.X, 0, p.Z - o.Z).Magnitude;
+		if (x < d) {
+			d = x;
+			meilleure = id as string;
+		}
+	}
+	return meilleure;
+}
+
 /** Style de décor de chaque région (terrain, bâtiments, végétation). */
 export const STYLES: Record<string, string> = {
 	aubeclaire: "plaine",

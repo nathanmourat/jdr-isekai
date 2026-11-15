@@ -6,14 +6,16 @@
  *  - bulles de phrases d'ambiance (content/monde/ambiance.yaml), selon l'avancée de la partie ;
  *  - marché sur la place (étals, marchands), poules, chats et chevaux.
  */
-import { CollectionService, Lighting, PathfindingService, TweenService, Workspace } from "@rbxts/services";
+import { CollectionService, Lighting, PathfindingService, Players, TweenService, Workspace } from "@rbxts/services";
 import { piece, souder } from "shared/construction";
 import { CONTENU } from "shared/donnees";
-import { positionLieu } from "shared/geo";
+import { ECHELLE, ORIGINES, positionLieu } from "shared/geo";
 import { conditionScene, listeHeros } from "shared/moteur";
 import { bloc, C, VERTICAL } from "./decor";
 import { humanoide, quadrupede, type Costume } from "./modeles";
 import { ouvertes } from "./parties";
+import { culture, tenueDe } from "./cultures";
+import { auSol } from "./paysage";
 
 const rgb = (r: number, g: number, b: number) => Color3.fromRGB(r, g, b);
 const DUREE_JOUR = 20 * 60; // secondes réelles pour 24 h de jeu
@@ -145,16 +147,9 @@ export function dire(modele: Model, texte: string) {
 
 // ───────────────────────────── Villageois et gardes ─────────────────────────────
 
-const TENUES: Costume[] = [
-	{ peau: rgb(225, 190, 160), haut: rgb(120, 60, 50), bas: rgb(70, 60, 50) },
-	{ peau: rgb(200, 160, 120), haut: rgb(70, 100, 140), bas: rgb(60, 55, 50) },
-	{ peau: rgb(235, 205, 180), haut: rgb(150, 130, 80), bas: rgb(90, 70, 50) },
-	{ peau: rgb(170, 125, 90), haut: rgb(90, 120, 80), bas: rgb(70, 60, 45) },
-	{ peau: rgb(225, 190, 160), haut: rgb(160, 120, 150), bas: rgb(80, 60, 70), capuche: rgb(140, 100, 130) },
-	{ peau: rgb(200, 160, 120), haut: rgb(200, 190, 160), bas: rgb(110, 90, 60), chapeau: rgb(190, 160, 100) },
-	{ peau: rgb(235, 205, 180), haut: rgb(110, 80, 60), bas: rgb(60, 50, 40), tablier: rgb(220, 215, 200) },
-];
-const GARDE: Costume = { peau: rgb(220, 185, 150), haut: rgb(170, 175, 190), bas: rgb(80, 85, 110), classe: "gardien" };
+// Lysmont : la culture d'Aubeclaire (les autres villes ont la leur : server/cultures.ts)
+const TENUES: Costume[] = culture("aubeclaire").tenues;
+const GARDE: Costume = culture("aubeclaire").garde;
 
 function animer(modele: Model) {
 	const h = modele.FindFirstChildOfClass("Humanoid");
@@ -233,7 +228,25 @@ function pointDePlace(): Vector3 {
 	return centrePlace.add(new Vector3(math.cos(a) * r, 0, math.sin(a) * r));
 }
 
-function promeneur(costume: Costume, garde: boolean) {
+/** Ville d'une autre région : ses habitants n'existent que lorsqu'un joueur est dans les parages. */
+interface VilleRegionale {
+	region: string;
+	centre: Vector3;
+	portes: { lieu: string; position: Vector3 }[];
+	actif: boolean;
+}
+
+function pointAutour(centre: Vector3): Vector3 {
+	const a = hasard.NextNumber(0, 2 * math.pi);
+	const r = hasard.NextNumber(20, 70);
+	// posé sur le terrain (montagnes, dunes…)
+	return auSol(centre.add(new Vector3(math.cos(a) * r, 0, math.sin(a) * r)));
+}
+
+function promeneur(costume: Costume, garde: boolean, ville?: VilleRegionale) {
+	const portesIci = ville ? ville.portes : portes;
+	const pointIci = () => (ville ? pointAutour(ville.centre) : pointDePlace());
+	const encore = () => ville === undefined || ville.actif;
 	const [ok, res] = pcall(() => humanoide(garde ? "Garde" : "Villageois", costume));
 	if (!ok) return;
 	const m = res as Model;
@@ -241,36 +254,91 @@ function promeneur(costume: Costume, garde: boolean) {
 	racine.Anchored = false;
 	const h = m.FindFirstChildOfClass("Humanoid")!;
 	h.WalkSpeed = garde ? 7 : hasard.NextNumber(5, 7.5);
-	m.PivotTo(new CFrame(pointDePlace().add(new Vector3(0, 4, 0))));
+	m.PivotTo(new CFrame(pointIci().add(new Vector3(0, 4, 0))));
 	m.Parent = dossier;
 	pcall(() => racine.SetNetworkOwner(undefined));
 	animer(m);
 	const qui = garde ? "garde" : "villageois";
-	while (m.Parent) {
+	while (m.Parent && encore()) {
 		// la nuit, les villageois rentrent chez eux ; les gardes continuent leur ronde
-		if (nuit && !garde && portes.size() > 0) {
-			const porte = portes[hasard.NextInteger(0, portes.size() - 1)];
+		if (nuit && !garde && portesIci.size() > 0) {
+			const porte = portesIci[hasard.NextInteger(0, portesIci.size() - 1)];
 			allerA(h, racine, porte.position);
 			m.Parent = undefined;
-			while (nuit) task.wait(5);
+			while (nuit && encore()) task.wait(5);
+			if (!encore()) break;
 			m.PivotTo(new CFrame(porte.position.add(new Vector3(0, 4, 0))));
 			m.Parent = dossier;
 		}
-		// place → une porte → place (les chemins sont des lignes droites depuis la place)
-		allerA(h, racine, pointDePlace());
+		// place → une porte → place
+		allerA(h, racine, pointIci());
 		task.wait(hasard.NextNumber(2, 6));
 		if (hasard.NextNumber() < 0.4) {
 			const phrase = choisirPhrase(qui, racine.Position);
 			if (phrase !== undefined) dire(m, phrase);
 		}
-		if (portes.size() > 0) {
-			const porte = portes[hasard.NextInteger(0, portes.size() - 1)];
+		if (portesIci.size() > 0) {
+			const porte = portesIci[hasard.NextInteger(0, portesIci.size() - 1)];
 			allerA(h, racine, porte.position.add(new Vector3(hasard.NextNumber(-3, 3), 0, hasard.NextNumber(2, 6))));
 			task.wait(hasard.NextNumber(3, 8));
 			if (hasard.NextNumber() < 0.5) {
 				const phrase = choisirPhrase(qui, racine.Position);
 				if (phrase !== undefined) dire(m, phrase);
 			}
+		}
+	}
+	// plus personne dans la région : l'habitant disparaît
+	m.Destroy();
+}
+
+// ───────────────────────────── Villes des autres régions ─────────────────────────────
+
+const villes: VilleRegionale[] = [];
+
+/** Villes des chapitres 2 à 6 (une par région), d'après le contenu. */
+function preparerVilles() {
+	for (const [id, r] of pairs(CONTENU.regions)) {
+		if (id === "aubeclaire") continue;
+		const v = r.villes?.[0];
+		const o = ORIGINES[id as string];
+		if (!v || !o) continue;
+		villes.push({ region: id as string, centre: o.add(new Vector3((v.position.x - 960) * ECHELLE, 0, (v.position.y - 570) * ECHELLE)), portes: [], actif: false });
+	}
+}
+
+function reveiller(ville: VilleRegionale) {
+	ville.actif = true;
+	// les portes de la ville (lieux et maisons habitées), cherchées maintenant : les régions se construisent après Lysmont
+	ville.portes = [];
+	for (const e of CollectionService.GetTagged("EntreeLieu")) {
+		if (!e.IsA("BasePart") || e.Parent?.GetAttribute("Etape") !== undefined) continue;
+		const p = e.Position.sub(new Vector3(0, 3, 0));
+		if (new Vector3(p.X - ville.centre.X, 0, p.Z - ville.centre.Z).Magnitude < 450) ville.portes.push({ lieu: e.GetAttribute("Lieu") as string, position: p });
+	}
+	const c = culture(ville.region);
+	task.spawn(() => {
+		for (let i = 0; i < 10 && ville.actif; i++) {
+			const garde = i < 2;
+			task.spawn(() => promeneur(garde ? c.garde : tenueDe(ville.region, i), garde, ville));
+			task.wait(0.8);
+		}
+	});
+}
+
+/** Les habitants d'une ville n'existent que si un joueur est à moins de 1 600 studs (le serveur reste léger). */
+function surveillerVilles() {
+	preparerVilles();
+	while (true) {
+		task.wait(8);
+		const positions: Vector3[] = [];
+		for (const p of Players.GetPlayers()) {
+			const r = p.Character?.FindFirstChild("HumanoidRootPart") as BasePart | undefined;
+			if (r) positions.push(r.Position);
+		}
+		for (const v of villes) {
+			const proche = positions.some((p) => new Vector3(p.X - v.centre.X, 0, p.Z - v.centre.Z).Magnitude < 1600);
+			if (proche && !v.actif) reveiller(v);
+			else if (!proche && v.actif) v.actif = false; // chaque habitant s'en va de lui-même (boucle de promeneur)
 		}
 	}
 }
@@ -430,6 +498,7 @@ export function animerVille() {
 		}
 	}
 	task.spawn(cycleJourNuit);
+	task.spawn(surveillerVilles);
 	task.spawn(() => pcall(marche));
 	task.spawn(() => pcall(animaux));
 	// 24 villageois et 4 gardes, apparus un par un pour ne pas ralentir le démarrage

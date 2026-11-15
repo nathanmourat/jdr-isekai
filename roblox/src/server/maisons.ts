@@ -8,7 +8,8 @@
  */
 import { CollectionService } from "@rbxts/services";
 import { bloc, C, tonneau, VERTICAL } from "./decor";
-import { cheminee, comptoir, etagere, invite, salle, tableBancs, tapis, TENUES } from "./interieurs";
+import { cheminee, comptoir, etagere, invite, salle, tableBancs, tapis } from "./interieurs";
+import { tenueIci } from "./cultures";
 import { humanoide, type Costume } from "./modeles";
 
 const rgb = (r: number, g: number, b: number) => Color3.fromRGB(r, g, b);
@@ -95,9 +96,12 @@ function habitant(m: Model, id: string, costume: Costume, pos: Vector3, regard: 
 	i.SetAttribute("Phrases", PHRASES[metier].join("|"));
 }
 
+/** Position de la maison en cours de construction (pour habiller ses habitants selon la culture de la région). */
+let ici = new Vector3();
+
 function meubler(m: Model, id: string, base: Vector3, metier: Metier, nom: string) {
 	const k = compte;
-	const costume = (i: number): Costume => ({ ...TENUES[(k + i) % TENUES.size()] });
+	const costume = (i: number): Costume => tenueIci(ici, k + i);
 	tapis(m, base.add(new Vector3(0, 0, 2)), new Vector2(10, 7), [rgb(150, 50, 50), rgb(60, 80, 140), rgb(90, 110, 60)][k % 3]);
 	switch (metier) {
 		case "famille":
@@ -170,6 +174,7 @@ export function maisonHabitee(porte: Vector3, metier: Metier, parent: Instance, 
 	const nom = nomLibre(metier);
 	// la salle intérieure, dans une grille à l'écart des lieux du contenu
 	const base = new Vector3(-1200 + ((compte - 1) % 20) * 110, HAUTEUR, -1400 - math.floor((compte - 1) / 20) * 110);
+	ici = porte;
 	const [ok, err] = pcall(() => {
 		const m = salle(id, base, 34, 26, 13, COULEURS[metier]);
 		m.SetAttribute("Nom", nom);
