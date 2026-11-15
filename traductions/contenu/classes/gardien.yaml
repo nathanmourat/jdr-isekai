@@ -1,0 +1,33 @@
+# Textes de content/classes/gardien.yaml
+# Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
+- fr: Gardien sacré
+- fr: Protection
+- fr: Un rempart vivant, béni par la lumière.
+- fr: Rempart
+- fr: 30 % de chances d'intercepter une attaque visant un allié, en subissant 20 % de dégâts en moins.
+- fr: Bastion
+- fr: Défense pure.
+- fr: Croisé
+- fr: Riposte et dégâts sacrés.
+- fr: Bastion éternel
+- fr: Pendant 2 tours, aucun allié ne peut tomber sous 1 PV.
+- fr: Rend le groupe très solide ; seul, il gagne en tenant longtemps.
+- fr: Dégâts faibles, combats longs, peu mobile.
+- fr: Provocation sainte
+- fr: Une onde sacrée frappe tous les ennemis et les force à le cibler pendant 2 tours ; sa défense augmente.
+- fr: Bouclier d'aube
+- fr: Donne à un allié un bouclier qui absorbe 20 % de ses PV.
+- fr: Mur de foi
+- fr: +30 % de défense pour tout le groupe pendant 2 tours.
+- fr: Jugement sacré
+- fr: Un coup de masse chargé de lumière.
+- fr: Égide sacrée
+- fr: Un bouclier de lumière sur tout le groupe.
+- fr: Citadelle de lumière
+- fr: Le Gardien attire tous les coups et protège le groupe.
+- fr: Marteau de l'aube
+- fr: Un coup sacré qui peut étourdir de peur.
+- fr: Colère divine
+- fr: La lumière frappe tous les ennemis ; les démons et les morts-vivants la craignent.
+- fr: Ultime — Bastion éternel
+- fr: "Pendant 2 tours, le groupe est presque intouchable : énorme bouclier, défense et régénération."

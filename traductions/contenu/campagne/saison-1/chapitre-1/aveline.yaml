@@ -1,0 +1,29 @@
+# Textes de content/campagne/saison-1/chapitre-1/aveline.yaml
+# Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
+- fr: Aveline — La ronde de nuit
+- fr: Vous croisez Aveline pendant sa ronde, une lanterne à la main. « Encore debout ? Les héros ne dorment jamais, c'est ça ? »
+- fr: « Je pourrais vous accompagner. Deux paires d'yeux valent mieux qu'une. »
+- fr: « Et vous, capitaine ? Vous ne dormez jamais non plus. »
+- fr: « Ce n'est pas un peu ennuyeux, de tourner en rond toute la nuit ? »
+- fr: Elle hésite, puis hoche la tête. Vous marchez longtemps en silence. C'est un silence étonnamment agréable.
+- fr: Au détour d'une rue, elle s'arrête net devant une pâtisserie fermée, le nez presque collé à la vitre. Puis elle se reprend. « Je… vérifiais les serrures. »
+- fr: « Pas beaucoup, non. » Elle regarde vers le nord. « Quand je ferme les yeux, je vois Valgrane. » Elle n'en dit pas plus.
+- fr: « C'est ce qui permet à la ville de dormir tranquille. » Elle s'éloigne d'un pas raide.
+- fr: Aveline — Leçon d'escrime
+- fr: Dans la cour du château, Aveline vous lance une épée de bois. « Votre garde est catastrophique. Montrez-moi ce que vous savez faire. »
+- fr: Vous battre sérieusement. (Force, difficulté 16)
+- fr: Esquiver et la faire tourner en bourrique. (Agilité, difficulté 16)
+- fr: "Tricher : lui jeter du sable aux yeux."
+- fr: Votre lame de bois s'arrête à un doigt de sa gorge. Elle vous fixe, sidérée… puis éclate de rire. Un vrai rire.
+- fr: « Encore. Demain. Même heure. » Ce n'est pas une question.
+- fr: Vous voilà sur le dos, sa lame de bois sur votre poitrine. « Pas mal. Pour un débutant. » Elle vous tend la main pour vous relever.
+- fr: Elle crache le sable, furieuse. « Sur un champ de bataille, peut-être. Ici, c'est une leçon d'honneur. Recommencez quand vous en aurez. »
+- fr: Aveline — Ce qu'on ne dit à personne
+- fr: Aveline vous attend au fond de la taverne, devant deux chopes qu'elle n'a pas touchées. « Asseyez-vous. J'ai… quelque chose à vous dire. »
+- fr: « Mon père, Gauvain de Castelroc, commandait Valgrane. On l'a accusé d'avoir ouvert les portes aux Cendres. On l'a exécuté sans procès. »
+- fr: « Je n'ai jamais cru à sa trahison. Mais les archives militaires de Valgrane ont été scellées… par l'Ordre. Pourquoi l'Ordre ? »
+- fr: « Je vous aiderai à découvrir la vérité. Je vous en fais la promesse. »
+- fr: « Et si la vérité ne vous plaisait pas ? »
+- fr: Elle vous regarde longtemps. Puis, très doucement, elle pose sa main sur la vôtre. « Merci. » Elle la retire aussitôt, écarlate.
+- fr: « Alors au moins, je saurai. » Elle lève sa chope. « À la vérité, quelle qu'elle soit. »
+- fr: "(Quête de compagnon « Le Serment brisé » : la suite au chapitre 2.)"

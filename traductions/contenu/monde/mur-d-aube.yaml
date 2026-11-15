@@ -1,0 +1,30 @@
+# Textes de content/monde/mur-d-aube.yaml
+# Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
+- fr: Mur d'Aube
+- fr: La grande muraille du nord, qui sépare le royaume des Terres Cendrées depuis six siècles. La guerre y commence.
+- fr: Fort-Aube
+- fr: "La forteresse au cœur du Mur : casernes, forges, hôpital, et dix mille soldats qui attendent."
+- fr: Porte de Fort-Aube
+- fr: Une porte fortifiée sous une herse de fer. Des chariots de vivres font la queue, jour et nuit.
+- fr: L'État-major
+- fr: Une grande salle de pierre, une table couverte de cartes et de figurines. On y décide qui vivra.
+- fr: La Gamelle
+- fr: La cantine des soldats, devenue auberge. Soupe chaude, pain dur, lits de camp et chansons de marche.
+- fr: L'Armurerie du Mur
+- fr: Des râteliers à perte de vue, des armures alignées comme des soldats. Tolvan connaît chaque pièce par son nom.
+- fr: Comptoir de la Guilde (Fort-Aube)
+- fr: Une tente de commandement aux couleurs de la Guilde, plantée contre le rempart. Les contrats sont des missions de guerre.
+- fr: Le chemin de ronde
+- fr: "Le sommet du Mur : un chemin de pierre large comme une route, des créneaux, et au nord, à perte de vue, les Terres Cendrées."
+- fr: Le camp des alliés
+- fr: Des tentes elfes, des forges naines, des feux de camp ourvalis, et des dragons qui dorment sur les collines.
+- fr: La Brèche
+- fr: "Là où le Mur s'est effondré : un trou large de cent pas, des pierres noircies, et le vent des Cendres qui s'y engouffre."
+- fr: La plaine cendrée
+- fr: De l'autre côté du Mur, une plaine grise où rien ne pousse. Le ciel y est toujours couleur de braise.
+- fr: Ruines de Valgrane
+- fr: La ville tombée en 1003. Des maisons vides, des cendres jusqu'aux chevilles, et une porte nord qui tient encore debout.
+- fr: Tour de guet abandonnée
+- fr: Une tour du Mur, vide depuis des années. Quelqu'un y a allumé un feu récemment.
+- fr: Village évacué
+- fr: Un village au pied du Mur, vidé en une nuit. Les soupes refroidissent encore sur les tables.

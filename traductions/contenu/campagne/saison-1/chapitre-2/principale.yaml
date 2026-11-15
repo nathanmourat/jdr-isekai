@@ -1,0 +1,151 @@
+# Textes de content/campagne/saison-1/chapitre-2/principale.yaml
+# Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
+- fr: Le départ
+- fr: Germinal 1015. Trois ans ont passé depuis l'Appel. Les cicatrices de la Nuit des Lanternes se sont refermées ; pas celles des souvenirs.
+- fr: "La princesse Séraphine [[t'attend||vous attend]] dans la salle des cartes, en tenue de voyage, les cheveux noués comme un soldat. « Enfin ! Mon père m'envoie à Qarzim. Officiellement : signer un traité de commerce avec la Concorde. »"
+- fr: "« Officieusement : la Concorde vend des cristaux d'éther à tout le monde… y compris, dit-on, à des gens qui portent des sceaux violets. » Elle pose la main sur la carte du sud. « J'ai demandé [[un Appelé||des Appelés]] pour m'escorter. Je veux [[toi||vous]]. »"
+- fr: "Aveline se tient près de la porte, bras croisés. « Ordre du roi : j'accompagne la princesse. Et… [[toi||vous]] aussi, apparemment. » Elle ne cache pas tout à fait son sourire."
+- fr: "La porte s'ouvre à la volée. Kaya, sac au dos, oreilles dressées : « Qarzim ? Vous allez dans le désert sans guide ? Vous allez mourir de soif avant midi. J'en suis ! »"
+- fr: « Une mission diplomatique ? Nous serons des modèles de politesse. »
+- fr: « Si la Concorde aide les Cendres, je veux le savoir. Le traité, je m'en moque. »
+- fr: « Kaya, c'est chez toi, là-bas ? Tu seras notre guide. »
+- fr: Séraphine éclate de rire. « Des modèles de politesse. Vous. Je garde la phrase pour la raconter à mon père. »
+- fr: « Exactement ce que je voulais entendre. » Elle baisse la voix. « Et pas un mot à la cour. La moitié des nobles a des parts dans les caravanes de la Concorde. »
+- fr: Kaya bombe le torse. « Chez moi, c'est le désert entier. Enfin… c'était. » Son sourire vacille une seconde. « La Concorde nous a pris nos terres. Mais je connais chaque dune. »
+- fr: "Dame Rowena vous a fait parvenir un mot : « La Guilde a un comptoir à Qarzim. Montrez-vous là-bas, l'intendant Ibrek vous trouvera du travail. Et ramenez la princesse entière. »"
+- fr: Trois jours plus tard, la caravane de la princesse quitte Lysmont par la porte du sud. Devant vous, la Route des Caravanes, et au bout, la Marche des Sables.
+- fr: "Germinal 1015 : {groupe} partent pour Qarzim avec la princesse Séraphine, Aveline et Kaya."
+- fr: La Route des Caravanes
+- fr: Dix jours de route. L'herbe d'Aubeclaire devient poussière, puis sable. Le soleil tape comme un marteau sur une enclume.
+- fr: "La caravane appartient à une courtière : une femme en voiles ocre, un carnet à la main, qui compte les tonneaux d'eau à voix haute. « Nadja Kesh. Chaque gorgée que vous buvez est notée. Princesse comprise. »"
+- fr: Kaya s'arrête net, nez au vent. « Ça sent le cuir et le sang. Des gens nous attendent derrière ces rochers. »
+- fr: Préparer une contre-embuscade. (Esprit, difficulté 20)
+- fr: "Continuer et laisser venir : la caravane est bien gardée."
+- fr: Vous contournez les rochers. Les pillards, le dos tourné, guettent la caravane… et ne vous voient pas venir.
+- fr: Des cris. Des flèches. Des silhouettes au chèche turquoise dévalent la dune, cimeterres au clair.
+- fr: Le dernier pillard lâche son arme. Un jeune, à peine seize ans, qui tremble sous son chèche.
+- fr: Nadja enjambe un corps sans le regarder et rouvre son carnet. « Deux chameaux blessés, un tonneau percé. » Elle lève les yeux vers vous. « Et zéro mort de notre côté. Pas mal, pour des étrangers. »
+- fr: Vous reprenez connaissance sous une toile tendue. Les gardes de la caravane ont repoussé les pillards à grand-peine.
+- fr: « Trois chameaux, deux tonneaux et ma réputation. » Nadja soupire. « La prochaine fois, laissez-moi négocier. »
+- fr: "Kaya tient le jeune pillard par le col. « Il dit qu'on les a payés. Pas pour voler : pour retarder la princesse. »"
+- fr: "L'emmener à Qarzim : la garde de la ville le fera parler."
+- fr: Le laisser partir avec de l'eau. Ce n'est qu'un gamin.
+- fr: "Au coucher du soleil, Qarzim apparaît : des coupoles bleues, des tours de terre ocre, et au-dessus de la ville, une lueur violette qui ne vient pas du ciel."
+- fr: « Les cristaux d'éther. » Nadja range son carnet. « Toute la ville en brille. Si vous avez besoin de quelque chose à Qarzim — n'importe quoi — demandez Nadja Kesh, à la Porte des Caravanes. Pour un prix honnête. » Elle sourit. « Enfin, presque. »
+- fr: "{groupe} arrivent à Qarzim avec la caravane de Nadja Kesh, après une embuscade de pillards."
+- fr: Le Prévôt de la Concorde
+- fr: Le Palais de la Concorde est un rêve de marbre et de cristal. Des fontaines coulent dans des vasques violettes. Ici, même l'air sent l'argent.
+- fr: Le Prévôt Hassad s'incline juste assez. « Princesse. Et les fameux Appelés. » Ses bagues-cristaux scintillent. « La Concorde est honorée. Elle serait plus honorée encore si le traité ne parlait pas des mines. »
+- fr: Une conseillère à l'éventail sourit derrière lui. « Les mines sont une affaire de Qarzim, Altesse. Les loups du désert les réclament, mais les loups réclament toujours. »
+- fr: Kaya serre les poings. Ses oreilles se couchent en arrière.
+- fr: Le Prévôt se tourne vers {nom}. « Et vous, {pseudo} ? Les Appelés sont-ils venus défendre les traités… ou les tribus ? »
+- fr: « Je suis ourvalis, Prévôt. Les « loups du désert », c'est moi. Choisissez mieux vos mots. »
+- fr: « Les vulpins commercent avec vous depuis des siècles. Ne me faites pas croire que vous ignorez qui vit sur ces terres. »
+- fr: « On m'a souvent traité de monstre. Je sais reconnaître quand on parle des autres comme ça. »
+- fr: « Nous défendons la princesse. Le reste dépendra de ce que nous verrons. »
+- fr: « Les tribus vivaient ici avant vos mines. Ça compte, non ? »
+- fr: « Nous sommes là pour le traité. Et pour le buffet. »
+- fr: "Le Prévôt sourit sans que ses yeux bougent. « Intéressant. » Il fait un signe : un serviteur vous tend à chacun un petit cristal violet, serti d'argent. « Un présent de la Concorde. Que la lumière de l'éther éclaire vos chemins. »"
+- fr: "Séraphine murmure sans remuer les lèvres : « Ne le portez pas sur vous. J'ai un mauvais pressentiment. »"
+- fr: Accepter le cristal avec un grand sourire.
+- fr: "Refuser poliment : « Nous ne pouvons accepter un tel présent. »"
+- fr: Accepter, et l'examiner discrètement. (Intelligence, difficulté 20)
+- fr: Dans la lumière, le cristal palpite. Lentement. Comme une veine. À l'intérieur, une minuscule déchirure violette se referme et se rouvre.
+- fr: "Les négociations dureront des mois : la Concorde est patiente, et sa patience coûte cher. La princesse s'installe à la Résidence d'Aubeclaire."
+- fr: "« Le grand banquet de la Résidence aura lieu le 10 Ardent de l'an prochain. Tout Qarzim y sera. » Elle soupire. « D'ici là, faites-vous connaître : la Guilde, les tribus, le Bazar. J'ai besoin d'yeux partout. »"
+- fr: "{groupe} rencontrent le Prévôt Hassad. La Concorde offre des cristaux d'éther en cadeau."
+- fr: Le banquet
+- fr: "10 Ardent 1016. La Résidence d'Aubeclaire brille de mille lanternes. Musiciens, plats d'argent, marchands de la Concorde en soie : tout Qarzim est là."
+- fr: "Séraphine, en robe blanche et or, sourit à tout le monde. Mais sous la table, elle [[te||vous]] glisse un mot : « Vashti n'a pas quitté mon verre des yeux. »"
+- fr: La conseillère Vashti lève sa coupe. « À l'amitié entre Aubeclaire et la Concorde ! » Les serviteurs remplissent les verres de la princesse.
+- fr: Séraphine porte la coupe à ses lèvres, puis s'arrête et la tend discrètement à {nom}. « {pseudo}… Il y a quelque chose de bizarre avec ce vin, non ? »
+- fr: « Ne bois pas ! L'odeur d'amande… c'est du venin de scorpion bleu. »
+- fr: « Je sens une fièvre dans ce liquide. Comme une malédiction. Pose ça. »
+- fr: « Le serviteur qui t'a servie vient de disparaître. Mauvais signe. »
+- fr: « Dans le doute… » (lui prendre la coupe et la renverser sur la nappe)
+- fr: « Il est très bon. Pourquoi ? »
+- fr: « Laisse-moi goûter d'abord. » (héroïque, mais imprudent)
+- fr: La coupe renversée fume en rongeant la nappe. Un silence glacé tombe sur la salle.
+- fr: Puis les serviteurs lâchent leurs plateaux. Sous les tuniques, des poignards courbes. Des voiles noirs. La Main de Sable.
+- fr: « Protégez la princesse ! » Aveline renverse une table pour faire barrage.
+- fr: Un poignard a effleuré le bras de Séraphine. La garde de la Résidence repousse les assassins, qui s'enfuient par les toits.
+- fr: Une silhouette voilée de noir vous observe depuis la coupole d'en face. Elle s'incline, moqueuse, et s'éloigne de toit en toit.
+- fr: « C'est le chef ! Je le sens d'ici. » Kaya bondit déjà vers la fenêtre.
+- fr: Le poursuivre sur les toits de Qarzim.
+- fr: "Rester auprès de la princesse : c'est peut-être une diversion."
+- fr: "Bien vu : un deuxième groupe d'assassins surgit des cuisines. Vous les attendiez."
+- fr: Sur la plus haute terrasse, l'homme voilé vous attend, deux lames à la main. « Kezir. On m'a payé pour une princesse. Les Appelés seront un bonus. »
+- fr: Kezir vous laisse au sol et disparaît dans la nuit. Mais dans sa fuite, il a perdu quelque chose.
+- fr: "Sur la terrasse, un insigne de bronze : une main tenant un grain de sable. Et, enroulée autour, une lettre de paiement… scellée du sceau personnel de la conseillère Vashti Orren."
+- fr: Au dos de la lettre, une rune violette griffonnée à la hâte. La même que sur le sceau cendré de la Crypte.
+- fr: Dénoncer Vashti devant le Conseil de la Concorde, preuve à l'appui.
+- fr: "Donner la lettre à Nadja : elle saura quoi en faire, sans bruit."
+- fr: "Aller voir le Prévôt Hassad en privé : qu'il nous doive une faveur."
+- fr: Devant le Conseil, Vashti pâlit, puis rit. « Une lettre ? N'importe qui peut voler un sceau. » Mais personne ne rit avec elle. Elle est arrêtée le soir même… et retrouvée morte dans sa cellule à l'aube.
+- fr: « Quelqu'un ne voulait pas qu'elle parle. » Séraphine fixe la fenêtre. « Quelqu'un de plus haut. »
+- fr: Nadja lit la lettre deux fois, puis la plie avec un soin infini. « Vashti me doit maintenant beaucoup plus que je ne lui dois. » Pour la première fois, son sourire est vrai. « Merci. »
+- fr: Le Prévôt brûle la lettre à la flamme d'une bougie sans la lire jusqu'au bout. « La Concorde n'oublie jamais une dette. » Le lendemain, Vashti a quitté Qarzim. Personne ne sait où.
+- fr: Plus tard, sur la terrasse de la Résidence, Séraphine tient son verre d'eau à deux mains. « Merci. Vraiment. » Elle hésite. « Le Grand Bazar ouvre le premier jour de Brumaire. Les gens y parlent. On y apprendra peut-être qui a payé Vashti. »
+- fr: "10 Ardent 1016 : tentative d'assassinat contre la princesse Séraphine à Qarzim. La Main de Sable était payée par la conseillère Vashti."
+- fr: Le Grand Bazar
+- fr: "1er Brumaire 1016. Le Grand Bazar de Qarzim s'éveille : des caravanes de tout le continent, des tapis volants (qui ne volent pas), des épices en montagnes, des cris dans dix langues."
+- fr: "Et partout, des cristaux d'éther : en colliers, en lampes, en poudre « contre la fatigue ». Les marchands de la Concorde les vendent par caisses entières."
+- fr: Sous une tente verte, une elfe aux cheveux d'argent vend des herbes. Elle vous fixe longuement. « Des Appelés. Ici. Avec ça plein les poches. » Elle désigne les cristaux d'un geste dégoûté.
+- fr: « Vous savez quelque chose sur ces cristaux ? »
+- fr: Montrer le sceau cendré à l'elfe.
+- fr: À l'instant où le sceau sort du sac, tous les cristaux de la tente se mettent à vibrer. Un bourdonnement monte, aigu, et des lueurs violettes dansent sur les toiles.
+- fr: L'elfe recule, livide. « Rangez ça. Tout de suite. » Elle respire mieux quand le sceau a disparu. « Ils se reconnaissent. Ils viennent du même endroit. »
+- fr: « Je m'appelle Faelis. Je viens de Sylvenoire. » Elle baisse la voix. « Chez nous, on enseigne que le Voile n'est pas une idée. C'est une chose. Une peau entre les mondes. Et une peau qu'on gratte… finit par saigner. »
+- fr: « Ces cristaux ne poussent pas dans la roche. Ce sont des éclats. Des éclats du Voile, tombés lors de la Déchirure. Chaque cristal qu'on arrache affaiblit ce qui reste. »
+- fr: « Comment pouvez-vous en être sûre ? » (Intelligence, difficulté 21)
+- fr: « Si c'est vrai, la Concorde doit l'apprendre. »
+- fr: "Faelis déroule un vieux parchemin : un dessin de cristal, des runes elfiques, et une phrase traduite à la main. « Ce que nous avons déchiré, la terre l'a gardé en éclats. »"
+- fr: « Ce parchemin est une copie. L'original est gravé dans les Ruines de Sel, au sud. Les elfes y sont venus il y a mille ans, pour réparer leur faute. Ils ont échoué. »
+- fr: « Vous ne me croyez pas ? » Elle hausse les épaules. « Allez voir les Ruines de Sel, au sud. Les anciens y ont tout écrit. Si les tempêtes vous laissent passer. »
+- fr: « La Concorde le sait. Elle s'en moque. Un cristal vaut plus qu'un village. » Elle range ses herbes. « Les grandes tempêtes viendront au printemps. Les Ruines de Sel ne se montrent qu'après, quand le vent a déplacé les dunes. »
+- fr: Nadja, qui écoutait depuis l'étal voisin, s'approche. « Une carte des Ruines, ça se trouve. Ça se paie, mais ça se trouve. » Elle hésite. « Et si l'elfe dit vrai… je travaille pour les gens qui vendent la fin du monde au détail. »
+- fr: "Grand Bazar de 1016 : une elfe de Sylvenoire affirme que les cristaux d'éther sont des éclats du Voile."
+- fr: La tempête et les Ruines de Sel
+- fr: Solaire 1017. Grâce à la carte de Nadja, vous êtes à deux jours des Ruines de Sel quand le ciel devient jaune.
+- fr: Kaya renifle l'air, puis attrape la bride du premier chameau. « La grande tempête ! Il faut un abri. Maintenant ! »
+- fr: "Un mur de sable haut comme une montagne avale l'horizon. Vous courez. Devant vous, des colonnes blanches sortent des dunes : les Ruines."
+- fr: Se réfugier dans les Ruines.
+- fr: Un escalier de sel cristallisé descend sous la cité morte. Le vent hurle au-dessus de vos têtes. En bas, des yeux turquoise s'allument dans le noir.
+- fr: "Épuisés, vous remontez l'escalier de sel. Le Roi de Sel n'a pas bougé de son trône : il attendra encore mille ans."
+- fr: Mais vous avez vu la fresque. Les elfes en cercle, le ciel déchiré, les éclats violets qui tombent… et la phrase gravée en dessous, que Séraphine a recopiée en tremblant.
+- fr: « « Ce que nous avons déchiré, la terre l'a gardé en éclats. » » Elle range sa copie. « Il faut quelqu'un pour lire ça. Quelqu'un de Sylvenoire. »
+- fr: "Solaire 1017 : dans les Ruines de Sel, {groupe} découvrent une fresque elfique sur la Déchirure."
+- fr: "Quand vous remontez, la tempête est passée. Le désert a changé de forme : les dunes ont avancé de cent pas."
+- fr: Dans votre sac, la tablette d'argile pèse plus lourd qu'elle ne devrait. Les mots elfiques gravés dessus brillent faiblement quand on les touche.
+- fr: Séraphine la retourne entre ses mains. « Il faut quelqu'un pour lire ça. Quelqu'un de Sylvenoire. » Elle sourit faiblement. « On dirait que nos routes ne font que commencer. »
+- fr: "Solaire 1017 : dans les Ruines de Sel, {groupe} trouvent une tablette elfique qui parle de la Déchirure."
+- fr: La révolte des Lunecroc
+- fr: Aurore 1017. Au campement Lunecroc, les tambours de guerre résonnent depuis trois nuits.
+- fr: L'Ancienne Sorha vous reçoit sous sa tente, appuyée sur son bâton gravé de loups. « Mon petit-fils Tavek veut attaquer les mines d'éther demain. Les mercenaires de la Concorde l'attendent. Ce sera un massacre. »
+- fr: Kaya regarde ses pieds. « Tavek a toujours été le plus courageux. Et le plus têtu. Il dit que si on ne reprend pas la terre maintenant, il n'y aura plus de terre à reprendre. »
+- fr: Le chef de guerre entre sans s'annoncer, griffes de fer aux poings. « Les Appelés de la princesse. Vous êtes venus nous dire d'être sages ? »
+- fr: "Un messager couvert de poussière apporte une lettre : la Concorde promet « une prime généreuse » à quiconque aidera à protéger les mines."
+- fr: "Soutenir la tribu Lunecroc : vous attaquerez les mines avec Tavek."
+- fr: "Défendre les mines : la paix avec la Concorde avant tout."
+- fr: Négocier une trêve entre Tavek et la Concorde. (Charisme, difficulté 22)
+- fr: À l'aube, les guerriers lunecroc dévalent la falaise en hurlant. Vous êtes en tête. Aux mines, le capitaine Orlen Vask vous attend, cuirasse dorée au soleil.
+- fr: « Des Appelés avec des loups. La Concorde va adorer cette histoire. » Il lève son fendoir. « Feu à volonté ! »
+- fr: Vask s'enfuit à travers le désert. Les mercenaires jettent leurs lances. Sur la plus haute galerie, Tavek plante le bâton de Sorha dans la roche violette.
+- fr: « Cette terre est à nous. » Il se tourne vers vous, et pour la première fois, il s'incline. « Merci, Appelés. Les Lunecroc ne l'oublieront jamais. »
+- fr: La charge se brise sur les boucliers dorés. Vous couvrez la retraite des blessés, pas à pas, jusqu'à la falaise.
+- fr: Tavek saigne mais vit. « Vous êtes restés. Jusqu'au bout. » Il serre la main de Kaya. « On reviendra. »
+- fr: Vous prenez position sur les galeries des mines, aux côtés des mercenaires. Quand la charge lunecroc arrive, Kaya n'est pas avec vous.
+- fr: Tavek vous voit et s'arrête net. « Toi aussi ? » Il crache dans le sable. « Alors tu mourras avec l'or de la Concorde. »
+- fr: Tavek recule, blessé, et ordonne la retraite. La Concorde garde ses mines. Le Prévôt vous fera envoyer une bourse d'or.
+- fr: Le soir, Kaya vous attend à la porte de l'auberge. Elle ne dit rien. Elle vous regarde seulement, longtemps. Puis elle s'en va.
+- fr: Les Lunecroc prennent les mines. Tavek vous épargne, avec mépris. « Va dire à tes marchands ce qui arrive quand on vole la terre des loups. »
+- fr: Vous parlez toute la nuit. À Tavek, à Sorha, puis au Prévôt Hassad, venu en personne sous un dais de soie.
+- fr: « Un tiers des mines rendu aux Lunecroc. Et la Concorde achète leur protection, au lieu de payer des mercenaires. » Le Prévôt plisse les yeux. « Vous feriez de redoutables marchands. »
+- fr: L'Ancienne Sorha pose sa main ridée sur votre front. « Le vent se souviendra de ton nom. »
+- fr: Tavek vous coupe la parole. « Des mots. Toujours des mots. » Il sort de la tente. La guerre aura lieu, avec ou sans vous.
+- fr: Alors combattre avec les Lunecroc.
+- fr: "Rester à l'écart : ce n'est pas votre guerre."
+- fr: La bataille dure une journée. Les Lunecroc reprennent une galerie, en perdent deux. Au soir, chacun compte ses morts, et rien n'a changé.
+- fr: "Quelques jours plus tard, une lettre royale arrive à Qarzim : le traité est signé, ou presque. Séraphine la lit, puis la jette sur la table. « Mon père veut que je rentre. Moi, je veux savoir ce que dit cette tablette. »"
+- fr: Aveline déplie une carte. « Sylvenoire. La forêt des elfes, à l'ouest d'Aubeclaire. Personne n'y entre sans invitation. » Elle hausse les épaules. « Il faudra donc une invitation. »
+- fr: La Marche des Sables a changé. Vous aussi. Derrière vous, les dunes effacent vos traces ; devant vous, une forêt qui se souvient.

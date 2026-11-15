@@ -1,0 +1,41 @@
+# Textes de content/campagne/saison-1/chapitre-3/quetes.yaml
+# Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
+- fr: Chapitre 3 — La Forêt qui se souvient
+- fr: Les elfes de Sylvenoire détiennent la vérité sur la Déchirure. Mais Ithrael ne s'ouvre pas aux humains, et la Légion Cendrée rôde déjà sous les arbres.
+- fr: "Se présenter au château de Lysmont : la Couronne a des nouvelles (Germinal 1018)."
+- fr: Entrer en Sylvenoire par la lisière.
+- fr: Être reçus par la Reine-Sève, à Ithrael (Floréal 1019).
+- fr: Descendre dans la Bibliothèque des Racines (Solaire 1020).
+- fr: Défendre la Clairière de la Déchirure pendant la Nuitlongue (30 Nuitlongue 1020).
+- fr: Retourner à la Cour de la Reine-Sève.
+- fr: Chapitre terminé.
+- fr: Les lumières du bois
+- fr: Un enfant d'Ithrael a suivi les feux follets. Personne n'ose aller le chercher.
+- fr: Écouter Thaliel, à la Feuille d'Argent.
+- fr: Chercher l'enfant dans le Bois des Feux follets.
+- fr: Ramener l'enfant à la Feuille d'Argent.
+- fr: Le Vieux-Chêne malade
+- fr: La sève du Vieux-Chêne est devenue violette, et les sylvains autour de lui deviennent fous.
+- fr: Écouter Mirwen, au Marché des Graines.
+- fr: Examiner le Vieux-Chêne.
+- fr: Rapporter le remède à Mirwen.
+- fr: La graine volée
+- fr: Une graine sacrée a disparu du Cercle des dryades. Les dryades accusent les elfes ; les elfes accusent les humains.
+- fr: Parler au capitaine Vaelor, à la Porte des Racines.
+- fr: Interroger les dryades au Cercle.
+- fr: Retrouver le voleur dans le Marais de brume.
+- fr: Les gens du domaine
+- fr: "Votre nouveau domaine a besoin d'un seigneur : des fermes pillées, un manoir en ruine, et des gens qui attendent de voir ce que vous valez."
+- fr: Découvrir votre domaine.
+- fr: Chasser ceux qui pillent vos fermes, au camp avancé de la Légion.
+- fr: Organiser la défense du domaine avec Maître Aubin.
+- fr: Ce que la Lumière cache
+- fr: Elianne a trouvé, dans les archives du Temple, des lettres qui parlent d'un « tribut du Voile ». Elle n'arrive plus à prier.
+- fr: Écouter les doutes d'Elianne (palier « Proche »).
+- fr: Découvrir ce que l'Ordre cache sur les invocations (chapitre 4).
+- fr: Aider Elianne à choisir entre sa foi et la vérité (chapitre 5).
+- fr: La Bibliothèque des Racines
+- fr: Ilyssë a été bannie pour avoir étudié la Déchirure. Elle veut retrouver ses propres notes, confisquées et cachées par la Reine.
+- fr: Aider Ilyssë à reprendre ses notes confisquées (palier « Proche »).
+- fr: Étudier le Voile là où il est le plus fin (chapitre 4).
+- fr: Trouver comment recoudre le Voile (chapitre 5).

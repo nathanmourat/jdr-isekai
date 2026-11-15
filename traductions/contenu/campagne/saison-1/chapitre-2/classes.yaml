@@ -1,0 +1,82 @@
+# Textes de content/campagne/saison-1/chapitre-2/classes.yaml
+# Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
+- fr: Lame runique — La rune perdue
+- fr: "Au fond du Bazar, un marchand de curiosités vend un morceau de colonne de sel. Une rune y est gravée : un cercle fendu, entouré de sept traits."
+- fr: Votre lame vibre quand vous approchez la main. Les runes que vous gravez en combat ont toujours été les vôtres… mais celle-ci, votre lame la connaît.
+- fr: Recopier la rune et la graver sur votre lame. (Intelligence, difficulté 20)
+- fr: Acheter le fragment de colonne. (60 or)
+- fr: La rune s'imprime dans l'acier comme si elle l'attendait. Pendant une seconde, vous voyez mille sceaux s'allumer le long de la lame, puis s'éteindre.
+- fr: "Le marchand murmure : « Les nains d'Ardenclume savent forger ces runes-là. On dit qu'ils les tiennent des tout premiers Appelés. »"
+- fr: La rune vous brûle la main avant de s'imprimer dans l'acier, de travers. Elle tiendra. Elle n'aime pas qu'on la force.
+- fr: Arcaniste — Le feu du désert
+- fr: Un ermite aux yeux brûlés par le soleil mendie à la Porte des Caravanes. Quand vous passez, des étincelles bleues courent au bout de vos doigts. Il sourit.
+- fr: « Tu sens la foudre des tempêtes, toi. Viens. Je vais te montrer comment on la boit. »
+- fr: Le suivre dans le désert, au cœur d'une tempête sèche.
+- fr: Au milieu des dunes, l'air crépite. L'ermite lève les bras ; un éclair tombe… dans ses mains, sans le blesser. « À toi. »
+- fr: Attraper l'éclair. (Esprit, difficulté 21)
+- fr: La foudre vous traverse sans vous brûler. Vous la sentez couler, comme une rivière, puis se ranger quelque part en vous, à côté du feu et du givre.
+- fr: « Il te manque le feu de la terre, maintenant. Celui des volcans. Va voir les nains, à Grisfer. »
+- fr: L'éclair vous jette dans le sable, les cheveux fumants. Mais quelque chose est resté. Une étincelle qui ne s'éteint pas.
+- fr: Invocateur — Le pacte des bêtes
+- fr: La nuit, au campement, un fennec translucide s'assoit devant votre tente. Un esprit. Il vous regarde comme on regarde un voleur.
+- fr: "L'Ancienne Sorha vous chuchote : « Tes créatures obéissent parce que tu les tires du Voile. Lui, il veut savoir si tu sais demander. »"
+- fr: S'asseoir devant lui et lui parler, longtemps. (Charisme, difficulté 19)
+- fr: Tenter de l'invoquer de force.
+- fr: Le fennec écoute toute la nuit. À l'aube, il pose une patte sur votre main. Vos créatures, désormais, vous semblent… plus chaudes. Plus présentes.
+- fr: Le fennec repart dans la nuit. Mais au loin, il se retourne une fois. Ce n'est pas un non. C'est un « pas encore ».
+- fr: L'esprit se tord, vous mord la main, et disparaît. Sorha secoue la tête. « On ne met pas un vent en cage. » Vous avez compris la leçon, à vos dépens.
+- fr: Ombre — La Main et l'Ombre
+- fr: "Un grain de sable sur votre oreiller, un soir. Puis un mot, glissé sous la porte : « Les toits. Minuit. Seul. »"
+- fr: Sur les toits, trois silhouettes voilées de la Main de Sable vous attendent. « Tu as le talent. Nous avons l'or. Montre-nous ce que vaut une Ombre de l'autre monde. »
+- fr: "Accepter l'épreuve : leur voler leurs insignes sans être vu. (Agilité, difficulté 21)"
+- fr: Refuser et combattre.
+- fr: "À l'aube, les trois assassins se réveillent sans leurs insignes, posés en rang sur le toit… avec un mot : « Non merci. »"
+- fr: "Une voix, derrière vous, que vous n'avez pas entendue venir : « Pas mal. Kezir avait un maître, autrefois. Il vit dans l'Archipel. Si tu veux devenir meilleur que lui… »"
+- fr: "Les assassins disparaissent dans la nuit. L'un d'eux a laissé tomber un mot : « Le maître de Kezir vit dans l'Archipel des Brumes. »"
+- fr: Gardien — Le serment du bouclier
+- fr: Mère Ziyane vous indique un vieil homme au fond de l'auberge. « Il vient tous les soirs boire de l'eau, rien d'autre. On dit qu'il était paladin de l'Ordre. »
+- fr: "Le vieil homme a un bouclier rond posé contre sa chaise. Pas de blason : on l'a gratté. « Tu portes la lumière de l'Ordre, toi aussi. Sais-tu seulement ce qu'elle protège ? »"
+- fr: « Les gens. Pas l'Ordre. »
+- fr: « L'Ordre protège les gens. C'est la même chose. »
+- fr: Le vieil homme sourit pour la première fois. Il vous tend son bouclier. « Tiens-le contre moi. » Il frappe, une fois, de toutes ses forces.
+- fr: Tenir. (Vitalité, difficulté 20)
+- fr: « J'ai cru ça aussi. Jusqu'à Valgrane. » Il se tait, puis vous tend son bouclier. « Tiens-le. Si tu tiens, je te dirai le reste. »
+- fr: Vous tenez. Le vieil homme hoche la tête. « Le vrai serment du bouclier ne se prête pas au temple. Il se prête sur une passe, face à l'ennemi. Il y a une passe, dans les Mille Marches, à Grisfer… »
+- fr: Vous voilà assis par terre. Le vieil homme vous aide à vous relever. « Tu t'es relevé. C'est le début. » Il vous parle d'une passe, dans les Mille Marches, à Grisfer.
+- fr: Alchimiste — L'atelier d'airain
+- fr: "Au fond du Bazar, un atelier sent l'huile et le métal chaud. Sur l'établi, les plans d'un automate de la taille d'un homme : un « golem d'airain ». Il manque la page du cœur."
+- fr: Le vieux vulpin qui tient l'atelier soupire. « Mon maître a emporté la page du cœur dans sa tombe. Il disait que seul un cœur de forge nain pouvait faire battre l'airain. »
+- fr: Reconstituer la page manquante à partir des autres. (Intelligence, difficulté 21)
+- fr: Racheter les plans tels quels. (80 or)
+- fr: "À l'aube, la page est là, recopiée de votre main : les engrenages, les soupapes, et au centre, un cercle vide marqué « cœur de forge — Ardenclume »."
+- fr: "Les plans sous le bras, vous savez ce qu'il vous faut : un cœur de forge, et la seule forge qui en fabrique est à Ardenclume, dans les Monts Grisfer."
+- fr: Archer — Le chant des ancêtres
+- fr: L'Ancienne Sorha pose une plume blanche sur votre arc. « Les ancêtres guident les flèches de ceux qui écoutent le vent. Ferme les yeux. Tire sur le chacal qui rôde là-bas, sans le regarder. »
+- fr: Fermer les yeux et tirer. (Esprit, difficulté 20)
+- fr: "Vous entendez la flèche chanter. Puis un jappement, au loin : touché. Sorha rit doucement. « Les ancêtres t'aiment bien. »"
+- fr: « Il y a, dans l'Archipel des Brumes, une cible que le vent déplace sans cesse. Celui qui la touche entend les ancêtres pour toujours. »
+- fr: La flèche se plante dans le sable. Sorha hausse les épaules. « Le vent n'a pas encore appris ton nom. Il l'apprendra. » Elle vous parle de la cible des vents, dans l'Archipel des Brumes.
+- fr: Guérisseur — Le souffle des vivants
+- fr: "Aux mines, des mineurs toussent une poussière violette. Les guérisseurs de la Concorde passent devant eux sans s'arrêter : « Ce ne sont que des journaliers. »"
+- fr: Un enfant vous tire par la manche. Son père ne respire presque plus.
+- fr: Soigner les mineurs toute la nuit. (Esprit, difficulté 21)
+- fr: "Au matin, les mineurs respirent. Vous, à peine. Mais dans votre lumière, il y a quelque chose de nouveau : un souffle qui ne vient pas de vous."
+- fr: Un vieux mineur vous prend la main. « Ma grand-mère disait qu'il y a une source, dans l'Archipel, où la lumière soigne même les morts. Vous devriez la trouver. »
+- fr: Vous en sauvez beaucoup. Pas tous. Le père de l'enfant s'éteint au lever du soleil, votre main sur son front.
+- fr: Un vieux mineur vous parle d'une source sacrée, dans l'Archipel des Brumes. « Pour la prochaine fois. Il y a toujours une prochaine fois. »
+- fr: Berserker — Le sang qui chante
+- fr: Dans les fosses de combat, derrière la Porte des Caravanes, un vieux sang-dragon aux écailles grises défie la foule. « Qui a du feu dans les veines ? Personne ? »
+- fr: Descendre dans la fosse.
+- fr: Le vieux combattant vous regarde, renifle. « Toi. Tu as le sang. Montre-moi qu'il chante. »
+- fr: Encaisser ses coups sans reculer. (Vitalité, difficulté 20)
+- fr: Frapper de toutes vos forces. (Force, difficulté 21)
+- fr: Le sang monte. Vos yeux brûlent. Pendant une seconde, vous voyez des ailes dans votre ombre. Le vieux sang-dragon recule, ravi. « Il chante ! »
+- fr: « Va au Nid des Wyrms, dans l'Archipel. Écoute les vieux dragons. Ton sang apprendra la chanson entière. »
+- fr: Vous voilà dans la poussière. La foule rit. Le vieux sang-dragon ne rit pas. « Il chante faux, mais il chante. » Il vous parle du Nid des Wyrms.
+- fr: Barde — La chanson perdue
+- fr: « Les Dunes chantantes ? » Mère Ziyane hausse les épaules. « Les bardes de passage essaient tous de noter leur chant. Ils repartent tous fous. »
+- fr: La nuit venue, vous montez sur la terrasse. Au loin, les dunes chantent. Une mélodie impossible, qui change à chaque souffle.
+- fr: Jouer avec elles, au lieu de les noter. (Charisme, difficulté 20)
+- fr: "Votre instrument trouve la note. Puis une autre. Les dunes vous répondent, comme un chœur. À l'aube, vous avez trois couplets. Il en manque un : le dernier."
+- fr: Un vieux caravanier, en bas, a tout entendu. « Le dernier couplet, ce sont les sirènes de l'Archipel qui le chantent. Tout le monde sait ça. »
+- fr: "Une fausse note, et les dunes se taisent, vexées. Mais vous avez entendu assez pour savoir : il manque un couplet, que chantent les sirènes de l'Archipel."

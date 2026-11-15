@@ -1,0 +1,16 @@
+# Textes de content/campagne/saison-1/chapitre-2/donjon.yaml
+# Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
+- fr: Ruines de Sel
+- fr: "Le vent hurle au-dessus de vous. Ici, tout est blanc : les murs, le sol, les ossements. Du sel, partout."
+- fr: Des silhouettes bandées de blanc se détachent des murs. Leurs yeux s'allument, turquoise.
+- fr: Le sol de sel s'effondre sous vos pieds !
+- fr: Un coffre de cèdre, intact sous une couche de sel.
+- fr: Un nid de scorpions dans une salle effondrée. Ils n'aiment pas les visiteurs.
+- fr: Une dalle libère un jet de sel brûlant !
+- fr: Des jarres d'offrandes. L'une contient encore quelque chose.
+- fr: La garde royale des Ruines se réveille, lance au poing.
+- fr: Sur un trône de sel, un roi momifié lève la tête. Sur sa couronne brille un cristal d'éther fendu. « Qui… vient voler… le Voile ? »
+- fr: "Le trésor du roi : de l'or terni et une arme d'apparat."
+- fr: "Une fresque immense : des elfes en cercle autour d'un ciel déchiré. Au centre, une plaie violette d'où tombent des éclats… des cristaux."
+- fr: "Sous la fresque, une phrase en elfique, que la tablette du roi reproduit : « Ce que nous avons déchiré, la terre l'a gardé en éclats. »"
+- fr: La tempête fait encore rage au-dehors. Et vous n'avez pas trouvé ce que les elfes ont laissé ici.

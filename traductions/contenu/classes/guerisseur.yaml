@@ -1,0 +1,33 @@
+# Textes de content/classes/guerisseur.yaml
+# Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
+- fr: Guérisseur
+- fr: Soin
+- fr: La lumière qui ramène ses compagnons du bord du gouffre.
+- fr: Main bienveillante
+- fr: Les soins qui dépassent les PV max deviennent un bouclier (50 % du surplus).
+- fr: Sanctuaire
+- fr: Soins de groupe.
+- fr: Jugement
+- fr: Dégâts sacrés, soin en frappant.
+- fr: Second Souffle
+- fr: Relève tous les alliés K.O. à 40 % de leurs PV.
+- fr: Rend le groupe presque increvable.
+- fr: Dégâts très faibles ; seul, il gagne en tenant, pas en tuant.
+- fr: Lumière apaisante
+- fr: Soigne un allié.
+- fr: Purification
+- fr: Retire les effets négatifs du groupe et le soigne un peu.
+- fr: Prière de groupe
+- fr: Soigne tout le groupe.
+- fr: Châtiment
+- fr: Dégâts sacrés ; le guérisseur récupère des PV.
+- fr: Cercle de vie
+- fr: Un cercle de lumière qui soigne tout le groupe chaque tour.
+- fr: Bénédiction de l'aube
+- fr: Purifie tout le groupe et le protège.
+- fr: Lance de lumière
+- fr: Une lance sacrée transperce la cible.
+- fr: Aube vengeresse
+- fr: La lumière brûle tous les ennemis et soigne le Guérisseur.
+- fr: Ultime — Second Souffle
+- fr: Relève tous les alliés K.O. à 40 % de leurs PV et soigne tout le groupe.

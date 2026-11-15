@@ -1,0 +1,38 @@
+# Textes de content/monde/marche-des-sables.yaml
+# Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
+- fr: Marche des Sables
+- fr: Désert, cités-oasis et canyons rouges. La Concorde de Qarzim y règne par l'or ; les Ourvalis et les Vulpins y vivent depuis toujours.
+- fr: Qarzim
+- fr: "La cité marchande de la Concorde : coupoles bleues, Grand Bazar, et des cristaux violets à tous les étals."
+- fr: Porte des Caravanes
+- fr: La grande porte ocre de Qarzim, où s'arrêtent les caravanes et leurs chameaux.
+- fr: Grand Bazar
+- fr: "Des milliers d'étals sous des toiles colorées. On y vend tout : épices, armes… et cristaux d'éther."
+- fr: Auberge de l'Oasis Bleue
+- fr: Une auberge fraîche autour d'un bassin d'eau claire. On y dort sous des voiles qui ondulent.
+- fr: Comptoir de la Guilde (Qarzim)
+- fr: "Le bureau de la Guilde de la Rose des Vents à Qarzim : un tableau de contrats et un intendant qui ne dort jamais."
+- fr: Palais de la Concorde
+- fr: Un palais de marbre blanc et de cristal, où les marchands les plus riches du désert décident de tout.
+- fr: Résidence d'Aubeclaire
+- fr: "La maison des ambassadeurs d'Aubeclaire : jardin à l'ombre des palmiers, drapeaux bleus et blancs."
+- fr: Route des Caravanes
+- fr: La piste qui relie Aubeclaire à Qarzim, entre les dunes et les rochers.
+- fr: Campement Lunecroc
+- fr: Les tentes de la tribu de Kaya, au pied d'une falaise rouge. Les feux y brûlent toute la nuit.
+- fr: Mines d'éther
+- fr: Des puits creusés dans la roche violette, gardés par les mercenaires de la Concorde.
+- fr: Canyon des Chacals
+- fr: Un canyon étroit aux parois rouges, où résonnent les jappements.
+- fr: Ruines de Sel
+- fr: "Une cité engloutie par le sel : des colonnes blanches qui sortent des dunes comme des os."
+- fr: Oasis perdue
+- fr: Trois palmiers morts et un bassin vide, au milieu de nulle part.
+- fr: Dunes chantantes
+- fr: Des dunes qui chantent quand le vent souffle, comme un chœur lointain.
+- fr: Puits asséchés
+- fr: Une ligne de puits à sec, le long d'un ancien canal.
+- fr: Repaire des pillards
+- fr: Des tentes rapiécées cachées entre deux rochers en forme de crocs.
+- fr: Toits de Qarzim
+- fr: Un dédale de terrasses, de cordes à linge et de coupoles.

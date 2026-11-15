@@ -1,0 +1,33 @@
+# Textes de content/classes/barde.yaml
+# Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
+- fr: Barde enchanteur
+- fr: Soutien / contrôle
+- fr: Sa musique galvanise ses amis et endort ses ennemis.
+- fr: Refrain
+- fr: Ses chants de groupe durent tant que le Barde n'est pas K.O.
+- fr: Virtuose
+- fr: Bonus de groupe.
+- fr: Dissonance
+- fr: Dégâts sonores et contrôle.
+- fr: Symphonie du dernier acte
+- fr: Tout le groupe rejoue immédiatement un tour complet.
+- fr: Rend tout le groupe meilleur ; le meilleur en dialogue.
+- fr: Peu de dégâts personnels ; le soutien le plus fragile.
+- fr: Ballade du courage
+- fr: +25 % de dégâts, +15 % d'initiative et une légère régénération pour le groupe.
+- fr: Berceuse
+- fr: Peut endormir chaque ennemi (60 %) ; un ennemi frappé se réveille.
+- fr: Hymne de guérison
+- fr: Soigne tout le groupe.
+- fr: Accord dissonant
+- fr: Dégâts sur tous les ennemis et défense réduite.
+- fr: Chant de l'aube
+- fr: Une mélodie qui soigne et purifie tout le groupe.
+- fr: Hymne héroïque
+- fr: Tout le groupe frappe plus fort, plus vite et plus juste.
+- fr: Cri de la banshee
+- fr: "Une note insoutenable : dégâts et peur sur tous les ennemis."
+- fr: Requiem
+- fr: Un chant funèbre qui brise la volonté de tous les ennemis.
+- fr: Ultime — Symphonie du dernier acte
+- fr: "La dernière note emporte tout : le groupe est soigné, purifié et galvanisé comme jamais."

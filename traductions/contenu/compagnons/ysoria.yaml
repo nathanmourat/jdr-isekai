@@ -1,0 +1,21 @@
+# Textes de content/compagnons/ysoria.yaml
+# Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
+- fr: Ysoria
+- fr: Dragonne de l'Archipel, sous forme humaine
+- fr: Majestueuse, directe, ignore tout des coutumes humaines (elle mange avec les mains, dort sur les tas d'or, dit exactement ce qu'elle pense). Adore tout ce qui brille.
+- fr: Une des dernières dragonnes. Elle dormait depuis trois siècles au Nid des Wyrms. À son réveil, son œuf avait disparu.
+- fr: Retrouver son œuf, puis décider si les dragons doivent revenir dans le monde.
+- fr: « Tu as chassé l'un des miens. Je sens son sang sur toi. Ne me parle plus. »
+- fr: « Tu as VENDU une écaille de mes ancêtres ? À un marchand ? » Elle crache une petite flamme, très en colère.
+- fr: Souffle de braise
+- fr: Elle reprend un instant sa vraie forme et crache un torrent de feu. Une seule fois par combat.
+- fr: Griffes d'écailles
+- fr: Ses mains se couvrent d'écailles dorées le temps d'un coup.
+- fr: Écailles partagées
+- fr: +6 % de défense pour tout le groupe.
+- fr: Fierté draconique
+- fr: +8 % de dégâts pour tout le groupe.
+- fr: Chaleur du nid
+- fr: Le groupe regagne 2 % de ses PV à chaque tour.
+- fr: Vol à deux
+- fr: "Attaque combinée avec son héros : +25 % de dégâts."

@@ -1,0 +1,128 @@
+# Textes de content/monde/pnj-saison1.yaml
+# Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
+- fr: Maître Ouzram Telli
+- fr: Armurier du Grand Bazar
+- fr: Vieil homme sec au turban safran, lunettes d'or, mains couvertes de petites brûlures de forge.
+- fr: Entrez, entrez ! Une lame de Qarzim ne rouille jamais, et mes prix ne mentent qu'à moitié.
+- fr: Mère Ziyane
+- fr: Aubergiste de l'Oasis Bleue
+- fr: Femme ronde au rire sonore, foulard indigo, bracelets qui tintent à chaque geste.
+- fr: De l'eau fraîche, un lit sous les voiles, et pas de questions. Bienvenue à l'Oasis Bleue.
+- fr: Ibrek Sall
+- fr: Intendant de la Guilde à Qarzim
+- fr: Jeune vulpin aux oreilles rousses, lunettes rondes, registre toujours ouvert. Il connaît les tarifs de tous les contrats par cœur.
+- fr: Comptoir de la Rose des Vents ! Les contrats sont au tableau ; le matériel, c'est ici.
+- fr: Prévôt Hassad Meriyem
+- fr: Prévôt de la Concorde
+- fr: Homme mince en soie blanche, barbe taillée au cordeau, une bague-cristal violette à chaque main. Courtois, glacial.
+- fr: Conseillère Vashti Orren
+- fr: Conseillère de la Concorde
+- fr: Femme élégante aux yeux maquillés de khôl, toujours un éventail à la main. Elle sourit trop.
+- fr: L'Ancienne Sorha
+- fr: Doyenne de la tribu Lunecroc
+- fr: Vieille ourvalis aux oreilles grises, aveugle d'un œil, appuyée sur un bâton gravé de loups. La grand-mère de Kaya.
+- fr: Tavek Lunecroc
+- fr: Chef de guerre lunecroc
+- fr: Grand ourvalis aux oreilles noires, peintures de guerre rouges, griffes de fer aux poings. Le cousin de Kaya.
+- fr: Kezir
+- fr: Maître de la Main de Sable
+- fr: Silhouette voilée de noir, voix douce, yeux dorés. Personne n'a jamais vu son visage.
+- fr: Capitaine Orlen Vask
+- fr: Mercenaire de la Concorde
+- fr: Cuirasse dorée cabossée, crâne rasé, cicatrice du menton à l'oreille.
+- fr: Faelis Brumevent
+- fr: Marchande elfe
+- fr: Elfe sylvaine aux cheveux d'argent tressés de feuilles, longue cape vert sombre. Elle vend des herbes, et des secrets.
+- fr: Maître Corvin
+- fr: Archiviste royal
+- fr: Petit homme voûté aux doigts tachés d'encre, qui parle aux livres plus qu'aux gens.
+- fr: La Reine-Sève
+- fr: Reine des elfes de Sylvenoire
+- fr: Grande, immobile, des cheveux comme des racines blanches et des yeux couleur de mousse. Elle a vu la Déchirure.
+- fr: Thaliel
+- fr: Aubergiste de la Feuille d'Argent
+- fr: Jeune elfe souriant, tablier vert, qui monte et descend les échelles plus vite qu'un écureuil.
+- fr: Bienvenue à la Feuille d'Argent ! Les hamacs sont doux, et la vue est gratuite.
+- fr: Mirwen
+- fr: Marchande du Marché des Graines
+- fr: Elfe âgée aux mains couvertes de terre, qui connaît le nom de chaque graine de la forêt.
+- fr: Une graine bien choisie vaut une épée. Regardez, mais ne marchez pas sur les pousses.
+- fr: Orsa Brindebois
+- fr: Intendante du Relais de la Guilde
+- fr: Naine trapue aux tresses rousses, hache à la ceinture, seule naine tolérée à Ithrael — et fière de l'être.
+- fr: Des contrats, du matériel, et pas de feuilles dans mon registre. Qu'est-ce qu'il vous faut ?
+- fr: Vaelor
+- fr: Capitaine de la garde d'Ithrael
+- fr: Elfe au visage fermé, arc long dans le dos, qui n'a jamais souri à un humain.
+- fr: Maître Aubin
+- fr: Intendant de votre domaine
+- fr: Vieil homme aux mains de paysan et au regard d'ancien soldat, qui tient vos comptes mieux que vous.
+- fr: Morwenna « Morra »
+- fr: Commandante de la Légion Cendrée
+- fr: Cornes noires, cheveux couleur de braise, épée-faux plus haute qu'elle. Humour noir, fierté, fatigue.
+- fr: Lirëa
+- fr: Enfant d'Ithrael
+- fr: Une petite elfe de quarante ans (huit, pour un humain), qui suit tout ce qui brille.
+- fr: Bardrek
+- fr: Haut-Forgeron
+- fr: Un nain immense (pour un nain), barbe tressée de fils d'or jusqu'aux genoux, couronne de fer noir. Il ne rit jamais avant le troisième tonneau.
+- fr: Maîtresse Durna Martelfeu
+- fr: Forgeronne de la Grande Forge
+- fr: Naine aux bras couverts de cicatrices de brûlure, lunettes de forge sur le front, voix qui couvre les marteaux.
+- fr: Une arme d'Ardenclume, c'est pour la vie. La vôtre, ou celle de votre ennemi.
+- fr: Grumli
+- fr: Tavernier de la Chope Ardente
+- fr: Nain rond comme un tonneau, tablier taché de bière, qui chante faux et fort.
+- fr: Une chope ? Deux ? Un tonneau ? Ici, on ne compte qu'à partir de trois !
+- fr: Hjalmi l'Éborgnée
+- fr: Intendante de la Guilde à Ardenclume
+- fr: Naine borgne au bandeau de cuir, qui a été rang A avant de perdre son œil contre une salamandre.
+- fr: Contrats au tableau. Matériel au comptoir. Et on ne crache pas par terre.
+- fr: Capitaine Corsa la Rouge
+- fr: Capitaine pirate de Port-Vérane
+- fr: Grande femme aux cheveux rouges tressés de perles, sabre courbe, rire tonitruant. Elle a une jambe de bois et elle s'en vante.
+- fr: Vieux Brann
+- fr: Tavernier du Requin Ivre
+- fr: Un ancien pirate couvert de tatouages délavés, un perroquet empaillé sur l'épaule.
+- fr: Bienvenue au Requin ! Le rhum est fort, les hamacs tanguent, et les dettes se paient.
+- fr: Corail
+- fr: Marchande du Marché aux épaves
+- fr: Une jeune femme sang-dragon aux écailles nacrées, qui sait d'où vient chaque objet et ne le dit jamais.
+- fr: Tout ce que la mer rapporte, je le vends. Le reste, je le garde.
+- fr: Marée
+- fr: Intendant de la Guilde à Port-Vérane
+- fr: Un vulpin roux en chemise de marin, qui a le mal de mer et tient pourtant un comptoir flottant.
+- fr: Contrats sur le mât ! Et si je deviens vert, ne vous inquiétez pas, c'est normal.
+- fr: Néréa
+- fr: Sirène du Récif
+- fr: Une sirène aux cheveux couleur d'algue et à la voix qui donne envie de se jeter à l'eau.
+- fr: Maréchale Ilsabet Corvin
+- fr: Commandante du Mur d'Aube
+- fr: Une femme de soixante ans aux cheveux blancs coupés court, une cicatrice du front au menton. Elle n'a jamais perdu une bataille. Elle n'en a jamais gagné une facilement.
+- fr: Mère Brisac
+- fr: Cantinière de la Gamelle
+- fr: Une grande femme aux bras de forgeron, louche à la main. Elle a nourri trois générations de soldats et en a enterré beaucoup.
+- fr: Asseyez-vous. Mangez. On ne se bat pas le ventre vide, chez moi.
+- fr: Tolvan l'Armurier
+- fr: Maître de l'Armurerie du Mur
+- fr: Un vieil homme voûté, une loupe vissée à l'œil, qui parle aux armures comme à des enfants.
+- fr: "Chaque armure ici a un nom. Choisissez bien : elle va vous sauver la vie."
+- fr: Sergente Valka
+- fr: Intendante de la Guilde au Mur
+- fr: Une Ourvalis aux oreilles déchirées, ancienne rang A, qui distribue les missions comme des ordres.
+- fr: Missions au tableau. Pas de questions. Revenez vivants, c'est un ordre.
+- fr: Prince Aldric
+- fr: Frère de Séraphine, disparu en 1009
+- fr: Armure noire, cape bleue des princes d'Aubeclaire en lambeaux, yeux où brûle une lueur violette.
+- fr: Le Champion masqué
+- fr: Épreuve du rang S
+- fr: Un guerrier en armure d'argent sans blason, masque lisse. Personne ne connaît son visage.
+- fr: Orvan
+- fr: Souverain des Cendres, le Premier Appelé
+- fr: Un homme grand et maigre, en armure d'obsidienne, couronne de flammes noires. Six cents ans dans ses yeux. Il parle doucement, comme quelqu'un qui n'a parlé à personne depuis très longtemps.
+- fr: Lyss
+- fr: Sœur cadette de Morra
+- fr: Une jeune démone aux petites cornes et aux cheveux de braise, comme sa sœur. Elle a l'air d'avoir seize ans. Elle en a cent quatre-vingts.
+- fr: Mère Ashka
+- fr: Doyenne de Cendrebourg
+- fr: Une très vieille démone aux cornes usées, appuyée sur un bâton d'os. Elle a vu naître les Cendres et n'a jamais tenu une arme.

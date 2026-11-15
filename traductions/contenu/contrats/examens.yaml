@@ -1,0 +1,20 @@
+# Textes de content/contrats/examens.yaml
+# Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
+- fr: Épreuve du rang B
+- fr: Une caravane de la Guilde à escorter dans la Marche des Sables, une piste à suivre dans le canyon, puis la championne de l'Arène. La Guilde veut savoir si vous tenez la distance.
+- fr: Escorter la caravane de la Guilde sur la Route des Caravanes.
+- fr: Six chameaux, des caisses scellées du sceau de la Guilde, et un caravanier qui note tout dans un carnet. Au loin, une tempête de sable se lève.
+- fr: Abriter la caravane derrière une dune et attendre.
+- fr: La tempête passe au-dessus de vous. Le caravanier note quelque chose dans son carnet.
+- fr: Forcer l'allure pour arriver avant la tempête.
+- fr: Vous arrivez à l'oasis avec du sable jusque dans les oreilles, mais à l'heure. Le caravanier note quelque chose.
+- fr: Retrouver la caisse « perdue » dans le Canyon des Chacals.
+- fr: "Une caisse a disparu pendant la nuit. Des traces partent vers le canyon : des pas d'homme, mêlés à des pas de chacal."
+- fr: Suivre la piste
+- fr: La caisse est au fond d'une crevasse, posée exprès. Vous la remontez sans une égratignure.
+- fr: Vous glissez dans la crevasse et remontez couvert de bleus. Mais vous avez la caisse.
+- fr: Affronter la championne de l'Arène, à Lysmont.
+- fr: "Sorenne Vif-Argent fait tourner ses deux lames courtes. « Rowena dit que vous êtes prêts. Moi, je dis : montrez-le. »"
+- fr: Revenir à la Guilde pour la cérémonie.
+- fr: Tout le hall s'est tu. Dame Rowena tient une carte d'or pâle entre deux doigts.
+- fr: Recevoir son rang

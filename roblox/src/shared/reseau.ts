@@ -7,6 +7,7 @@
 import { ReplicatedStorage, RunService } from "@rbxts/services";
 import type { CommandeBoutique, EtatBoutique } from "./boutique";
 import type { CommandeModeration, EtatModeration } from "./grades";
+import type { Reglages } from "./reglages";
 import type { Action, EtatPartie } from "./moteur";
 
 /** Message affiché au milieu de l'écran (annonce, avertissement…). */
@@ -86,7 +87,7 @@ export function reseau() {
 		if (RunService.IsServer()) {
 			dossier = new Instance("Folder");
 			dossier.Name = NOM_DOSSIER;
-			for (const nom of ["Action", "NouvellesActions", "Erreur", "Campagne", "Groupe", "EtatModeration", "Message", "EtatBoutique"]) {
+			for (const nom of ["Action", "NouvellesActions", "Erreur", "Campagne", "Groupe", "EtatModeration", "Message", "EtatBoutique", "Reglages"]) {
 				const e = new Instance("RemoteEvent");
 				e.Name = nom;
 				e.Parent = dossier;
@@ -124,6 +125,8 @@ export function reseau() {
 		boutique: dossier.WaitForChild("Boutique") as RemoteFunction<(c: CommandeBoutique) => ReponseCommande>,
 		/** serveur → joueur : ce qu'il possède et porte dans la boutique */
 		etatBoutique: dossier.WaitForChild("EtatBoutique") as RemoteEvent<(e: EtatBoutique) => void>,
+		/** dans les deux sens : réglages du joueur (le serveur les envoie à l'arrivée, undefined = jamais réglés ; le joueur les enregistre) */
+		reglages: dossier.WaitForChild("Reglages") as RemoteEvent<(r: Reglages | undefined) => void>,
 	};
 }
 

@@ -1,0 +1,128 @@
+# Textes de content/campagne/saison-1/chapitre-1/principale.yaml
+# Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
+- fr: L'Appel
+- fr: Printemps 1012. Un cercle de lumière bleue embrase le sol du Temple du Seuil. Des chants montent, des vitraux vibrent… puis le silence.
+- fr: "Au centre du cercle, des silhouettes se relèvent, hagardes : les invoqués. À la lisière de la lumière, d'autres jeunes gens, attirés ici par une résonance qu'ils ne savent pas nommer : les réincarnés."
+- fr: "« Bienvenue à Velmaris, [[{{Appelé|Appelée}}||{{groupe:Appelés|Appelées|Appelés}}]]. Je suis Auréliath, Grand Prieur de l'Ordre de la Lumière Sereine. [[N'aie||N'ayez]] crainte : la Lumière [[t'a {{choisi|choisie}}||vous a {{groupe:choisis|choisies|choisis}}]]. »"
+- fr: « Le Souverain des Cendres s'est éveillé au nord. Le Mur d'Aube faiblit. Le royaume a besoin de héros. »
+- fr: Une jeune femme en armure argentée s'avance, la main sur le pommeau. « Capitaine Aveline de Castelroc. Je suis chargée de [[ta||votre]] sécurité. » Son regard s'attarde sur [[toi||vous]], méfiant.
+- fr: « Un monde de magie ? Génial. Où est-ce qu'on signe ? » (enthousiaste)
+- fr: « Personne ne [[m'a demandé mon||nous a demandé notre]] avis. Qui a décidé de [[m'arracher à ma vie||nous arracher à nos vies]] ? » (méfiant)
+- fr: « Excusez-moi, il y a des toilettes dans ce monde ? » (humour)
+- fr: Le Grand Prieur sourit largement. « Voilà l'esprit des héros ! »
+- fr: Aveline soupire. « Les derniers à avoir dit ça sont enterrés sous le Mur d'Aube. »
+- fr: Le sourire du Grand Prieur se fige une fraction de seconde. « La Lumière a ses raisons. [[Tu les comprendras||Vous les comprendrez]]. »
+- fr: Aveline [[te||vous]] jette un regard nouveau. Presque… approbateur.
+- fr: Un acolyte s'étrangle. Auréliath cligne des yeux.
+- fr: "Aveline détourne la tête, mais [[tu l'as||vous l'avez]] vue : elle a souri. « Par ici. Et oui, il y en a. »"
+- fr: Le Grand Prieur lève une main. Son regard [[te détaille longuement||parcourt vos visages un à un, puis s'arrête]].
+- fr: "« {pseudo}. Je sens quelque chose s'éveiller en toi. Dis-moi : que sais-tu de la magie de ce monde ? »"
+- fr: « Je la sens crépiter au bout de mes doigts. Le feu, le givre… ils me répondent déjà. »
+- fr: « Quelque chose m'accompagne depuis mon arrivée. Une présence, à mes côtés. »
+- fr: « Je sais seulement que mes mains apaisent la douleur. Le reste, je l'apprendrai. »
+- fr: « La magie ? Chez moi, ça s'appelle une bonne chanson au bon moment. »
+- fr: « De la magie ? Montrez-moi vos fioles, je vous dirai ce que j'en pense. »
+- fr: « Je préfère l'acier. La magie, je la laisse à ceux qui ont le temps de réciter. »
+- fr: « Les anciens parlent du Voile et de ses dangers. Je sais qu'on ne joue pas avec. »
+- fr: « Rien du tout. Mais j'apprends vite. »
+- fr: « Assez pour me méfier de ceux qui s'en servent sur les autres sans demander. »
+- fr: « Ça dépend. Elle fait aussi le café ? »
+- fr: "« [[Repose-toi||Reposez-vous]]. Demain, la Couronne [[te||vous]] recevra. En attendant, la Guilde de la Rose des Vents [[t'ouvrira ses portes : tu y apprendras||vous ouvrira ses portes : vous y apprendrez]] à survivre. »"
+- fr: "Ce soir-là, en contemplant les tours blanches de Lysmont depuis la fenêtre du temple, [[tu vois flotter devant tes yeux une fenêtre translucide : ton niveau, tes capacités… et ton don.||chacun de vous voit flotter devant ses yeux une fenêtre translucide : votre niveau, vos capacités… et votre don.]]"
+- fr: "L'Appel : {groupe} arrivent au Temple du Seuil. La capitaine Aveline de Castelroc est chargée de leur sécurité."
+- fr: L'examen de la Guilde
+- fr: Le hall de la Guilde de la Rose des Vents sent la bière, le cuir et la sueur. Des dizaines de regards se tournent vers vous.
+- fr: « Ah. [[{{Un Appelé|Une Appelée}}||{{groupe:Les Appelés|Les Appelées|Les Appelés}}]]. » Dame Rowena mâchonne sa pipe éteinte. « Ici, [[ton don ne vaut rien tant que tu n'as pas prouvé que tu sais||votre don ne vaut rien tant que vous n'avez pas prouvé que vous savez]] tenir debout. »
+- fr: Une jeune femme aux oreilles de loup argentées [[te||vous]] dévisage, adossée à un pilier. « Pff. [[{{Il a l'air tout mou|Elle a l'air toute molle}}||{{groupe:Ils ont l'air tout mous|Elles ont l'air toutes molles|Ils ont l'air tout mous}}]]. Je parie dix pièces [[{{qu'il tombe|qu'elle tombe}}||{{groupe:qu'ils tombent|qu'elles tombent|qu'ils tombent}}]] au premier coup. »
+- fr: Elle vous fixe un instant de plus, puis son regard s'adoucit. « …Un Ourvalis ? Hé. Bonne chance, alors. »
+- fr: "« L'examen est simple : [[tu affrontes||vous affrontez]] notre golem d'entraînement. S'il [[te||vous]] met au tapis, [[reviens||revenez]] dans un an. »"
+- fr: Kaya fait sauter une pièce dans sa main. « Allez, soyons joueurs. Vingt pièces, pour [[toi||tout le groupe]], que [[tu ne tiens||vous ne tenez]] pas debout jusqu'au bout. [[Tu suis||Qui suit]] ? »
+- fr: « Personne ne parie ? Tss. Prudent[[||s]], en plus d'être mou[[||s]]. » Elle range sa pièce, presque déçue.
+- fr: Rowena pointe sa pipe vers {nom}. « Toi, {pseudo}. Ce golem fait deux fois ta taille. Tu comptes t'y prendre comment ? »
+- fr: « Je me mets devant et j'encaisse. [[Je frapperai quand il fatiguera.||Les autres frapperont pendant ce temps.]] »
+- fr: « Je cogne fort. Et s'il tient encore debout, je recommence. »
+- fr: « Je cherche le point faible. Tout le monde en a un, même l'argile. »
+- fr: « De loin. Très loin. Avec quelque chose qui explose. »
+- fr: « Je tiens debout plus longtemps que lui.[[|| Et je garde les autres debout.]] »
+- fr: « Avec prudence. Je regarde d'abord comment il bouge. »
+- fr: « On verra bien une fois dedans. »
+- fr: « Vous n'auriez pas un golem plus petit ? »
+- fr: Le golem d'argile se met en marche dans un grincement.
+- fr: « Pas mal. Pas mal du tout. » Elle tamponne une carte de cuivre. « Rang F. Les contrats sont au tableau. Ne mourez pas bêtement. »
+- fr: Kaya rend la mise et y ajoute vingt pièces de sa poche, en grommelant. « Ouais, bon. [[Tu as||Vous avez]] de la chance. »
+- fr: "{groupe} réussissent l'examen de la Guilde : rang F."
+- fr: « Bon. Le golem [[t'a {{laminé|laminée}}||vous a {{groupe:laminés|laminées|laminés}}]]. » Elle soupire. « Mais [[tu t'es {{relevé|relevée}}||vous vous êtes {{groupe:relevés|relevées|relevés}}]]. C'est ce que je cherche. Rang F, à l'essai. »
+- fr: Kaya empoche les vingt pièces avec un grand sourire. « Sans rancune. »
+- fr: "{groupe} entrent à la Guilde « à l'essai »."
+- fr: "« Maintenant, au travail : contrats, entraînement, premières cicatrices. Et quand vous voudrez que les mois passent, prenez une chambre au Chaudron Fêlé. Le temps ne file que si vous le décidez. »"
+- fr: Aveline passera souvent « par hasard » à la Guilde. Officiellement pour vous surveiller.
+- fr: On raconte que des lueurs étranges apparaissent parfois sous les ruines de la Crypte de la Fontaine, à l'automne. La Guilde vous y enverra en Brumaire 1013.
+- fr: La Crypte de la Fontaine
+- fr: L'automne est là. Des paysans ont vu des lueurs violettes sous les ruines de la Crypte de la Fontaine. Rowena [[t'a||vous a]] confié l'affaire.
+- fr: "Aveline [[t'attend||vous attend]] à l'entrée, en armure complète. « Ordre du roi : je [[t'accompagne||vous accompagne]]. Et… je n'allais pas [[te laisser descendre {{seul|seule}}||vous laisser descendre {{groupe:seuls|seules|seuls}}]]. »"
+- fr: L'escalier s'enfonce dans le noir. Une odeur d'eau croupie et de vieille pierre monte des profondeurs.
+- fr: Descendre dans la crypte.
+- fr: Aveline s'arrête sur la première marche et se tourne vers {nom}. « {pseudo}, c'est toi qui ouvres la marche, ou c'est moi ? »
+- fr: « Moi. Je passe devant, sans bruit. Si quelque chose bouge, je le verrai avant qu'il nous voie. »
+- fr: « Moi. Mon bouclier d'abord, tout le monde derrière. »
+- fr: « Passe devant. Je couvre depuis l'arrière, une flèche encochée. »
+- fr: « Un escalier sous terre ? Laisse faire un nain. »
+- fr: « Je vois dans le noir. Je guide, tu me suis. »
+- fr: « Ensemble, côte à côte. »
+- fr: « Après toi, capitaine. C'est toi qui as l'armure. »
+- fr: « On tire à pile ou face ? »
+- fr: Vous remontez à la surface, couverts de poussière. Dans votre sac, le sceau cendré pulse d'une lumière violette, comme un cœur.
+- fr: « Ce symbole… » Aveline pâlit. « On l'a trouvé sur les ruines de Valgrane, il y a dix ans. Le jour où mon père… » Elle se tait.
+- fr: Dans la Crypte de la Fontaine, {groupe} découvrent un sceau cendré.
+- fr: Remettre le sceau à l'Ordre, comme le veut la loi.
+- fr: "Le confier à la Guilde : Rowena saura quoi en faire."
+- fr: Le garder et l'étudier vous-mêmes, en secret.
+- fr: L'hiver approche. Le sceau ne quitte pas vos pensées. Toute la ville parle déjà de la prochaine Fête des Lanternes, le 15 Floréal 1014.
+- fr: La Nuit des Lanternes
+- fr: 15 Floréal 1014, Fête des Lanternes. Des milliers de lanternes de papier s'élèvent au-dessus de Lysmont, chacune portant le nom d'un disparu.
+- fr: Bram, le tavernier, distribue des brochettes en riant. « Ce soir, c'est la maison qui régale ! »
+- fr: Sur le balcon du château, une jeune femme blonde vous fait un petit signe discret. La princesse Séraphine.
+- fr: Aveline est là elle aussi, en civil pour une fois, une lanterne éteinte entre les doigts.
+- fr: « C'est… pour mon père. » Elle hésite, sans vous regarder. « Vous voulez bien rester un moment ? »
+- fr: Lâcher une lanterne avec Aveline, en silence.
+- fr: "Profiter de la fête : danses, musique, brochettes."
+- fr: "Vos lanternes montent côte à côte. Aveline murmure : « Il s'appelait Gauvain. Il n'était pas un traître. » Pour la première fois, sa voix tremble."
+- fr: Elle s'essuie les yeux d'un revers de main. « …Merci. N'en parlez à personne. »
+- fr: Soudain, les lanternes virent au violet. Un cri. Puis une explosion de cendres au centre de la place.
+- fr: Des gobelins cendrés surgissent des égouts, guidés par des cultistes. La foule panique.
+- fr: « Protégez les civils ! » hurle Aveline en dégainant.
+- fr: Couvrir la fuite des civils, même si les cultistes s'échappent.
+- fr: Foncer sur le cultiste qui dirige l'attaque, coûte que coûte.
+- fr: Vous tombez sous le nombre. Quand vous rouvrez les yeux, la garde a repoussé les gobelins… mais le Chaudron Fêlé est en flammes.
+- fr: Les flammes s'ouvrent. Une silhouette en armure noire s'avance, une épée nimbée de feu violet à la main.
+- fr: « Alors c'est vous, les nouveaux jouets de l'Ordre. » Il rit. « Le Souverain m'a demandé de vous saluer. »
+- fr: « Le sceau. Vous l'avez. Je le sens. Rendez-le-moi, et je laisse vivre cette ville une année de plus. »
+- fr: « Viens le chercher. »
+- fr: « Pourquoi vous attaquez Lysmont ? Qu'est-ce que vous voulez vraiment ? » (Esprit, difficulté 17)
+- fr: Il incline la tête, amusé. « Ce que nous voulons ? Demandez à votre Grand Prieur combien coûte un Appel. Demandez-lui qui paie. »
+- fr: Vorthak recule, son armure fendue. « Intéressant… très intéressant. » Il disparaît dans un tourbillon de cendres.
+- fr: Aveline s'appuie sur son épée, essoufflée, et vous regarde avec un sourire épuisé. « Vous… vous avez été incroyables. »
+- fr: Vorthak vous balaie comme des fétus de paille, puis s'en va, l'air ennuyé. « Revenez quand vous serez dignes de mon temps. »
+- fr: À l'aube, Lysmont compte ses morts. Les lanternes calcinées jonchent les pavés.
+- fr: Bram, couvert de suie, vous serre la main à vous broyer les os. « Vous avez sauvé ma taverne. Ici, vous ne paierez plus jamais une bière. »
+- fr: Le Chaudron Fêlé n'est plus que cendres. Bram n'a pas survécu.
+- fr: "Fête des Lanternes : Vorthak, émissaire des Cendres, attaque Lysmont."
+- fr: Le Serment
+- fr: Nivôse 1014. La salle du trône est glaciale. Le roi Edmund IV vous toise depuis son trône doré.
+- fr: "« Vous avez défendu ma capitale. Bien. Mais un héros sans maître est une épée sans fourreau : dangereux. »"
+- fr: « Agenouillez-vous et jurez fidélité à la Couronne. Vous aurez titres, or, et l'honneur de mourir pour Aubeclaire. »
+- fr: La princesse Séraphine, debout à côté du trône, serre les poings. Elle croise votre regard et secoue très légèrement la tête.
+- fr: Aveline, au garde-à-vous, fixe un point droit devant elle. Mais ses jointures blanchissent sur son épée.
+- fr: Jurer fidélité à la Couronne.
+- fr: "Refuser poliment : vous resterez des aventuriers libres, fidèles à la Guilde."
+- fr: "Négocier : une alliance d'égal à égal, pas un serment de vassal. (Charisme, difficulté 18)"
+- fr: Faire semblant de jurer, en croisant les doigts dans votre dos.
+- fr: « Relevez-vous, chevaliers d'Aubeclaire. » Le roi sourit enfin. Séraphine détourne les yeux.
+- fr: Un silence de mort. « …Soit. La Guilde répondra de vous. Ne me décevez pas. »
+- fr: En sortant, Séraphine vous rattrape dans un couloir. « C'était courageux. Ou stupide. Les deux me plaisent. »
+- fr: Le roi plisse les yeux… puis éclate d'un rire bref. « Vous avez du cran. Une alliance, donc. Mais je m'en souviendrai. »
+- fr: « Des conditions ? À MOI ? » Le roi se lève, furieux. « Hors de ma vue ! »
+- fr: Vous prononcez les mots du serment. Personne ne remarque vos doigts croisés… sauf Aveline, juste derrière vous. Son visage se ferme.
+- fr: Ce soir-là, sur les remparts, vous regardez les étoiles d'un ciel qui n'est pas le vôtre.
+- fr: « Le printemps prochain, on m'envoie à la frontière sud. » Aveline hésite. « J'aimerais… que vous veniez. » Elle rougit. « Pour la mission, évidemment. »
+- fr: "Deux ans ont passé depuis l'Appel. Velmaris n'est plus un monde étranger : c'est le vôtre, désormais. Et il brûle déjà au nord."

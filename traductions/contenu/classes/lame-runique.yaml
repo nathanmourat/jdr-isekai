@@ -1,0 +1,33 @@
+# Textes de content/classes/lame-runique.yaml
+# Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
+- fr: Lame runique
+- fr: Dégâts (hybride)
+- fr: Un guerrier qui grave des runes sur sa lame en plein combat.
+- fr: Runes gravées
+- fr: "Chaque attaque réussie ajoute une charge de rune (3 au maximum). La compétence suivante consomme les charges : +20 % de dégâts par charge."
+- fr: Runes de guerre
+- fr: Dégâts et enchaînements.
+- fr: Runes de sceau
+- fr: Affaiblissements et silence.
+- fr: Lame des Mille Sceaux
+- fr: Consomme toutes les charges et frappe tous les ennemis ; chaque charge ajoute un effet.
+- fr: Polyvalent, efficace contre les ennemis physiques comme magiques.
+- fr: "Lent à démarrer : il doit accumuler ses charges."
+- fr: Entaille runique
+- fr: "Une entaille qui libère l'énergie des runes : dégâts physiques et arcaniques."
+- fr: Rune de garde
+- fr: "Grave une rune protectrice : bouclier de 20 % des PV et +1 charge."
+- fr: Frappe écarlate
+- fr: Un coup puissant porté par les runes de guerre.
+- fr: Sceau de silence
+- fr: Appose un sceau qui peut réduire l'ennemi au silence pendant 2 tours.
+- fr: Rune d'embrasement
+- fr: "Grave une rune de feu sur la lame : un coup brûlant qui peut embraser la cible."
+- fr: Tempête de lames
+- fr: "Les runes se détachent de la lame et tournoient : frappe tous les ennemis."
+- fr: Sceau d'entrave
+- fr: Un sceau qui cloue l'ennemi au sol et l'affaiblit.
+- fr: Grand sceau de rupture
+- fr: "Brise les protections de tous les ennemis : dégâts arcaniques et défense réduite."
+- fr: Ultime — Lame des Mille Sceaux
+- fr: Consomme toutes les charges de rune et frappe tous les ennemis, plus fort à chaque charge, en les réduisant au silence.

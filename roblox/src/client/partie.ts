@@ -6,6 +6,7 @@ import { CONTENU } from "shared/donnees";
 import { appliquer, rejouer, type Action, type EtatPartie, type Heros } from "shared/moteur";
 import type { CommandeModeration, EtatModeration } from "shared/grades";
 import { idJoueur, reseau, type ActionJoueur, type Commande, type EtatGroupe, type ReponseCommande } from "shared/reseau";
+import { tr } from "shared/langue";
 
 const r = reseau();
 const moi = idJoueur(Players.LocalPlayer);
@@ -66,7 +67,7 @@ function ouvrir(rep: ReponseCommande) {
 /** Envoie une commande au serveur (créer, rejoindre…). Renvoie la réponse, ou une erreur en français. */
 export function commander(c: Commande): ReponseCommande {
 	const [ok, rep] = pcall(() => r.commande.InvokeServer(c));
-	if (!ok) return { ok: false, erreur: "Le serveur ne répond pas. Réessaie." };
+	if (!ok) return { ok: false, erreur: tr("Le serveur ne répond pas. Réessaie.") };
 	if (rep.ok && rep.partie) ouvrir(rep);
 	if (!rep.ok) jeu.erreur = rep.erreur;
 	prevenir();
@@ -145,7 +146,7 @@ r.etatModeration.OnClientEvent.Connect((e) => {
 export function commandeModeration(c: CommandeModeration) {
 	task.spawn(() => {
 		const [ok, rep] = pcall(() => r.moderation.InvokeServer(c));
-		if (!ok) jeu.erreur = "Le serveur ne répond pas. Réessaie.";
+		if (!ok) jeu.erreur = tr("Le serveur ne répond pas. Réessaie.");
 		else if (!rep.ok) jeu.erreur = rep.erreur;
 		else jeu.info = rep.info;
 		prevenir();
@@ -156,7 +157,7 @@ export function commandeModeration(c: CommandeModeration) {
 export function commandeGroupe(c: Commande) {
 	task.spawn(() => {
 		const [ok, rep] = pcall(() => r.commande.InvokeServer(c));
-		if (!ok) jeu.erreur = "Le serveur ne répond pas. Réessaie.";
+		if (!ok) jeu.erreur = tr("Le serveur ne répond pas. Réessaie.");
 		else if (!rep.ok) jeu.erreur = rep.erreur;
 		else jeu.info = rep.info;
 		prevenir();

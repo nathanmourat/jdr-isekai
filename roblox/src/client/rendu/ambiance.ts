@@ -4,13 +4,14 @@
  * Seuls les moulins à moins de 600 studs de la caméra sont animés.
  */
 import { CollectionService, RunService, Workspace } from "@rbxts/services";
+import { reglages } from "../reglages";
 
 const VITESSE = 0.8; // radians par seconde
 
 export function animerDecor() {
 	RunService.RenderStepped.Connect((dt) => {
 		const camera = Workspace.CurrentCamera;
-		if (!camera) return;
+		if (!camera || reglages.effetsReduits) return;
 		for (const m of CollectionService.GetTagged("AilesMoulin")) {
 			if (!m.IsA("Model")) continue;
 			const pivot = m.GetPivot();

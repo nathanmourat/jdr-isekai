@@ -1,0 +1,738 @@
+# Textes de content/objets/equipements.yaml
+# Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
+- fr: Épée courte
+- fr: +2 de puissance d'attaque.
+- fr: Épée courte de maître
+- fr: Version soignée par un maître artisan. +1 de puissance, +2 FOR.
+- fr: Cimeterre des caravanes
+- fr: Épée du palier II. +1 de puissance, +2 FOR, +1 VIT.
+- fr: Cimeterre des caravanes de maître
+- fr: Version soignée par un maître artisan. +2 de puissance, +2 FOR, +1 VIT.
+- fr: Épée-feuille sylvaine
+- fr: Épée du palier III. +2 de puissance, +4 FOR, +1 VIT.
+- fr: Épée-feuille sylvaine de maître
+- fr: Version soignée par un maître artisan. +3 de puissance, +4 FOR, +1 VIT.
+- fr: Épée de Grisfer
+- fr: Épée du palier IV. +3 de puissance, +5 FOR, +1 VIT.
+- fr: Épée de Grisfer de maître
+- fr: Version soignée par un maître artisan. +3 de puissance, +6 FOR, +1 VIT.
+- fr: Épée d'aube-acier
+- fr: Épée du palier V. +3 de puissance, +6 FOR, +1 VIT.
+- fr: Épée d'aube-acier de maître
+- fr: Version soignée par un maître artisan. +4 de puissance, +6 FOR, +2 VIT.
+- fr: Épée de cendracier
+- fr: Épée du palier VI. +4 de puissance, +6 FOR, +2 VIT.
+- fr: Épée de cendracier de maître
+- fr: Version soignée par un maître artisan. +5 de puissance, +8 FOR, +2 VIT.
+- fr: Hache de bûcheron
+- fr: Arme à deux mains du palier I. +1 de puissance, +1 FOR.
+- fr: Hache de bûcheron de maître
+- fr: Grande hache du désert
+- fr: Arme à deux mains du palier II. +1 de puissance, +3 FOR.
+- fr: Grande hache du désert de maître
+- fr: Version soignée par un maître artisan. +2 de puissance, +3 FOR.
+- fr: Espadon sylvain
+- fr: Arme à deux mains du palier III. +2 de puissance, +5 FOR.
+- fr: Espadon sylvain de maître
+- fr: Version soignée par un maître artisan. +3 de puissance, +5 FOR.
+- fr: Espadon de forge-lave
+- fr: Arme à deux mains du palier IV. +3 de puissance, +6 FOR.
+- fr: Espadon de forge-lave de maître
+- fr: Version soignée par un maître artisan. +3 de puissance, +7 FOR.
+- fr: Grande hache d'aube-acier
+- fr: Arme à deux mains du palier V. +3 de puissance, +7 FOR.
+- fr: Grande hache d'aube-acier de maître
+- fr: Version soignée par un maître artisan. +4 de puissance, +8 FOR.
+- fr: Espadon de cendracier
+- fr: Arme à deux mains du palier VI. +4 de puissance, +8 FOR.
+- fr: Espadon de cendracier de maître
+- fr: Version soignée par un maître artisan. +5 de puissance, +10 FOR.
+- fr: Masse de fer
+- fr: Masse / marteau du palier I. +1 de puissance, +1 FOR.
+- fr: Masse de fer de maître
+- fr: Version soignée par un maître artisan. +1 de puissance, +1 FOR, +1 VIT.
+- fr: Marteau des caravaniers
+- fr: Masse / marteau du palier II. +1 de puissance, +2 FOR, +1 VIT.
+- fr: Marteau des caravaniers de maître
+- fr: Masse de cœur-de-chêne
+- fr: Masse / marteau du palier III. +2 de puissance, +4 FOR, +1 VIT.
+- fr: Masse de cœur-de-chêne de maître
+- fr: Marteau de forge naine
+- fr: Masse / marteau du palier IV. +3 de puissance, +4 FOR, +2 VIT.
+- fr: Marteau de forge naine de maître
+- fr: Version soignée par un maître artisan. +3 de puissance, +5 FOR, +2 VIT.
+- fr: Marteau d'aube-acier
+- fr: Masse / marteau du palier V. +3 de puissance, +5 FOR, +2 VIT.
+- fr: Marteau d'aube-acier de maître
+- fr: Masse de cendracier
+- fr: Masse / marteau du palier VI. +4 de puissance, +6 FOR, +2 VIT.
+- fr: Masse de cendracier de maître
+- fr: Version soignée par un maître artisan. +5 de puissance, +7 FOR, +3 VIT.
+- fr: Dague fine
+- fr: +1 de puissance, +1 AGI.
+- fr: Dague fine de maître
+- fr: Version soignée par un maître artisan. +1 de puissance, +2 AGI.
+- fr: Kriss du désert
+- fr: Dague / lame courte du palier II. +1 de puissance, +2 AGI, +1 CHA.
+- fr: Kriss du désert de maître
+- fr: Version soignée par un maître artisan. +2 de puissance, +2 AGI, +1 CHA.
+- fr: Dague-épine sylvaine
+- fr: Dague / lame courte du palier III. +2 de puissance, +4 AGI, +1 CHA.
+- fr: Dague-épine sylvaine de maître
+- fr: Version soignée par un maître artisan. +3 de puissance, +4 AGI, +1 CHA.
+- fr: Stylet de Grisfer
+- fr: Dague / lame courte du palier IV. +3 de puissance, +5 AGI, +1 CHA.
+- fr: Stylet de Grisfer de maître
+- fr: Version soignée par un maître artisan. +3 de puissance, +6 AGI, +1 CHA.
+- fr: Dague d'aube-acier
+- fr: Dague / lame courte du palier V. +3 de puissance, +6 AGI, +1 CHA.
+- fr: Dague d'aube-acier de maître
+- fr: Version soignée par un maître artisan. +4 de puissance, +6 AGI, +2 CHA.
+- fr: Dague de cendracier
+- fr: Dague / lame courte du palier VI. +4 de puissance, +6 AGI, +2 CHA.
+- fr: Dague de cendracier de maître
+- fr: Version soignée par un maître artisan. +5 de puissance, +8 AGI, +2 CHA.
+- fr: Arc court
+- fr: Arc court de maître
+- fr: Version soignée par un maître artisan. +1 de puissance, +1 AGI, +1 ESP.
+- fr: Arc composite du désert
+- fr: Arc du palier II. +1 de puissance, +2 AGI, +1 ESP.
+- fr: Arc composite du désert de maître
+- fr: Version soignée par un maître artisan. +2 de puissance, +2 AGI, +1 ESP.
+- fr: Arc long sylvain
+- fr: Arc du palier III. +2 de puissance, +4 AGI, +1 ESP.
+- fr: Arc long sylvain de maître
+- fr: Version soignée par un maître artisan. +3 de puissance, +4 AGI, +1 ESP.
+- fr: Arc de fer-souple
+- fr: Arc du palier IV. +3 de puissance, +4 AGI, +2 ESP.
+- fr: Arc de fer-souple de maître
+- fr: Version soignée par un maître artisan. +3 de puissance, +5 AGI, +2 ESP.
+- fr: Arc d'aube-bois
+- fr: Arc du palier V. +3 de puissance, +5 AGI, +2 ESP.
+- fr: Arc d'aube-bois de maître
+- fr: Version soignée par un maître artisan. +4 de puissance, +6 AGI, +2 ESP.
+- fr: Arc de cendre-if
+- fr: Arc du palier VI. +4 de puissance, +6 AGI, +2 ESP.
+- fr: Arc de cendre-if de maître
+- fr: Version soignée par un maître artisan. +5 de puissance, +7 AGI, +3 ESP.
+- fr: Arbalète de poing
+- fr: Arbalète / lance-fioles du palier I. +1 de puissance, +1 INT.
+- fr: Arbalète de poing de maître
+- fr: Version soignée par un maître artisan. +1 de puissance, +1 AGI, +1 INT.
+- fr: Lance-fioles du bazar
+- fr: Arbalète / lance-fioles du palier II. +1 de puissance, +1 AGI, +2 INT.
+- fr: Lance-fioles du bazar de maître
+- fr: Version soignée par un maître artisan. +2 de puissance, +1 AGI, +2 INT.
+- fr: Arbalète de bois-vif
+- fr: Arbalète / lance-fioles du palier III. +2 de puissance, +2 AGI, +3 INT.
+- fr: Arbalète de bois-vif de maître
+- fr: Version soignée par un maître artisan. +3 de puissance, +2 AGI, +3 INT.
+- fr: Arbalète à vapeur
+- fr: Arbalète / lance-fioles du palier IV. +3 de puissance, +2 AGI, +4 INT.
+- fr: Arbalète à vapeur de maître
+- fr: Version soignée par un maître artisan. +3 de puissance, +3 AGI, +4 INT.
+- fr: Arbalète d'aube-acier
+- fr: Arbalète / lance-fioles du palier V. +3 de puissance, +3 AGI, +4 INT.
+- fr: Arbalète d'aube-acier de maître
+- fr: Version soignée par un maître artisan. +4 de puissance, +3 AGI, +5 INT.
+- fr: Arbalète de cendracier
+- fr: Arbalète / lance-fioles du palier VI. +4 de puissance, +3 AGI, +5 INT.
+- fr: Arbalète de cendracier de maître
+- fr: Version soignée par un maître artisan. +5 de puissance, +4 AGI, +6 INT.
+- fr: Bâton d'apprenti
+- fr: +1 INT, +1 ESP.
+- fr: Bâton d'apprenti de maître
+- fr: Version soignée par un maître artisan. +1 de puissance, +1 INT, +1 ESP.
+- fr: Bâton de mage du désert
+- fr: Bâton du palier II. +1 de puissance, +2 INT, +1 ESP.
+- fr: Bâton de mage du désert de maître
+- fr: Version soignée par un maître artisan. +2 de puissance, +2 INT, +1 ESP.
+- fr: Bâton de bois-de-lune
+- fr: Bâton du palier III. +2 de puissance, +3 INT, +2 ESP.
+- fr: Bâton de bois-de-lune de maître
+- fr: Version soignée par un maître artisan. +3 de puissance, +3 INT, +2 ESP.
+- fr: Bâton de basalte
+- fr: Bâton du palier IV. +3 de puissance, +3 INT, +3 ESP.
+- fr: Bâton de basalte de maître
+- fr: Version soignée par un maître artisan. +3 de puissance, +4 INT, +3 ESP.
+- fr: Bâton d'aube-cristal
+- fr: Bâton du palier V. +3 de puissance, +4 INT, +3 ESP.
+- fr: Bâton d'aube-cristal de maître
+- fr: Version soignée par un maître artisan. +4 de puissance, +4 INT, +4 ESP.
+- fr: Bâton de cendre-cristal
+- fr: Bâton du palier VI. +4 de puissance, +4 INT, +4 ESP.
+- fr: Bâton de cendre-cristal de maître
+- fr: Version soignée par un maître artisan. +5 de puissance, +5 INT, +5 ESP.
+- fr: Sceptre de novice
+- fr: Sceptre du palier I. +1 de puissance, +1 ESP.
+- fr: Sceptre de novice de maître
+- fr: Version soignée par un maître artisan. +1 de puissance, +1 VIT, +1 ESP.
+- fr: Sceptre de l'oasis
+- fr: Sceptre du palier II. +1 de puissance, +1 VIT, +2 ESP.
+- fr: Sceptre de l'oasis de maître
+- fr: Version soignée par un maître artisan. +2 de puissance, +1 VIT, +2 ESP.
+- fr: Sceptre de sève
+- fr: Sceptre du palier III. +2 de puissance, +1 VIT, +4 ESP.
+- fr: Sceptre de sève de maître
+- fr: Version soignée par un maître artisan. +3 de puissance, +1 VIT, +4 ESP.
+- fr: Sceptre de cristal de mine
+- fr: Sceptre du palier IV. +3 de puissance, +2 VIT, +4 ESP.
+- fr: Sceptre de cristal de mine de maître
+- fr: Version soignée par un maître artisan. +3 de puissance, +2 VIT, +5 ESP.
+- fr: Sceptre d'aube-cristal
+- fr: Sceptre du palier V. +3 de puissance, +2 VIT, +5 ESP.
+- fr: Sceptre d'aube-cristal de maître
+- fr: Version soignée par un maître artisan. +4 de puissance, +2 VIT, +6 ESP.
+- fr: Sceptre de cendre-cristal
+- fr: Sceptre du palier VI. +4 de puissance, +2 VIT, +6 ESP.
+- fr: Sceptre de cendre-cristal de maître
+- fr: Version soignée par un maître artisan. +5 de puissance, +3 VIT, +7 ESP.
+- fr: Orbe de verre
+- fr: Orbe / grimoire du palier I. +1 de puissance, +1 INT.
+- fr: Orbe de verre de maître
+- fr: Orbe de sable fondu
+- fr: Orbe / grimoire du palier II. +1 de puissance, +2 INT, +1 ESP.
+- fr: Orbe de sable fondu de maître
+- fr: Grimoire de feuilles
+- fr: Orbe / grimoire du palier III. +2 de puissance, +4 INT, +1 ESP.
+- fr: Grimoire de feuilles de maître
+- fr: Version soignée par un maître artisan. +3 de puissance, +4 INT, +1 ESP.
+- fr: Orbe de lave figée
+- fr: Orbe / grimoire du palier IV. +3 de puissance, +4 INT, +2 ESP.
+- fr: Orbe de lave figée de maître
+- fr: Version soignée par un maître artisan. +3 de puissance, +5 INT, +2 ESP.
+- fr: Orbe d'aube-cristal
+- fr: Orbe / grimoire du palier V. +3 de puissance, +5 INT, +2 ESP.
+- fr: Orbe d'aube-cristal de maître
+- fr: Version soignée par un maître artisan. +4 de puissance, +6 INT, +2 ESP.
+- fr: Grimoire de cendre
+- fr: Orbe / grimoire du palier VI. +4 de puissance, +6 INT, +2 ESP.
+- fr: Grimoire de cendre de maître
+- fr: Version soignée par un maître artisan. +5 de puissance, +7 INT, +3 ESP.
+- fr: Flûte de roseau
+- fr: Instrument du palier I. +1 de puissance, +1 CHA.
+- fr: Flûte de roseau de maître
+- fr: Version soignée par un maître artisan. +1 de puissance, +1 AGI, +1 CHA.
+- fr: Oud du bazar
+- fr: Instrument du palier II. +1 de puissance, +1 AGI, +2 CHA.
+- fr: Oud du bazar de maître
+- fr: Version soignée par un maître artisan. +2 de puissance, +1 AGI, +2 CHA.
+- fr: Harpe sylvaine
+- fr: Instrument du palier III. +2 de puissance, +1 AGI, +4 CHA.
+- fr: Harpe sylvaine de maître
+- fr: Version soignée par un maître artisan. +3 de puissance, +1 AGI, +4 CHA.
+- fr: Cornemuse de Grisfer
+- fr: Instrument du palier IV. +3 de puissance, +2 AGI, +4 CHA.
+- fr: Cornemuse de Grisfer de maître
+- fr: Version soignée par un maître artisan. +3 de puissance, +2 AGI, +5 CHA.
+- fr: Luth d'aube-bois
+- fr: Instrument du palier V. +3 de puissance, +2 AGI, +5 CHA.
+- fr: Luth d'aube-bois de maître
+- fr: Version soignée par un maître artisan. +4 de puissance, +2 AGI, +6 CHA.
+- fr: Luth de cendre-if
+- fr: Instrument du palier VI. +4 de puissance, +2 AGI, +6 CHA.
+- fr: Luth de cendre-if de maître
+- fr: Version soignée par un maître artisan. +5 de puissance, +3 AGI, +7 CHA.
+- fr: Cotte de mailles
+- fr: Tenue lourde du palier I. +2 d'armure, +1 VIT.
+- fr: Cotte de mailles de maître
+- fr: Version soignée par un maître artisan. +4 d'armure, +1 VIT.
+- fr: Armure à écailles du désert
+- fr: Tenue lourde du palier II. +4 d'armure, +1 FOR, +1 VIT.
+- fr: Armure à écailles du désert de maître
+- fr: Version soignée par un maître artisan. +6 d'armure, +1 FOR, +1 VIT.
+- fr: Cuirasse d'écorce
+- fr: Tenue lourde du palier III. +8 d'armure, +1 FOR, +2 VIT.
+- fr: Cuirasse d'écorce de maître
+- fr: Version soignée par un maître artisan. +10 d'armure, +1 FOR, +2 VIT.
+- fr: Plates de Grisfer
+- fr: Tenue lourde du palier IV. +10 d'armure, +2 FOR, +2 VIT.
+- fr: Plates de Grisfer de maître
+- fr: Version soignée par un maître artisan. +12 d'armure, +2 FOR, +2 VIT.
+- fr: Plates d'aube-acier
+- fr: Tenue lourde du palier V. +12 d'armure, +2 FOR, +2 VIT.
+- fr: Plates d'aube-acier de maître
+- fr: Version soignée par un maître artisan. +14 d'armure, +2 FOR, +3 VIT.
+- fr: Plates de cendracier
+- fr: Tenue lourde du palier VI. +14 d'armure, +2 FOR, +3 VIT.
+- fr: Plates de cendracier de maître
+- fr: Version soignée par un maître artisan. +18 d'armure, +3 FOR, +3 VIT.
+- fr: Armure de cuir
+- fr: +4 d'armure.
+- fr: Armure de cuir de maître
+- fr: Version soignée par un maître artisan. +2 d'armure, +1 AGI, +1 VIT.
+- fr: Cuir de nomade
+- fr: Tenue intermédiaire du palier II. +4 d'armure, +1 AGI, +1 VIT.
+- fr: Cuir de nomade de maître
+- fr: Version soignée par un maître artisan. +6 d'armure, +1 AGI, +1 VIT.
+- fr: Cuir de cerf sylvain
+- fr: Tenue intermédiaire du palier III. +6 d'armure, +2 AGI, +2 VIT.
+- fr: Cuir de cerf sylvain de maître
+- fr: Version soignée par un maître artisan. +8 d'armure, +2 AGI, +2 VIT.
+- fr: Cuir renforcé de Grisfer
+- fr: Tenue intermédiaire du palier IV. +10 d'armure, +2 AGI, +2 VIT.
+- fr: Cuir renforcé de Grisfer de maître
+- fr: Version soignée par un maître artisan. +10 d'armure, +3 AGI, +2 VIT.
+- fr: Brigandine d'aube-acier
+- fr: Tenue intermédiaire du palier V. +10 d'armure, +3 AGI, +2 VIT.
+- fr: Brigandine d'aube-acier de maître
+- fr: Version soignée par un maître artisan. +12 d'armure, +3 AGI, +3 VIT.
+- fr: Cuir de cendre
+- fr: Tenue intermédiaire du palier VI. +12 d'armure, +3 AGI, +3 VIT.
+- fr: Cuir de cendre de maître
+- fr: Version soignée par un maître artisan. +14 d'armure, +4 AGI, +4 VIT.
+- fr: Robe de mage
+- fr: +1 d'armure, +1 ESP.
+- fr: Robe de mage de maître
+- fr: Version soignée par un maître artisan. +2 d'armure, +1 INT, +1 ESP.
+- fr: Robe de soie du désert
+- fr: Tenue légère du palier II. +2 d'armure, +1 INT, +2 ESP.
+- fr: Robe de soie du désert de maître
+- fr: Version soignée par un maître artisan. +2 d'armure, +2 INT, +2 ESP.
+- fr: Robe de brume
+- fr: Tenue légère du palier III. +4 d'armure, +2 INT, +3 ESP.
+- fr: Robe de brume de maître
+- fr: Version soignée par un maître artisan. +4 d'armure, +3 INT, +3 ESP.
+- fr: Robe de laine de forge
+- fr: Tenue légère du palier IV. +6 d'armure, +3 INT, +3 ESP.
+- fr: Robe de laine de forge de maître
+- fr: Version soignée par un maître artisan. +6 d'armure, +3 INT, +4 ESP.
+- fr: Robe d'aube-soie
+- fr: Tenue légère du palier V. +6 d'armure, +3 INT, +4 ESP.
+- fr: Robe d'aube-soie de maître
+- fr: Version soignée par un maître artisan. +8 d'armure, +4 INT, +4 ESP.
+- fr: Robe de cendre-soie
+- fr: Tenue légère du palier VI. +8 d'armure, +4 INT, +4 ESP.
+- fr: Robe de cendre-soie de maître
+- fr: Version soignée par un maître artisan. +10 d'armure, +5 INT, +5 ESP.
+- fr: Bouclier de bois
+- fr: +3 d'armure.
+- fr: Bouclier de bois de maître
+- fr: Rondache du désert
+- fr: Bouclier du palier II. +4 d'armure, +2 VIT.
+- fr: Rondache du désert de maître
+- fr: Version soignée par un maître artisan. +6 d'armure, +2 VIT.
+- fr: Bouclier de chêne
+- fr: Bouclier du palier III. +8 d'armure, +3 VIT.
+- fr: Bouclier de chêne de maître
+- fr: Version soignée par un maître artisan. +10 d'armure, +3 VIT.
+- fr: Pavois de Grisfer
+- fr: Bouclier du palier IV. +10 d'armure, +4 VIT.
+- fr: Pavois de Grisfer de maître
+- fr: Version soignée par un maître artisan. +12 d'armure, +4 VIT.
+- fr: Bouclier d'aube-acier
+- fr: Bouclier du palier V. +12 d'armure, +4 VIT.
+- fr: Bouclier d'aube-acier de maître
+- fr: Version soignée par un maître artisan. +14 d'armure, +5 VIT.
+- fr: Bouclier de cendracier
+- fr: Bouclier du palier VI. +14 d'armure, +5 VIT.
+- fr: Bouclier de cendracier de maître
+- fr: Version soignée par un maître artisan. +18 d'armure, +6 VIT.
+- fr: Anneau de cuivre
+- fr: Anneau du palier I. +1 AGI, +1 CHA.
+- fr: Anneau de cuivre de maître
+- fr: Version soignée par un maître artisan. +2 AGI, +1 CHA.
+- fr: Anneau de turquoise
+- fr: Anneau du palier II. +2 AGI, +2 CHA.
+- fr: Anneau de turquoise de maître
+- fr: Version soignée par un maître artisan. +3 AGI, +2 CHA.
+- fr: Anneau de bois-de-lune
+- fr: Anneau du palier III. +4 AGI, +3 CHA.
+- fr: Anneau de bois-de-lune de maître
+- fr: Version soignée par un maître artisan. +4 AGI, +4 CHA.
+- fr: Anneau de rubis de mine
+- fr: Anneau du palier IV. +5 AGI, +4 CHA.
+- fr: Anneau de rubis de mine de maître
+- fr: Version soignée par un maître artisan. +5 AGI, +5 CHA.
+- fr: Anneau d'aube-or
+- fr: Anneau du palier V. +5 AGI, +5 CHA.
+- fr: Anneau d'aube-or de maître
+- fr: Version soignée par un maître artisan. +6 AGI, +6 CHA.
+- fr: Anneau de cendre-or
+- fr: Anneau du palier VI. +6 AGI, +6 CHA.
+- fr: Anneau de cendre-or de maître
+- fr: Version soignée par un maître artisan. +8 AGI, +7 CHA.
+- fr: Amulette de bois
+- fr: Amulette du palier I. +1 INT, +1 ESP.
+- fr: Amulette de bois de maître
+- fr: Version soignée par un maître artisan. +1 INT, +2 ESP.
+- fr: Amulette de verre-sable
+- fr: Amulette du palier II. +2 INT, +2 ESP.
+- fr: Amulette de verre-sable de maître
+- fr: Version soignée par un maître artisan. +2 INT, +3 ESP.
+- fr: Amulette de sève
+- fr: Amulette du palier III. +3 INT, +4 ESP.
+- fr: Amulette de sève de maître
+- fr: Version soignée par un maître artisan. +4 INT, +4 ESP.
+- fr: Amulette de basalte
+- fr: Amulette du palier IV. +4 INT, +5 ESP.
+- fr: Amulette de basalte de maître
+- fr: Version soignée par un maître artisan. +5 INT, +5 ESP.
+- fr: Amulette d'aube-cristal
+- fr: Amulette du palier V. +5 INT, +5 ESP.
+- fr: Amulette d'aube-cristal de maître
+- fr: Version soignée par un maître artisan. +6 INT, +6 ESP.
+- fr: Amulette de cendre-cristal
+- fr: Amulette du palier VI. +6 INT, +6 ESP.
+- fr: Amulette de cendre-cristal de maître
+- fr: Version soignée par un maître artisan. +7 INT, +8 ESP.
+- fr: Talisman d'os
+- fr: Talisman du palier I. +1 FOR, +1 VIT.
+- fr: Talisman d'os de maître
+- fr: Version soignée par un maître artisan. +1 FOR, +2 VIT.
+- fr: Talisman de croc de chacal
+- fr: Talisman du palier II. +2 FOR, +2 VIT.
+- fr: Talisman de croc de chacal de maître
+- fr: Version soignée par un maître artisan. +2 FOR, +3 VIT.
+- fr: Talisman de racine
+- fr: Talisman du palier III. +3 FOR, +4 VIT.
+- fr: Talisman de racine de maître
+- fr: Version soignée par un maître artisan. +3 FOR, +5 VIT.
+- fr: Talisman de fer de forge
+- fr: Talisman du palier IV. +4 FOR, +5 VIT.
+- fr: Talisman de fer de forge de maître
+- fr: Version soignée par un maître artisan. +4 FOR, +6 VIT.
+- fr: Talisman d'aube-pierre
+- fr: Talisman du palier V. +4 FOR, +6 VIT.
+- fr: Talisman d'aube-pierre de maître
+- fr: Version soignée par un maître artisan. +5 FOR, +7 VIT.
+- fr: Talisman de cendre-pierre
+- fr: Talisman du palier VI. +5 FOR, +7 VIT.
+- fr: Talisman de cendre-pierre de maître
+- fr: Version soignée par un maître artisan. +6 FOR, +9 VIT.
+- fr: Carquois de cuir
+- fr: Carquois du palier I. +1 AGI, +1 ESP.
+- fr: Carquois de cuir de maître
+- fr: Version soignée par un maître artisan. +2 AGI, +1 ESP.
+- fr: Carquois du nomade
+- fr: Carquois du palier II. +2 AGI, +2 ESP.
+- fr: Carquois du nomade de maître
+- fr: Version soignée par un maître artisan. +3 AGI, +2 ESP.
+- fr: Carquois sylvain
+- fr: Carquois du palier III. +4 AGI, +3 ESP.
+- fr: Carquois sylvain de maître
+- fr: Version soignée par un maître artisan. +5 AGI, +3 ESP.
+- fr: Carquois de Grisfer
+- fr: Carquois du palier IV. +5 AGI, +4 ESP.
+- fr: Carquois de Grisfer de maître
+- fr: Version soignée par un maître artisan. +6 AGI, +4 ESP.
+- fr: Carquois d'aube-cuir
+- fr: Carquois du palier V. +6 AGI, +4 ESP.
+- fr: Carquois d'aube-cuir de maître
+- fr: Version soignée par un maître artisan. +7 AGI, +5 ESP.
+- fr: Carquois de cendre-cuir
+- fr: Carquois du palier VI. +7 AGI, +5 ESP.
+- fr: Carquois de cendre-cuir de maître
+- fr: Version soignée par un maître artisan. +9 AGI, +6 ESP.
+- fr: Sacoche d'herboriste
+- fr: Sacoche du palier I. +1 AGI, +1 INT.
+- fr: Sacoche d'herboriste de maître
+- fr: Version soignée par un maître artisan. +1 AGI, +2 INT.
+- fr: Sacoche du bazar
+- fr: Sacoche du palier II. +2 AGI, +2 INT.
+- fr: Sacoche du bazar de maître
+- fr: Version soignée par un maître artisan. +2 AGI, +3 INT.
+- fr: Sacoche de feuilles
+- fr: Sacoche du palier III. +3 AGI, +4 INT.
+- fr: Sacoche de feuilles de maître
+- fr: Version soignée par un maître artisan. +3 AGI, +5 INT.
+- fr: Sacoche de forge
+- fr: Sacoche du palier IV. +4 AGI, +5 INT.
+- fr: Sacoche de forge de maître
+- fr: Version soignée par un maître artisan. +4 AGI, +6 INT.
+- fr: Sacoche d'aube-cuir
+- fr: Sacoche du palier V. +4 AGI, +6 INT.
+- fr: Sacoche d'aube-cuir de maître
+- fr: Version soignée par un maître artisan. +5 AGI, +7 INT.
+- fr: Sacoche de cendre-cuir
+- fr: Sacoche du palier VI. +5 AGI, +7 INT.
+- fr: Sacoche de cendre-cuir de maître
+- fr: Version soignée par un maître artisan. +6 AGI, +9 INT.
+- fr: Lame du Guet de Lysmont
+- fr: L'épée réglementaire des sergents du guet, gravée d'une première rune par un forgeron curieux.
+- fr: Haubert du Temple du Seuil
+- fr: Une cotte de mailles bénite le jour de l'Appel ; ses anneaux vibrent quand une rune s'allume.
+- fr: Rondache des caravaniers
+- fr: Un petit bouclier de bronze martelé, poli par le sable de la Marche.
+- fr: Fendeuse de Qarzim
+- fr: Une lame courbe à deux mains, forgée pour un champion des arènes du Grand Bazar.
+- fr: Cuirasse d'écorce-fer
+- fr: Des plaques taillées dans l'écorce durcie des arbres géants de Sylvenoire.
+- fr: Anneau des Racines
+- fr: Un anneau de bois vivant qui garde la mémoire de chaque rune qu'il a vue.
+- fr: Épée des Mille Marches
+- fr: Forgée à Ardenclume, une marche gravée sur la lame pour chaque étage conquis.
+- fr: Plates de la forge volcanique
+- fr: Une armure trempée dans la lave des Monts Grisfer, encore tiède au toucher.
+- fr: Pavois du Mur d'Aube
+- fr: Le grand bouclier des sentinelles de la frontière, couvert de sceaux de garde.
+- fr: Sceau-lame des Sentinelles
+- fr: Chaque rune gravée sur cette lame scelle un démon tombé sur le Mur.
+- fr: Armure de cendre trempée
+- fr: Une armure récupérée dans les forteresses noires et purifiée par les runes.
+- fr: Anneau du Premier Sceau
+- fr: On dit qu'il a fermé la première brèche du Voile.
+- fr: Velgraive, la Lame-Grimoire
+- fr: Une épée dont la lame est un livre de runes ; elle se réécrit à chaque combat.
+- fr: Commence chaque combat avec 1 charge de rune.
+- fr: Bâton de l'apprenti prodige
+- fr: Le bâton d'un élève du Temple qui a fait exploser trois salles d'étude.
+- fr: Robe des étincelles
+- fr: Une robe d'étude dont les ourlets crépitent d'étincelles bleues.
+- fr: Pendentif de verre-sable
+- fr: Du sable fondu par un éclair, monté en pendentif par un orfèvre de Qarzim.
+- fr: Orbe des mirages
+- fr: Une sphère où dansent les mirages du désert ; elle trouble les sorts ennemis.
+- fr: Manteau de brume bleue
+- fr: Tissé avec la brume des sous-bois de Sylvenoire, il ne se mouille jamais.
+- fr: Larme d'Ithrael
+- fr: Une goutte de sève cristallisée, offerte par la cité-arbre.
+- fr: Bâton de basalte chantant
+- fr: Taillé dans une colonne de basalte qui résonne à chaque éruption.
+- fr: Robe des Brumes salées
+- fr: La robe des mages de Port-Vérane, cousue d'écailles de sirène.
+- fr: Médaillon de garde du Mur
+- fr: Les mages de la frontière y gravent un sort de bouclier.
+- fr: Bâton des trois tempêtes
+- fr: Feu, glace et foudre tournent autour de sa pointe sans jamais se mélanger.
+- fr: Robe tissée de cendre
+- fr: Une robe que les flammes des Terres Cendrées n'arrivent pas à consumer.
+- fr: Cœur d'éther pur
+- fr: Un cristal d'éther intact, rare depuis que la Concorde les exploite.
+- fr: Ysgarde, Bâton des Quatre Vents
+- fr: Un bâton qui a appartenu à la fondatrice de l'école élémentaire du Temple.
+- fr: Les sorts de zone coûtent 15 % de mana en moins.
+- fr: Orbe du familier timide
+- fr: Une petite sphère où vit un esprit qui sort seulement quand on a peur.
+- fr: Tunique des liens
+- fr: Brodée de cercles d'invocation qui s'illuminent quand un esprit est proche.
+- fr: Talisman de l'esprit du puits
+- fr: Un talisman offert par les gardiens d'une oasis ; un esprit y dort.
+- fr: Bâton des chacals d'ombre
+- fr: Les nomades disent qu'il appelle les esprits des chacals du canyon.
+- fr: Robe de mousse ancienne
+- fr: Une robe vivante où poussent des mousses qui murmurent les noms des esprits.
+- fr: Pendentif de la dryade
+- fr: Le présent d'une dryade de Sylvenoire à qui l'on a rendu service.
+- fr: Orbe du wyrmling
+- fr: Un œuf de wyrm vide, qui garde encore la chaleur de son occupant.
+- fr: Manteau du Nid des Wyrms
+- fr: Taillé dans la mue d'un jeune dragon de l'Archipel.
+- fr: Talisman des âmes gardiennes
+- fr: Les âmes des sentinelles tombées veillent sur celui qui le porte.
+- fr: Orbe du Pacte brisé
+- fr: Une sphère fêlée qui contient un esprit libéré d'un pacte démoniaque.
+- fr: Robe du Lien éternel
+- fr: Les cercles brodés de cette robe ne s'éteignent jamais.
+- fr: Sceau des mille esprits
+- fr: Un sceau de pierre où chaque invocateur du Temple a laissé une trace.
+- fr: Nyxaliel, l'Orbe-Portail
+- fr: Une sphère qui ouvre une porte vers un monde d'esprits encore inconnu.
+- fr: Les invocations commencent le combat avec 20 % de PV en plus.
+- fr: Surin des ruelles
+- fr: Une lame fine retrouvée dans une ruelle de Lysmont, sans propriétaire connu.
+- fr: Pourpoint du voleur de minuit
+- fr: Un pourpoint noir aux coutures silencieuses, qui ne craque jamais.
+- fr: Anneau du Vulpin rieur
+- fr: Une bague à tête de renard, gagnée aux dés ou volée, selon qui raconte.
+- fr: Crocs jumeaux du canyon
+- fr: Deux dagues taillées dans les crocs d'un grand chacal du désert.
+- fr: Cape de feuilles mortes
+- fr: Une cape qui prend la couleur du sous-bois de Sylvenoire.
+- fr: Anneau du dernier souffle
+- fr: Il refroidit d'un coup quand un ennemi tourne le dos.
+- fr: Stylet du brouillard
+- fr: Une lame de pirate, aussi grise que la brume de l'Archipel.
+- fr: Gilet de maille de grisargent
+- fr: Une maille naine si fine qu'elle tient dans une main.
+- fr: Anneau de l'éclaireur du Mur
+- fr: Porté par les éclaireurs qui passent de l'autre côté du Mur d'Aube.
+- fr: Lame-sans-reflet
+- fr: Une dague noire qui n'apparaît pas dans les miroirs.
+- fr: Tenue de l'infiltré cendré
+- fr: Un cuir teint à la cendre pour se fondre dans les plaines du nord.
+- fr: Anneau du Prince disparu
+- fr: Une chevalière aux armes d'Aubeclaire, trouvée là où personne ne l'attendait.
+- fr: Murmure, la Dague du Silence
+- fr: Personne n'a jamais entendu le bruit qu'elle fait en frappant.
+- fr: La première attaque du combat est toujours un coup critique.
+- fr: Masse du sacristain
+- fr: La masse d'un sacristain du Temple, bénite plus souvent que nécessaire.
+- fr: Cuirasse de la Lumière Sereine
+- fr: L'armure de parade de l'Ordre, plus solide qu'elle n'en a l'air.
+- fr: Écu de l'oasis
+- fr: Un bouclier peint d'un palmier, qui a protégé une caravane entière.
+- fr: Épée du serment des sables
+- fr: Les gardes des caravanes jurent sur cette lame de ne jamais abandonner un voyageur.
+- fr: Harnois du gardien des racines
+- fr: Une armure de plaques ornée de feuilles, portée par les protecteurs d'Ithrael.
+- fr: Bouclier-chêne
+- fr: Taillé d'une seule pièce dans un chêne millénaire qui a accepté de le donner.
+- fr: Marteau de l'enclume-mère
+- fr: Le marteau cérémoniel des forgerons d'Ardenclume.
+- fr: Plates du Rempart nain
+- fr: Une armure si lourde qu'il faut deux nains pour aider à l'enfiler.
+- fr: Bouclier de l'Aube
+- fr: Il brille d'un éclat doré quand un démon approche.
+- fr: Sceptre de la sainte garde
+- fr: Le sceptre des capitaines de l'Ordre sur le Mur d'Aube.
+- fr: Armure du dernier rempart
+- fr: Portée par celui qui reste debout quand tous les autres ont reculé.
+- fr: Égide d'Obsidienne
+- fr: Un bouclier taillé dans un éclat de la Citadelle d'Obsidienne, purifié.
+- fr: Solenne, le Marteau de l'Aube
+- fr: Le marteau du premier gardien du Mur, qui a tenu seul une nuit entière.
+- fr: "Rempart protège aussi le héros : il subit 10 % de dégâts en moins."
+- fr: Lance-fioles bricolé
+- fr: Un mécanisme de récupération qui projette les fioles plus loin qu'un bras.
+- fr: Tablier ignifugé de Halvine
+- fr: Halvine jure qu'il a résisté à trois explosions et demie.
+- fr: Sacoche du marchand d'épices
+- fr: Une sacoche aux mille poches, qui sent toujours le cumin.
+- fr: Arbalète à éther de la Concorde
+- fr: Une arme de marchand, alimentée par un petit cristal d'éther.
+- fr: Veste d'herboriste
+- fr: Une veste couverte de poches à graines, cousue par un botaniste elfe.
+- fr: Besace des racines
+- fr: Les ingrédients qu'on y range ne pourrissent jamais.
+- fr: Arbalète-soufflet naine
+- fr: Une arbalète à vapeur conçue par des ingénieurs gnomes d'Ardenclume.
+- fr: Combinaison du plongeur de l'Archipel
+- fr: Cuir huilé et casque de verre, pour récolter les algues du Phare noyé.
+- fr: Sacoche de l'artificier du Mur
+- fr: Les artificiers de la frontière y rangent leurs bombes de siège.
+- fr: Canon de poing à cristal
+- fr: "Plus une arbalète, plus tout à fait un canon : une invention interdite à Lysmont."
+- fr: Tenue anti-cendre
+- fr: Masque à filtre et cuir doublé, pour respirer dans les Terres Cendrées.
+- fr: Laboratoire portatif
+- fr: Une sacoche qui se déplie en petit atelier complet.
+- fr: Prisme, l'Arbalète-Alambic
+- fr: Elle distille ses propres fioles pendant qu'on la recharge.
+- fr: Les objets de soin et les bombes utilisés par le héros sont 25 % plus efficaces.
+- fr: Arc du chasseur de la plaine
+- fr: Un arc de frêne tendu par un chasseur des plaines d'Aubeclaire.
+- fr: Cape du guetteur
+- fr: La cape des guetteurs royaux, qui guettent sans être vus.
+- fr: Carquois du vent du sud
+- fr: Les flèches qu'il contient sifflent comme le vent du désert.
+- fr: Arc de corne d'Ourvalis
+- fr: Un arc composite des peuples-loups, en corne et en tendon.
+- fr: Tunique de l'éclaireur sylvain
+- fr: Elle garde l'odeur de la forêt, et les bêtes ne la sentent pas.
+- fr: Carquois des esprits
+- fr: Un esprit de la forêt y remplace chaque flèche tirée.
+- fr: Arc de fer-cerf
+- fr: Un arc nain en métal souple, inventé pour tirer dans les mines.
+- fr: Armure de plumes de wyrm
+- fr: Des plumes de dragon tissées sur du cuir, pour tirer en plein vol.
+- fr: Carquois des flèches bénites
+- fr: Les prêtres du Mur bénissent chaque flèche avant la bataille.
+- fr: Arc de l'Étoile du Mur
+- fr: On dit qu'une de ses flèches a touché un démon à une lieue de distance.
+- fr: Cuirasse de cuir cendré
+- fr: Un cuir noir, durci au feu des plaines du nord.
+- fr: Carquois sans fond
+- fr: Personne n'a jamais vu le fond de ce carquois.
+- fr: Kestrévane, l'Arc du Faucon d'Âme
+- fr: L'arc d'un esprit faucon, qui guide la flèche jusqu'au cœur de la cible.
+- fr: Œil du faucon touche toujours, même un ennemi caché.
+- fr: Bâton du dispensaire
+- fr: Le bâton de marche des soigneurs du dispensaire de Lysmont.
+- fr: Aube de la novice
+- fr: La robe blanche des novices de l'Ordre, cousue de fils de lumière.
+- fr: Talisman du puits sacré
+- fr: Une pierre plongée dans le puits sacré d'une oasis.
+- fr: Sceptre de l'eau vive
+- fr: Un sceptre d'argent qui fait jaillir quelques gouttes fraîches quand on soigne.
+- fr: Robe de sève
+- fr: Une robe qui guérit doucement les égratignures de celui qui la porte.
+- fr: Graine du Premier Arbre
+- fr: Une graine qui n'a jamais germé et ne germera peut-être jamais.
+- fr: Bâton de corail blanc
+- fr: Taillé dans un corail des récifs de l'Archipel, il apaise les brûlures.
+- fr: Chasuble de la source chaude
+- fr: Les guérisseurs nains la trempent dans les sources des Monts Grisfer.
+- fr: Médaillon de la sœur de garde
+- fr: Porté par les soigneuses qui suivent les sentinelles au combat.
+- fr: Sceptre de la lumière première
+- fr: Une relique de l'Ordre, d'avant que l'Ordre ait des secrets.
+- fr: Robe de l'espérance
+- fr: Une robe simple, que les flammes et la cendre ne salissent jamais.
+- fr: Cœur de l'Aube
+- fr: Un talisman qui bat doucement, comme un cœur, quand un allié est en danger.
+- fr: Lumenaë, le Sceptre de Miséricorde
+- fr: Le sceptre d'une sainte oubliée, qui soignait amis et ennemis.
+- fr: Les soins du héros rendent 15 % de PV en plus.
+- fr: Hache du bûcheron colérique
+- fr: Une hache de bûcheron si lourde que son propriétaire l'a lâchée de rage.
+- fr: Cuir clouté de la fosse
+- fr: L'armure des combattants de la fosse aux paris, sous le Chaudron Fêlé.
+- fr: Croc de lion des sables
+- fr: Un croc porté en pendentif, arraché au roi des fauves du désert.
+- fr: Espadon du soleil brûlant
+- fr: Sa lame chauffe au soleil jusqu'à brûler ce qu'elle touche.
+- fr: Armure d'écailles de sanglier-roi
+- fr: Taillée dans le cuir d'un sanglier géant des forêts de l'ouest.
+- fr: Anneau du cri sauvage
+- fr: Quand on le serre, on entend un rugissement lointain.
+- fr: Marteau-volcan
+- fr: Un marteau de forge naine, qui crache des étincelles à chaque coup.
+- fr: Plates d'écailles de dragon
+- fr: Une armure taillée dans les écailles d'un dragon de l'Archipel, avec sa permission.
+- fr: Talisman de sang-dragon
+- fr: Une écaille qui réchauffe le sang de celui qui la porte.
+- fr: Fléau des Cendres
+- fr: Une grande hache forgée pour fendre les démons les plus massifs.
+- fr: Armure de l'enragé
+- fr: Elle a été réparée tant de fois qu'il ne reste presque rien de l'originale.
+- fr: Anneau du feu intérieur
+- fr: Un anneau d'écaille qui brûle quand le porteur est blessé.
+- fr: Drakhaar, la Hache des Dragons-Rois
+- fr: La hache d'un ancien pacte entre les dragons-rois et les hommes.
+- fr: Sang de dragon se déclenche dès 50 % de PV au lieu du seuil habituel.
+- fr: Luth du Chaudron Fêlé
+- fr: Le luth que Bram garde derrière son comptoir, pour les soirs de fête.
+- fr: Pourpoint du ménestrel
+- fr: Un pourpoint de velours aux couleurs vives, impossible à ne pas remarquer.
+- fr: Anneau des contes du bazar
+- fr: Le conteur du Grand Bazar le portait en racontant mille et une histoires.
+- fr: Flûte des dunes chantantes
+- fr: Sa mélodie imite le chant des dunes de la Marche.
+- fr: Cape du conteur sylvain
+- fr: Une cape brodée de toutes les légendes de Sylvenoire.
+- fr: Anneau de la dryade chanteuse
+- fr: Il fredonne tout seul quand le porteur se tait trop longtemps.
+- fr: Rapière du corsaire
+- fr: Une lame fine et élégante, gagnée à un capitaine pirate en duel de chansons.
+- fr: Habit de gala de Port-Vérane
+- fr: La tenue de cérémonie des fêtes des sirènes.
+- fr: Anneau de l'hymne du Mur
+- fr: Il porte gravées les paroles de l'hymne que chantent les sentinelles.
+- fr: Harpe de l'Aube
+- fr: Ses cordes en fil d'or donnent du courage à tout un bataillon.
+- fr: Manteau du dernier refrain
+- fr: Le manteau d'un barde qui a chanté jusqu'aux portes de la Citadelle.
+- fr: Anneau des voix perdues
+- fr: Il garde les voix des héros tombés, qui chantent encore pour les vivants.
+- fr: Mélisande, le Luth des Âges
+- fr: Un luth qui joue les chansons de toutes les époques, même celles à venir.
+- fr: Refrain dure 1 tour de plus.
+- fr: Aube-Première, l'Épée du Premier Serment
+- fr: La lame sur laquelle fut prêté le premier serment de protéger le monde, bien avant le Voile.
+- fr: Une fois par combat, quand un allié tombe K.O., le porteur le relève avec 30 % de ses PV.
+- fr: Brise-Monde, la Hache du Premier Pacte
+- fr: Forgée dans le souffle du premier dragon-roi, pour sceller l'alliance entre les dragons et les hommes.
+- fr: Chaque ennemi vaincu par le porteur lui rend 10 % de ses PV max.
+- fr: Nuit-Première, le Croc d'avant le Voile
+- fr: Une lame taillée dans la première ombre du monde, quand la nuit n'avait pas encore de nom.
+- fr: Les coups critiques du porteur infligent × 2 au lieu de × 1,5.
+- fr: Lointain, l'Arc de l'Horizon Perdu
+- fr: Un arc dont les flèches atteignaient, dit-on, des terres que le Voile a effacées des cartes.
+- fr: Chaque attaque a 25 % de chances de tirer une seconde flèche sur un autre ennemi.
+- fr: Œil-du-Voile, l'Arbalète des Étoiles fixes
+- fr: Un mécanisme d'avant le Voile, que personne n'a jamais su démonter ni reproduire.
+- fr: Les tirs du porteur ignorent 30 % de la défense et des résistances de la cible.
+- fr: Ylvarae, le Bâton des Premières Racines
+- fr: Une branche de l'arbre-monde dont toutes les forêts descendent, Sylvenoire comprise.
+- fr: Les compétences du porteur coûtent 20 % de mana en moins.

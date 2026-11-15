@@ -1,0 +1,22 @@
+# Textes de content/compagnons/nadja.yaml
+# Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
+- fr: Nadja Kesh
+- fr: Courtière de caravanes
+- fr: Cupide en apparence, sarcastique, négociatrice redoutable. Loyale envers qui l'a méritée, et elle tient ses comptes à la pièce près.
+- fr: La maison Kesh a fait faillite quand Nadja avait seize ans. Sa dette appartient à la Concorde, qui l'emploie comme intermédiaire, « à contrecœur ».
+- fr: Racheter sa liberté… et, un jour, faire tomber la Concorde.
+- fr: « Je ne suis pas un étal du Bazar. Ne me parle pas comme à un comptoir. »
+- fr: « Tu m'as volé un client. Dans le désert, ça se paie. »
+- fr: « Tu as rendu le Grand Livre à la Concorde. Tu m'as revendue avec. »
+- fr: Fumigène de contrebande
+- fr: Un nuage de fumée qui protège tout le groupe.
+- fr: Lame de poche
+- fr: Un couteau de lancer enduit d'un poison du Bazar.
+- fr: Œil du marchand
+- fr: "Elle repère les failles : +5 % de précision pour le groupe."
+- fr: Coups fourrés
+- fr: +8 % de défense pour tout le groupe.
+- fr: Bon placement
+- fr: +8 % de dégâts pour tout le groupe.
+- fr: Affaire conclue
+- fr: "Attaque combinée avec son héros : +25 % de dégâts."

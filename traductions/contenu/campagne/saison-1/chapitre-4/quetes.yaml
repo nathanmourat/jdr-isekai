@@ -1,0 +1,42 @@
+# Textes de content/campagne/saison-1/chapitre-4/quetes.yaml
+# Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
+- fr: Chapitre 4 — Feu et Écailles
+- fr: La guerre approche. Il faut l'alliance des nains de Grisfer et des dragons de l'Archipel. Et Elianne cherche toujours ses preuves.
+- fr: Se présenter au château de Lysmont (Germinal 1021).
+- fr: Être reçus par le Haut-Forgeron, à Ardenclume.
+- fr: Descendre les Mille Marches (Floréal 1022).
+- fr: Trouver un navire pour le Nid des Wyrms, à Port-Vérane.
+- fr: Aborder au Nid des Wyrms (Solaire 1023).
+- fr: Quelqu'un vous attend à la Porte d'Ardenclume (Brumaire 1023).
+- fr: Affronter le Grand Prieur au Temple du Seuil (Aurore 1023).
+- fr: Chapitre terminé.
+- fr: La forge qui s'éteint
+- fr: Le feu de la Grande Forge brûle depuis mille ans. Il est en train de mourir.
+- fr: Écouter Maîtresse Durna, à la Grande Forge.
+- fr: Trouver la Braise-mère à la Coulée de lave.
+- fr: Rapporter la Braise-mère à Durna.
+- fr: La cave de Grumli
+- fr: Quelqu'un vide les tonneaux de la Chope Ardente par en dessous. Grumli en pleure dans sa barbe.
+- fr: Écouter Grumli, à la Chope Ardente.
+- fr: Suivre le tunnel jusqu'aux Mines profondes.
+- fr: Revenir à la Chope Ardente.
+- fr: La lumière du Phare noyé
+- fr: Le Phare noyé s'allume certaines nuits. Le fils du vieux Brann est parti voir qui l'allume. Il n'est pas revenu.
+- fr: Écouter le vieux Brann, au Requin Ivre.
+- fr: Monter au Phare noyé.
+- fr: Revenir au Requin Ivre.
+- fr: Le chant de Néréa
+- fr: Une sirène chante au Récif, et les marins sautent à l'eau. Corail dit qu'elle ne chante pas pour noyer, mais pour appeler à l'aide.
+- fr: Écouter Corail, au Marché aux épaves.
+- fr: Aller au Récif des sirènes.
+- fr: Revenir voir Corail.
+- fr: L'Œuf de braise
+- fr: Pendant qu'Ysoria dormait, quelqu'un a volé son œuf. Le dernier œuf de dragon du monde.
+- fr: Retrouver la trace de l'œuf d'Ysoria (palier « Proche »).
+- fr: Reprendre l'œuf à ses voleurs (chapitre 5).
+- fr: Décider avec Ysoria si les dragons reviennent dans le monde (chapitre 5).
+- fr: Les Chaînes d'Obsidienne
+- fr: Lyss, la petite sœur de Morra, est enchaînée dans la Citadelle d'Obsidienne. Les chaînes ne cèdent à aucune lame connue.
+- fr: Trouver un moyen de briser les chaînes d'obsidienne (palier « Proche »).
+- fr: Forger la Clé de braise (chapitre 5).
+- fr: Libérer Lyss dans la Citadelle d'Obsidienne (chapitre 6).

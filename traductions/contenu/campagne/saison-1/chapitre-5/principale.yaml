@@ -1,0 +1,100 @@
+# Textes de content/campagne/saison-1/chapitre-5/principale.yaml
+# Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
+- fr: Le conseil de guerre
+- fr: "Germinal 1024. Douze ans depuis l'Appel. La salle du trône est devenue une salle de guerre : des cartes partout, des capitaines qui crient, et le roi Edmund au milieu, qui ne crie plus."
+- fr: « Depuis que vous avez lu les Registres sur la place, le peuple ne fait plus confiance au Temple. Mais il vous fait confiance, à vous. Les volontaires affluent. »
+- fr: "« Le Grand Prieur a tenu parole : plus aucun Appel. Le peuple ne sait rien. Je prie pour que ce silence ne nous coûte rien. »"
+- fr: « Le Grand Prieur prépare le nouvel Appel. Dans un an, des dizaines de héros. » Il se frotte les yeux. « J'espère que nous serons encore là pour les accueillir. »
+- fr: « La Légion attaquera le Mur d'Aube au printemps prochain. Vous avez apporté les nains, les elfes, les dragons. Je vous demande maintenant d'aller là-bas, et de tenir. »
+- fr: Séraphine pose la main sur la carte, au nord. « Et si Aldric est de l'autre côté du Mur… je veux être là quand il reviendra. Quel que soit le côté où il revient. »
+- fr: « Nous partons pour le Mur. Envoyez les troupes de nos domaines avec nous. »
+- fr: "« Nous partons. Et que la Couronne s'occupe des réfugiés : le Mur ne doit pas être le seul à tenir. »"
+- fr: "Trois semaines de route vers le nord. Les villages se vident à mesure que vous montez : des familles entières descendent vers le sud avec leurs charrettes. Elles vous saluent comme on salue des gens qu'on ne reverra pas."
+- fr: "Germinal 1024 : le roi Edmund envoie {groupe} défendre le Mur d'Aube."
+- fr: Fort-Aube
+- fr: La Maréchale Corvin ne lève pas les yeux de sa carte. « Les Appelés. On m'a dit que vous arriviez. On m'a dit beaucoup de choses. » Elle plante une figurine noire au-delà du Mur. « Quarante mille. Voilà ce qu'ils sont. Nous sommes dix mille. »
+- fr: « Les nains ont promis de renforcer les portes. Les elfes, de tenir les tours. Les dragons… » Elle a un petit rire. « Je n'ai jamais commandé de dragons. »
+- fr: Une voix tonne depuis la porte. « Les nains d'Ardenclume sont arrivés ! Trois mille marteaux ! Où sont les tonneaux ? »
+- fr: Le capitaine Vaelor entre sans bruit. « Les archers d'Ithrael sont dans les tours. La Reine-Sève vous salue. »
+- fr: Ysoria s'assoit sur la table, sur la carte, sur les figurines. « Mes cousins dorment sur les collines. Quand vous voudrez du feu, appelez. » La Maréchale la regarde, longtemps. Puis elle sourit, pour la première fois.
+- fr: « Mettez-nous là où ce sera le plus dur. »
+- fr: « Nous allons d'abord inspecter le Mur, pierre par pierre. » (Intelligence, difficulté 30)
+- fr: Au troisième jour d'inspection, vous trouvez une fissure dans les fondations, sous la tour centrale. Fraîche. Quelqu'un a creusé de l'autre côté.
+- fr: La Maréchale pâlit. « Ils ne vont pas escalader le Mur. Ils vont le faire tomber. » Elle frappe la table. « Bien vu, Appelés. Nous aurons au moins le temps de reculer les réserves. »
+- fr: « Le chemin de ronde, au-dessus de la porte centrale. C'est là qu'ils frapperont. C'est là que vous serez. » Elle vous regarde enfin. « Ils attaqueront au printemps. D'ici là, entraînez-vous. Mangez. Dormez. Et écrivez à ceux que vous aimez. »
+- fr: "{groupe} arrivent à Fort-Aube. La Maréchale Corvin leur confie le chemin de ronde de la porte centrale."
+- fr: La chute du Mur d'Aube
+- fr: Floréal 1025. À l'aube, l'horizon devient noir. Puis il avance. Quarante mille soldats, des chiens de flammes, des diablotins par nuées, et au milieu, poussés par des centaines de démons, des colosses d'obsidienne hauts comme des tours.
+- fr: La Maréchale lève son épée. « Pour le royaume. Pour ceux qui dorment derrière nous. Tenez ! »
+- fr: Le premier colosse arrive au pied du Mur, juste sous vous. Il lève ses poings.
+- fr: Sauter sur le colosse avant qu'il frappe le Mur.
+- fr: Le colosse s'effondre. Mais sous vos pieds, le sol gronde. Une explosion, très loin dessous, dans les fondations. La tour centrale vacille… et s'écroule, entraînant cent pas de Mur avec elle.
+- fr: Le Mur d'Aube, debout depuis six siècles, a une brèche. La Légion s'y engouffre en hurlant. À sa tête, un démon aux cornes immenses, épée entourée de flammes violettes. Vous le reconnaissez.
+- fr: « Les Appelés ! » Vorthak éclate de rire. « Douze ans que j'attends ça ! À la Fête des Lanternes, vous étiez des enfants. Montrez-moi ce que vous êtes devenus ! »
+- fr: Barrer la brèche à Vorthak.
+- fr: Vorthak vous renverse et passe… mais trois dragons tombent du ciel sur la brèche dans un torrent de feu. Le seigneur de guerre recule, brûlé, en jurant.
+- fr: Vorthak tombe à genoux dans les décombres. Il rit encore, avec du sang noir aux lèvres. « Le Souverain… avait raison… vous êtes ses meilleurs enfants. » Il ne se relève pas.
+- fr: La bataille dure jusqu'au soir. Ce qui la décide, ce sont ceux qui sont venus pour vous.
+- fr: Les nains d'Ardenclume referment la brèche avec un mur de boucliers qui ne recule pas d'un pouce.
+- fr: Les archers d'Ithrael tirent depuis les tours, si vite que le ciel se couvre de flèches.
+- fr: Les dragons de l'Archipel brûlent les arrières de la Légion. Ysoria, en forme de dragonne d'or, plonge sur les colosses.
+- fr: Les guerriers Lunecroc chargent sur le flanc, en hurlant à la lune, Kaya en tête.
+- fr: Les soldats de vos domaines tiennent la porte centrale. Des paysans qui ont appris à tenir une lance sur vos terres, et qui ne lâchent rien.
+- fr: La Maréchale Corvin, blessée au bras, s'appuie sur votre épaule. « Vos gens… Je n'ai jamais vu des miliciens tenir comme ça. » Elle sourit, épuisée. « Vous les avez bien formés. »
+- fr: La porte centrale cède. La Maréchale Corvin se jette dans l'ouverture avec sa garde, pour donner aux autres le temps de reculer.
+- fr: « Tenez la seconde ligne ! » C'est la dernière chose qu'elle dit. Quand vous reprenez la porte, une heure plus tard, vous la trouvez sous ses soldats, l'épée toujours à la main.
+- fr: Vaelor descend de sa tour, l'arc vide, sans une égratignure. « Mes archers vous ont couverts toute la journée. La Reine sera fière. »
+- fr: La tour des archers elfes est tombée avec le Mur. Vaelor est resté à son poste jusqu'au bout, pour couvrir la retraite de ses hommes. On retrouve son arc dans les décombres. Pas lui.
+- fr: Au soir, la Légion recule au-delà de la plaine. Le Mur a une brèche, mais le royaume tient. Pour combien de temps, personne ne le sait.
+- fr: Elianne soigne les blessés toute la nuit, les mains couvertes de sang jusqu'aux coudes. À l'aube, elle s'endort assise contre un mur, une prière à moitié dite sur les lèvres.
+- fr: "Floréal 1025 : le Mur d'Aube tombe. {groupe} et leurs alliés repoussent la Légion Cendrée au prix de lourdes pertes."
+- fr: L'épreuve du rang S
+- fr: Germinal 1026. L'Arène de Lysmont est pleine à craquer. Il n'y a pas eu d'épreuve du rang S depuis trente ans. La dernière s'est mal terminée.
+- fr: "Dame Rowena se lève dans la tribune. « Le rang S n'est pas un rang. C'est une promesse : celui qui le porte se battra jusqu'au bout, pour tout le monde. » Elle regarde la foule. « La Guerre a besoin de promesses. »"
+- fr: Kaya sautille d'un pied sur l'autre. « Ça y est. Ça y est. Mon père aurait… » Elle s'arrête, se mord la lèvre. « Il serait là, dans les tribunes, à hurler plus fort que tout le monde. »
+- fr: Une porte s'ouvre au fond de l'arène. Un guerrier en armure d'argent s'avance, sans blason, le visage caché par un masque lisse. Le Champion. Il salue, une seule fois.
+- fr: Saluer le Champion, et entrer dans l'arène.
+- fr: Le Champion vous désarme une dernière fois. Puis il tend la main pour vous relever, et retire son masque. C'est un vieil homme, aux yeux très doux.
+- fr: « L'épreuve n'a jamais été de gagner », dit Rowena dans le silence. « C'était de vous relever, encore et encore. Vous vous êtes relevés dix fois. » Elle sourit. « Rang S. »
+- fr: "Le Champion pose un genou à terre. Il retire son masque : c'est un vieil homme aux yeux très doux, qui sourit. « Enfin. Trente ans que j'attendais quelqu'un pour me battre. Je vais pouvoir prendre ma retraite. »"
+- fr: "Rowena descend dans l'arène et accroche à votre poitrine une broche d'or noir : le rang S. La foule hurle si fort que les oiseaux s'envolent de tout Lysmont."
+- fr: Kaya reçoit la sienne en tremblant. Elle la regarde, longtemps. Puis elle hurle à la lune, en plein jour, et dix mille personnes hurlent avec elle.
+- fr: "Germinal 1026 : {groupe} passent l'épreuve du rang S à l'Arène de Lysmont."
+- fr: Le Prince Noir
+- fr: "Ardent 1026. Les éclaireurs l'ont vu trois fois : un chevalier en armure noire, cape bleue, qui erre dans les ruines de Valgrane, la nuit. Cette nuit, il vous attend sur la place, au milieu des cendres."
+- fr: « Petite sœur. » Sa voix est celle d'un homme, avec un écho, comme si un autre parlait en même temps. « Tu as grandi. » Il lève l'épée des princes d'Aubeclaire, devenue noire. « Le Souverain m'a montré la vérité. L'Ordre. Les Appels. Notre père qui savait tout. »
+- fr: « Les Appelés. » Sa voix est celle d'un homme, avec un écho, comme si un autre parlait en même temps. Il lève l'épée des princes d'Aubeclaire, devenue noire. « Le Souverain m'a montré la vérité. L'Ordre. Les Appels. Mon père qui savait tout. »
+- fr: « Le Souverain veut vous voir. Il dit que vous êtes ses enfants. Venez avec moi, et la guerre s'arrêtera ce soir. »
+- fr: « Nous viendrons. Mais pas en prisonniers. »
+- fr: « Aldric, souviens-toi de qui tu es ! » (Esprit, difficulté 31)
+- fr: Le prince se fige. La lueur violette vacille dans ses yeux. « Je… Séraphine… les pommiers du château… » Puis l'écho reprend le dessus. « TAIS-TOI. »
+- fr: Aldric vous jette dans les cendres. Il lève son épée… et s'arrête, la main tremblante. « Pas… comme ça. » Il disparaît vers le nord, en titubant.
+- fr: Séraphine regarde l'endroit où il a disparu. « Il s'est arrêté. Vous avez vu ? Il s'est arrêté. »
+- fr: Aldric tombe à genoux. Son épée noire se brise en deux sur les pavés. La lueur violette s'éteint dans ses yeux, et pendant une seconde, c'est un jeune homme perdu qui vous regarde.
+- fr: Le ramener à Lysmont, enchaîné, pour que les prêtres tentent de le guérir.
+- fr: Le laisser partir. « Retourne vers ton Souverain, et dis-lui que nous arrivons. »
+- fr: L'achever. Il a choisi les Cendres.
+- fr: "Pendant le voyage, Aldric parle peu. Une nuit, il vous dit, très bas : « Le Souverain… Orvan… Il était comme vous. Un Appelé. Le premier. Ils l'ont abandonné de l'autre côté du Voile. Il veut… que vous compreniez. »"
+- fr: Séraphine dort à côté de sa cellule, toutes les nuits. Elle lui lit les histoires que leur mère leur lisait.
+- fr: Aldric se relève, ramasse les deux moitiés de son épée. « Il sait déjà que vous arrivez. » Il hésite. « Orvan était un Appelé. Le premier. L'Ordre l'a abandonné de l'autre côté du Voile. Demandez-leur. » Il disparaît dans la nuit.
+- fr: La lame tombe. Le prince Aldric d'Aubeclaire meurt dans les ruines de Valgrane, là où tout a commencé pour tant de gens.
+- fr: Séraphine ne crie pas. Elle ne pleure pas. Elle ramasse la cape bleue, la plie avec soin, et s'en va sans un mot.
+- fr: "Ardent 1026 : à Valgrane, {groupe} affrontent le prince Aldric, corrompu par les Cendres."
+- fr: La contre-offensive
+- fr: Aurore 1026, la fin de l'hiver. Pour la première fois en six siècles, une armée du royaume franchit le Mur d'Aube vers le nord. Sous vos bottes, la plaine cendrée craque comme de la neige gelée.
+- fr: La Maréchale Corvin, le bras en écharpe, chevauche à côté de vous. « Six cents ans qu'on attend derrière ce Mur. Aujourd'hui, c'est eux qui attendent. »
+- fr: Bardrek, sur un bélier de guerre, chante une chanson naine de onze couplets, très faux. Personne n'ose l'arrêter.
+- fr: Au milieu de la plaine, un camp de la Légion. Des tentes noires, des cages, et un capitaine qui hurle des ordres.
+- fr: Charger le camp.
+- fr: Le capitaine vous repousse, mais la charge des alliés balaie le camp derrière vous. Quand la poussière retombe, la Légion a fui.
+- fr: "Dans les cages, des prisonniers : des soldats du royaume, des elfes, des Ourvalis. Et dans une caisse marquée du sceau de la Concorde, enveloppé de couvertures brûlées, un œuf rouge et or, chaud comme une forge."
+- fr: Ysoria tombe à genoux devant la caisse. Elle ne dit rien. Elle pose la joue contre l'œuf, et ferme les yeux. Dans l'œuf, quelque chose cogne doucement. Deux fois.
+- fr: Nadja, derrière, recopie le sceau de la Concorde dans son Grand Livre rouge, avec un sourire de loup. « Pris la main dans le sac. »
+- fr: Au-delà du camp, au bout de la plaine, se dresse une porte noire, haute comme une montagne, enchaînée à un colosse d'obsidienne. La porte des Terres Cendrées.
+- fr: Attaquer le Gardien de la Brèche.
+- fr: Le Gardien vous écrase… puis s'immobilise. Les dragons ont fait fondre ses chaînes. Il s'écroule de lui-même, et la porte s'entrouvre.
+- fr: "La porte des Terres Cendrées s'ouvre en grinçant. Derrière, un ciel couleur de braise, des montagnes noires, et très loin, une tour plus haute que toutes les autres : la Citadelle d'Obsidienne."
+- fr: Ilyssë regarde le ciel, les yeux brillants. « Le Voile est presque transparent, ici. Je vois… des choses de l'autre côté. » Elle frissonne. « Orvan nous attend. Et il sait que nous venons. »
+- fr: Morra serre sa faux. « Lyss est dans cette tour. » Elle sourit, féroce. « J'arrive, petite sœur. »
+- fr: La guerre n'est pas finie. Elle ne fait que changer de côté.
+- fr: "Aurore 1026 : la contre-offensive de {groupe} ouvre la porte des Terres Cendrées."

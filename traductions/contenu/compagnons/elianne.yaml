@@ -1,0 +1,21 @@
+# Textes de content/compagnons/elianne.yaml
+# Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
+- fr: Sœur Elianne
+- fr: Prêtresse de l'Ordre
+- fr: Douce, patiente, mais têtue comme une mule quand il s'agit de justice. Elle rit rarement, et toujours au mauvais moment.
+- fr: Orpheline élevée par l'Ordre de la Lumière Sereine. Elle a assisté à l'Appel des héros, et ne s'en est jamais tout à fait remise.
+- fr: Découvrir la vérité sur les invocations… et choisir entre sa foi et la vérité.
+- fr: « Vous l'avez fait souffrir pour rien. Je ne peux pas pardonner ça. »
+- fr: « Vous avez profané les morts. Ils ne vous avaient rien fait. »
+- fr: Prière de la Sœur
+- fr: Une prière qui soigne tout le groupe.
+- fr: Lumière qui brûle
+- fr: La lumière sacrée frappe un ennemi ; les démons la craignent.
+- fr: Prière du soir
+- fr: Le groupe récupère 3 % de ses PV à chaque tour.
+- fr: Bénédiction
+- fr: +8 % de défense pour tout le groupe.
+- fr: Regard clair
+- fr: +5 % de précision pour le groupe.
+- fr: Lumière partagée
+- fr: "Attaque combinée avec son héros : +25 % de dégâts."

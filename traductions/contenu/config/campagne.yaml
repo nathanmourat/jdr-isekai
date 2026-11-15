@@ -1,0 +1,34 @@
+# Textes de content/config/campagne.yaml
+# Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
+- fr: Saison 1 — Le Souverain des Cendres
+- fr: Germinal
+- fr: Floréal
+- fr: Pluvial
+- fr: Solaire
+- fr: Moisson
+- fr: Ardent
+- fr: Brumaire
+- fr: Cendral
+- fr: Givral
+- fr: Nivôse
+- fr: Nuitlongue
+- fr: Aurore
+- fr: Fête des Lanternes
+- fr: Tournoi de la Couronne
+- fr: Grand Bazar de Qarzim
+- fr: Inconnue
+- fr: Alliée
+- fr: Proche
+- fr: Amoureuse
+- fr: Engagée
+- fr: Hostile
+- fr: Méfiant
+- fr: Neutre
+- fr: Ami
+- fr: Allié
+- fr: Honoré
+- fr: « Asseyez-vous. Respirez. La Lumière fera le reste, et moi un peu aussi. »
+- fr: Sœur Elianne pose les mains au-dessus des plaies et murmure une prière. La lumière descend, chaude comme un soleil d'été.
+- fr: « Voilà. Vous voilà {{guéri|guérie}}. Essayez de ne pas vous faire frapper pendant au moins… une semaine. »
+- fr: « Celle-ci est plus profonde. Ne bougez pas, ça va piquer. » La lumière se resserre sur la vieille plaie, qui se referme lentement.
+- fr: « Et cette fois, laissez la cicatrice tranquille. »

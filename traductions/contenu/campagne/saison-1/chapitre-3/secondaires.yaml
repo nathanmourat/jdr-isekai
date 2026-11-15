@@ -1,0 +1,48 @@
+# Textes de content/campagne/saison-1/chapitre-3/secondaires.yaml
+# Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
+- fr: "Les lumières du bois : l'enfant perdue"
+- fr: Thaliel n'a plus de sourire. « Ma petite sœur, Lirëa. Elle a suivi les feux follets hier soir, vers le bois. Les gardes disent qu'on ne revient pas du Bois des Feux follets. »
+- fr: « Nous la ramènerons. »
+- fr: "Les lumières du bois : dans le bois"
+- fr: Des lumières bleues dansent entre les troncs. Elles vous appellent, doucement. Au loin, une petite voix chante.
+- fr: Ignorer les lumières et suivre la voix. (Esprit, difficulté 24)
+- fr: Disperser les feux follets.
+- fr: Les lumières vous font tourner en rond. Puis elles s'impatientent… et attaquent.
+- fr: Au pied d'un arbre, une petite elfe chante aux lumières, ravie. « Elles sont jolies ! Elles m'ont montré plein de choses ! » Elle n'a aucune idée du danger.
+- fr: "Les lumières du bois : le retour"
+- fr: Thaliel serre sa sœur à l'étouffer. « Merci. Merci ! Vos hamacs sont gratuits, pour toujours. Et je vais vous chanter une chanson. Une longue. »
+- fr: "Le Vieux-Chêne malade : la sève violette"
+- fr: Mirwen montre un flacon de sève violette. « Le Vieux-Chêne. Il a trois mille ans. Sa sève devient comme ça depuis que des marchands humains ont enterré des caisses à ses pieds. Et les sylvains autour de lui deviennent fous. »
+- fr: « Des caisses… de cristaux d'éther ? Nous allons voir. »
+- fr: "Le Vieux-Chêne malade : les racines"
+- fr: Au pied du Vieux-Chêne, la terre est retournée. Des caisses marquées d'une rune violette dépassent du sol. Les cristaux qu'elles contiennent pulsent comme des cœurs malades.
+- fr: Les sylvains corrompus se dressent autour de l'arbre. Ils ne vous laisseront pas approcher.
+- fr: Vous arrachez les caisses une à une. La sève du Vieux-Chêne pâlit lentement, du violet au vert.
+- fr: Détruire les cristaux sur place.
+- fr: Garder les cristaux comme preuve du trafic de la Concorde.
+- fr: "Le Vieux-Chêne malade : le remède"
+- fr: Mirwen goûte une goutte de sève, ferme les yeux, et sourit. « Il guérira. Dans cent ans, il ne s'en souviendra plus. Nous, si. » Elle vous donne une petite graine dorée. « Plantez-la sur vos terres. »
+- fr: "La graine volée : les accusations"
+- fr: Le capitaine Vaelor est de mauvaise humeur, ce qui ne change pas de d'habitude. « Les dryades disent qu'un elfe a volé leur graine sacrée. Les elfes disent que c'est un humain. Vous êtes des humains. Vous êtes donc suspects. Ou utiles. Choisissez. »
+- fr: « Utiles. Nous trouverons le voleur. »
+- fr: "La graine volée : le Cercle des dryades"
+- fr: Les sept arbres du Cercle murmurent. Une dryade sort d'une écorce, furieuse, des feuilles plein les cheveux. « La graine de l'Arbre-Premier ! Volée ! Par quelqu'un qui sentait la boue et le champignon ! »
+- fr: « La boue et le champignon… le Marais de brume. »
+- fr: "La graine volée : le voleur"
+- fr: Au milieu du marais, des champignons géants entourent un petit tas de terre. Dessus, la graine sacrée brille doucement. Les champignons l'ont « volée » pour la faire pousser chez eux.
+- fr: Vous rapportez la graine au Cercle. Les dryades chantent ; Vaelor, lui, ne dit rien. Mais le soir même, il vous laisse passer la Porte des Racines sans vous fouiller. Chez lui, c'est presque une accolade.
+- fr: "Les gens du domaine : l'arrivée"
+- fr: "Votre domaine : un manoir au toit à moitié effondré, cinq fermes, un moulin qui ne tourne plus, et une centaine de personnes qui vous regardent arriver en se demandant si vous serez pires que le précédent seigneur."
+- fr: Un vieil homme s'avance, chapeau à la main. « Maître Aubin, intendant. Trois fermes ont été pillées ce mois-ci. Des hommes en armure noire, venus de la forêt. Les gens ont peur, mes seigneurs. »
+- fr: « Plus maintenant. Où sont-ils ? »
+- fr: « Les gardes forestiers ont vu un camp, au sud-ouest de la forêt. » Il hésite. « Revenez vivants. Le dernier seigneur n'est pas revenu. »
+- fr: "Les gens du domaine : le camp avancé"
+- fr: "Sous les fougères, des tentes noires. Des soldats de la Légion, et des diablotins qui rient en comptant des sacs de grain volé : votre grain."
+- fr: Le camp est vide. Vous rapportez le grain, et des armes noires que les forgerons du domaine pourront refondre.
+- fr: "Vous battez en retraite, mais la Légion a compris : ces terres ont désormais un seigneur. Le camp est abandonné le lendemain."
+- fr: "Les gens du domaine : la milice"
+- fr: Maître Aubin a réuni les fermiers dans la cour du manoir. « Ils veulent apprendre à se défendre. Avec vous. » Des fourches, des arcs de chasse, des visages déterminés.
+- fr: Les entraîner vous-mêmes, chaque matin.
+- fr: Engager des sergents de la Guilde. (150 or)
+- fr: "Quelques mois plus tard, votre domaine a une milice. Petite, mal équipée, mais fière. Et une bannière : la vôtre."
+- fr: "« Dans les temps libres, pensez à « Gérer le domaine » : plus vous y passez de temps, plus nous serons nombreux le jour où il faudra marcher au nord. »"

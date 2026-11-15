@@ -1,0 +1,24 @@
+# Textes de content/monde/archipel-des-brumes.yaml
+# Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
+- fr: Archipel des Brumes
+- fr: Îles volcaniques, récifs et brouillard permanent. Des pirates, des sirènes… et les derniers dragons.
+- fr: Port-Vérane
+- fr: "Un port de pirates bâti sur des épaves : des ponts de cordes, des tavernes, et personne ne pose de questions."
+- fr: Les Quais
+- fr: Des pontons de bois, des navires de toutes les couleurs, et l'odeur du sel et du goudron.
+- fr: Le Requin Ivre
+- fr: Une taverne construite dans la coque d'un galion échoué. Les hamacs tanguent, même à terre.
+- fr: Marché aux épaves
+- fr: "On y vend tout ce que la mer rapporte : des trésors, des armes, et des choses qu'il vaut mieux ne pas toucher."
+- fr: Comptoir de la Guilde (Port-Vérane)
+- fr: Un comptoir flottant, amarré entre deux navires. Le tableau des contrats est cloué au mât.
+- fr: Nid des Wyrms
+- fr: Une île volcanique couverte de nids de pierre, où dorment les derniers dragons.
+- fr: Phare noyé
+- fr: Un phare à moitié englouti, dont la lumière s'allume encore certaines nuits. Personne ne sait qui l'allume.
+- fr: Récif des sirènes
+- fr: Des rochers noirs à fleur d'eau, où l'on entend chanter à la tombée du jour.
+- fr: Île aux épaves
+- fr: Une île faite de navires échoués, empilés comme des jouets cassés.
+- fr: Plage noire
+- fr: Une plage de sable volcanique, chaude sous les pieds, où pondent les tortues de feu.

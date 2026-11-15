@@ -1,0 +1,22 @@
+# Textes de content/compagnons/kaya.yaml
+# Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
+- fr: Kaya Lunecroc
+- fr: Aventurière ourvalis
+- fr: Énergique, compétitive, franche jusqu'à la gaffe. Gourmande de viande grillée, mauvaise perdante, loyale à la vie à la mort.
+- fr: Sa tribu, les Lunecroc, a été chassée de ses terres par la Concorde de Qarzim, qui y a ouvert des mines d'éther. Elle est partie à Lysmont pour devenir quelqu'un.
+- fr: Devenir rang S à la Guilde, pour rendre sa fierté à sa tribu.
+- fr: « Des bêtes, hein ? C'est comme ça que tu nous vois ? »
+- fr: « Tricher à la Guilde. Tu sais combien de temps j'ai sué pour mon rang ? »
+- fr: « Tu as vendu ma tribu à la Concorde. Ne me parle plus. »
+- fr: Croc lunaire
+- fr: Une double entaille de son épée, rapide comme un loup.
+- fr: Hurlement de la meute
+- fr: Un hurlement qui galvanise le groupe.
+- fr: Flair
+- fr: "Elle sent les pièges et les feintes : +5 % de précision pour le groupe."
+- fr: Instinct de meute
+- fr: +8 % de dégâts pour tout le groupe.
+- fr: Riposte du loup
+- fr: 25 % de chances de contre-attaquer quand elle est frappée.
+- fr: Chasse à deux
+- fr: "Attaque combinée avec son héros : +25 % de dégâts."

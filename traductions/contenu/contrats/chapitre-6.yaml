@@ -1,0 +1,31 @@
+# Textes de content/contrats/chapitre-6.yaml
+# Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
+- fr: Les ombres de la Forêt pétrifiée
+- fr: Des ombres du Voile sortent de la Forêt pétrifiée la nuit et rôdent autour du camp. Il faut les renvoyer d'où elles viennent.
+- fr: Entrer dans la Forêt pétrifiée.
+- fr: Des arbres de pierre, figés au milieu d'un vent qui n'existe plus. Entre les troncs, des chuchotements.
+- fr: Suivre les chuchotements
+- fr: Renvoyer les ombres.
+- fr: Les silhouettes violettes se tournent vers vous, toutes ensemble.
+- fr: Revenir au comptoir du Camp de l'Aube.
+- fr: Valka coche une ligne de plus sur sa liste. « Les sentinelles dormiront mieux. Moi aussi. »
+- fr: Toucher la récompense
+- fr: Le poste du Col des Soupirs
+- fr: Des gardes d'obsidienne tiennent le Col des Soupirs et coupent la route des convois. Il faut rouvrir le passage.
+- fr: Approcher du Col des Soupirs.
+- fr: Une barricade d'obsidienne en travers du passage. Derrière, des gardes et un prêtre mort qui chante.
+- fr: Attaquer de front.
+- fr: Les gardes lèvent leurs hallebardes. Ils vous attendaient.
+- fr: Escalader la falaise pour les prendre à revers.
+- fr: Vous tombez derrière la barricade. Le prêtre arrête de chanter.
+- fr: Rouvrir le passage.
+- fr: Les gardes d'obsidienne forment les rangs.
+- fr: "« Les convois repassent. Mère Brisac vous remercie : ses oignons arrivent enfin. »"
+- fr: Le golem du Lac de lave
+- fr: Un golem d'obsidienne s'est échappé de la Citadelle et monte la garde au bord du Lac de lave, sur la route des éclaireurs.
+- fr: Aller au Lac de lave.
+- fr: Au bord du lac, un golem noir, immobile. Les éclaireurs n'osent pas passer.
+- fr: S'approcher
+- fr: Abattre le golem.
+- fr: La lave se rallume dans ses veines.
+- fr: Valka hoche la tête. « Rang S, travail de rang S. Durna veut les morceaux. Évidemment. »

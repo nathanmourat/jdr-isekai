@@ -1,0 +1,44 @@
+# Textes de content/ennemis/reference.yaml
+# Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
+- fr: Brute de référence
+- fr: Coup de massue
+- fr: abat sa massue sur {cible}
+- fr: Coup de poing
+- fr: envoie son poing dans les côtes de {cible}
+- fr: Coup écrasant
+- fr: Un coup lourd.
+- fr: Rapide de référence
+- fr: Morsure éclair
+- fr: mord {cible} avant qu'on l'ait vu bouger
+- fr: Coup de griffes
+- fr: griffe {cible} en passant
+- fr: Double morsure
+- fr: Deux morsures rapides.
+- fr: Mage de référence
+- fr: Trait arcanique
+- fr: lance un trait d'énergie sur {cible}
+- fr: Éclat de runes
+- fr: fait éclater une rune devant {cible}
+- fr: Boule de feu
+- fr: Une boule de feu.
+- fr: Sbire de référence
+- fr: Coup de bâton
+- fr: frappe {cible} de son bâton
+- fr: Coup de pied
+- fr: donne un coup de pied à {cible}
+- fr: Chef de référence (mini-boss)
+- fr: Coup de hache
+- fr: abat sa hache sur {cible}
+- fr: Coup de pommeau
+- fr: frappe {cible} du pommeau de son arme
+- fr: Coup de botte
+- fr: repousse {cible} d'un coup de botte
+- fr: Balayage
+- fr: Frappe tous les adversaires.
+- fr: Cri de guerre
+- fr: Augmente ses dégâts.
+- fr: "Référence : brute"
+- fr: "Référence : rapide"
+- fr: "Référence : mage"
+- fr: "Référence : groupe de faibles"
+- fr: "Référence : mini-boss"

@@ -1,0 +1,30 @@
+# Textes de content/campagne/saison-1/chapitre-5/quetes.yaml
+# Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
+- fr: Chapitre 5 — La Guerre des Cendres
+- fr: La Légion Cendrée va attaquer le Mur d'Aube. Toutes les alliances que vous avez nouées vont être mises à l'épreuve.
+- fr: Se présenter au château de Lysmont pour le conseil de guerre (Germinal 1024).
+- fr: Rejoindre la Maréchale à l'État-major de Fort-Aube.
+- fr: Défendre le chemin de ronde pendant l'assaut (Floréal 1025).
+- fr: Passer l'épreuve du rang S à l'Arène de Lysmont (Germinal 1026).
+- fr: Suivre la piste du chevalier noir jusqu'aux ruines de Valgrane (Ardent 1026).
+- fr: Mener la contre-offensive dans la plaine cendrée (Aurore 1026).
+- fr: Chapitre terminé.
+- fr: La soupe de Mère Brisac
+- fr: Le convoi de vivres de la Gamelle n'est pas arrivé. Sans soupe, dit Mère Brisac, le Mur tombera avant la Légion.
+- fr: Écouter Mère Brisac, à la Gamelle.
+- fr: Retrouver le convoi au village évacué.
+- fr: Ramener le convoi à la Gamelle.
+- fr: L'armure du premier maréchal
+- fr: L'armure du premier maréchal du Mur est restée à Valgrane en 1003. Tolvan jure qu'elle porte chance.
+- fr: Écouter Tolvan, à l'Armurerie du Mur.
+- fr: Chercher l'armure dans les ruines de Valgrane.
+- fr: Rapporter l'armure à Tolvan.
+- fr: Un espion à Fort-Aube
+- fr: Quelqu'un envoie des signaux lumineux depuis une tour abandonnée du Mur. La Légion sait trop de choses.
+- fr: Écouter la Sergente Valka, au comptoir de la Guilde.
+- fr: Surprendre l'espion à la tour de guet abandonnée.
+- fr: Faire votre rapport à Valka.
+- fr: La meute de braise
+- fr: Depuis la chute du Mur, une meute de chiens des enfers rôde autour du camp des alliés et emporte les sentinelles.
+- fr: Enquêter au camp des alliés.
+- fr: Traquer la meute dans la plaine cendrée.

@@ -1,0 +1,61 @@
+# Textes de content/monde/pnj.yaml
+# Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
+- fr: Grand Prieur Auréliath
+- fr: Ordre de la Lumière Sereine
+- fr: Crâne rasé, barbe blanche, sourire bienveillant un peu trop parfait.
+- fr: Dame Rowena
+- fr: Maîtresse de la Guilde
+- fr: Cheveux gris coupés court, cicatrice sur l'œil, pipe éteinte entre les dents.
+- fr: Edmund IV
+- fr: Roi d'Aubeclaire
+- fr: Couronne lourde, barbe grise, regard fatigué et dur.
+- fr: Séraphine d'Aubeclaire
+- fr: Princesse
+- fr: Longs cheveux blond pâle, petit diadème, robe blanche et or. Seconde de la lignée, espiègle sous l'étiquette.
+- fr: Sœur Elianne
+- fr: Prêtresse
+- fr: Cheveux noirs au carré sous un voile clair, chapelet de perles bleues. Douce, patiente, têtue quand il s'agit de justice.
+- fr: Que la Lumière vous garde. Le Temple vend peu de choses, mais elles soignent.
+- fr: Kaya Lunecroc
+- fr: Aventurière ourvalis, rang E
+- fr: Oreilles et queue de loup argentées, bandeau rouge, épée à la hanche. Franche jusqu'à la gaffe.
+- fr: Vorthak
+- fr: Émissaire des Cendres
+- fr: Démon en armure noire aux flammes violettes.
+- fr: Ferrand
+- fr: Expert en antiquités
+- fr: "Moustache noire, bagues à tous les doigts, lunettes cerclées d'or, manteau violet et or : il reconnaît une fausse pièce au premier coup d'œil."
+- fr: Un objet dont vous ignorez tout ? Dix pièces, et je vous dis ce qu'il vaut vraiment.
+- fr: Orlan Cassebrune
+- fr: Colporteur de merveilles
+- fr: Petit homme rond aux joues rouges, chapeau à larges bords couvert de breloques, gilet moutarde rapiécé, énorme sacoche en bandoulière, sourire de vendeur.
+- fr: Dame Halvine Corbelet
+- fr: Marchande du Comptoir
+- fr: Petite femme vive aux lunettes rondes, tablier plein de poches, boulier à la main, compte plus vite que lui.
+- fr: Bienvenue au Comptoir ! Regardez tout, touchez peu, et payez comptant.
+- fr: Bram
+- fr: Tavernier du Chaudron Fêlé
+- fr: Colosse jovial au crâne lisse et à la grande barbe brune, tablier taché, chope à la main, cœur d'or.
+- fr: Installez-vous ! Ici on mange chaud, et le lit est à l'étage.
+- fr: Maître Barnoul Kestrin
+- fr: Intendant de la Guilde
+- fr: Costaud, peau mate, barbe brune, tablier de cuir, un registre à la main, l'air sévère. Rien ne sort de la réserve sans sa signature.
+- fr: Nom, rang, et ce qu'il vous faut. Tout est noté dans le registre.
+- fr: Lina
+- fr: Jeune tanneuse
+- fr: Disparue du quartier des Tanneurs.
+- fr: Tobin
+- fr: Apprenti de l'Ordre
+- fr: Dix-neuf ans, cheveux roux en bataille, taches de rousseur, un livre toujours sous le bras. Curieux, trop curieux.
+- fr: Gareth
+- fr: Fermier de la Combe-aux-Saules
+- fr: Mains calleuses, chapeau de paille, salopette bleue et fourche à la main.
+- fr: Maître Orlo
+- fr: Mentor d'enfance
+- fr: Vieux bibliothécaire bourru.
+- fr: Cassian
+- fr: Rival d'enfance
+- fr: Fils de garde, fier et rapide.
+- fr: Pipa
+- fr: Amie d'enfance
+- fr: Rieuse, intrépide, toujours une égratignure au genou.

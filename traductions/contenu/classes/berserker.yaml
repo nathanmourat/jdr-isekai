@@ -1,0 +1,33 @@
+# Textes de content/classes/berserker.yaml
+# Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
+- fr: Berserker draconique
+- fr: Dégâts (mêlée) / tank offensif
+- fr: "Le sang du dragon bout dans ses veines : plus il saigne, plus il frappe fort."
+- fr: Sang de dragon
+- fr: +1 % de dégâts par tranche de 2 % de PV manquants (+40 % au maximum).
+- fr: Furie
+- fr: Dégâts et vol de vie.
+- fr: Écailles
+- fr: Réduction de dégâts quand il est blessé.
+- fr: Forme du Wyrm
+- fr: "Se transforme pendant 3 tours : souffle de feu et carapace d'écailles."
+- fr: Les plus gros dégâts en mêlée ; dangereux quand il est blessé.
+- fr: Se met en danger lui-même ; faible face à la magie et au contrôle.
+- fr: Fendoir furieux
+- fr: Une frappe énorme qui coûte 5 % de ses propres PV.
+- fr: Rugissement
+- fr: "Peut effrayer tous les ennemis : 50 % de chances de perdre leur tour."
+- fr: Frénésie
+- fr: Deux coups rapides.
+- fr: Peau d'écailles
+- fr: +40 % de défense et régénération pendant 3 tours.
+- fr: Carnage
+- fr: Un tourbillon de coups sur tous les ennemis, au prix de quelques PV.
+- fr: Rage du wyrm
+- fr: "Le sang de dragon bout : énorme coup unique, d'autant plus fort que le Berserker est blessé."
+- fr: Écailles d'airain
+- fr: "Des écailles couvrent sa peau : bouclier et défense."
+- fr: Souffle brûlant
+- fr: Un souffle de flammes sur tous les ennemis.
+- fr: Ultime — Forme du Wyrm
+- fr: "Se transforme en wyrm : carapace d'écailles, régénération et souffle de feu sur tous les ennemis."

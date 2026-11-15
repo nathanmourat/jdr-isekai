@@ -9,6 +9,7 @@ import { COULEUR_RARETE, modeleObjet } from "shared/equipement3d";
 import { avertissementEquipement, NOMS_RARETE, problemeEquipement, texteEffets, type Heros, type ObjetDef } from "shared/moteur";
 import { monHeros, surChangement } from "../partie";
 import { bouton, COULEURS, esc, ligne, texte } from "./kit";
+import { tr, trf } from "shared/langue";
 
 // ───────────────────────────── Aperçu 3D ─────────────────────────────
 
@@ -94,13 +95,13 @@ function comparaison(h: Heros, o: ObjetDef): string | undefined {
 	const diff: string[] = [];
 	const ecart = (nom: string, x: number, y: number) => {
 		const d = y - x;
-		if (d !== 0) diff.push(`<font color="${d > 0 ? "#72c46a" : "#e0605a"}">${d > 0 ? "+" : ""}${d} ${nom}</font>`);
+		if (d !== 0) diff.push(trf("<font color=\"{v}\">{v2}{d} {nom}</font>", { v: d > 0 ? "#72c46a" : "#e0605a", v2: d > 0 ? "+" : "", d, nom }));
 	};
 	ecart("puissance", a.bonus?.puissance ?? 0, o.bonus?.puissance ?? 0);
 	ecart("armure", a.bonus?.armure ?? 0, o.bonus?.armure ?? 0);
 	for (const k of ["FOR", "AGI", "INT", "VIT", "ESP", "CHA"] as const) ecart(k, a.bonus?.caracs[k] ?? 0, o.bonus?.caracs[k] ?? 0);
-	if (diff.size() === 0) return `Comparé à ${esc(a.nom)} : mêmes valeurs de base.`;
-	return `Comparé à ${esc(a.nom)} : ${diff.join(", ")}`;
+	if (diff.size() === 0) return trf("Comparé à {esc} : mêmes valeurs de base.", { esc: esc(a.nom) });
+	return trf("Comparé à {esc} : {v}", { esc: esc(a.nom), v: diff.join(", ") });
 }
 
 export interface ActionObjet {
@@ -132,18 +133,18 @@ export function ficheObjet(parent: Instance, objetId: string, options: { nombre?
 
 	const couleur = COULEUR_RARETE[o.rarete ?? "commun"] ?? COULEURS.texte;
 	const probleme = h && o.type === "equipement" ? problemeEquipement(CONTENU, h, o) : undefined;
-	let titre = `<b><font color="${hex(couleur)}">${esc(o.nom)}</font></b>${options.nombre !== undefined && options.nombre > 1 ? ` ×${options.nombre}` : ""}`;
-	if (o.rarete !== undefined) titre += `  <font size="12" color="${hex(couleur)}">${NOMS_RARETE[o.rarete]}</font>`;
-	if (o.niveau !== undefined && o.niveau > 1) titre += `  <font size="12" color="${h && h.niveau < o.niveau ? "#e0605a" : "#beaf96"}">niv. ${o.niveau}</font>`;
-	if (o.unique_par_partie === true) titre += `  <font size="12" color="#ff4a4a">unique</font>`;
+	let titre = trf("<b><font color=\"{hex}\">{esc}</font></b>{v}", { hex: hex(couleur), esc: esc(o.nom), v: options.nombre !== undefined && options.nombre > 1 ? ` ×${options.nombre}` : "" });
+	if (o.rarete !== undefined) titre += trf("  <font size=\"12\" color=\"{hex}\">{v}</font>", { hex: hex(couleur), v: NOMS_RARETE[o.rarete] });
+	if (o.niveau !== undefined && o.niveau > 1) titre += trf("  <font size=\"12\" color=\"{v}\">niv. {niveau}</font>", { v: h && h.niveau < o.niveau ? "#e0605a" : "#beaf96", niveau: o.niveau });
+	if (o.unique_par_partie === true) titre += tr("  <font size=\"12\" color=\"#ff4a4a\">unique</font>");
 	texte(col, titre, 15);
 	if (o.classes !== undefined && o.classes.size() > 0) {
 		const refus = probleme !== undefined && probleme.sub(1, 7) === "Réservé";
-		texte(col, `Pour : ${o.classes.map((c) => CONTENU.classes[c]?.nom ?? c).join(", ")}`, 12, { couleur: refus ? COULEURS.rouge : COULEURS.texte2 });
+		texte(col, trf("Pour : {v}", { v: o.classes.map((c) => CONTENU.classes[c]?.nom ?? c).join(", ") }), 12, { couleur: refus ? COULEURS.rouge : COULEURS.texte2 });
 	}
 	const effets = o.type === "equipement" ? texteEffets(o) : [];
 	if (effets.size() > 0) texte(col, effets.join(" · "), 13);
-	if (o.pouvoir_unique !== undefined) texte(col, `<i>✦ ${esc(o.pouvoir_unique)}</i>`, 13, { couleur: COULEUR_RARETE.legendaire });
+	if (o.pouvoir_unique !== undefined) texte(col, trf("<i>✦ {esc}</i>", { esc: esc(o.pouvoir_unique) }), 13, { couleur: COULEUR_RARETE.legendaire });
 	texte(col, esc(o.description), 12, { couleur: COULEURS.texte2 });
 	// maîtrise d'équipement : interdit (rouge) ou malus de non-maîtrise (orange), affiché avant l'achat et l'équipement
 	if (probleme !== undefined && probleme.sub(1, 7) !== "Réservé") texte(col, `⛔ ${esc(probleme)}`, 12, { couleur: COULEURS.rouge });
@@ -189,7 +190,7 @@ function annoncer(objetId: string) {
 	marge.Parent = cadre;
 	const l = ligne(cadre, 10);
 	apercu3D(l, objetId, 76);
-	const t = texte(l, `<font color="#d9a441">Nouvel objet !</font>\n<b><font color="${hex(COULEUR_RARETE[o.rarete ?? "commun"])}">${esc(o.nom)}</font></b>\n<font size="12" color="#beaf96">${o.rarete !== undefined ? NOMS_RARETE[o.rarete] : ""}${o.niveau !== undefined && o.niveau > 1 ? ` · niv. ${o.niveau}` : ""}</font>`, 16, { largeur: new UDim(1, -90) });
+	const t = texte(l, trf("<font color=\"#d9a441\">Nouvel objet !</font>\n<b><font color=\"{hex}\">{esc}</font></b>\n<font size=\"12\" color=\"#beaf96\">{v}{v2}</font>", { hex: hex(COULEUR_RARETE[o.rarete ?? "commun"]), esc: esc(o.nom), v: o.rarete !== undefined ? NOMS_RARETE[o.rarete] : "", v2: o.niveau !== undefined && o.niveau > 1 ? trf(" · niv. {niveau}", { niveau: o.niveau }) : "" }), 16, { largeur: new UDim(1, -90) });
 	t.TextYAlignment = Enum.TextYAlignment.Center;
 	cadre.Parent = gui;
 	const rang = pile++;

@@ -1,0 +1,42 @@
+# Textes de content/races/races.yaml
+# Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
+- fr: Humain
+- fr: Le peuple le plus nombreux de Velmaris, présent partout. Polyvalent et obstiné.
+- fr: Détermination
+- fr: Une fois par combat, quand il passe sous 25 % de PV, il se ressaisit et regagne 10 % de ses PV.
+- fr: −10 % de résistance magique.
+- fr: Elfe
+- fr: Peuple ancien de Sylvenoire, lié à la magie et aux forêts.
+- fr: Sang ancien
+- fr: +15 % de résistance magique ; voit dans le noir.
+- fr: Poisons et saignements durent 1 tour de plus.
+- fr: Demi-elfe
+- fr: "Ni tout à fait humain, ni tout à fait elfe : à l'aise partout, chez soi nulle part."
+- fr: Entre deux mondes
+- fr: +10 % d'affinité en dialogue ; +5 % de précision.
+- fr: −10 de réputation de départ auprès de la Couronne.
+- fr: Nain
+- fr: Forgerons et mineurs des Monts Grisfer, solides comme la roche.
+- fr: Robuste
+- fr: Résiste au poison à 50 % ; +2 % de défense.
+- fr: −3 d'initiative ; ne sait pas nager.
+- fr: Ourvalis
+- fr: Peuple-loup nomade de la Marche des Sables, chassé de ses terres par la Concorde.
+- fr: Instinct de meute
+- fr: +10 % de dégâts sur une cible déjà frappée par un allié ce tour ; flair.
+- fr: −15 % de résistance à la peur et à la provocation.
+- fr: Vulpin
+- fr: Peuple-renard rusé, commerçant et voyageur.
+- fr: Ruse
+- fr: +5 % d'esquive ; −10 % sur les prix.
+- fr: "Réputation de filou : marchands humains et Couronne méfiants."
+- fr: Demi-démon
+- fr: Descendants de lignées touchées par les Cendres, le long du Mur d'Aube. L'Ordre les craint.
+- fr: Sang cendré
+- fr: 25 % de résistance au feu et à l'ombre ; sous 50 % de PV, régénère 2 % de ses PV par tour.
+- fr: +25 % de dégâts sacrés subis ; −20 % de soins sacrés reçus des autres.
+- fr: Sang-dragon
+- fr: Descendants des anciens pactes avec les dragons-rois, surtout dans l'Archipel des Brumes.
+- fr: Écailles et souffle
+- fr: Un souffle de feu mineur par combat ; −10 % de dégâts de feu reçus.
+- fr: +25 % de dégâts de glace reçus ; −1 d'initiative.

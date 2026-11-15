@@ -13,6 +13,7 @@ import { jouer } from "../sons";
 import { jeu } from "../partie";
 import { article, ATTRIBUT_COSMETIQUES, lireCosmetiques } from "shared/boutique";
 import { montrerMurs, repereDonjon } from "./donjon3d";
+import { tr } from "shared/langue";
 
 const COULEUR_ELEMENT: Record<string, Color3> = {
 	physique: Color3.fromRGB(255, 255, 255),
@@ -534,7 +535,7 @@ function jouerEvenement(e: EvenementCombat): number {
 			}
 			return 0.35;
 		case "rate":
-			if (cible) chiffre(cible, "Raté", Color3.fromRGB(200, 200, 200));
+			if (cible) chiffre(cible, tr("Raté"), Color3.fromRGB(200, 200, 200));
 			return 0.3;
 		case "bouclier":
 			if (cible) {

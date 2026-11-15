@@ -1,0 +1,21 @@
+# Textes de content/compagnons/ilysse.yaml
+# Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
+- fr: Ilyssë Vaëlnor
+- fr: Mage elfe, bannie d'Ithrael
+- fr: Érudite, sarcastique, curieuse jusqu'à l'imprudence. Elle compte en siècles et s'ennuie en heures. Les Appelés la fascinent.
+- fr: Bannie d'Ithrael il y a cinquante ans pour avoir étudié la Déchirure, un sujet tabou chez les elfes. Elle vit seule à la lisière de la forêt, avec ses livres.
+- fr: Comprendre — et peut-être réparer — le Voile.
+- fr: « Vous avez brûlé des livres. Des LIVRES. Vous ne valez pas mieux que ceux qui m'ont bannie. »
+- fr: « La forêt se souviendra de ce feu. Moi aussi. »
+- fr: Éclat de Voile
+- fr: Un éclat de lumière violette, arraché au Voile lui-même.
+- fr: Tempête de runes
+- fr: Des runes elfiques explosent sur tous les ennemis.
+- fr: Savoir des runes
+- fr: +6 % de dégâts pour tout le groupe.
+- fr: Analyse des sceaux
+- fr: +6 % de précision pour le groupe.
+- fr: Bouclier de runes
+- fr: +8 % de défense pour tout le groupe.
+- fr: Deux mondes, un sort
+- fr: "Attaque combinée avec son héros : +25 % de dégâts."

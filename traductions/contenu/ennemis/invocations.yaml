@@ -1,0 +1,36 @@
+# Textes de content/ennemis/invocations.yaml
+# Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
+- fr: Loup spectral
+- fr: Morsure spectrale
+- fr: traverse {cible} d'une morsure glacée
+- fr: Griffes d'éther
+- fr: lacère {cible} de ses griffes translucides
+- fr: Golem de pierre
+- fr: Poing de pierre
+- fr: écrase son poing sur {cible}
+- fr: Bousculade
+- fr: bouscule {cible} de tout son poids
+- fr: Grondement
+- fr: Provoque tous les ennemis.
+- fr: Feu follet
+- fr: Flammèche
+- fr: crache une flammèche sur {cible}
+- fr: Étincelles
+- fr: crible {cible} d'étincelles
+- fr: Colosse de pierre
+- fr: Poing du colosse
+- fr: abat un poing énorme sur {cible}
+- fr: Écrasement
+- fr: tente d'écraser {cible} sous son pied
+- fr: Tourelle mécanique
+- fr: Carreau
+- fr: tire un carreau sur {cible}
+- fr: Rafale de billes
+- fr: crible {cible} de billes d'acier
+- fr: Wyrm ancestral
+- fr: Crocs de braise
+- fr: referme ses crocs brûlants sur {cible}
+- fr: Coup de queue
+- fr: balaie {cible} d'un coup de queue écailleuse
+- fr: Souffle ancestral
+- fr: Un torrent de flammes sur tous les ennemis.

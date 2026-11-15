@@ -1,0 +1,81 @@
+# Textes de content/campagne/saison-1/chapitre-4/classes.yaml
+# Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
+- fr: Lame runique — La forge des runes
+- fr: Maîtresse Durna examine la rune gravée sur votre lame. Elle siffle. « Le cercle fendu aux sept traits. La rune du Premier Sceau. Les tout premiers Appelés l'ont apportée ici, en l'an 430. »
+- fr: « Gravée, elle tient. Forgée dans l'acier, elle devient une partie de l'arme. Mais il faut frapper au bon moment, quand le métal chante. Et le tenir pendant qu'il chante. »
+- fr: Tenir la lame dans le feu pendant que Durna frappe. (Vitalité, difficulté 28)
+- fr: Frapper vous-même, au rythme de Durna. (Force, difficulté 28)
+- fr: La lame chante. La rune s'enfonce dans l'acier, puis disparaît… et se rallume, de l'intérieur, comme un cœur qui bat. Durna essuie une larme de suie. « Mille ans que je n'avais pas entendu ça. »
+- fr: « Il reste une dernière rune, celle des Mille Sceaux. Personne ne sait la graver. On dit qu'elle n'apparaît que sur un champ de bataille. »
+- fr: La lame se tord, se fend… puis se ressoude d'elle-même, la rune au cœur de l'acier, de travers. Durna fronce les sourcils. « Elle t'a choisi quand même. Têtue, comme son porteur. »
+- fr: Arcaniste — Le feu de la montagne
+- fr: "La Coulée de lave descend lentement. La chaleur vous brûle les cils. Quelque part en vous, la foudre du désert et le givre de vos débuts s'agitent : ils reconnaissent leur cousin."
+- fr: Le feu de la terre ne se capture pas comme un éclair. Il est lent, lourd, patient. Il faut le laisser venir.
+- fr: Plonger les mains dans la lave et l'appeler. (Intelligence, difficulté 28)
+- fr: Méditer au bord de la coulée jusqu'à ce que le feu vienne. (Esprit, difficulté 28)
+- fr: "La lave monte le long de vos bras sans les brûler, puis rentre en vous, comme une rivière qui trouve son lit. Le feu, la foudre, le givre : trois éléments tournent maintenant en vous."
+- fr: Il en manque un. Le quatrième, l'ombre ou la lumière ? Vous le saurez quand vous le verrez. Sur un champ de bataille, peut-être.
+- fr: La lave vous rejette, et vous voilà assis dans la cendre, les mains rouges. Mais une braise est restée au creux de votre paume, et elle ne s'éteint pas.
+- fr: Invocateur — L'esprit-dragon
+- fr: "Dans un nid vide, au sommet de l'île, l'air tremble. Une forme translucide se dresse : un dragon fait de fumée et de lumière, mort depuis des siècles. Un esprit-dragon."
+- fr: Vos créatures se cachent derrière vous. Le fennec du désert, lui, s'assoit à vos pieds et regarde l'esprit sans peur. « Demande », semble-t-il dire.
+- fr: Demander, au lieu d'ordonner. (Charisme, difficulté 28)
+- fr: Lui offrir un peu de votre propre énergie. (Esprit, difficulté 28)
+- fr: L'esprit-dragon baisse la tête jusqu'à vous. Il souffle, et votre grimoire se couvre d'une écriture que vous ne connaissiez pas. Un nom. Le sien. Il viendra, si vous l'appelez.
+- fr: "Au loin, quelque chose s'ouvre : une porte que vous sentez sans la voir. La Porte du Bestiaire, que seuls les grands invocateurs franchissent."
+- fr: L'esprit-dragon vous ignore et s'envole. Mais il tourne trois fois au-dessus du nid avant de disparaître. Ce n'est pas un non. C'est encore un « pas encore ».
+- fr: Ombre — Le maître de Kezir
+- fr: "Au fond du Requin Ivre, un vieillard aveugle joue aux osselets tout seul. Il gagne à chaque fois. Quand vous approchez, il dit, sans lever la tête : « Tu marches comme Kezir. En plus discret. »"
+- fr: « J'ai formé Kezir. Il était doué. Il est devenu cruel. » Il lance les osselets. « Je ne forme plus personne. Sauf ceux qui arrivent à me voler ma bourse. »
+- fr: Lui voler sa bourse. (Agilité, difficulté 28)
+- fr: Lui dire qu'on ne veut pas voler sa bourse. (Esprit, difficulté 28)
+- fr: "Le vieillard sourit, et vous tend la main. Sa bourse est dedans. Ou alors c'est la vôtre ? « Bien. Je vais t'apprendre la seule chose que je n'ai jamais apprise à Kezir : quand ne pas frapper. »"
+- fr: Il vous parle des Mille Coupures, la technique ultime des Ombres. « On ne l'apprend pas. On la trouve, au milieu d'une bataille, quand on a tout perdu. »
+- fr: Le vieillard vous attrape le poignet avant même que vous ayez bougé. Il rit. « Trop d'envie. » Puis il vous lâche. « Reviens quand tu auras moins envie. Mais tu as du talent. Je t'apprendrai quand même. »
+- fr: Gardien — La passe des Marches
+- fr: Le vieux paladin de Qarzim vous attendait devant la Porte d'Ardenclume. Il a fait tout le chemin à pied. « Les nains m'ont laissé passer. Ils disent que tu es descendu au fond. Bien. Maintenant, tiens la passe. »
+- fr: Il vous mène au premier palier des Mille Marches, là où l'escalier est si étroit qu'un seul homme peut le défendre. Des statues de rois nains, de chaque côté. « Prête le serment ici. Face à l'ennemi. »
+- fr: Tenir la passe toute la nuit, bouclier levé, sans reculer d'un pas. (Vitalité, difficulté 28)
+- fr: Prononcer le serment du bouclier devant les rois de pierre. (Charisme, difficulté 28)
+- fr: À l'aube, le vieux paladin pose la main sur votre bouclier. Une lueur passe de sa main au métal. « Le serment est pris. Il en reste un, le dernier. Celui du Bastion éternel. On le prête une seule fois, et on ne s'en relève pas tout à fait. »
+- fr: "Au milieu de la nuit, vous reculez d'un pas. Un seul. Le vieux paladin ne dit rien. À l'aube, il dit seulement : « Un pas. C'est moins que moi, la première fois. » Et il vous apprend le serment quand même."
+- fr: Alchimiste — Le cœur de forge
+- fr: Vous étalez les plans du golem d'airain sur l'établi de Durna. La forgeronne regarde le cercle vide marqué « cœur de forge ». Elle éclate de rire. « Un cœur de forge ! Pour un jouet de vulpin ! »
+- fr: « Un cœur de forge, c'est une braise de la Grande Forge, enfermée dans une sphère de bronze. On n'en donne pas. On en gagne. »
+- fr: Fabriquer devant elle une potion qui résiste au feu de la forge. (Intelligence, difficulté 28)
+- fr: Lui proposer d'échanger vos meilleures recettes. (Charisme, difficulté 28)
+- fr: Durna regarde votre fiole résister au feu. Elle se tait longtemps. Puis elle va chercher, au fond de la forge, une sphère de bronze qui bat comme un cœur. « Ne le gaspille pas. »
+- fr: Le golem d'airain a maintenant un cœur. Il ne lui manque que la vie. Et ça, aucun plan ne dit comment la donner.
+- fr: La fiole éclate. Durna hausse les épaules, puis vous tend quand même un cœur de forge, plus petit. « Pour avoir essayé. Les nains respectent ceux qui ratent bruyamment. »
+- fr: Archer — La cible des vents
+- fr: Au sommet du Phare noyé, les vents de l'Archipel se croisent. Sur un rocher, au loin, une cible de bois peinte, que les marins appellent « la cible des vents ». Le vent la fait trembler sans cesse.
+- fr: La plume blanche de l'Ancienne Sorha frémit sur votre arc. « Ferme les yeux », disait-elle.
+- fr: Fermer les yeux et tirer. (Agilité, difficulté 28)
+- fr: Attendre que le vent se taise, une seconde, et tirer. (Esprit, difficulté 28)
+- fr: "La flèche part. Le vent la porte, la tourne, la ramène… et elle se plante au centre exact. Pendant une seconde, vous entendez des voix : des archers morts depuis mille ans, qui rient. Les ancêtres."
+- fr: « Un jour, dit une des voix, tu nous appelleras tous. Et nous tirerons avec toi. »
+- fr: "La flèche se perd dans la brume. Mais le vent vous la rapporte, et la pose à vos pieds. Une voix, très loin : « Pas encore. Mais nous t'avons entendu. »"
+- fr: Guérisseur — La source sacrée
+- fr: Néréa vous attend sur son rocher. « Une source de lumière, sous la mer ? » Elle rit. « Bien sûr qu'elle existe. Nous y soignons nos blessés. Mais un humain s'y noie avant d'y arriver. »
+- fr: Elle plonge, et ressort avec une bulle d'air enfermée dans un coquillage. « Respire là-dedans. Et suis-moi. Ne lâche pas ma main. »
+- fr: Plonger avec elle jusqu'à la source. (Vitalité, difficulté 28)
+- fr: Lui demander de vous apporter l'eau de la source. (Charisme, difficulté 28)
+- fr: Au fond, une source de lumière jaillit du sable, chaude comme un soleil. Vous y plongez les mains, et votre propre lumière change de couleur. Elle a un deuxième souffle, maintenant.
+- fr: "Néréa, dans l'eau : « Les sirènes disent que celui qui a bu à la source peut ramener quelqu'un une fois. Une seule fois. Choisis bien. »"
+- fr: L'eau vous chasse, et Néréa vous ramène à la surface, toussant. Mais dans vos mains, il reste un peu de lumière liquide. Elle n'a pas fini de vous parler.
+- fr: Berserker — La chanson du sang
+- fr: Les jeunes wyrms du Nid vous entourent, en sifflant. Ils ne vous attaquent pas. Ils vous reniflent. Votre sang bat plus fort à chaque souffle.
+- fr: Au milieu d'eux, un vieux wyrm aux écailles grises ouvre un œil. Il ne parle pas. Il gronde, et le grondement monte dans votre poitrine comme une chanson.
+- fr: Gronder avec lui, de toutes vos forces. (Force, difficulté 28)
+- fr: Le laisser chanter, et écouter. (Esprit, difficulté 28)
+- fr: Votre voix se mêle à la sienne. Les wyrms reprennent tous ensemble. Vos yeux brûlent, et cette fois, vous voyez vraiment vos ailes, dans votre ombre, sur la roche.
+- fr: Le vieux wyrm se rendort. Mais vous savez maintenant que la chanson a une fin. La Forme du Wyrm. Elle viendra quand le sang chantera sa dernière note.
+- fr: Votre voix se casse. Les wyrms s'éloignent, déçus. Mais le vieux wyrm, avant de fermer l'œil, souffle une petite flamme sur votre main. Une promesse.
+- fr: Barde — Le dernier couplet
+- fr: Le soir tombe sur le Récif. Vous jouez les trois couplets des Dunes chantantes. Une à une, des têtes sortent de l'eau. Des sirènes. Elles écoutent, les yeux brillants.
+- fr: Néréa nage jusqu'à vous. « Ce chant-là… Les dunes l'ont volé à nos grands-mères. » Elle sourit. « Le dernier couplet ne se joue pas. Il se chante. À deux voix. »
+- fr: Chanter le dernier couplet avec elle. (Charisme, difficulté 28)
+- fr: Écouter jusqu'à l'avoir dans la tête, puis le jouer. (Intelligence, difficulté 28)
+- fr: Vos deux voix s'élèvent ensemble. La mer se calme. Au loin, les dunes du désert, à des centaines de lieues, se mettent à chanter, elles aussi. Vous le sentez.
+- fr: "Quatre couplets. Une chanson complète. Néréa vous chuchote : « Il existe une symphonie. Une seule. On la joue à la fin des guerres. Tu la trouveras. »"
+- fr: Votre voix déraille, et les sirènes éclatent de rire. Néréa aussi. Puis elle vous chante le couplet, doucement, trois fois. Vous l'avez. Mal, mais vous l'avez.

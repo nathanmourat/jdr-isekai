@@ -1,0 +1,52 @@
+# Textes de content/campagne/saison-1/chapitre-5/secondaires.yaml
+# Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
+- fr: La soupe de Mère Brisac
+- fr: Mère Brisac frappe sa louche contre la marmite vide. « Trois jours. Trois jours que le convoi du village de Hautepierre devait arriver. Des pommes de terre, des oignons, du lard. Sans ça, je fais de la soupe à l'eau chaude. »
+- fr: « Le village a été évacué la semaine dernière. Les charrettes devaient partir les dernières. » Elle baisse la voix. « Les éclaireurs ont vu des diablotins par là-bas. »
+- fr: « Nous ramènerons votre convoi. »
+- fr: « Et si les charretiers ont faim, donnez-leur ça. » Elle vous fourre des quignons de pain dans les poches. « Personne ne se bat le ventre vide. Même pas les charretiers. »
+- fr: Le village évacué
+- fr: Le village est vide. Sur la place, trois charrettes renversées, des pommes de terre partout. Les charretiers sont réfugiés dans le clocher. Autour, des diablotins ricanent en jonglant avec des oignons.
+- fr: Chasser les diablotins.
+- fr: Les diablotins vous repoussent… jusqu'à ce que les charretiers descendent du clocher avec des fourches. À vous tous, vous mettez la nuée en fuite.
+- fr: On relève les charrettes, on ramasse les pommes de terre une à une. Les charretiers rient nerveusement. L'un d'eux pleure un peu. Personne ne se moque de lui.
+- fr: La soupe du soir
+- fr: Le soir, la Gamelle sent l'oignon et le lard. Mille soldats font la queue, le bol à la main. Mère Brisac vous sert en premier, double portion.
+- fr: « Vous savez ce qui gagne une guerre ? Pas les épées. La soupe. » Elle vous tend une petite bourse. « Les officiers m'ont donné ça pour vous. Moi, je vous donne une place à ma table pour toujours. »
+- fr: L'armure du premier maréchal
+- fr: Tolvan pose la main sur un mannequin vide, au fond de l'Armurerie. « Ici, il y avait l'armure du premier maréchal du Mur. Six cents ans qu'elle protège ceux qui la portent. Le maréchal de Valgrane l'avait empruntée, en 1003. »
+- fr: « Elle est restée là-bas. Dans les ruines. Je suis trop vieux pour aller la chercher, et les jeunes ont peur des ruines. » Il vous regarde par-dessus sa loupe. « Vous n'avez peur de rien, vous, paraît-il. »
+- fr: « Nous irons à Valgrane. »
+- fr: Les ruines de Valgrane
+- fr: Dans la caserne effondrée de Valgrane, l'armure est là, debout sur son mannequin, comme si elle montait la garde depuis vingt ans. Autour d'elle, des gelées de cendre violette se sont installées.
+- fr: Aveline s'arrête net devant la porte nord, à moitié écroulée. « C'est ici que mon père a tenu. » Elle pose la main sur la pierre. Puis elle dégaine. « Allons chercher cette armure. »
+- fr: Nettoyer la caserne.
+- fr: Les gelées vous chassent de la caserne. Mais l'une d'elles a renversé le mannequin, et l'armure a roulé jusqu'à la porte. Vous la traînez dehors.
+- fr: "L'armure est bosselée, noircie, mais intacte. Sous le plastron, quelqu'un a gravé au couteau : « Gauvain de Castelroc a tenu la porte. Que personne ne l'oublie. »"
+- fr: Aveline lit l'inscription trois fois. Elle ne dit rien. Elle la recopie dans son carnet, très lentement.
+- fr: Le retour de l'armure
+- fr: Tolvan pose l'armure sur son mannequin et recule de trois pas. Il retire sa loupe. Il a les yeux mouillés. « Bienvenue chez toi, vieille amie. »
+- fr: « Elle sera portée par le prochain maréchal du Mur. Et vous, prenez ce que vous voulez dans mon arrière-boutique. Enfin… pas tout. »
+- fr: Un espion à Fort-Aube
+- fr: La Sergente Valka ferme la toile de la tente derrière vous. « Trois fois, la Légion a attaqué là où nos troupes venaient de partir. Trois fois. Quelqu'un les renseigne. »
+- fr: « Une sentinelle a vu des signaux lumineux, la nuit, depuis la vieille tour de guet de l'est. Une tour vide depuis dix ans. Allez voir. Discrètement. »
+- fr: « Nous y serons cette nuit. »
+- fr: La tour de guet
+- fr: Minuit. En haut de la tour abandonnée, un homme en manteau de marchand agite une lanterne vers le nord. En bas, une patrouille de la Légion attend sa réponse.
+- fr: Monter en silence et l'arrêter. (Agilité, difficulté 31)
+- fr: S'occuper d'abord de la patrouille.
+- fr: La patrouille vous repousse et s'enfuit vers le nord. Mais l'espion, lui, a glissé dans l'escalier en voulant fuir. Il est là, la cheville tordue.
+- fr: L'espion tremble. Dans sa poche, une lettre chiffrée et une bourse pleine de pièces d'obsidienne. Sur sa bague, le sceau de la Concorde de Qarzim.
+- fr: Nadja lui prend la bague, la retourne entre ses doigts. « Bonsoir, cousin. » Elle sourit. « Tu vas beaucoup m'aider. »
+- fr: Le rapport
+- fr: Valka lit la lettre déchiffrée, et ses oreilles se couchent. « La Concorde vend nos positions à la Légion. Contre de l'obsidienne. » Elle froisse la lettre. « Les marchands. Toujours les marchands. »
+- fr: « Bon travail. La Guilde s'en souviendra. Moi aussi. »
+- fr: La meute de braise
+- fr: Au camp des alliés, une sentinelle naine montre des traces de pattes brûlées dans la boue. « Trois sentinelles en une semaine. On n'entend rien. On trouve juste… des traces fumantes. »
+- fr: "Un vieil archer elfe, plus loin : « Des chiens des enfers. Ils chassent en meute, la nuit. Il faut les traquer jusque dans la plaine, ou ils reviendront. »"
+- fr: Partir sur les traces de la meute.
+- fr: La chasse dans la plaine
+- fr: Dans la plaine cendrée, les traces mènent à un vieux cratère. Des yeux de braise s'allument dans le noir. La meute vous attendait.
+- fr: Affronter la meute.
+- fr: Les chiens vous renversent… mais un hurlement de loup répond aux leurs, puis dix. Les guerriers Lunecroc du camp vous ont suivis. La meute s'enfuit pour de bon.
+- fr: "Au cratère, sous des cendres chaudes, les sentinelles disparues : vivantes, attachées, à moitié mortes de soif. Les chiens les gardaient pour plus tard."

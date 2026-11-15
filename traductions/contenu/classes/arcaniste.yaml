@@ -1,0 +1,33 @@
+# Textes de content/classes/arcaniste.yaml
+# Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
+- fr: Arcaniste élémentaire
+- fr: Dégâts (zone)
+- fr: Un mage qui plie le feu, la glace et la foudre à sa volonté.
+- fr: Résonance
+- fr: Enchaîner deux éléments différents donne +25 % de dégâts au second.
+- fr: Pyromancie et foudre
+- fr: Dégâts purs.
+- fr: Cryo et terre
+- fr: Contrôle et protection.
+- fr: Convergence des Quatre
+- fr: Dégâts massifs sur tous les ennemis, exposés aux 4 éléments.
+- fr: Le meilleur pour nettoyer les groupes d'ennemis.
+- fr: Très fragile ; s'épuise en mana dans les longs combats.
+- fr: Javelot de flamme
+- fr: Un javelot de feu qui peut enflammer la cible.
+- fr: Onde de givre
+- fr: Une vague de froid qui touche tous les ennemis et les ralentit.
+- fr: Éclair en chaîne
+- fr: La foudre rebondit sur tous les ennemis.
+- fr: Mur de glace
+- fr: Un mur de glace protège tout le groupe (+25 % de défense pendant 2 tours).
+- fr: Météore
+- fr: Un bloc de roche en feu s'abat sur la cible.
+- fr: Tempête foudroyante
+- fr: La foudre frappe tous les ennemis, deux fois.
+- fr: Prison de givre
+- fr: Enferme la cible dans la glace.
+- fr: Séisme
+- fr: Le sol se fend sous tous les ennemis, qui perdent l'équilibre.
+- fr: Ultime — Convergence des Quatre
+- fr: "Feu, glace, foudre et terre se rejoignent : dégâts massifs sur tous les ennemis, exposés aux éléments."

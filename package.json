@@ -21,6 +21,9 @@
     "e2e:carte": "node tests/e2e/carte.mjs",
     "ia:entrainer": "tsx scripts/entrainer-ia.ts",
     "roblox:contenu": "tsx scripts/roblox-contenu.ts",
+    "roblox:traductions": "tsx scripts/traductions.ts exporter",
+    "traductions:extraire": "tsx scripts/traductions.ts extraire",
+    "traductions:rapport": "tsx scripts/traductions.ts rapport",
     "roblox:verifier": "tsx scripts/verifier-luau.ts",
     "roblox:moteur": "npm run moteur --prefix roblox",
     "roblox:parite": "tsx scripts/roblox-parite.ts"

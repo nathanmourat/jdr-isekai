@@ -1,0 +1,17 @@
+# Textes de content/campagne/saison-1/chapitre-6/donjon.yaml
+# Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
+- fr: La Citadelle d'Obsidienne
+- fr: "Des couloirs d'obsidienne polie, où votre reflet marche à côté de vous. Pas de torches : les murs brillent d'une lueur violette, de l'intérieur."
+- fr: Deux chevaliers en armure noire montent la garde devant une porte. Ils tirent l'épée sans un mot.
+- fr: Le coffre d'un officier de la Légion. Des lettres jamais envoyées, et une bourse.
+- fr: Une armurerie oubliée. Tout est rouillé, sauf une fiole qui brille encore.
+- fr: Le sol devient un miroir, et votre reflet vous frappe !
+- fr: Une salle immense. Au centre, un golem d'obsidienne se déplie, veiné de lave.
+- fr: Des éclats de verre noir tombent du plafond !
+- fr: Une salle remplie d'armures de l'Ordre, très anciennes, alignées contre le mur. Personne ne les a portées depuis six cents ans.
+- fr: "La chambre d'Orvan. Un lit jamais défait, et sur la table, un objet étrange, de votre monde : une petite boîte en plastique, qui ne fonctionne plus depuis longtemps."
+- fr: "Un cercle violet s'allume sous vos pieds : un fragment du Voile !"
+- fr: Un colosse d'obsidienne vous barre la route. À sa ceinture, cent clés qui chantent. « PERSONNE… NE SORT. »
+- fr: Le trousseau du Geôlier, tombé près des cellules. Cent clés, une par cellule.
+- fr: "Sur le mur, gravé à la main, maladroitement, dans une langue que vous seuls pouvez lire : « Je veux rentrer chez moi. » La gravure a six cents ans."
+- fr: Les prisonniers sont toujours enfermés. Il faut trouver les clés du Geôlier.

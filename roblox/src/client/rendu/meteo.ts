@@ -13,6 +13,8 @@ import { ORIGINES } from "shared/geo";
 import { versDate } from "shared/moteur";
 import { jeu } from "../partie";
 import { sonMeteo } from "../sons";
+import { reglages } from "../reglages";
+import { tx } from "shared/langue";
 
 export type Temps = "beau" | "pluie" | "neige" | "brouillard" | "sable" | "cendres";
 
@@ -51,15 +53,16 @@ const EFFETS: Record<Temps, { brume: number; particules?: { couleur: Color3; tai
 };
 
 export const NOMS_TEMPS: Record<Temps, string> = {
-	beau: "☀ beau temps",
-	pluie: "🌧 pluie",
-	neige: "❄ neige",
-	brouillard: "🌫 brouillard",
-	sable: "🏜 tempête de sable",
-	cendres: "🌋 pluie de cendres",
+	beau: tx("☀ beau temps"),
+	pluie: tx("🌧 pluie"),
+	neige: tx("❄ neige"),
+	brouillard: tx("🌫 brouillard"),
+	sable: tx("🏜 tempête de sable"),
+	cendres: tx("🌋 pluie de cendres"),
 };
 
 let actuel: Temps = "beau";
+let reduits = false;
 let emetteur: Part | undefined;
 let particules: ParticleEmitter | undefined;
 
@@ -105,7 +108,8 @@ function appliquer(t: Temps) {
 	const atmo = Lighting.FindFirstChildOfClass("Atmosphere");
 	if (atmo) atmo.Haze = e.brume;
 	sonMeteo(e.son);
-	if (!e.particules) {
+	// effets réduits : la brume reste, pas les particules
+	if (!e.particules || reglages.effetsReduits) {
 		if (particules) particules.Enabled = false;
 		return;
 	}
@@ -152,7 +156,10 @@ export function demarrerMeteo() {
 			let voulu: Temps = "beau";
 			// dehors seulement : ni dans les salles (sous la carte), ni dans les donjons (au-dessus)
 			if (r && etat && r.Position.Y > -100 && r.Position.Y < 400) voulu = tempsDuJour(regionDe(r.Position), etat.jour);
-			if (voulu !== actuel) appliquer(voulu);
+			if (voulu !== actuel || reduits !== reglages.effetsReduits) {
+				reduits = reglages.effetsReduits;
+				appliquer(voulu);
+			}
 		}
 	});
 }

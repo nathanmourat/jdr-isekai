@@ -1,0 +1,26 @@
+# Textes de content/monde/terres-cendrees.yaml
+# Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
+- fr: Terres Cendrées
+- fr: "Au-delà du Mur : des plaines de cendre, des forêts de pierre, des lacs de lave, et au centre, la Citadelle d'Obsidienne."
+- fr: Camp de l'Aube
+- fr: "Le camp de l'alliance, planté au milieu des Cendres : tentes elfes, forges naines, et un dragon qui monte la garde."
+- fr: La Tente des Braves
+- fr: Une grande tente de toile, des lits de camp, et la soupe de Mère Brisac, qui a suivi l'armée « parce que sinon, qui vous nourrirait ? ».
+- fr: La Forge de campagne
+- fr: Maîtresse Durna a suivi les nains jusqu'ici. Son enclume est posée sur un rocher d'obsidienne. « Le meilleur métal du monde, et il est gratuit ! »
+- fr: Comptoir de la Guilde (Camp de l'Aube)
+- fr: La tente de commandement de la Guilde. Sur le tableau, les dernières missions de la guerre.
+- fr: Cendrebourg
+- fr: "Un village de démons. Pas de soldats : des fermiers, des forgerons, des enfants aux petites cornes. Ils vous regardent arriver avec terreur."
+- fr: La Forêt pétrifiée
+- fr: Des arbres de pierre noire, figés au moment de la première Déchirure. On y entend parfois des voix du passé.
+- fr: Le Lac de lave
+- fr: Un lac de feu, immense, d'où émergent des os de dragons. Les plus anciens sont morts avant la naissance du royaume.
+- fr: Porte de la Citadelle d'Obsidienne
+- fr: Une tour noire plus haute que les montagnes, sans fenêtres. Sa porte est ouverte. Elle l'a toujours été.
+- fr: Sommet de la Citadelle
+- fr: Une salle ronde, ouverte sur le ciel couleur de braise. Au centre, un trône. Sous le trône, la première déchirure du Voile.
+- fr: Col des Soupirs
+- fr: Un passage entre deux falaises de basalte, où le vent souffle comme quelqu'un qui pleure.
+- fr: Le Puits de cendre
+- fr: Un gouffre au fond duquel brille une lumière violette. Les gardes d'obsidienne y descendent des prisonniers.

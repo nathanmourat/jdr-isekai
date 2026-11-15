@@ -1,0 +1,77 @@
+# Textes de content/objets/objets-saison1.yaml
+# Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
+- fr: Grande potion de soin
+- fr: "Une fiole épaisse, rouge sombre : elle referme les plaies en un instant."
+- fr: À boire en combat (bouton du sac). Pour les héros aguerris.
+- fr: Grande potion de mana
+- fr: Un liquide bleu qui pétille sur la langue.
+- fr: "À boire en combat : rend 45 points de mana."
+- fr: Gourde d'eau d'oasis
+- fr: Une eau fraîche tirée du puits de l'Oasis Bleue.
+- fr: "À boire en combat : soigne un peu et retire les effets négatifs."
+- fr: Brochettes d'agneau grillé
+- fr: Épicées, juteuses, encore fumantes.
+- fr: Boîte de thé à la menthe
+- fr: Un thé fin du Grand Bazar, dans une boîte en cuivre ciselé.
+- fr: Sachet d'épices de Qarzim
+- fr: Safran, cumin et poivre des dunes. Cela vaut presque son poids en or.
+- fr: Carnet de contes
+- fr: Des contes de toutes les régions, recopiés à la main par un conteur du Bazar.
+- fr: Perle du désert
+- fr: Une perle de verre de sable, chaude au toucher, qui change de couleur au soleil.
+- fr: Cristal d'éther
+- fr: Un cristal violet qui bourdonne doucement, comme s'il respirait.
+- fr: "Matériau : se revend très cher… mais à qui profite ce commerce ?"
+- fr: Tablette de la Déchirure
+- fr: Une tablette d'argile couverte d'écriture elfique très ancienne. On y parle d'un rituel, d'un Voile, et d'une faute.
+- fr: Lettre scellée de Valgrane
+- fr: Un ordre de repli daté de 1003, signé du commandant de Valgrane… et contresigné d'un sceau de l'Ordre.
+- fr: Copie du Grand Livre rouge
+- fr: "Les comptes secrets de la Concorde : qui achète les cristaux, qui doit de l'argent à qui."
+- fr: Insigne de la Main de Sable
+- fr: "Une main de bronze tenant un grain de sable : la marque des assassins de Qarzim."
+- fr: Thé de sylve
+- fr: Des feuilles d'argent qui sentent la pluie.
+- fr: Miel des fleurs d'argent
+- fr: Un miel presque blanc, qui brille dans le noir.
+- fr: Plume de chouette blanche
+- fr: Les elfes l'offrent à ceux dont ils respectent la sagesse.
+- fr: Contes sylvains
+- fr: Des histoires elfiques sur les étoiles, les arbres et les dragons d'avant.
+- fr: Codex de la Déchirure
+- fr: Le grand livre des elfes qui ont tenté de recoudre le Voile. Les dernières pages sont arrachées.
+- fr: Corne brisée
+- fr: Une corne noire, brisée pendant le combat de la Nuitlongue. Elle est encore tiède.
+- fr: Sceau du domaine
+- fr: "Le sceau de cire de vos terres : il vous fait seigneur ou dame, pour le meilleur et pour les impôts."
+- fr: Potion de soin suprême
+- fr: Une fiole dorée qui brille comme un soleil miniature.
+- fr: À boire en combat (bouton du sac). Pour les héros les plus aguerris.
+- fr: Tonnelet de bière d'Ardenclume
+- fr: Une bière brune et amère, brassée sous la montagne depuis mille ans.
+- fr: Pierre de feu
+- fr: Une pierre volcanique qui reste tiède toute la nuit. Les nains en offrent aux amis.
+- fr: Rhum des Brumes
+- fr: Un rhum noir qui sent la fumée et la vanille. Les pirates jurent qu'il guérit tout.
+- fr: Coquillage chantant
+- fr: Quand on l'approche de l'oreille, on entend une sirène chanter.
+- fr: Écaille de dragon polie
+- fr: Une écaille dorée, polie comme un miroir. Elle brille de mille feux.
+- fr: Estampage du Registre des Appels
+- fr: Une copie, frottée au charbon, des tables de pierre où les nains ont noté chaque Appel depuis l'an 430… et ce qu'il a coûté.
+- fr: Œuf de braise
+- fr: Un œuf de dragon, gros comme une tête, brûlant comme une forge. Il bat doucement.
+- fr: Carte marine de Corsa
+- fr: La seule carte qui montre le chemin du Nid des Wyrms entre les récifs.
+- fr: Broche du rang S
+- fr: Une broche d'or noir en forme d'étoile à sept branches. Il n'en existe que douze au monde.
+- fr: Clé de braise
+- fr: Une clé forgée par Durna Martelfeu dans le souffle d'Ysoria. Elle est toujours chaude. Elle ouvre les chaînes d'obsidienne.
+- fr: Armure du premier maréchal
+- fr: Une armure bosselée aux armes du premier maréchal du Mur. Tolvan dit qu'elle porte chance.
+- fr: Lettre chiffrée
+- fr: Une lettre codée trouvée sur l'espion de la tour de guet. Les chiffres ressemblent à ceux de la Concorde.
+- fr: Trousseau du Geôlier
+- fr: Cent clés d'obsidienne, une par cellule de la Citadelle. Elles chantent quand on les secoue.
+- fr: Fleur de cendre
+- fr: Une petite fleur grise, la seule qui pousse dans les Terres Cendrées. Elle ne fane jamais.

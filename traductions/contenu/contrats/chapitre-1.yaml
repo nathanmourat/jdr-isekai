@@ -1,0 +1,140 @@
+# Textes de content/contrats/chapitre-1.yaml
+# Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
+- fr: Chasse aux loups
+- fr: Des loups rôdent près des bergeries de la Combe.
+- fr: Aller à la Combe-aux-Saules.
+- fr: Un berger vous montre une brebis égorgée près de l'enclos. Des traces larges comme une main partent vers la lisière.
+- fr: Examiner les traces
+- fr: Suivre les traces jusqu'à la lisière.
+- fr: "À la lisière, les empreintes se séparent : une piste longe les ronces, l'autre descend vers l'eau."
+- fr: Suivre la piste des ronces.
+- fr: "Des touffes de poils gris sont accrochées aux épines : la meute est passée par ici il y a peu."
+- fr: Descendre vers l'eau.
+- fr: "Des empreintes fraîches dans la boue : la meute vient boire ici chaque soir."
+- fr: Remonter le ruisseau aux Saules.
+- fr: Sur l'autre rive, une carcasse de lièvre à moitié dévorée. Le vent tourne.
+- fr: Avancer sous le vent, sans bruit.
+- fr: Les loups ne vous sentiront pas venir.
+- fr: Laisser un morceau de viande séchée comme appât.
+- fr: "Un hurlement répond au loin, vers le vieux saule : vous savez où aller."
+- fr: Trouver la meute au vieux saule creux.
+- fr: Sous les racines du vieux saule, des yeux jaunes s'allument un à un.
+- fr: Revenir à la Guilde toucher la récompense.
+- fr: Rowena compte les crocs que vous posez sur le comptoir et hoche la tête. « Propre. »
+- fr: Toucher la récompense
+- fr: Cueillette de lune-sauge
+- fr: Trouver de la lune-sauge pour l'apothicaire (test d'Esprit).
+- fr: Monter aux collines à lune-sauge.
+- fr: Les collines sont couvertes d'herbes qui se ressemblent toutes. Où chercher ?
+- fr: À l'ombre des rochers.
+- fr: L'herbe y est plus haute, et certaines tiges ont un reflet d'argent.
+- fr: Près des sources.
+- fr: Entre les joncs, quelques feuilles argentées tremblent.
+- fr: Reconnaître la vraie lune-sauge.
+- fr: Deux plantes presque jumelles poussent côte à côte. L'une soigne, l'autre rend malade.
+- fr: Cueillir avec soin
+- fr: Vous reconnaissez l'odeur poivrée de la lune-sauge.
+- fr: "Vous rapportez un plein sac de fausse sauge : l'apothicaire soupire."
+- fr: Rapporter la lune-sauge à la Guilde.
+- fr: L'apothicaire vous attend au comptoir, sa balance déjà prête.
+- fr: Gobelins sur la route du nord
+- fr: Des gobelins cendrés attaquent les charrettes.
+- fr: Aller sur la route du nord.
+- fr: Une charrette renversée, des sacs éventrés, des traces de petits pieds griffus dans le fossé.
+- fr: Suivre les traces dans le fossé.
+- fr: Elles mènent à un bosquet d'où monte une fumée maigre.
+- fr: Se cacher et attendre la prochaine attaque.
+- fr: Au crépuscule, des ricanements montent du bosquet voisin.
+- fr: Débusquer les gobelins du bosquet.
+- fr: Ils vous ont vu. Les lances se dressent.
+- fr: « La route est de nouveau sûre ? Bien. » Rowena pousse une bourse vers vous.
+- fr: Médiation au marché
+- fr: Calmer une dispute entre deux marchands (test de Charisme).
+- fr: Aller au marché de Lysmont.
+- fr: Un drapier et un épicier se disputent le même emplacement. Chacun jure qu'il était là le premier.
+- fr: Écouter d'abord le drapier.
+- fr: Il a un reçu… daté de l'an dernier.
+- fr: Écouter d'abord l'épicier.
+- fr: Il a des témoins… qui sont tous ses cousins.
+- fr: Trouver un accord entre les deux marchands.
+- fr: La foule s'amasse. Il faut une solution que les deux puissent accepter sans perdre la face.
+- fr: Proposer un accord
+- fr: "Un jour sur deux chacun : ils se serrent la main en bougonnant."
+- fr: "Le ton monte, un étal se renverse : la garde disperse tout le monde."
+- fr: Les deux marchands ont déjà fait porter leur paiement à la Guilde.
+- fr: Bandits de grand chemin
+- fr: Escorter une caravane jusqu'au gué de Valmont.
+- fr: Rejoindre la caravane sur la place de Lysmont.
+- fr: Trois chariots bâchés, des mules nerveuses, un caravanier qui regarde sans cesse par-dessus son épaule.
+- fr: Prendre la route
+- fr: Escorter la caravane jusqu'au gué de Valmont.
+- fr: "Le gué est en vue. Les berges sont hautes : l'endroit rêvé pour une embuscade."
+- fr: Partir en éclaireur.
+- fr: Vous repérez des silhouettes couchées dans les roseaux.
+- fr: Rester près des chariots.
+- fr: Vous gardez les mules calmes. Un sifflement part des roseaux.
+- fr: Repousser les bandits au gué.
+- fr: « La bourse ou la vie ! » Ils sortent des roseaux, l'eau jusqu'aux genoux.
+- fr: Le caravanier a laissé une lettre de remerciement et la prime convenue.
+- fr: Le nid sous la crypte
+- fr: Nettoyer un nid d'araignées géantes.
+- fr: Descendre au nid, sous la Crypte de la Fontaine.
+- fr: Le boyau est tapissé de toiles épaisses comme des draps. Quelque chose remue au fond.
+- fr: Brûler les toiles pour dégager le passage.
+- fr: Les toiles se consument en crépitant. Le fond du boyau s'agite.
+- fr: Avancer en les écartant à la lame.
+- fr: Vous progressez lentement. Des fils vibrent sous vos pas.
+- fr: Détruire le nid.
+- fr: Huit yeux, puis seize, puis davantage.
+- fr: Rowena fronce le nez. « Lavez-vous. Ensuite, la prime. »
+- fr: Rats dans les égouts
+- fr: Les égouts sous la place de Lysmont grouillent de rats géants et de gelées.
+- fr: Descendre dans les égouts de Lysmont.
+- fr: Deux galeries partent de l'escalier. À gauche, des couinements. À droite, un clapotis gluant.
+- fr: Prendre à gauche.
+- fr: Des dizaines de petits yeux rouges reculent devant votre torche… puis s'arrêtent.
+- fr: Prendre à droite.
+- fr: Une masse translucide glisse le long du mur, et les rats la suivent.
+- fr: Nettoyer la galerie.
+- fr: Ils sont plus gros que des chats. Et ils ont faim.
+- fr: « Les égouts ? Déjà ? » Rowena a presque l'air impressionnée.
+- fr: Les sangliers des champs
+- fr: Deux sangliers ravagent les champs de blé au nord de la capitale.
+- fr: Aller aux champs de blé du nord.
+- fr: Le blé est couché en larges sillons. Le fermier vous montre une haie défoncée.
+- fr: Se poster près de la haie.
+- fr: Vers le soir, la haie tremble.
+- fr: Suivre les sillons jusqu'à la mare.
+- fr: Deux masses sombres se vautrent dans la boue.
+- fr: Chasser les sangliers.
+- fr: Ils grattent le sol, tête basse. Ils vont charger.
+- fr: Le fermier a fait porter des provisions en plus de la prime.
+- fr: La grotte aux chauves-souris
+- fr: "Des mineurs refusent de retourner au travail : la grotte est infestée."
+- fr: Aller à la grotte des mineurs.
+- fr: Les mineurs attendent dehors, pioches posées. Du plafond de la galerie pendent des grappes sombres.
+- fr: Entrer avec une torche.
+- fr: "La lumière les réveille d'un coup : un nuage d'ailes."
+- fr: Entrer dans le noir, sans un bruit.
+- fr: Vous arrivez sous la colonie avant qu'elle ne s'éveille.
+- fr: Chasser la colonie.
+- fr: Des cris stridents résonnent sous la voûte.
+- fr: Les mineurs sont retournés au travail. La prime est prête.
+- fr: Épreuve du rang C
+- fr: "Escorter, enquêter, puis affronter le maître d'armes : la Guilde veut voir tout ce que vous savez faire."
+- fr: Escorter le chariot de la Guilde sur la route du nord.
+- fr: Un chariot bâché, deux mules, et un cocher qui ne dit pas ce qu'il transporte. À mi-chemin, un arbre barre la route.
+- fr: Dégager l'arbre en gardant un œil sur les fossés.
+- fr: Rien ne bouge. Le cocher note quelque chose dans un carnet.
+- fr: Faire le tour par le champ, chariot compris.
+- fr: Les mules protestent, mais le chariot passe. Le cocher note quelque chose dans un carnet.
+- fr: Retrouver le colis « volé » dans le quartier des Tanneurs.
+- fr: "Le colis du chariot a disparu pendant la nuit. Les traces mènent aux ruelles des Tanneurs : à vous de trouver qui ment."
+- fr: Mener l'enquête
+- fr: "Le « voleur » est un commis de la Guilde : tout était arrangé, et vous l'avez compris."
+- fr: Vous accusez la mauvaise personne. La Guilde vous fera repasser l'épreuve.
+- fr: Affronter le maître d'armes à l'arène.
+- fr: Corvan Elsterre vous attend au centre du sable, l'épée déjà tirée. « Dernière partie. Montrez-moi. »
+- fr: Revenir à la Guilde pour la cérémonie.
+- fr: Tout le hall s'est tu. Dame Rowena tient une carte d'argent entre deux doigts.
+- fr: Recevoir son rang

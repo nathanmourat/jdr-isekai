@@ -10,6 +10,7 @@ import { CONTENU } from "shared/donnees";
 import { trouverLieu } from "shared/geo";
 import { conditionScene, lieuAvecCombat, lieuxDesEtapes, listeHeros, scenesDisponibles } from "shared/moteur";
 import { jeu, monHeros } from "../partie";
+import { tr } from "shared/langue";
 
 const panneaux = new Map<string, TextLabel>();
 
@@ -79,9 +80,9 @@ export function majMarqueurs(visible: boolean) {
 		if (!accessible) continue;
 		const scenes = scenesDisponibles(CONTENU, etat, id, h.id);
 		const principale = scenes.some((s) => s.quete !== undefined && CONTENU.quetes[s.quete]?.type === "principale");
-		const marque = principale ? '<font color="#ffd166">⭐</font> ' : scenes.size() > 0 ? '<font color="#9fd3ff">●</font> ' : "";
-		const combat = lieuAvecCombat(CONTENU, etat, id, h.id) ? ' <font color="#ff9b8a">⚔</font>' : "";
-		const etape = etapes.includes(id) ? '<font color="#ffd166">📍</font> ' : "";
+		const marque = principale ? tr("<font color=\"#ffd166\">⭐</font> ") : scenes.size() > 0 ? tr("<font color=\"#9fd3ff\">●</font> ") : "";
+		const combat = lieuAvecCombat(CONTENU, etat, id, h.id) ? tr(" <font color=\"#ff9b8a\">⚔</font>") : "";
+		const etape = etapes.includes(id) ? tr("<font color=\"#ffd166\">📍</font> ") : "";
 		etiquette.Text = `${etape}${marque}${lieu.nom}${combat}`;
 	}
 }
@@ -130,7 +131,7 @@ export function majPnj() {
 			const scenes = (ok && etat && h ? scenesDisponibles(CONTENU, etat, lieuId, h.id) : []).filter((sc) => sc.pnj === pnjId || (sc.pnj === undefined && premier));
 			const principale = scenes.some((sc) => sc.quete !== undefined && CONTENU.quetes[sc.quete]?.type === "principale");
 			const rendre = scenes.some((sc) => sc.rend_quete === true);
-			marque.Text = rendre ? '<font color="#ffd166">?</font>' : principale ? '<font color="#ffd166">!</font>' : scenes.size() > 0 ? '<font color="#d0d6e0">!</font>' : "";
+			marque.Text = rendre ? tr("<font color=\"#ffd166\">?</font>") : principale ? tr("<font color=\"#ffd166\">!</font>") : scenes.size() > 0 ? tr("<font color=\"#d0d6e0\">!</font>") : "";
 			(marque.Parent as BillboardGui).Enabled = ok;
 		}
 	}

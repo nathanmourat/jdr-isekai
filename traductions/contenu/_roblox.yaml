@@ -1,0 +1,4 @@
+# Textes propres à la version Roblox (ajoutés à l'export)
+# Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
+- fr: Amie fidèle
+- fr: Lien indéfectible

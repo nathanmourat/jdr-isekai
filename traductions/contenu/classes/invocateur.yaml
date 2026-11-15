@@ -1,0 +1,33 @@
+# Textes de content/classes/invocateur.yaml
+# Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
+- fr: Invocateur
+- fr: Contrôle / dégâts indirects
+- fr: Il combat entouré de créatures liées à son âme.
+- fr: Lien d'âme
+- fr: Un loup spectral combat à ses côtés en permanence. S'il tombe, il revient au bout de 4 tours.
+- fr: Meute
+- fr: Plusieurs petites invocations.
+- fr: Colosse
+- fr: Une grosse invocation.
+- fr: Porte du Bestiaire
+- fr: Invoque une créature légendaire pendant 3 tours.
+- fr: Agit plusieurs fois par tour grâce à ses invocations, qui encaissent à sa place.
+- fr: Très faible si ses invocations sont détruites ; vulnérable au silence.
+- fr: Appel du gardien de pierre
+- fr: Invoque un golem de pierre qui provoque les ennemis pendant 2 tours.
+- fr: Échange d'âme
+- fr: Soigne ses invocations de 40 % et se protège d'un bouclier.
+- fr: Feux follets
+- fr: Invoque deux feux follets qui brûlent les ennemis pendant 3 tours.
+- fr: Éveil du colosse
+- fr: Invoque un colosse de pierre pendant 4 tours.
+- fr: Meute spectrale
+- fr: Appelle deux loups spectraux pour 3 tours.
+- fr: Chasse sauvage
+- fr: Les esprits de la meute fondent sur tous les ennemis.
+- fr: Rempart vivant
+- fr: Une carapace de pierre protège tout le groupe ; les créatures sont soignées.
+- fr: Titan de pierre
+- fr: Réveille un colosse pour 4 tours et un gardien de pierre à ses côtés.
+- fr: Ultime — Porte du Bestiaire
+- fr: "Ouvre la Porte : un wyrm ancestral combat pour le groupe pendant 3 tours."

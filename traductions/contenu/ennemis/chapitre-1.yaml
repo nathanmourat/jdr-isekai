@@ -1,0 +1,127 @@
+# Textes de content/ennemis/chapitre-1.yaml
+# Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
+- fr: Golem d'entraînement
+- fr: Le golem d'argile de l'examen de la Guilde. Il ne frappe pas fort, mais il encaisse.
+- fr: Coup de poing d'argile
+- fr: abat son poing d'argile sur {cible}
+- fr: Balayage
+- fr: balaie {cible} d'un large revers du bras
+- fr: Loup gris
+- fr: Grand loup aux yeux jaunes, chasse en meute.
+- fr: Morsure à la jambe
+- fr: bondit et mord {cible} à la jambe
+- fr: Coup de crocs
+- fr: referme ses crocs sur le bras de {cible}
+- fr: Griffes
+- fr: laboure {cible} d'un coup de griffes
+- fr: Morsure sauvage
+- fr: Une morsure qui fait saigner.
+- fr: Gobelin cendré
+- fr: Gobelin à la peau grise, corrompu par les Cendres.
+- fr: Coup de lance
+- fr: pique {cible} de sa lance rouillée
+- fr: Coup bas
+- fr: frappe {cible} aux genoux en ricanant
+- fr: Jet de pierre
+- fr: lance une pierre noircie sur {cible}
+- fr: Squelette de crypte
+- fr: Un ancien garde, relevé par un sceau cendré.
+- fr: Taille d'épée
+- fr: taillade {cible} de son épée ébréchée
+- fr: Coup de bouclier
+- fr: cogne {cible} avec le bord de son bouclier
+- fr: Araignée géante
+- fr: Grande comme un chien, venimeuse.
+- fr: Morsure venimeuse
+- fr: plante ses crochets dans {cible}
+- fr: Pattes acérées
+- fr: frappe {cible} de ses pattes avant
+- fr: Toile collante
+- fr: Immobilise une cible.
+- fr: Bandit
+- fr: Un détrousseur de grand chemin.
+- fr: Coup de gourdin
+- fr: assène un coup de gourdin à {cible}
+- fr: Coup de couteau
+- fr: pique {cible} d'un coup de couteau rapide
+- fr: Coup d'épaule
+- fr: bouscule {cible} d'un coup d'épaule
+- fr: Coup sournois
+- fr: Frappe une cible affaiblie.
+- fr: Cultiste des Cendres
+- fr: Un fanatique qui porte un sceau violet sur la main.
+- fr: Trait d'ombre
+- fr: lance un trait d'ombre sur {cible}
+- fr: Murmure des Cendres
+- fr: murmure une malédiction qui glace {cible}
+- fr: Trait de cendre
+- fr: Un trait d'énergie sombre.
+- fr: Soin impie
+- fr: Soigne un allié.
+- fr: Golem de la Fontaine
+- fr: Le gardien de pierre de la crypte, une fontaine dans le dos. Mini-boss.
+- fr: Poing de pierre
+- fr: écrase son poing de pierre sur {cible}
+- fr: Jet d'eau sous pression
+- fr: projette un jet d'eau glacée sur {cible}
+- fr: Piétinement
+- fr: piétine le sol et renverse {cible}
+- fr: Déferlante
+- fr: Un torrent d'eau qui frappe tous les adversaires.
+- fr: Source vive
+- fr: La fontaine le soigne.
+- fr: Vorthak, émissaire des Cendres
+- fr: Démon en armure noire, épée entourée de flammes violettes. Il s'enfuit s'il est trop blessé.
+- fr: Lame cendrée
+- fr: abat sa lame noire sur {cible}
+- fr: Revers de gantelet
+- fr: frappe {cible} d'un revers de gantelet
+- fr: Flammes violettes
+- fr: enveloppe {cible} de flammes violettes
+- fr: Lame violette
+- fr: Une taille enflammée de feu violet.
+- fr: Vague de cendres
+- fr: Une vague de cendres brûlantes sur tout le groupe.
+- fr: Regard terrifiant
+- fr: Peut terrifier tout le groupe.
+- fr: Sergent Maelric
+- fr: "Examinateur de la Guilde : un vétéran trapu qui frappe du plat de l'épée."
+- fr: Plat de l'épée
+- fr: frappe {cible} du plat de l'épée
+- fr: Feinte basse
+- fr: feinte, puis touche {cible} à la jambe
+- fr: Leçon du sergent
+- fr: Un enchaînement appuyé, pour voir si le candidat tient debout.
+- fr: Capitaine Ysolde Brandefer
+- fr: "Examinatrice de la Guilde : rapide, précise, et jamais essoufflée."
+- fr: Estoc
+- fr: porte un estoc net à {cible}
+- fr: Revers
+- fr: surprend {cible} d'un revers
+- fr: Coup de pommeau
+- fr: repousse {cible} d'un coup de pommeau
+- fr: Passe de Brandefer
+- fr: Deux touches enchaînées, trop rapides pour être parées toutes les deux.
+- fr: Maître d'armes Corvan Elsterre
+- fr: "Le maître d'armes de la Guilde : il ne se bat que contre ceux qui visent le rang C."
+- fr: Taille
+- fr: abat sa lame sur {cible}
+- fr: Charge d'épaule
+- fr: percute {cible} de l'épaule
+- fr: Épreuve du maître
+- fr: Un coup porté de toute sa force, pour clore l'examen.
+- fr: Examen du rang E
+- fr: Examen du rang D
+- fr: Examen du rang C
+- fr: Examen de la Guilde
+- fr: Les loups de la Combe-aux-Saules
+- fr: La louve noire
+- fr: Embuscade de gobelins
+- fr: Bandits de grand chemin
+- fr: Gardes de la crypte
+- fr: Nid d'araignées
+- fr: Le Golem de la Fontaine
+- fr: Les cultistes des Tanneurs
+- fr: Attaque de la Fête des Lanternes
+- fr: Vorthak
+- fr: Tournoi des écuyers

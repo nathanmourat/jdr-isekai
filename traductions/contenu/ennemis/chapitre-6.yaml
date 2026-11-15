@@ -1,0 +1,88 @@
+# Textes de content/ennemis/chapitre-6.yaml
+# Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
+- fr: Garde d'obsidienne
+- fr: Un soldat d'élite de la Citadelle, armure noire polie comme un miroir, hallebarde de verre volcanique.
+- fr: Hallebarde de verre
+- fr: fauche {cible} d'une hallebarde d'obsidienne
+- fr: Coup de bouclier
+- fr: repousse {cible} d'un coup de bouclier
+- fr: Ombre du Voile
+- fr: Une silhouette violette, sans visage, échappée d'une déchirure. Elle chuchote dans une langue que personne ne parle.
+- fr: Murmure
+- fr: chuchote à l'oreille de {cible}
+- fr: Éclat du Voile
+- fr: lance un éclat violet sur {cible}
+- fr: Petite déchirure
+- fr: Elle ouvre une fente dans l'air, qui aspire les forces.
+- fr: Dragon de cendre
+- fr: Un dragon mort il y a des siècles, relevé par les Cendres. Ses ailes sont trouées, son souffle est gris.
+- fr: Griffes grises
+- fr: lacère {cible} de ses griffes
+- fr: Morsure de cendre
+- fr: mord {cible}
+- fr: Souffle gris
+- fr: Un souffle de cendre froide sur tout le groupe.
+- fr: Liche cendrée
+- fr: Un ancien prêtre de l'Ordre, venu chercher Orvan il y a des siècles, et qui n'est jamais reparti. Il soigne les démons qu'il haïssait.
+- fr: Trait de cendre
+- fr: lance un trait de cendre sur {cible}
+- fr: Prière inversée
+- fr: maudit {cible} d'une prière à l'envers
+- fr: Requiem
+- fr: Un chant qui recoud les chairs mortes.
+- fr: Chevalier cendré
+- fr: Un chevalier de la garde personnelle du Souverain, en armure noire aux runes violettes. Il ne parle jamais.
+- fr: Lame runique
+- fr: frappe {cible} d'une lame aux runes violettes
+- fr: Charge
+- fr: renverse {cible}
+- fr: Serment noir
+- fr: "Il plante son épée au sol : l'ombre protège ses alliés."
+- fr: Golem d'obsidienne
+- fr: Un golem noir veiné de lave, gardien de la Citadelle. Chaque pas fait trembler le sol.
+- fr: Poing d'obsidienne
+- fr: écrase {cible} d'un poing noir
+- fr: Éclats de verre
+- fr: projette des éclats tranchants sur {cible}
+- fr: Le Geôlier
+- fr: Un colosse d'obsidienne qui porte à la ceinture les clés de toutes les cellules de la Citadelle. Ses chaînes traînent par terre en chantant.
+- fr: Chaîne
+- fr: fouette {cible} d'une chaîne d'obsidienne
+- fr: Poing
+- fr: écrase {cible}
+- fr: Enchaînement
+- fr: Ses chaînes s'enroulent autour d'un héros.
+- fr: Orvan, Souverain des Cendres
+- fr: Un homme grand, en armure d'obsidienne, couronne de flammes noires. Ses yeux sont ceux d'un homme très fatigué. Il était le premier Appelé.
+- fr: Épée du premier Appel
+- fr: frappe {cible} d'une épée qui vient d'un autre monde
+- fr: Geste royal
+- fr: renverse {cible} d'un simple geste
+- fr: Couronne de flammes
+- fr: "La couronne s'embrase : des flammes noires tombent sur le groupe."
+- fr: Orvan déchaîné
+- fr: Le Souverain a jeté sa couronne. Il se bat comme un homme qui a tout perdu il y a six cents ans, et qui n'a plus rien à perdre.
+- fr: Fureur
+- fr: frappe {cible} de toutes ses forces
+- fr: Cri du premier Appelé
+- fr: hurle sur {cible} un nom que personne ne connaît
+- fr: Six cents ans de colère
+- fr: Une série de coups, de plus en plus forts.
+- fr: Rage ancienne
+- fr: Sa colère le rend plus fort.
+- fr: Orvan, cœur du Voile
+- fr: Orvan a plongé dans la déchirure, sous la Citadelle. Il est devenu une silhouette de lumière violette, reliée au Voile par mille fils. S'il tombe, le Voile tombe avec lui… ou se recoud.
+- fr: Fil du Voile
+- fr: transperce {cible} d'un fil de lumière
+- fr: Souvenir
+- fr: montre à {cible} un souvenir de son monde d'origine
+- fr: Tempête du Voile
+- fr: Le Voile se déchire autour du groupe.
+- fr: Mille fils
+- fr: Les fils du Voile recousent ses blessures.
+- fr: Les gardes d'obsidienne
+- fr: Les ombres du Voile
+- fr: Le dragon de cendre
+- fr: Les chevaliers du Souverain
+- fr: Le golem d'obsidienne
+- fr: Les prêtres oubliés

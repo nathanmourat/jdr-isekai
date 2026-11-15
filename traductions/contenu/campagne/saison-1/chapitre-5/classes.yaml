@@ -1,0 +1,73 @@
+# Textes de content/campagne/saison-1/chapitre-5/classes.yaml
+# Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
+- fr: Lame runique — La Lame des Mille Sceaux
+- fr: "Dans la Brèche, au milieu des pierres noircies, votre lame se met à vibrer toute seule. Les runes gravées depuis Qarzim s'allument une à une, et une huitième apparaît, que vous n'avez jamais gravée : un cercle fermé, entier."
+- fr: La rune des Mille Sceaux. Elle n'apparaît que sur un champ de bataille, disait Durna. Le Mur est tombé ici. Mille sceaux brisés en un jour.
+- fr: Graver la rune pendant qu'elle brille, d'un seul trait. (Intelligence, difficulté 32)
+- fr: Laisser la lame graver la rune à travers votre main. (Vitalité, difficulté 32)
+- fr: Le trait est parfait. Toutes les runes de la lame s'allument ensemble, et pendant une seconde, elles forment un seul sceau, immense, qui illumine la Brèche.
+- fr: Vous savez maintenant ce que fait la Lame des Mille Sceaux. Toutes les charges, d'un coup. Tous les ennemis, d'un coup.
+- fr: Le trait dérape, la rune vous brûle jusqu'au coude. Mais elle tient. Elle est un peu de travers. Comme vous.
+- fr: Arcaniste — La Convergence des Quatre
+- fr: Dans la plaine cendrée, le ciel est couleur de braise, et l'air sent l'ombre. Le quatrième élément. Celui qui vous manquait.
+- fr: "Le feu du volcan, la foudre du désert, le givre de vos débuts : les trois tournent en vous. L'ombre des Cendres s'approche, curieuse, comme un chat."
+- fr: L'appeler, et la faire tourner avec les trois autres. (Intelligence, difficulté 32)
+- fr: La laisser entrer d'elle-même, sans la forcer. (Esprit, difficulté 32)
+- fr: Les quatre éléments tournent ensemble, de plus en plus vite, jusqu'à ne plus former qu'une seule lumière, blanche, insupportable. La Convergence des Quatre. Elle vous obéit.
+- fr: L'ombre résiste, vous brûle, vous glace, vous foudroie. Puis elle se range, avec les autres. Elle n'est pas domptée. Elle a décidé de rester.
+- fr: Invocateur — La Porte du Bestiaire
+- fr: Au camp, la nuit, le fennec du désert et l'esprit-dragon de l'Archipel apparaissent ensemble devant votre tente. Ils ne disent rien. Ils attendent.
+- fr: "Derrière eux, une porte se dessine dans l'air, faite de griffes, d'ailes et d'écailles : la Porte du Bestiaire. Elle s'ouvre seulement si toutes vos créatures veulent la franchir avec vous."
+- fr: Leur demander, une par une, si elles veulent venir. (Charisme, difficulté 32)
+- fr: Ouvrir la porte avec votre propre énergie. (Esprit, difficulté 32)
+- fr: Toutes répondent oui. La Porte s'ouvre, et derrière, une créature immense, ancienne, légendaire, vous regarde. Elle viendra, quand vous l'appellerez. Pour trois tours. Ce sera assez.
+- fr: La Porte s'entrouvre seulement. Mais la créature derrière a vu votre visage. Elle viendra. En traînant les pattes, peut-être, mais elle viendra.
+- fr: Ombre — Les Mille Coupures
+- fr: "Pendant la chute du Mur, vous avez tout perdu de vue : vos alliés, vos armes, le ciel. Il ne restait que des ombres, et vous au milieu."
+- fr: "Le vieux maître de Port-Vérane l'avait dit : on ne l'apprend pas. On la trouve, au milieu d'une bataille, quand on a tout perdu. Ce soir, dans la Brèche, vous la cherchez encore."
+- fr: Fermer les yeux et frapper six fois, sans réfléchir. (Agilité, difficulté 32)
+- fr: Attendre, immobile, jusqu'à devenir une ombre parmi les ombres. (Esprit, difficulté 32)
+- fr: Six coups. Vous ne les avez pas vus. Six pierres de la Brèche tombent en morceaux, parfaitement coupées. Les Mille Coupures. Elles étaient là depuis le début.
+- fr: Cinq coups seulement, et le sixième vous échappe. Mais vous avez compris le principe. Le sixième viendra au bon moment.
+- fr: Gardien — Le Bastion éternel
+- fr: Sur le chemin de ronde, à l'endroit exact où vous avez tenu pendant la chute du Mur, le vieux paladin de Qarzim vous attend. Il a l'air plus vieux que jamais.
+- fr: « Le dernier serment. Celui du Bastion éternel. On jure que personne ne tombera tant qu'on est debout. Et on ne se relève jamais tout à fait de l'avoir juré. » Il vous regarde. « Tu es sûr ? »
+- fr: Prêter le serment, à genoux, devant les noms des défenseurs du Mur. (Charisme, difficulté 32)
+- fr: Tenir votre bouclier levé jusqu'à l'aube, sans un mot. (Vitalité, difficulté 32)
+- fr: Quand vous vous relevez, votre bouclier brille d'une lumière qui ne s'éteint plus. Le vieux paladin pleure sans honte. « Le Bastion éternel. Le dernier qui l'a juré, c'était moi. Je suis content de te le passer. »
+- fr: À l'aube, vos bras tremblent, votre voix aussi. Mais le serment est pris. Le vieux paladin pose la main sur votre épaule. « Personne ne le jure parfaitement. On le tient, c'est tout. »
+- fr: Alchimiste — Le Golem d'airain
+- fr: Au camp des alliés, les forgerons nains vous ont prêté un coin de forge. Le golem d'airain est là, terminé, le cœur de forge de Durna battant dans sa poitrine. Il ne bouge pas.
+- fr: Il ne lui manque que la vie. Et aucun plan ne dit comment la donner.
+- fr: Trouver la formule qui manque, en mélangeant tout ce que vous savez. (Intelligence, difficulté 32)
+- fr: "Lui donner un peu de vous : votre sang dans la dernière fiole. (Vitalité, difficulté 32)"
+- fr: La fiole se vide dans le cœur de forge. Le golem ouvre les yeux, deux lumières bleues. Il se penche, et pose sa main de métal sur votre tête, très doucement. Il vous protégera.
+- fr: La fiole explose. Le golem ne s'allume pas… puis, au matin, vous le trouvez assis à côté de vous, qui vous regarde dormir. Vous ne savez pas ce qui a marché. Lui non plus.
+- fr: Archer — La Pluie des Ancêtres
+- fr: Sur le chemin de ronde, le vent du nord souffle fort. Vous avez tiré dix mille flèches depuis le début de la guerre. Ce soir, vous n'en avez plus qu'une.
+- fr: "La plume blanche de Sorha frémit. Une voix, très loin : « Appelle-nous. »"
+- fr: Tirer votre dernière flèche vers le ciel, en appelant les ancêtres. (Agilité, difficulté 32)
+- fr: Écouter le vent jusqu'à entendre leurs voix. (Esprit, difficulté 32)
+- fr: La flèche monte, monte, et se divise. Dix, cent, mille flèches de lumière retombent sur la plaine, tirées par des archers que vous ne voyez pas, mais dont vous entendez les rires. La Pluie des Ancêtres.
+- fr: La flèche retombe seule, mais une plume de lumière flotte avec elle. Les ancêtres ont entendu. La prochaine fois, ils viendront tous.
+- fr: Guérisseur — Le Second Souffle
+- fr: Après la chute du Mur, il y a eu trop de blessés, et vous n'avez pas pu tous les sauver. Ce soir, à la porte de Fort-Aube, on vous amène un soldat qui ne respire plus depuis une minute.
+- fr: "Néréa l'a dit : celui qui a bu à la source peut ramener quelqu'un. Une fois. Vous sentez le souffle de la source, quelque part en vous."
+- fr: Lui donner votre souffle. (Esprit, difficulté 32)
+- fr: Poser vos mains sur son cœur et ne pas lâcher. (Vitalité, difficulté 32)
+- fr: Le soldat tousse. Il ouvre les yeux. Autour de vous, tous les blessés de la cour respirent plus fort, comme si un vent chaud était passé sur eux. Le Second Souffle. Il n'était pas pour un seul.
+- fr: Il revient. Lui seul, de justesse. Vous tombez à genoux, vidé. Mais vous avez senti comment faire. La prochaine fois, ce sera pour tous.
+- fr: Berserker — La Forme du Wyrm
+- fr: Dans la plaine cendrée, après la bataille, votre sang chante encore. La dernière note de la chanson des wyrms. Vous la sentez au bout de la langue, comme du feu.
+- fr: Au-dessus de vous, un dragon de l'Archipel tourne en cercle. Il attend, lui aussi.
+- fr: Laisser monter la dernière note, jusqu'au bout. (Force, difficulté 32)
+- fr: Chanter avec le dragon, au lieu de crier. (Esprit, difficulté 32)
+- fr: Vos os craquent. Des écailles poussent sur vos bras, des ailes dans votre ombre, du feu dans votre gorge. Pendant trois battements de cœur, vous êtes un wyrm. Puis vous redevenez vous. La Forme du Wyrm. Elle reviendra quand vous l'appellerez.
+- fr: Les écailles poussent, puis tombent. Vous restez à genoux, fumant. Le dragon, au-dessus, souffle une flamme de joie. Il a vu. Ça viendra.
+- fr: Barde — La Symphonie du dernier acte
+- fr: À la Gamelle, la veille de la contre-offensive, personne ne dort. Les soldats boivent en silence. Quelqu'un vous tend votre instrument. « Joue quelque chose. N'importe quoi. »
+- fr: "Les quatre couplets sont là, dans votre tête : les dunes, les sirènes, et deux que vous avez écrits vous-même. Il manque juste la façon de les jouer ensemble."
+- fr: Jouer les quatre couplets ensemble, en même temps. (Charisme, difficulté 32)
+- fr: Laisser les soldats chanter, et les accompagner. (Esprit, difficulté 32)
+- fr: La musique remplit la Gamelle, puis la cour, puis le camp entier. Des milliers de voix la reprennent. Tout le monde se lève, sans savoir pourquoi, prêt à tout recommencer. La Symphonie du dernier acte.
+- fr: "Vous ratez une note sur trois. Mais personne ne s'en rend compte : tout le monde chante trop fort. La Symphonie existe. Vous l'avez entendue."

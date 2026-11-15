@@ -1,0 +1,33 @@
+# Textes de content/classes/ombre.yaml
+# Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
+- fr: Ombre
+- fr: Dégâts (cible unique)
+- fr: Un assassin qui frappe là où l'ennemi ne regarde pas.
+- fr: Dans le dos
+- fr: +35 % de chances de critique contre une cible affaiblie ou qui ne l'attaque pas.
+- fr: Assassinat
+- fr: Critiques et exécutions.
+- fr: Toxines
+- fr: Poisons et affaiblissements.
+- fr: Mille Coupures
+- fr: 6 frappes réparties sur les ennemis, chacune avec une chance de critique.
+- fr: Élimine une cible prioritaire en un ou deux tours.
+- fr: Peu de PV ; faible contre les groupes nombreux.
+- fr: Pas d'ombre
+- fr: Devient invisible pendant 1 tour ; la prochaine attaque est un critique garanti.
+- fr: Lame empoisonnée
+- fr: Une entaille qui empoisonne (cumulable 3 fois).
+- fr: Coup de grâce
+- fr: Double dégâts contre une cible sous 25 % de PV.
+- fr: Nuage toxique
+- fr: Empoisonne tous les ennemis.
+- fr: Danse des lames
+- fr: Trois frappes rapides sur la même cible.
+- fr: Exécution silencieuse
+- fr: Un coup mortel, toujours critique, qui achève une cible affaiblie.
+- fr: Venin paralysant
+- fr: Un poison qui engourdit les muscles.
+- fr: Peste noire
+- fr: Un nuage de toxines sur tous les ennemis, qui s'affaiblissent.
+- fr: Ultime — Mille Coupures
+- fr: "L'Ombre disparaît et frappe partout à la fois : six coups sur les ennemis, chacun avec une chance de critique."

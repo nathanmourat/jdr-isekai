@@ -1,0 +1,45 @@
+# Textes de content/campagne/saison-1/quetes.yaml
+# Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
+- fr: Chapitre 1 — L'Appel
+- fr: Invoqués ou revenus d'une autre vie, vous voici à Lysmont. Survivez, entrez à la Guilde, et découvrez ce que la Couronne attend de vous.
+- fr: Écouter le Grand Prieur au Temple du Seuil.
+- fr: Passer l'examen d'entrée de la Guilde.
+- fr: Explorer la Crypte de la Fontaine (Brumaire 1013).
+- fr: Assister à la Fête des Lanternes (15 Floréal 1014).
+- fr: Répondre à la convocation du roi (Nivôse 1014).
+- fr: Chapitre terminé.
+- fr: Premiers pas au Comptoir
+- fr: Dame Halvine vous montre comment acheter et vendre dans sa boutique.
+- fr: Acheter un objet utile au Comptoir de Halvine (une petite potion de soin, par exemple).
+- fr: Vendre la breloque cabossée (onglet « Vendre » de la boutique).
+- fr: Retourner parler à Dame Halvine.
+- fr: Les loups de la Combe-aux-Saules
+- fr: Gareth le fermier perd ses moutons, et sa fille n'ose plus sortir.
+- fr: Prendre l'affaire auprès de Dame Rowena, à la Guilde.
+- fr: Aller voir Gareth à la Combe-aux-Saules.
+- fr: Suivre les traces à la lisière de la Combe.
+- fr: Trouver la meute au vieux saule creux.
+- fr: Revenir à la Guilde raconter la fin de l'affaire.
+- fr: Le marchand de reliques
+- fr: Au Chaudron Fêlé, un marchand vend des « os de saint » à prix d'or.
+- fr: Approcher le colporteur Orlan Cassebrune à la taverne.
+- fr: Les disparus du quartier des Tanneurs
+- fr: Trois personnes ont disparu en un mois dans les ruelles des Tanneurs.
+- fr: Écouter les habitants du quartier des Tanneurs.
+- fr: Chercher une piste près du puits des Tanneurs.
+- fr: Fouiller la tannerie abandonnée.
+- fr: Faire son rapport à Dame Rowena, à la Guilde.
+- fr: L'apprenti de l'Ordre
+- fr: "Sœur Elianne s'inquiète : son apprenti Tobin passe ses nuits dans les archives interdites."
+- fr: Parler à Sœur Elianne au Temple du Seuil.
+- fr: Le tournoi des écuyers
+- fr: Aveline arbitre le tournoi des écuyers ; il manque un participant… ou un adversaire.
+- fr: Se présenter à l'arène.
+- fr: Observer le mercenaire tricheur sur la place de Lysmont.
+- fr: Retourner à l'arène pour le duel.
+- fr: Le Serment brisé
+- fr: Le père d'Aveline a été exécuté pour trahison après la chute de Valgrane. Elle n'y a jamais cru.
+- fr: Gagner la confiance d'Aveline (palier « Proche »).
+- fr: Trouver un moyen d'accéder aux archives militaires de Valgrane (avec l'aide de Séraphine, au chapitre 2).
+- fr: Découvrir pourquoi l'Ordre a scellé le dossier de Valgrane (chapitre 4).
+- fr: Faire réhabiliter Gauvain de Castelroc (chapitre 5).

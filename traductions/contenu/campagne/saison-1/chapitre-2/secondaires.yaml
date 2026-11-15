@@ -1,0 +1,70 @@
+# Textes de content/campagne/saison-1/chapitre-2/secondaires.yaml
+# Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
+- fr: "La Grande Mère des chacals : l'affaire"
+- fr: "Ibrek remonte ses lunettes sur son museau roux. « Sept chameaux en un mois, dans le Canyon des Chacals. Les caravaniers parlent d'une matriarche blanche, grande comme un poney. Personne ne veut le contrat : il paie mal. »"
+- fr: Kaya ricane. « Il paie mal, mais il paie en gloire. »
+- fr: « On prend. »
+- fr: « Le canyon est au sud-est. Prenez de l'eau, et ne faites pas confiance à l'écho. »
+- fr: "La Grande Mère des chacals : le canyon"
+- fr: Les parois rouges se resserrent. Des jappements résonnent de partout et de nulle part à la fois.
+- fr: Avancer en silence et repérer la meute. (Agilité, difficulté 20)
+- fr: "Avancer d'un pas ferme : qu'ils viennent."
+- fr: Vous repérez les guetteurs avant qu'ils ne vous voient. La tanière est au fond du canyon, sous un surplomb.
+- fr: Une meute surgit des rochers !
+- fr: Les survivants fuient vers le fond du canyon, sous un surplomb. Vous savez où aller.
+- fr: "La Grande Mère des chacals : la tanière"
+- fr: Sous le surplomb, une chacale énorme, au pelage presque blanc, se dresse devant ses petits. Ses yeux sont fatigués. Ses côtes saillent.
+- fr: Kaya fronce les sourcils. « Elle a faim. Les mines ont fait fuir tout le gibier du canyon. »
+- fr: Combattre la matriarche.
+- fr: Lui laisser de la viande et la chasser loin des routes. (Esprit, difficulté 22)
+- fr: La Grande Mère tombe. Ses petits s'enfuient dans les rochers.
+- fr: La matriarche vous laisse au sol et emporte ses petits vers le désert profond. Elle ne reviendra pas.
+- fr: La chacale renifle la viande, vous fixe longuement… puis s'éloigne vers le sud avec toute sa meute. Les routes seront tranquilles.
+- fr: Kaya vous regarde avec un respect nouveau. « Tu parles aux bêtes, maintenant ? »
+- fr: "La Grande Mère des chacals : le retour"
+- fr: "« Le canyon est sûr ? Parfait. » Ibrek trempe sa plume. « Je note : contrat rempli, avec… mention. »"
+- fr: "Les puits asséchés : l'inquiétude de Ziyane"
+- fr: Mère Ziyane trempe la main dans le bassin de l'auberge. « Il baisse. Chaque semaine, un doigt de moins. Le vieux canal de l'Oasis passe par les puits du sud… et mon grand-père disait qu'il n'était jamais à sec. »
+- fr: « Nous irons voir. »
+- fr: « Que les puits vous soient doux. » Elle vous remplit les gourdes, gratuitement.
+- fr: "Les puits asséchés : le vieux canal"
+- fr: "Les puits sont à sec. Mais dans le canal, les traces sont fraîches : des pelles, des roues de chariot… et un barrage de planches neuves qui détourne l'eau vers l'est."
+- fr: Vers l'est. Vers les mines d'éther.
+- fr: "Les puits asséchés : l'eau des mines"
+- fr: Aux mines, l'eau du canal sert à laver le minerai violet. Des bassins entiers, troubles, gaspillés, puis rejetés dans le sable.
+- fr: Un capitaine en cuirasse dorée s'approche. « Propriété de la Concorde. Circulez. »
+- fr: Détruire le barrage cette nuit, en silence.
+- fr: Exiger que l'eau soit rendue à Qarzim.
+- fr: Acheter les gardes pour qu'ils « oublient » le barrage. (100 or)
+- fr: "Les planches cèdent dans un grand fracas d'eau. Le canal se remplit. Au loin, des cris : on vous a vus."
+- fr: « Exiger ? » Le capitaine rit. « Gardes ! »
+- fr: Les mercenaires battus démontent eux-mêmes le barrage, sous vos yeux.
+- fr: L'or change de main. Au matin, le barrage a « mystérieusement » disparu.
+- fr: "Les puits asséchés : le retour"
+- fr: Le bassin déborde presque. Mère Ziyane pleure et rit en même temps. « Vous dormirez ici quand vous voudrez. Et la première nuit, c'est la maison qui offre ! »
+- fr: "La caravane fantôme : une vieille histoire"
+- fr: Maître Ouzram cesse de polir une lame. « Il y a vingt ans, la caravane de mon frère, Belkhir, s'est perdue dans les Dunes chantantes. Certaines nuits, des caravaniers voient des lanternes là-bas… et entendent des clochettes de chameaux. »
+- fr: « Je ne crois pas aux fantômes. Mais je voudrais savoir. »
+- fr: « Nous irons voir, Maître Ouzram. »
+- fr: "La caravane fantôme : les Dunes chantantes"
+- fr: "La nuit tombe. Les dunes chantent, une note longue et triste. Puis, au loin : des clochettes. Des lanternes. Une file de chameaux translucides avance lentement."
+- fr: À la tête de la caravane, un homme sans visage, couvert de sel, lève la main. Les chameaux s'arrêtent. Les chacals sortent de l'ombre.
+- fr: Les lanternes s'éteignent une à une. Dans le sable, à la place du chef de caravane, une boîte de cuivre gravée du nom « Belkhir Telli », et une poignée de cendres.
+- fr: "Une voix, très faible, dans le chant des dunes : « …l'oasis… ramenez-moi à l'oasis… »"
+- fr: "La caravane fantôme : l'oasis perdue"
+- fr: L'oasis perdue n'est que trois palmiers morts. Vous dispersez les cendres de Belkhir au pied du plus grand.
+- fr: "Le lendemain, vous ne l'avez pas rêvé : une pousse verte est sortie du sable. Les dunes, au loin, ne chantent plus."
+- fr: De retour au Bazar, Maître Ouzram écoute toute l'histoire sans un mot. Puis il vous tend une lame qu'il gardait sous son comptoir. « Elle était à mon frère. Elle sera mieux dans vos mains que dans les miennes. »
+- fr: "Le repaire des pillards : le prisonnier"
+- fr: Le jeune pillard de la Route des Caravanes a été retrouvé à la Porte, mendiant de l'eau.
+- fr: Le jeune pillard de la Route des Caravanes croupit dans la geôle de la Porte.
+- fr: Nadja s'accroupit devant lui. « Qui vous a payés pour retarder la princesse ? »
+- fr: Le convaincre gentiment. (Charisme, difficulté 19)
+- fr: Le menacer.
+- fr: "Le garçon fond en larmes. « Un homme en soie est venu au repaire. Avec une bague violette. Il a payé en cristaux. » Il vous dit où trouver le repaire : entre deux rochers en forme de crocs, à l'est."
+- fr: Le garçon se recroqueville et parle, terrorisé. Le repaire est à l'est, entre deux rochers en forme de crocs.
+- fr: "Le repaire des pillards : l'assaut"
+- fr: Des tentes rapiécées, un feu, des chameaux volés. Et des pillards qui vous attendaient.
+- fr: Dans la tente du chef, un coffret plein de cristaux d'éther… et un reçu, signé d'un « H. » orné d'une bague.
+- fr: "Le repaire des pillards : la preuve"
+- fr: Nadja regarde le reçu longtemps. « Un « H. ». Ça ne prouve rien… et ça dit tout. » Elle le glisse dans son carnet. « Quelqu'un, très haut à la Concorde, ne voulait pas de ce traité. »

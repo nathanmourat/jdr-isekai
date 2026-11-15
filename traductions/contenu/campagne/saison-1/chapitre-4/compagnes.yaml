@@ -1,0 +1,70 @@
+# Textes de content/campagne/saison-1/chapitre-4/compagnes.yaml
+# Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
+- fr: Ysoria — Les coutumes humaines
+- fr: Ysoria a commandé « tout ». Le vieux Brann a pris ça au pied de la lettre. Elle mange avec les mains, sur une table couverte de plats, sous les regards horrifiés des pirates.
+- fr: « Pourquoi les humains mettent-ils leur nourriture dans des petites assiettes ? C'est inefficace. » Elle vous tend une cuisse de poulet entière. « Mange. Tu es trop petit. »
+- fr: Manger avec les mains, comme elle.
+- fr: Lui expliquer patiemment à quoi sert une fourchette.
+- fr: Elle examine la fourchette longtemps, très sérieuse. Puis elle la plie en forme de bague et la met à son doigt. « C'est joli. Ça brille. Merci. »
+- fr: Le soir, elle dort sur le comptoir, au milieu des pièces d'or de la caisse, roulée en boule. Brann n'ose pas la réveiller pour récupérer sa recette.
+- fr: Ysoria — La piste de l'œuf
+- fr: Ysoria entre au Marché aux épaves et toutes les conversations s'arrêtent. Elle va droit à Corail. « Tu vends tout ce que la mer rapporte. As-tu vendu un œuf ? Rouge et or, gros comme ça, chaud comme une forge ? »
+- fr: Corail pâlit, ce qui est difficile pour une sang-dragon. « Je… Je ne l'ai pas vendu. Je l'ai vu passer. Il y a trois ans. Sur un navire de la Concorde, vers le nord. Vers le Mur d'Aube. »
+- fr: « Le capitaine disait qu'un acheteur l'attendait de l'autre côté du Mur. Un acheteur qui paie en obsidienne. »
+- fr: Poser la main sur l'épaule d'Ysoria. « Nous le retrouverons. »
+- fr: « De l'autre côté du Mur… La Légion a ton œuf. »
+- fr: La température monte dans tout le marché. Les bougies fondent. Puis Ysoria ferme les yeux, et l'air redevient frais. « Le Souverain a mon œuf. » Sa voix est très calme. « Alors j'irai le chercher dans sa Citadelle, et je brûlerai tout ce qui sera entre lui et moi. »
+- fr: Morra — Le pain chaud
+- fr: Morra est assise sur les marches de la Porte, un pain entier dans les mains. Elle le regarde comme on regarde un trésor. « Dans les Cendres, on mange de la cendre. Littéralement. Ça, c'est… » Elle mord dedans. Elle ferme les yeux.
+- fr: « Ne me regarde pas comme ça. Une démone a le droit d'aimer le pain. »
+- fr: S'asseoir à côté d'elle et partager le pain.
+- fr: « Tu sais qu'il y a aussi des gâteaux, à Lysmont ? »
+- fr: Elle se fige. « Des gâteaux. » Un silence. « Appelé, si tu me mens, je te coupe en deux. » Un autre silence. « … Quel genre de gâteaux ? »
+- fr: Les gardes nains la regardent de travers. Elle leur fait un grand sourire plein de dents pointues. Ils regardent ailleurs. Elle rit.
+- fr: Morra — Les chaînes d'obsidienne
+- fr: Morra pose un maillon de chaîne noire sur l'enclume de Durna. « Arraché à la chaîne de Lyss, le jour où je suis partie. Obsidienne des Cendres. Aucune lame ne la coupe. »
+- fr: Maîtresse Durna frappe le maillon. Son marteau rebondit. Elle frappe encore, plus fort. Rien. Elle siffle d'admiration. « Une matière qui résiste au feu de mille ans… Il faudrait une clé, pas une lame. Une clé de braise, forgée dans un feu plus vieux que les Cendres. »
+- fr: « Le feu d'un dragon, par exemple. » Elle se gratte le menton. « Si votre dragonne veut bien souffler dans ma forge… »
+- fr: « Nous trouverons ce feu. Je te le promets, Morra. »
+- fr: Prendre la main de Morra, sans rien dire.
+- fr: Morra reprend le maillon et le serre dans son poing. « Trois siècles que je sers le Souverain pour qu'elle vive. » Elle vous regarde. « C'est la première fois que quelqu'un me dit « nous ». »
+- fr: Aveline — Le nom de mon père
+- fr: Aveline n'a pas touché à sa chope. Elle a l'estampage du Registre étalé devant elle, et la lettre de Valgrane qu'elle garde depuis Qarzim. « Les dates correspondent. Le jour de l'Appel secret, mon père tenait la porte nord de Valgrane. »
+- fr: « Il a vu le cercle s'ouvrir. Il a vu les Cendres sortir. Il a fait évacuer la ville. Trois mille personnes. » Sa voix se brise. « Et l'Ordre l'a fait exécuter pour trahison, pour que personne ne sache ce qu'il avait vu. »
+- fr: « Ton père était un héros, Aveline. Nous le ferons savoir à tout le royaume. »
+- fr: La laisser pleurer contre votre épaule, sans rien dire.
+- fr: Elle s'essuie les yeux, se redresse, redevient la capitaine. « Gauvain de Castelroc. Je veux entendre ce nom crié sur la place de Lysmont. Pas murmuré. » Elle serre votre main. « Merci de m'avoir suivie jusqu'ici. »
+- fr: Elianne — Ce que la Lumière cache
+- fr: Elianne est restée seule dans la salle du trône, devant le feu de lave. Elle a posé son voile de l'Ordre sur ses genoux. « J'ai prié toute la nuit. Pour la première fois de ma vie, personne n'a répondu. »
+- fr: « J'ai été élevée par l'Ordre. J'ai vu votre Appel. J'ai chanté pendant qu'on vous arrachait à votre monde. » Elle lève les yeux vers vous. « Comment peux-tu encore me regarder ? »
+- fr: « Tu ne savais pas. Et maintenant que tu sais, tu te bats pour la vérité. C'est ça qui compte. »
+- fr: « La Lumière n'est pas l'Ordre, Elianne. Ta foi t'appartient. »
+- fr: Elle vous regarde longtemps. Puis elle remet son voile, lentement, avec soin. « Tu as raison. Ce ne sont pas eux qui m'ont appris à soigner. C'est la Lumière. Ils n'ont pas le droit de me la prendre. »
+- fr: « Il faudra choisir, bientôt. Dire la vérité, ou la garder. » Elle se lève. « Quand le moment viendra… je serai à côté de toi. Quoi que tu décides. Ou presque. »
+- fr: Ilyssë — Là où le Voile est fin
+- fr: "Ilyssë a installé ses instruments au sommet du Phare noyé : des lentilles, des fils d'argent, un astrolabe elfique. « La lumière verte, ici, ne vient pas de notre monde. Le Voile est si fin qu'on voit à travers. »"
+- fr: "Elle vous tend une lentille. De l'autre côté, flou, comme sous l'eau : des lumières jaunes alignées, des toits plats, un ciel orange. Une ville. Une ville de VOTRE monde."
+- fr: Regarder longtemps, sans un mot.
+- fr: « On pourrait… rentrer, par là ? »
+- fr: Ilyssë ne répond pas tout de suite. « Peut-être. Un jour. Si on comprend comment le Voile se recoud… on comprendra aussi comment il s'ouvre proprement. » Elle détourne les yeux. « Tu voudrais partir ? »
+- fr: Elle note tout dans son carnet, très vite, l'écriture qui penche. « Le Voile n'est pas déchiré au hasard. Il est déchiré le long des Appels, comme un tissu qu'on a trop percé au même endroit. » Elle relève la tête. « Ça veut dire qu'on peut le recoudre. Je ne sais pas encore comment. Mais on peut. »
+- fr: Kaya — Les terres des ancêtres
+- fr: L'Ancienne Sorha déroule une peau tannée où sont dessinées les terres des Lunecroc, avant la Concorde. « Le Prévôt veut rouvrir les mines du canyon. Nos tombes sont dans ce canyon. »
+- fr: Kaya montre les crocs. « Ils ne toucheront pas aux tombes. » Elle se tourne vers vous. « J'ai écrit au Prévôt. Avec ton nom à côté du mien. Un héros d'Aubeclaire, ça compte, à Qarzim. »
+- fr: « Mon nom est à toi. Utilise-le. »
+- fr: « Allons voir le Prévôt ensemble. Il comprendra mieux en face. »
+- fr: "Une semaine plus tard, une lettre de Qarzim : le canyon des tombes est rendu aux Lunecroc. Kaya hurle à la lune toute la nuit, et toute la tribu avec elle."
+- fr: "Sorha vous pose une plume blanche dans les cheveux. « Les ancêtres connaissent ton nom, maintenant. » Kaya, à côté : « Plus qu'un rang. Le rang S. Et ils chanteront nos noms pour toujours. »"
+- fr: Nadja — Les acheteurs de cristaux
+- fr: "Nadja vous entraîne derrière une pile de caisses, sur les quais. « Regarde les marques. » Des caisses de cristaux d'éther, tamponnées du sceau de la Concorde. Destination : « Mur d'Aube, poste 7 »."
+- fr: « Il n'y a pas de poste 7 sur le Mur. J'ai vérifié. » Elle sort son Grand Livre rouge. « Les cristaux passent le Mur. La Concorde vend des morceaux du Voile à la Légion. Et ça fait trente ans que ça dure. »
+- fr: « Avec ça, tu peux faire tomber la Concorde, Nadja. »
+- fr: « Avec ça, tu peux racheter ta dette. Et la leur faire payer au centuple. »
+- fr: "Nadja sourit, du sourire qu'elle a quand elle négocie. « Je préfère ta version. » Puis, plus bas : « Mais je veux aussi qu'ils tombent. Ma famille, ils l'ont ruinée en souriant. »"
+- fr: "Elle referme le Grand Livre rouge. « Il me faut une dernière preuve : un acheteur, côté Légion, pris la main dans le sac. Quand la guerre commencera, il y en aura. » Elle vous tapote la joue. « Associé. »"
+- fr: Séraphine — L'homme à la cape bleue
+- fr: Séraphine a passé trois jours à faire boire tous les capitaines de Port-Vérane. Elle tient mieux le rhum qu'eux, ce qui l'étonne elle-même. « J'ai trouvé. L'anneau d'Aldric a été vendu ici, il y a quatre ans, par un démon qui payait en obsidienne. »
+- fr: "« Le démon a dit au marchand : « Mon maître n'en a plus besoin. Il a une nouvelle famille. » » Elle serre les poings. « Une nouvelle famille. Aldric est de l'autre côté du Mur. Avec eux. »"
+- fr: « Prisonnier, peut-être. Pas forcément traître. »
+- fr: « Quoi qu'il soit devenu, tu n'es pas seule pour l'affronter. »
+- fr: « L'armure noire. La cape bleue. » Elle ferme les yeux. « Quand la guerre commencera, je le chercherai sur le champ de bataille. Et s'il me lève une épée… » Elle ne finit pas. Elle n'a pas besoin.

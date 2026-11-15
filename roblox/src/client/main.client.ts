@@ -31,6 +31,13 @@ import { vueFinChapitre, vueTempsLibre } from "./ui/temps";
 import { majSons } from "./sons";
 import { surveillerButin } from "./ui/objets";
 import { preparerBoutique } from "./ui/boutique";
+import { preparerReglages, surReglages } from "./reglages";
+import { preparerFenetreReglages } from "./ui/reglages";
+import { traduireLeMonde } from "./rendu/traduction";
+import { tr, trMoteur, trf } from "shared/langue";
+
+// la langue d'abord (celle du compte Roblox, puis celle des réglages enregistrés) : tout le reste s'affiche dedans
+preparerReglages();
 
 const joueur = Players.LocalPlayer;
 const gui = new Instance("ScreenGui");
@@ -168,9 +175,9 @@ function allerA(lieu: string) {
 		guiderVers(lieu);
 		const nom = trouverLieu(lieu)?.nom ?? lieu;
 		jeu.info = voyageDebloque(jeu.etat)
-			? `Pas encore de pierre de voyage activée près de ${nom} : suis la flèche dorée.`
-			: `Le voyage rapide s'éveillera ${DEBLOCAGE_VOYAGE.texte}. En attendant, suis la flèche dorée jusqu'à ${nom}.`;
-		if (affichage.dans !== undefined) jeu.info += " (Sors d'abord du bâtiment.)";
+			? trf("Pas encore de pierre de voyage activée près de {nom} : suis la flèche dorée.", { nom })
+			: trf("Le voyage rapide s'éveillera {texte}. En attendant, suis la flèche dorée jusqu'à {nom}.", { texte: tr(DEBLOCAGE_VOYAGE.texte), nom });
+		if (affichage.dans !== undefined) jeu.info += tr(" (Sors d'abord du bâtiment.)");
 	}
 	redessiner();
 }
@@ -261,7 +268,7 @@ function redessiner() {
 	const panneauVoulu = laterale.Visible;
 	if (panneauVoulu && affichage.lateralReplie) laterale.Visible = false;
 	languette.Visible = panneauVoulu;
-	languette.Text = affichage.lateralReplie ? "☰ Ouvrir le panneau" : "▸ Replier";
+	languette.Text = affichage.lateralReplie ? tr("☰ Ouvrir le panneau") : tr("▸ Replier");
 	placerLanguette(laterale.Position.Y.Offset);
 
 	if (vue !== "combat") cacherArene();
@@ -289,7 +296,8 @@ function redessiner() {
 	}
 	vuePrecedente = vue;
 
-	const message = jeu.erreur ?? jeu.info;
+	const brut = jeu.erreur ?? jeu.info;
+	const message = brut !== undefined ? trMoteur(brut) : undefined;
 	bandeau.Visible = message !== undefined;
 	bandeau.Text = message !== undefined ? `${message}   ✕` : "";
 	bandeau.BackgroundColor3 = jeu.erreur !== undefined ? COULEURS.rouge : COULEURS.fond2;
@@ -332,6 +340,9 @@ demarrerMeteo();
 ecouterMessages();
 preparerInvitesJoueurs();
 preparerBoutique();
+preparerFenetreReglages();
+traduireLeMonde();
+surReglages(() => redessiner());
 redessiner();
 // l'ambiance sonore suit aussi le jour et la nuit, même sans action dans la partie
 task.spawn(() => {

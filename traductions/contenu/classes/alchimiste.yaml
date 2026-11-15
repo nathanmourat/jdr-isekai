@@ -1,0 +1,33 @@
+# Textes de content/classes/alchimiste.yaml
+# Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
+- fr: Alchimiste-artificier
+- fr: Soutien / contrôle
+- fr: "Bombes, fioles et machines : la science au service de l'aventure."
+- fr: Fioles optimisées
+- fr: "Ses objets sont 40 % plus efficaces, avec 25 % de chances de ne pas être consommés. "
+- fr: Grenadier
+- fr: Bombes et dégâts de zone.
+- fr: Mécaniste
+- fr: Tourelles et élixirs.
+- fr: Golem d'airain
+- fr: Se protège dans une armure-golem pendant 3 tours, avec des compétences améliorées.
+- fr: Très polyvalent ; le meilleur artisan hors combat.
+- fr: Dépend de ses ressources, qu'il doit fabriquer entre les quêtes.
+- fr: Bombe collante
+- fr: Dégâts de feu et immobilisation (l'ennemi peut perdre son prochain tour).
+- fr: Tourelle mécanique
+- fr: Pose une tourelle qui tire pendant 3 tours.
+- fr: Grenade incendiaire
+- fr: Dégâts de feu sur tous les ennemis, avec brûlure.
+- fr: Élixir de combat
+- fr: +30 % de dégâts pendant 3 tours et un petit soin.
+- fr: Bombe à fragmentation
+- fr: Des éclats de métal sur tous les ennemis.
+- fr: Feu grégeois
+- fr: "Un liquide qui brûle même sur l'eau : tous les ennemis s'embrasent."
+- fr: Tourelle améliorée
+- fr: Deux tourelles pour 4 tours.
+- fr: Nuée de drones
+- fr: De petits automates soignent le groupe et le protègent.
+- fr: Ultime — Golem d'airain
+- fr: "Se glisse dans une armure-golem : énorme protection, dégâts augmentés et salve de canons sur tous les ennemis."

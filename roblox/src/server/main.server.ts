@@ -26,6 +26,7 @@ import { sauvegardeActive } from "./stockage";
 import { diffuser as diffuserModeration, preparerModeration, verifierArrivee } from "./moderation";
 import { preparerRecompenses } from "./recompenses";
 import { preparerBoutique } from "./boutique";
+import { preparerReglages } from "./reglages";
 import { construireMonde } from "./monde";
 import { preparerModeles } from "./modeles";
 import { construireInterieurs } from "./interieurs";
@@ -109,6 +110,7 @@ preparerModeration();
 // badges et bonus de connexion
 preparerRecompenses();
 preparerBoutique();
+preparerReglages();
 // chaque joueur qui arrive (s'il n'est pas banni) retrouve sa campagne (créée la première fois)
 const arrivee = (p: Player) => {
 	if (!verifierArrivee(p)) return;

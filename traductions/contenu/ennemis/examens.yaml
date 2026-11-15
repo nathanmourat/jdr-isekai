@@ -1,0 +1,22 @@
+# Textes de content/ennemis/examens.yaml
+# Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
+- fr: Sorenne Vif-Argent
+- fr: Ancienne championne de l'Arène, examinatrice du rang B. Deux lames courtes, un sourire tranquille, et pas une goutte de sueur.
+- fr: Double taille
+- fr: croise ses deux lames sur {cible}
+- fr: Feinte
+- fr: trompe {cible} d'une feinte et frappe
+- fr: Danse de vif-argent
+- fr: Trois touches, si rapides qu'elles ne font qu'un seul bruit.
+- fr: Dame Rowena, maîtresse de la Guilde
+- fr: Pour le rang A, c'est la maîtresse de la Guilde elle-même qui descend dans l'arène. Elle a rangé sa pipe. C'est mauvais signe.
+- fr: Lame de la Guilde
+- fr: frappe {cible} d'une épée qui a tout vu
+- fr: Coup d'expérience
+- fr: trouve la faille de {cible} du premier coup
+- fr: Leçon de Rowena
+- fr: « Vous avez laissé une ouverture. » Un seul coup, au bon endroit.
+- fr: Vieille habitude
+- fr: Elle respire, une seule fois, et se remet en garde.
+- fr: Examen du rang B
+- fr: Examen du rang A

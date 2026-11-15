@@ -1,0 +1,111 @@
+# Textes de content/ennemis/chapitre-4.yaml
+# Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
+- fr: Chauve-souris de lave
+- fr: Une chauve-souris noire aux ailes rougeoyantes, qui niche dans les cheminées volcaniques.
+- fr: Morsure brûlante
+- fr: mord {cible} d'une gueule fumante
+- fr: Battement de feu
+- fr: souffle des étincelles sur {cible}
+- fr: Kobold mineur
+- fr: Un petit kobold écailleux, casque de mineur et pioche. Il défend « sa » galerie.
+- fr: Coup de pioche
+- fr: plante sa pioche dans {cible}
+- fr: Lancer de caillou
+- fr: jette un caillou sur {cible}
+- fr: Éboulement
+- fr: Il fait tomber le plafond sur le groupe.
+- fr: Gelée de magma
+- fr: Une gelée de roche fondue, brûlante, qui laisse des traces noires derrière elle.
+- fr: Éclaboussure de magma
+- fr: éclabousse {cible} de roche fondue
+- fr: Engloutissement
+- fr: s'étale sur les pieds de {cible}
+- fr: Coulée
+- fr: Une coulée brûlante.
+- fr: Salamandre de forge
+- fr: Un lézard des forges, queue enflammée, qui crache du feu quand on l'énerve. Il est toujours énervé.
+- fr: Crocs de braise
+- fr: mord {cible}
+- fr: Coup de queue enflammée
+- fr: fouette {cible} de sa queue en feu
+- fr: Crachat de feu
+- fr: Un jet de flammes sur tout le groupe.
+- fr: Golem de granite
+- fr: Un golem nain de granite, une rune bleue sur le torse. Il garde les Mille Marches depuis des siècles.
+- fr: Poing de granite
+- fr: abat un poing de pierre sur {cible}
+- fr: Balayage
+- fr: balaie {cible} d'un revers
+- fr: Le Gardien des Mille Marches
+- fr: Un colosse de bronze et de runes, assis au sommet de la millième marche. Il pose une question à chaque visiteur. Il n'aime pas les réponses.
+- fr: Marteau de bronze
+- fr: abat un marteau runique sur {cible}
+- fr: Rune de foudre
+- fr: frappe {cible} d'une rune crépitante
+- fr: Onde runique
+- fr: "Toutes les runes s'allument : la foudre frappe le groupe."
+- fr: Réparation runique
+- fr: Les runes recousent le bronze.
+- fr: Crabe des récifs
+- fr: Un gros crabe rouge couvert de coquillages, aux pinces capables de briser une ancre.
+- fr: Pince
+- fr: serre {cible} dans sa pince
+- fr: Carapace
+- fr: charge {cible} carapace en avant
+- fr: Pirate de Port-Vérane
+- fr: Un pirate en chemise rayée, sabre d'abordage et sourire édenté.
+- fr: Sabre d'abordage
+- fr: taillade {cible} de son sabre
+- fr: Coup de crosse
+- fr: assomme presque {cible} d'un coup de crosse
+- fr: Pirate noyé
+- fr: Un squelette de pirate couvert de coquillages, bandeau rouge et sabre rouillé. Il ne sait pas qu'il est mort.
+- fr: Sabre rouillé
+- fr: taillade {cible} d'un sabre rongé de sel
+- fr: Étreinte des noyés
+- fr: agrippe {cible} de ses doigts d'os
+- fr: Chant des noyés
+- fr: Un chant qui glace le sang.
+- fr: Jeune wyrm
+- fr: Un jeune dragon des brumes, ailes membraneuses, souffle de feu. Rendu fou par la disparition de son œuf.
+- fr: Griffes
+- fr: lacère {cible} de ses griffes
+- fr: Morsure de braise
+- fr: mord {cible} d'une gueule ardente
+- fr: Souffle du wyrm
+- fr: Un souffle de flammes sur tout le groupe.
+- fr: Chasseur de dragons
+- fr: "Mercenaire de la Concorde équipé pour chasser les dragons : filet lesté, harpon, armure ignifugée."
+- fr: Harpon
+- fr: lance un harpon sur {cible}
+- fr: Filet lesté
+- fr: jette un filet sur {cible}
+- fr: Immobilise la cible.
+- fr: Orlen Vask, chasseur de dragons
+- fr: Le capitaine des mercenaires de la Concorde est revenu. Il vend maintenant des œufs de dragon au plus offrant.
+- fr: Lance-harpon
+- fr: tire un harpon sur {cible}
+- fr: Fendoir doré
+- fr: abat son fendoir sur {cible}
+- fr: Ordre de chasse
+- fr: Ses chasseurs frappent plus fort.
+- fr: Harpon empoisonné
+- fr: Un harpon trempé dans du venin de scorpion.
+- fr: Soldat de la Légion
+- fr: Un soldat de la Légion Cendrée en armure noire, envoyé pour ramener une déserteuse.
+- fr: Lame noire
+- fr: taille {cible} d'une lame noire
+- fr: Coup de bouclier
+- fr: frappe {cible} de son bouclier
+- fr: Nuée de chauves-souris de lave
+- fr: Les kobolds de la galerie
+- fr: Gelées de magma
+- fr: Salamandres de forge
+- fr: Les gardiens de granite
+- fr: Les salamandres des Marches
+- fr: Les crabes du récif
+- fr: Abordage !
+- fr: L'équipage noyé
+- fr: Les jeunes wyrms
+- fr: Les chasseurs de dragons
+- fr: Les chasseurs de la Légion

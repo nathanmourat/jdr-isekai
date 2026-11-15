@@ -12,8 +12,9 @@ import { pvHorsCombat, type TestCarac } from "shared/moteur";
 import { jeu, monHeros } from "../partie";
 import { jouer } from "../sons";
 import { COULEURS } from "./kit";
+import { tr, trf, tx } from "shared/langue";
 
-const NOMS_CARACS: Record<string, string> = { FOR: "Force", AGI: "Agilité", INT: "Intelligence", VIT: "Vitalité", ESP: "Esprit", CHA: "Charisme" };
+const NOMS_CARACS: Record<string, string> = { FOR: tx("Force"), AGI: tx("Agilité"), INT: tx("Intelligence"), VIT: tx("Vitalité"), ESP: tx("Esprit"), CHA: tx("Charisme") };
 
 let gui: ScreenGui | undefined;
 let pile: Frame | undefined;
@@ -106,8 +107,8 @@ function comparer() {
 	// changement de campagne (groupe) ou premier affichage : rien à annoncer
 	if (!avant || !apres || avant.code !== apres.code || avant.heros !== apres.heros) return;
 	const lignes: [string, Color3][] = [];
-	if (apres.niveau > avant.niveau) lignes.push([`⭐ Niveau ${apres.niveau} !`, COULEURS.or]);
-	if (apres.xp > avant.xp && apres.niveau === avant.niveau) lignes.push([`+${apres.xp - avant.xp} XP`, COULEURS.bleu]);
+	if (apres.niveau > avant.niveau) lignes.push([trf("⭐ Niveau {niveau} !", { niveau: apres.niveau }), COULEURS.or]);
+	if (apres.xp > avant.xp && apres.niveau === avant.niveau) lignes.push([trf("+{v} XP", { v: apres.xp - avant.xp }), COULEURS.bleu]);
 	if (apres.or !== avant.or) lignes.push([`${apres.or > avant.or ? "+" : ""}${apres.or - avant.or} or`, apres.or > avant.or ? COULEURS.or : COULEURS.texte2]);
 	for (const [o, n] of pairs(apres.inventaire)) {
 		const d = n - (avant.inventaire[o] ?? 0);
@@ -157,7 +158,7 @@ function lancer(t: TestCarac) {
 	l.SortOrder = Enum.SortOrder.LayoutOrder;
 	l.Parent = f;
 	const nom = jeu.etat?.heros[t.heros]?.nom ?? "?";
-	const titre = etiquette(f, `🎲 Test de ${NOMS_CARACS[t.carac] ?? t.carac} — <b>${nom}</b>`, 16, COULEURS.texte);
+	const titre = etiquette(f, trf("🎲 Test de {v} — <b>{nom}</b>", { v: tr(NOMS_CARACS[t.carac] ?? t.carac), nom }), 16, COULEURS.texte);
 	titre.TextXAlignment = Enum.TextXAlignment.Center;
 	titre.LayoutOrder = 1;
 	if (t.quoi !== "") {
@@ -182,9 +183,9 @@ function lancer(t: TestCarac) {
 		}
 		de.Text = tostring(t.jet);
 		TweenService.Create(de, new TweenInfo(0.15), { TextSize: 56 }).Play();
-		detail.Text = `${t.jet} + ${t.bonus} = <b>${t.total}</b> contre ${t.difficulte}`;
+		detail.Text = trf("{jet} + {bonus} = <b>{total}</b> contre {difficulte}", { jet: t.jet, bonus: t.bonus, total: t.total, difficulte: t.difficulte });
 		task.wait(0.5);
-		const r = etiquette(f, t.reussi ? "Réussi !" : "Échoué…", 22, t.reussi ? COULEURS.vert : COULEURS.rouge, true);
+		const r = etiquette(f, t.reussi ? tr("Réussi !") : tr("Échoué…"), 22, t.reussi ? COULEURS.vert : COULEURS.rouge, true);
 		r.TextXAlignment = Enum.TextXAlignment.Center;
 		r.LayoutOrder = 5;
 		bord.Color = t.reussi ? COULEURS.vert : COULEURS.rouge;

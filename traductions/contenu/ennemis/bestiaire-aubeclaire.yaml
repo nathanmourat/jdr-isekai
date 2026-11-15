@@ -1,0 +1,35 @@
+# Textes de content/ennemis/bestiaire-aubeclaire.yaml
+# Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
+- fr: Gelée verte
+- fr: Petite gelée verte qui rebondit. Inoffensive… en petit nombre.
+- fr: Éclaboussure acide
+- fr: éclabousse {cible} d'une giclée acide
+- fr: Engloutissement
+- fr: s'étale sur les jambes de {cible}
+- fr: Rat géant
+- fr: Rat brun de la taille d'un chat, queue rose.
+- fr: Morsure
+- fr: mord {cible} au mollet
+- fr: Griffure
+- fr: griffe {cible} en lui grimpant dessus
+- fr: Morsure infectée
+- fr: Une morsure qui peut empoisonner.
+- fr: Chauve-souris des cavernes
+- fr: Rapide et difficile à toucher.
+- fr: Piqué
+- fr: fond en piqué sur {cible}
+- fr: Morsure au cou
+- fr: mord {cible} au cou avant de s'envoler
+- fr: Cri ultrasonique
+- fr: Peut étourdir une cible.
+- fr: Sanglier des plaines
+- fr: Sanglier brun aux défenses blanches. Il charge.
+- fr: Coup de boutoir
+- fr: charge {cible} tête baissée
+- fr: Coup de défenses
+- fr: embroche presque {cible} de ses défenses
+- fr: Charge
+- fr: Une charge brutale.
+- fr: Les égouts de Lysmont
+- fr: La grotte aux chauves-souris
+- fr: Les sangliers des champs

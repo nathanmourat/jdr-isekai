@@ -17,6 +17,7 @@ import { CONTENU } from "shared/donnees";
 import { caseDonjon, listeHeros, type DonjonDef, type EtatDonjon, type EtatPartie } from "shared/moteur";
 import { agir, jeu } from "../partie";
 import { jouer } from "../sons";
+import { tr } from "shared/langue";
 
 const CASE = 12;
 const HAUT = 18;
@@ -236,7 +237,7 @@ function escalier(id: string, x: number, y: number) {
 	t.TextSize = 16;
 	t.TextColor3 = rgb(255, 230, 170);
 	t.TextStrokeTransparency = 0.3;
-	t.Text = "↑ Sortie";
+	t.Text = tr("↑ Sortie");
 	t.Parent = gui;
 	gui.Parent = jour;
 }

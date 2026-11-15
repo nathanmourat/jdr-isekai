@@ -1,0 +1,22 @@
+# Textes de content/compagnons/aveline.yaml
+# Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
+- fr: Aveline de Castelroc
+- fr: Capitaine de la garde royale
+- fr: Droite, sérieuse, très maladroite dès qu'on parle de sentiments. Gourmande de pâtisseries en secret.
+- fr: Son père, chevalier, a été accusé de trahison lors de la chute de Valgrane (1003) et exécuté. Elle est devenue capitaine par son seul mérite, sous les regards méfiants.
+- fr: Prouver l'innocence de son père.
+- fr: « Vous avez donné votre parole. Et vous l'avez reprise. »
+- fr: « Des gens mouraient, et vous avez tourné le dos. »
+- fr: « Avec les Cendres ? Jamais. Plus jamais. »
+- fr: Charge du serment
+- fr: Une charge au bouclier.
+- fr: Garde du bouclier
+- fr: Protège l'allié le plus blessé.
+- fr: Garde partagée
+- fr: 25 % de chances d'intercepter un coup destiné à son héros.
+- fr: Formation serrée
+- fr: +10 % de défense pour tout le groupe.
+- fr: Riposte
+- fr: 25 % de chances de contre-attaquer quand elle est frappée.
+- fr: Charge des Deux Serments
+- fr: "Attaque combinée avec son héros : +25 % de dégâts."

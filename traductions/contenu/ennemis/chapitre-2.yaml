@@ -1,0 +1,129 @@
+# Textes de content/ennemis/chapitre-2.yaml
+# Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
+- fr: Chacal des dunes
+- fr: Chacal fauve aux grandes oreilles, chasse en meute.
+- fr: Morsure
+- fr: mord {cible} au mollet
+- fr: Assaut de meute
+- fr: bondit sur {cible} en jappant
+- fr: Hurlement de meute
+- fr: Toute la meute frappe plus fort.
+- fr: Scorpion des sables
+- fr: Scorpion ocre de la taille d'un chien, dard noir.
+- fr: Coup de dard
+- fr: plante son dard dans {cible}
+- fr: Pinces
+- fr: serre {cible} dans ses pinces
+- fr: Venin de scorpion
+- fr: Un venin brûlant.
+- fr: Pillard du désert
+- fr: Pillard au chèche turquoise, cimeterre à la main.
+- fr: Coup de cimeterre
+- fr: taillade {cible} de son cimeterre
+- fr: Sable aux yeux
+- fr: jette du sable au visage de {cible}
+- fr: Charge du pillard
+- fr: Une charge au cimeterre.
+- fr: Archer pillard
+- fr: Archer du désert, perché sur les rochers.
+- fr: Flèche
+- fr: décoche une flèche sur {cible}
+- fr: Tir rapide
+- fr: tire deux fois vers {cible}
+- fr: Lame de Sable
+- fr: "Assassin de la Main de Sable : voile noir, deux poignards courbes."
+- fr: Poignard courbe
+- fr: glisse un poignard sous la garde de {cible}
+- fr: Lame empoisonnée
+- fr: entaille {cible} d'une lame luisante
+- fr: Disparition
+- fr: Se fond dans l'ombre.
+- fr: Frappe dans le dos
+- fr: Un coup vicieux, souvent critique.
+- fr: Kezir, Main de Sable
+- fr: Le maître des assassins de Qarzim. Il ne combat jamais à la loyale, et s'enfuit quand il perd.
+- fr: Danse des poignards
+- fr: tourne autour de {cible} en frappant
+- fr: Lame de sable
+- fr: frappe {cible} d'une lame chargée de sable
+- fr: Nuage de sable
+- fr: Aveugle tout le groupe.
+- fr: Coup du scorpion
+- fr: Deux poignards enduits de venin.
+- fr: Mercenaire de la Concorde
+- fr: "Soldat payé par les marchands : cuirasse dorée, lance et bouclier rond."
+- fr: Coup de lance
+- fr: embroche presque {cible}
+- fr: Coup de bouclier
+- fr: repousse {cible} avec son bouclier
+- fr: Mur de boucliers
+- fr: Les mercenaires serrent les rangs.
+- fr: Mage de cristal
+- fr: "Mage de la Concorde : il puise dans un cristal d'éther pour lancer ses sorts."
+- fr: Éclat d'éther
+- fr: projette un éclat violet sur {cible}
+- fr: Rayon de cristal
+- fr: frappe {cible} d'un rayon de lumière
+- fr: Surcharge d'éther
+- fr: Le cristal explose de lumière sur tout le groupe.
+- fr: Guerrier lunecroc
+- fr: "Guerrier ourvalis de la tribu Lunecroc : peintures de guerre, griffes de fer."
+- fr: Griffes de fer
+- fr: lacère {cible} de ses griffes de fer
+- fr: Bond
+- fr: bondit sur {cible}
+- fr: Momie de sel
+- fr: Momie couverte de bandelettes durcies par le sel, yeux turquoise.
+- fr: Poing de sel
+- fr: abat un poing durci de sel sur {cible}
+- fr: Étreinte
+- fr: agrippe {cible} de ses bras décharnés
+- fr: Malédiction de sel
+- fr: Le sel ronge la peau et dessèche.
+- fr: Grande Mère des chacals
+- fr: "La matriarche du canyon : énorme, pelage presque blanc, cicatrices partout."
+- fr: Crocs de la matriarche
+- fr: referme ses mâchoires sur {cible}
+- fr: Charge
+- fr: renverse {cible} d'un coup d'épaule
+- fr: Appel de la meute
+- fr: Toute la meute s'enrage.
+- fr: Le Roi de Sel
+- fr: Un ancien roi du désert, couronné d'un cristal d'éther fendu. Il garde les Ruines depuis mille ans.
+- fr: Sceptre de sel
+- fr: abat son sceptre sur {cible}
+- fr: Regard d'éther
+- fr: fixe {cible} de ses yeux d'éther
+- fr: Tempête de sel
+- fr: Une tempête de sel cristallin sur tout le groupe.
+- fr: Éveil des gardes
+- fr: Le Roi se régénère grâce au cristal de sa couronne.
+- fr: Capitaine Orlen Vask
+- fr: Le chef des mercenaires de la Concorde. Cuirasse dorée, ordres secs, aucun scrupule.
+- fr: Fendoir doré
+- fr: abat son fendoir sur {cible}
+- fr: Ordre de tir
+- fr: désigne {cible} à ses archers
+- fr: Coup de commandement
+- fr: Ses hommes frappent plus fort.
+- fr: Tavek Lunecroc
+- fr: Le cousin de Kaya, chef de guerre de la révolte. Rapide, furieux, désespéré.
+- fr: Griffes du chef
+- fr: lacère {cible} des deux mains
+- fr: Hurlement
+- fr: pousse un hurlement qui glace {cible}
+- fr: Furie lunecroc
+- fr: Trois coups de griffes enragés.
+- fr: Embuscade sur la route des caravanes
+- fr: Meute de chacals
+- fr: La Grande Mère des chacals
+- fr: Nid de scorpions
+- fr: Le camp des pillards
+- fr: Les assassins du banquet
+- fr: Kezir, sur les toits
+- fr: Les gardes des mines
+- fr: Gardiens des Ruines
+- fr: Scorpions des Ruines
+- fr: Les mercenaires de Vask
+- fr: Tavek et ses guerriers
+- fr: La caravane fantôme

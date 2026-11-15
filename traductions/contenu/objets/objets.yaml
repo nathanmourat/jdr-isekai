@@ -1,0 +1,50 @@
+# Textes de content/objets/objets.yaml
+# Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
+- fr: Petite potion de soin
+- fr: Rend un peu de PV.
+- fr: À boire en combat (bouton « Potion »).
+- fr: Potion de soin
+- fr: Rend beaucoup de PV.
+- fr: À boire en combat (bouton du sac, dans « Toutes les actions »).
+- fr: Potion de mana
+- fr: Rend 20 points de mana.
+- fr: À boire en combat pour relancer des sorts (bouton du sac).
+- fr: Antidote
+- fr: Retire poisons et effets négatifs.
+- fr: À utiliser en combat sur un allié empoisonné, brûlé ou affaibli (bouton du sac).
+- fr: Bombe incendiaire
+- fr: Dégâts de feu sur tous les ennemis.
+- fr: "À lancer en combat : touche tous les ennemis d'un coup (bouton du sac)."
+- fr: Bombe fumigène
+- fr: Le groupe devient plus difficile à toucher.
+- fr: "À lancer en combat : protège tout le groupe pendant 2 tours (bouton du sac)."
+- fr: Parchemin de retour
+- fr: Ramène le groupe en ville (hors combat).
+- fr: "Pas encore utilisable : il servira dans les grands donjons des prochains chapitres."
+- fr: Ration de voyage
+- fr: Pain, fromage et viande séchée.
+- fr: "Il en faut une par héros pour chaque combat hors de la ville. Sans ration, la route fatigue : −15 % de PV au début du combat."
+- fr: Gâteau de Lysmont
+- fr: Une pâtisserie à la crème, spécialité de la capitale.
+- fr: Kit d'entretien d'armes
+- fr: Pierre à aiguiser, huile et chiffon.
+- fr: Collier doré
+- fr: Clinquant et cher.
+- fr: Bouquet de fleurs des champs
+- fr: Simple et joli.
+- fr: Livre ancien
+- fr: "Des chroniques de chevalerie, aux enluminures passées : un beau cadeau pour qui aime les histoires d'honneur."
+- fr: Sceau cendré
+- fr: Fragment de pierre noire marqué d'une rune violette.
+- fr: Clé de bronze de la crypte
+- fr: Ouvre la salle du fond de la Crypte de la Fontaine.
+- fr: Croc de loup
+- fr: Une dent longue comme un doigt.
+- fr: "Matériau : se revend, ou sert à l'activité « Artisanat » du temps libre."
+- fr: Soie d'araignée
+- fr: Un fil solide et collant.
+- fr: Breloque cabossée
+- fr: Une vieille breloque en cuivre, trouvée entre deux pavés. Elle ne sert à rien, mais elle se vend.
+- fr: À revendre dans une boutique (onglet « Vendre »).
+- fr: Relique douteuse
+- fr: "Un « os de saint » vendu sous le manteau : en vérité, un os de poulet verni."

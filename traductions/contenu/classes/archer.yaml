@@ -1,0 +1,33 @@
+# Textes de content/classes/archer.yaml
+# Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
+- fr: Archer spirituel
+- fr: Dégâts (distance)
+- fr: Ses flèches portent les esprits des ancêtres.
+- fr: Œil du faucon
+- fr: Ses attaques simples ont 30 % de chances de marquer la cible ; les cibles marquées subissent +15 % de dégâts de tout le groupe.
+- fr: Tireur d'élite
+- fr: Une cible, perforation.
+- fr: Chaman des vents
+- fr: Esprits et soutien léger.
+- fr: Pluie des Ancêtres
+- fr: Pendant 2 tours, une pluie de flèches frappe tous les ennemis à chaque début de tour.
+- fr: Dégâts réguliers et fiables, depuis la deuxième ligne.
+- fr: Fragile au contact ; peu d'outils défensifs.
+- fr: Flèche marquante
+- fr: Dégâts et marque (+15 % de dégâts subis pendant 3 tours).
+- fr: Volée d'esprits
+- fr: 3 flèches spirituelles sur des cibles au hasard.
+- fr: Tir perforant
+- fr: Une flèche qui traverse les armures.
+- fr: Souffle des ancêtres
+- fr: Soigne un peu tout le groupe et le rend plus rapide.
+- fr: Tir du faucon
+- fr: "Une flèche guidée par l'esprit du faucon : critique assuré."
+- fr: Flèche de l'oubli
+- fr: Une flèche qui traverse la cible et la marque pour tout le groupe.
+- fr: Vent guérisseur
+- fr: Le vent des ancêtres soigne tout le groupe.
+- fr: Tornade d'esprits
+- fr: Une tornade d'esprits frappe tous les ennemis à plusieurs reprises.
+- fr: Ultime — Pluie des Ancêtres
+- fr: Une pluie de flèches d'esprit s'abat sur tous les ennemis, encore et encore.

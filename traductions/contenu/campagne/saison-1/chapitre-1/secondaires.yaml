@@ -1,0 +1,132 @@
+# Textes de content/campagne/saison-1/chapitre-1/secondaires.yaml
+# Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
+- fr: "Les loups de la Combe : l'affaire"
+- fr: « Un fermier de la Combe-aux-Saules, Gareth, perd ses moutons. Il n'a pas de quoi payer un vrai contrat, alors personne n'y va. » Rowena [[te||vous]] regarde par-dessus sa pipe. « Sauf si ça [[t'intéresse||vous intéresse]]. »
+- fr: « [[J'y vais||On y va]]. »
+- fr: « La ferme est au sud-ouest, à l'entrée de la Combe. Et [[reviens||revenez]] me dire comment ça s'est fini. »
+- fr: "Les loups de la Combe : la ferme de Gareth"
+- fr: « Trois moutons cette semaine ! Et hier, ma petite Rose a vu des yeux jaunes à la lisière. » Gareth tord son chapeau de paille entre ses mains.
+- fr: « Les traces partent de l'enclos vers les ronces, là-bas. Moi, je n'ose plus y aller. »
+- fr: "Les loups de la Combe : les traces"
+- fr: À la lisière, la terre est retournée. Des empreintes larges comme une main… et d'autres, toutes petites, à côté.
+- fr: Suivre les grandes empreintes.
+- fr: Regarder de plus près les petites.
+- fr: "La piste est franche : elle file droit vers un énorme saule, au fond de la Combe."
+- fr: "Des louveteaux. La meute ne chasse pas par plaisir : elle nourrit ses petits. La piste mène à un énorme saule, au fond de la Combe."
+- fr: "Les loups de la Combe : le vieux saule"
+- fr: "Une tanière s'ouvre sous les racines du vieux saule. Des grognements… et des gémissements plus aigus : des louveteaux."
+- fr: Attaquer la meute.
+- fr: Utiliser votre don pour parler à la louve. (Langue universelle)
+- fr: Effrayer la meute avec du feu et du bruit pour la faire partir. (Force, difficulté 16)
+- fr: "La louve vous écoute, babines retroussées. Puis, lentement, elle comprend : les fermiers, les pièges, les bois plus au sud où le gibier abonde."
+- fr: À l'aube, la meute est partie. Gareth n'en croit pas ses yeux.
+- fr: "Torches, cris, casseroles : la meute détale vers le sud avec ses petits. Aucun sang versé."
+- fr: La meute est décimée. Les louveteaux s'enfuient dans les fourrés.
+- fr: Les loups vous repoussent. Gareth vous traîne jusqu'à sa ferme et vous soigne avec une soupe épaisse. « On réessaiera. »
+- fr: Le calme revient sur la Combe. Il reste à prévenir Gareth… et Rowena, à la Guilde.
+- fr: "Les loups de la Combe : le compte rendu"
+- fr: « Alors, ces loups ? »
+- fr: « Partis sans une goutte de sang ? » Elle hausse un sourcil. « C'est rare, ça. Et ça me plaît. »
+- fr: Gareth a fait le chemin jusqu'à la Guilde, son chapeau à la main. « Merci, du fond du cœur. Tenez, c'est pas grand-chose, mais c'est honnête. »
+- fr: Le marchand de reliques
+- fr: « Approchez, approchez ! Orlan Cassebrune, colporteur de merveilles ! » Il brandit un petit os jauni, posé sur un coussin de velours mité. « Ceci, [[{{mon ami|mon amie}}||{{groupe:mes amis|mes amies|mes amis}}]], est un os authentique de Saint Aldebrand, le Premier Appelé ! Il guérit les fièvres et porte chance aux aventuriers. Cent pièces seulement ! »
+- fr: « J'ai aussi un cheveu de la Reine des Brumes. Mais celui-là, je le garde pour moi. »
+- fr: Bram lève les yeux au ciel derrière son comptoir. « Ça fait trois semaines qu'il vend des os de poulet. »
+- fr: À la table du fond, Ferrand l'expert lève un sourcil et ne dit rien. Il a l'air de souffrir pour toute la profession.
+- fr: Examiner la « relique » de près. (Intelligence, difficulté 15)
+- fr: L'acheter. On ne sait jamais.
+- fr: "Aller prévenir l'Ordre : vendre de fausses reliques est un crime."
+- fr: L'ignorer et retourner à sa bière.
+- fr: "Un os de poulet, verni et gravé à la hâte. [[Tu le brandis||Vous le brandissez]] sous le nez des clients. Rires, huées : Orlan ramasse son coussin et s'enfuit sous les quolibets, en jurant qu'on n'a « aucun respect pour l'histoire »."
+- fr: L'os a l'air… vrai ? [[Tu n'en es pas {{sûr|sûre}}||Vous n'en êtes pas {{groupe:sûrs|sûres|sûrs}}]]. Orlan [[t'adresse||vous adresse]] un clin d'œil satisfait.
+- fr: Orlan empoche l'or avec un sourire radieux et une révérence un peu trop basse. La relique sent vaguement le poulet rôti.
+- fr: Sœur Elianne arrive en personne, le visage grave. « Ces escrocs salissent la mémoire des Appelés. Merci. » Orlan est emmené par deux gardes, en protestant qu'il est « victime d'un fournisseur malhonnête ».
+- fr: Orlan hausse les épaules et range son coussin. « Les vraies merveilles attendent toujours leur heure. »
+- fr: Le retour du colporteur
+- fr: « [[{{Mon ami|Mon amie}}||{{groupe:Mes amis|Mes amies|Mes amis}}]] ! » Orlan Cassebrune ouvre grand les bras. « Je n'oublie jamais un visage. Surtout un visage qui m'a déjà fait confiance. »
+- fr: « Et cet os de saint, il vous porte chance ? Non ? Il faut lui laisser le temps. »
+- fr: Il déballe un coffret doublé de soie. « Cette fois, c'est du sérieux. La phalange de Saint Aldebrand. L'autre phalange. Il en avait plusieurs, vous savez. »
+- fr: Il déballe un coffret doublé de soie. « Cette fois, c'est du sérieux. Un clou de la Porte d'Aube, arraché la nuit où le Mur a tenu. Il n'en reste presque plus. »
+- fr: Il déballe un coffret doublé de soie. « Cette fois, c'est du sérieux. Une larme de Sainte Ysolde, dans sa fiole de cristal. Elle relève les mourants, dit-on. »
+- fr: "Bram, en essuyant une chope : « Il est revenu. Évidemment qu'il est revenu. »"
+- fr: Examiner la relique de près. (Intelligence, difficulté 15)
+- fr: "[[Tu approches||Vous approchez]] la relique de la lanterne et [[la tournes||la tournez]] lentement entre [[tes||vos]] doigts."
+- fr: Ce n'est pas un os de poulet. Le travail est ancien, les gravures sont justes, et quand [[tu la prends||vous la prenez]] en main, une chaleur douce remonte le long du bras.
+- fr: Orlan pâlit. « Elle est… vraie ? » Il s'assoit lourdement. « Trente ans de métier, et c'est la première fois. »
+- fr: L'acheter.
+- fr: La lui laisser.
+- fr: Un os de poulet. Encore. Celui-ci a même gardé un peu de sauce. [[Tu le brandis||Vous le brandissez]] devant toute la taverne ; Orlan s'enfuit, et cette fois, on ne le reverra plus.
+- fr: Impossible de trancher. Orlan sourit de toutes ses dents.
+- fr: L'or change de mains. Orlan compte les pièces deux fois, par principe.
+- fr: Orlan empoche l'or avec une révérence. La relique sent toujours le poulet.
+- fr: Orlan emballe l'objet avec un soin qu'on ne lui connaissait pas.
+- fr: « Prenez-en soin. Moi, je n'y croyais pas. »
+- fr: "Un garçon de salle court chercher l'Ordre. Orlan, lui, ne bouge pas : il commande même une bière."
+- fr: "« Elle est authentique. » Elianne la tient comme un nouveau-né. « Où l'avez-vous trouvée ? » Orlan bafouille une histoire de grenier. L'Ordre la lui achète à bon prix : il repart ravi, et parfaitement innocent."
+- fr: « Je repasserai. Je repasse toujours. »
+- fr: Orlan range son coffret. Dans quelques jours, il repartira vers d'autres marchés.
+- fr: "Les disparus des Tanneurs : la plainte"
+- fr: "Les ruelles des Tanneurs sentent l'urine et la teinture. Une mère [[t'agrippe||vous agrippe]] le bras : « Ma fille, Lina. Partie chercher de l'eau il y a trois jours. »"
+- fr: « La garde ne vient plus ici. Je n'ai que [[toi||vous]]. »
+- fr: "Les disparus des Tanneurs : la piste"
+- fr: Près du puits, un seau renversé. Des traces de pas, une odeur de soufre.
+- fr: Et, gravé sur une porte, un symbole violet que [[tu commences||vous commencez]] à connaître.
+- fr: Suivre la piste de soufre. (Esprit, difficulté 14)
+- fr: Interroger les ivrognes du coin, avec quelques pièces. (Charisme, difficulté 13)
+- fr: "La piste mène à une tannerie abandonnée, au bout de la ruelle. Sous la trappe de la cave : des chants étouffés."
+- fr: Des heures précieuses sont perdues. À la nuit tombée seulement, quelqu'un parle enfin d'une tannerie abandonnée, au bout de la ruelle.
+- fr: "Les disparus des Tanneurs : la cave"
+- fr: Au bout de la ruelle, la tannerie abandonnée. Volets cloués, enseigne effacée, et dans la cour, des cuves de trempage à sec où ne pousse plus qu'une mousse noire.
+- fr: "Pourtant, le seuil n'a rien d'abandonné : la poussière est couverte de traces de pas, et de deux sillons parallèles, comme si on avait traîné quelqu'un."
+- fr: "Au fond de l'atelier, une trappe de cave. Ses gonds sont graissés de frais. Une odeur monte entre les planches : de la cire, sucrée, presque écœurante. De la cire violette."
+- fr: Sous [[tes||vos]] pieds, très loin, un chant étouffé. Des voix qui répètent la même phrase, encore et encore.
+- fr: Aucun bruit ne monte de la trappe. Un silence trop parfait, celui de quelqu'un qui [[t'attend||vous attend]].
+- fr: Descendre dans la cave.
+- fr: L'échelle grince à chaque barreau. [[Tu retiens ton||Vous retenez votre]] souffle. En bas, la lumière est violette.
+- fr: "La cave est plus grande que la tannerie elle-même. Des cages de fer le long des murs, des dizaines de bougies violettes fondues en flaques, et sur chaque pierre, le même symbole : un cercle brisé, entouré de flammes."
+- fr: Les cultistes sont en plein rituel, dos à l'échelle, et ne [[t'ont pas {{entendu|entendue}}||vous ont pas {{groupe:entendus|entendues|entendus}}]]. Ils chantent dans une langue qui râpe la gorge.
+- fr: Dans la cage du fond, une jeune fille aux mains tachées de teinture lève la tête. Lina. Vivante.
+- fr: Un cultiste se retourne pour moucher une bougie, et [[te||vous]] voit. Il a l'air aussi surpris que [[toi||vous]].
+- fr: Les bougies brûlent, mais plus personne ne chante. Les cultistes [[t'attendent||vous attendent]] au pied de l'échelle, lames tirées. « Vous en avez mis, du temps. »
+- fr: Au fond, une cage est ouverte, et les bougies autour d'elle se sont éteintes.
+- fr: Lina se jette dans les bras de sa mère en pleurant. Les deux autres disparus sont là aussi, affaiblis mais vivants.
+- fr: Les cultistes sont vaincus. Deux prisonniers sont sauvés… mais pour Lina, il est trop tard. Sa mère s'effondre.
+- fr: Vous êtes repoussés. Quand la garde investit la cave le lendemain, elle est vide. On ne retrouvera jamais Lina.
+- fr: Il faut que la Guilde sache ce qui se cachait sous cette tannerie.
+- fr: "Les disparus des Tanneurs : le rapport"
+- fr: Rowena écoute sans un mot, puis repose sa pipe. « Des cultistes des Cendres. Dans MA ville. » Elle griffonne un ordre pour la garde.
+- fr: « La petite Lina est rentrée chez elle. C'est grâce à [[toi||vous]]. »
+- fr: L'apprenti de l'Ordre
+- fr: « Tobin, mon apprenti, passe ses nuits dans les archives interdites. S'il se fait prendre par le Grand Prieur… » Sœur Elianne se mord la lèvre. « Pouvez-vous lui parler ? »
+- fr: "Vous trouvez Tobin entre deux rayonnages, une bougie à la main, un vieux registre ouvert. « Regardez ! Les registres de l'Appel. Il manque des pages. Toujours les mêmes : le prix. »"
+- fr: Lire le registre avec lui.
+- fr: Le convaincre de remettre le registre en place avant qu'il ne soit trop tard.
+- fr: Le dénoncer au Grand Prieur Auréliath.
+- fr: "Une seule ligne a échappé au grattoir : « …et pour chaque Appel, le Voile cède d'un fil, et au nord, les Cendres s'en nourrissent. »"
+- fr: Elianne, derrière vous, a tout entendu. Elle est livide.
+- fr: Tobin soupire et range le registre. « Vous avez raison. Mais un jour, quelqu'un devra savoir. »
+- fr: Le Grand Prieur vous remercie chaleureusement. Le lendemain, Tobin a été « envoyé dans un monastère du nord ». Elianne ne vous adresse plus la parole.
+- fr: "Le tournoi des écuyers : l'inscription"
+- fr: "Aveline, juge du tournoi, [[t'accueille||vous accueille]]. « Un de nos écuyers s'est cassé la jambe. Il me faut un remplaçant. Et un adversaire coriace pour le finaliste : un mercenaire qui triche. »"
+- fr: « Si [[tu gagnes… je t'offre||vous gagnez… je vous offre]] une pâtisserie. » Elle se racle la gorge. « C'est une coutume. »
+- fr: « Il traîne sur la place avant chaque combat. [[Va||Allez]] voir comment il s'y prend, puis [[reviens||revenez]] ici. »
+- fr: "Le tournoi des écuyers : le tricheur"
+- fr: Le mercenaire est là, près de la fontaine, entouré de parieurs. Un grand gaillard au sourire trop sûr de lui.
+- fr: L'observer de loin pendant qu'il s'échauffe.
+- fr: Payer un verre à l'un de ses anciens adversaires.
+- fr: "Il glisse quelque chose dans son gant gauche avant chaque passe : une poignée de sable. Maintenant, [[tu sais||vous savez]] d'où viendra le coup bas."
+- fr: « Il vise les yeux. Du sable, toujours de la main gauche. » L'écuyer vide sa chope. « Et il frappe quand on recule. »
+- fr: "Le tournoi des écuyers : le duel"
+- fr: « [[Te||Vous]] voilà. Le finaliste est prêt. » Aveline baisse la voix. « Méfie-toi de sa main gauche. »
+- fr: Entrer en lice.
+- fr: La foule rugit. Le mercenaire, désarmé, est escorté hors de l'arène.
+- fr: Aveline vous tend un gâteau de Lysmont, les joues roses. « Coutume. C'est la coutume. »
+- fr: « Il trichait, je l'ai vu. » Aveline fait disqualifier le mercenaire. « Vous vous êtes battus honnêtement. C'est ce qui compte. »
+- fr: Premiers pas au Comptoir
+- fr: « Un nouveau visage de la Guilde ! Entrez, entrez. Dame Halvine Corbelet, pour vous servir. Ici, tout a un prix, et le prix est juste. »
+- fr: "« C'est simple : l'onglet Acheter montre ce que je vends, l'onglet Vendre montre ce que vous avez dans votre sac. Je reprends tout à moitié prix, sauf les objets de quête. »"
+- fr: "En vous penchant vers le comptoir, vous remarquez quelque chose qui brille entre deux pavés : une vieille breloque de cuivre."
+- fr: "« Tiens, ça traîne là depuis des semaines. Gardez-la. Achetez-moi d'abord quelque chose d'utile, une petite potion par exemple, puis revendez-moi cette breloque : vous saurez tout faire. »"
+- fr: "Premiers pas au Comptoir : le compte est bon"
+- fr: "« Acheté, vendu, et sans vous faire rouler : vous apprenez vite. » Elle pousse une petite fiole et quelques pièces vers vous."
+- fr: "« Cadeau de la maison. Revenez quand votre bourse sera plus lourde : j'ai toujours de quoi l'alléger. »"

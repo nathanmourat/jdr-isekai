@@ -1,0 +1,83 @@
+# Textes de content/ennemis/chapitre-3.yaml
+# Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
+- fr: Feu follet
+- fr: Un esprit de lumière bleue, sans corps. Il attire les voyageurs loin des sentiers.
+- fr: Lueur brûlante
+- fr: frôle {cible} d'une lueur glacée
+- fr: Éclat
+- fr: éclate au visage de {cible}
+- fr: Lueur trompeuse
+- fr: Une lumière qui égare.
+- fr: Champignon vénéneux
+- fr: Un myconide au chapeau violet, qui crache des spores.
+- fr: Coup de chapeau
+- fr: assène un coup de chapeau à {cible}
+- fr: Spores
+- fr: crache des spores sur {cible}
+- fr: Nuage de spores
+- fr: Des spores sur tout le groupe.
+- fr: Loup de brume
+- fr: Un loup translucide, bleu brume, aux yeux blancs. Les elfes disent que ce sont des chiens de garde de la forêt.
+- fr: Morsure de brume
+- fr: traverse {cible} d'une morsure glacée
+- fr: Hurlement
+- fr: hurle à la face de {cible}
+- fr: Chasse fantôme
+- fr: Deux morsures rapides.
+- fr: Sylvain corrompu
+- fr: Un arbre vivant aux feuilles tachées de violet. La corruption des cristaux l'a rendu fou.
+- fr: Branche-fouet
+- fr: fouette {cible} d'une branche noueuse
+- fr: Racines
+- fr: fait jaillir des racines sous {cible}
+- fr: Étreinte des racines
+- fr: Des racines immobilisent la cible.
+- fr: Garde sylvain
+- fr: Archer elfe de la garde d'Ithrael, cape vert sombre, arc long.
+- fr: Flèche elfique
+- fr: décoche une flèche silencieuse sur {cible}
+- fr: Tir double
+- fr: tire deux flèches vers {cible}
+- fr: Éclaireur de la Légion
+- fr: "Un soldat de la Légion Cendrée : armure noire, cape en lambeaux, épée qui fume."
+- fr: Lame fumante
+- fr: taille {cible} d'une lame qui fume
+- fr: Coup de garde
+- fr: frappe {cible} du pommeau
+- fr: Diablotin
+- fr: Un petit démon rouge aux ailes de chauve-souris, une fourche à la main. Il rit tout le temps.
+- fr: Fourche
+- fr: pique {cible} de sa fourche
+- fr: Boule de feu
+- fr: lance une petite boule de feu sur {cible}
+- fr: Le Gardien des Racines
+- fr: Un sylvain immense, plus vieux que le royaume. Il garde la Bibliothèque, et il ne sait plus pourquoi.
+- fr: Tronc
+- fr: écrase {cible} sous un bras de bois
+- fr: Tempête de feuilles
+- fr: fouette {cible} d'une tempête de feuilles
+- fr: Sève ancienne
+- fr: Il se régénère par ses racines.
+- fr: Forêt vivante
+- fr: Des racines frappent tout le groupe.
+- fr: Morwenna « Morra »
+- fr: "Commandante de la Légion Cendrée : cornes noires, cheveux couleur de braise, épée-faux. Elle se bat comme si elle n'avait plus rien à perdre."
+- fr: Faux de cendre
+- fr: fauche {cible} d'un large arc noir
+- fr: Ricanement
+- fr: frappe {cible} du plat de la lame en riant
+- fr: Moisson noire
+- fr: Un coup de faux sur tout le groupe.
+- fr: Pacte de sang
+- fr: Elle se soigne en frappant.
+- fr: Les loups de brume
+- fr: Les feux follets
+- fr: Le cercle de champignons
+- fr: Les sylvains corrompus
+- fr: La garde d'Ithrael
+- fr: Éclaireurs de la Légion
+- fr: Les gardiens de bois
+- fr: Les lumières de la Bibliothèque
+- fr: La Légion dans la forêt
+- fr: Morra, commandante des Cendres
+- fr: Les brigands du domaine

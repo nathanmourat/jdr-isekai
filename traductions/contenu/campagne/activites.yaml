@@ -1,0 +1,20 @@
+# Textes de content/campagne/activites.yaml
+# Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
+- fr: Entraînement
+- fr: "Exercices, duels, sueur : de l'expérience, et de la maîtrise pour vos compétences équipées."
+- fr: Entraînement intensif
+- fr: "Un maître d'armes exigeant : +1 point de caractéristique, et un peu de maîtrise."
+- fr: Artisanat
+- fr: Fabriquer des potions de soin (meilleur avec l'Intelligence, l'Alchimiste ou la Main de l'artisan).
+- fr: Commerce
+- fr: Acheter, revendre, négocier (selon le Charisme).
+- fr: Relation
+- fr: "Passer du temps avec un compagnon : une scène et de l'affinité."
+- fr: Contrats de guilde
+- fr: "Petites missions : or et points de guilde."
+- fr: Études
+- fr: "Bibliothèques et archives : un peu d'expérience et des indices."
+- fr: Repos
+- fr: Soigne les blessures ; un moment avec tout le monde.
+- fr: Gestion du domaine
+- fr: "Développer sa seigneurie : des revenus, et des soldats qui serviront dans la guerre à venir (chapitre 5)."

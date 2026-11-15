@@ -22,8 +22,9 @@ import {
 import { affichage } from "../local";
 import { agir, jeu, monHeros } from "../partie";
 import { bouton, carte, COULEURS, esc, ligne, texte } from "./kit";
+import { tr, trMoteur, trf, tx } from "shared/langue";
 
-const NOMS_CARACS: Record<string, string> = { FOR: "Force", AGI: "Agilité", INT: "Intelligence", VIT: "Vitalité", ESP: "Esprit", CHA: "Charisme" };
+const NOMS_CARACS: Record<string, string> = { FOR: tx("Force"), AGI: tx("Agilité"), INT: tx("Intelligence"), VIT: tx("Vitalité"), ESP: tx("Esprit"), CHA: tx("Charisme") };
 
 /** Quand le résultat d'un vote (ou une réponse) a été vu, et quand « Continuer » a commencé à attendre. */
 const minuterie = { resultat: "", resultatJusqua: 0, attente: "", attenteDepuis: 0 };
@@ -42,7 +43,7 @@ function prixDuChoix(etat: EtatPartie, ch: Choix): number {
 function raisonIndispo(etat: EtatPartie, ch: Choix, heros: string[]): string {
 	const si = ch.si as { or_min?: number; or_min_chapitre?: number } | undefined;
 	const min = si?.or_min ?? (si?.or_min_chapitre !== undefined ? si.or_min_chapitre * etat.chapitre : undefined);
-	if (min !== undefined) return `Pas assez d'or : il faut ${min} or (${heros.map((h) => `${esc(etat.heros[h].nom)} : ${etat.heros[h].or}`).join(", ")})`;
+	if (min !== undefined) return trf("Pas assez d'or : il faut {min} or ({v})", { min, v: heros.map((h) => `${esc(etat.heros[h].nom)} : ${etat.heros[h].or}`).join(", ") });
 	return "indisponible";
 }
 
@@ -70,18 +71,18 @@ export function vueDialogue(parent: Frame, cle: string, redessiner: () => void) 
 	const txt = (t: string) => remplacerVariables(CONTENU, etat, t, es.heros);
 
 	const c = carte(parent);
-	texte(c, `${scene.titre}${groupe ? '  <font color="#beaf96">· scène de groupe</font>' : ""}`, 20, { gras: true, couleur: COULEURS.or });
+	texte(c, `${scene.titre}${groupe ? tr("  <font color=\"#beaf96\">· scène de groupe</font>") : ""}`, 20, { gras: true, couleur: COULEURS.or });
 
 	if (vues === 1 && es.dernierTest) {
 		const t = es.dernierTest;
 		texte(
 			c,
-			`Test de ${NOMS_CARACS[t.carac]} (${esc(etat.heros[t.heros]?.nom ?? "?")}) : dé ${t.jet} + ${t.total - t.jet} = <b>${t.total}</b> contre ${t.difficulte} → ${t.reussi ? "réussite !" : "échec."}`,
+			trf("Test de {v} ({esc}) : dé {jet} + {v2} = <b>{total}</b> contre {difficulte} → {v3}", { v: tr(NOMS_CARACS[t.carac] ?? t.carac), esc: esc(etat.heros[t.heros]?.nom ?? "?"), jet: t.jet, v2: t.total - t.jet, total: t.total, difficulte: t.difficulte, v3: t.reussi ? tr("réussite !") : tr("échec.") }),
 			15,
 			{ couleur: t.reussi ? COULEURS.vert : COULEURS.rouge },
 		);
 	}
-	if (vues === 1) for (const m of es.messages) texte(c, `• ${m}`, 14, { couleur: COULEURS.or });
+	if (vues === 1) for (const m of es.messages) texte(c, `• ${trMoteur(m)}`, 14, { couleur: COULEURS.or });
 	// résultat du dernier vote ou de la dernière réponse, montré 3 secondes
 	const pseudo = (j: string) => esc(etat.joueurs[j]?.pseudo ?? "?");
 	if (es.resultatVote !== undefined || es.reponseParole !== undefined) {
@@ -94,13 +95,13 @@ export function vueDialogue(parent: Frame, cle: string, redessiner: () => void) 
 		void kr;
 		if (os.clock() < minuterie.resultatJusqua) {
 			const rv = carte(c);
-			if (es.reponseParole) texte(rv, `<b>${pseudo(es.reponseParole.joueur)} a répondu :</b> « ${esc(es.reponseParole.texte)} »`, 15);
+			if (es.reponseParole) texte(rv, trf("<b>{pseudo} a répondu :</b> « {esc} »", { pseudo: pseudo(es.reponseParole.joueur), esc: esc(es.reponseParole.texte) }), 15);
 			if (es.resultatVote) {
 				es.resultatVote.choix.forEach((ch, i) => {
 					if (ch.joueurs.size() > 0)
 						texte(rv, `${i === es.resultatVote!.retenu ? "★ " : "• "}${esc(ch.texte)} — ${ch.joueurs.map(pseudo).join(", ")}`, 14, { couleur: i === es.resultatVote!.retenu ? COULEURS.or : COULEURS.texte2 });
 				});
-				texte(rv, `Choix du groupe : <b>${esc(es.resultatVote.choix[es.resultatVote.retenu]?.texte ?? "")}</b>`, 15, { couleur: COULEURS.or });
+				texte(rv, trf("Choix du groupe : <b>{esc}</b>", { esc: esc(es.resultatVote.choix[es.resultatVote.retenu]?.texte ?? "") }), 15, { couleur: COULEURS.or });
 			}
 		}
 	}
@@ -113,7 +114,7 @@ export function vueDialogue(parent: Frame, cle: string, redessiner: () => void) 
 		if (!toutVu) {
 			bouton(
 				c,
-				`Continuer ▸ (${vues}/${repliques.size()})`,
+				trf("Continuer ▸ ({vues}/{v})", { vues, v: repliques.size() }),
 				() => {
 					affichage.replique.vues += 1;
 					redessiner();
@@ -125,7 +126,7 @@ export function vueDialogue(parent: Frame, cle: string, redessiner: () => void) 
 	if (!toutVu) return;
 
 	if (fini) {
-		bouton(c, "Terminer la scène", () => agir({ type: "quitter_scene", cle }), { principal: true });
+		bouton(c, tr("Terminer la scène"), () => agir({ type: "quitter_scene", cle }), { principal: true });
 		return;
 	}
 	// un personnage s'adresse à un joueur précis : lui seul répond
@@ -138,18 +139,18 @@ export function vueDialogue(parent: Frame, cle: string, redessiner: () => void) 
 		texte(c, dire(q.dit), 18);
 		const interroge = etat.heros[parole.heros];
 		if (monHeros()?.id === parole.heros) {
-			texte(c, "C'est à toi de répondre :", 14, { couleur: COULEURS.or });
+			texte(c, tr("C'est à toi de répondre :"), 14, { couleur: COULEURS.or });
 			for (const i of parole.reponses) bouton(c, dire(noeud.parole_a.reponses[i].texte), () => agir({ type: "repondre", cle, index: i }), { largeur: new UDim(1, 0), hauteur: 40, taille: 15 });
 		} else {
 			const pseudo = etat.joueurs[interroge?.joueurId ?? ""]?.pseudo ?? "?";
-			texte(c, `<i>${esc(interroge?.nom ?? "?")} (${esc(pseudo)}) réfléchit à sa réponse…</i>`, 15, { couleur: COULEURS.texte2 });
+			texte(c, trf("<i>{esc} ({esc2}) réfléchit à sa réponse…</i>", { esc: esc(interroge?.nom ?? "?"), esc2: esc(pseudo) }), 15, { couleur: COULEURS.texte2 });
 		}
 		return;
 	}
 	if (combatEnAttente) {
 		bouton(
 			c,
-			"⚔ Au combat !",
+			tr("⚔ Au combat !"),
 			() => {
 				affichage.combatsVus.add(etat.combats[groupe ? "groupe" : cle].combat.id);
 				redessiner();
@@ -163,19 +164,19 @@ export function vueDialogue(parent: Frame, cle: string, redessiner: () => void) 
 		const def = noeud.pari;
 		const joueurs = joueursDuPari(etat, cle);
 		const partMin = partMinimaleDePari(etat, cle, def.mise);
-		const cp = carte(c, `🪙 Pari : ${def.mise} pièces pour le groupe`);
-		texte(cp, `La mise est partagée entre ceux qui misent${joueurs.size() > 1 ? ` (si tout le monde mise : ${partsDeMise(def.mise, joueurs.size()).join(" + ")})` : ""}. Pari gagné : chacun récupère ${def.gain} fois sa part. Pari perdu : la part est perdue.`, 14, { couleur: COULEURS.texte2 });
+		const cp = carte(c, trf("🪙 Pari : {mise} pièces pour le groupe", { mise: def.mise }));
+		texte(cp, trf("La mise est partagée entre ceux qui misent{v}. Pari gagné : chacun récupère {gain} fois sa part. Pari perdu : la part est perdue.", { v: joueurs.size() > 1 ? trf(" (si tout le monde mise : {v})", { v: partsDeMise(def.mise, joueurs.size()).join(" + ") }) : "", gain: def.gain }), 14, { couleur: COULEURS.texte2 });
 		for (const j of joueurs) {
 			const hj = etat.heros[etat.joueurs[j].herosId ?? ""];
 			const rep = es.pari[j];
 			const l = ligne(cp, 8);
-			texte(l, `<b>${pseudo(j)}</b> (${esc(hj?.nom ?? "?")}, ${hj?.or ?? 0} or)${rep !== undefined ? ` — <b>${rep ? "mise" : "ne mise pas"}</b>` : ""}`, 15, { largeur: new UDim(1, -230) });
+			texte(l, trf("<b>{pseudo}</b> ({esc}, {v} or){v2}", { pseudo: pseudo(j), esc: esc(hj?.nom ?? "?"), v: hj?.or ?? 0, v2: rep !== undefined ? trf(" — <b>{v}</b>", { v: rep ? "mise" : tr("ne mise pas") }) : "" }), 15, { largeur: new UDim(1, -230) });
 			if (rep === undefined && j === jeu.moi) {
 				const manque = (hj?.or ?? 0) < partMin;
-				bouton(l, "Je mise", () => agir({ type: "parier", cle, mise: true }), { principal: true, actif: !manque, hauteur: 30, taille: 14 });
-				bouton(l, "Je ne mise pas", () => agir({ type: "parier", cle, mise: false }), { hauteur: 30, taille: 14 });
-				if (manque) texte(cp, `Pas assez d'or : il faut au moins ${partMin} pièces pour ta part.`, 13, { couleur: COULEURS.rouge });
-			} else if (rep === undefined) texte(l, "réfléchit…", 13, { couleur: COULEURS.texte2 });
+				bouton(l, tr("Je mise"), () => agir({ type: "parier", cle, mise: true }), { principal: true, actif: !manque, hauteur: 30, taille: 14 });
+				bouton(l, tr("Je ne mise pas"), () => agir({ type: "parier", cle, mise: false }), { hauteur: 30, taille: 14 });
+				if (manque) texte(cp, trf("Pas assez d'or : il faut au moins {partMin} pièces pour ta part.", { partMin }), 13, { couleur: COULEURS.rouge });
+			} else if (rep === undefined) texte(l, tr("réfléchit…"), 13, { couleur: COULEURS.texte2 });
 		}
 		return;
 	}
@@ -186,28 +187,28 @@ export function vueDialogue(parent: Frame, cle: string, redessiner: () => void) 
 			const l = ligne(c);
 			const votants: string[] = [];
 			for (const [j, v] of pairs(es.votes)) if (v === ch.index) votants.push(esc(etat.joueurs[j]?.pseudo ?? "?"));
-			const test = ch.choix.test ? ` <font color="#beaf96">[test de ${NOMS_CARACS[ch.choix.test.carac]}]</font>` : "";
+			const test = ch.choix.test ? trf(" <font color=\"#beaf96\">[test de {v}]</font>", { v: tr(NOMS_CARACS[ch.choix.test.carac] ?? ch.choix.test.carac) }) : "";
 			// pari : la mise sort vraiment du porte-monnaie
 			const mise = miseDuChoix(ch.choix);
 			const orDispo = monHeros()?.or ?? 0;
-			const pari = mise > 0 ? ` <font color="#d9a441">[mise ${mise} or${orDispo < mise ? " — pas assez d'or" : ""}]</font>` : "";
+			const pari = mise > 0 ? trf(" <font color=\"#d9a441\">[mise {mise} or{v}]</font>", { mise, v: orDispo < mise ? tr(" — pas assez d'or") : "" }) : "";
 			const libelle = txt(ch.choix.texte);
 			const prix = prixDuChoix(etat, ch.choix);
-			const avecPrix = prix > 0 && libelle.find(" or", 1, true)[0] === undefined ? `${libelle} <font color="#d9a441">(${prix} or)</font>` : libelle;
-			texte(l, `${avecPrix}${test}${pari}${ch.possible ? "" : ` <font color="#c4483c">(${raisonIndispo(etat, ch.choix, es.heros)})</font>`}${groupe && votants.size() > 0 ? `\n<font color="#d9a441">Votes : ${votants.join(", ")}</font>` : ""}`, 15, { largeur: new UDim(1, -110) });
-			bouton(l, groupe ? "Voter" : "Choisir", () => agir({ type: "choisir", cle, index: ch.index }), { actif: ch.possible && orDispo >= mise, choisi: es.votes[jeu.moi] === ch.index, hauteur: 34 });
+			const avecPrix = prix > 0 && libelle.find(" or", 1, true)[0] === undefined ? trf("{libelle} <font color=\"#d9a441\">({prix} or)</font>", { libelle, prix }) : libelle;
+			texte(l, `${avecPrix}${test}${pari}${ch.possible ? "" : trf(" <font color=\"#c4483c\">({raisonIndispo})</font>", { raisonIndispo: raisonIndispo(etat, ch.choix, es.heros) })}${groupe && votants.size() > 0 ? trf("\n<font color=\"#d9a441\">Votes : {v}</font>", { v: votants.join(", ") }) : ""}`, 15, { largeur: new UDim(1, -110) });
+			bouton(l, groupe ? tr("Voter") : tr("Choisir"), () => agir({ type: "choisir", cle, index: ch.index }), { actif: ch.possible && orDispo >= mise, choisi: es.votes[jeu.moi] === ch.index, hauteur: 34 });
 		}
 		if (groupe) {
 			const attente = presents.filter((j) => es.votes[j] === undefined).map((j) => esc(etat.joueurs[j].pseudo));
-			texte(c, `En attente des votes : ${attente.size() > 0 ? attente.join(", ") : "personne"}.`, 13, { couleur: COULEURS.texte2 });
+			texte(c, trf("En attente des votes : {v}.", { v: attente.size() > 0 ? attente.join(", ") : "personne" }), 13, { couleur: COULEURS.texte2 });
 			let nbVotes = 0;
 			for (const [,] of pairs(es.votes)) nbVotes++;
-			if (etat.meneur === jeu.moi && nbVotes > 0) bouton(c, "Trancher (meneur)", () => agir({ type: "trancher", cle }), { hauteur: 32, taille: 14 });
+			if (etat.meneur === jeu.moi && nbVotes > 0) bouton(c, tr("Trancher (meneur)"), () => agir({ type: "trancher", cle }), { hauteur: 32, taille: 14 });
 		}
 	} else if (noeud?.suite !== undefined) {
 		const presents = etat.ordreJoueurs.filter((j) => etat.joueurs[j].present && etat.joueurs[j].herosId !== undefined && es.heros.includes(etat.joueurs[j].herosId!));
 		if (!groupe || presents.size() <= 1) {
-			bouton(c, "Continuer", () => agir({ type: "continuer", cle }), { principal: true });
+			bouton(c, tr("Continuer"), () => agir({ type: "continuer", cle }), { principal: true });
 			return;
 		}
 		// en groupe : on avance quand tout le monde est prêt ; le meneur peut passer après 20 s d'attente
@@ -215,8 +216,8 @@ export function vueDialogue(parent: Frame, cle: string, redessiner: () => void) 
 		const attendus = joueursAttendusDialogue(etat, cle);
 		const jeSuisPret = prets.includes(jeu.moi);
 		const l = ligne(c, 8);
-		bouton(l, jeSuisPret ? "Prêt ✔" : "Continuer", () => agir({ type: "pret_dialogue", cle }), { principal: !jeSuisPret, actif: !jeSuisPret, hauteur: 36 });
-		texte(l, `Prêts : ${presents.filter((j) => prets.includes(j)).size()}/${presents.size()}${attendus.size() > 0 ? ` · en attente de ${attendus.map(pseudo).join(", ")}…` : ""}`, 14, { couleur: COULEURS.texte2, largeur: new UDim(1, -360) });
+		bouton(l, jeSuisPret ? tr("Prêt ✔") : tr("Continuer"), () => agir({ type: "pret_dialogue", cle }), { principal: !jeSuisPret, actif: !jeSuisPret, hauteur: 36 });
+		texte(l, trf("Prêts : {v}/{v2}{v3}", { v: presents.filter((j) => prets.includes(j)).size(), v2: presents.size(), v3: attendus.size() > 0 ? trf(" · en attente de {v}…", { v: attendus.map(pseudo).join(", ") }) : "" }), 14, { couleur: COULEURS.texte2, largeur: new UDim(1, -360) });
 		const ka = `${es.sceneId}:${es.noeud}`;
 		if (jeSuisPret && attendus.size() > 0) {
 			if (minuterie.attente !== ka) {
@@ -225,7 +226,7 @@ export function vueDialogue(parent: Frame, cle: string, redessiner: () => void) 
 				task.delay(20.1, redessiner);
 			}
 			if (etat.meneur === jeu.moi && os.clock() - minuterie.attenteDepuis >= 20)
-				bouton(l, "Passer quand même (meneur)", () => agir({ type: "continuer", cle }), { hauteur: 32, taille: 13 });
+				bouton(l, tr("Passer quand même (meneur)"), () => agir({ type: "continuer", cle }), { hauteur: 32, taille: 13 });
 		}
 	}
 }

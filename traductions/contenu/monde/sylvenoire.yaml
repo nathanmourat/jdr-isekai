@@ -1,0 +1,34 @@
+# Textes de content/monde/sylvenoire.yaml
+# Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
+- fr: Sylvenoire
+- fr: "La forêt primaire des elfes : arbres géants, brume bleue, et une mémoire plus longue que celle des hommes."
+- fr: Ithrael
+- fr: La cité des elfes, bâtie dans les branches d'un arbre plus haut qu'une montagne.
+- fr: Porte des Racines
+- fr: "L'entrée d'Ithrael : un escalier taillé dans une racine, gardé par des archers silencieux."
+- fr: Cour de la Reine-Sève
+- fr: Une salle vivante, aux murs de branches tressées, où la Reine écoute plus qu'elle ne parle.
+- fr: La Feuille d'Argent
+- fr: L'auberge des voyageurs, perchée dans les branches. Les lits sont des hamacs, et la vue est vertigineuse.
+- fr: Marché des Graines
+- fr: "Des étals dans les branches : graines, herbes, arcs de frêne et tissus de soie d'araignée."
+- fr: Relais de la Guilde (Ithrael)
+- fr: Une petite cabane au pied de l'arbre, où la Guilde a le droit — tout juste — d'afficher ses contrats.
+- fr: Lisière de Sylvenoire
+- fr: Là où les champs d'Aubeclaire cèdent la place à des troncs larges comme des tours.
+- fr: Votre domaine
+- fr: "Des terres données par la Couronne (ou par la Guilde), entre la forêt et les champs : un manoir à relever, des fermes, des gens."
+- fr: Bois des Feux follets
+- fr: Un bois où les lumières bleues dansent entre les troncs. On s'y perd facilement, même en plein jour.
+- fr: Bibliothèque des Racines
+- fr: Une bibliothèque creusée sous les racines du plus vieil arbre du monde. Interdite depuis mille ans.
+- fr: Clairière de la Déchirure
+- fr: Une clairière où rien ne pousse. Au centre, l'air tremble comme au-dessus d'un feu.
+- fr: Marais de brume
+- fr: Une eau noire sous une brume bleue, et des champignons partout.
+- fr: Cercle des dryades
+- fr: Sept arbres en cercle, qui murmurent quand on entre.
+- fr: Le Vieux-Chêne
+- fr: Un chêne immense, dont l'écorce suinte une sève violette.
+- fr: Camp avancé de la Légion
+- fr: Des tentes noires, cachées sous les fougères, à un jour de marche d'Ithrael.

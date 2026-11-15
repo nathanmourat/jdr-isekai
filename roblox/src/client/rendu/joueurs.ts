@@ -4,6 +4,7 @@
  */
 import { Players } from "@rbxts/services";
 import { commandeGroupe, jeu } from "../partie";
+import { tr } from "shared/langue";
 
 const invites = new Map<Player, ProximityPrompt>();
 
@@ -13,7 +14,7 @@ function poser(p: Player, perso: Model) {
 	invites.get(p)?.Destroy();
 	const i = new Instance("ProximityPrompt");
 	i.Name = "InviterGroupe";
-	i.ActionText = "Inviter dans le groupe";
+	i.ActionText = tr("Inviter dans le groupe");
 	i.ObjectText = p.DisplayName;
 	i.KeyboardKeyCode = Enum.KeyCode.G;
 	i.HoldDuration = 0.3;

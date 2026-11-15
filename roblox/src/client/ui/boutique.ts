@@ -24,6 +24,7 @@ import { reseau } from "shared/reseau";
 import { jouer } from "../sons";
 import { COULEURS, MOBILE } from "./kit";
 import { messageLocal } from "./messages";
+import { tr, trf, tx } from "shared/langue";
 
 const r = reseau();
 const joueur = Players.LocalPlayer;
@@ -40,7 +41,7 @@ const etat = {
 	essai: undefined as { id: string; fin: number } | undefined,
 };
 
-const NOMS_EMPLACEMENTS: Record<Emplacement, string> = { aura: "Aura", cape: "Cape", titre: "Titre", trace: "Traces de pas", sorts: "Effets de sorts" };
+const NOMS_EMPLACEMENTS: Record<Emplacement, string> = { aura: tx("Aura"), cape: tx("Cape"), titre: tx("Titre"), trace: tx("Traces de pas"), sorts: tx("Effets de sorts") };
 
 // ───────────────────────────── Prix (lus sur Roblox) ─────────────────────────────
 
@@ -61,7 +62,7 @@ function chargerPrix() {
 }
 
 function textePrix(a: ArticleBoutique): string {
-	if (a.achat.numero === 0) return "Bientôt";
+	if (a.achat.numero === 0) return tr("Bientôt");
 	const p = prix.get(a.id);
 	if (p === undefined) return "…";
 	if (p === false) return "Indisponible";
@@ -179,8 +180,8 @@ function lancementLibre(a: ArticleBoutique): boolean {
 function commande(c: CommandeBoutique) {
 	task.spawn(() => {
 		const [ok, rep] = pcall(() => r.boutique.InvokeServer(c));
-		if (!ok) etat.info = { texte: "La boutique ne répond pas, réessaie.", couleur: COULEURS.rouge };
-		else if (!rep.ok) etat.info = { texte: rep.erreur ?? "Refusé.", couleur: COULEURS.rouge };
+		if (!ok) etat.info = { texte: tr("La boutique ne répond pas, réessaie."), couleur: COULEURS.rouge };
+		else if (!rep.ok) etat.info = { texte: rep.erreur ?? tr("Refusé."), couleur: COULEURS.rouge };
 		else if (rep.info !== undefined) etat.info = { texte: rep.info, couleur: COULEURS.texte2 };
 		if (etat.ouvert) dessiner();
 	});
@@ -232,7 +233,7 @@ function essayer(a: ArticleBoutique) {
 	t.Size = new UDim2(0, 0, 0, 0);
 	t.AutomaticSize = Enum.AutomaticSize.XY;
 	t.TextWrapped = false;
-	btn(barreEssai, "Retour à la boutique", "or", () => {
+	btn(barreEssai, tr("Retour à la boutique"), "or", () => {
 		finirEssai();
 		ouvrirBoutique(a.id);
 	}, 2, new UDim(0, 190));
@@ -245,7 +246,7 @@ function essayer(a: ArticleBoutique) {
 				finirEssai();
 				break;
 			}
-			t.Text = `👁 Essai : ${a.icone} ${a.nom} — ${reste} s (tourne la caméra pour te voir)`;
+			t.Text = trf("👁 Essai : {icone} {nom} — {reste} s (tourne la caméra pour te voir)", { icone: a.icone, nom: tr(a.nom), reste });
 			task.wait(0.25);
 		}
 	});
@@ -313,11 +314,11 @@ function construireFenetre() {
 	degrade(tete, Color3.fromRGB(70, 30, 85), Color3.fromRGB(35, 22, 12), 0);
 	tete.Parent = fenetre;
 	marge(tete, 12);
-	const titre = label(tete, "✦ Boutique de Velmaris ✦", MOBILE ? 20 : 26, COULEURS.or, true);
+	const titre = label(tete, tr("✦ Boutique de Velmaris ✦"), MOBILE ? 20 : 26, COULEURS.or, true);
 	titre.Font = Enum.Font.Garamond;
 	titre.Size = new UDim2(1, -60, 0, 0);
 	if (!MOBILE) {
-		const sous = label(tete, "Des cosmétiques seulement : rien ne rend plus fort, tout rend plus beau.", 13, COULEURS.texte2);
+		const sous = label(tete, tr("Des cosmétiques seulement : rien ne rend plus fort, tout rend plus beau."), 13, COULEURS.texte2);
 		sous.Position = new UDim2(0, 0, 0, 32);
 		sous.Size = new UDim2(1, -60, 0, 0);
 	}
@@ -357,8 +358,8 @@ function dessinerOnglets(parent: Frame) {
 	barre.ScrollBarThickness = MOBILE ? 0 : 4;
 	barre.Parent = parent;
 	pile(barre, 6, true);
-	const onglets: [Onglet, string][] = CATEGORIES.map((c) => [c.id, `${c.icone} ${c.nom}`]);
-	onglets.push(["collection", "🎒 Ma collection"]);
+	const onglets: [Onglet, string][] = CATEGORIES.map((c) => [c.id, `${c.icone} ${tr(c.nom)}`]);
+	onglets.push(["collection", tr("🎒 Ma collection")]);
 	let i = 0;
 	for (const [id, nom] of onglets) {
 		const choisi = etat.onglet === id;
@@ -397,13 +398,13 @@ function pastille(parent: Instance, a: ArticleBoutique) {
 	let texteCouleur = COULEURS.texte;
 	if (a.categorie === "fete") {
 		const n = charges(a);
-		if (etat.boutique?.proprietaire) [t, fond] = ["∞ illimité", COULEURS.choisi];
-		else if (n > 0) [t, fond] = [`×${n} restantes`, Color3.fromRGB(60, 120, 70)];
+		if (etat.boutique?.proprietaire) [t, fond] = [tr("∞ illimité"), COULEURS.choisi];
+		else if (n > 0) [t, fond] = [trf("×{n} restantes", { n }), Color3.fromRGB(60, 120, 70)];
 		else [t, fond] = [textePrix(a), COULEURS.fond2];
 	} else if (porte(a)) {
-		[t, fond] = ["★ Porté", COULEURS.or];
+		[t, fond] = [tr("★ Porté"), COULEURS.or];
 		texteCouleur = COULEURS.fond;
-	} else if (possede(a.id)) [t, fond] = ["✓ Possédé", Color3.fromRGB(60, 120, 70)];
+	} else if (possede(a.id)) [t, fond] = [tr("✓ Possédé"), Color3.fromRGB(60, 120, 70)];
 	else [t, fond] = [textePrix(a), a.achat.numero === 0 ? COULEURS.fond2 : Color3.fromRGB(45, 95, 55)];
 	const p = new Instance("TextLabel");
 	p.Text = t;
@@ -457,7 +458,7 @@ function carteArticle(parent: Instance, a: ArticleBoutique, ordre: number) {
 	icone.Parent = haut;
 	// étiquette de rareté
 	const r = new Instance("TextLabel");
-	r.Text = rarete.nom;
+	r.Text = tr(rarete.nom);
 	r.Font = Enum.Font.GothamBold;
 	r.TextSize = 11;
 	r.TextColor3 = COULEURS.fond;
@@ -474,7 +475,7 @@ function carteArticle(parent: Instance, a: ArticleBoutique, ordre: number) {
 	// nom
 	const nom = new Instance("TextLabel");
 	nom.BackgroundTransparency = 1;
-	nom.Text = a.nom;
+	nom.Text = tr(a.nom);
 	nom.Font = Enum.Font.GothamBold;
 	nom.TextSize = MOBILE ? 14 : 15;
 	nom.TextWrapped = true;
@@ -549,7 +550,7 @@ function detail(parent: Instance, a: ArticleBoutique) {
 	marge(c, 14);
 	pile(c, 10);
 	let o = 0;
-	if (MOBILE) btn(c, "← Retour aux articles", "sombre", () => ((etat.detailMobile = false), dessiner()), o++, new UDim(0, 220));
+	if (MOBILE) btn(c, tr("← Retour aux articles"), "sombre", () => ((etat.detailMobile = false), dessiner()), o++, new UDim(0, 220));
 
 	// grand aperçu : dégradé, cercle qui « respire », pictogramme
 	const apercu = new Instance("Frame");
@@ -590,10 +591,10 @@ function detail(parent: Instance, a: ArticleBoutique) {
 		});
 	}
 
-	label(c, a.nom, 22, COULEURS.texte, true, o++).Font = Enum.Font.Garamond;
+	label(c, tr(a.nom), 22, COULEURS.texte, true, o++).Font = Enum.Font.Garamond;
 	const cat = CATEGORIES.find((x) => x.id === a.categorie);
-	label(c, `<font color="#${rarete.couleur.ToHex()}"><b>${rarete.nom}</b></font>  ·  ${cat?.icone ?? ""} ${cat?.nom ?? ""}`, 14, COULEURS.texte2, false, o++);
-	label(c, a.description, 15, COULEURS.texte, false, o++);
+	label(c, trf("<font color=\"#{v}\"><b>{nom}</b></font>  ·  {v2} {v3}", { v: rarete.couleur.ToHex(), nom: tr(rarete.nom), v2: cat?.icone ?? "", v3: tr(cat?.nom ?? "") }), 14, COULEURS.texte2, false, o++);
+	label(c, tr(a.description), 15, COULEURS.texte, false, o++);
 
 	// pastilles de couleur
 	const nuancier = new Instance("Frame");
@@ -613,10 +614,10 @@ function detail(parent: Instance, a: ArticleBoutique) {
 
 	// contenu d'un pack
 	if (a.contenu) {
-		label(c, "<b>Contient :</b>", 14, COULEURS.or, false, o++);
+		label(c, tr("<b>Contient :</b>"), 14, COULEURS.or, false, o++);
 		for (const id of a.contenu) {
 			const x = article(id);
-			if (x) label(c, `${x.icone}  ${x.nom}  <font color="#${RARETES[x.rarete].couleur.ToHex()}">(${RARETES[x.rarete].nom})</font>`, 14, COULEURS.texte, false, o++);
+			if (x) label(c, trf("{icone}  {nom}  <font color=\"#{v}\">({nom2})</font>", { icone: x.icone, nom: tr(x.nom), v: RARETES[x.rarete].couleur.ToHex(), nom2: tr(RARETES[x.rarete].nom) }), 14, COULEURS.texte, false, o++);
 		}
 	}
 
@@ -625,29 +626,29 @@ function detail(parent: Instance, a: ArticleBoutique) {
 	const prop = b?.proprietaire ?? false;
 	if (a.categorie === "fete") {
 		const n = charges(a);
-		label(c, prop ? "👑 Propriétaire : illimité." : `Utilisations restantes : <b>${n}</b>`, 14, COULEURS.texte2, false, o++);
-		if (prop || n > 0 || lancementLibre(a)) btn(c, `${a.icone} Lancer maintenant`, "or", () => {
+		label(c, prop ? tr("👑 Propriétaire : illimité.") : trf("Utilisations restantes : <b>{n}</b>", { n }), 14, COULEURS.texte2, false, o++);
+		if (prop || n > 0 || lancementLibre(a)) btn(c, trf("{icone} Lancer maintenant", { icone: a.icone }), "or", () => {
 			commande({ type: "utiliser", id: a.id });
 			fermer();
 		}, o++);
 	} else if (a.categorie === "pack") {
-		if (possede(a.id)) label(c, "✓ Tu possèdes ce pack : ses articles sont dans « Ma collection ».", 14, COULEURS.vert, false, o++);
+		if (possede(a.id)) label(c, tr("✓ Tu possèdes ce pack : ses articles sont dans « Ma collection »."), 14, COULEURS.vert, false, o++);
 	} else if (possede(a.id)) {
-		if (porte(a)) btn(c, "Retirer", "sombre", () => commande({ type: "retirer", emplacement: a.categorie as Emplacement }), o++);
-		else btn(c, "★ Porter", "or", () => commande({ type: "equiper", id: a.id }), o++);
+		if (porte(a)) btn(c, tr("Retirer"), "sombre", () => commande({ type: "retirer", emplacement: a.categorie as Emplacement }), o++);
+		else btn(c, tr("★ Porter"), "or", () => commande({ type: "equiper", id: a.id }), o++);
 	}
 	const aAcheter = a.categorie === "fete" ? !prop : !possede(a.id);
 	if (aAcheter) {
-		if (a.achat.numero !== 0) btn(c, `Acheter — ${textePrix(a)}`, "vert", () => acheter(a), o++);
+		if (a.achat.numero !== 0) btn(c, trf("Acheter — {textePrix}", { textePrix: textePrix(a) }), "vert", () => acheter(a), o++);
 		else {
-			btn(c, "Bientôt en vente", "sombre", undefined, o++);
-			if (b?.studio) btn(c, "🧪 Essai Studio (gratuit, non gardé)", "sombre", () => commande({ type: "essai_studio", id: a.id }), o++);
+			btn(c, tr("Bientôt en vente"), "sombre", undefined, o++);
+			if (b?.studio) btn(c, tr("🧪 Essai Studio (gratuit, non gardé)"), "sombre", () => commande({ type: "essai_studio", id: a.id }), o++);
 		}
 	}
-	if (a.categorie === "sorts") label(c, "🔮 Se voit en combat, sur tes sorts et tes flèches.", 13, COULEURS.texte2, false, o++);
-	else if (a.categorie !== "fete" && a.categorie !== "pack") btn(c, "👁 Essayer 10 secondes", "sombre", () => essayer(a), o++);
+	if (a.categorie === "sorts") label(c, tr("🔮 Se voit en combat, sur tes sorts et tes flèches."), 13, COULEURS.texte2, false, o++);
+	else if (a.categorie !== "fete" && a.categorie !== "pack") btn(c, tr("👁 Essayer 10 secondes"), "sombre", () => essayer(a), o++);
 	if (etat.info) label(c, etat.info.texte, 14, etat.info.couleur, true, o++);
-	label(c, "Achat sécurisé par Roblox. Les cosmétiques ne donnent aucun avantage en jeu.", 12, COULEURS.texte2, false, o++);
+	label(c, tr("Achat sécurisé par Roblox. Les cosmétiques ne donnent aucun avantage en jeu."), 12, COULEURS.texte2, false, o++);
 }
 
 /** Onglet « Ma collection » : ce que je porte, puis ce que je possède. */
@@ -657,7 +658,7 @@ function collection(parent: Frame) {
 	zone.Size = UDim2.fromScale(1, 1);
 	zone.Parent = parent;
 	pile(zone, 10);
-	label(zone, "<b>Porté en ce moment</b>", 16, COULEURS.or, false, 1);
+	label(zone, tr("<b>Porté en ce moment</b>"), 16, COULEURS.or, false, 1);
 	const rang = new Instance("Frame");
 	rang.BackgroundTransparency = 1;
 	rang.Size = new UDim2(1, 0, 0, MOBILE ? 92 : 84);
@@ -680,7 +681,7 @@ function collection(parent: Frame) {
 		pile(f, 2);
 		const t1 = label(f, a ? a.icone : "—", 24, COULEURS.texte, true, 1);
 		t1.TextXAlignment = Enum.TextXAlignment.Center;
-		const t2 = label(f, `<b>${NOMS_EMPLACEMENTS[emp]}</b>${a ? `\n${a.nom}` : ""}`, 11, a ? COULEURS.texte : COULEURS.texte2, false, 2);
+		const t2 = label(f, `<b>${tr(NOMS_EMPLACEMENTS[emp])}</b>${a ? `\n${tr(a.nom)}` : ""}`, 11, a ? COULEURS.texte : COULEURS.texte2, false, 2);
 		t2.TextXAlignment = Enum.TextXAlignment.Center;
 		if (a) f.MouseButton1Click.Connect(() => {
 			etat.choisi = a.id;
@@ -689,8 +690,8 @@ function collection(parent: Frame) {
 		});
 	}
 	const mes = ARTICLES.filter((a) => possede(a.id) || (a.categorie === "fete" && charges(a) > 0));
-	label(zone, `<b>Ma collection</b> (${mes.size()} article${mes.size() > 1 ? "s" : ""})`, 16, COULEURS.or, false, 3);
-	if (mes.size() === 0) label(zone, "Rien pour l'instant. Les articles achetés apparaîtront ici, et tu pourras les porter ou les retirer quand tu veux.", 14, COULEURS.texte2, false, 4);
+	label(zone, trf("<b>Ma collection</b> ({v} article{v2})", { v: mes.size(), v2: mes.size() > 1 ? "s" : "" }), 16, COULEURS.or, false, 3);
+	if (mes.size() === 0) label(zone, tr("Rien pour l'instant. Les articles achetés apparaîtront ici, et tu pourras les porter ou les retirer quand tu veux."), 14, COULEURS.texte2, false, 4);
 	else grille(zone, mes, 5, new UDim(1, MOBILE ? -170 : -150));
 }
 
@@ -712,7 +713,7 @@ function dessiner() {
 	if (b?.proprietaire || b?.studio) {
 		const bandeau = label(
 			contenu,
-			b.proprietaire ? "👑 Propriétaire du jeu : tout est débloqué pour toi (les autres joueurs voient les vrais prix)." : "🧪 Studio : les achats Roblox sont des tests gratuits ; « Essai Studio » débloque un article jusqu'à la fin du test.",
+			b.proprietaire ? tr("👑 Propriétaire du jeu : tout est débloqué pour toi (les autres joueurs voient les vrais prix).") : tr("🧪 Studio : les achats Roblox sont des tests gratuits ; « Essai Studio » débloque un article jusqu'à la fin du test."),
 			13,
 			COULEURS.or,
 		);
@@ -800,13 +801,13 @@ export function preparerBoutique() {
 			const nouveaux = e.possedes.filter((id) => !avant.possedes.includes(id));
 			const a = article(nouveaux.find((id) => article(id)?.categorie === "pack") ?? nouveaux[0] ?? "");
 			if (a) {
-				messageLocal({ titre: "✨ Merci !", texte: `${a.icone} ${a.nom} est à toi. Tu peux le porter depuis « Ma collection ».`, genre: "annonce" });
+				messageLocal({ titre: tr("✨ Merci !"), texte: trf("{icone} {nom} est à toi. Tu peux le porter depuis « Ma collection ».", { icone: a.icone, nom: tr(a.nom) }), genre: "annonce" });
 				jouer("niveau");
 			}
 			for (const [id, n] of pairs(e.charges)) {
 				const a = article(id as string);
 				if (a && n > (avant.charges[id as string] ?? 0)) {
-					messageLocal({ titre: "✨ Merci !", texte: `${a.icone} ${a.nom} : ${n} utilisation${n > 1 ? "s" : ""} disponible${n > 1 ? "s" : ""}.`, genre: "annonce" });
+					messageLocal({ titre: tr("✨ Merci !"), texte: trf("{icone} {nom} : {n} utilisation{v} disponible{v2}.", { icone: a.icone, nom: tr(a.nom), n, v: n > 1 ? "s" : "", v2: n > 1 ? "s" : "" }), genre: "annonce" });
 					jouer("niveau");
 				}
 			}

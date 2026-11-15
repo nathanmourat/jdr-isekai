@@ -3,7 +3,7 @@
  *  - une flèche dorée flotte devant le joueur et montre la porte du lieu de la prochaine étape ;
  *  - une bulle en bas de l'écran donne LE conseil utile selon ce qu'on fait (dehors, dans un bâtiment,
  *    en dialogue, en combat, dans un donjon) ;
- *  - « Masquer les conseils » les cache pour la session.
+ *  - « Masquer les conseils » les cache (réglage du compte, qu'on peut remettre dans ⚙ Réglages).
  * Rien n'est enregistré : le tutoriel se déduit de l'avancement de la campagne.
  */
 import { CollectionService, Players, RunService, Workspace } from "@rbxts/services";
@@ -12,8 +12,9 @@ import { prochaineEtape } from "shared/moteur";
 import { affichage } from "../local";
 import { jeu, monHeros } from "../partie";
 import { COULEURS } from "./kit";
+import { changerReglage, reglages } from "../reglages";
+import { tr, trf } from "shared/langue";
 
-let masque = false;
 /** Lieu vers lequel « Y aller » guide (quand on ne peut pas encore s'y téléporter). */
 let guide: string | undefined;
 let derniereVue = "";
@@ -31,7 +32,7 @@ const vus = new Set<string>();
 
 function actif(): boolean {
 	const etat = jeu.etat;
-	if (masque || !etat || !monHeros()) return false;
+	if (!reglages.conseils || !etat || !monHeros()) return false;
 	return etat.chapitre === 1 && etat.flags["examen-reussi"] !== true;
 }
 
@@ -77,7 +78,7 @@ function ecran() {
 	bulle.LayoutOrder = 1;
 	bulle.Parent = cadre;
 	const cacher = new Instance("TextButton");
-	cacher.Text = "Masquer les conseils";
+	cacher.Text = tr("Masquer les conseils");
 	cacher.Font = Enum.Font.Gotham;
 	cacher.TextSize = 13;
 	cacher.TextColor3 = COULEURS.texte2;
@@ -86,7 +87,7 @@ function ecran() {
 	cacher.LayoutOrder = 2;
 	cacher.Parent = cadre;
 	cacher.MouseButton1Click.Connect(() => {
-		masque = true;
+		changerReglage("conseils", false);
 		majTutoriel("");
 	});
 	gui.Parent = Players.LocalPlayer.WaitForChild("PlayerGui");
@@ -152,19 +153,19 @@ function conseil(vue: string): string | undefined {
 	const h = monHeros()!;
 	const e = prochaineEtape(CONTENU, etat, h.id);
 	const nomCible = e?.nomLieu ?? e?.lieu ?? "";
-	if (vue === "combat") return "⚔ <b>Combat au tour par tour</b> : à ton tour, choisis « Attaquer » ou une compétence, puis clique sur un ennemi (contour doré). « Conseils » propose une bonne action.";
+	if (vue === "combat") return tr("⚔ <b>Combat au tour par tour</b> : à ton tour, choisis « Attaquer » ou une compétence, puis clique sur un ennemi (contour doré). « Conseils » propose une bonne action.");
 	if (vue === "scene-groupe" || vue === "scene-moi")
-		return "💬 Lis les répliques avec « Continuer », puis choisis une réponse. À plusieurs, chacun vote et la majorité l'emporte.";
-	if (vue === "donjon") return "🕯 Avance avec ton avatar : les événements (coffres, pièges, monstres) se déclenchent sous les pieds du meneur, marqué par la lueur dorée.";
+		return tr("💬 Lis les répliques avec « Continuer », puis choisis une réponse. À plusieurs, chacun vote et la majorité l'emporte.");
+	if (vue === "donjon") return tr("🕯 Avance avec ton avatar : les événements (coffres, pièges, monstres) se déclenchent sous les pieds du meneur, marqué par la lueur dorée.");
 	if (vue !== "monde" || !e) return undefined;
 	if (affichage.dans !== undefined) {
-		if (e.lieu === affichage.dans) return "🗨 C'est ici ! Approche-toi du personnage marqué d'un <b>« ! » doré</b> et appuie sur <b>E</b> pour lui parler.";
-		return `🚪 Ce n'est pas ici : sors par la porte (touche <b>E</b>), puis suis la flèche dorée jusqu'à <b>${nomCible}</b>.`;
+		if (e.lieu === affichage.dans) return tr("🗨 C'est ici ! Approche-toi du personnage marqué d'un <b>« ! » doré</b> et appuie sur <b>E</b> pour lui parler.");
+		return trf("🚪 Ce n'est pas ici : sors par la porte (touche <b>E</b>), puis suis la flèche dorée jusqu'à <b>{nomCible}</b>.", { nomCible });
 	}
-	if (!e.disponible) return `🎯 Objectif : <b>${e.objectif}</b>. L'histoire attend : va dormir au <b>Chaudron Fêlé</b> (la taverne) pour faire passer le temps.`;
-	const astuce = !vus.has("groupe") ? "\nAstuce : le menu <b>👥 Groupe</b> permet de jouer à plusieurs." : "";
+	if (!e.disponible) return trf("🎯 Objectif : <b>{objectif}</b>. L'histoire attend : va dormir au <b>Chaudron Fêlé</b> (la taverne) pour faire passer le temps.", { objectif: e.objectif });
+	const astuce = !vus.has("groupe") ? tr("\nAstuce : le menu <b>👥 Groupe</b> permet de jouer à plusieurs.") : "";
 	vus.add("groupe");
-	return `🎯 Objectif : <b>${e.objectif}</b>. Suis la <b>flèche dorée</b> jusqu'à <b>${nomCible}</b>, puis appuie sur <b>E</b> devant la porte. (Le bouton « Guider » de la barre du haut montre aussi le chemin.)${astuce}`;
+	return trf("🎯 Objectif : <b>{objectif}</b>. Suis la <b>flèche dorée</b> jusqu'à <b>{nomCible}</b>, puis appuie sur <b>E</b> devant la porte. (Le bouton « Guider » de la barre du haut montre aussi le chemin.){astuce}", { objectif: e.objectif, nomCible, astuce });
 }
 
 /** À appeler à chaque changement d'écran ou de partie. */

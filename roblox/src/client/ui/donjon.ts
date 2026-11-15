@@ -7,6 +7,7 @@ import { CONTENU } from "shared/donnees";
 import { jeu } from "../partie";
 import { peutGuider, rejoindreGroupe } from "../rendu/donjon3d";
 import { bouton, carte, COULEURS, esc, texte } from "./kit";
+import { tr, trMoteur, trf } from "shared/langue";
 
 export function vueDonjon(parent: Frame) {
 	const etat = jeu.etat!;
@@ -15,12 +16,12 @@ export function vueDonjon(parent: Frame) {
 	texte(
 		c,
 		peutGuider()
-			? "Tu guides le groupe : marche, les événements se déclenchent sous tes pieds (lueur dorée)."
-			: `${esc(etat.joueurs[etat.meneur ?? ""]?.pseudo ?? "Le meneur")} guide le groupe : la lueur dorée montre où il est.`,
+			? tr("Tu guides le groupe : marche, les événements se déclenchent sous tes pieds (lueur dorée).")
+			: trf("{esc} guide le groupe : la lueur dorée montre où il est.", { esc: esc(etat.joueurs[etat.meneur ?? ""]?.pseudo ?? tr("Le meneur")) }),
 		14,
 		{ couleur: COULEURS.texte2 },
 	);
-	if (dj.messages.size() === 0) texte(c, "Le groupe avance prudemment…", 15);
-	for (const m of dj.messages) texte(c, m, 15);
-	bouton(c, "Rejoindre le groupe", () => rejoindreGroupe(), { hauteur: 32, taille: 14 });
+	if (dj.messages.size() === 0) texte(c, tr("Le groupe avance prudemment…"), 15);
+	for (const m of dj.messages) texte(c, trMoteur(m), 15);
+	bouton(c, tr("Rejoindre le groupe"), () => rejoindreGroupe(), { hauteur: 32, taille: 14 });
 }

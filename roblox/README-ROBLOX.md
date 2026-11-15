@@ -475,6 +475,16 @@ Dans Studio :
 - Sauvegarde : DataStore `VelmarisBoutique_v1` (possédés, portés, charges, reçus déjà traités : un achat n'est jamais compté deux fois).
 - Sons : emplacements `clic` et `boutique` dans `shared/sons.ts`.
 
+### Liste de contrôle — réglages et langues (15/11)
+- [ ] Bouton « ⚙ » de la barre du haut : la fenêtre Réglages s'ouvre (✕, Échap ou clic à côté pour fermer).
+- [ ] Langue : au premier lancement, celle de ton compte Roblox (sinon français). Choisir English / Español / Deutsch / 日本語 : tout se redessine dans la langue choisie ; ce qui n'est pas encore traduit reste en français.
+- [ ] Invites « E », bulles des habitants, étiquettes au-dessus des têtes : traduites aussi.
+- [ ] Son : 4 curseurs (général, musique et ambiance, effets, interface) ; on peut glisser ou utiliser − / +.
+- [ ] Taille du texte (85 à 130 %) : les panneaux se redessinent plus grands ou plus petits.
+- [ ] Interrupteurs : conseils du tutoriel, cosmétiques des autres (Player2 ne voit plus tes auras), effets réduits (plus de particules de météo ni de moulins), compteur d'images en bas à gauche.
+- [ ] Les réglages reviennent après avoir quitté et relancé (DataStore `VelmarisReglages_v1`).
+- 144 images par seconde : c'est le menu de Roblox (Échap → Paramètres), le jeu ne peut pas le régler ; le compteur montre la valeur réelle.
+
 ### Liste de contrôle — examens de rang et maîtrises d'équipement (test 2, changements 10 et 11)
 - [ ] Dans n'importe quel comptoir de la Guilde, le panneau « 🎖 Rang de Guilde » montre le rang suivant, ce qu'il manque (points, niveau) et le bouton de l'examen quand tout est prêt.
 - [ ] Rangs E, D et A : un combat contre un examinateur (A : Dame Rowena en personne). En cas d'échec, on retente le lendemain.

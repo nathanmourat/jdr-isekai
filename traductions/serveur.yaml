@@ -1,0 +1,1363 @@
+# Textes du serveur Roblox et des catalogues partagés (roblox/src/server, roblox/src/shared) ; {1}, {2}… = valeurs
+# Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
+- fr: La boutique se charge encore, réessaie dans un instant.
+  en: The shop is still loading, try again in a moment.
+  es: La tienda aún se está cargando, vuelve a intentarlo en un momento.
+  de: Der Laden lädt noch, versuch es gleich noch einmal.
+  ja: ショップを読み込み中。少し待ってからもう一度試してください。
+- fr: Cet article ne se porte pas.
+  en: This item can't be worn.
+  es: Este artículo no se puede poner.
+  de: Dieser Artikel kann nicht getragen werden.
+  ja: このアイテムは装着できない。
+- fr: Tu ne possèdes pas encore cet article.
+  en: You don't own this item yet.
+  es: Todavía no tienes este artículo.
+  de: Du besitzt diesen Artikel noch nicht.
+  ja: このアイテムはまだ持っていない。
+- fr: La sauvegarde n'a pas répondu, réessaie.
+  en: Saving didn't respond, try again.
+  es: El guardado no ha respondido, vuelve a intentarlo.
+  de: Das Speichern hat nicht geklappt, versuch es noch einmal.
+  ja: 保存が応答しなかった。もう一度試してください。
+- fr: Rien à lancer.
+  en: Nothing to launch.
+  es: Nada que lanzar.
+  de: Nichts zu zünden.
+  ja: 打ち上げるものがない。
+- fr: Attends quelques secondes avant la prochaine fête.
+  en: Wait a few seconds before the next celebration.
+  es: Espera unos segundos antes de la próxima fiesta.
+  de: Warte ein paar Sekunden bis zum nächsten Fest.
+  ja: 次のお祝いまで数秒待ってね。
+- fr: Ton personnage n'est pas encore là.
+  en: Your character isn't here yet.
+  es: Tu personaje aún no está aquí.
+  de: Deine Figur ist noch nicht da.
+  ja: キャラクターがまだ現れていない。
+- fr: "Plus d'utilisation : rachète-en dans la boutique."
+  en: "No uses left: buy more in the shop."
+  es: "No quedan usos: compra más en la tienda."
+  de: "Keine Nutzungen mehr: Kauf neue im Laden."
+  ja: 残り回数がない。ショップで買い直そう。
+- fr: Seulement dans Studio.
+  en: Only in Studio.
+  es: Solo en Studio.
+  de: Nur in Studio.
+  ja: Studio専用。
+- fr: Débloqué pour ce test seulement (rien n'est sauvegardé).
+  en: Unlocked for this test only (nothing is saved).
+  es: Desbloqueado solo para esta prueba (no se guarda nada).
+  de: Nur für diesen Test freigeschaltet (nichts wird gespeichert).
+  ja: このテスト中だけ解放（保存されない）。
+- fr: Erreur de la boutique.
+  en: Shop error.
+  es: Error de la tienda.
+  de: Fehler im Laden.
+  ja: ショップのエラー。
+- fr: Maître d'armes
+  en: Weapons master
+  es: Maestro de armas
+  de: Waffenmeister
+  ja: 武術師範
+- fr: Point-{1}
+- fr: Sortir
+  en: Leave
+  es: Salir
+  de: Hinausgehen
+  ja: 出る
+- fr: Porte
+  en: Door
+  es: Puerta
+  de: Tür
+  ja: 扉
+- fr: Arrivee
+- fr: Acheter
+  en: Buy
+  es: Comprar
+  de: Kaufen
+  ja: 買う
+- fr: Comptoir de la Guilde
+  en: Guild counter
+  es: Mostrador del Gremio
+  de: Gildentresen
+  ja: ギルドのカウンター
+- fr: CONTRATS
+  en: CONTRACTS
+  es: CONTRATOS
+  de: AUFTRÄGE
+  ja: 依頼
+- fr: Consulter
+  en: Browse
+  es: Consultar
+  de: Ansehen
+  ja: 見る
+- fr: Tableau des contrats
+  en: Contract board
+  es: Tablón de contratos
+  de: Auftragsbrett
+  ja: 依頼掲示板
+- fr: Lire
+  en: Read
+  es: Leer
+  de: Lesen
+  ja: 読む
+- fr: Grimoire de la partie
+  en: Party grimoire
+  es: Grimorio de la partida
+  de: Grimoire der Partie
+  ja: 冒険の魔導書
+- fr: Commander
+  en: Order
+  es: Pedir
+  de: Bestellen
+  ja: 注文
+- fr: Comptoir du Chaudron Fêlé
+  en: Cracked Cauldron counter
+  es: Barra del Caldero Rajado
+  de: Theke des Gesprungenen Kessels
+  ja: ひび割れ釜亭のカウンター
+- fr: Dormir
+  en: Sleep
+  es: Dormir
+  de: Schlafen
+  ja: 眠る
+- fr: Le lit de l'auberge
+  en: The inn's bed
+  es: La cama de la posada
+  de: Das Bett im Gasthaus
+  ja: 宿屋のベッド
+- fr: Faire une offrande
+  en: Make an offering
+  es: Hacer una ofrenda
+  de: Eine Opfergabe machen
+  ja: 供物を捧げる
+- fr: Comptoir des offrandes
+  en: Offerings counter
+  es: Mostrador de ofrendas
+  de: Opfertresen
+  ja: 供物のカウンター
+- fr: Acheter / Vendre
+  en: Buy / Sell
+  es: Comprar / Vender
+  de: Kaufen / Verkaufen
+  ja: 売買
+- fr: Comptoir de Halvine
+  en: Halvine's counter
+  es: Mostrador de Halvine
+  de: Halvines Tresen
+  ja: アルヴィーヌのカウンター
+- fr: Descendre
+  en: Go down
+  es: Bajar
+  de: Hinabsteigen
+  ja: 降りる
+- fr: Escalier de la crypte
+  en: Crypt stairs
+  es: Escalera de la cripta
+  de: Treppe zur Krypta
+  ja: 地下墓所の階段
+- fr: Fusions de la Guilde
+  en: Guild fusions
+  es: Fusiones del Gremio
+  de: Gildenfusionen
+  ja: ギルドの融合技
+- fr: Comptoir de l'auberge
+  en: Inn counter
+  es: Barra de la posada
+  de: Theke des Gasthauses
+  ja: 宿屋のカウンター
+- fr: "Studio : sauvegarde Roblox désactivée, la partie sera perdue à l'arrêt (voir README-ROBLOX.md)."
+  en: "Studio: Roblox saving is disabled, the game will be lost when it stops (see README-ROBLOX.md)."
+  es: "Studio: el guardado de Roblox está desactivado, la partida se perderá al detenerse (ver README-ROBLOX.md)."
+  de: "Studio: Roblox-Speicherung deaktiviert, die Partie geht beim Beenden verloren (siehe README-ROBLOX.md)."
+  ja: Studio：Robloxの保存が無効。停止するとデータは失われる（README-ROBLOX.md参照）。
+- fr: Commande invalide.
+  en: Invalid command.
+  es: Comando no válido.
+  de: Ungültiger Befehl.
+  ja: 無効なコマンド。
+- fr: La campagne se charge…
+  en: Loading the campaign…
+  es: Cargando la campaña…
+  de: Kampagne wird geladen …
+  ja: キャンペーンを読み込み中…
+- fr: Ce joueur n'est plus sur le serveur.
+  en: This player is no longer on the server.
+  es: Este jugador ya no está en el servidor.
+  de: Dieser Spieler ist nicht mehr auf dem Server.
+  ja: このプレイヤーはもうサーバーにいない。
+- fr: Invitation envoyée à {1}.
+  en: Invitation sent to {1}.
+  es: Invitación enviada a {1}.
+  de: Einladung an {1} gesendet.
+  ja: "{1}に招待を送った。"
+- fr: Commande inconnue.
+  en: Unknown command.
+  es: Comando desconocido.
+  de: Unbekannter Befehl.
+  ja: 不明なコマンド。
+- fr: Maison des Aubertin
+  en: The Aubertins' house
+  es: Casa de los Aubertin
+  de: Haus der Aubertins
+  ja: オベルタン家
+- fr: Maison des Vasseur
+  en: The Vasseurs' house
+  es: Casa de los Vasseur
+  de: Haus der Vasseurs
+  ja: ヴァスール家
+- fr: Maison de la veuve Grenier
+  en: Widow Grenier's house
+  es: Casa de la viuda Grenier
+  de: Haus der Witwe Grenier
+  ja: グルニエ未亡人の家
+- fr: Maison des Lacombe
+  en: The Lacombes' house
+  es: Casa de los Lacombe
+  de: Haus der Lacombes
+  ja: ラコンブ家
+- fr: Maison des Fontenelle
+  en: The Fontenelles' house
+  es: Casa de los Fontenelle
+  de: Haus der Fontenelles
+  ja: フォントネル家
+- fr: Maison des Corbin
+  en: The Corbins' house
+  es: Casa de los Corbin
+  de: Haus der Corbins
+  ja: コルバン家
+- fr: Boulangerie Dorée
+  en: The Golden Bakery
+  es: Panadería Dorada
+  de: Goldene Bäckerei
+  ja: 黄金のパン屋
+- fr: Au Pain Chaud
+  en: The Warm Loaf
+  es: El Pan Caliente
+  de: Zum Warmen Brot
+  ja: 焼きたてパン亭
+- fr: Fournil des Remparts
+  en: Rampart Bakehouse
+  es: Horno de las Murallas
+  de: Backstube am Wall
+  ja: 城壁のパン工房
+- fr: Forge du Marteau Gris
+  en: Grey Hammer Forge
+  es: Forja del Martillo Gris
+  de: Schmiede zum Grauen Hammer
+  ja: 灰色の槌の鍛冶場
+- fr: Atelier Bréval
+  en: Bréval Workshop
+  es: Taller Bréval
+  de: Werkstatt Bréval
+  ja: ブレヴァル工房
+- fr: Forge de la Porte Sud
+  en: South Gate Forge
+  es: Forja de la Puerta Sur
+  de: Schmiede am Südtor
+  ja: 南門の鍛冶場
+- fr: Atelier de tissage Morel
+  en: Morel Weaving Workshop
+  es: Taller de tejido Morel
+  de: Weberei Morel
+  ja: モレル織物工房
+- fr: Draperie aux Trois Fils
+  en: Three Threads Drapery
+  es: Pañería de los Tres Hilos
+  de: Tuchhandel Drei Fäden
+  ja: 三本糸の織物店
+- fr: Atelier des Laines
+  en: Wool Workshop
+  es: Taller de las Lanas
+  de: Wollwerkstatt
+  ja: 羊毛工房
+- fr: Ferme des Blés
+  en: Wheatfield Farm
+  es: Granja de los Trigales
+  de: Weizenhof
+  ja: 麦畑の農場
+- fr: Ferme du Vieux Moulin
+  en: Old Mill Farm
+  es: Granja del Viejo Molino
+  de: Hof zur Alten Mühle
+  ja: 古い風車の農場
+- fr: Ferme Delorme
+  en: Delorme Farm
+  es: Granja Delorme
+  de: Hof Delorme
+  ja: ドロルム農場
+- fr: Ferme des Saules
+  en: Willow Farm
+  es: Granja de los Sauces
+  de: Weidenhof
+  ja: 柳の農場
+- fr: Ferme du Coteau
+  en: Hillside Farm
+  es: Granja de la Ladera
+  de: Hof am Hang
+  ja: 丘の農場
+- fr: Bienvenue chez nous ! Essuyez vos bottes, s'il vous plaît.
+  en: Welcome to our home! Please wipe your boots.
+  es: ¡Bienvenidos a casa! Limpiaos las botas, por favor.
+  de: Willkommen bei uns! Bitte die Stiefel abtreten.
+  ja: ようこそ！ブーツの泥は落としてね。
+- fr: Mon fils dit qu'il veut devenir aventurier, comme vous. J'en dors mal.
+  en: My son says he wants to become an adventurer, like you. I can barely sleep.
+  es: Mi hijo dice que quiere ser aventurero, como vosotros. No pego ojo.
+  de: Mein Sohn sagt, er will Abenteurer werden, wie ihr. Ich kann kaum noch schlafen.
+  ja: 息子があなたたちみたいな冒険者になりたいって言うのよ。心配で眠れないわ。
+- fr: On raconte que des Appelés sont arrivés au Temple. C'est vous ?
+  en: They say some Summoned arrived at the Temple. Is that you?
+  es: Dicen que unos Llamados llegaron al Templo. ¿Sois vosotros?
+  de: Man sagt, im Tempel seien Gerufene angekommen. Seid ihr das?
+  ja: 神殿に召喚者が現れたって噂だけど、あなたたちのこと？
+- fr: La soupe est sur le feu. Il y en a assez pour un héros affamé.
+  en: The soup is on the fire. There's enough for a hungry hero.
+  es: La sopa está al fuego. Hay suficiente para un héroe hambriento.
+  de: Die Suppe steht auf dem Feuer. Es reicht für einen hungrigen Helden.
+  ja: スープを火にかけてるよ。お腹をすかせたヒーローの分もある。
+- fr: Le pain sort du four ! Le premier est pour les héros.
+  en: Bread's out of the oven! The first loaf is for the heroes.
+  es: ¡El pan sale del horno! El primero es para los héroes.
+  de: Das Brot kommt aus dem Ofen! Das erste ist für die Helden.
+  ja: パンが焼けたよ！最初の一つはヒーローに。
+- fr: Levée à quatre heures, comme tous les matins depuis trente ans.
+  en: Up at four, like every morning for thirty years.
+  es: En pie a las cuatro, como todas las mañanas desde hace treinta años.
+  de: Um vier aufgestanden, wie jeden Morgen seit dreißig Jahren.
+  ja: 三十年、毎朝四時起きさ。
+- fr: Goûtez-moi cette brioche aux pommes. Spécialité de Lysmont !
+  en: Taste this apple brioche. A Lysmont speciality!
+  es: Pruebe este brioche de manzana. ¡Especialidad de Lysmont!
+  de: Probiert mal diese Apfelbrioche. Eine Spezialität aus Lysmont!
+  ja: このリンゴのブリオッシュを食べてみて。リスモン名物だよ！
+- fr: Une lame bien aiguisée vaut mieux qu'un long discours.
+  en: A well-honed blade is worth more than a long speech.
+  es: Una hoja bien afilada vale más que un largo discurso.
+  de: Eine gut geschliffene Klinge sagt mehr als lange Reden.
+  ja: よく研いだ刃は長い演説に勝る。
+- fr: Je ferre les chevaux du château. Même ceux du roi ont mauvais caractère.
+  en: I shoe the castle's horses. Even the king's have a foul temper.
+  es: Yo herro los caballos del castillo. Hasta los del rey tienen mal carácter.
+  de: Ich beschlage die Pferde des Schlosses. Selbst die des Königs sind launisch.
+  ja: 城の馬の蹄鉄を打ってるんだ。王様の馬だって気性が荒い。
+- fr: Si votre épée a une entaille, ne la laissez pas comme ça. Elle vous trahira.
+  en: If your sword has a nick, don't leave it like that. It'll betray you.
+  es: Si tu espada tiene una mella, no la dejes así. Te traicionará.
+  de: Wenn dein Schwert eine Scharte hat, lass es nicht so. Es wird dich verraten.
+  ja: 剣に刃こぼれがあるなら放っておくな。いざという時に裏切られるぞ。
+- fr: Cette laine vient des moutons de la Combe-aux-Saules. La plus douce du royaume.
+  en: This wool comes from the sheep of Combe-aux-Saules. The softest in the kingdom.
+  es: Esta lana viene de las ovejas de Combe-aux-Saules. La más suave del reino.
+  de: Diese Wolle stammt von den Schafen aus Combe-aux-Saules. Die weichste im Königreich.
+  ja: この羊毛はコンブ＝オ＝ソールの羊のもの。王国一やわらかいよ。
+- fr: Une cape pour l'hiver ? Le vent du nord ne pardonne pas.
+  en: A cloak for winter? The north wind shows no mercy.
+  es: ¿Una capa para el invierno? El viento del norte no perdona.
+  de: Ein Umhang für den Winter? Der Nordwind kennt keine Gnade.
+  ja: 冬用のマントはいかが？北風は容赦しないよ。
+- fr: Le bleu de ce tissu, c'est de la guède. Trois semaines de teinture !
+  en: The blue of this cloth is woad. Three weeks of dyeing!
+  es: El azul de esta tela es glasto. ¡Tres semanas de tinte!
+  de: Das Blau dieses Stoffs ist Färberwaid. Drei Wochen Färben!
+  ja: この青はタイセイ染め。三週間もかかるんだ！
+- fr: La moisson sera bonne cette année, si les loups nous laissent tranquilles.
+  en: The harvest will be good this year, if the wolves leave us alone.
+  es: La cosecha será buena este año, si los lobos nos dejan en paz.
+  de: Die Ernte wird dieses Jahr gut, wenn die Wölfe uns in Ruhe lassen.
+  ja: 狼さえ来なければ、今年は豊作だ。
+- fr: Le moulin tourne depuis l'aube. Le vent est avec nous.
+  en: The mill has been turning since dawn. The wind is with us.
+  es: El molino gira desde el alba. El viento está de nuestra parte.
+  de: Die Mühle dreht sich seit dem Morgengrauen. Der Wind ist auf unserer Seite.
+  ja: 夜明けから風車が回ってる。風が味方してくれてるね。
+- fr: Vous venez de la ville ? Ici, on se lève avec les poules. Littéralement.
+  en: From the city, are you? Out here we get up with the hens. Literally.
+  es: ¿Venís de la ciudad? Aquí nos levantamos con las gallinas. Literalmente.
+  de: Ihr kommt aus der Stadt? Hier stehen wir mit den Hühnern auf. Wortwörtlich.
+  ja: 町から来たのかい？ここじゃ鶏と一緒に起きるんだ。文字どおりね。
+- fr: Attention au taureau du voisin. Il n'aime personne.
+  en: Watch out for the neighbour's bull. He likes nobody.
+  es: Cuidado con el toro del vecino. No le gusta nadie.
+  de: Vorsicht vor dem Stier des Nachbarn. Er mag niemanden.
+  ja: 隣の牛には気をつけな。誰にもなつかないんだ。
+- fr: Entree
+- fr: Entrer
+  en: Enter
+  es: Entrar
+  de: Eintreten
+  ja: 入る
+- fr: "Tu es banni de ce jeu {1}. Raison : {2}."
+  en: "You are banned from this game {1}. Reason: {2}."
+  es: "Estás baneado de este juego {1}. Motivo: {2}."
+  de: "Du bist {1} aus diesem Spiel gebannt. Grund: {2}."
+  ja: あなたはこのゲームから{1}BANされています。理由：{2}。
+- fr: Tu n'as pas la permission de faire ça.
+  en: You don't have permission to do that.
+  es: No tienes permiso para hacer eso.
+  de: Dafür hast du keine Berechtigung.
+  ja: その操作の権限がない。
+- fr: Pas sur toi-même.
+  en: Not on yourself.
+  es: No sobre ti mismo.
+  de: Nicht bei dir selbst.
+  ja: 自分には使えない。
+- fr: "{1} a un grade égal ou supérieur au tien."
+  en: "{1} has a rank equal to or higher than yours."
+  es: "{1} tiene un rango igual o superior al tuyo."
+  de: "{1} hat einen gleichen oder höheren Rang als du."
+  ja: "{1}の権限はあなたと同じか上。"
+- fr: Signalement impossible.
+  en: Report impossible.
+  es: Denuncia imposible.
+  de: Meldung nicht möglich.
+  ja: 通報できない。
+- fr: Attends un peu avant de signaler à nouveau.
+  en: Wait a little before reporting again.
+  es: Espera un poco antes de volver a denunciar.
+  de: Warte ein wenig, bevor du erneut meldest.
+  ja: 少し待ってから通報してね。
+- fr: "{1} signale {2} : {3}."
+  en: "{1} reports {2}: {3}."
+  es: "{1} denuncia a {2}: {3}."
+  de: "{1} meldet {2}: {3}."
+  ja: "{1}が{2}を通報：{3}。"
+- fr: Avertissement de la modération
+  en: Moderation warning
+  es: Aviso de la moderación
+  de: Verwarnung der Moderation
+  ja: モデレーションからの警告
+- fr: "{1}. Merci de respecter les autres joueurs : la prochaine fois, ce sera une sanction."
+  en: "{1}. Please respect other players: next time, there will be a sanction."
+  es: "{1}. Por favor, respeta a los demás jugadores: la próxima vez habrá sanción."
+  de: "{1}. Bitte respektiere die anderen Spieler: Beim nächsten Mal gibt es eine Strafe."
+  ja: "{1}。他のプレイヤーを尊重してください。次は処分の対象になります。"
+- fr: Chat coupé
+  en: Chat muted
+  es: Chat silenciado
+  de: Chat stummgeschaltet
+  ja: チャット停止
+- fr: "Tu ne peux plus écrire dans le chat pendant {1}. Raison : {2}."
+  en: "You can no longer write in the chat for {1}. Reason: {2}."
+  es: "No puedes escribir en el chat durante {1}. Motivo: {2}."
+  de: "Du kannst {1} lang nicht mehr im Chat schreiben. Grund: {2}."
+  ja: "{1}の間チャットに書き込めません。理由：{2}。"
+- fr: Chat rétabli
+  en: Chat restored
+  es: Chat restablecido
+  de: Chat wieder frei
+  ja: チャット再開
+- fr: Tu peux de nouveau écrire dans le chat.
+  en: You can write in the chat again.
+  es: Puedes volver a escribir en el chat.
+  de: Du kannst wieder im Chat schreiben.
+  ja: またチャットに書き込めます。
+- fr: fin de sourdine
+  en: end of mute
+  es: fin del silencio
+  de: Ende der Stummschaltung
+  ja: チャット停止の終了
+- fr: Tu es figé
+  en: You are frozen
+  es: Estás congelado
+  de: Du bist eingefroren
+  ja: 凍結されました
+- fr: Tu peux bouger
+  en: You can move
+  es: Puedes moverte
+  de: Du kannst dich bewegen
+  ja: 動けるようになりました
+- fr: Un modérateur t'a figé sur place.
+  en: A moderator has frozen you in place.
+  es: Un moderador te ha congelado en el sitio.
+  de: Ein Moderator hat dich an Ort und Stelle eingefroren.
+  ja: モデレーターがあなたをその場で凍結しました。
+- fr: Un modérateur t'a libéré.
+  en: A moderator has released you.
+  es: Un moderador te ha liberado.
+  de: Ein Moderator hat dich freigegeben.
+  ja: モデレーターが凍結を解除しました。
+- fr: Personnage introuvable.
+  en: Character not found.
+  es: Personaje no encontrado.
+  de: Figur nicht gefunden.
+  ja: キャラクターが見つからない。
+- fr: aller vers
+  en: go to
+  es: ir hacia
+  de: hingehen
+  ja: 会いに行く
+- fr: renvoi du serveur
+  en: kick from server
+  es: expulsión del servidor
+  de: Rauswurf vom Server
+  ja: サーバーから追放
+- fr: "Tu as été renvoyé du serveur. Raison : {1}."
+  en: "You've been kicked from the server. Reason: {1}."
+  es: "Te han expulsado del servidor. Motivo: {1}."
+  de: "Du wurdest vom Server geworfen. Grund: {1}."
+  ja: サーバーから追放されました。理由：{1}。
+- fr: Durée inconnue.
+  en: Unknown duration.
+  es: Duración desconocida.
+  de: Unbekannte Dauer.
+  ja: 不明な期間。
+- fr: Par {1} ({2})
+  en: By {1} ({2})
+  es: Por {1} ({2})
+  de: Von {1} ({2})
+  ja: "{1}による（{2}）"
+- fr: Ce joueur n'est pas banni.
+  en: This player isn't banned.
+  es: Este jugador no está baneado.
+  de: Dieser Spieler ist nicht gebannt.
+  ja: このプレイヤーはBANされていない。
+- fr: Seul le propriétaire lève un bannissement définitif.
+  en: Only the owner can lift a permanent ban.
+  es: Solo el propietario puede levantar un baneo definitivo.
+  de: Nur der Besitzer kann einen dauerhaften Bann aufheben.
+  ja: 永久BANを解除できるのはオーナーだけ。
+- fr: Joueur introuvable.
+  en: Player not found.
+  es: Jugador no encontrado.
+  de: Spieler nicht gefunden.
+  ja: プレイヤーが見つからない。
+- fr: Grade impossible.
+  en: Impossible rank.
+  es: Rango imposible.
+  de: Rang nicht möglich.
+  ja: その権限は付与できない。
+- fr: Tu ne peux pas changer ce grade.
+  en: You can't change this rank.
+  es: No puedes cambiar este rango.
+  de: Du kannst diesen Rang nicht ändern.
+  ja: この権限は変更できない。
+- fr: Nouveau grade
+  en: New rank
+  es: Nuevo rango
+  de: Neuer Rang
+  ja: 新しい権限
+- fr: "Tu es maintenant : {1}."
+  en: "You are now: {1}."
+  es: "Ahora eres: {1}."
+  de: "Du bist jetzt: {1}."
+  ja: あなたの権限：{1}。
+- fr: grade → {1}
+  en: rank → {1}
+  es: rango → {1}
+  de: Rang → {1}
+  ja: 権限 → {1}
+- fr: Annonce vide.
+  en: Empty announcement.
+  es: Anuncio vacío.
+  de: Leere Ankündigung.
+  ja: 告知が空っぽ。
+- fr: Annonce de {1}
+  en: Announcement from {1}
+  es: Anuncio de {1}
+  de: Ankündigung von {1}
+  ja: "{1}からの告知"
+- fr: arrêt du serveur
+  en: server shutdown
+  es: cierre del servidor
+  de: Herunterfahren des Servers
+  ja: サーバー停止
+- fr: Arrêt du serveur
+  en: Server shutdown
+  es: Cierre del servidor
+  de: Server wird heruntergefahren
+  ja: サーバー停止
+- fr: Le serveur s'arrête dans 10 secondes. Ta progression est sauvegardée.
+  en: The server is shutting down in 10 seconds. Your progress is saved.
+  es: El servidor se cierra en 10 segundos. Tu progreso está guardado.
+  de: Der Server fährt in 10 Sekunden herunter. Dein Fortschritt ist gespeichert.
+  ja: 10秒後にサーバーが停止します。進行状況は保存されています。
+- fr: "Le serveur a été arrêté par le propriétaire. Ta progression est sauvegardée : reviens quand tu veux !"
+  en: "The server was shut down by the owner. Your progress is saved: come back whenever you like!"
+  es: "El propietario ha cerrado el servidor. Tu progreso está guardado: ¡vuelve cuando quieras!"
+  de: "Der Server wurde vom Besitzer heruntergefahren. Dein Fortschritt ist gespeichert: Komm wieder, wann du willst!"
+  ja: オーナーがサーバーを停止しました。進行状況は保存済み。いつでも戻ってきてね！
+- fr: Sa campagne n'est pas chargée.
+  en: Their campaign isn't loaded.
+  es: Su campaña no está cargada.
+  de: Die Kampagne ist nicht geladen.
+  ja: 相手のキャンペーンが読み込まれていない。
+- fr: "{1} or, {2} XP"
+  en: "{1} gold, {2} XP"
+  es: "{1} de oro, {2} XP"
+  de: "{1} Gold, {2} EP"
+  ja: "{1}G、経験値{2}"
+- fr: "Merci : ton signalement a été transmis à la modération."
+  en: "Thank you: your report has been sent to the moderators."
+  es: "Gracias: tu denuncia se ha enviado a la moderación."
+  de: "Danke: Deine Meldung wurde an die Moderation weitergeleitet."
+  ja: ありがとう。通報はモデレーションに届きました。
+- fr: C'est fait.
+  en: Done.
+  es: Hecho.
+  de: Erledigt.
+  ja: 完了。
+- fr: Enseigne
+- fr: GUILDE
+  en: GUILD
+  es: GREMIO
+  de: GILDE
+  ja: ギルド
+- fr: COMPTOIR
+  en: COUNTER
+  es: MOSTRADOR
+  de: TRESEN
+  ja: カウンター
+- fr: Examiner
+  en: Examine
+  es: Examinar
+  de: Untersuchen
+  ja: 調べる
+- fr: Regarder
+  en: Look
+  es: Mirar
+  de: Ansehen
+  ja: 眺める
+- fr: Action refusée.
+  en: Action refused.
+  es: Acción rechazada.
+  de: Aktion abgelehnt.
+  ja: 操作が拒否された。
+- fr: "Le filtre de texte de Roblox ne répond pas : réessaie dans un instant."
+  en: "Roblox's text filter isn't responding: try again in a moment."
+  es: "El filtro de texto de Roblox no responde: vuelve a intentarlo en un momento."
+  de: "Der Textfilter von Roblox antwortet nicht: Versuch es gleich noch einmal."
+  ja: Robloxの文字フィルターが応答しない。少ししてから試してください。
+- fr: Campagne de {1}
+  en: "{1}'s campaign"
+  es: Campaña de {1}
+  de: Kampagne von {1}
+  ja: "{1}のキャンペーン"
+- fr: "Ta campagne n'a pas pu être chargée : {1}"
+  en: "Your campaign couldn't be loaded: {1}"
+  es: "No se ha podido cargar tu campaña: {1}"
+  de: "Deine Kampagne konnte nicht geladen werden: {1}"
+  ja: キャンペーンを読み込めなかった：{1}
+- fr: Crée d'abord ton héros.
+  en: Create your hero first.
+  es: Crea primero tu héroe.
+  de: Erschaffe zuerst deinen Helden.
+  ja: 先にヒーローを作ろう。
+- fr: Seul le chef du groupe peut publier une annonce.
+  en: Only the group leader can post an ad.
+  es: Solo el jefe del grupo puede publicar un anuncio.
+  de: Nur der Gruppenanführer kann eine Anzeige aufgeben.
+  ja: 募集を出せるのはパーティーのリーダーだけ。
+- fr: Ton groupe est déjà complet.
+  en: Your group is already full.
+  es: Tu grupo ya está completo.
+  de: Deine Gruppe ist schon voll.
+  ja: パーティーはもう満員。
+- fr: Cette annonce n'existe plus.
+  en: This ad no longer exists.
+  es: Este anuncio ya no existe.
+  de: Diese Anzeige gibt es nicht mehr.
+  ja: この募集はもうない。
+- fr: C'est ton annonce.
+  en: That's your own ad.
+  es: Es tu anuncio.
+  de: Das ist deine Anzeige.
+  ja: それは自分の募集。
+- fr: Quitte d'abord ton groupe.
+  en: Leave your group first.
+  es: Deja primero tu grupo.
+  de: Verlass zuerst deine Gruppe.
+  ja: 先に今のパーティーを抜けよう。
+- fr: Ce groupe est complet.
+  en: This group is full.
+  es: Este grupo está completo.
+  de: Diese Gruppe ist voll.
+  ja: このパーティーは満員。
+- fr: Tu ne peux pas t'inviter toi-même.
+  en: You can't invite yourself.
+  es: No puedes invitarte a ti mismo.
+  de: Du kannst dich nicht selbst einladen.
+  ja: 自分自身は招待できない。
+- fr: Seul le chef du groupe ({1}) peut inviter.
+  en: Only the group leader ({1}) can invite.
+  es: Solo el jefe del grupo ({1}) puede invitar.
+  de: Nur der Gruppenanführer ({1}) kann einladen.
+  ja: 招待できるのはリーダー（{1}）だけ。
+- fr: Ton groupe est complet ({1} joueurs).
+  en: Your group is full ({1} players).
+  es: Tu grupo está completo ({1} jugadores).
+  de: Deine Gruppe ist voll ({1} Spieler).
+  ja: パーティーは満員（{1}人）。
+- fr: "{1} est déjà dans un groupe."
+  en: "{1} is already in a group."
+  es: "{1} ya está en un grupo."
+  de: "{1} ist schon in einer Gruppe."
+  ja: "{1}はすでに別のパーティーにいる。"
+- fr: "{1} n'a pas encore créé son héros."
+  en: "{1} hasn't created a hero yet."
+  es: "{1} todavía no ha creado su héroe."
+  de: "{1} hat noch keinen Helden erschaffen."
+  ja: "{1}はまだヒーローを作っていない。"
+- fr: Campagne introuvable.
+  en: Campaign not found.
+  es: Campaña no encontrada.
+  de: Kampagne nicht gefunden.
+  ja: キャンペーンが見つからない。
+- fr: Termine d'abord ton combat.
+  en: Finish your fight first.
+  es: Termina primero tu combate.
+  de: Beende zuerst deinen Kampf.
+  ja: 先に戦闘を終わらせよう。
+- fr: Cette invitation a expiré.
+  en: This invitation has expired.
+  es: Esta invitación ha caducado.
+  de: Diese Einladung ist abgelaufen.
+  ja: この招待は期限切れ。
+- fr: Ce joueur a quitté le serveur.
+  en: This player has left the server.
+  es: Este jugador ha salido del servidor.
+  de: Dieser Spieler hat den Server verlassen.
+  ja: このプレイヤーはサーバーを去った。
+- fr: Tu es déjà dans un groupe.
+  en: You're already in a group.
+  es: Ya estás en un grupo.
+  de: Du bist schon in einer Gruppe.
+  ja: すでにパーティーにいる。
+- fr: Ce joueur n'est plus chef de son groupe.
+  en: This player is no longer leading their group.
+  es: Este jugador ya no es el jefe de su grupo.
+  de: Dieser Spieler führt seine Gruppe nicht mehr an.
+  ja: このプレイヤーはもうリーダーではない。
+- fr: Tu n'es dans aucun groupe.
+  en: You're not in any group.
+  es: No estás en ningún grupo.
+  de: Du bist in keiner Gruppe.
+  ja: パーティーに入っていない。
+- fr: Attends la fin du combat pour quitter le groupe.
+  en: Wait for the end of the fight to leave the group.
+  es: Espera al final del combate para dejar el grupo.
+  de: Warte das Ende des Kampfes ab, um die Gruppe zu verlassen.
+  ja: パーティーを抜けるのは戦闘が終わってから。
+- fr: Tu n'es dans aucune partie.
+  en: You're not in any game.
+  es: No estás en ninguna partida.
+  de: Du bist in keiner Partie.
+  ja: どのゲームにも参加していない。
+- fr: Action non disponible sur Roblox.
+  en: Action not available on Roblox.
+  es: Acción no disponible en Roblox.
+  de: Aktion auf Roblox nicht verfügbar.
+  ja: Robloxでは使えない操作。
+- fr: Moyeu
+- fr: "Sauvegarde Roblox indisponible : {1}"
+  en: "Roblox saving unavailable: {1}"
+  es: "Guardado de Roblox no disponible: {1}"
+  de: "Roblox-Speicherung nicht verfügbar: {1}"
+  ja: Robloxの保存が使えない：{1}
+- fr: Aucune partie avec ce code.
+  en: No game with this code.
+  es: Ninguna partida con este código.
+  de: Keine Partie mit diesem Code.
+  ja: このコードのゲームはない。
+- fr: Cette partie est déjà ouverte sur un autre serveur. Rejoins ton ami sur Roblox (bouton « Rejoindre » sur son profil), puis entre le code.
+  en: This game is already open on another server. Join your friend on Roblox (“Join” button on their profile), then enter the code.
+  es: Esta partida ya está abierta en otro servidor. Únete a tu amigo en Roblox (botón «Unirse» en su perfil) y luego introduce el código.
+  de: Diese Partie ist bereits auf einem anderen Server geöffnet. Tritt deinem Freund auf Roblox bei („Beitreten“ auf seinem Profil) und gib dann den Code ein.
+  ja: このゲームは別のサーバーで開かれている。Robloxで友達に参加して（プロフィールの「参加」ボタン）、コードを入力しよう。
+- fr: Étal de fruits
+  en: Fruit stall
+  es: Puesto de fruta
+  de: Obststand
+  ja: 果物の屋台
+- fr: Étal de tissus
+  en: Cloth stall
+  es: Puesto de telas
+  de: Stoffstand
+  ja: 布の屋台
+- fr: Étal d'épices
+  en: Spice stall
+  es: Puesto de especias
+  de: Gewürzstand
+  ja: 香辛料の屋台
+- fr: Étal de potions
+  en: Potion stall
+  es: Puesto de pociones
+  de: Trankstand
+  ja: ポーションの屋台
+- fr: Étal du boulanger
+  en: Baker's stall
+  es: Puesto del panadero
+  de: Bäckerstand
+  ja: パン屋の屋台
+- fr: Étal de bijoux
+  en: Jewellery stall
+  es: Puesto de joyas
+  de: Schmuckstand
+  ja: 装飾品の屋台
+- fr: 🌀 Pierre de voyage
+  en: 🌀 Waystone
+  es: 🌀 Piedra de viaje
+  de: 🌀 Reisestein
+  ja: 🌀 旅の石
+- fr: "{1} : pierre de voyage activée. Tu pourras y revenir en un instant depuis n'importe quelle autre pierre (menu 🗺 Carte ou en touchant une pierre)."
+  en: "{1}: waystone activated. You can come back here in an instant from any other stone (🗺 Map menu or by touching a stone)."
+  es: "{1}: piedra de viaje activada. Podrás volver aquí al instante desde cualquier otra piedra (menú 🗺 Mapa o tocando una piedra)."
+  de: "{1}: Reisestein aktiviert. Du kannst von jedem anderen Stein aus sofort hierher zurückkehren (Menü 🗺 Karte oder durch Berühren eines Steins)."
+  ja: "{1}：旅の石を起動した。他のどの石からでも一瞬で戻ってこられる（🗺 地図メニュー、または石に触れる）。"
+- fr: Pierre-{1}
+- fr: Obelisque
+- fr: Cristal
+- fr: Voyager
+  en: Travel
+  es: Viajar
+  de: Reisen
+  ja: 移動
+- fr: Pierre de voyage — {1}
+  en: Waystone — {1}
+  es: Piedra de viaje — {1}
+  de: Reisestein — {1}
+  ja: 旅の石 — {1}
+- fr: L'Appelé
+  en: The Summoned One
+  es: El Llamado
+  de: Der Gerufene
+  ja: 召喚されし者
+- fr: Créer son héros
+  en: Create your hero
+  es: Crear tu héroe
+  de: Erschaffe deinen Helden
+  ja: ヒーローを作る
+- fr: Membre de la Guilde
+  en: Guild Member
+  es: Miembro del Gremio
+  de: Gildenmitglied
+  ja: ギルドの一員
+- fr: Réussir l'examen de la Guilde
+  en: Pass the Guild exam
+  es: Aprobar el examen del Gremio
+  de: Die Gildenprüfung bestehen
+  ja: ギルドの試験に合格する
+- fr: Compagnons d'armes
+  en: Brothers in Arms
+  es: Compañeros de armas
+  de: Waffengefährten
+  ja: 戦友
+- fr: Jouer dans un groupe
+  en: Play in a group
+  es: Jugar en grupo
+  de: In einer Gruppe spielen
+  ja: パーティーで遊ぶ
+- fr: Les Lanternes d'Aubeclaire
+  en: The Lanterns of Aubeclaire
+  es: Las Linternas de Aubeclaire
+  de: Die Laternen von Aubeclaire
+  ja: オーブクレールの灯
+- fr: Finir le chapitre 1
+  en: Finish chapter 1
+  es: Terminar el capítulo 1
+  de: Kapitel 1 abschließen
+  ja: 第1章をクリア
+- fr: Les Routes du Sud
+  en: The Southern Roads
+  es: Los Caminos del Sur
+  de: Die Straßen des Südens
+  ja: 南への道
+- fr: Finir le chapitre 2
+  en: Finish chapter 2
+  es: Terminar el capítulo 2
+  de: Kapitel 2 abschließen
+  ja: 第2章をクリア
+- fr: La Forêt qui se souvient
+  en: The Forest That Remembers
+  es: El Bosque que Recuerda
+  de: Der Wald, der sich erinnert
+  ja: 記憶する森
+- fr: Finir le chapitre 3
+  en: Finish chapter 3
+  es: Terminar el capítulo 3
+  de: Kapitel 3 abschließen
+  ja: 第3章をクリア
+- fr: Feu et Écailles
+  en: Fire and Scales
+  es: Fuego y Escamas
+  de: Feuer und Schuppen
+  ja: 炎と鱗
+- fr: Finir le chapitre 4
+  en: Finish chapter 4
+  es: Terminar el capítulo 4
+  de: Kapitel 4 abschließen
+  ja: 第4章をクリア
+- fr: La Guerre des Cendres
+  en: The War of Ashes
+  es: La Guerra de las Cenizas
+  de: Der Aschenkrieg
+  ja: 灰の戦争
+- fr: Finir le chapitre 5
+  en: Finish chapter 5
+  es: Terminar el capítulo 5
+  de: Kapitel 5 abschließen
+  ja: 第5章をクリア
+- fr: "Fin : le Sceau"
+  en: "Ending: the Seal"
+  es: "Final: el Sello"
+  de: "Ende: das Siegel"
+  ja: エンディング：封印
+- fr: Recoudre le Voile
+  en: Mend the Veil
+  es: Recoser el Velo
+  de: Den Schleier flicken
+  ja: ヴェールを繕う
+- fr: "Fin : le Pacte"
+  en: "Ending: the Pact"
+  es: "Final: el Pacto"
+  de: "Ende: der Pakt"
+  ja: エンディング：盟約
+- fr: Faire la paix avec Orvan
+  en: Make peace with Orvan
+  es: Hacer las paces con Orvan
+  de: Frieden mit Orvan schließen
+  ja: オルヴァンと和解する
+- fr: "Fin : la Couronne"
+  en: "Ending: the Crown"
+  es: "Final: la Corona"
+  de: "Ende: die Krone"
+  ja: エンディング：王冠
+- fr: Rentrer en vainqueurs
+  en: Come home victorious
+  es: Volver victoriosos
+  de: Als Sieger heimkehren
+  ja: 勝者として帰還する
+- fr: "Fin : le Retour"
+  en: "Ending: the Return"
+  es: "Final: el Regreso"
+  de: "Ende: die Rückkehr"
+  ja: エンディング：帰還
+- fr: Ouvrir une porte vers votre monde
+  en: Open a door to your world
+  es: Abrir una puerta a vuestro mundo
+  de: Ein Tor in eure Welt öffnen
+  ja: 元の世界への扉を開く
+- fr: Aguerri
+  en: Seasoned
+  es: Curtido
+  de: Erfahren
+  ja: 熟練者
+- fr: Atteindre le niveau 10
+  en: Reach level 10
+  es: Alcanzar el nivel 10
+  de: Level 10 erreichen
+  ja: レベル10に到達
+- fr: Vétéran
+  en: Veteran
+  es: Veterano
+  de: Veteran
+  ja: 歴戦の勇士
+- fr: Atteindre le niveau 20
+  en: Reach level 20
+  es: Alcanzar el nivel 20
+  de: Level 20 erreichen
+  ja: レベル20に到達
+- fr: Légende de Velmaris
+  en: Legend of Velmaris
+  es: Leyenda de Velmaris
+  de: Legende von Velmaris
+  ja: ヴェルマリスの伝説
+- fr: Atteindre le niveau 40
+  en: Reach level 40
+  es: Alcanzar el nivel 40
+  de: Level 40 erreichen
+  ja: レベル40に到達
+- fr: Packs
+  en: Packs
+  es: Packs
+  de: Pakete
+  ja: パック
+- fr: Auras
+  en: Auras
+  es: Auras
+  de: Auren
+  ja: オーラ
+- fr: Capes
+  en: Capes
+  es: Capas
+  de: Umhänge
+  ja: マント
+- fr: Titres
+  en: Titles
+  es: Títulos
+  de: Titel
+  ja: 称号
+- fr: Traces de pas
+  en: Footprints
+  es: Huellas
+  de: Fußspuren
+  ja: 足跡
+- fr: Effets de sorts
+  en: Spell effects
+  es: Efectos de hechizos
+  de: Zaubereffekte
+  ja: 呪文エフェクト
+- fr: Fêtes
+  en: Celebrations
+  es: Fiestas
+  de: Feste
+  ja: お祝い
+- fr: Commune
+  en: Common
+  es: Común
+  de: Gewöhnlich
+  ja: コモン
+- fr: Rare
+  en: Rare
+  es: Raro
+  de: Selten
+  ja: レア
+- fr: Épique
+  en: Epic
+  es: Épico
+  de: Episch
+  ja: エピック
+- fr: Légendaire
+  en: Legendary
+  es: Legendario
+  de: Legendär
+  ja: レジェンダリー
+- fr: Pack du Fondateur
+  en: Founder's Pack
+  es: Pack del Fundador
+  de: Gründerpaket
+  ja: 創設者パック
+- fr: "Pour celles et ceux qui soutiennent Velmaris dès le début : Cape royale de Lysmont, Halo de l'Aube et titre « Fondateur »."
+  en: "For those who support Velmaris from the very start: Royal Cape of Lysmont, Dawn Halo and the “Founder” title."
+  es: "Para quienes apoyan Velmaris desde el principio: Capa real de Lysmont, Halo del Alba y título «Fundador»."
+  de: "Für alle, die Velmaris von Anfang an unterstützen: Königlicher Umhang von Lysmont, Morgenhalo und der Titel „Gründer“."
+  ja: 最初からヴェルマリスを応援してくれる人へ：リスモン王家のマント、暁の光輪、称号「創設者」。
+- fr: Lucioles de Sylvenoire
+  en: Fireflies of Sylvenoire
+  es: Luciérnagas de Sylvenoire
+  de: Glühwürmchen von Sylvenoire
+  ja: シルヴェノワールの蛍
+- fr: Des lucioles dorées tournent autour de toi, comme dans la forêt qui se souvient.
+  en: Golden fireflies circle around you, as in the forest that remembers.
+  es: Luciérnagas doradas giran a tu alrededor, como en el bosque que recuerda.
+  de: Goldene Glühwürmchen kreisen um dich, wie im Wald, der sich erinnert.
+  ja: 記憶する森のように、金色の蛍があなたの周りを舞う。
+- fr: Braises d'Ardenclume
+  en: Embers of Ardenclume
+  es: Brasas de Ardenclume
+  de: Glut von Ardenclume
+  ja: アルダンクリュームの残り火
+- fr: Des braises montent de tes épaules, chaudes comme les forges du Haut-Forgeron.
+  en: Embers rise from your shoulders, hot as the High Smith's forges.
+  es: Brasas suben de tus hombros, ardientes como las forjas del Alto Herrero.
+  de: Glut steigt von deinen Schultern auf, heiß wie die Schmieden des Hohen Schmieds.
+  ja: 大鍛冶王の炉のように熱い火の粉が肩から立ちのぼる。
+- fr: Givre des Monts Grisfer
+  en: Frost of the Greyiron Mountains
+  es: Escarcha de los Montes Grisfer
+  de: Frost der Grauerz-Berge
+  ja: グリフェル山脈の霜
+- fr: Une neige fine tombe autour de toi, même en plein été.
+  en: A fine snow falls around you, even in high summer.
+  es: Una nieve fina cae a tu alrededor, incluso en pleno verano.
+  de: Feiner Schnee fällt um dich herum, selbst im Hochsommer.
+  ja: 真夏でも、あなたの周りに細かな雪が舞う。
+- fr: Murmures du Voile
+  en: Whispers of the Veil
+  es: Susurros del Velo
+  de: Flüstern des Schleiers
+  ja: ヴェールのささやき
+- fr: "Des volutes violettes s'échappent de toi : le Voile n'est jamais loin."
+  en: "Purple wisps escape from you: the Veil is never far."
+  es: "Volutas violetas escapan de ti: el Velo nunca está lejos."
+  de: "Violette Schwaden entweichen dir: Der Schleier ist nie weit."
+  ja: 紫の靄があふれ出す。ヴェールはいつもすぐそばに。
+- fr: Halo de l'Aube
+  en: Dawn Halo
+  es: Halo del Alba
+  de: Morgenhalo
+  ja: 暁の光輪
+- fr: Un anneau de lumière dorée flotte au-dessus de ta tête et des étincelles t'entourent.
+  en: A ring of golden light floats above your head and sparks surround you.
+  es: Un anillo de luz dorada flota sobre tu cabeza y te rodean chispas.
+  de: Ein Ring aus goldenem Licht schwebt über deinem Kopf, und Funken umgeben dich.
+  ja: 頭上に金色の光の輪が浮かび、火花があなたを包む。
+- fr: Cape de la Guilde
+  en: Guild Cape
+  es: Capa del Gremio
+  de: Gildenumhang
+  ja: ギルドのマント
+- fr: Bleu nuit à liseré doré, la cape des aventuriers de Lysmont.
+  en: Midnight blue with golden trim, the cape of Lysmont's adventurers.
+  es: Azul noche con ribete dorado, la capa de los aventureros de Lysmont.
+  de: Nachtblau mit goldenem Saum, der Umhang der Abenteurer von Lysmont.
+  ja: 金の縁取りの濃紺。リスモンの冒険者のマント。
+- fr: Cape des Sables
+  en: Cape of the Sands
+  es: Capa de las Arenas
+  de: Umhang des Sandes
+  ja: 砂のマント
+- fr: Une étoffe légère couleur dune, brodée de rouge, venue de la Marche des Sables.
+  en: A light dune-coloured fabric embroidered in red, from the Sand Marches.
+  es: Una tela ligera color duna, bordada en rojo, venida de la Marca de las Arenas.
+  de: Ein leichter, dünenfarbener Stoff mit roter Stickerei aus der Sandmark.
+  ja: 砂の辺境から来た、赤い刺繍入りの砂丘色の軽い布。
+- fr: Cape des Brumes
+  en: Cape of the Mists
+  es: Capa de las Brumas
+  de: Umhang der Nebel
+  ja: 霧のマント
+- fr: "Gris-bleu, presque transparente : elle semble faite de la brume de l'Archipel."
+  en: "Blue-grey, almost transparent: it seems woven from the Archipelago's mist."
+  es: "Gris azulada, casi transparente: parece hecha de la bruma del Archipiélago."
+  de: "Blaugrau, fast durchsichtig: Er scheint aus dem Nebel des Archipels gewebt."
+  ja: 青灰色でほとんど透明。群島の霧で織られたかのよう。
+- fr: Cape royale de Lysmont
+  en: Royal Cape of Lysmont
+  es: Capa real de Lysmont
+  de: Königlicher Umhang von Lysmont
+  ja: リスモン王家のマント
+- fr: Pourpre et or, avec le soleil levant d'Aubeclaire brodé dans le dos.
+  en: Purple and gold, with the rising sun of Aubeclaire embroidered on the back.
+  es: Púrpura y oro, con el sol naciente de Aubeclaire bordado en la espalda.
+  de: Purpur und Gold, mit der aufgehenden Sonne von Aubeclaire auf dem Rücken.
+  ja: 紫と金。背中にオーブクレールの朝日の刺繍。
+- fr: Lanterne d'Aubeclaire
+  en: Lantern of Aubeclaire
+  es: Linterna de Aubeclaire
+  de: Laterne von Aubeclaire
+  ja: オーブクレールの灯
+- fr: "Un titre doré au-dessus de ta tête : « Lanterne d'Aubeclaire »."
+  en: "A golden title above your head: “Lantern of Aubeclaire”."
+  es: "Un título dorado sobre tu cabeza: «Linterna de Aubeclaire»."
+  de: "Ein goldener Titel über deinem Kopf: „Laterne von Aubeclaire“."
+  ja: 頭上に金色の称号：「オーブクレールの灯」。
+- fr: Chasseur de Brumes
+  en: Mist Hunter
+  es: Cazador de Brumas
+  de: Nebeljäger
+  ja: 霧の狩人
+- fr: Le titre de celles et ceux qui ont navigué dans l'Archipel.
+  en: The title of those who have sailed the Archipelago.
+  es: El título de quienes han navegado por el Archipiélago.
+  de: Der Titel derer, die den Archipel befahren haben.
+  ja: 群島を航海した者の称号。
+- fr: Gardien du Voile
+  en: Keeper of the Veil
+  es: Guardián del Velo
+  de: Hüter des Schleiers
+  ja: ヴェールの守り手
+- fr: Un titre violet qui scintille doucement.
+  en: A purple title that gently shimmers.
+  es: Un título violeta que centellea suavemente.
+  de: Ein violetter Titel, der sanft schimmert.
+  ja: やさしくきらめく紫の称号。
+- fr: Fondateur
+  en: Founder
+  es: Fundador
+  de: Gründer
+  ja: 創設者
+- fr: "Réservé au Pack du Fondateur : merci d'avoir cru en Velmaris !"
+  en: "Exclusive to the Founder's Pack: thank you for believing in Velmaris!"
+  es: "Reservado al Pack del Fundador: ¡gracias por creer en Velmaris!"
+  de: "Nur im Gründerpaket: Danke, dass du an Velmaris glaubst!"
+  ja: 創設者パック限定：ヴェルマリスを信じてくれてありがとう！
+- fr: Pétales de saule
+  en: Willow petals
+  es: Pétalos de sauce
+  de: Weidenblüten
+  ja: 柳の花びら
+- fr: Des pétales roses volent derrière toi quand tu marches.
+  en: Pink petals fly behind you as you walk.
+  es: Pétalos rosas vuelan detrás de ti al caminar.
+  de: Rosa Blütenblätter fliegen hinter dir her, wenn du gehst.
+  ja: 歩くと桃色の花びらが舞う。
+- fr: Pas de cendre
+  en: Ash steps
+  es: Pasos de ceniza
+  de: Aschenschritte
+  ja: 灰の足跡
+- fr: Chaque pas laisse une traînée de cendres rougeoyantes.
+  en: Each step leaves a trail of glowing ash.
+  es: Cada paso deja un rastro de cenizas incandescentes.
+  de: Jeder Schritt hinterlässt eine Spur glühender Asche.
+  ja: 一歩ごとに赤く光る灰の跡が残る。
+- fr: Poussière d'étoiles
+  en: Stardust
+  es: Polvo de estrellas
+  de: Sternenstaub
+  ja: 星屑
+- fr: Une traînée lumineuse d'or et d'argent suit chacun de tes pas.
+  en: A shining trail of gold and silver follows each of your steps.
+  es: Un rastro luminoso de oro y plata sigue cada uno de tus pasos.
+  de: Eine leuchtende Spur aus Gold und Silber folgt jedem deiner Schritte.
+  ja: 金と銀の光の軌跡が足取りを追う。
+- fr: Sorts étoilés
+  en: Starry spells
+  es: Hechizos estrellados
+  de: Sternenzauber
+  ja: 星の呪文
+- fr: Tes sorts et tes flèches laissent une pluie d'étoiles dorées. La couleur de l'élément reste visible.
+  en: Your spells and arrows leave a shower of golden stars. The element's colour stays visible.
+  es: Tus hechizos y flechas dejan una lluvia de estrellas doradas. El color del elemento sigue visible.
+  de: Deine Zauber und Pfeile hinterlassen einen Regen goldener Sterne. Die Farbe des Elements bleibt sichtbar.
+  ja: 呪文や矢が金色の星を降らせる。属性の色はそのまま見える。
+- fr: Prisme
+  en: Prism
+  es: Prisma
+  de: Prisma
+  ja: プリズム
+- fr: Une traînée aux couleurs de l'arc-en-ciel suit chacun de tes sorts.
+  en: A rainbow-coloured trail follows each of your spells.
+  es: Un rastro con los colores del arcoíris sigue cada uno de tus hechizos.
+  de: Eine Spur in Regenbogenfarben folgt jedem deiner Zauber.
+  ja: 呪文のたびに虹色の軌跡が続く。
+- fr: Feu d'artifice
+  en: Fireworks
+  es: Fuegos artificiales
+  de: Feuerwerk
+  ja: 花火
+- fr: Trois fusées qui éclatent en gerbes de couleurs au-dessus de toi. 3 utilisations par achat.
+  en: Three rockets bursting into showers of colour above you. 3 uses per purchase.
+  es: Tres cohetes que estallan en lluvias de colores sobre ti. 3 usos por compra.
+  de: Drei Raketen, die über dir in bunten Garben zerplatzen. 3 Nutzungen pro Kauf.
+  ja: 頭上で三発のロケットが色とりどりに弾ける。1回の購入で3回使える。
+- fr: Lâcher de lanternes
+  en: Lantern release
+  es: Suelta de linternas
+  de: Laternenflug
+  ja: ランタン飛ばし
+- fr: Une dizaine de lanternes célestes montent lentement dans le ciel, comme à la fête d'Aubeclaire. 3 utilisations par achat.
+  en: A dozen sky lanterns slowly rise into the sky, as at the Aubeclaire festival. 3 uses per purchase.
+  es: Una docena de linternas celestes suben lentamente al cielo, como en la fiesta de Aubeclaire. 3 usos por compra.
+  de: Ein Dutzend Himmelslaternen steigt langsam in den Himmel, wie beim Fest von Aubeclaire. 3 Nutzungen pro Kauf.
+  ja: オーブクレールの祭りのように、十ほどの天灯がゆっくり空へ昇る。1回の購入で3回使える。
+- fr: Liseré
+- fr: Ailette{1}
+- fr: Branche+{1}
+- fr: Branche-{1}
+- fr: Griffe{1}
+- fr: Fleuron{1}
+- fr: Trou{1}
+- fr: Fleche{1}
+- fr: Plume{1}
+- fr: Left
+- fr: Right
+- fr: Epaulière
+- fr: Jambière
+- fr: Joueur
+  en: Player
+  es: Jugador
+  de: Spieler
+  ja: プレイヤー
+- fr: Modérateur
+  en: Moderator
+  es: Moderador
+  de: Moderator
+  ja: モデレーター
+- fr: Administrateur
+  en: Administrator
+  es: Administrador
+  de: Administrator
+  ja: 管理者
+- fr: Propriétaire
+  en: Owner
+  es: Propietario
+  de: Besitzer
+  ja: オーナー
+- fr: 🛡 Modérateur
+  en: 🛡 Moderator
+  es: 🛡 Moderador
+  de: 🛡 Moderator
+  ja: 🛡 モデレーター
+- fr: ⚔ Administrateur
+  en: ⚔ Administrator
+  es: ⚔ Administrador
+  de: ⚔ Administrator
+  ja: ⚔ 管理者
+- fr: 👑 Propriétaire
+  en: 👑 Owner
+  es: 👑 Propietario
+  de: 👑 Besitzer
+  ja: 👑 オーナー
+- fr: Insultes ou propos blessants
+  en: Insults or hurtful remarks
+  es: Insultos o comentarios hirientes
+  de: Beleidigungen oder verletzende Äußerungen
+  ja: 暴言・傷つける発言
+- fr: Triche ou exploitation d'un bug
+  en: Cheating or exploiting a bug
+  es: Trampas o abuso de un error
+  de: Schummeln oder Ausnutzen eines Fehlers
+  ja: チート・バグの悪用
+- fr: Spam
+  en: Spam
+  es: Spam
+  de: Spam
+  ja: スパム
+- fr: Gêne les autres joueurs
+  en: Disturbing other players
+  es: Molesta a los demás jugadores
+  de: Stört andere Spieler
+  ja: 他のプレイヤーへの迷惑行為
+- fr: Pseudo ou avatar inapproprié
+  en: Inappropriate name or avatar
+  es: Nombre o avatar inapropiado
+  de: Unangemessener Name oder Avatar
+  ja: 不適切な名前・アバター
+- fr: Autre comportement
+  en: Other behaviour
+  es: Otro comportamiento
+  de: Anderes Verhalten
+  ja: その他の行為
+- fr: Quête principale
+  en: Main quest
+  es: Misión principal
+  de: Hauptquest
+  ja: メインクエスト
+- fr: Contrats de la Guilde
+  en: Guild contracts
+  es: Contratos del Gremio
+  de: Gildenaufträge
+  ja: ギルドの依頼
+- fr: Donjon
+  en: Dungeon
+  es: Mazmorra
+  de: Verlies
+  ja: ダンジョン
+- fr: Quêtes secondaires
+  en: Side quests
+  es: Misiones secundarias
+  de: Nebenquests
+  ja: サブクエスト
+- fr: Examen de rang
+  en: Rank exam
+  es: Examen de rango
+  de: Rangprüfung
+  ja: ランク試験
+- fr: Explorer et discuter
+  en: Explore and chat
+  es: Explorar y charlar
+  de: Erkunden und plaudern
+  ja: 探索とおしゃべり
+- fr: Action
+- fr: Erreur
+- fr: Campagne
+- fr: Groupe
+- fr: Message
+- fr: Reglages
+- fr: Commande
+- fr: Moderation
+- fr: Boutique
+- fr: au départ de la caravane, au début du chapitre 2
+  en: when the caravan departs, at the start of chapter 2
+  es: al partir la caravana, al comienzo del capítulo 2
+  de: beim Aufbruch der Karawane zu Beginn von Kapitel 2
+  ja: 第2章の始め、キャラバンの出発時
+- fr: Lysmont
+- fr: Hautepierre (faubourg)
+  en: Hautepierre (outskirts)
+  es: Hautepierre (arrabal)
+  de: Hautepierre (Vorstadt)
+  ja: オートピエール（郊外）

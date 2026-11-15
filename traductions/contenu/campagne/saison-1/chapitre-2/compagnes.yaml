@@ -1,0 +1,64 @@
+# Textes de content/campagne/saison-1/chapitre-2/compagnes.yaml
+# Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
+- fr: Kaya — Le concours de brochettes
+- fr: Kaya pose deux montagnes de brochettes sur la table. « Concours ! Celui qui en mange le plus a gagné. Le perdant paie. Et ne viens pas pleurer après. »
+- fr: Relever le défi. (Vitalité, difficulté 19)
+- fr: Tricher en glissant des brochettes sous la table.
+- fr: « Je te regarde manger, ça me suffit. »
+- fr: Kaya fixe votre assiette vide, puis la sienne, à moitié pleine. « Impossible. Tu as un deuxième estomac. Avoue. »
+- fr: Elle éclate de rire et vous donne une tape dans le dos à vous décrocher une épaule. « Revanche demain ! »
+- fr: « HA ! » Kaya lève les bras au ciel, une brochette dans chaque main. « La reine des brochettes ! Tu paies ! »
+- fr: Kaya renifle. Une fois. Deux fois. Puis elle se penche sous la table. « Sérieusement ? Tu triches à un concours de brochettes ? » Elle vous jette un os à la figure… mais elle rit à moitié.
+- fr: Kaya s'arrête, une brochette à mi-chemin. Ses oreilles rougissent. « Mange au lieu de dire des bêtises. »
+- fr: Kaya — Le Hurlement des Ancêtres
+- fr: La nuit est pleine. L'Ancienne Sorha a allumé un feu bleu au centre du campement. « Kaya veut hurler avec les ancêtres. Elle a choisi qui l'accompagnerait. » Elle vous regarde de son œil valide. « Toi. »
+- fr: Kaya ne plaisante pas, pour une fois. « Quand un Lunecroc hurle sur la falaise, les ancêtres répondent. Ou pas. S'ils ne répondent pas, c'est qu'on ne mérite pas encore. Moi, ils ne m'ont jamais répondu. »
+- fr: Hurler avec elle, de toutes vos forces.
+- fr: Lui prendre la main, en silence, pendant qu'elle hurle.
+- fr: Vos deux voix montent dans la nuit, maladroites puis justes. Et du fond du désert… quelque chose répond. Un hurlement immense, qui fait trembler le sable.
+- fr: Kaya hurle. Sa main serre la vôtre à vous briser les doigts. Et du fond du désert… quelque chose répond. Un hurlement immense, qui fait trembler le sable.
+- fr: Kaya pleure sans s'en cacher. « Ils ont répondu. Ils ont répondu… » Elle s'essuie les yeux d'un revers de bras. « Je deviendrai rang S. Je reprendrai nos terres. Et tu seras là pour voir ça. C'est un ordre. »
+- fr: Nadja — Leçon de marchandage
+- fr: "Nadja vous entraîne devant un étal de tapis. « Leçon numéro un : on ne paie jamais le premier prix. Montre-moi ce que tu vaux. »"
+- fr: Marchander avec aplomb. (Charisme, difficulté 18)
+- fr: Laisser Nadja faire, et prendre des notes.
+- fr: « Ce marchand a l'air pauvre. Payons le prix qu'il demande. »
+- fr: Le marchand finit par vous offrir le thé ET le tapis. Nadja vous dévisage. « …Tu as déjà fait ça. Avoue. »
+- fr: Vous repartez avec un tapis hors de prix et un sourire de vainqueur. Nadja se masse les tempes. « On reprendra la leçon. Depuis le début. »
+- fr: En trois phrases, Nadja divise le prix par quatre. « Tu vois ? Le secret, c'est de toujours avoir l'air de pouvoir partir. » Elle vous fait un clin d'œil. « Avec les gens aussi. »
+- fr: "Nadja vous regarde comme si vous veniez de jeter de l'or dans un puits. Puis, plus doucement : « …Tu es bizarre. Ça me plaît, bizarrement. »"
+- fr: Nadja — Le Grand Livre rouge
+- fr: Minuit, au pied du Palais. Nadja a troqué ses voiles contre une tenue noire. « Ma dette est écrite dans le Grand Livre rouge, au dernier étage. Avec celles de la moitié de Qarzim, et le nom de tous les acheteurs de cristaux. Je veux une copie. Tu m'aides ? »
+- fr: Grimper par les terrasses. (Agilité, difficulté 21)
+- fr: Faire diversion pendant qu'elle entre. (Charisme, difficulté 20)
+- fr: Le Grand Livre est un registre de cuir rouge, épais comme un tronc. Nadja recopie à toute vitesse, à la lueur d'un cristal.
+- fr: Elle s'arrête sur une page. « Ces cristaux… ils partent vers le nord. Des caisses entières. Payées en or noir, par un acheteur qui signe d'une rune violette. » Elle pâlit. « La Concorde vend aux Cendres. »
+- fr: Une cloche sonne. Des gardes ! Vous sautez de terrasse en terrasse, Nadja serrant contre elle les quelques pages qu'elle a pu arracher.
+- fr: Dans une ruelle, à bout de souffle, elle déplie les pages. « C'est peu… mais c'est assez. Des caisses de cristaux vers le nord. Signées d'une rune violette. »
+- fr: « Merci. » Nadja range les pages contre son cœur. « Personne n'avait jamais pris de risque pour moi. Personne. » Elle détourne les yeux. « Je n'aime pas avoir des dettes. Celle-là, je la garderai. »
+- fr: Séraphine — Les contes de l'autre monde
+- fr: Séraphine vous attend dans le jardin de la Résidence, pieds nus dans l'herbe, un carnet sur les genoux. « Raconte-moi ton monde. Pas les guerres. Les petites choses. Ce que vous mangiez le matin. Les histoires qu'on racontait aux enfants. »
+- fr: Elle hésite. « Toi, tu as eu une autre vie, avant. Tu t'en souviens ? »
+- fr: Lui raconter un conte de votre enfance.
+- fr: Lui décrire une ville de votre monde, avec ses lumières qui ne s'éteignent jamais.
+- fr: « Ce n'est pas si intéressant, tu sais. »
+- fr: Elle note tout, les yeux brillants, et vous fait répéter la fin trois fois. « Il faut que je l'écrive avant de l'oublier. Un jour, je ferai un livre. « Contes de l'autre côté du Voile ». »
+- fr: « Des lumières partout, la nuit ? Sans magie ? » Elle reste silencieuse un long moment. « Chez vous, personne n'a besoin d'Appelés. C'est peut-être ça, un monde heureux. »
+- fr: Elle referme son carnet. « Tout est intéressant, quand on ne l'a jamais vu. » Elle sourit poliment, mais quelque chose s'est éteint.
+- fr: Séraphine — L'anneau d'Aldric
+- fr: Séraphine vous entraîne au fond du Bazar, chez un prêteur sur gages. Elle tremble. « Un marchand m'a écrit. Il a vu passer un anneau gravé d'un griffon. Celui de mon frère. »
+- fr: "Le prêteur sort l'anneau d'un coffret. Un griffon d'argent, une pierre bleue. Et, à l'intérieur, une inscription : « À A., de S. — reviens-moi »."
+- fr: « C'est moi qui le lui ai offert. » Sa voix se brise. « Il l'avait au doigt le jour où il a disparu. »
+- fr: Demander au prêteur d'où il vient. (Charisme, difficulté 20)
+- fr: Racheter l'anneau pour Séraphine. (100 or)
+- fr: "Le prêteur finit par parler : l'anneau a été vendu par un marchand du nord, qui l'avait lui-même échangé contre de l'eau… à un homme en armure noire, sur le Mur d'Aube, il y a deux ans."
+- fr: « Deux ans. » Séraphine serre l'anneau. « Il y a deux ans, il était vivant. » Elle vous regarde, et pour la première fois depuis longtemps, elle sourit à travers ses larmes. « Merci. »
+- fr: Le prêteur ne dira rien de plus. Mais Séraphine repart avec l'anneau au doigt.
+- fr: « Il est vivant quelque part. Je le sens. » Elle serre votre main. « Tu m'aideras à le retrouver ? »
+- fr: Aveline — La lettre de Valgrane
+- fr: Aveline vous attend dans la bibliothèque de la Résidence, une lettre jaunie entre les mains. « Séraphine l'a fait sortir des archives royales. En secret. Elle a risqué gros. »
+- fr: "« C'est l'ordre de repli de Valgrane. Signé de mon père, oui. Mais regarde : le sceau du bas. Ce n'est pas celui de la Couronne. C'est celui de l'Ordre de la Lumière. »"
+- fr: « Mon père n'a pas ouvert les portes. On lui a ordonné de se replier. L'Ordre a donné l'ordre… puis l'a laissé accuser. »
+- fr: « Nous irons jusqu'au bout. Même s'il faut regarder l'Ordre en face. »
+- fr: « Prends ton temps. On ne renverse pas l'Ordre sur une lettre. »
+- fr: Elle replie la lettre et vous la confie. « Garde-la. Si on me fouille, on ne la trouvera pas. » Elle vous regarde. « Je te fais confiance. Plus qu'à moi-même. »

@@ -1,0 +1,3 @@
+# Textes de content/config/portraits.yaml
+# Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
+[]

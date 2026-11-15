@@ -1,0 +1,108 @@
+# Textes de content/campagne/saison-1/chapitre-4/principale.yaml
+# Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
+- fr: L'alliance des peuples
+- fr: Germinal 1021. Neuf ans depuis l'Appel. Sur la grande carte de la salle du trône, le Mur d'Aube est entouré de rouge. Trop de rouge.
+- fr: "Le roi a vieilli. « Les éclaireurs le disent tous : la Légion se rassemble derrière le Mur. Dans trois ans, peut-être moins, elle attaquera. Et nous ne tiendrons pas seuls. »"
+- fr: "« Les elfes sont avec nous, grâce à vous. Il nous faut les nains de Grisfer : leurs armes, leurs murailles. Et… » Il hésite. « Les dragons de l'Archipel, s'il en reste. »"
+- fr: Séraphine croise les bras. « Père, les nains ont fermé leur porte à la Couronne il y a cent ans. Ils ne l'ouvriront pas pour un ambassadeur. Ils l'ouvriront peut-être pour des héros. »
+- fr: "Elianne, à voix basse : « Les nains ont forgé les sceaux de l'Appel, en l'an 430. Si quelqu'un a gardé une trace de ce que l'Ordre a fait… c'est eux. »"
+- fr: « Nous irons à Ardenclume. Puis dans l'Archipel. »
+- fr: « Et l'Ordre, Majesté ? Que dit le Grand Prieur de tout ça ? »
+- fr: Le roi détourne le regard. « Le Grand Prieur dit qu'il faut un nouvel Appel. D'autres héros. » Il soupire. « Je lui ai dit d'attendre. Je ne sais pas combien de temps il m'obéira. »
+- fr: On vous remet des lettres scellées, des cartes, et un sac de pièces d'or naines, frappées d'un marteau. « Elles ouvrent plus de portes que les nôtres », dit le trésorier, vexé.
+- fr: "Germinal 1021 : la Couronne envoie {groupe} chercher l'alliance des nains de Grisfer et des dragons de l'Archipel."
+- fr: Le Haut-Forgeron
+- fr: La salle du trône d'Ardenclume est si haute qu'on n'en voit pas le plafond. Des rivières de lave domptées coulent dans des rigoles de bronze, et la chaleur vous sèche les yeux.
+- fr: Le roi Bardrek ne se lève pas. « Des humains. Des Appelés, en plus. » Il boit une longue gorgée. « La dernière fois que des Appelés sont venus à Ardenclume, c'était il y a six cents ans. Ils nous ont demandé de forger des sceaux. Nous l'avons fait. Nous le regrettons encore. »
+- fr: « Une alliance ? Contre la Légion ? » Il rit, sans joie. « La Légion ne nous a jamais rien fait. Ce sont vos prêtres qui nous ont menti. »
+- fr: « Alors dites-nous ce qu'ils ont fait. Nous voulons la vérité, nous aussi. »
+- fr: Lui offrir un tonnelet de bière d'Ardenclume, à la manière naine.
+- fr: « La Légion ne vous a rien fait… encore. » (Charisme, difficulté 26)
+- fr: Le roi regarde le tonnelet, puis vous. Puis il éclate d'un rire qui fait trembler la lave. « Des humains qui savent offrir ! Asseyez-vous. Les tonneaux d'abord, les affaires ensuite. »
+- fr: Bardrek pose sa chope. Lentement. « … Encore. » Il se gratte la barbe. « Mes éclaireurs ont vu des soldats cendrés dans les Marches. Je croyais qu'ils se perdaient. » Un silence. « Ils ne se perdaient pas. »
+- fr: "« Les Mille Marches. Mille étages sous la montagne. Tout en bas, la Salle des Registres : nos ancêtres y ont gravé chaque Appel depuis l'an 430, et ce que chacun a coûté. »"
+- fr: « Mais il y a vingt ans, le Gardien des Marches s'est réveillé. Un golem que nos ancêtres ont forgé pour protéger les Registres. Il n'obéit plus à personne. »
+- fr: « Descendez. Faites taire le Gardien. Lisez les Registres. Si vous remontez, vous aurez l'alliance des nains. » Il sourit dans sa barbe. « Si vous ne remontez pas… vous aurez une belle tombe. Nous faisons de très belles tombes. »
+- fr: "{groupe} sont reçus par Bardrek, le Haut-Forgeron. Il promet l'alliance des nains s'ils reviennent des Mille Marches."
+- fr: Les Mille Marches
+- fr: Floréal 1022. La porte des Mille Marches s'ouvre dans un grondement. Un escalier plonge dans le noir. Une marche par étage. Un étage par siècle, disent les nains.
+- fr: Elianne serre son chapelet. « Si les Registres disent ce que je crois… » Elle ne finit pas sa phrase.
+- fr: Descendre les Mille Marches.
+- fr: Le Gardien vous rejette vers l'escalier. Mais, pendant le combat, une des tables de pierre s'est fendue en deux, et un morceau a roulé à vos pieds. Vous le remontez.
+- fr: "Le Gardien des Mille Marches s'est éteint, un genou à terre, comme un chevalier qui salue. Derrière lui, la Salle des Registres : des tables de pierre, du sol au plafond, couvertes de runes naines."
+- fr: "Elianne lit, avec l'aide d'un vieux scribe nain venu avec vous. « An 430 : premier Appel. Un seul Appelé. Son nom… » Elle plisse les yeux. « Orvan. Le prix : la vallée de Cendre, au nord. Mille âmes. »"
+- fr: "« An 611 : deuxième Appel. Le prix : la ville de Merran. An 874 : troisième Appel. Le prix : les îles du Levant. » Sa voix tremble. « Chaque Appel ouvre le Voile. Chaque ouverture laisse entrer les Cendres. Chaque fois, une terre meurt. »"
+- fr: "Elle s'arrête sur la dernière table, gravée récemment. « An 1003. Appel secret, à Valgrane. Échec. Le prix : Valgrane. » Elle se tourne lentement vers vous. « Et an 1012… » Elle ne lit pas la suite. Elle n'en a pas besoin."
+- fr: Aveline a pâli. « Valgrane. Ce n'était pas une trahison. Ce n'était pas mon père. C'était l'Ordre. Un Appel raté. » Sa main tremble sur la garde de son épée.
+- fr: Elianne referme son carnet. « Chaque invocation nourrit les Cendres. Votre venue, à vous tous, a nourri la Légion. » Elle ferme les yeux. « Et l'Ordre le sait depuis six cents ans. »
+- fr: "Floréal 1022 : dans la Salle des Registres, {groupe} découvrent que chaque Appel nourrit les Cendres, et que l'Ordre le sait depuis l'an 430."
+- fr: Remonter et annoncer la nouvelle à Bardrek.
+- fr: Bardrek écoute sans un mot. Puis il pose son marteau sur la table. « Les nains d'Ardenclume marcheront avec vous. Pas pour la Couronne. Pas pour l'Ordre. Pour vous, qui êtes descendus. »
+- fr: "« Et pour les dragons… Il y a une capitaine pirate, à Port-Vérane, qui connaît la route du Nid. Corsa la Rouge. Elle me doit une jambe. Enfin, une jambe de bois : c'est moi qui l'ai fabriquée. »"
+- fr: Corsa la Rouge
+- fr: Port-Vérane sent le sel, le goudron et le rhum renversé. Sur le pont d'une frégate rouge, une femme à la jambe de bois fait tourner un sabre autour de son doigt.
+- fr: « Le Nid des Wyrms ? » La capitaine Corsa rit si fort que son perroquet (vivant, lui) s'envole. « Personne n'y va, mes jolis. Les récifs mangent les coques, et les dragons mangent ce qui reste. »
+- fr: « Et puis il y a déjà un client, cette saison. Un certain Orlen Vask, chasseur de la Concorde. Il a payé cher pour la route. Il a dit qu'il cherchait… un œuf. »
+- fr: « Bardrek dit que vous lui devez une jambe. »
+- fr: « Nous vous payons le double de Vask. » (500 or)
+- fr: « Un duel. Si nous gagnons, la carte est à nous. »
+- fr: Corsa regarde sa jambe de bois, puis vous. « Ce vieux grincheux… » Elle soupire. « D'accord. Mais mon équipage veut s'amuser un peu d'abord. Montrez-leur ce que valent des Appelés. »
+- fr: L'équipage forme un cercle sur le quai. Deux pirates aux sabres courbes s'avancent en souriant.
+- fr: Vous voilà dans l'eau du port. Corsa vous repêche elle-même, hilare. « Vous perdez avec panache. J'aime ça. » Elle vous jette la carte. « Ne la mouillez pas plus que vous. »
+- fr: Corsa déroule une carte marine couverte de croix rouges. « Le Nid est là. On n'y passe qu'en été, quand la brume se lève. Revenez à Solaire, et ne dites à personne que c'est moi. »
+- fr: À Port-Vérane, la capitaine Corsa la Rouge confie à {groupe} la route du Nid des Wyrms.
+- fr: Le Nid des Wyrms
+- fr: Solaire 1023. La brume s'ouvre comme un rideau. L'île est noire, fumante, couverte de nids de pierre grands comme des maisons. Ils sont presque tous vides.
+- fr: Dans les rochers, de jeunes wyrms (des dragons pas plus grands que des chevaux, sans ailes, furieux) se tournent vers vous en sifflant.
+- fr: "Se défendre sans les tuer : les repousser."
+- fr: Leur montrer qu'on ne leur veut aucun mal. (Esprit, difficulté 27)
+- fr: Vous vous agenouillez, les mains ouvertes. Les wyrms reniflent, hésitent… puis se couchent, la tête basse. Ils n'ont pas peur de vous. Ils ont peur de quelqu'un d'autre.
+- fr: Au sommet de l'île, dans le plus grand nid, un homme en manteau de cuir pose le pied sur une immense tête dorée, endormie. Des chasseurs l'entourent, des harpons à la main.
+- fr: « Orlen Vask, chasseur de la Concorde. » Il ne se retourne pas. « L'œuf est déjà vendu, Appelés. Il ne reste que la mère. Une dragonne endormie depuis trois siècles… savez-vous combien vaut une seule de ses écailles ? »
+- fr: « Écarte-toi de cette dragonne. »
+- fr: Vask vous jette à terre. Son harpon se lève au-dessus de la dragonne… et la dragonne ouvre un œil. Un œil d'or, grand comme un bouclier.
+- fr: Le souffle qui suit ne laisse aux chasseurs que le temps de sauter à la mer. Vask, en flammes, plonge le dernier.
+- fr: Vask recule jusqu'au bord de la falaise, saute à la mer et disparaît dans la brume. Derrière vous, la tête dorée remue. Un œil s'ouvre. Un œil d'or, grand comme un bouclier.
+- fr: La dragonne se déplie. Elle est immense. Puis elle rapetisse, rapetisse, et à sa place se tient une femme grande, aux cheveux d'or et aux yeux de braise, vêtue seulement d'écailles.
+- fr: « Je suis Ysoria. Je dormais. » Elle regarde le nid vide, et sa voix devient très calme, ce qui est pire qu'un cri. « Mon œuf. Où est mon œuf. »
+- fr: "Elle vous écoute raconter, sans cligner des yeux. Puis : « Vous m'avez défendue pendant mon sommeil. Chez les dragons, cela fait de vous… » Elle cherche le mot humain. « … de la famille. Je viens avec vous. Je retrouverai mon œuf. Et je mangerai ce Vask. »"
+- fr: « Et votre guerre contre les Cendres ? » Elle hausse les épaules. « Les Cendres ont dévoré les miens avant vous. Les dragons qui restent écouteront ma voix. »
+- fr: "Solaire 1023 : au Nid des Wyrms, {groupe} sauvent la dragonne Ysoria des chasseurs de la Concorde. Elle les rejoint, et les dragons avec elle."
+- fr: Celle qui a déserté
+- fr: Brumaire 1023. Les gardes de la Porte d'Ardenclume vous font appeler en pleine nuit. « Quelqu'un vous demande. Quelqu'un avec des cornes. »
+- fr: Dans la neige, devant la porte de bronze, une silhouette encapuchonnée tient à peine debout. Une corne est brisée.
+- fr: Morra relève la tête. « Bonsoir, Appelés. » Elle sourit, avec du sang aux dents. « J'ai déserté. Ils me suivent. Vous avez cinq secondes pour décider si vous m'aidez. »
+- fr: Dans la neige, devant la porte de bronze, un jeune soldat cendré lève les mains. Il a jeté son épée. « Je… je déserte. J'ai des nouvelles du Mur. Ils me suivent ! »
+- fr: Se battre contre les chasseurs de la Légion.
+- fr: Les chasseurs de la Légion vous submergent… jusqu'à ce que les portes de bronze s'ouvrent et que cinquante nains en armure en sortent en hurlant. Les soldats cendrés s'enfuient dans la neige.
+- fr: Morra s'assoit dans la neige, essoufflée. « Le Souverain prépare l'assaut du Mur d'Aube. Au printemps 1025. Il a… » Elle ferme les yeux. « Il a dit qu'il ferait de Lyss sa nouvelle commandante. Elle a seize ans. »
+- fr: Le jeune déserteur claque des dents. « Au printemps 1025, ils attaqueront le Mur d'Aube. Toute la Légion. La commandante Morra… avant de mourir, elle disait que le Souverain gardait les Appelés pour la fin. »
+- fr: « Viens avec nous, Morra. Nous libérerons ta sœur. »
+- fr: « Tu peux rester à Ardenclume, à l'abri. Mais pas avec nous. »
+- fr: Confier le déserteur aux nains et repartir.
+- fr: Morra vous regarde longtemps. Puis elle rit, un vrai rire cette fois. « Une démone parmi les Appelés. Le Souverain va en faire une attaque. » Elle tend la main. « D'accord. Mais je garde ma faux. Et je mange quand je veux. »
+- fr: Elianne la fixe, et Morra soutient son regard. Puis la prêtresse lui tend une couverture. « Tu trembles. » « Je ne tremble jamais. » « Tu trembles. »
+- fr: « À l'abri. » Morra hoche la tête, sans surprise. « Vous avez raison. On ne fait pas confiance à une démone. » Elle se détourne. « Moi non plus, je ne me ferais pas confiance. »
+- fr: "Brumaire 1023 : à la Porte d'Ardenclume, {groupe} apprennent que la Légion attaquera le Mur d'Aube au printemps 1025."
+- fr: Le secret de l'Ordre
+- fr: Aurore 1023. Le Temple du Seuil, où tout a commencé. Le grand cercle de l'Appel brille toujours au sol. Le Grand Prieur Auréliath vous attend devant l'autel, seul.
+- fr: « Les Registres des nains. » Il ne fait même pas semblant d'être surpris. « Je savais qu'un jour, quelqu'un descendrait. J'espérais que ce serait après ma mort. »
+- fr: « Oui, chaque Appel nourrit les Cendres. Oui, l'Ordre le sait. Mais sans Appel, il y a six cents ans, les dragons nous auraient tous brûlés. Et sans vous, la Légion serait déjà à Lysmont. » Il ouvre les mains. « Nous avons choisi le moindre mal. Six cents ans de moindre mal. »
+- fr: « Et maintenant, il faut un nouvel Appel. Vingt Appelés, cent peut-être. Pour gagner la guerre. » Il vous regarde. « Je vous demande de vous taire. Le peuple ne comprendrait pas. »
+- fr: "Elianne, d'une voix que vous ne lui connaissiez pas : « Le peuple comprendrait très bien. C'est pour ça que vous avez peur. »"
+- fr: Aveline a la main sur son épée. « Valgrane. Vous avez laissé exécuter mon père pour cacher votre échec. »
+- fr: Morra, appuyée contre une colonne, ricane. « Et c'est nous, les démons. »
+- fr: "Tout révéler : convoquer le peuple sur la place de Lysmont et lire les Registres à voix haute."
+- fr: "Garder le secret, pour ne pas briser le royaume avant la guerre. Mais exiger : plus aucun Appel."
+- fr: Garder le secret, et laisser l'Ordre préparer un nouvel Appel pour gagner la guerre.
+- fr: Le lendemain, sur la place de Lysmont, vous lisez les Registres devant des milliers de gens. Le silence est total. Puis quelqu'un jette une pierre contre la porte du Temple. Puis une autre.
+- fr: "Le soir même, le Grand Prieur est démis par le roi. On dit qu'il a quitté la ville, seul, vers le nord. Il n'a rien dit en partant. Sauf une phrase, à Elianne : « Tu feras mieux que moi. »"
+- fr: Elianne pleure, et sourit en même temps. « L'Ordre ne sera plus jamais le même. Il faudra le reconstruire. Sans mensonges, cette fois. »
+- fr: Auréliath vous regarde longtemps. Puis il s'incline. « Plus aucun Appel. Vous avez ma parole. » Il soupire. « Je ne sais pas si vous venez de sauver le monde ou de le perdre. »
+- fr: "Elianne ne dit rien sur le chemin du retour. Le soir, elle vous demande seulement : « Vous croyez qu'on peut bâtir quelque chose de juste sur un mensonge ? »"
+- fr: Le Grand Prieur sourit, soulagé. « Vous êtes sages. Plus sages que je ne l'étais à votre âge. » Il pose la main sur le cercle de l'Appel. « Dans un an, de nouveaux héros arriveront. »
+- fr: Elianne se lève et sort du Temple sans un mot. Sur le parvis, elle arrache le voile de l'Ordre de ses cheveux.
+- fr: "Ilyssë, glaciale : « Vous venez de décider d'ouvrir une nouvelle déchirure. J'espère que vous aimerez le monde qui en sortira. »"
+- fr: L'hiver finit. Au nord, derrière le Mur d'Aube, des milliers de feux s'allument chaque nuit. Les nains forgent. Les dragons volent. Les elfes tendent leurs arcs.
+- fr: La guerre des Cendres commence au printemps.
+- fr: "Aurore 1023 : {groupe} affrontent le Grand Prieur Auréliath au Temple du Seuil. L'alliance des peuples est prête pour la guerre."

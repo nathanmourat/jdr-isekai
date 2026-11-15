@@ -1,0 +1,49 @@
+# Textes de content/monde/aubeclaire.yaml
+# Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
+- fr: Royaume d'Aubeclaire
+- fr: Ville de Lysmont
+- fr: "La capitale d'Aubeclaire : tours blanches, toits bleus, et toujours du monde dans les rues."
+- fr: Temple du Seuil
+- fr: Le grand temple blanc où l'Ordre accomplit l'Appel.
+- fr: Place de Lysmont
+- fr: "Le cœur de la capitale : fontaine, étals, rumeurs."
+- fr: Guilde de la Rose des Vents
+- fr: "Le hall des aventuriers : contrats, comptoir et bagarres."
+- fr: Le Chaudron Fêlé
+- fr: "La taverne et l'auberge de Bram : on y mange bien, on y parle trop, et on y dort à l'étage."
+- fr: Le Comptoir de Halvine
+- fr: "Une boutique encombrée du sol au plafond : potions, armes, cadeaux, et une balance qui ne ment jamais."
+- fr: Château de Lysmont
+- fr: Le siège de la Couronne, tours blanches et toits bleus.
+- fr: Quartier des Tanneurs
+- fr: Ruelles pauvres et cuves de teinture. On y disparaît, ces temps-ci.
+- fr: Arène de Lysmont
+- fr: Le sable du tournoi des écuyers.
+- fr: Combe-aux-Saules
+- fr: Forêt de saules au sud-ouest, fermes isolées et loups affamés.
+- fr: Crypte de la Fontaine
+- fr: Des ruines couvertes de lierre, un escalier qui descend dans le noir.
+- fr: Lisière de la Combe
+- fr: Ronces, souches et empreintes dans la terre meuble.
+- fr: Ruisseau aux Saules
+- fr: Une eau froide et claire sous les branches tombantes.
+- fr: Vieux saule creux
+- fr: Un saule énorme, aux racines creusées comme une grotte.
+- fr: Route du nord
+- fr: Une route pavée qui file vers le Mur d'Aube, bordée de fossés.
+- fr: Gué de Valmont
+- fr: La rivière s'élargit ; les chariots passent à gué, lentement.
+- fr: Champs de blé du nord
+- fr: Des champs dorés, retournés par endroits comme par une charrue folle.
+- fr: Grotte des mineurs
+- fr: Une entrée de mine étayée de poutres, d'où sort un air froid.
+- fr: Collines à lune-sauge
+- fr: Des collines pelées où pousse une herbe argentée, visible surtout au crépuscule.
+- fr: Nid sous la crypte
+- fr: Un boyau latéral tapissé de toiles épaisses.
+- fr: Égouts de Lysmont
+- fr: Une grille soulevée derrière la fontaine, un escalier glissant, une odeur tenace.
+- fr: Marché de Lysmont
+- fr: Des étals serrés, des cris, et deux marchands qui en viennent presque aux mains.
+- fr: Tannerie abandonnée
+- fr: Volets cloués, cuves à sec… et une trappe de cave qui a servi récemment.

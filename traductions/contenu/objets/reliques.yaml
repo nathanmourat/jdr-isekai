@@ -1,0 +1,21 @@
+# Textes de content/objets/reliques.yaml
+# Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
+- fr: Phalange de Saint Aldebrand
+- fr: Une vraie relique du Premier Appelé, enchâssée dans de l'argent noirci. Elle tient chaud au cœur.
+- fr: "Relique authentique (palier I) : +1 INT, +2 ESP, +8 % de PV max."
+- fr: Clou de la Porte d'Aube
+- fr: Un clou de fer forgé, arraché à la Porte d'Aube la nuit où le Mur a tenu. Les ombres s'en écartent.
+- fr: "Relique authentique (palier I) : +1 FOR, +2 VIT, résistance à l'ombre 12 %."
+- fr: "Relique authentique (palier II) : +2 INT, +3 ESP, +8 % de PV max."
+- fr: "Relique authentique (palier II) : +2 FOR, +3 VIT, résistance à l'ombre 12 %."
+- fr: "Relique authentique (palier III) : +4 INT, +4 ESP, +8 % de PV max."
+- fr: "Relique authentique (palier III) : +3 FOR, +5 VIT, résistance à l'ombre 12 %."
+- fr: "Relique authentique (palier IV) : +5 INT, +5 ESP, +8 % de PV max."
+- fr: "Relique authentique (palier IV) : +4 FOR, +6 VIT, résistance à l'ombre 12 %."
+- fr: "Relique authentique (palier V) : +6 INT, +6 ESP, +8 % de PV max."
+- fr: "Relique authentique (palier V) : +5 FOR, +7 VIT, résistance à l'ombre 12 %."
+- fr: "Relique authentique (palier VI) : +7 INT, +8 ESP, +8 % de PV max."
+- fr: "Relique authentique (palier VI) : +6 FOR, +9 VIT, résistance à l'ombre 12 %."
+- fr: Larme de Sainte Ysolde
+- fr: Une goutte d'eau claire, scellée dans une fiole de cristal. Elle ne s'évapore jamais.
+- fr: "Une seule utilisation. En combat : relève un allié K.O. avec 50 % de ses PV (bouton du sac). Hors combat : rend tous les PV et guérit la blessure (fiche « Personnage »)."

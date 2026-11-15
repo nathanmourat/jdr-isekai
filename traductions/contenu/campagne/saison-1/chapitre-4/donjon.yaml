@@ -1,0 +1,17 @@
+# Textes de content/campagne/saison-1/chapitre-4/donjon.yaml
+# Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
+- fr: Les Mille Marches
+- fr: Des marches taillées dans le granite, usées au centre par des milliers de pas. Sur chaque palier, une statue de roi nain vous regarde descendre.
+- fr: "Deux statues descendent de leur socle. Leurs yeux s'allument : des runes rouges, qui ne reconnaissent pas votre visage."
+- fr: Le coffre d'un éclaireur nain, mort ici il y a longtemps. Sa lanterne brûle encore.
+- fr: "Une offrande au pied d'une statue royale : des pièces d'or frappées d'un marteau."
+- fr: Une marche s'enfonce sous votre pied. Des jets de vapeur brûlante jaillissent des murs !
+- fr: Une fissure dans le mur laisse couler de la lave. Des salamandres en sortent, attirées par votre chaleur.
+- fr: Le palier s'effondre à moitié ! Il faut s'accrocher au bord.
+- fr: Le squelette d'un soldat cendré, une carte des Marches à la main. La Légion cherchait déjà les Registres.
+- fr: Le coffre d'un maître forgeron, scellé d'une rune. La rune s'éteint à votre approche.
+- fr: Une poche de gaz de mine s'enflamme !
+- fr: Au millième palier, un golem haut comme trois hommes, couvert de runes, déplie ses bras de granite. « LES REGISTRES… NE SONT PAS… POUR LES APPELÉS. »
+- fr: La Salle des Registres. Sur la dernière table de pierre, un scribe nain a laissé du papier et du charbon pour faire un estampage.
+- fr: Un cercle d'Appel gravé dans la roche, exactement comme celui du Temple du Seuil. Les nains l'ont barré de sept traits.
+- fr: Vous n'avez pas encore lu les Registres. Remonter maintenant, ce serait avoir fait tout ce chemin pour rien.

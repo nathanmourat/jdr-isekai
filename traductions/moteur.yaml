@@ -1,0 +1,2957 @@
+# Phrases du moteur et de l'IA (src/moteur, src/ia) ; {1}, {2}… = valeurs
+# Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
+- fr: Brûlure
+  en: Burn
+  es: Quemadura
+  de: Verbrennung
+  ja: 火傷
+- fr: Poison
+  en: Poison
+  es: Veneno
+  de: Gift
+  ja: 毒
+- fr: Gel
+  en: Frost
+  es: Congelación
+  de: Frost
+  ja: 凍結
+- fr: Immobilisé
+  en: Immobilized
+  es: Inmovilizado
+  de: Bewegungsunfähig
+  ja: 拘束
+- fr: Sommeil
+  en: Sleep
+  es: Sueño
+  de: Schlaf
+  ja: 睡眠
+- fr: Peur
+  en: Fear
+  es: Miedo
+  de: Furcht
+  ja: 恐怖
+- fr: Silence
+  en: Silence
+  es: Silencio
+  de: Stille
+  ja: 沈黙
+- fr: Provoqué
+  en: Taunted
+  es: Provocado
+  de: Provoziert
+  ja: 挑発
+- fr: Marqué
+  en: Marked
+  es: Marcado
+  de: Markiert
+  ja: マーク
+- fr: Furtif
+  en: Stealthed
+  es: Sigiloso
+  de: Getarnt
+  ja: 隠密
+- fr: Dégâts +
+  en: Damage +
+  es: Daño +
+  de: Schaden +
+  ja: 攻撃力＋
+- fr: Défense +
+  en: Defence +
+  es: Defensa +
+  de: Verteidigung +
+  ja: 防御＋
+- fr: Initiative +
+  en: Initiative +
+  es: Iniciativa +
+  de: Initiative +
+  ja: 先制＋
+- fr: Précision +
+  en: Accuracy +
+  es: Precisión +
+  de: Präzision +
+  ja: 命中＋
+- fr: Défense −
+  en: Defence −
+  es: Defensa −
+  de: Verteidigung −
+  ja: 防御−
+- fr: Régénération
+  en: Regeneration
+  es: Regeneración
+  de: Regeneration
+  ja: 再生
+- fr: En garde
+  en: On guard
+  es: En guardia
+  de: In Deckung
+  ja: 防御態勢
+- fr: Exposé
+  en: Exposed
+  es: Expuesto
+  de: Ungeschützt
+  ja: 無防備
+- fr: Affaibli
+  en: Weakened
+  es: Debilitado
+  de: Geschwächt
+  ja: 弱体
+- fr: la tête
+  en: the head
+  es: la cabeza
+  de: den Kopf
+  ja: 頭
+- fr: vacille, sonné
+  en: staggers, stunned
+  es: se tambalea, aturdido
+  de: taumelt, benommen
+  ja: よろめき、気絶した
+- fr: les jambes
+  en: the legs
+  es: las piernas
+  de: die Beine
+  ja: 脚
+- fr: est ralenti
+  en: is slowed
+  es: queda ralentizado
+  de: ist verlangsamt
+  ja: 動きが鈍った
+- fr: le bras armé
+  en: the weapon arm
+  es: el brazo armado
+  de: den Waffenarm
+  ja: 武器を持つ腕
+- fr: frappe moins fort
+  en: hits less hard
+  es: golpea con menos fuerza
+  de: schlägt schwächer zu
+  ja: 攻撃が弱まった
+- fr: Souffle draconique
+  en: Draconic Breath
+  es: Aliento dracónico
+  de: Drachenodem
+  ja: 竜の息吹
+- fr: Un souffle de feu sur tous les ennemis (une fois par combat).
+  en: A breath of fire on all enemies (once per combat).
+  es: Un aliento de fuego sobre todos los enemigos (una vez por combate).
+  de: Ein Feueratem auf alle Gegner (einmal pro Kampf).
+  ja: 敵全体に炎の息を吐く（戦闘ごとに1回）。
+- fr: VIT
+- fr: "Rencontre inconnue : {1}"
+  en: "Unknown encounter: {1}"
+  es: "Encuentro desconocido: {1}"
+  de: "Unbekannte Begegnung: {1}"
+  ja: 不明な遭遇：{1}
+- fr: "Le combat commence : {1} !"
+  en: "The fight begins: {1}!"
+  es: "¡Empieza el combate: {1}!"
+  de: "Der Kampf beginnt: {1}!"
+  ja: 戦闘開始：{1}！
+- fr: "Combattant introuvable : {1}"
+  en: "Combatant not found: {1}"
+  es: "Combatiente no encontrado: {1}"
+  de: "Kämpfer nicht gefunden: {1}"
+  ja: 戦闘員が見つからない：{1}
+- fr: "Cette action ne se dirige pas : pas de cible à choisir"
+  en: This action has no target to choose
+  es: "Esta acción no se dirige: no hay objetivo que elegir"
+  de: Diese Aktion hat kein Ziel zum Auswählen
+  ja: この行動は対象を選ばない
+- fr: "{1} a quitté le combat"
+  en: "{1} has left the fight"
+  es: "{1} ha dejado el combate"
+  de: "{1} hat den Kampf verlassen"
+  ja: "{1}は戦闘から離脱した"
+- fr: Cette action ne vise que les alliés K.O.
+  en: This action only targets KO'd allies
+  es: Esta acción solo apunta a aliados K.O.
+  de: Diese Aktion zielt nur auf K.-o.-Verbündete
+  ja: この行動の対象は戦闘不能の味方だけ
+- fr: "{1} n'est pas K.O."
+  en: "{1} isn't KO'd"
+  es: "{1} no está K.O."
+  de: "{1} ist nicht K. o."
+  ja: "{1}は戦闘不能ではない"
+- fr: Une invocation ne peut pas être relevée
+  en: A summon can't be revived
+  es: Una invocación no se puede levantar
+  de: Eine Beschwörung kann nicht wiederbelebt werden
+  ja: 召喚獣は蘇生できない
+- fr: "{1} est déjà K.O."
+  en: "{1} is already KO'd"
+  es: "{1} ya está K.O."
+  de: "{1} ist bereits K. o."
+  ja: "{1}はすでに戦闘不能"
+- fr: Cette action ne vise que les alliés
+  en: This action only targets allies
+  es: Esta acción solo apunta a aliados
+  de: Diese Aktion zielt nur auf Verbündete
+  ja: この行動の対象は味方だけ
+- fr: Cette action ne vise que les ennemis
+  en: This action only targets enemies
+  es: Esta acción solo apunta a enemigos
+  de: Diese Aktion zielt nur auf Gegner
+  ja: この行動の対象は敵だけ
+- fr: "{1} est caché : impossible de le viser"
+  en: "{1} is hidden: can't be targeted"
+  es: "{1} está escondido: imposible apuntarle"
+  de: "{1} ist versteckt: kann nicht anvisiert werden"
+  ja: "{1}は隠れている：狙えない"
+- fr: "{1} est provoqué par {2} : il doit l'attaquer"
+  en: "{1} is taunted by {2}: they must attack it"
+  es: "{1} está provocado por {2}: debe atacarle"
+  de: "{1} wird von {2} provoziert: muss es angreifen"
+  ja: "{1}は{2}に挑発されている：そちらを攻撃するしかない"
+- fr: "Hors de portée : au corps à corps, il faut d'abord vaincre les ennemis du premier rang"
+  en: "Out of reach: in melee, you must first defeat the front-rank enemies"
+  es: "Fuera de alcance: cuerpo a cuerpo, primero hay que vencer a los enemigos de la primera fila"
+  de: "Außer Reichweite: Im Nahkampf musst du zuerst die Gegner in der vorderen Reihe besiegen"
+  ja: 届かない：近接攻撃では先に前列の敵を倒す必要がある
+- fr: Cible impossible
+  en: Impossible target
+  es: Objetivo imposible
+  de: Ungültiges Ziel
+  ja: 対象にできない
+- fr: "{1} s'interpose devant {2} !"
+  en: "{1} steps in front of {2}!"
+  es: ¡{1} se interpone ante {2}!
+  de: "{1} stellt sich vor {2}!"
+  ja: "{1}が{2}の前に立ちはだかる！"
+- fr: Le bouclier de {1} absorbe {2} dégâts.
+  en: "{1}'s shield absorbs {2} damage."
+  es: El escudo de {1} absorbe {2} de daño.
+  de: Der Schild von {1} absorbiert {2} Schaden.
+  ja: "{1}の盾が{2}ダメージを吸収した。"
+- fr: "{1} {2} : {3} dégâts{4}."
+  en: "{1} {2}: {3} damage{4}."
+  es: "{1} {2}: {3} de daño{4}."
+  de: "{1} {2}: {3} Schaden{4}."
+  ja: "{1}{2}：{3}ダメージ{4}。"
+- fr: " (critique !)"
+  en: " (critical!)"
+  es: " (¡crítico!)"
+  de: " (kritisch!)"
+  ja: （クリティカル！）
+- fr: "{1} inflige {2} dégâts{3} à {4}{5}."
+  en: "{1} deals {2} damage{3} to {4}{5}."
+  es: "{1} inflige {2} de daño{3} a {4}{5}."
+  de: "{1} fügt {4}{5} {2} Schaden{3} zu."
+  ja: "{1}は{4}{5}に{2}ダメージ{3}を与えた。"
+- fr: "{1} serre les dents et regagne {2} PV ! (Détermination)"
+  en: "{1} grits their teeth and regains {2} HP! (Determination)"
+  es: ¡{1} aprieta los dientes y recupera {2} PV! (Determinación)
+  de: "{1} beißt die Zähne zusammen und erhält {2} LP zurück! (Entschlossenheit)"
+  ja: "{1}は歯を食いしばりHPを{2}回復した！（不屈）"
+- fr: "{1} récupère {2} PV. (Brise-Monde)"
+  en: "{1} recovers {2} HP. (World-Breaker)"
+  es: "{1} recupera {2} PV. (Rompemundos)"
+  de: "{1} erhält {2} LP zurück. (Weltenbrecher)"
+  ja: "{1}はHPを{2}回復した。（世界砕き）"
+- fr: "{1} bat en retraite dans un nuage de cendres !"
+  en: "{1} retreats in a cloud of ash!"
+  es: ¡{1} se retira en una nube de ceniza!
+  de: "{1} zieht sich in einer Aschewolke zurück!"
+  ja: "{1}は灰の雲の中へ退いた！"
+- fr: "{1} contre-attaque : {2} dégâts à {3}."
+  en: "{1} counterattacks: {2} damage to {3}."
+  es: "{1} contraataca: {2} de daño a {3}."
+  de: "{1} kontert: {2} Schaden an {3}."
+  ja: "{1}の反撃：{3}に{2}ダメージ。"
+- fr: "{1} est K.O. !"
+  en: "{1} is KO'd!"
+  es: ¡{1} está K.O.!
+  de: "{1} ist K. o.!"
+  ja: "{1}は戦闘不能になった！"
+- fr: "{1} est vaincu."
+  en: "{1} is defeated."
+  es: "{1} ha sido derrotado."
+  de: "{1} ist besiegt."
+  ja: "{1}を倒した。"
+- fr: "{1} relève {2} ! (Aube-Première)"
+  en: "{1} revives {2}! (First Dawn)"
+  es: ¡{1} levanta a {2}! (Primera Alba)
+  de: "{1} richtet {2} wieder auf! (Erste Morgenröte)"
+  ja: "{1}が{2}を蘇らせた！（始まりの暁）"
+- fr: "{1} récupère {2} PV."
+  en: "{1} recovers {2} HP."
+  es: "{1} recupera {2} PV."
+  de: "{1} erhält {2} LP zurück."
+  ja: "{1}はHPを{2}回復した。"
+- fr: Le surplus de soin devient un bouclier de {1}.
+  en: The excess healing becomes a shield of {1}.
+  es: El exceso de curación se convierte en un escudo de {1}.
+  de: Die überschüssige Heilung wird zu einem Schild von {1}.
+  ja: 余った回復量が{1}の盾になった。
+- fr: "{1} invoque : {2} !"
+  en: "{1} summons: {2}!"
+  es: "¡{1} invoca: {2}!"
+  de: "{1} beschwört: {2}!"
+  ja: "{1}の召喚：{2}！"
+- fr: "{1} disparaît dans l'ombre et esquive ! (Pas de l'ombre)"
+  en: "{1} vanishes into the shadows and dodges! (Shadow Step)"
+  es: ¡{1} desaparece en la sombra y esquiva! (Paso de sombra)
+  de: "{1} verschwindet im Schatten und weicht aus! (Schattenschritt)"
+  ja: "{1}は影に消えて回避した！（影歩き）"
+- fr: "{1} rate {2}."
+  en: "{1} misses {2}."
+  es: "{1} falla contra {2}."
+  de: "{1} verfehlt {2}."
+  ja: "{1}の攻撃は{2}に外れた。"
+- fr: "{1} est insensible au poison."
+  en: "{1} is immune to poison."
+  es: "{1} es inmune al veneno."
+  de: "{1} ist immun gegen Gift."
+  ja: "{1}に毒は効かない。"
+- fr: "{1} résiste au poison."
+  en: "{1} resists the poison."
+  es: "{1} resiste al veneno."
+  de: "{1} widersteht dem Gift."
+  ja: "{1}は毒に耐えた。"
+- fr: "{1} : {2}{3} ({4} dégâts par tour pendant {5} tours)."
+  en: "{1}: {2}{3} ({4} damage per turn for {5} turns)."
+  es: "{1}: {2}{3} ({4} de daño por turno durante {5} turnos)."
+  de: "{1}: {2}{3} ({4} Schaden pro Runde für {5} Runden)."
+  ja: "{1}：{2}{3}（{5}ターンの間、毎ターン{4}ダメージ）。"
+- fr: "{1} gagne un bouclier de {2}."
+  en: "{1} gains a shield of {2}."
+  es: "{1} gana un escudo de {2}."
+  de: "{1} erhält einen Schild von {2}."
+  ja: "{1}は{2}の盾を得た。"
+- fr: "{1} est purifié."
+  en: "{1} is purified."
+  es: "{1} queda purificado."
+  de: "{1} ist gereinigt."
+  ja: "{1}は浄化された。"
+- fr: "{1} se relève !"
+  en: "{1} gets back up!"
+  es: ¡{1} se levanta!
+  de: "{1} steht wieder auf!"
+  ja: "{1}は立ち上がった！"
+- fr: Attaque
+  en: Attack
+  es: Ataque
+  de: Angriff
+  ja: 攻撃
+- fr: "{1} tire une seconde flèche ! (Lointain)"
+  en: "{1} fires a second arrow! (Far-Shot)"
+  es: ¡{1} dispara una segunda flecha! (Lejano)
+  de: "{1} schießt einen zweiten Pfeil! (Fernschuss)"
+  ja: "{1}は二本目の矢を放った！（遠射）"
+- fr: "{1} est marqué."
+  en: "{1} is marked."
+  es: "{1} queda marcado."
+  de: "{1} ist markiert."
+  ja: "{1}はマークされた。"
+- fr: Victoire !
+  en: Victory!
+  es: ¡Victoria!
+  de: Sieg!
+  ja: 勝利！
+- fr: Défaite…
+  en: Defeat…
+  es: Derrota…
+  de: Niederlage …
+  ja: 敗北…
+- fr: "{1} : −{2} PV ({3}{4}, encore {5} tour{6})."
+  en: "{1}: −{2} HP ({3}{4}, {5} turn(s) left)."
+  es: "{1}: −{2} PV ({3}{4}, quedan {5} turno(s))."
+  de: "{1}: −{2} LP ({3}{4}, noch {5} Runde(n))."
+  ja: "{1}：HP−{2}（{3}{4}、残り{5}ターン）。"
+- fr: "{1} régénère {2} PV."
+  en: "{1} regenerates {2} HP."
+  es: "{1} regenera {2} PV."
+  de: "{1} regeneriert {2} LP."
+  ja: "{1}はHPを{2}再生した。"
+- fr: "{1} ne peut pas agir."
+  en: "{1} can't act."
+  es: "{1} no puede actuar."
+  de: "{1} kann nicht handeln."
+  ja: "{1}は行動できない。"
+- fr: "{1} est paralysé par la peur."
+  en: "{1} is paralysed by fear."
+  es: "{1} está paralizado por el miedo."
+  de: "{1} ist vor Furcht gelähmt."
+  ja: "{1}は恐怖で動けない。"
+- fr: Combat bloqué (boucle infinie)
+  en: Fight stuck (infinite loop)
+  es: Combate bloqueado (bucle infinito)
+  de: Kampf blockiert (Endlosschleife)
+  ja: 戦闘が停止した（無限ループ）
+- fr: Le combat est terminé
+  en: The fight is over
+  es: El combate ha terminado
+  de: Der Kampf ist vorbei
+  ja: 戦闘は終わった
+- fr: Ce n'est pas le tour de ce personnage
+  en: It's not this character's turn
+  es: No es el turno de este personaje
+  de: Diese Figur ist nicht am Zug
+  ja: このキャラクターの番ではない
+- fr: Compétence inconnue
+  en: Unknown skill
+  es: Habilidad desconocida
+  de: Unbekannte Fähigkeit
+  ja: 不明なスキル
+- fr: Compétence indisponible (mana, recharge ou silence)
+  en: Skill unavailable (mana, cooldown or silence)
+  es: Habilidad no disponible (maná, recarga o silencio)
+  de: Fähigkeit nicht verfügbar (Mana, Abklingzeit oder Stille)
+  ja: スキルが使えない（マナ、クールダウン、沈黙）
+- fr: Vous n'avez plus cet objet
+  en: You no longer have this item
+  es: Ya no tienes este objeto
+  de: Du hast diesen Gegenstand nicht mehr
+  ja: このアイテムはもう持っていない
+- fr: Plus de potion
+  en: No more potions
+  es: No quedan pociones
+  de: Keine Tränke mehr
+  ja: ポーションがもうない
+- fr: Plus de bombe
+  en: No more bombs
+  es: No quedan bombas
+  de: Keine Bomben mehr
+  ja: 爆弾がもうない
+- fr: Impossible de fuir ce combat
+  en: You can't flee this fight
+  es: No se puede huir de este combate
+  de: Aus diesem Kampf kann man nicht fliehen
+  ja: この戦闘からは逃げられない
+- fr: Il faut le don Langue universelle
+  en: You need the Universal Tongue gift
+  es: Hace falta el don Lengua universal
+  de: Dafür brauchst du die Gabe Universalsprache
+  ja: 天賦「万国の言葉」が必要
+- fr: Cette créature ne peut pas être pacifiée maintenant
+  en: This creature can't be pacified now
+  es: Esta criatura no puede ser apaciguada ahora
+  de: Diese Kreatur lässt sich jetzt nicht besänftigen
+  ja: この生き物は今はなだめられない
+- fr: "{1} est hors de portée"
+  en: "{1} is out of reach"
+  es: "{1} está fuera de alcance"
+  de: "{1} ist außer Reichweite"
+  ja: "{1}には届かない"
+- fr: "{1} n'a ni tête ni membres à viser"
+  en: "{1} has neither head nor limbs to aim at"
+  es: "{1} no tiene ni cabeza ni miembros a los que apuntar"
+  de: "{1} hat weder Kopf noch Glieder, auf die man zielen kann"
+  ja: "{1}には狙える頭も手足もない"
+- fr: Vous êtes déjà caché
+  en: You're already hidden
+  es: Ya estás escondido
+  de: Du bist schon versteckt
+  ja: すでに隠れている
+- fr: "{1} utilise {2} !"
+  en: "{1} uses {2}!"
+  es: ¡{1} usa {2}!
+  de: "{1} setzt {2} ein!"
+  ja: "{1}の{2}！"
+- fr: "{1} copie la technique « {2} » ! (Mimétisme)"
+  en: "{1} copies the technique “{2}”! (Mimicry)"
+  es: ¡{1} copia la técnica «{2}»! (Mimetismo)
+  de: "{1} kopiert die Technik „{2}“! (Mimikry)"
+  ja: "{1}は技「{2}」を真似した！（擬態）"
+- fr: "{1} utilise : {2}{3}."
+  en: "{1} uses: {2}{3}."
+  es: "{1} usa: {2}{3}."
+  de: "{1} benutzt: {2}{3}."
+  ja: "{1}は{2}{3}を使った。"
+- fr: " (sans la consommer !)"
+  en: " (without using it up!)"
+  es: " (¡sin gastarlo!)"
+  de: " (ohne es zu verbrauchen!)"
+  ja: （消費せずに！）
+- fr: "{1} agit encore ! (Réserve du Néant)"
+  en: "{1} acts again! (Void Reserve)"
+  es: ¡{1} vuelve a actuar! (Reserva de la Nada)
+  de: "{1} handelt erneut! (Reserve des Nichts)"
+  ja: "{1}はもう一度行動する！（虚無の蓄え）"
+- fr: "{1} se met en garde."
+  en: "{1} takes a guard stance."
+  es: "{1} se pone en guardia."
+  de: "{1} geht in Deckung."
+  ja: "{1}は防御態勢をとった。"
+- fr: "{1} passe au rang {2}."
+  en: "{1} moves to the {2} rank."
+  es: "{1} pasa a la fila {2}."
+  de: "{1} wechselt in die Reihe „{2}“."
+  ja: "{1}は{2}列に移った。"
+- fr: "{1} parle à {2}, qui renonce au combat et s'éloigne. (Langue universelle)"
+  en: "{1} speaks to {2}, who gives up the fight and walks away. (Universal Tongue)"
+  es: "{1} habla con {2}, que renuncia al combate y se aleja. (Lengua universal)"
+  de: "{1} spricht mit {2}, das den Kampf aufgibt und davongeht. (Universalsprache)"
+  ja: "{1}が{2}に語りかけると、相手は戦いをやめて去っていった。（万国の言葉）"
+- fr: "{1} vise {2} de {3}."
+  en: "{1} aims at {2}'s {3}."
+  es: "{1} apunta a {3} de {2}."
+  de: "{1} zielt auf {3} von {2}."
+  ja: "{1}は{2}の{3}を狙う。"
+- fr: Attaque visée
+  en: Aimed attack
+  es: Ataque apuntado
+  de: Gezielter Angriff
+  ja: 狙い撃ち
+- fr: "{1} se fond dans l'ombre : impossible à cibler, sa prochaine attaque sera critique."
+  en: "{1} melts into the shadows: impossible to target, their next attack will be critical."
+  es: "{1} se funde en la sombra: imposible de apuntar, su próximo ataque será crítico."
+  de: "{1} verschmilzt mit dem Schatten: nicht anvisierbar, der nächste Angriff wird kritisch."
+  ja: "{1}は影に溶け込んだ：狙えなくなり、次の攻撃はクリティカルになる。"
+- fr: "{1} tente de se cacher… mais se fait repérer."
+  en: "{1} tries to hide… but gets spotted."
+  es: "{1} intenta esconderse… pero lo descubren."
+  de: "{1} versucht sich zu verstecken … wird aber entdeckt."
+  ja: "{1}は隠れようとした…が見つかった。"
+- fr: Le groupe prend la fuite !
+  en: The group flees!
+  es: ¡El grupo huye!
+  de: Die Gruppe flieht!
+  ja: パーティーは逃げ出した！
+- fr: "{1} tente de fuir, sans succès."
+  en: "{1} tries to flee, without success."
+  es: "{1} intenta huir, sin éxito."
+  de: "{1} versucht zu fliehen, ohne Erfolg."
+  ja: "{1}は逃げようとしたが失敗した。"
+- fr: Aucun tour à annuler
+  en: No turn to undo
+  es: Ningún turno que deshacer
+  de: Keine Runde zum Zurücknehmen
+  ja: やり直せるターンがない
+- fr: Le temps se replie… le tour recommence ! (Second départ)
+  en: Time folds back… the turn starts over! (Second Start)
+  es: El tiempo se repliega… ¡el turno vuelve a empezar! (Segundo comienzo)
+  de: Die Zeit faltet sich zurück … die Runde beginnt von vorn! (Zweiter Anlauf)
+  ja: 時が巻き戻る…ターンをやり直す！（仕切り直し）
+- fr: Réduit au silence
+  en: Silenced
+  es: Silenciado
+  de: Zum Schweigen gebracht
+  ja: 沈黙中
+- fr: "Recharge : {1} tour(s)"
+  en: "Cooldown: {1} turn(s)"
+  es: "Recarga: {1} turno(s)"
+  de: "Abklingzeit: {1} Runde(n)"
+  ja: クールダウン：{1}ターン
+- fr: Mana insuffisant
+  en: Not enough mana
+  es: Maná insuficiente
+  de: Nicht genug Mana
+  ja: マナ不足
+- fr: Déjà utilisé
+  en: Already used
+  es: Ya usado
+  de: Bereits benutzt
+  ja: 使用済み
+- fr: Personnage inconnu.
+  en: Unknown character.
+  es: Personaje desconocido.
+  de: Unbekannte Figur.
+  ja: 不明なキャラクター。
+- fr: Le combat est terminé.
+  en: The fight is over.
+  es: El combate ha terminado.
+  de: Der Kampf ist vorbei.
+  ja: 戦闘は終わった。
+- fr: Ce n'est pas le tour de {1}.
+  en: It's not {1}'s turn.
+  es: No es el turno de {1}.
+  de: "{1} ist nicht am Zug."
+  ja: "{1}の番ではない。"
+- fr: Il faut choisir une cible.
+  en: You must choose a target.
+  es: Hay que elegir un objetivo.
+  de: Du musst ein Ziel wählen.
+  ja: 対象を選ぶ必要がある。
+- fr: "{1} est déjà hors de combat."
+  en: "{1} is already out of the fight."
+  es: "{1} ya está fuera de combate."
+  de: "{1} ist bereits kampfunfähig."
+  ja: "{1}はすでに戦闘不能。"
+- fr: "{1} est un allié."
+  en: "{1} is an ally."
+  es: "{1} es un aliado."
+  de: "{1} ist ein Verbündeter."
+  ja: "{1}は味方だ。"
+- fr: "{1} est caché : impossible de le viser."
+  en: "{1} is hidden: can't be targeted."
+  es: "{1} está escondido: imposible apuntarle."
+  de: "{1} ist versteckt: kann nicht anvisiert werden."
+  ja: "{1}は隠れている：狙えない。"
+- fr: "Vous êtes provoqué : vous devez attaquer {1}."
+  en: "You are taunted: you must attack {1}."
+  es: "Estás provocado: debes atacar a {1}."
+  de: "Du bist provoziert: Du musst {1} angreifen."
+  ja: 挑発されている：{1}を攻撃するしかない。
+- fr: votre provocateur
+  en: your taunter
+  es: tu provocador
+  de: deinen Provokateur
+  ja: 挑発した相手
+- fr: "{1} est protégé au rang arrière : il faut une attaque à distance, ou éliminer d'abord le rang avant."
+  en: "{1} is protected in the back rank: you need a ranged attack, or to clear the front rank first."
+  es: "{1} está protegido en la fila trasera: hace falta un ataque a distancia, o eliminar primero la fila delantera."
+  de: "{1} ist in der hinteren Reihe geschützt: Du brauchst einen Fernangriff oder musst zuerst die vordere Reihe ausschalten."
+  ja: "{1}は後列で守られている：遠距離攻撃が必要か、先に前列を倒そう。"
+- fr: "{1} est hors de portée."
+  en: "{1} is out of reach."
+  es: "{1} está fuera de alcance."
+  de: "{1} ist außer Reichweite."
+  ja: "{1}には届かない。"
+- fr: Il faut choisir un allié K.O.
+  en: You must choose a KO'd ally.
+  es: Hay que elegir un aliado K.O.
+  de: Du musst einen K.-o.-Verbündeten wählen.
+  ja: 戦闘不能の味方を選ぶ必要がある。
+- fr: Il faut choisir un allié.
+  en: You must choose an ally.
+  es: Hay que elegir un aliado.
+  de: Du musst einen Verbündeten wählen.
+  ja: 味方を選ぶ必要がある。
+- fr: bouclier ({1} % des PV)
+  en: shield ({1}% of HP)
+  es: escudo ({1} % de los PV)
+  de: Schild ({1} % der LP)
+  ja: 盾（HPの{1}%）
+- fr: "invocation : {1}"
+  en: "summon: {1}"
+  es: "invocación: {1}"
+  de: "Beschwörung: {1}"
+  ja: 召喚：{1}
+- fr: "furtif : impossible à cibler, prochaine attaque critique"
+  en: "stealthed: impossible to target, next attack critical"
+  es: "sigiloso: imposible de apuntar, próximo ataque crítico"
+  de: "getarnt: nicht anvisierbar, nächster Angriff kritisch"
+  ja: 隠密：狙えない、次の攻撃はクリティカル
+- fr: −50 % de dégâts reçus jusqu'au prochain tour, +10 % de mana
+  en: −50% damage taken until next turn, +10% mana
+  es: −50 % de daño recibido hasta el próximo turno, +10 % de maná
+  de: −50 % erlittener Schaden bis zur nächsten Runde, +10 % Mana
+  ja: 次のターンまで被ダメージ−50%、マナ+10%
+- fr: Commence chaque combat avec 1 charge de rune.
+  en: Starts each fight with 1 rune charge.
+  es: Empieza cada combate con 1 carga de runa.
+  de: Beginnt jeden Kampf mit 1 Runenladung.
+  ja: 各戦闘をルーンのチャージ1で開始する。
+- fr: Les sorts de zone coûtent 15 % de mana en moins.
+  en: Area spells cost 15% less mana.
+  es: Los hechizos de área cuestan un 15 % menos de maná.
+  de: Flächenzauber kosten 15 % weniger Mana.
+  ja: 範囲呪文のマナ消費が15%減る。
+- fr: Les invocations commencent le combat avec 20 % de PV en plus.
+  en: Summons start the fight with 20% more HP.
+  es: Las invocaciones empiezan el combate con un 20 % más de PV.
+  de: Beschwörungen beginnen den Kampf mit 20 % mehr LP.
+  ja: 召喚獣はHP+20%で戦闘を始める。
+- fr: La première attaque du combat est toujours un coup critique.
+  en: The first attack of the fight is always a critical hit.
+  es: El primer ataque del combate siempre es un golpe crítico.
+  de: Der erste Angriff des Kampfes ist immer ein kritischer Treffer.
+  ja: 戦闘の最初の攻撃は必ずクリティカルになる。
+- fr: Le héros subit 10 % de dégâts en moins.
+  en: The hero takes 10% less damage.
+  es: El héroe recibe un 10 % menos de daño.
+  de: Der Held erleidet 10 % weniger Schaden.
+  ja: ヒーローの被ダメージが10%減る。
+- fr: Les objets de soin et les bombes sont 25 % plus efficaces.
+  en: Healing items and bombs are 25% more effective.
+  es: Los objetos de curación y las bombas son un 25 % más eficaces.
+  de: Heilgegenstände und Bomben sind 25 % wirksamer.
+  ja: 回復アイテムと爆弾の効果が25%上がる。
+- fr: L'attaque touche toujours, même un ennemi caché.
+  en: The attack always hits, even a hidden enemy.
+  es: El ataque siempre acierta, incluso a un enemigo escondido.
+  de: Der Angriff trifft immer, selbst einen versteckten Gegner.
+  ja: 攻撃は必ず当たる。隠れた敵にも。
+- fr: Les soins du héros rendent 15 % de PV en plus.
+  en: The hero's heals restore 15% more HP.
+  es: Las curaciones del héroe devuelven un 15 % más de PV.
+  de: Die Heilungen des Helden stellen 15 % mehr LP wieder her.
+  ja: ヒーローの回復量が15%増える。
+- fr: Sang de dragon donne son plein effet dès 50 % de PV.
+  en: Dragon Blood takes full effect from 50% HP.
+  es: Sangre de dragón surte pleno efecto desde el 50 % de PV.
+  de: Drachenblut wirkt schon ab 50 % LP voll.
+  ja: 「竜の血」がHP50%から最大効果を発揮する。
+- fr: Refrain dure 1 tour de plus.
+  en: Refrain lasts 1 more turn.
+  es: Estribillo dura 1 turno más.
+  de: Refrain hält 1 Runde länger.
+  ja: 「リフレイン」の持続が1ターン延びる。
+- fr: Une fois par combat, relève un allié K.O. avec 30 % de ses PV.
+  en: Once per fight, revives a KO'd ally with 30% of their HP.
+  es: Una vez por combate, levanta a un aliado K.O. con el 30 % de sus PV.
+  de: Einmal pro Kampf richtet es einen K.-o.-Verbündeten mit 30 % seiner LP wieder auf.
+  ja: 戦闘ごとに1回、戦闘不能の味方をHP30%で蘇生する。
+- fr: Chaque ennemi vaincu par le porteur lui rend 10 % de ses PV max.
+  en: Each enemy defeated by the wearer restores 10% of their max HP.
+  es: Cada enemigo vencido por el portador le devuelve un 10 % de sus PV máx.
+  de: Jeder vom Träger besiegte Gegner stellt 10 % seiner max. LP wieder her.
+  ja: 装備者が敵を倒すたび、最大HPの10%を回復する。
+- fr: Les coups critiques infligent × 2 au lieu de × 1,5.
+  en: Critical hits deal × 2 instead of × 1.5.
+  es: Los golpes críticos infligen × 2 en lugar de × 1,5.
+  de: Kritische Treffer verursachen × 2 statt × 1,5.
+  ja: クリティカルのダメージが×1.5ではなく×2になる。
+- fr: 25 % de chances de tirer une seconde flèche sur un autre ennemi.
+  en: 25% chance to fire a second arrow at another enemy.
+  es: 25 % de probabilidad de disparar una segunda flecha a otro enemigo.
+  de: 25 % Chance, einen zweiten Pfeil auf einen anderen Gegner zu schießen.
+  ja: 25%の確率で別の敵に二本目の矢を放つ。
+- fr: Les tirs ignorent 30 % de la défense et des résistances de la cible.
+  en: Shots ignore 30% of the target's defence and resistances.
+  es: Los disparos ignoran el 30 % de la defensa y las resistencias del objetivo.
+  de: Schüsse ignorieren 30 % der Verteidigung und Resistenzen des Ziels.
+  ja: 射撃は対象の防御と耐性を30%無視する。
+- fr: Les compétences coûtent 20 % de mana en moins.
+  en: Skills cost 20% less mana.
+  es: Las habilidades cuestan un 20 % menos de maná.
+  de: Fähigkeiten kosten 20 % weniger Mana.
+  ja: スキルのマナ消費が20%減る。
+- fr: Commun
+  en: Common
+  es: Común
+  de: Gewöhnlich
+  ja: コモン
+- fr: Peu commun
+  en: Uncommon
+  es: Poco común
+  de: Ungewöhnlich
+  ja: アンコモン
+- fr: Rare
+  en: Rare
+  es: Raro
+  de: Selten
+  ja: レア
+- fr: Épique
+  en: Epic
+  es: Épico
+  de: Episch
+  ja: エピック
+- fr: Légendaire
+  en: Legendary
+  es: Legendario
+  de: Legendär
+  ja: レジェンダリー
+- fr: Mythique
+  en: Mythic
+  es: Mítico
+  de: Mythisch
+  ja: ミシック
+- fr: les épées
+  en: swords
+  es: las espadas
+  de: Schwerter
+  ja: 剣
+- fr: les armes à deux mains
+  en: two-handed weapons
+  es: las armas a dos manos
+  de: Zweihandwaffen
+  ja: 両手武器
+- fr: les masses
+  en: maces
+  es: las mazas
+  de: Streitkolben
+  ja: メイス
+- fr: les dagues
+  en: daggers
+  es: las dagas
+  de: Dolche
+  ja: 短剣
+- fr: les arcs
+  en: bows
+  es: los arcos
+  de: Bögen
+  ja: 弓
+- fr: les arbalètes
+  en: crossbows
+  es: las ballestas
+  de: Armbrüste
+  ja: クロスボウ
+- fr: les bâtons
+  en: staves
+  es: los bastones
+  de: Stäbe
+  ja: 杖
+- fr: les sceptres
+  en: sceptres
+  es: los cetros
+  de: Zepter
+  ja: 錫杖
+- fr: les orbes
+  en: orbs
+  es: los orbes
+  de: Kugeln
+  ja: オーブ
+- fr: les instruments
+  en: instruments
+  es: los instrumentos
+  de: Instrumente
+  ja: 楽器
+- fr: les armures lourdes
+  en: heavy armour
+  es: las armaduras pesadas
+  de: schwere Rüstungen
+  ja: 重鎧
+- fr: les armures intermédiaires
+  en: medium armour
+  es: las armaduras intermedias
+  de: mittlere Rüstungen
+  ja: 中鎧
+- fr: les tenues légères
+  en: light outfits
+  es: los atuendos ligeros
+  de: leichte Kleidung
+  ja: 軽装
+- fr: les boucliers
+  en: shields
+  es: los escudos
+  de: Schilde
+  ja: 盾
+- fr: les carquois
+  en: quivers
+  es: los carcajes
+  de: Köcher
+  ja: 矢筒
+- fr: les sacoches
+  en: satchels
+  es: las bolsas
+  de: Umhängetaschen
+  ja: 鞄
+- fr: cet objet
+  en: this item
+  es: este objeto
+  de: diesen Gegenstand
+  ja: このアイテム
+- fr: −{1} % de dégâts, −{2} points de chance de toucher
+  en: −{1}% damage, −{2} points of hit chance
+  es: −{1} % de daño, −{2} puntos de probabilidad de acierto
+  de: −{1} % Schaden, −{2} Punkte Trefferchance
+  ja: ダメージ−{1}%、命中率−{2}ポイント
+- fr: armure réduite de moitié, {1} en Agilité (moins d'esquive)
+  en: armour halved, {1} Agility (less dodging)
+  es: armadura reducida a la mitad, {1} de Agilidad (menos esquiva)
+  de: Rüstung halbiert, {1} Geschick (weniger Ausweichen)
+  ja: 防具効果が半減、敏捷{1}（回避が下がる）
+- fr: bonus réduits de moitié
+  en: bonuses halved
+  es: bonificaciones reducidas a la mitad
+  de: Boni halbiert
+  ja: ボーナス半減
+- fr: "Non maîtrisé par {1} : {2}"
+  en: "Not mastered by {1}: {2}"
+  es: "No dominado por {1}: {2}"
+  de: "Von {1} nicht beherrscht: {2}"
+  ja: "{1}は扱いに慣れていない：{2}"
+- fr: Cet objet ne s'équipe pas
+  en: This item can't be equipped
+  es: Este objeto no se puede equipar
+  de: Dieser Gegenstand kann nicht ausgerüstet werden
+  ja: このアイテムは装備できない
+- fr: Niveau {1} requis
+  en: Level {1} required
+  es: Se requiere el nivel {1}
+  de: Level {1} erforderlich
+  ja: レベル{1}が必要
+- fr: "Interdit : {1} ne peut pas porter {2}"
+  en: "Forbidden: {1} can't wear {2}"
+  es: "Prohibido: {1} no puede llevar {2}"
+  de: "Verboten: {1} kann {2} nicht tragen"
+  ja: 禁止：{1}は{2}を装備できない
+- fr: "Réservé à : {1}"
+  en: "Reserved for: {1}"
+  es: "Reservado a: {1}"
+  de: "Nur für: {1}"
+  ja: 専用：{1}
+- fr: +{1} puissance
+  en: +{1} power
+  es: +{1} de potencia
+  de: +{1} Kraft
+  ja: 威力+{1}
+- fr: +{1} armure
+  en: +{1} armour
+  es: +{1} de armadura
+  de: +{1} Rüstung
+  ja: 防御力+{1}
+- fr: FOR
+  en: STR
+  es: FUE
+  de: STÄ
+  ja: 筋力
+- fr: AGI
+  en: AGI
+  es: AGI
+  de: GES
+  ja: 敏捷
+- fr: INT
+  en: INT
+  es: INT
+  de: INT
+  ja: 知力
+- fr: ESP
+  en: SPI
+  es: ESP
+  de: GEI
+  ja: 精神
+- fr: CHA
+  en: CHA
+  es: CAR
+  de: CHA
+  ja: 魅力
+- fr: +{1} critique
+  en: +{1} critical
+  es: +{1} de crítico
+  de: +{1} Krit
+  ja: クリティカル+{1}
+- fr: +{1} précision
+  en: +{1} accuracy
+  es: +{1} de precisión
+  de: +{1} Präzision
+  ja: 命中+{1}
+- fr: +{1} mana max
+  en: +{1} max mana
+  es: +{1} de maná máx.
+  de: +{1} max. Mana
+  ja: 最大マナ+{1}
+- fr: +{1} PV max
+  en: +{1} max HP
+  es: +{1} PV máx.
+  de: +{1} max. LP
+  ja: 最大HP+{1}
+- fr: touche de {1} (+{2})
+  en: "{1} touch (+{2})"
+  es: toque de {1} (+{2})
+  de: Hauch von {1} (+{2})
+  ja: "{1}の付与（+{2}）"
+- fr: Force
+  en: Strength
+  es: Fuerza
+  de: Stärke
+  ja: 筋力
+- fr: augmente les dégâts des attaques et des compétences de corps à corps qui utilisent la Force (+5 % par point).
+  en: increases the damage of melee attacks and skills that use Strength (+5% per point).
+  es: aumenta el daño de los ataques y habilidades cuerpo a cuerpo que usan la Fuerza (+5 % por punto).
+  de: erhöht den Schaden von Nahkampfangriffen und -fähigkeiten, die Stärke nutzen (+5 % pro Punkt).
+  ja: 筋力を使う近接攻撃とスキルのダメージが上がる（1ポイントにつき+5%）。
+- fr: Agilité
+  en: Agility
+  es: Agilidad
+  de: Geschick
+  ja: 敏捷
+- fr: fait agir plus tôt, toucher plus souvent (+2 % par point d'écart avec la cible), esquiver, et réussir plus de coups critiques (+0,5 % par point).
+  en: lets you act sooner, hit more often (+2% per point of difference with the target), dodge, and land more critical hits (+0.5% per point).
+  es: hace actuar antes, acertar más (+2 % por punto de diferencia con el objetivo), esquivar y lograr más golpes críticos (+0,5 % por punto).
+  de: lässt dich früher handeln, öfter treffen (+2 % pro Punkt Unterschied zum Ziel), ausweichen und mehr kritische Treffer landen (+0,5 % pro Punkt).
+  ja: 早く行動でき、命中しやすくなり（対象との差1ポイントにつき+2%）、回避とクリティカルも増える（1ポイントにつき+0.5%）。
+- fr: Intelligence
+  en: Intelligence
+  es: Inteligencia
+  de: Intelligenz
+  ja: 知力
+- fr: augmente les dégâts des sorts et des compétences qui utilisent l'Intelligence (+5 % par point).
+  en: increases the damage of spells and skills that use Intelligence (+5% per point).
+  es: aumenta el daño de los hechizos y habilidades que usan la Inteligencia (+5 % por punto).
+  de: erhöht den Schaden von Zaubern und Fähigkeiten, die Intelligenz nutzen (+5 % pro Punkt).
+  ja: 知力を使う呪文とスキルのダメージが上がる（1ポイントにつき+5%）。
+- fr: Vitalité
+  en: Vitality
+  es: Vitalidad
+  de: Vitalität
+  ja: 体力
+- fr: donne des points de vie (+5 PV par point) et réduit les dégâts physiques reçus.
+  en: gives hit points (+5 HP per point) and reduces physical damage taken.
+  es: da puntos de vida (+5 PV por punto) y reduce el daño físico recibido.
+  de: gibt Lebenspunkte (+5 LP pro Punkt) und verringert erlittenen physischen Schaden.
+  ja: HPが増え（1ポイントにつき+5）、物理ダメージを軽減する。
+- fr: Esprit
+  en: Spirit
+  es: Espíritu
+  de: Geist
+  ja: 精神
+- fr: donne du mana (+3 par point), le fait revenir plus vite, renforce les soins et réduit les dégâts magiques reçus.
+  en: gives mana (+3 per point), makes it come back faster, strengthens healing and reduces magic damage taken.
+  es: da maná (+3 por punto), lo hace volver más rápido, refuerza las curaciones y reduce el daño mágico recibido.
+  de: gibt Mana (+3 pro Punkt), lässt es schneller zurückkehren, verstärkt Heilungen und verringert erlittenen magischen Schaden.
+  ja: マナが増え（1ポイントにつき+3）、回復が早まり、回復量が上がり、魔法ダメージを軽減する。
+- fr: Charisme
+  en: Charisma
+  es: Carisma
+  de: Charisma
+  ja: 魅力
+- fr: donne de la « présence » en combat (±1 % de dégâts infligés et subis par point au-dessus ou au-dessous de 10) et aide dans les dialogues et le commerce.
+  en: gives “presence” in combat (±1% damage dealt and taken per point above or below 10) and helps in dialogue and trade.
+  es: da «presencia» en combate (±1 % de daño infligido y recibido por punto por encima o por debajo de 10) y ayuda en los diálogos y el comercio.
+  de: verleiht im Kampf „Präsenz“ (±1 % verursachter und erlittener Schaden pro Punkt über oder unter 10) und hilft in Gesprächen und beim Handel.
+  ja: 戦闘での「存在感」（10を超える・下回る1ポイントごとに与ダメージと被ダメージが±1%）を与え、会話や取引にも役立つ。
+- fr: un ennemi
+  en: one enemy
+  es: un enemigo
+  de: ein Gegner
+  ja: 敵1体
+- fr: tous les ennemis
+  en: all enemies
+  es: todos los enemigos
+  de: alle Gegner
+  ja: 敵全体
+- fr: un ennemi au hasard
+  en: a random enemy
+  es: un enemigo al azar
+  de: ein zufälliger Gegner
+  ja: ランダムな敵1体
+- fr: un allié
+  en: one ally
+  es: un aliado
+  de: ein Verbündeter
+  ja: 味方1人
+- fr: un allié K.O.
+  en: a KO'd ally
+  es: un aliado K.O.
+  de: ein K.-o.-Verbündeter
+  ja: 戦闘不能の味方1人
+- fr: tout le groupe
+  en: the whole group
+  es: todo el grupo
+  de: die ganze Gruppe
+  ja: パーティー全体
+- fr: gel (agit plus tard)
+  en: frost (acts later)
+  es: congelación (actúa más tarde)
+  de: Frost (handelt später)
+  ja: 凍結（行動が遅れる）
+- fr: immobilisé (perd son tour)
+  en: immobilized (loses their turn)
+  es: inmovilizado (pierde su turno)
+  de: bewegungsunfähig (verliert die Runde)
+  ja: 拘束（ターンを失う）
+- fr: peur (peut perdre son tour)
+  en: fear (may lose their turn)
+  es: miedo (puede perder su turno)
+  de: Furcht (kann die Runde verlieren)
+  ja: 恐怖（ターンを失うことがある）
+- fr: silence (plus de compétences)
+  en: silence (no more skills)
+  es: silencio (sin habilidades)
+  de: Stille (keine Fähigkeiten mehr)
+  ja: 沈黙（スキル使用不可）
+- fr: marqué (subit plus de dégâts)
+  en: marked (takes more damage)
+  es: marcado (recibe más daño)
+  de: markiert (erleidet mehr Schaden)
+  ja: マーク（被ダメージ増加）
+- fr: dégâts augmentés
+  en: increased damage
+  es: daño aumentado
+  de: erhöhter Schaden
+  ja: 攻撃力上昇
+- fr: défense augmentée
+  en: increased defence
+  es: defensa aumentada
+  de: erhöhte Verteidigung
+  ja: 防御上昇
+- fr: initiative augmentée
+  en: increased initiative
+  es: iniciativa aumentada
+  de: erhöhte Initiative
+  ja: 先制上昇
+- fr: précision augmentée
+  en: increased accuracy
+  es: precisión aumentada
+  de: erhöhte Präzision
+  ja: 命中上昇
+- fr: défense réduite
+  en: reduced defence
+  es: defensa reducida
+  de: verringerte Verteidigung
+  ja: 防御低下
+- fr: en garde
+  en: on guard
+  es: en guardia
+  de: in Deckung
+  ja: 防御態勢
+- fr: affaibli (frappe moins fort)
+  en: weakened (hits less hard)
+  es: debilitado (golpea con menos fuerza)
+  de: geschwächt (schlägt schwächer zu)
+  ja: 弱体（攻撃が弱まる）
+- fr: coup critique garanti
+  en: guaranteed critical hit
+  es: golpe crítico garantizado
+  de: garantierter kritischer Treffer
+  ja: 確定クリティカル
+- fr: dégâts doublés si la cible a moins de {1} % de ses PV
+  en: double damage if the target has less than {1}% of their HP
+  es: daño doble si el objetivo tiene menos del {1} % de sus PV
+  de: doppelter Schaden, wenn das Ziel weniger als {1} % seiner LP hat
+  ja: 対象のHPが{1}%未満ならダメージ2倍
+- fr: coûte {1} % de tes PV
+  en: costs {1}% of your HP
+  es: cuesta el {1} % de tus PV
+  de: kostet {1} % deiner LP
+  ja: 自分のHPの{1}%を消費
+- fr: " ({1} dégâts par tour{2})"
+  en: " ({1} damage per turn{2})"
+  es: " ({1} de daño por turno{2})"
+  de: " ({1} Schaden pro Runde{2})"
+  ja: （毎ターン{1}ダメージ{2}）
+- fr: ", cumulable {1} fois"
+  en: ", stacks up to {1} times"
+  es: ", acumulable {1} veces"
+  de: ", bis zu {1}-mal stapelbar"
+  ja: 、{1}回まで重複
+- fr: "{1} % de chance : {2}"
+  en: "{1}% chance: {2}"
+  es: "{1} % de probabilidad: {2}"
+  de: "{1} % Chance: {2}"
+  ja: "{1}%の確率：{2}"
+- fr: ta prochaine attaque est un coup critique garanti (environ {1} à {2} dégâts)
+  en: your next attack is a guaranteed critical hit (about {1} to {2} damage)
+  es: tu próximo ataque es un golpe crítico garantizado (unos {1} a {2} de daño)
+  de: dein nächster Angriff ist ein garantierter kritischer Treffer (etwa {1} bis {2} Schaden)
+  ja: 次の攻撃は確定クリティカル（約{1}〜{2}ダメージ）
+- fr: bouclier de {1} % des PV
+  en: shield of {1}% of HP
+  es: escudo del {1} % de los PV
+  de: Schild von {1} % der LP
+  ja: HPの{1}%の盾
+- fr: "invoque : {1} pendant {2}"
+  en: "summons: {1} for {2}"
+  es: "invoca: {1} durante {2}"
+  de: "beschwört: {1} für {2}"
+  ja: 召喚：{1}（{2}）
+- fr: retire les effets négatifs
+  en: removes negative effects
+  es: elimina los efectos negativos
+  de: entfernt negative Effekte
+  ja: 弱体効果を解除
+- fr: +{1} charge{2} de rune
+  en: +{1} rune charge{2}
+  es: +{1} carga{2} de runa
+  de: +{1} Runenladung(en)
+  ja: ルーンのチャージ+{1}
+- fr: rend {1} mana
+  en: restores {1} mana
+  es: devuelve {1} de maná
+  de: stellt {1} Mana wieder her
+  ja: マナを{1}回復
+- fr: soigne tes invocations de {1} % de leurs PV
+  en: heals your summons for {1}% of their HP
+  es: cura a tus invocaciones un {1} % de sus PV
+  de: heilt deine Beschwörungen um {1} % ihrer LP
+  ja: 召喚獣のHPを{1}%回復
+- fr: relève un allié K.O. à {1} % de ses PV
+  en: revives a KO'd ally at {1}% of their HP
+  es: levanta a un aliado K.O. con el {1} % de sus PV
+  de: richtet einen K.-o.-Verbündeten mit {1} % seiner LP wieder auf
+  ja: 戦闘不能の味方をHP{1}%で蘇生
+- fr: AEIOUY
+- fr: Lame
+- fr: de l'{1}
+- fr: de la {1}
+- fr: compétence de départ {1}
+  en: starting skill {1}
+  es: habilidad inicial {1}
+  de: Startfähigkeit {1}
+  ja: 初期スキル{1}
+- fr: apprise au niveau {1} (branche {2})
+  en: learned at level {1} (branch {2})
+  es: aprendida en el nivel {1} (rama {2})
+  de: auf Level {1} erlernt (Zweig {2})
+  ja: レベル{1}で習得（ブランチ{2}）
+- fr: fusion de ton grimoire
+  en: fusion from your grimoire
+  es: fusión de tu grimorio
+  de: Fusion aus deinem Grimoire
+  ja: 魔導書の融合技
+- fr: trait de ta race
+  en: trait of your race
+  es: rasgo de tu raza
+  de: Merkmal deines Volkes
+  ja: 種族の特性
+- fr: compétence spéciale
+  en: special skill
+  es: habilidad especial
+  de: Spezialfähigkeit
+  ja: 特殊スキル
+- fr: "cible : {1}"
+  en: "target: {1}"
+  es: "objetivo: {1}"
+  de: "Ziel: {1}"
+  ja: 対象：{1}
+- fr: "élément : {1}"
+  en: "element: {1}"
+  es: "elemento: {1}"
+  de: "Element: {1}"
+  ja: 属性：{1}
+- fr: environ {1} à {2} dégâts
+  en: about {1} to {2} damage
+  es: unos {1} a {2} de daño
+  de: etwa {1} bis {2} Schaden
+  ja: 約{1}〜{2}ダメージ
+- fr: "{1} % de chance de toucher"
+  en: "{1}% chance to hit"
+  es: "{1} % de probabilidad de acierto"
+  de: "{1} % Trefferchance"
+  ja: 命中率{1}%
+- fr: soigne environ {1} PV
+  en: heals about {1} HP
+  es: cura unos {1} PV
+  de: heilt etwa {1} LP
+  ja: HPを約{1}回復
+- fr: Compétence inconnue.
+  en: Unknown skill.
+  es: Habilidad desconocida.
+  de: Unbekannte Fähigkeit.
+  ja: 不明なスキル。
+- fr: Il faut deux compétences différentes.
+  en: You need two different skills.
+  es: Hacen falta dos habilidades distintas.
+  de: Du brauchst zwei verschiedene Fähigkeiten.
+  ja: 異なるスキルが2つ必要。
+- fr: "« {1} » n'inflige pas de dégâts : elle ne peut pas servir de base à une fusion. Essayez dans l'autre sens."
+  en: "“{1}” deals no damage: it can't be the base of a fusion. Try the other way round."
+  es: "«{1}» no inflige daño: no puede servir de base para una fusión. Prueba al revés."
+  de: "„{1}“ verursacht keinen Schaden: Es kann nicht die Grundlage einer Fusion sein. Versuch es andersherum."
+  ja: 「{1}」はダメージを与えないので融合の基礎にできない。逆の組み合わせを試そう。
+- fr: « {1} » n'a pas d'élément à transmettre.
+  en: “{1}” has no element to pass on.
+  es: «{1}» no tiene elemento que transmitir.
+  de: „{1}“ hat kein Element zum Übertragen.
+  ja: 「{1}」には受け渡す属性がない。
+- fr: "« {1} » et « {2} » sont du même élément ({3}) : rien à fusionner."
+  en: "“{1}” and “{2}” share the same element ({3}): nothing to fuse."
+  es: "«{1}» y «{2}» son del mismo elemento ({3}): nada que fusionar."
+  de: "„{1}“ und „{2}“ haben dasselbe Element ({3}): Nichts zu fusionieren."
+  ja: 「{1}」と「{2}」は同じ属性（{3}）なので融合できない。
+- fr: Variante de « {1} » imprégnée de {2} (fusion avec « {3} »).
+  en: Variant of “{1}” infused with {2} (fusion with “{3}”).
+  es: Variante de «{1}» impregnada de {2} (fusión con «{3}»).
+  de: Variante von „{1}“, durchdrungen von {2} (Fusion mit „{3}“).
+  ja: "{2}をまとった「{1}」の派生（「{3}」との融合）。"
+- fr: Il faut connaître « {1} ».
+  en: You must know “{1}”.
+  es: Hay que conocer «{1}».
+  de: Du musst „{1}“ kennen.
+  ja: 「{1}」を習得している必要がある。
+- fr: Il faut « {1} » au rang {2} au moins (actuellement {3}).
+  en: You need “{1}” at rank {2} at least (currently {3}).
+  es: Hace falta «{1}» al menos en rango {2} (actualmente {3}).
+  de: Du brauchst „{1}“ mindestens auf Rang {2} (derzeit {3}).
+  ja: 「{1}」がランク{2}以上必要（現在{3}）。
+- fr: Vous connaissez déjà cette technique.
+  en: You already know this technique.
+  es: Ya conoces esta técnica.
+  de: Diese Technik kennst du schon.
+  ja: この技はもう習得している。
+- fr: "« {1} » a déjà {2} variantes : oubliez-en une d'abord (fiche du personnage)."
+  en: "“{1}” already has {2} variants: forget one first (character sheet)."
+  es: "«{1}» ya tiene {2} variantes: olvida una primero (ficha del personaje)."
+  de: "„{1}“ hat schon {2} Varianten: Vergiss zuerst eine (Charakterbogen)."
+  ja: 「{1}」には派生がすでに{2}つある。先に1つ忘れよう（キャラクター画面）。
+- fr: "{1} (pas encore de héros)"
+  en: "{1} (no hero yet)"
+  es: "{1} (aún sin héroe)"
+  de: "{1} (noch kein Held)"
+  ja: "{1}（ヒーロー未作成）"
+- fr: "{1} (absent : {2})"
+  en: "{1} (absent: {2})"
+  es: "{1} (ausente: {2})"
+  de: "{1} (abwesend: {2})"
+  ja: "{1}（不在：{2}）"
+- fr: son héros sera joué par l'ordinateur
+  en: their hero will be played by the computer
+  es: su héroe será jugado por el ordenador
+  de: der Held wird vom Computer gespielt
+  ja: ヒーローはコンピューターが操作する
+- fr: son héros reste au camp
+  en: their hero stays at camp
+  es: su héroe se queda en el campamento
+  de: der Held bleibt im Lager
+  ja: ヒーローは野営地で待機する
+- fr: "Conseillé : niveau {1}. Votre groupe : niveau {2}."
+  en: "Recommended: level {1}. Your group: level {2}."
+  es: "Recomendado: nivel {1}. Vuestro grupo: nivel {2}."
+  de: "Empfohlen: Level {1}. Eure Gruppe: Level {2}."
+  ja: 推奨：レベル{1}。パーティー：レベル{2}。
+- fr: "{1} Vous avez le niveau."
+  en: "{1} You're at the right level."
+  es: "{1} Tenéis el nivel."
+  de: "{1} Ihr habt das nötige Level."
+  ja: "{1} レベルは十分。"
+- fr: "{1} Ce sera difficile : entraînez-vous ou faites d'abord des contrats plus faciles."
+  en: "{1} It'll be tough: train, or do easier contracts first."
+  es: "{1} Será difícil: entrenaos o haced antes contratos más fáciles."
+  de: "{1} Das wird schwer: Trainiert oder erledigt zuerst leichtere Aufträge."
+  ja: "{1} 厳しい戦いになる。鍛えるか、先に簡単な依頼をこなそう。"
+- fr: "{1} C'est bien trop fort pour l'instant : entraînez-vous ou faites d'abord des contrats plus faciles."
+  en: "{1} It's far too strong for now: train, or do easier contracts first."
+  es: "{1} Es demasiado fuerte por ahora: entrenaos o haced antes contratos más fáciles."
+  de: "{1} Das ist im Moment viel zu stark: Trainiert oder erledigt zuerst leichtere Aufträge."
+  ja: "{1} 今はまだ強すぎる。鍛えるか、先に簡単な依頼をこなそう。"
+- fr: "Printemps {1} AV : la partie « {2} » commence."
+  en: "Spring {1} AV: the game “{2}” begins."
+  es: "Primavera de {1} AV: empieza la partida «{2}»."
+  de: "Frühling {1} AV: Die Partie „{2}“ beginnt."
+  ja: AV{1}年春：ゲーム「{2}」が始まる。
+- fr: Joueur inconnu
+  en: Unknown player
+  es: Jugador desconocido
+  de: Unbekannter Spieler
+  ja: 不明なプレイヤー
+- fr: Ce joueur n'a pas encore de héros
+  en: This player has no hero yet
+  es: Este jugador aún no tiene héroe
+  de: Dieser Spieler hat noch keinen Helden
+  ja: このプレイヤーはまだヒーローを持っていない
+- fr: Il faut {1} points de Guilde (vous en avez {2}).
+  en: You need {1} Guild points (you have {2}).
+  es: Hacen falta {1} puntos de Gremio (tienes {2}).
+  de: Du brauchst {1} Gildenpunkte (du hast {2}).
+  ja: ギルドポイントが{1}必要（現在{2}）。
+- fr: Il faut être niveau {1} (vous êtes niveau {2}).
+  en: You must be level {1} (you are level {2}).
+  es: Hay que ser de nivel {1} (eres de nivel {2}).
+  de: Du musst Level {1} sein (du bist Level {2}).
+  ja: レベル{1}が必要（現在レベル{2}）。
+- fr: L'examen du rang {1} arrivera avec un prochain chapitre.
+  en: The rank {1} exam will come with a future chapter.
+  es: El examen del rango {1} llegará con un próximo capítulo.
+  de: Die Prüfung für Rang {1} kommt mit einem späteren Kapitel.
+  ja: ランク{1}の試験は今後の章で登場する。
+- fr: "L'épreuve du rang {1} fait partie de l'histoire : « {2} »."
+  en: "The rank {1} trial is part of the story: “{2}”."
+  es: "La prueba del rango {1} forma parte de la historia: «{2}»."
+  de: "Die Prüfung für Rang {1} ist Teil der Geschichte: „{2}“."
+  ja: ランク{1}の試練は物語の一部：「{2}」。
+- fr: "Examen raté aujourd'hui : revenez demain."
+  en: "Exam failed today: come back tomorrow."
+  es: "Examen suspendido hoy: vuelve mañana."
+  de: "Prüfung heute nicht bestanden: Komm morgen wieder."
+  ja: 今日の試験は不合格。明日また来よう。
+- fr: Terminez d'abord votre contrat en cours.
+  en: Finish your current contract first.
+  es: Termina primero tu contrato en curso.
+  de: Beende zuerst deinen laufenden Auftrag.
+  ja: 先に進行中の依頼を終えよう。
+- fr: La Guilde
+  en: The Guild
+  es: El Gremio
+  de: Die Gilde
+  ja: ギルド
+- fr: "{1} réussit l'examen de la Guilde : rang {2}."
+  en: "{1} passes the Guild exam: rank {2}."
+  es: "{1} aprueba el examen del Gremio: rango {2}."
+  de: "{1} besteht die Gildenprüfung: Rang {2}."
+  ja: "{1}はギルドの試験に合格：ランク{2}。"
+- fr: "{1} tamponne la carte de {2} devant tout le hall : rang {3} ! Les contrats du rang {4} lui sont ouverts."
+  en: "{1} stamps {2}'s card in front of the whole hall: rank {3}! Rank {4} contracts are now open to them."
+  es: "{1} sella la tarjeta de {2} delante de todo el salón: ¡rango {3}! Los contratos del rango {4} quedan abiertos."
+  de: "{1} stempelt vor der ganzen Halle die Karte von {2}: Rang {3}! Die Aufträge des Rangs {4} stehen jetzt offen."
+  ja: "{1}がホール中の前で{2}のカードに判を押す：ランク{3}！ランク{4}の依頼が受けられるようになった。"
+- fr: " — examen du rang {1} possible dès le niveau {2}"
+  en: " — rank {1} exam available from level {2}"
+  es: " — examen del rango {1} posible desde el nivel {2}"
+  de: " — Prüfung für Rang {1} ab Level {2} möglich"
+  ja: " — ランク{1}の試験はレベル{2}から受けられる"
+- fr: " — {1} peut passer l'examen du rang {2} à la Guilde !"
+  en: " — {1} can take the rank {2} exam at the Guild!"
+  es: " — ¡{1} puede presentarse al examen del rango {2} en el Gremio!"
+  de: " — {1} kann in der Gilde die Prüfung für Rang {2} ablegen!"
+  ja: " — {1}はギルドでランク{2}の試験を受けられる！"
+- fr: "{1} perd {2} pièces d'or"
+  en: "{1} loses {2} gold coins"
+  es: "{1} pierde {2} monedas de oro"
+  de: "{1} verliert {2} Goldmünzen"
+  ja: "{1}は{2}Gを失った"
+- fr: "{1} débloque son ultime : {2}{3} !"
+  en: "{1} unlocks their ultimate: {2}{3}!"
+  es: "¡{1} desbloquea su definitiva: {2}{3}!"
+  de: "{1} schaltet die ultimative Fähigkeit frei: {2}{3}!"
+  ja: "{1}は奥義を解放した：{2}{3}！"
+- fr: " (utilisable au niveau {1})"
+  en: " (usable at level {1})"
+  es: " (utilizable en el nivel {1})"
+  de: " (nutzbar ab Level {1})"
+  ja: （レベル{1}で使用可能）
+- fr: Réputation {1} {2}{3}
+  en: Reputation {1} {2}{3}
+  es: Reputación {1} {2}{3}
+  de: Ruf {1} {2}{3}
+  ja: 評判 {1} {2}{3}
+- fr: "{1} : affinité {2}{3} ({4})"
+  en: "{1}: affinity {2}{3} ({4})"
+  es: "{1}: afinidad {2}{3} ({4})"
+  de: "{1}: Zuneigung {2}{3} ({4})"
+  ja: "{1}：好感度{2}{3}（{4}）"
+- fr: "{1} gagne {2} XP{3}"
+  en: "{1} gains {2} XP{3}"
+  es: "{1} gana {2} XP{3}"
+  de: "{1} erhält {2} EP{3}"
+  ja: "{1}は経験値{2}を獲得{3}"
+- fr: " et monte au niveau {1} !"
+  en: " and reaches level {1}!"
+  es: " ¡y sube al nivel {1}!"
+  de: " und steigt auf Level {1}!"
+  ja: 、レベル{1}に上がった！
+- fr: "{1} {2} {3} pièces d'or"
+  en: "{1} {2} {3} gold coins"
+  es: "{1} {2} {3} monedas de oro"
+  de: "{1} {2} {3} Goldmünzen"
+  ja: "{1}は{3}G{2}"
+- fr: "{1} existe déjà dans la partie : il n'en existe qu'un."
+  en: "{1} already exists in this game: there is only one."
+  es: "{1} ya existe en la partida: solo hay uno."
+  de: "{1} gibt es in dieser Partie schon: Es existiert nur einmal."
+  ja: "{1}はこのゲームにすでに存在する。1つしかない。"
+- fr: "{1} obtient : {2}"
+  en: "{1} obtains: {2}"
+  es: "{1} obtiene: {2}"
+  de: "{1} erhält: {2}"
+  ja: "{1}は{2}を手に入れた"
+- fr: "{1} : +{2} points de guilde{3}"
+  en: "{1}: +{2} guild points{3}"
+  es: "{1}: +{2} puntos de gremio{3}"
+  de: "{1}: +{2} Gildenpunkte{3}"
+  ja: "{1}：ギルドポイント+{2}{3}"
+- fr: "Nouvelle quête : {1}."
+  en: "New quest: {1}."
+  es: "Nueva misión: {1}."
+  de: "Neue Quest: {1}."
+  ja: 新しいクエスト：{1}。
+- fr: "Nouvelle quête : {1}"
+  en: "New quest: {1}"
+  es: "Nueva misión: {1}"
+  de: "Neue Quest: {1}"
+  ja: 新しいクエスト：{1}
+- fr: "Quête mise à jour : {1}"
+  en: "Quest updated: {1}"
+  es: "Misión actualizada: {1}"
+  de: "Quest aktualisiert: {1}"
+  ja: クエスト更新：{1}
+- fr: "Quête terminée : {1}."
+  en: "Quest completed: {1}."
+  es: "Misión completada: {1}."
+  de: "Quest abgeschlossen: {1}."
+  ja: クエスト完了：{1}。
+- fr: "Quête terminée : {1}"
+  en: "Quest completed: {1}"
+  es: "Misión completada: {1}"
+  de: "Quest abgeschlossen: {1}"
+  ja: クエスト完了：{1}
+- fr: "{1} croise la route du groupe."
+  en: "{1} crosses paths with the group."
+  es: "{1} se cruza con el grupo."
+  de: "{1} kreuzt den Weg der Gruppe."
+  ja: "{1}がパーティーの前に現れた。"
+- fr: "{1} peut désormais accompagner un héros (palier « Alliée » requis)."
+  en: "{1} can now accompany a hero (“Ally” tier required)."
+  es: "{1} ya puede acompañar a un héroe (nivel «Aliada» requerido)."
+  de: "{1} kann jetzt einen Helden begleiten (Stufe „Verbündete“ nötig)."
+  ja: "{1}がヒーローに同行できるようになった（「味方」段階が必要）。"
+- fr: "{1} a perdu la vie."
+  en: "{1} has lost their life."
+  es: "{1} ha perdido la vida."
+  de: "{1} hat das Leben verloren."
+  ja: "{1}は命を落とした。"
+- fr: "Ellipse : {1}. Chaque joueur choisit ses activités de temps libre."
+  en: "Time skip: {1}. Each player chooses their free-time activities."
+  es: "Elipsis: {1}. Cada jugador elige sus actividades de tiempo libre."
+  de: "Zeitsprung: {1}. Jeder Spieler wählt seine Freizeitaktivitäten."
+  ja: 時間経過：{1}。各プレイヤーは自由時間の活動を選ぶ。
+- fr: "{1} mise {2} pièces d'or."
+  en: "{1} bets {2} gold coins."
+  es: "{1} apuesta {2} monedas de oro."
+  de: "{1} setzt {2} Goldmünzen."
+  ja: "{1}は{2}Gを賭けた。"
+- fr: pari gagné
+  en: bet won
+  es: apuesta ganada
+  de: Wette gewonnen
+  ja: 賭けに勝った
+- fr: "{1} gagne son pari : +{2} pièces d'or (mise comprise)."
+  en: "{1} wins their bet: +{2} gold coins (stake included)."
+  es: "{1} gana su apuesta: +{2} monedas de oro (apuesta incluida)."
+  de: "{1} gewinnt die Wette: +{2} Goldmünzen (Einsatz inbegriffen)."
+  ja: "{1}は賭けに勝った：+{2}G（賭け金込み）。"
+- fr: "{1} perd sa mise de {2} pièces d'or."
+  en: "{1} loses their stake of {2} gold coins."
+  es: "{1} pierde su apuesta de {2} monedas de oro."
+  de: "{1} verliert den Einsatz von {2} Goldmünzen."
+  ja: "{1}は賭け金{2}Gを失った。"
+- fr: "Fin du chapitre {1}. Un long moment va passer : rendez-vous à l'auberge quand tout le monde est prêt."
+  en: "End of chapter {1}. A long time is about to pass: meet at the inn when everyone is ready."
+  es: "Fin del capítulo {1}. Va a pasar mucho tiempo: reuníos en la posada cuando todos estén listos."
+  de: "Ende von Kapitel {1}. Es wird viel Zeit vergehen: Trefft euch im Gasthaus, wenn alle bereit sind."
+  ja: 第{1}章終幕。長い時が流れる。全員の準備ができたら宿屋に集まろう。
+- fr: "{1} est profondément blessée : {2}"
+  en: "{1} is deeply hurt: {2}"
+  es: "{1} está profundamente herida: {2}"
+  de: "{1} ist zutiefst verletzt: {2}"
+  ja: "{1}は深く傷ついている：{2}"
+- fr: Début du chapitre {1}
+  en: Start of chapter {1}
+  es: Comienzo del capítulo {1}
+  de: Beginn von Kapitel {1}
+  ja: 第{1}章 開幕
+- fr: Un temps libre est déjà en cours
+  en: A free time is already in progress
+  es: Ya hay un tiempo libre en curso
+  de: Es läuft bereits eine Freizeit
+  ja: すでに自由時間の最中
+- fr: Le groupe est dans un donjon
+  en: The group is in a dungeon
+  es: El grupo está en una mazmorra
+  de: Die Gruppe ist in einem Verlies
+  ja: パーティーはダンジョンにいる
+- fr: Un combat est en cours
+  en: A fight is in progress
+  es: Hay un combate en curso
+  de: Ein Kampf läuft
+  ja: 戦闘中
+- fr: "Une scène est en cours : terminez-la d'abord"
+  en: "A scene is in progress: finish it first"
+  es: "Hay una escena en curso: termínala primero"
+  de: "Eine Szene läuft: Beende sie zuerst"
+  ja: シーンの途中。先に終わらせよう
+- fr: Repos à l'auberge ({1} mois)
+  en: Rest at the inn ({1} month(s))
+  es: Descanso en la posada ({1} mes(es))
+  de: Ruhe im Gasthaus ({1} Monat(e))
+  ja: 宿屋で休息（{1}か月）
+- fr: "Tout le monde est d'accord : {1} mois vont passer. Chacun choisit ses activités."
+  en: "Everyone agrees: {1} month(s) will pass. Everyone chooses their activities."
+  es: "Todos están de acuerdo: pasarán {1} mes(es). Cada uno elige sus actividades."
+  de: "Alle sind einverstanden: {1} Monat(e) vergehen. Jeder wählt seine Aktivitäten."
+  ja: 全員が同意：{1}か月が過ぎる。それぞれ活動を選ぼう。
+- fr: Couronne
+  en: Crown
+  es: Corona
+  de: Krone
+  ja: 王家
+- fr: Guilde
+  en: Guild
+  es: Gremio
+  de: Gilde
+  ja: ギルド
+- fr: Concorde
+  en: Concord
+  es: Concordia
+  de: Eintracht
+  ja: 協調
+- fr: Ordre
+  en: Order
+  es: Orden
+  de: Orden
+  ja: 教団
+- fr: Tribus ourvalis
+  en: Ourvalis tribes
+  es: Tribus ourvalis
+  de: Ourvalis-Stämme
+  ja: ウルヴァリスの部族
+- fr: Elfes de Sylvenoire
+  en: Elves of Sylvenoire
+  es: Elfos de Sylvenoire
+  de: Elfen von Sylvenoire
+  ja: シルヴェノワールのエルフ
+- fr: Nains de Grisfer
+  en: Dwarves of Greyiron
+  es: Enanos de Grisfer
+  de: Zwerge von Grauerz
+  ja: グリフェルのドワーフ
+- fr: Dragons et Archipel
+  en: Dragons and Archipelago
+  es: Dragones y Archipiélago
+  de: Drachen und Archipel
+  ja: 竜と群島
+- fr: Troupes des domaines
+  en: Domain troops
+  es: Tropas de los dominios
+  de: Truppen der Ländereien
+  ja: 領地の兵
+- fr: Légion Cendrée
+  en: Ashen Legion
+  es: Legión Cenicienta
+  de: Aschelegion
+  ja: 灰の軍団
+- fr: le héros
+  en: the hero
+  es: el héroe
+  de: der Held
+  ja: ヒーロー
+- fr: "Nœud introuvable : {1}"
+  en: "Node not found: {1}"
+  es: "Nodo no encontrado: {1}"
+  de: "Knoten nicht gefunden: {1}"
+  ja: ノードが見つからない：{1}
+- fr: "Le groupe entre dans : {1}."
+  en: "The group enters: {1}."
+  es: "El grupo entra en: {1}."
+  de: "Die Gruppe betritt: {1}."
+  ja: パーティーは{1}に入った。
+- fr: "{1} répond : {2}"
+  en: "{1} answers: {2}"
+  es: "{1} responde: {2}"
+  de: "{1} antwortet: {2}"
+  ja: "{1}の答え：{2}"
+- fr: "{1} n'a pas assez d'or pour sa part et se retire du pari."
+  en: "{1} doesn't have enough gold for their share and drops out of the bet."
+  es: "{1} no tiene suficiente oro para su parte y se retira de la apuesta."
+  de: "{1} hat nicht genug Gold für den Anteil und steigt aus der Wette aus."
+  ja: "{1}は取り分のゴールドが足りず、賭けから降りた。"
+- fr: Personne ne parie.
+  en: Nobody bets.
+  es: Nadie apuesta.
+  de: Niemand wettet.
+  ja: 誰も賭けない。
+- fr: "{1} mise {2} pièce{3} d'or."
+  en: "{1} bets {2} gold coin{3}."
+  es: "{1} apuesta {2} moneda{3} de oro."
+  de: "{1} setzt {2} Goldmünze(n)."
+  ja: "{1}は{2}Gを賭けた。"
+- fr: "Objet identifié : {1}. {2}"
+  en: "Item identified: {1}. {2}"
+  es: "Objeto identificado: {1}. {2}"
+  de: "Gegenstand identifiziert: {1}. {2}"
+  ja: アイテムを鑑定した：{1}。{2}
+- fr: Aucun héros disponible pour combattre
+  en: No hero available to fight
+  es: Ningún héroe disponible para combatir
+  de: Kein Held kampfbereit
+  ja: 戦えるヒーローがいない
+- fr: "{1} mange une ration de voyage en route."
+  en: "{1} eats a travel ration on the way."
+  es: "{1} come una ración de viaje por el camino."
+  de: "{1} isst unterwegs eine Reiseration."
+  ja: "{1}は道中で携帯食を食べた。"
+- fr: "{1} n'a pas de ration : la route l'a fatigué (−{2} % de PV au début du combat)."
+  en: "{1} has no ration: the road has worn them out (−{2}% HP at the start of the fight)."
+  es: "{1} no tiene ración: el camino lo ha cansado (−{2} % de PV al empezar el combate)."
+  de: "{1} hat keine Ration: Der Weg hat erschöpft (−{2} % LP zu Kampfbeginn)."
+  ja: "{1}は携帯食がなく、道中で疲れてしまった（戦闘開始時HP−{2}%）。"
+- fr: "{1} maîtrise mieux « {2} » : maîtrise {3}/{4}."
+  en: "{1} masters “{2}” better: mastery {3}/{4}."
+  es: "{1} domina mejor «{2}»: maestría {3}/{4}."
+  de: "{1} beherrscht „{2}“ besser: Meisterschaft {3}/{4}."
+  ja: "{1}は「{2}」に習熟した：習熟度{3}/{4}。"
+- fr: "{1} : +{2} XP, +{3} or{4}"
+  en: "{1}: +{2} XP, +{3} gold{4}"
+  es: "{1}: +{2} XP, +{3} de oro{4}"
+  de: "{1}: +{2} EP, +{3} Gold{4}"
+  ja: "{1}：経験値+{2}、+{3}G{4}"
+- fr: " — niveau {1} !"
+  en: " — level {1}!"
+  es: " — ¡nivel {1}!"
+  de: " — Level {1}!"
+  ja: " — レベル{1}！"
+- fr: "{1} récupère : {2}"
+  en: "{1} recovers: {2}"
+  es: "{1} recupera: {2}"
+  de: "{1} erhält: {2}"
+  ja: "{1}は{2}を手に入れた"
+- fr: L'examinateur baisse son arme et vous aide à vous relever. « Pas encore. Revenez demain. » Aucune blessure, aucune pièce perdue.
+  en: The examiner lowers their weapon and helps you up. “Not yet. Come back tomorrow.” No wounds, no coins lost.
+  es: El examinador baja el arma y te ayuda a levantarte. «Todavía no. Vuelve mañana.» Ni heridas ni monedas perdidas.
+  de: Der Prüfer senkt die Waffe und hilft dir auf. „Noch nicht. Komm morgen wieder.“ Keine Verletzung, keine Münze verloren.
+  ja: 試験官は武器を下ろし、手を貸して立たせてくれた。「まだだな。明日また来い」負傷もゴールドの損失もない。
+- fr: "{1} se réveille au refuge, blessé (−{2} % de PV max jusqu'au repos) et perd {3} or."
+  en: "{1} wakes up at the shelter, wounded (−{2}% max HP until rest) and loses {3} gold."
+  es: "{1} despierta en el refugio, herido (−{2} % de PV máx. hasta descansar) y pierde {3} de oro."
+  de: "{1} erwacht in der Zuflucht, verletzt (−{2} % max. LP bis zur Ruhe), und verliert {3} Gold."
+  ja: "{1}は避難所で目を覚ました。負傷（休息まで最大HP−{2}%）し、{3}Gを失った。"
+- fr: "Défaite face à : {1}."
+  en: "Defeated by: {1}."
+  es: "Derrota frente a: {1}."
+  de: "Niederlage gegen: {1}."
+  ja: "{1}に敗北。"
+- fr: Le groupe a pris la fuite.
+  en: The group has fled.
+  es: El grupo ha huido.
+  de: Die Gruppe ist geflohen.
+  ja: パーティーは逃げ出した。
+- fr: Vous reprenez connaissance près de l'escalier d'entrée. Les ennemis vaincus ne se relèveront pas.
+  en: You come to near the entrance stairs. Defeated enemies won't get back up.
+  es: Recobras el conocimiento junto a la escalera de entrada. Los enemigos vencidos no se levantarán.
+  de: Du kommst an der Eingangstreppe wieder zu dir. Besiegte Gegner stehen nicht wieder auf.
+  ja: 入口の階段のそばで意識を取り戻した。倒した敵はもう起き上がらない。
+- fr: Le groupe se replie vers l'entrée.
+  en: The group falls back towards the entrance.
+  es: El grupo se repliega hacia la entrada.
+  de: Die Gruppe zieht sich zum Eingang zurück.
+  ja: パーティーは入口へ退いた。
+- fr: "Le groupe est épuisé. Vous pouvez renoncer et remonter par l'escalier d'entrée : l'histoire continuera sans ce que vous cherchiez ici."
+  en: "The group is exhausted. You can give up and climb back up the entrance stairs: the story will go on without what you were looking for here."
+  es: "El grupo está agotado. Podéis renunciar y subir por la escalera de entrada: la historia seguirá sin lo que buscabais aquí."
+  de: "Die Gruppe ist erschöpft. Ihr könnt aufgeben und über die Eingangstreppe hinaufsteigen: Die Geschichte geht ohne das weiter, was ihr hier gesucht habt."
+  ja: パーティーは疲れ果てている。あきらめて入口の階段から戻ることもできる。ここで探していたものなしで物語は続く。
+- fr: "Vous êtes repoussé. Reprenez des forces, puis revenez : le contrat tient toujours."
+  en: "You've been pushed back. Get your strength back, then return: the contract still stands."
+  es: "Te han rechazado. Recupera fuerzas y vuelve: el contrato sigue en pie."
+  de: "Du wurdest zurückgeschlagen. Sammle Kräfte und komm wieder: Der Auftrag gilt weiterhin."
+  ja: 押し返された。力を取り戻してからまた来よう。依頼はまだ有効だ。
+- fr: "Vous vous repliez. Le contrat tient toujours : revenez quand vous êtes prêt."
+  en: "You fall back. The contract still stands: come back when you're ready."
+  es: "Te retiras. El contrato sigue en pie: vuelve cuando estés listo."
+  de: "Du ziehst dich zurück. Der Auftrag gilt weiterhin: Komm wieder, wenn du bereit bist."
+  ja: 退却した。依頼はまだ有効。準備ができたら戻ってこよう。
+- fr: "{1} remplit le contrat « {2} »."
+  en: "{1} completes the contract “{2}”."
+  es: "{1} cumple el contrato «{2}»."
+  de: "{1} erfüllt den Auftrag „{2}“."
+  ja: "{1}は依頼「{2}」を達成した。"
+- fr: Le groupe n'est pas dans un donjon
+  en: The group isn't in a dungeon
+  es: El grupo no está en una mazmorra
+  de: Die Gruppe ist in keinem Verlies
+  ja: パーティーはダンジョンにいない
+- fr: Déplacement d'une case à la fois
+  en: Movement one square at a time
+  es: Desplazamiento de una casilla cada vez
+  de: Bewegung nur ein Feld auf einmal
+  ja: 1マスずつ移動
+- fr: Passage bloqué
+  en: Passage blocked
+  es: Paso bloqueado
+  de: Durchgang versperrt
+  ja: 通れない
+- fr: Une lourde porte de bronze, verrouillée. Il faudrait une clé.
+  en: A heavy bronze door, locked. You'd need a key.
+  es: Una pesada puerta de bronce, cerrada con llave. Haría falta una llave.
+  de: Eine schwere Bronzetür, verschlossen. Man bräuchte einen Schlüssel.
+  ja: 鍵のかかった重い青銅の扉。鍵が必要だ。
+- fr: Un coffre !
+  en: A chest!
+  es: ¡Un cofre!
+  de: Eine Truhe!
+  ja: 宝箱だ！
+- fr: Un piège !
+  en: A trap!
+  es: ¡Una trampa!
+  de: Eine Falle!
+  ja: 罠だ！
+- fr: "{1} {2} le repère à temps ({3} : {4} + {5} = {6} ≥ {7})."
+  en: "{1} {2} spots it in time ({3}: {4} + {5} = {6} ≥ {7})."
+  es: "{1} {2} lo detecta a tiempo ({3}: {4} + {5} = {6} ≥ {7})."
+  de: "{1} {2} bemerkt es rechtzeitig ({3}: {4} + {5} = {6} ≥ {7})."
+  ja: "{1} {2}は間一髪で気づいた（{3}：{4} + {5} = {6} ≥ {7}）。"
+- fr: "{1} Le groupe est pris au dépourvu ({2} : {3} < {4}) : tout le monde est blessé jusqu'au prochain repos."
+  en: "{1} The group is caught off guard ({2}: {3} < {4}): everyone is wounded until the next rest."
+  es: "{1} El grupo es tomado por sorpresa ({2}: {3} < {4}): todos quedan heridos hasta el próximo descanso."
+  de: "{1} Die Gruppe wird überrumpelt ({2}: {3} < {4}): Alle sind bis zur nächsten Ruhe verletzt."
+  ja: "{1} パーティーは不意を突かれた（{2}：{3} < {4}）。次の休息まで全員が負傷する。"
+- fr: "{1} : +{2} XP{3}"
+  en: "{1}: +{2} XP{3}"
+  es: "{1}: +{2} XP{3}"
+  de: "{1}: +{2} EP{3}"
+  ja: "{1}：経験値+{2}{3}"
+- fr: " (niveau {1} !)"
+  en: " (level {1}!)"
+  es: " (¡nivel {1}!)"
+  de: " (Level {1}!)"
+  ja: （レベル{1}！）
+- fr: "{1} : +1 point de caractéristique à répartir"
+  en: "{1}: +1 attribute point to spend"
+  es: "{1}: +1 punto de característica por repartir"
+  de: "{1}: +1 Attributpunkt zu verteilen"
+  ja: "{1}：能力値ポイント+1"
+- fr: "{1} : +{2} or"
+  en: "{1}: +{2} gold"
+  es: "{1}: +{2} de oro"
+  de: "{1}: +{2} Gold"
+  ja: "{1}：+{2}G"
+- fr: "{1} : +{2} points de guilde (rang {3})"
+  en: "{1}: +{2} guild points (rank {3})"
+  es: "{1}: +{2} puntos de gremio (rango {3})"
+  de: "{1}: +{2} Gildenpunkte (Rang {3})"
+  ja: "{1}：ギルドポイント+{2}（ランク{3}）"
+- fr: "{1} : {2} potion(s) de soin fabriquée(s)"
+  en: "{1}: {2} healing potion(s) made"
+  es: "{1}: {2} poción(es) de curación fabricada(s)"
+  de: "{1}: {2} Heiltrank/-tränke hergestellt"
+  ja: "{1}：回復ポーションを{2}個作った"
+- fr: "{1} avec {2} : affinité +{3}"
+  en: "{1} with {2}: affinity +{3}"
+  es: "{1} con {2}: afinidad +{3}"
+  de: "{1} mit {2}: Zuneigung +{3}"
+  ja: "{1}と{2}：好感度+{3}"
+- fr: "{1} : blessures guéries"
+  en: "{1}: wounds healed"
+  es: "{1}: heridas curadas"
+  de: "{1}: Verletzungen geheilt"
+  ja: "{1}：負傷が治った"
+- fr: "{1} (maîtrise {2})"
+  en: "{1} (mastery {2})"
+  es: "{1} (maestría {2})"
+  de: "{1} (Meisterschaft {2})"
+  ja: "{1}（習熟度{2}）"
+- fr: "{1} : +{2} points de maîtrise par compétence équipée{3}"
+  en: "{1}: +{2} mastery points per equipped skill{3}"
+  es: "{1}: +{2} puntos de maestría por habilidad equipada{3}"
+  de: "{1}: +{2} Meisterschaftspunkte pro ausgerüsteter Fähigkeit{3}"
+  ja: "{1}：装備スキルごとに習熟ポイント+{2}{3}"
+- fr: " — progrès : {1}"
+  en: " — progress: {1}"
+  es: " — progreso: {1}"
+  de: " — Fortschritt: {1}"
+  ja: " — 上達：{1}"
+- fr: "{1} ({2} mois passent)."
+  en: "{1} ({2} month(s) pass)."
+  es: "{1} (pasan {2} mes(es))."
+  de: "{1} ({2} Monat(e) vergehen)."
+  ja: "{1}（{2}か月が過ぎる）。"
+- fr: "Joueur inconnu : rejoignez la partie d'abord"
+  en: "Unknown player: join the game first"
+  es: "Jugador desconocido: únete primero a la partida"
+  de: "Unbekannter Spieler: Tritt zuerst der Partie bei"
+  ja: 不明なプレイヤー：先にゲームに参加しよう
+- fr: La partie est complète ({1} joueurs maximum)
+  en: The game is full ({1} players max)
+  es: La partida está completa ({1} jugadores como máximo)
+  de: Die Partie ist voll (höchstens {1} Spieler)
+  ja: ゲームは満員（最大{1}人）
+- fr: Choisissez un pseudo
+  en: Choose a nickname
+  es: Elige un apodo
+  de: Wähle einen Spielernamen
+  ja: ニックネームを選ぼう
+- fr: Ce pseudo est déjà pris dans cette partie
+  en: This nickname is already taken in this game
+  es: Este apodo ya está ocupado en esta partida
+  de: Dieser Name ist in dieser Partie schon vergeben
+  ja: このニックネームはこのゲームで使われている
+- fr: "{1} rejoint la partie."
+  en: "{1} joins the game."
+  es: "{1} se une a la partida."
+  de: "{1} tritt der Partie bei."
+  ja: "{1}がゲームに参加した。"
+- fr: Le groupe est complet ({1} joueurs maximum)
+  en: The group is full ({1} players max)
+  es: El grupo está completo ({1} jugadores como máximo)
+  de: Die Gruppe ist voll (höchstens {1} Spieler)
+  ja: パーティーは満員（最大{1}人）
+- fr: Renfort
+  en: Reinforcement
+  es: Refuerzo
+  de: Verstärkung
+  ja: 援軍
+- fr: "{1} rejoint le groupe en renfort (niveau {2})."
+  en: "{1} joins the group as reinforcement (level {2})."
+  es: "{1} se une al grupo como refuerzo (nivel {2})."
+  de: "{1} verstärkt die Gruppe (Level {2})."
+  ja: "{1}が援軍として参加した（レベル{2}）。"
+- fr: "{1} revient d'une aventure en groupe (niveau {2})."
+  en: "{1} returns from a group adventure (level {2})."
+  es: "{1} vuelve de una aventura en grupo (nivel {2})."
+  de: "{1} kehrt von einem Gruppenabenteuer zurück (Level {2})."
+  ja: "{1}がパーティーでの冒険から戻った（レベル{2}）。"
+- fr: "Ton histoire n'en était pas au même point que celle du groupe : tu gardes tes gains, mais ton histoire ne change pas."
+  en: "Your story wasn't at the same point as the group's: you keep your rewards, but your story doesn't change."
+  es: "Tu historia no estaba en el mismo punto que la del grupo: conservas tus ganancias, pero tu historia no cambia."
+  de: "Deine Geschichte war nicht am selben Punkt wie die der Gruppe: Du behältst deine Belohnungen, aber deine Geschichte ändert sich nicht."
+  ja: あなたの物語はパーティーと同じ地点ではなかった。報酬は持ち帰れるが、物語は変わらない。
+- fr: "L'histoire vécue avec le groupe compte aussi pour toi : {1} scène{2} de plus dans ta campagne."
+  en: "The story lived with the group counts for you too: {1} more scene(s) in your campaign."
+  es: "La historia vivida con el grupo también cuenta para ti: {1} escena(s) más en tu campaña."
+  de: "Die mit der Gruppe erlebte Geschichte zählt auch für dich: {1} Szene(n) mehr in deiner Kampagne."
+  ja: パーティーで体験した物語はあなたにも反映される：キャンペーンにシーンが{1}つ追加。
+- fr: Le groupe a fait avancer l'histoire ({1} scène{2}).
+  en: The group has moved the story forward ({1} scene(s)).
+  es: El grupo ha hecho avanzar la historia ({1} escena(s)).
+  de: Die Gruppe hat die Geschichte vorangebracht ({1} Szene(n)).
+  ja: パーティーが物語を進めた（{1}シーン）。
+- fr: +{1} or
+  en: +{1} gold
+  es: +{1} de oro
+  de: +{1} Gold
+  ja: +{1}G
+- fr: "Bonus de connexion ({1} jour{2} de suite) pour {3} : {4}."
+  en: "Login bonus ({1} day(s) in a row) for {3}: {4}."
+  es: "Bonificación de conexión ({1} día(s) seguido(s)) para {3}: {4}."
+  de: "Anmeldebonus ({1} Tag(e) in Folge) für {3}: {4}."
+  ja: ログインボーナス（{1}日連続）{3}：{4}。
+- fr: +{1} XP{2}
+  en: +{1} XP{2}
+  es: +{1} XP{2}
+  de: +{1} EP{2}
+  ja: 経験値+{1}{2}
+- fr: " (niveau {1})"
+  en: " (level {1})"
+  es: " (nivel {1})"
+  de: " (Level {1})"
+  ja: （レベル{1}）
+- fr: Objet inconnu
+  en: Unknown item
+  es: Objeto desconocido
+  de: Unbekannter Gegenstand
+  ja: 不明なアイテム
+- fr: Cet objet est unique et existe déjà dans la partie
+  en: This item is unique and already exists in the game
+  es: Este objeto es único y ya existe en la partida
+  de: Dieser Gegenstand ist einzigartig und existiert bereits in der Partie
+  ja: このアイテムはユニークで、すでにゲーム内に存在する
+- fr: "Cadeau du propriétaire du jeu pour {1} : {2}."
+  en: "Gift from the game's owner for {1}: {2}."
+  es: "Regalo del propietario del juego para {1}: {2}."
+  de: "Geschenk des Spielbesitzers für {1}: {2}."
+  ja: ゲームオーナーから{1}への贈り物：{2}。
+- fr: Vous avez déjà un héros
+  en: You already have a hero
+  es: Ya tienes un héroe
+  de: Du hast schon einen Helden
+  ja: すでにヒーローがいる
+- fr: Le don « {1} » est déjà pris par un autre joueur
+  en: The gift “{1}” is already taken by another player
+  es: El don «{1}» ya lo ha elegido otro jugador
+  de: Die Gabe „{1}“ hat schon ein anderer Spieler
+  ja: 天賦「{1}」は他のプレイヤーが選択済み
+- fr: "{1} ({2}, {3}, {4}) rejoint l'histoire{5}."
+  en: "{1} ({2}, {3}, {4}) joins the story{5}."
+  es: "{1} ({2}, {3}, {4}) se une a la historia{5}."
+  de: "{1} ({2}, {3}, {4}) tritt der Geschichte bei{5}."
+  ja: "{1}（{2}、{3}、{4}）が物語に加わった{5}。"
+- fr: " au niveau {1}"
+  en: " at level {1}"
+  es: " en el nivel {1}"
+  de: " auf Level {1}"
+  ja: （レベル{1}）
+- fr: Image trop lourde (300 Ko maximum)
+  en: Image too large (300 KB max)
+  es: Imagen demasiado pesada (300 KB como máximo)
+  de: Bild zu groß (höchstens 300 KB)
+  ja: 画像が大きすぎる（最大300KB）
+- fr: Scène inconnue
+  en: Unknown scene
+  es: Escena desconocida
+  de: Unbekannte Szene
+  ja: 不明なシーン
+- fr: Terminez d'abord le temps libre
+  en: Finish the free time first
+  es: Termina primero el tiempo libre
+  de: Beende zuerst die Freizeit
+  ja: 先に自由時間を終えよう
+- fr: Une scène de groupe est déjà en cours
+  en: A group scene is already in progress
+  es: Ya hay una escena de grupo en curso
+  de: Eine Gruppenszene läuft bereits
+  ja: すでにパーティーシーンの最中
+- fr: Cette scène n'est pas disponible
+  en: This scene isn't available
+  es: Esta escena no está disponible
+  de: Diese Szene ist nicht verfügbar
+  ja: このシーンは利用できない
+- fr: Vous êtes déjà dans une scène
+  en: You're already in a scene
+  es: Ya estás en una escena
+  de: Du bist schon in einer Szene
+  ja: すでにシーンの中にいる
+- fr: Aucune scène
+  en: No scene
+  es: Ninguna escena
+  de: Keine Szene
+  ja: シーンなし
+- fr: Ce n'est pas votre scène
+  en: This isn't your scene
+  es: No es tu escena
+  de: Das ist nicht deine Szene
+  ja: あなたのシーンではない
+- fr: Le groupe explore un donjon
+  en: The group is exploring a dungeon
+  es: El grupo explora una mazmorra
+  de: Die Gruppe erkundet ein Verlies
+  ja: パーティーはダンジョン探索中
+- fr: Choix impossible
+  en: Impossible choice
+  es: Elección imposible
+  de: Wahl nicht möglich
+  ja: 選べない選択肢
+- fr: Pas assez d'or pour miser {1} pièces (vous en avez {2})
+  en: Not enough gold to bet {1} coins (you have {2})
+  es: No tienes suficiente oro para apostar {1} monedas (tienes {2})
+  de: Nicht genug Gold, um {1} Münzen zu setzen (du hast {2})
+  ja: "{1}G賭けるにはゴールドが足りない（所持{2}）"
+- fr: Personne ne vous pose de question
+  en: Nobody is asking you a question
+  es: Nadie te está preguntando nada
+  de: Niemand stellt dir eine Frage
+  ja: 誰もあなたに質問していない
+- fr: C'est à {1} de répondre
+  en: It's {1}'s turn to answer
+  es: Le toca responder a {1}
+  de: "{1} muss antworten"
+  ja: 答えるのは{1}
+- fr: Réponse impossible
+  en: Impossible answer
+  es: Respuesta imposible
+  de: Antwort nicht möglich
+  ja: その答えは選べない
+- fr: Aucun pari en cours
+  en: No bet in progress
+  es: Ninguna apuesta en curso
+  de: Keine laufende Wette
+  ja: 進行中の賭けはない
+- fr: Vous ne participez pas à ce pari
+  en: You're not taking part in this bet
+  es: No participas en esta apuesta
+  de: Du nimmst an dieser Wette nicht teil
+  ja: この賭けには参加していない
+- fr: Vous avez déjà répondu
+  en: You've already answered
+  es: Ya has respondido
+  de: Du hast schon geantwortet
+  ja: すでに答えた
+- fr: "Pas assez d'or pour miser : il faut au moins {1} pièces (vous en avez {2})"
+  en: "Not enough gold to bet: you need at least {1} coins (you have {2})"
+  es: "No tienes suficiente oro para apostar: hacen falta al menos {1} monedas (tienes {2})"
+  de: "Nicht genug Gold zum Wetten: Du brauchst mindestens {1} Münzen (du hast {2})"
+  ja: 賭けるには最低{1}G必要（所持{2}）
+- fr: Seul le meneur du jour peut trancher
+  en: Only today's leader can decide
+  es: Solo el líder del día puede decidir
+  de: Nur der Anführer des Tages kann entscheiden
+  ja: 決められるのは今日のリーダーだけ
+- fr: Aucune scène de groupe
+  en: No group scene
+  es: Ninguna escena de grupo
+  de: Keine Gruppenszene
+  ja: パーティーシーンなし
+- fr: Personne n'a encore voté
+  en: Nobody has voted yet
+  es: Nadie ha votado todavía
+  de: Noch hat niemand abgestimmt
+  ja: まだ誰も投票していない
+- fr: Le sexe du héros ne peut plus changer après le premier mois de jeu
+  en: The hero's sex can no longer change after the first month of play
+  es: El sexo del héroe ya no puede cambiar tras el primer mes de juego
+  de: Das Geschlecht des Helden kann nach dem ersten Spielmonat nicht mehr geändert werden
+  ja: ヒーローの性別はゲーム開始1か月後から変更できない
+- fr: Pas pendant un combat
+  en: Not during a fight
+  es: No durante un combate
+  de: Nicht während eines Kampfes
+  ja: 戦闘中は不可
+- fr: Il faut être dans un temple
+  en: You must be in a temple
+  es: Hay que estar en un templo
+  de: Du musst in einem Tempel sein
+  ja: 神殿にいる必要がある
+- fr: "{1} est déjà en pleine forme"
+  en: "{1} is already in top shape"
+  es: "{1} ya está en plena forma"
+  de: "{1} ist schon topfit"
+  ja: "{1}はすでに元気いっぱい"
+- fr: "Pas assez d'or : les soins coûtent {1} or (vous en avez {2})"
+  en: "Not enough gold: healing costs {1} gold (you have {2})"
+  es: "No tienes suficiente oro: los cuidados cuestan {1} de oro (tienes {2})"
+  de: "Nicht genug Gold: Die Heilung kostet {1} Gold (du hast {2})"
+  ja: ゴールドが足りない：治療は{1}G（所持{2}）
+- fr: "Les prêtres soignent {1} : tous les PV sont rendus{2}."
+  en: "The priests heal {1}: all HP are restored{2}."
+  es: "Los sacerdotes curan a {1}: se devuelven todos los PV{2}."
+  de: "Die Priester heilen {1}: Alle LP sind wiederhergestellt{2}."
+  ja: 神官が{1}を治療した：HPが全回復{2}。
+- fr: " et la blessure est guérie"
+  en: " and the wound is healed"
+  es: " y la herida se cura"
+  de: " und die Verletzung ist geheilt"
+  ja: 、負傷も治った
+- fr: Objet impossible à utiliser
+  en: This item can't be used
+  es: Este objeto no se puede usar
+  de: Dieser Gegenstand kann nicht benutzt werden
+  ja: このアイテムは使えない
+- fr: "{1} utilise : {2}. Tous les PV sont rendus, et la blessure est guérie."
+  en: "{1} uses: {2}. All HP are restored, and the wound is healed."
+  es: "{1} usa: {2}. Se devuelven todos los PV y la herida se cura."
+  de: "{1} benutzt: {2}. Alle LP sind wiederhergestellt, und die Verletzung ist geheilt."
+  ja: "{1}は{2}を使った。HPが全回復し、負傷も治った。"
+- fr: Il faut être dans une auberge
+  en: You must be in an inn
+  es: Hay que estar en una posada
+  de: Du musst in einem Gasthaus sein
+  ja: 宿屋にいる必要がある
+- fr: "Pas assez d'or : le repas coûte {1} or (vous en avez {2})"
+  en: "Not enough gold: the meal costs {1} gold (you have {2})"
+  es: "No tienes suficiente oro: la comida cuesta {1} de oro (tienes {2})"
+  de: "Nicht genug Gold: Die Mahlzeit kostet {1} Gold (du hast {2})"
+  ja: ゴールドが足りない：食事は{1}G（所持{2}）
+- fr: Plus de ration dans le sac
+  en: No more rations in the bag
+  es: No quedan raciones en la bolsa
+  de: Keine Rationen mehr in der Tasche
+  ja: 袋に携帯食がもうない
+- fr: "{1} récupère {2} PV ({3}/{4})."
+  en: "{1} recovers {2} HP ({3}/{4})."
+  es: "{1} recupera {2} PV ({3}/{4})."
+  de: "{1} erhält {2} LP zurück ({3}/{4})."
+  ja: "{1}はHPを{2}回復した（{3}/{4}）。"
+- fr: Cette scène doit être menée jusqu'au bout
+  en: This scene must be played through to the end
+  es: Esta escena debe llevarse hasta el final
+  de: Diese Szene muss zu Ende gespielt werden
+  ja: このシーンは最後まで進める必要がある
+- fr: Aucun combat
+  en: No fight
+  es: Ningún combate
+  de: Kein Kampf
+  ja: 戦闘なし
+- fr: Combattant inconnu
+  en: Unknown combatant
+  es: Combatiente desconocido
+  de: Unbekannter Kämpfer
+  ja: 不明な戦闘員
+- fr: Ce personnage ne vous appartient pas
+  en: This character doesn't belong to you
+  es: Este personaje no te pertenece
+  de: Diese Figur gehört dir nicht
+  ja: このキャラクターはあなたのものではない
+- fr: Il faut le don Second départ
+  en: You need the Second Start gift
+  es: Hace falta el don Segundo comienzo
+  de: Dafür brauchst du die Gabe Zweiter Anlauf
+  ja: 天賦「仕切り直し」が必要
+- fr: Déjà utilisé pendant cette session
+  en: Already used this session
+  es: Ya usado en esta sesión
+  de: In dieser Sitzung bereits benutzt
+  ja: このセッションで使用済み
+- fr: Le combat n'est pas terminé
+  en: The fight isn't over
+  es: El combate no ha terminado
+  de: Der Kampf ist nicht vorbei
+  ja: 戦闘はまだ終わっていない
+- fr: C'est le meneur du jour qui guide le groupe
+  en: Today's leader guides the group
+  es: El líder del día es quien guía al grupo
+  de: Der Anführer des Tages führt die Gruppe
+  ja: パーティーを導くのは今日のリーダー
+- fr: Pas de temps libre en cours
+  en: No free time in progress
+  es: Ningún tiempo libre en curso
+  de: Keine laufende Freizeit
+  ja: 自由時間中ではない
+- fr: Le temps libre est terminé
+  en: The free time is over
+  es: El tiempo libre ha terminado
+  de: Die Freizeit ist vorbei
+  ja: 自由時間は終わった
+- fr: Choisissez {1} activités
+  en: Choose {1} activities
+  es: Elige {1} actividades
+  de: Wähle {1} Aktivitäten
+  ja: 活動を{1}つ選ぼう
+- fr: Activité inconnue
+  en: Unknown activity
+  es: Actividad desconocida
+  de: Unbekannte Aktivität
+  ja: 不明な活動
+- fr: Activité « {1} » indisponible
+  en: Activity “{1}” unavailable
+  es: Actividad «{1}» no disponible
+  de: Aktivität „{1}“ nicht verfügbar
+  ja: 活動「{1}」は選べない
+- fr: Choisissez un compagnon rencontré
+  en: Choose a companion you've met
+  es: Elige una compañera que hayas conocido
+  de: Wähle eine Gefährtin, die du getroffen hast
+  ja: 出会った仲間を選ぼう
+- fr: "Le don Croissance accélérée donne une activité « Entraînement » en plus : choisissez-la"
+  en: "The Accelerated Growth gift gives an extra “Training” activity: choose it"
+  es: "El don Crecimiento acelerado da una actividad «Entrenamiento» extra: elígela"
+  de: "Die Gabe Beschleunigtes Wachstum gibt eine zusätzliche Aktivität „Training“: Wähle sie"
+  ja: 天賦「成長促進」で「鍛錬」の活動が1つ増える。選ぼう
+- fr: Seul le meneur du jour peut valider pour les absents
+  en: Only today's leader can confirm for absent players
+  es: Solo el líder del día puede validar por los ausentes
+  de: Nur der Anführer des Tages kann für Abwesende bestätigen
+  ja: 不在の人の分を確定できるのは今日のリーダーだけ
+- fr: Ce jour est déjà passé
+  en: This day has already passed
+  es: Este día ya ha pasado
+  de: Dieser Tag ist schon vorbei
+  ja: この日はもう過ぎた
+- fr: "Dernier jour du mois : pour changer de mois, dormez à l'auberge"
+  en: "Last day of the month: to change month, sleep at the inn"
+  es: "Último día del mes: para cambiar de mes, dormid en la posada"
+  de: "Letzter Tag des Monats: Um den Monat zu wechseln, schlaft im Gasthaus"
+  ja: 月の最終日。月を進めるには宿屋で眠ろう
+- fr: "Un nouveau jour se lève : {1} !"
+  en: "A new day dawns: {1}!"
+  es: "¡Amanece un nuevo día: {1}!"
+  de: "Ein neuer Tag bricht an: {1}!"
+  ja: 新しい一日が始まる：{1}！
+- fr: "Un nouveau jour se lève : {1}."
+  en: "A new day dawns: {1}."
+  es: "Amanece un nuevo día: {1}."
+  de: "Ein neuer Tag bricht an: {1}."
+  ja: 新しい一日が始まる：{1}。
+- fr: L'histoire n'attend aucune date pour le moment
+  en: The story isn't waiting for any date right now
+  es: La historia no espera ninguna fecha por ahora
+  de: Die Geschichte wartet im Moment auf kein Datum
+  ja: 今は物語が待っている日付はない
+- fr: Durée de repos non proposée
+  en: Rest duration not offered
+  es: Duración de descanso no propuesta
+  de: Diese Ruhedauer wird nicht angeboten
+  ja: その休息期間は選べない
+- fr: "{1} propose de dormir {2} mois à l'auberge. En attente de : {3}."
+  en: "{1} suggests sleeping {2} month(s) at the inn. Waiting for: {3}."
+  es: "{1} propone dormir {2} mes(es) en la posada. Esperando a: {3}."
+  de: "{1} schlägt vor, {2} Monat(e) im Gasthaus zu schlafen. Warten auf: {3}."
+  ja: "{1}が宿屋で{2}か月眠ることを提案。待っている人：{3}。"
+- fr: Personne ne propose de dormir pour le moment
+  en: Nobody is suggesting to sleep right now
+  es: Nadie propone dormir por ahora
+  de: Im Moment schlägt niemand vor zu schlafen
+  ja: 今は誰も眠る提案をしていない
+- fr: "{1} préfère ne pas dormir {2} mois. Proposez une autre durée."
+  en: "{1} would rather not sleep {2} month(s). Suggest another duration."
+  es: "{1} prefiere no dormir {2} mes(es). Proponed otra duración."
+  de: "{1} möchte lieber nicht {2} Monat(e) schlafen. Schlagt eine andere Dauer vor."
+  ja: "{1}は{2}か月眠るのを望んでいない。別の期間を提案しよう。"
+- fr: Vous ne connaissez pas encore ce personnage
+  en: You don't know this character yet
+  es: Todavía no conoces a este personaje
+  de: Du kennst diese Figur noch nicht
+  ja: このキャラクターとはまだ出会っていない
+- fr: Vous n'avez pas cet objet
+  en: You don't have this item
+  es: No tienes este objeto
+  de: Du hast diesen Gegenstand nicht
+  ja: このアイテムを持っていない
+- fr: Un cadeau tous les {1} jours au plus
+  en: One gift every {1} days at most
+  es: Un regalo cada {1} días como máximo
+  de: Höchstens ein Geschenk alle {1} Tage
+  ja: 贈り物は{1}日に1回まで
+- fr: "{1} {2} ce cadeau ({3}{4})."
+  en: "{1} {2} this gift ({3}{4})."
+  es: "{1} {2} este regalo ({3}{4})."
+  de: "{1} {2} dieses Geschenk ({3}{4})."
+  ja: "{1}はこの贈り物を{2}（{3}{4}）。"
+- fr: accepte poliment
+  en: politely accepts
+  es: acepta educadamente
+  de: nimmt höflich an
+  ja: 丁寧に受け取った
+- fr: n'aime pas du tout
+  en: really dislikes
+  es: no le gusta nada
+  de: mag überhaupt nicht
+  ja: まったく気に入らなかった
+- fr: Compagnon inconnu
+  en: Unknown companion
+  es: Compañera desconocida
+  de: Unbekannte Gefährtin
+  ja: 不明な仲間
+- fr: Il faut atteindre le palier « Alliée »
+  en: You must reach the “Ally” tier
+  es: Hay que alcanzar el nivel «Aliada»
+  de: Du musst die Stufe „Verbündete“ erreichen
+  ja: 「味方」段階に達する必要がある
+- fr: "{1} accompagne déjà {2}"
+  en: "{1} is already accompanying {2}"
+  es: "{1} ya acompaña a {2}"
+  de: "{1} begleitet bereits {2}"
+  ja: "{1}はすでに{2}に同行している"
+- fr: Lieu inconnu
+  en: Unknown place
+  es: Lugar desconocido
+  de: Unbekannter Ort
+  ja: 不明な場所
+- fr: Cet objet n'est pas vendu ici
+  en: This item isn't sold here
+  es: Este objeto no se vende aquí
+  de: Dieser Gegenstand wird hier nicht verkauft
+  ja: このアイテムはここでは売っていない
+- fr: "Cet objet est unique : il n'en existe qu'un dans la partie"
+  en: "This item is unique: there's only one in the game"
+  es: "Este objeto es único: solo hay uno en la partida"
+  de: "Dieser Gegenstand ist einzigartig: Es gibt nur einen in der Partie"
+  ja: このアイテムはユニーク。ゲームに1つしかない
+- fr: Pas assez d'or
+  en: Not enough gold
+  es: No tienes suficiente oro
+  de: Nicht genug Gold
+  ja: ゴールドが足りない
+- fr: "{1} achète {2}{3} : −{4} or."
+  en: "{1} buys {2}{3}: −{4} gold."
+  es: "{1} compra {2}{3}: −{4} de oro."
+  de: "{1} kauft {2}{3}: −{4} Gold."
+  ja: "{1}は{2}{3}を買った：−{4}G。"
+- fr: On ne vend pas un objet de quête
+  en: You can't sell a quest item
+  es: No se vende un objeto de misión
+  de: Questgegenstände kann man nicht verkaufen
+  ja: クエストアイテムは売れない
+- fr: Vous n'en avez que {1}
+  en: You only have {1}
+  es: Solo tienes {1}
+  de: Du hast nur {1}
+  ja: "{1}個しか持っていない"
+- fr: "{1} vend {2}{3} : +{4} or."
+  en: "{1} sells {2}{3}: +{4} gold."
+  es: "{1} vende {2}{3}: +{4} de oro."
+  de: "{1} verkauft {2}{3}: +{4} Gold."
+  ja: "{1}は{2}{3}を売った：+{4}G。"
+- fr: Personnage inconnu
+  en: Unknown character
+  es: Personaje desconocido
+  de: Unbekannte Figur
+  ja: 不明なキャラクター
+- fr: "{1} n'identifie pas les objets"
+  en: "{1} doesn't identify items"
+  es: "{1} no identifica objetos"
+  de: "{1} identifiziert keine Gegenstände"
+  ja: "{1}は鑑定をしていない"
+- fr: "{1} n'est plus là"
+  en: "{1} is no longer here"
+  es: "{1} ya no está aquí"
+  de: "{1} ist nicht mehr da"
+  ja: "{1}はもういない"
+- fr: Cet objet n'a rien de mystérieux
+  en: There's nothing mysterious about this item
+  es: Este objeto no tiene nada de misterioso
+  de: An diesem Gegenstand ist nichts Geheimnisvolles
+  ja: このアイテムに謎はない
+- fr: Vous savez déjà ce que c'est
+  en: You already know what it is
+  es: Ya sabes lo que es
+  de: Du weißt schon, was es ist
+  ja: 何なのかはもうわかっている
+- fr: "Pas assez d'or : l'identification coûte {1} pièces"
+  en: "Not enough gold: identification costs {1} coins"
+  es: "No tienes suficiente oro: la identificación cuesta {1} monedas"
+  de: "Nicht genug Gold: Die Identifizierung kostet {1} Münzen"
+  ja: ゴールドが足りない：鑑定は{1}G
+- fr: Les potions se boivent en combat (les PV remontent au maximum après chaque combat)
+  en: Potions are drunk in combat (HP go back to max after each fight)
+  es: Las pociones se beben en combate (los PV vuelven al máximo tras cada combate)
+  de: Tränke trinkt man im Kampf (die LP steigen nach jedem Kampf auf das Maximum)
+  ja: ポーションは戦闘中に飲む（戦闘後はHPが最大に戻る）
+- fr: Cet objet ne s'utilise pas hors combat
+  en: This item can't be used out of combat
+  es: Este objeto no se usa fuera de combate
+  de: Dieser Gegenstand lässt sich außerhalb des Kampfes nicht benutzen
+  ja: このアイテムは戦闘外では使えない
+- fr: Contrat inconnu
+  en: Unknown contract
+  es: Contrato desconocido
+  de: Unbekannter Auftrag
+  ja: 不明な依頼
+- fr: Vous êtes déjà en combat
+  en: You're already in a fight
+  es: Ya estás en combate
+  de: Du bist schon im Kampf
+  ja: すでに戦闘中
+- fr: Cette épreuve se demande à la Guilde, en passant l'examen de rang
+  en: This trial is requested at the Guild, by taking the rank exam
+  es: Esta prueba se pide en el Gremio, al presentarse al examen de rango
+  de: Diese Prüfung beantragt man in der Gilde mit der Rangprüfung
+  ja: この試練はギルドのランク試験で受ける
+- fr: Contrat réservé au rang {1}
+  en: Contract reserved for rank {1}
+  es: Contrato reservado al rango {1}
+  de: Auftrag nur für Rang {1}
+  ja: ランク{1}専用の依頼
+- fr: Contrat indisponible
+  en: Contract unavailable
+  es: Contrato no disponible
+  de: Auftrag nicht verfügbar
+  ja: 受けられない依頼
+- fr: "Ce contrat a déjà été rempli : il ne reviendra pas"
+  en: "This contract has already been completed: it won't come back"
+  es: "Este contrato ya se ha cumplido: no volverá"
+  de: "Dieser Auftrag wurde schon erfüllt: Er kommt nicht wieder"
+  ja: この依頼は達成済み。もう掲示されない
+- fr: "Ce contrat vient d'être rempli : il revient au tableau dans {1} jour{2}"
+  en: "This contract was just completed: it'll be back on the board in {1} day(s)"
+  es: "Este contrato acaba de cumplirse: vuelve al tablón dentro de {1} día(s)"
+  de: "Dieser Auftrag wurde gerade erfüllt: Er ist in {1} Tag(en) wieder am Brett"
+  ja: この依頼は達成されたばかり。{1}日後に再掲示される
+- fr: "Terminez d'abord votre contrat en cours : {1}"
+  en: "Finish your current contract first: {1}"
+  es: "Termina primero tu contrato en curso: {1}"
+  de: "Beende zuerst deinen laufenden Auftrag: {1}"
+  ja: 先に進行中の依頼を終えよう：{1}
+- fr: "Contrat accepté : {1}. {2}"
+  en: "Contract accepted: {1}. {2}"
+  es: "Contrato aceptado: {1}. {2}"
+  de: "Auftrag angenommen: {1}. {2}"
+  ja: 依頼を受けた：{1}。{2}
+- fr: "Contrat réussi ({1} : {2} + {3} = {4} ≥ {5})."
+  en: "Contract succeeded ({1}: {2} + {3} = {4} ≥ {5})."
+  es: "Contrato cumplido ({1}: {2} + {3} = {4} ≥ {5})."
+  de: "Auftrag erfolgreich ({1}: {2} + {3} = {4} ≥ {5})."
+  ja: 依頼成功（{1}：{2} + {3} = {4} ≥ {5}）。
+- fr: "Contrat raté ({1} : {2} < {3}). Vous en tirez quand même une leçon."
+  en: "Contract failed ({1}: {2} < {3}). You still learn a lesson from it."
+  es: "Contrato fallido ({1}: {2} < {3}). Aun así aprendes una lección."
+  de: "Auftrag gescheitert ({1}: {2} < {3}). Du lernst trotzdem etwas daraus."
+  ja: 依頼失敗（{1}：{2} < {3}）。それでも教訓は得た。
+- fr: Vous avez déjà le rang le plus haut
+  en: You already have the highest rank
+  es: Ya tienes el rango más alto
+  de: Du hast schon den höchsten Rang
+  ja: すでに最高ランク
+- fr: Épreuve introuvable
+  en: Trial not found
+  es: Prueba no encontrada
+  de: Prüfung nicht gefunden
+  ja: 試練が見つからない
+- fr: "Épreuve du rang {1} : {2}. {3}"
+  en: "Rank {1} trial: {2}. {3}"
+  es: "Prueba del rango {1}: {2}. {3}"
+  de: "Prüfung für Rang {1}: {2}. {3}"
+  ja: ランク{1}の試練：{2}。{3}
+- fr: Une scène de groupe est en cours
+  en: A group scene is in progress
+  es: Hay una escena de grupo en curso
+  de: Eine Gruppenszene läuft
+  ja: パーティーシーンの最中
+- fr: "Examen du rang {1} : {2} {3} dans l'arène d'entraînement."
+  en: "Rank {1} exam: {2} {3} in the training arena."
+  es: "Examen del rango {1}: {2} {3} en la arena de entrenamiento."
+  de: "Prüfung für Rang {1}: {2} {3} in der Trainingsarena."
+  ja: ランク{1}の試験：訓練場で{2}{3}。
+- fr: Vous n'avez pas de contrat en cours
+  en: You have no contract in progress
+  es: No tienes ningún contrato en curso
+  de: Du hast keinen laufenden Auftrag
+  ja: 進行中の依頼はない
+- fr: "{1} : dé {2} + {3} = {4} contre {5}"
+  en: "{1}: roll {2} + {3} = {4} vs {5}"
+  es: "{1}: dado {2} + {3} = {4} contra {5}"
+  de: "{1}: Wurf {2} + {3} = {4} gegen {5}"
+  ja: "{1}：出目{2} + {3} = {4} 対 {5}"
+- fr: Réussi ({1}). {2}
+  en: Success ({1}). {2}
+  es: Éxito ({1}). {2}
+  de: Erfolg ({1}). {2}
+  ja: 成功（{1}）。{2}
+- fr: Contrat raté ({1}). {2} Vous en tirez quand même une leçon.
+  en: Contract failed ({1}). {2} You still learn a lesson from it.
+  es: Contrato fallido ({1}). {2} Aun así aprendes una lección.
+  de: Auftrag gescheitert ({1}). {2} Du lernst trotzdem etwas daraus.
+  ja: 依頼失敗（{1}）。{2} それでも教訓は得た。
+- fr: Choisissez une des réponses proposées
+  en: Choose one of the suggested answers
+  es: Elige una de las respuestas propuestas
+  de: Wähle eine der vorgeschlagenen Antworten
+  ja: 提示された答えから選ぼう
+- fr: Terminez d'abord le combat
+  en: Finish the fight first
+  es: Termina primero el combate
+  de: Beende zuerst den Kampf
+  ja: 先に戦闘を終わらせよう
+- fr: "Session {1} : {2} est le meneur du jour."
+  en: "Session {1}: {2} is today's leader."
+  es: "Sesión {1}: {2} es el líder del día."
+  de: "Sitzung {1}: {2} ist Anführer des Tages."
+  ja: セッション{1}：今日のリーダーは{2}。
+- fr: Ce n'est pas votre tour
+  en: It's not your turn
+  es: No es tu turno
+  de: Du bist nicht am Zug
+  ja: あなたの番ではない
+- fr: Votre classe ne peut pas apprendre cette fusion
+  en: Your class can't learn this fusion
+  es: Tu clase no puede aprender esta fusión
+  de: Deine Klasse kann diese Fusion nicht lernen
+  ja: あなたのクラスはこの融合技を習得できない
+- fr: Technique inconnue
+  en: Unknown technique
+  es: Técnica desconocida
+  de: Unbekannte Technik
+  ja: 不明な技
+- fr: Variante non apprise
+  en: Variant not learned
+  es: Variante no aprendida
+  de: Variante nicht erlernt
+  ja: 未習得の派生
+- fr: "{1} compétences équipées au maximum"
+  en: "{1} equipped skills at most"
+  es: "{1} habilidades equipadas como máximo"
+  de: Höchstens {1} ausgerüstete Fähigkeiten
+  ja: 装備できるスキルは最大{1}個
+- fr: Compétence non connue
+  en: Skill not known
+  es: Habilidad no conocida
+  de: Fähigkeit nicht bekannt
+  ja: 未習得のスキル
+- fr: Le chapitre n'est pas terminé
+  en: The chapter isn't over
+  es: El capítulo no ha terminado
+  de: Das Kapitel ist nicht vorbei
+  ja: 章はまだ終わっていない
+- fr: "Contrat « {1} » : {2}"
+  en: "Contract “{1}”: {2}"
+  es: "Contrato «{1}»: {2}"
+  de: "Auftrag „{1}“: {2}"
+  ja: 依頼「{1}」：{2}
+- fr: "Épreuve réussie : {1}."
+  en: "Trial passed: {1}."
+  es: "Prueba superada: {1}."
+  de: "Prüfung bestanden: {1}."
+  ja: 試練に合格：{1}。
+- fr: "Contrat rempli : {1}."
+  en: "Contract completed: {1}."
+  es: "Contrato cumplido: {1}."
+  de: "Auftrag erfüllt: {1}."
+  ja: 依頼達成：{1}。
+- fr: Quantité invalide (de 1 à 99)
+  en: Invalid quantity (1 to 99)
+  es: Cantidad no válida (de 1 a 99)
+  de: Ungültige Menge (1 bis 99)
+  ja: 無効な数量（1〜99）
+- fr: "Quête « {1} » : {2}"
+  en: "Quest “{1}”: {2}"
+  es: "Misión «{1}»: {2}"
+  de: "Quest „{1}“: {2}"
+  ja: クエスト「{1}」：{2}
+- fr: Rien à continuer
+  en: Nothing to continue
+  es: Nada que continuar
+  de: Nichts fortzusetzen
+  ja: 続けるものがない
+- fr: Il faut faire un choix
+  en: You must make a choice
+  es: Hay que elegir
+  de: Du musst eine Wahl treffen
+  ja: 選択する必要がある
+- fr: "Classe inconnue : {1}"
+  en: "Unknown class: {1}"
+  es: "Clase desconocida: {1}"
+  de: "Unbekannte Klasse: {1}"
+  ja: 不明なクラス：{1}
+- fr: "Race inconnue : {1}"
+  en: "Unknown race: {1}"
+  es: "Raza desconocida: {1}"
+  de: "Unbekanntes Volk: {1}"
+  ja: 不明な種族：{1}
+- fr: "Répartition libre : au plus +1 ou −1 par caractéristique"
+  en: "Free allocation: at most +1 or −1 per attribute"
+  es: "Reparto libre: como máximo +1 o −1 por característica"
+  de: "Freie Verteilung: höchstens +1 oder −1 pro Attribut"
+  ja: 自由配分：能力値ごとに+1か−1まで
+- fr: "Répartition libre : une même caractéristique ne peut pas avoir +1 et −1"
+  en: "Free allocation: the same attribute can't get both +1 and −1"
+  es: "Reparto libre: una misma característica no puede tener +1 y −1"
+  de: "Freie Verteilung: Ein Attribut kann nicht +1 und −1 zugleich haben"
+  ja: 自由配分：同じ能力値に+1と−1は同時につけられない
+- fr: "Répartition libre invalide : il faut +{1} et −{2}"
+  en: "Invalid free allocation: you need +{1} and −{2}"
+  es: "Reparto libre no válido: hacen falta +{1} y −{2}"
+  de: "Ungültige freie Verteilung: Es braucht +{1} und −{2}"
+  ja: 無効な自由配分：+{1}と−{2}が必要
+- fr: "{1} = {2} hors limites ({3} à {4})"
+  en: "{1} = {2} out of bounds ({3} to {4})"
+  es: "{1} = {2} fuera de límites ({3} a {4})"
+  de: "{1} = {2} außerhalb der Grenzen ({3} bis {4})"
+  ja: "{1} = {2} は範囲外（{3}〜{4}）"
+- fr: "Don inconnu : {1}"
+  en: "Unknown gift: {1}"
+  es: "Don desconocido: {1}"
+  de: "Unbekannte Gabe: {1}"
+  ja: 不明な天賦：{1}
+- fr: "Âge d'un invoqué : entre {1} et {2} ans"
+  en: "Age of a summoned hero: between {1} and {2}"
+  es: "Edad de un invocado: entre {1} y {2} años"
+  de: "Alter eines Beschworenen: zwischen {1} und {2} Jahren"
+  ja: 召喚者の年齢：{1}〜{2}歳
+- fr: Héros sans nom
+  en: Nameless hero
+  es: Héroe sin nombre
+  de: Namenloser Held
+  ja: 名もなきヒーロー
+- fr: Aucun point de caractéristique disponible
+  en: No attribute points available
+  es: Ningún punto de característica disponible
+  de: Keine Attributpunkte verfügbar
+  ja: 能力値ポイントがない
+- fr: La branche est déjà choisie
+  en: The branch is already chosen
+  es: La rama ya está elegida
+  de: Der Zweig ist schon gewählt
+  ja: ブランチは選択済み
+- fr: Branche disponible au niveau {1}
+  en: Branch available at level {1}
+  es: Rama disponible en el nivel {1}
+  de: Zweig ab Level {1} verfügbar
+  ja: ブランチはレベル{1}から選べる
+- fr: Branche inconnue
+  en: Unknown branch
+  es: Rama desconocida
+  de: Unbekannter Zweig
+  ja: 不明なブランチ
+- fr: Aucun point de compétence disponible
+  en: No skill points available
+  es: Ningún punto de habilidad disponible
+  de: Keine Fähigkeitspunkte verfügbar
+  ja: スキルポイントがない
+- fr: Rang maximum atteint
+  en: Max rank reached
+  es: Rango máximo alcanzado
+  de: Höchster Rang erreicht
+  ja: 最大ランクに到達
+- fr: "Compétence inconnue : {1}"
+  en: "Unknown skill: {1}"
+  es: "Habilidad desconocida: {1}"
+  de: "Unbekannte Fähigkeit: {1}"
+  ja: 不明なスキル：{1}
+- fr: Jour {1} · {2} (mois {3}/{4}) · An {5}
+  en: Day {1} · {2} (month {3}/{4}) · Year {5}
+  es: Día {1} · {2} (mes {3}/{4}) · Año {5}
+  de: Tag {1} · {2} (Monat {3}/{4}) · Jahr {5}
+  ja: "{5}年 {2}（{3}/{4}月）{1}日"
+- fr: du printemps
+  en: of spring
+  es: de la primavera
+  de: des Frühlings
+  ja: 春の
+- fr: de l'hiver
+  en: of winter
+  es: del invierno
+  de: des Winters
+  ja: 冬の
+- fr: "{1} : {2} mois {3}."
+  en: "{1}: {2} month {3}."
+  es: "{1}: {2} mes {3}."
+  de: "{1}: {2}. Monat {3}."
+  ja: "{1}：{3}{2}番目の月。"
+- fr: "« AV » veut dire « Après le Voile » : c'est le calendrier de Velmaris. Nous sommes en {1} AV."
+  en: "“AV” means “After the Veil”: it's the Velmaris calendar. We are in {1} AV."
+  es: "«AV» significa «Después del Velo»: es el calendario de Velmaris. Estamos en el {1} AV."
+  de: "„AV“ heißt „Nach dem Schleier“: Das ist der Kalender von Velmaris. Wir haben das Jahr {1} AV."
+  ja: 「AV」は「ヴェール後」の意味。ヴェルマリスの暦で、今はAV{1}年。
+- fr: "Aujourd'hui : {1} !"
+  en: "Today: {1}!"
+  es: "Hoy: ¡{1}!"
+  de: "Heute: {1}!"
+  ja: 今日は{1}！
+- fr: "Prochaine fête : {1}, dans {2} jour{3}."
+  en: "Next festival: {1}, in {2} day(s)."
+  es: "Próxima fiesta: {1}, dentro de {2} día(s)."
+  de: "Nächstes Fest: {1}, in {2} Tag(en)."
+  ja: 次の祭り：{1}、あと{2}日。
+- fr: Héros introuvable
+  en: Hero not found
+  es: Héroe no encontrado
+  de: Held nicht gefunden
+  ja: ヒーローが見つからない
+- fr: tout le monde
+  en: everyone
+  es: todo el mundo
+  de: alle
+  ja: 全員
+- fr: "{1} de réussite"
+  en: "{1} chance of success"
+  es: "{1} de éxito"
+  de: "{1} Erfolgschance"
+  ja: 成功率{1}
+- fr: "{1}–{2} dégâts{3}"
+  en: "{1}–{2} damage{3}"
+  es: "{1}–{2} de daño{3}"
+  de: "{1}–{2} Schaden{3}"
+  ja: "{1}〜{2}ダメージ{3}"
+- fr: " (×{1} cibles)"
+  en: " (×{1} targets)"
+  es: " (×{1} objetivos)"
+  de: " (×{1} Ziele)"
+  ja: （×{1}体）
+- fr: +{1} PV
+  en: +{1} HP
+  es: +{1} PV
+  de: +{1} LP
+  ja: HP+{1}
+- fr: critique assuré
+  en: guaranteed critical
+  es: crítico asegurado
+  de: garantiert kritisch
+  ja: 確定クリティカル
+- fr: fusion de deux de tes compétences
+  en: fusion of two of your skills
+  es: fusión de dos de tus habilidades
+  de: Fusion aus zwei deiner Fähigkeiten
+  ja: 自分のスキル2つの融合
+- fr: technique copiée sur un ennemi (don Mimétisme)
+  en: technique copied from an enemy (Mimicry gift)
+  es: técnica copiada de un enemigo (don Mimetismo)
+  de: von einem Gegner kopierte Technik (Gabe Mimikry)
+  ja: 敵から真似した技（天賦「擬態」）
+- fr: potion de ton inventaire
+  en: potion from your inventory
+  es: poción de tu inventario
+  de: Trank aus deinem Inventar
+  ja: 所持品のポーション
+- fr: bombe de ta réserve
+  en: bomb from your stock
+  es: bomba de tu reserva
+  de: Bombe aus deinem Vorrat
+  ja: 手持ちの爆弾
+- fr: don Langue universelle
+  en: Universal Tongue gift
+  es: don Lengua universal
+  de: Gabe Universalsprache
+  ja: 天賦「万国の言葉」
+- fr: attaque de base, fiable
+  en: basic attack, reliable
+  es: ataque básico, fiable
+  de: Grundangriff, zuverlässig
+  ja: 通常攻撃、確実
+- fr: Fusion {1} + {2}{3}
+  en: Fusion {1} + {2}{3}
+  es: Fusión {1} + {2}{3}
+  de: Fusion {1} + {2}{3}
+  ja: 融合 {1} + {2}{3}
+- fr: Attaque sur {1}
+  en: Attack {1}
+  es: Atacar a {1}
+  de: "{1} angreifen"
+  ja: "{1}を攻撃"
+- fr: Viser {1} de {2}
+  en: Aim at {2}'s {1}
+  es: Apuntar a {1} de {2}
+  de: Auf {1} von {2} zielen
+  ja: "{2}の{1}を狙う"
+- fr: Potion de soin{1}
+  en: Healing potion{1}
+  es: Poción de curación{1}
+  de: Heiltrank{1}
+  ja: 回復ポーション{1}
+- fr: Lancer une bombe
+  en: Throw a bomb
+  es: Lanzar una bomba
+  de: Eine Bombe werfen
+  ja: 爆弾を投げる
+- fr: Se défendre
+  en: Defend
+  es: Defenderse
+  de: Verteidigen
+  ja: 防御する
+- fr: Changer de rang
+  en: Change rank
+  es: Cambiar de fila
+  de: Reihe wechseln
+  ja: 列を変える
+- fr: Parler à {1} pour le pacifier
+  en: Talk to {1} to pacify it
+  es: Hablar con {1} para apaciguarlo
+  de: Mit {1} reden, um es zu besänftigen
+  ja: "{1}に話しかけてなだめる"
+- fr: Se cacher
+  en: Hide
+  es: Esconderse
+  de: Verstecken
+  ja: 隠れる
+- fr: Fuir le combat
+  en: Flee the fight
+  es: Huir del combate
+  de: Aus dem Kampf fliehen
+  ja: 戦闘から逃げる
+- fr: De bonnes chances d'achever {1}.
+  en: Good chance to finish off {1}.
+  es: Buenas posibilidades de rematar a {1}.
+  de: Gute Chancen, {1} zu erledigen.
+  ja: "{1}にとどめを刺せる可能性が高い。"
+- fr: "{1} semble craindre {2}."
+  en: "{1} seems to fear {2}."
+  es: "{1} parece temer {2}."
+  de: "{1} scheint {2} zu fürchten."
+  ja: "{1}は{2}を恐れているようだ。"
+- fr: la lumière
+  en: light
+  es: la luz
+  de: Licht
+  ja: 光
+- fr: "{1} n'a plus que {2} % de ses PV."
+  en: "{1} has only {2}% of their HP left."
+  es: A {1} solo le queda el {2} % de sus PV.
+  de: "{1} hat nur noch {2} % LP."
+  ja: "{1}のHPは残り{2}%。"
+- fr: "Vous êtes très blessé : prudence."
+  en: "You're badly hurt: be careful."
+  es: "Estás muy herido: prudencia."
+  de: "Du bist schwer verletzt: Vorsicht."
+  ja: 深手を負っている。用心しよう。
+- fr: Le groupe est en mauvaise posture.
+  en: The group is in a bad spot.
+  es: El grupo está en apuros.
+  de: Die Gruppe steckt in Schwierigkeiten.
+  ja: パーティーは劣勢だ。
+- fr: "Compris :"
+  en: "Got it:"
+  es: "Entendido:"
+  de: "Verstanden:"
+  ja: 了解：
+- fr: "Entendu :"
+  en: "Understood:"
+  es: "De acuerdo:"
+  de: "Alles klar:"
+  ja: わかった：
+- fr: "C'est parti :"
+  en: "Here we go:"
+  es: "¡Vamos!:"
+  de: "Los geht's:"
+  ja: いくぞ：
+- fr: "Bien vu :"
+  en: "Good call:"
+  es: "Bien visto:"
+  de: "Gut gesehen:"
+  ja: いい判断：
+- fr: "Impossible :"
+  en: "Impossible:"
+  es: "Imposible:"
+  de: "Unmöglich:"
+  ja: 不可能：
+- fr: "Ça ne marchera pas :"
+  en: "That won't work:"
+  es: "Eso no funcionará:"
+  de: "Das klappt nicht:"
+  ja: それはうまくいかない：
+- fr: "Pas possible :"
+  en: "Not possible:"
+  es: "No es posible:"
+  de: "Nicht möglich:"
+  ja: できない：
+- fr: Ce n'est pas votre tour.
+  en: It's not your turn.
+  es: No es tu turno.
+  de: Du bist nicht am Zug.
+  ja: あなたの番ではない。
+- fr: Écrivez ce que fait votre personnage.
+  en: Write what your character does.
+  es: Escribe lo que hace tu personaje.
+  de: Schreib, was deine Figur tut.
+  ja: キャラクターの行動を書こう。
+- fr: Je n'ai pas compris l'action.
+  en: I didn't understand the action.
+  es: No he entendido la acción.
+  de: Ich habe die Aktion nicht verstanden.
+  ja: 行動が理解できなかった。
+- fr: rang arrière
+  en: back rank
+  es: fila trasera
+  de: hintere Reihe
+  ja: 後列
+- fr: "Voici ce que vous pouvez faire à la place :"
+  en: "Here's what you can do instead:"
+  es: "Esto es lo que puedes hacer en su lugar:"
+  de: "Das kannst du stattdessen tun:"
+  ja: 代わりにできること：
+- fr: Vous ne connaissez pas « {1} »
+  en: You don't know “{1}”
+  es: No conoces «{1}»
+  de: Du kennst „{1}“ nicht
+  ja: 「{1}」は習得していない
+- fr: Pour une fusion, nommez deux de vos compétences (ou deux éléments que vous maîtrisez)
+  en: For a fusion, name two of your skills (or two elements you master)
+  es: Para una fusión, nombra dos de tus habilidades (o dos elementos que domines)
+  de: Für eine Fusion nenne zwei deiner Fähigkeiten (oder zwei Elemente, die du beherrschst)
+  ja: 融合するには自分のスキルを2つ（または扱える属性を2つ）挙げよう
+- fr: Vous n'avez ni sort de soin ni potion
+  en: You have neither a healing spell nor a potion
+  es: No tienes ni hechizo de curación ni poción
+  de: Du hast weder Heilzauber noch Trank
+  ja: 回復呪文もポーションもない
+- fr: Vous n'avez pas de technique pour protéger un allié{1} ; seul un Gardien sacré sait s'interposer
+  en: You have no technique to protect an ally{1}; only a sacred Guardian can step in front
+  es: No tienes técnica para proteger a un aliado{1}; solo un Guardián sagrado sabe interponerse
+  de: Du hast keine Technik, um einen Verbündeten zu schützen{1}; nur ein heiliger Hüter kann sich davorstellen
+  ja: 味方を守る技がない{1}。身を挺して守れるのは聖なるガーディアンだけ
+- fr: Vous n'avez pas de technique de provocation
+  en: You have no taunting technique
+  es: No tienes técnica de provocación
+  de: Du hast keine Provokationstechnik
+  ja: 挑発の技がない
+- fr: Vous ne savez pas invoquer de créature
+  en: You don't know how to summon a creature
+  es: No sabes invocar criaturas
+  de: Du kannst keine Kreatur beschwören
+  ja: 生き物を召喚できない
+- fr: Vous ne connaissez pas « {1} »{2}
+  en: You don't know “{1}”{2}
+  es: No conoces «{1}»{2}
+  de: Du kennst „{1}“ nicht{2}
+  ja: 「{1}」は習得していない{2}
+- fr: " (c'est une compétence de {1})"
+  en: " (it's a {1} skill)"
+  es: " (es una habilidad de {1})"
+  de: " (das ist eine Fähigkeit von {1})"
+  ja: （{1}のスキル）
+- fr: Vous ne maîtrisez pas la magie de {1}
+  en: You don't master {1} magic
+  es: No dominas la magia de {1}
+  de: Du beherrschst die Magie von {1} nicht
+  ja: "{1}の魔法は扱えない"
+- fr: Vous n'avez pas de compétence utilisable pour ça
+  en: You have no usable skill for that
+  es: No tienes ninguna habilidad utilizable para eso
+  de: Dafür hast du keine nutzbare Fähigkeit
+  ja: それに使えるスキルがない
+- fr: Vous n'avez pas de bombe sur vous
+  en: You have no bomb on you
+  es: No llevas ninguna bomba
+  de: Du hast keine Bombe dabei
+  ja: 爆弾を持っていない
+- fr: "Votre sang de dragon vous donne des écailles, pas des ailes : impossible de voler"
+  en: "Your dragon blood gives you scales, not wings: you can't fly"
+  es: "Tu sangre de dragón te da escamas, no alas: imposible volar"
+  de: "Dein Drachenblut gibt dir Schuppen, keine Flügel: Fliegen ist unmöglich"
+  ja: 竜の血がくれたのは鱗で、翼ではない。飛べない
+- fr: "Votre personnage n'a pas d'ailes : impossible de voler"
+  en: "Your character has no wings: you can't fly"
+  es: "Tu personaje no tiene alas: imposible volar"
+  de: "Deine Figur hat keine Flügel: Fliegen ist unmöglich"
+  ja: キャラクターに翼はない。飛べない
+- fr: "Les créatures ne comprennent pas votre langue : seul le don « Langue universelle » permet de les raisonner"
+  en: "Creatures don't understand your language: only the “Universal Tongue” gift lets you reason with them"
+  es: "Las criaturas no entienden tu idioma: solo el don «Lengua universal» permite razonar con ellas"
+  de: "Kreaturen verstehen deine Sprache nicht: Nur die Gabe „Universalsprache“ erlaubt es, mit ihnen zu reden"
+  ja: 生き物にはあなたの言葉が通じない。天賦「万国の言葉」がないと説得できない
+- fr: À qui voulez-vous parler ?
+  en: Who do you want to talk to?
+  es: ¿Con quién quieres hablar?
+  de: Mit wem willst du sprechen?
+  ja: 誰に話しかける？
+- fr: Vous êtes déjà au rang {1}
+  en: You're already in the {1} rank
+  es: Ya estás en la fila {1}
+  de: Du bist schon in der Reihe „{1}“
+  ja: すでに{1}列にいる
+- fr: "{1} : {2} % de PV"
+  en: "{1}: {2}% HP"
+  es: "{1}: {2} % de PV"
+  de: "{1}: {2} % LP"
+  ja: "{1}：HP{2}%"
+- fr: "état : {1}"
+  en: "state: {1}"
+  es: "estado: {1}"
+  de: "Zustand: {1}"
+  ja: 状態：{1}
+- fr: "craint : {1}"
+  en: "fears: {1}"
+  es: "teme: {1}"
+  de: "fürchtet: {1}"
+  ja: 弱点：{1}
+- fr: "résiste : {1}"
+  en: "resists: {1}"
+  es: "resiste: {1}"
+  de: "widersteht: {1}"
+  ja: 耐性：{1}
+- fr: "{1}/{2} PV exactement"
+  en: exactly {1}/{2} HP
+  es: "{1}/{2} PV exactos"
+  de: genau {1}/{2} LP
+  ja: HPちょうど{1}/{2}
+- fr: Vous observez le champ de bataille{1}. Cela ne vous coûte pas votre tour.
+  en: You observe the battlefield{1}. It doesn't cost you your turn.
+  es: Observas el campo de batalla{1}. No te cuesta el turno.
+  de: Du beobachtest das Schlachtfeld{1}. Das kostet dich keine Runde.
+  ja: 戦場を観察した{1}。ターンは消費しない。
+- fr: " (Œil du Seuil)"
+  en: " (Eye of the Threshold)"
+  es: " (Ojo del Umbral)"
+  de: " (Auge der Schwelle)"
+  ja: （境界の眼）
+- fr: Je n'ai pas compris l'action. Essayez par exemple « j'attaque le loup », « je vise la tête », « je lance Javelot de flamme sur le mage » ou « je me cache »
+  en: I didn't understand the action. Try for example “j'attaque le loup”, “je vise la tête” or “je me cache” (French only).
+  es: No he entendido la acción. Prueba por ejemplo «j'attaque le loup», «je vise la tête» o «je me cache» (solo en francés).
+  de: Ich habe die Aktion nicht verstanden. Versuch zum Beispiel „j'attaque le loup“, „je vise la tête“ oder „je me cache“ (nur Französisch).
+  ja: 行動が理解できなかった。例：「j'attaque le loup」「je vise la tête」「je me cache」（フランス語のみ）。

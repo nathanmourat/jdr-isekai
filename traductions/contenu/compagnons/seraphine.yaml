@@ -1,0 +1,21 @@
+# Textes de content/compagnons/seraphine.yaml
+# Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
+- fr: Séraphine d'Aubeclaire
+- fr: Princesse, envoyée de la Couronne
+- fr: Vive, curieuse, rebelle sous l'étiquette. Elle adore les histoires « de l'autre monde » et déteste qu'on la ménage.
+- fr: Seconde de la lignée d'Aubeclaire, elle porte le deuil de son frère Aldric, disparu en 1009 lors d'une patrouille sur le Mur d'Aube.
+- fr: Retrouver Aldric, et réformer une Couronne qui traite les Appelés comme des armes.
+- fr: « Vous avez obéi au roi contre son propre peuple. Je croyais que vous valiez mieux. »
+- fr: « Je ne suis pas un trophée, ni une alliance à signer. »
+- fr: Ordre de bataille
+- fr: "Un ordre clair, une voix qui porte : le groupe frappe plus fort."
+- fr: Estoc royal
+- fr: Une botte d'escrime enseignée par les maîtres d'armes du château.
+- fr: Commandement
+- fr: +5 % de précision pour le groupe.
+- fr: Étendard royal
+- fr: +8 % de dégâts pour tout le groupe.
+- fr: Garde de la princesse
+- fr: +10 % de défense pour tout le groupe.
+- fr: Valse des lames
+- fr: "Attaque combinée avec son héros : +25 % de dégâts."

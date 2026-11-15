@@ -6,6 +6,7 @@
 import { Lighting, Players, SoundService, Workspace } from "@rbxts/services";
 import { SONS, type CleSon } from "shared/sons";
 import { jeu } from "./partie";
+import { groupeSon } from "./reglages";
 
 const pistes = new Map<string, Sound>();
 
@@ -18,6 +19,7 @@ function piste(cle: CleSon, boucle: boolean, volume: number): Sound | undefined 
 		s.SoundId = id;
 		s.Looped = boucle;
 		s.Volume = volume;
+		s.SoundGroup = groupeSon(cle);
 		s.Parent = SoundService;
 		pistes.set(cle, s);
 	}

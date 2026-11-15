@@ -5,6 +5,7 @@
 import { Players } from "@rbxts/services";
 import { reseau, type MessageServeur } from "shared/reseau";
 import { COULEURS } from "./kit";
+import { tr, trMoteur } from "shared/langue";
 
 const r = reseau();
 const file: MessageServeur[] = [];
@@ -53,10 +54,10 @@ function afficher(m: MessageServeur) {
 		l.LayoutOrder = ordre;
 		l.Parent = cadre;
 	};
-	ligneTexte(m.titre, 19, bord.Color, true, 1);
-	ligneTexte(m.texte, 16, COULEURS.texte, false, 2);
+	ligneTexte(trMoteur(m.titre), 19, bord.Color, true, 1);
+	ligneTexte(trMoteur(m.texte), 16, COULEURS.texte, false, 2);
 	const fermer = new Instance("TextButton");
-	fermer.Text = "OK";
+	fermer.Text = tr("OK");
 	fermer.Font = Enum.Font.GothamBold;
 	fermer.TextSize = 15;
 	fermer.Size = new UDim2(0, 90, 0, 34);

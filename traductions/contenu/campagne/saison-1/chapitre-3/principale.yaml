@@ -1,0 +1,100 @@
+# Textes de content/campagne/saison-1/chapitre-3/principale.yaml
+# Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
+- fr: Les domaines
+- fr: Germinal 1018. Six ans depuis l'Appel. À Lysmont, on vous salue dans la rue ; certains enfants jouent aux Appelés avec des épées de bois.
+- fr: Le roi Edmund vous reçoit debout, ce qui ne lui arrive jamais. « Qarzim. Le traité. Ma fille vivante. » Il hoche la tête. « La Couronne paie ses dettes. »
+- fr: "« Chevaliers d'Aubeclaire : je vous donne des terres à la lisière de Sylvenoire. Un manoir, des fermes, des gens. Gardez-les bien : la frontière est fragile. »"
+- fr: C'est Dame Rowena qui vous attend dans la salle du trône, un rouleau de parchemin à la main. « Le roi n'aime pas les héros libres. Mais il aime encore moins devoir quelque chose à la Guilde. »
+- fr: « Alors la Guilde vous offre des terres qu'elle a reçues en paiement il y a cent ans, à la lisière de Sylvenoire. Un manoir en ruine. Des fermes. Des gens qui ont besoin d'être protégés. Considérez ça comme une prime. »
+- fr: Sœur Elianne s'avance, un voyage dans les yeux et un sac sur l'épaule. « L'Ordre m'envoie avec vous. Officiellement, pour lire la tablette des Ruines avec les elfes. »
+- fr: "Plus bas, quand le roi s'éloigne : « Officieusement… j'ai trouvé des choses, dans les archives du Temple. Des choses qui m'empêchent de dormir. J'ai besoin de savoir. »"
+- fr: « Bienvenue, Sœur Elianne. Nous chercherons la vérité ensemble. »
+- fr: « L'Ordre nous espionne, maintenant ? »
+- fr: Elle ne s'offense pas. « L'Ordre croit que je l'espionne pour lui. Moi, je crois que je l'espionne pour vous. » Un sourire triste. « Nous verrons bien qui a raison. »
+- fr: "Le sceau de vos terres est de cire verte, frappé d'une feuille et d'une épée. Sur la carte, votre domaine touche la lisière de Sylvenoire : la forêt des elfes, où personne n'entre sans invitation."
+- fr: Séraphine pose un doigt sur la carte. « La tablette des Ruines, la fresque… tout mène à Sylvenoire. Et votre domaine en est la porte. » Elle sourit. « Le hasard fait bien les choses. Ou mon père. »
+- fr: "Germinal 1018 : {groupe} reçoivent un domaine à la lisière de Sylvenoire. Sœur Elianne les accompagne."
+- fr: La lisière de Sylvenoire
+- fr: Les champs s'arrêtent net, comme coupés au couteau. Au-delà, des troncs larges comme des tours, une brume bleue, et un silence qui écoute.
+- fr: Une flèche se plante à vos pieds. Puis dix archers apparaissent dans les branches, comme sortis de l'écorce. « Humains. Faites demi-tour. Sylvenoire n'est pas à vous. »
+- fr: Montrer la tablette (ou la copie de la fresque) des Ruines de Sel.
+- fr: "« Nous sommes les voisins : notre domaine touche votre forêt. » (Charisme, difficulté 23)"
+- fr: Attendre sans bouger, les mains ouvertes.
+- fr: Le capitaine descend d'une branche, lentement. Il regarde l'écriture elfique et pâlit. « Où avez-vous trouvé ça ? Ces mots… ce sont ceux des Anciens. »
+- fr: « Les voisins. » L'elfe pèse le mot. « Il y a cent ans, le seigneur de vos terres brûlait nos arbres pour se chauffer. » Il baisse son arc. « Prouvez que vous êtes différents. »
+- fr: "La brume s'épaissit d'un coup. Les archers se figent. Des yeux blancs s'allument entre les troncs : des loups translucides, qui ne font aucun bruit en marchant."
+- fr: « Les loups de brume ! Ils ne sortent jamais à la lisière… » Il n'a pas le temps de finir.
+- fr: Les loups vous renversent. Puis une lumière violette explose au milieu de la meute, et les loups se dissipent comme de la fumée.
+- fr: Une elfe en robe de voyage couverte de taches d'encre sort de la brume, un livre ouvert dans une main, une baguette dans l'autre. « Les loups de brume gardent la forêt contre ce qui ne vient pas de ce monde. Ils vous ont pris pour des intrus. » Elle vous détaille. « Ils n'avaient pas tout à fait tort. »
+- fr: « Ilyssë Vaëlnor. Tu es bannie. Tu n'as rien à faire ici. »
+- fr: « Je suis à la lisière, Vaelor. La lisière, c'est encore à personne. » Elle se tourne vers vous, les yeux brillants. « Des Appelés. Des vrais. Avec une tablette des Anciens. J'ai attendu ce jour pendant cinquante ans. »
+- fr: « Vous pouvez la lire ? Venez avec nous. »
+- fr: « Pourquoi vous a-t-on bannie ? »
+- fr: "« Pour avoir posé la seule question qui compte : pourquoi le ciel s'est-il déchiré ? » Elle referme son livre d'un coup sec. « La Reine préfère l'oubli. Moi, je préfère savoir. »"
+- fr: Le capitaine soupire longuement. « La Reine voudra voir la tablette. Et vous. » Il désigne Ilyssë du menton. « Elle, elle reste dehors. »
+- fr: « Bien sûr. » Ilyssë sourit d'un air qui promet exactement le contraire.
+- fr: "{groupe} entrent en Sylvenoire. Ilyssë Vaëlnor, mage elfe bannie, se joint à eux."
+- fr: La Reine-Sève
+- fr: Floréal 1019. Il a fallu près d'un an pour que la Reine accepte de vous recevoir. Les elfes ne sont jamais pressés.
+- fr: "La Cour est une salle vivante : des branches tressées pour murs, de la mousse pour tapis, et au fond, une femme si immobile qu'on la prendrait pour une statue."
+- fr: « Des Appelés. Dans ma Cour. » Sa voix est douce comme le vent dans les feuilles. « La dernière fois que j'ai vu un Appelé, il s'appelait Orvan, et il était venu me demander pardon pour ce que l'Ordre allait faire. C'était il y a six cents ans. »
+- fr: Ilyssë, qui n'était évidemment pas restée dehors, s'étrangle derrière un pilier.
+- fr: "La Reine tourne ses yeux couleur de mousse vers {nom}. « Toi, {pseudo}. Tu as du sang de la forêt. Dis-moi : faut-il réveiller ce qui dort ? »"
+- fr: « Je suis elfe, ma Reine. Et je sais que l'oubli n'a jamais guéri personne. »
+- fr: « À moitié elfe, à moitié humaine. Je sais ce que c'est, de vivre entre deux mondes qui se taisent. »
+- fr: « Ce qui dort est en train de se réveiller tout seul, au nord. Mieux vaut savoir pourquoi. »
+- fr: « Nous ne voulons pas réveiller. Nous voulons comprendre. »
+- fr: « Avec tout le respect que je vous dois… on n'a pas le temps de dormir. »
+- fr: Un long silence. Les branches des murs bougent, comme si la salle respirait.
+- fr: « Il y a mille ans, les dragons-rois régnaient. Mon peuple a voulu les vaincre. Nous avons ouvert le Voile pour y puiser une force qui n'était pas la nôtre. Le ciel s'est déchiré. Les dragons sont tombés… et le nord est devenu cendres. »
+- fr: « Tout le reste est écrit dans la Bibliothèque des Racines. Fermée depuis mille ans. » Elle vous fixe. « Pourquoi devrais-je vous l'ouvrir ? »
+- fr: « Parce que la Légion arrive, et que vous ne la vaincrez pas en fermant les yeux. » (Charisme, difficulté 24)
+- fr: « Parce qu'Ilyssë a raison depuis cinquante ans. »
+- fr: « Nous protégerons la forêt en échange. Notre domaine sera votre rempart. »
+- fr: « Alors prouvez-le. » La Reine se lève, et ses cheveux-racines glissent sur le sol. « La Bibliothèque s'ouvre à l'été prochain, quand la sève monte. Si son Gardien vous laisse passer, c'est que la forêt vous accepte. »
+- fr: Pour la première fois, quelque chose qui ressemble à un sourire. « Soit. La Bibliothèque s'ouvre à l'été prochain, quand la sève monte. Son Gardien décidera du reste. »
+- fr: Elle se tourne vers le pilier. « Et toi, Ilyssë Vaëlnor, tu peux sortir de derrière ce pilier. Tu les accompagneras. Ta peine est… suspendue. »
+- fr: En sortant, Elianne vous retient par la manche. « Elle a dit qu'Orvan était venu lui demander pardon pour ce que l'Ordre « allait faire ». Pas ce qu'il avait fait. Ce que l'Ordre allait faire. » Elle est pâle. « Le Premier Appelé… savait. »
+- fr: "Floréal 1019 : la Reine-Sève raconte la Déchirure et accepte d'ouvrir la Bibliothèque des Racines."
+- fr: La Bibliothèque des Racines
+- fr: Solaire 1020. La sève monte. Sous le plus vieil arbre du monde, une porte de racines s'ouvre pour la première fois depuis mille ans.
+- fr: Ilyssë a les mains qui tremblent. « Mille ans de savoir. Ne touchez à rien. Ne respirez pas trop fort. Et si vous devez vous battre… faites-le loin des étagères. »
+- fr: Descendre dans la Bibliothèque.
+- fr: Le Gardien vous repousse une dernière fois vers l'escalier. Mais dans votre fuite, Ilyssë a eu le temps de recopier une page entière d'un livre tombé à terre.
+- fr: "Le Gardien des Racines s'est rendormi. Au fond de la salle, sur un pupitre de bois vivant, un livre énorme : le Codex de la Déchirure."
+- fr: "Ilyssë lit à voix haute, et sa voix se brise par moments. « « Nous avons ouvert le Voile pour vaincre les dragons. Le Voile n'est pas une porte : c'est une peau. Chaque passage la déchire un peu. Chaque déchirure laisse passer des Cendres. » »"
+- fr: « « En l'an 430, des prêtres humains sont venus copier nos rituels. Nous les avons chassés. Trop tard. » » Elle lève les yeux. « L'Ordre. L'Appel vient de nous. C'est notre rituel, recopié par des voleurs. »
+- fr: Elianne s'assoit sur une marche, sans un mot. Elle serre son chapelet si fort que les perles craquent.
+- fr: « Il y a une dernière phrase, à moitié effacée. « Seul celui qui vient de l'autre côté peut recoudre ce qui a été déchiré. » » Elle vous regarde, tous, longuement. « Celui qui vient de l'autre côté. Vous. »
+- fr: "Solaire 1020 : dans la Bibliothèque des Racines, {groupe} apprennent que l'Appel est un rituel elfe volé par l'Ordre, et que chaque passage déchire le Voile."
+- fr: La Nuitlongue
+- fr: 30 Nuitlongue 1020. La nuit la plus longue de l'année. Dans la Clairière de la Déchirure, l'air tremble plus fort que jamais.
+- fr: « Ils arrivent par le nord ! » Le capitaine Vaelor court entre les arbres. « La Légion Cendrée. Des centaines. Ils veulent la Clairière. »
+- fr: « Bien sûr qu'ils la veulent. » Ilyssë est livide. « C'est l'endroit où le Voile est le plus fin. Avec assez de cristaux d'éther, ils pourraient le déchirer… de l'intérieur. »
+- fr: "Les soldats de la Légion reculent. Un passage s'ouvre dans leurs rangs. Une femme s'avance : cornes noires, cheveux couleur de braise, une épée-faux plus haute qu'elle."
+- fr: « Morwenna. Commandante de la Première Légion. Mais on m'appelle Morra. » Elle fait tourner sa faux. « Les Appelés. Le Souverain dit que vous êtes ses enfants. Moi, je dis que vous êtes ses chiens. Voyons qui a raison. »
+- fr: Morra vous domine. Sa faux s'arrête sur votre gorge… puis elle la relève.
+- fr: « Pas cette nuit. » Elle siffle ; la Légion se retire. « Le Souverain veut que vous viviez. Je ne sais pas pourquoi. Ça m'agace. »
+- fr: Morra tombe à genoux. Une de ses cornes est brisée. Elle lève les yeux vers vous, et dans ces yeux, il n'y a pas de haine. Il y a… de la fatigue.
+- fr: « Allez-y. » Elle laisse tomber sa faux. « Finissez. Il me tuera de toute façon, pour avoir perdu. »
+- fr: L'achever. C'est une commandante de la Légion.
+- fr: L'épargner. « Va-t'en. Et ne reviens pas. »
+- fr: « Pourquoi te tuerait-il ? » (Esprit, difficulté 24)
+- fr: "Elle vous fixe longtemps. Puis, très bas : « Parce qu'il a ma sœur. Lyss. Elle a seize ans, enfin… l'équivalent. Il la garde dans la Citadelle. Tant que j'obéis, elle vit. »"
+- fr: « Si je rentre vaincue, il la punira. Si je ne rentre pas… » Elle rit, un rire cassé. « Je ne sais pas ce qu'il fera. »
+- fr: Elle détourne les yeux. « Ça ne te regarde pas, Appelé. »
+- fr: Morra se relève, ramasse sa faux. Elle hésite, comme si elle allait dire quelque chose. Puis elle disparaît dans la nuit, sans se retourner.
+- fr: Elianne la regarde partir. « Elle n'avait pas les yeux d'un monstre. » Elle frissonne. « C'est presque pire. »
+- fr: La lame tombe. La commandante de la Première Légion ne se relèvera plus. Autour de vous, les derniers soldats cendrés s'enfuient vers le nord.
+- fr: Ilyssë ramasse la corne brisée, pensive. « Une démone qui n'a pas supplié. On en apprend tous les jours. »
+- fr: À l'aube, la Clairière est intacte. Le Voile tremble encore, mais il tient. Les elfes sortent des arbres, un par un, et vous regardent comme on regarde des gens qu'on ne connaissait pas.
+- fr: "30 Nuitlongue 1020 : {groupe} défendent la Clairière de la Déchirure contre la Légion Cendrée et sa commandante, Morra."
+- fr: Le verdict de la Reine
+- fr: La Reine-Sève vous attend debout, ce qui, chez elle, vaut une ovation. « Vous avez défendu la Clairière. Mon peuple s'en souviendra pendant mille ans. C'est long, mille ans, pour un souvenir. »
+- fr: « Les elfes de Sylvenoire seront vos alliés quand viendra la guerre. Nos archers. Nos guérisseurs. Notre mémoire. »
+- fr: « Ilyssë Vaëlnor. Ta peine est levée. Tu avais raison, et j'avais peur. Les reines aussi ont le droit d'avoir peur. »
+- fr: Ilyssë ne dit rien. Pour une fois, elle n'a pas de réplique. Elle s'incline, très bas, et ses épaules tremblent.
+- fr: « Merci, ma Reine. Nous reviendrons. »
+- fr: Ce soir-là, sur la plus haute branche d'Ithrael, Elianne regarde vers l'est, vers les Monts Grisfer, et plus loin, la mer. « Si chaque Appel déchire le Voile… alors les invocations doivent cesser. Il faut que quelqu'un le dise. » Elle se tourne vers vous. « Il faut des preuves. »
+- fr: Séraphine déplie une lettre qui vient d'arriver. « Les nains de Grisfer refusent toute alliance avec la Couronne. Et les dragons de l'Archipel… » Elle hésite. « On dit qu'une dragonne s'est réveillée. »
+- fr: La forêt se souvient. Désormais, vous aussi. Et la guerre approche à grands pas.

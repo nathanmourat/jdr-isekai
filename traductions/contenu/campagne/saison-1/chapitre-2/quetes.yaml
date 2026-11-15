@@ -1,0 +1,99 @@
+# Textes de content/campagne/saison-1/chapitre-2/quetes.yaml
+# Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
+- fr: Chapitre 2 — Les Routes du Sud
+- fr: Une mission diplomatique à Qarzim, avec la princesse Séraphine. Mais dans la cité de la Concorde, les cristaux d'éther cachent quelque chose.
+- fr: Répondre à la convocation de la princesse Séraphine, au château de Lysmont (Germinal 1015).
+- fr: Escorter la caravane sur la Route des Caravanes.
+- fr: Être reçus par le Prévôt Hassad au Palais de la Concorde.
+- fr: Assister au banquet de la Résidence d'Aubeclaire (10 Ardent 1016).
+- fr: Enquêter pendant le Grand Bazar de Qarzim (1er Brumaire 1016).
+- fr: Traverser le désert vers les Ruines de Sel (Solaire 1017).
+- fr: "Rejoindre le campement Lunecroc : la révolte gronde (Aurore 1017)."
+- fr: Chapitre terminé.
+- fr: La Grande Mère des chacals
+- fr: Les caravanes qui passent par le canyon perdent des chameaux. Une meute énorme, menée par une matriarche presque blanche.
+- fr: Écouter Ibrek au Comptoir de la Guilde de Qarzim.
+- fr: Descendre dans le Canyon des Chacals.
+- fr: Affronter la matriarche au fond du canyon.
+- fr: Revenir au Comptoir de la Guilde.
+- fr: Les puits asséchés
+- fr: Le bassin de l'Oasis Bleue baisse chaque semaine. Mère Ziyane soupçonne quelqu'un de voler l'eau de Qarzim.
+- fr: Parler à Mère Ziyane, à l'auberge de l'Oasis Bleue.
+- fr: Suivre l'ancien canal jusqu'aux puits asséchés.
+- fr: Trouver où va l'eau, du côté des mines d'éther.
+- fr: Rapporter la vérité à Mère Ziyane.
+- fr: La caravane fantôme
+- fr: Une caravane disparue il y a vingt ans réapparaît certaines nuits dans les Dunes chantantes.
+- fr: Écouter Maître Ouzram, au Grand Bazar.
+- fr: Attendre la nuit dans les Dunes chantantes.
+- fr: Rapporter les cendres du marchand à l'Oasis perdue.
+- fr: Le repaire des pillards
+- fr: Les pillards qui ont attaqué votre caravane ont un repaire. Et quelqu'un, à Qarzim, les paie.
+- fr: Faire parler le prisonnier, à la Porte des Caravanes.
+- fr: Attaquer le repaire des pillards.
+- fr: Montrer les preuves à Nadja, à la Porte des Caravanes.
+- fr: Le Hurlement des Ancêtres
+- fr: Kaya revient chez les siens, chassés de leurs terres. Elle veut devenir rang S pour leur rendre leur fierté.
+- fr: Accompagner Kaya au campement Lunecroc (palier « Proche »).
+- fr: Aider Kaya à reprendre une part des terres de sa tribu (chapitre 4).
+- fr: Passer l'épreuve du rang S avec Kaya (chapitre 5).
+- fr: Le Grand Livre rouge
+- fr: La dette de Nadja est écrite dans un livre de comptes secret de la Concorde. Ce livre dit aussi qui achète les cristaux.
+- fr: Aider Nadja à copier le Grand Livre rouge (palier « Proche »).
+- fr: Suivre la piste des acheteurs de cristaux (chapitre 4).
+- fr: Libérer Nadja de sa dette (chapitre 5).
+- fr: La Couronne et le Masque
+- fr: Séraphine n'a jamais cru à la mort de son frère Aldric. À Qarzim, quelqu'un a vu un homme portant son anneau.
+- fr: Suivre la piste de l'anneau d'Aldric avec Séraphine (palier « Proche »).
+- fr: Trouver où l'anneau a été vendu (chapitre 4).
+- fr: Retrouver Aldric (chapitre 5).
+- fr: Classe — La rune perdue
+- fr: Une rune gravée sur une colonne des Ruines de Sel ne ressemble à aucune autre.
+- fr: Déchiffrer la rune de la colonne brisée (Lame runique).
+- fr: Forger la rune à Ardenclume (chapitre 4).
+- fr: Graver la rune des Mille Sceaux (chapitre 5).
+- fr: Classe — Le feu du désert
+- fr: Un ermite du désert dit savoir dompter la foudre des tempêtes de sable.
+- fr: Trouver l'ermite des dunes (Arcaniste).
+- fr: Capturer le feu d'un volcan de Grisfer (chapitre 4).
+- fr: Faire converger les quatre éléments (chapitre 5).
+- fr: Classe — Le pacte des bêtes
+- fr: Les esprits des bêtes du désert répondent mal à l'appel. Il faut leur parler, pas leur ordonner.
+- fr: Parler à l'esprit du grand fennec (Invocateur).
+- fr: Gagner la confiance d'un esprit-dragon (chapitre 4).
+- fr: Ouvrir la Porte du Bestiaire (chapitre 5).
+- fr: Classe — La Main et l'Ombre
+- fr: La Main de Sable recrute. Pour une Ombre, c'est une occasion… ou un piège.
+- fr: Répondre à l'invitation sur les toits de Qarzim (Ombre).
+- fr: Retrouver le maître qui a formé Kezir (chapitre 4).
+- fr: Apprendre les Mille Coupures (chapitre 5).
+- fr: Classe — Le serment du bouclier
+- fr: Un vieux paladin de l'Ordre vit en ermite près des puits. Il garde un bouclier sans blason.
+- fr: Trouver le paladin des puits (Gardien).
+- fr: Tenir la passe des Mille Marches (chapitre 4).
+- fr: Prêter le serment du Bastion éternel (chapitre 5).
+- fr: Classe — L'atelier d'airain
+- fr: Au fond du Bazar, un atelier vend des plans d'automates. Il manque toujours une pièce.
+- fr: Racheter les plans de l'atelier du Bazar (Alchimiste).
+- fr: Trouver un cœur de forge à Ardenclume (chapitre 4).
+- fr: Achever le Golem d'airain (chapitre 5).
+- fr: Classe — Le chant des ancêtres
+- fr: Les Ourvalis disent que les ancêtres guident les flèches de ceux qui savent écouter le vent.
+- fr: Écouter le vent avec l'Ancienne Sorha (Archer).
+- fr: Tirer sur la cible des vents, dans l'Archipel (chapitre 4).
+- fr: Appeler la Pluie des Ancêtres (chapitre 5).
+- fr: Classe — Le souffle des vivants
+- fr: Une fièvre touche les mineurs de l'éther. Les guérisseurs de la Concorde refusent de les soigner.
+- fr: Soigner les mineurs malades (Guérisseur).
+- fr: Trouver la source sacrée de l'Archipel (chapitre 4).
+- fr: Apprendre le Second Souffle (chapitre 5).
+- fr: Classe — Le sang qui chante
+- fr: Dans les fosses de combat de Qarzim, un vieux sang-dragon défie quiconque prétend avoir du feu dans les veines.
+- fr: Relever le défi des fosses de Qarzim (Berserker).
+- fr: Écouter le sang au Nid des Wyrms (chapitre 4).
+- fr: Prendre la Forme du Wyrm (chapitre 5).
+- fr: Classe — La chanson perdue
+- fr: Les Dunes chantantes chantent une mélodie que personne n'a jamais su noter.
+- fr: Noter le chant des dunes (Barde).
+- fr: Trouver le dernier couplet chez les sirènes (chapitre 4).
+- fr: Jouer la Symphonie du dernier acte (chapitre 5).

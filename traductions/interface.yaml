@@ -1,0 +1,2367 @@
+# Textes de l'interface Roblox (roblox/src : tr, trf, tx)
+# Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
+- fr: "Pas encore de pierre de voyage activée près de {nom} : suis la flèche dorée."
+  en: "No waystone activated near {nom} yet: follow the golden arrow."
+  es: "Aún no hay ninguna piedra de viaje activada cerca de {nom}: sigue la flecha dorada."
+  de: "Noch kein Reisestein in der Nähe von {nom} aktiviert: Folge dem goldenen Pfeil."
+  ja: "{nom}の近くにはまだ起動した旅の石がない。金色の矢印についていこう。"
+- fr: Le voyage rapide s'éveillera {texte}. En attendant, suis la flèche dorée jusqu'à {nom}.
+  en: Fast travel will awaken {texte}. Until then, follow the golden arrow to {nom}.
+  es: El viaje rápido despertará {texte}. Mientras tanto, sigue la flecha dorada hasta {nom}.
+  de: Die Schnellreise erwacht {texte}. Bis dahin folge dem goldenen Pfeil bis {nom}.
+  ja: ファストトラベルは{texte}に目覚める。それまでは金色の矢印をたどって{nom}へ向かおう。
+- fr: " (Sors d'abord du bâtiment.)"
+  en: " (Leave the building first.)"
+  es: " (Sal primero del edificio.)"
+  de: " (Verlasse zuerst das Gebäude.)"
+  ja: （先に建物から出よう）
+- fr: ☰ Ouvrir le panneau
+  en: ☰ Open the panel
+  es: ☰ Abrir el panel
+  de: ☰ Leiste öffnen
+  ja: ☰ パネルを開く
+- fr: ▸ Replier
+  en: ▸ Collapse
+  es: ▸ Plegar
+  de: ▸ Einklappen
+  ja: ▸ たたむ
+- fr: Le serveur ne répond pas. Réessaie.
+  en: The server is not responding. Try again.
+  es: El servidor no responde. Vuelve a intentarlo.
+  de: Der Server antwortet nicht. Versuch es noch einmal.
+  ja: サーバーが応答しません。もう一度試してください。
+- fr: "{n} images/s"
+  en: "{n} FPS"
+  es: "{n} FPS"
+  de: "{n} FPS"
+  ja: "{n} FPS"
+- fr: Raté
+  en: Missed
+  es: Fallido
+  de: Verfehlt
+  ja: ミス
+- fr: ↑ Sortie
+  en: ↑ Exit
+  es: ↑ Salida
+  de: ↑ Ausgang
+  ja: ↑ 出口
+- fr: Inviter dans le groupe
+  en: Invite to the group
+  es: Invitar al grupo
+  de: In die Gruppe einladen
+  ja: パーティーに招待
+- fr: ☀ beau temps
+  en: ☀ fair weather
+  es: ☀ buen tiempo
+  de: ☀ schönes Wetter
+  ja: ☀ 晴れ
+- fr: 🌧 pluie
+  en: 🌧 rain
+  es: 🌧 lluvia
+  de: 🌧 Regen
+  ja: 🌧 雨
+- fr: ❄ neige
+  en: ❄ snow
+  es: ❄ nieve
+  de: ❄ Schnee
+  ja: ❄ 雪
+- fr: 🌫 brouillard
+  en: 🌫 fog
+  es: 🌫 niebla
+  de: 🌫 Nebel
+  ja: 🌫 霧
+- fr: 🏜 tempête de sable
+  en: 🏜 sandstorm
+  es: 🏜 tormenta de arena
+  de: 🏜 Sandsturm
+  ja: 🏜 砂嵐
+- fr: 🌋 pluie de cendres
+  en: 🌋 ash fall
+  es: 🌋 lluvia de ceniza
+  de: 🌋 Ascheregen
+  ja: 🌋 降灰
+- fr: Aura
+  en: Aura
+  es: Aura
+  de: Aura
+  ja: オーラ
+- fr: Cape
+  en: Cape
+  es: Capa
+  de: Umhang
+  ja: マント
+- fr: Titre
+  en: Title
+  es: Título
+  de: Titel
+  ja: 称号
+- fr: Traces de pas
+  en: Footprints
+  es: Huellas
+  de: Fußspuren
+  ja: 足跡
+- fr: Effets de sorts
+  en: Spell effects
+  es: Efectos de hechizos
+  de: Zaubereffekte
+  ja: 呪文エフェクト
+- fr: Bientôt
+  en: Soon
+  es: Pronto
+  de: Bald
+  ja: 近日公開
+- fr: La boutique ne répond pas, réessaie.
+  en: The shop is not responding, try again.
+  es: La tienda no responde, vuelve a intentarlo.
+  de: Der Laden antwortet nicht, versuch es noch einmal.
+  ja: ショップが応答しません。もう一度試してください。
+- fr: Refusé.
+  en: Refused.
+  es: Rechazado.
+  de: Abgelehnt.
+  ja: 拒否されました。
+- fr: Retour à la boutique
+  en: Back to the shop
+  es: Volver a la tienda
+  de: Zurück zum Laden
+  ja: ショップに戻る
+- fr: "👁 Essai : {icone} {nom} — {reste} s (tourne la caméra pour te voir)"
+  en: "👁 Try-on: {icone} {nom} — {reste} s (turn the camera to see yourself)"
+  es: "👁 Prueba: {icone} {nom} — {reste} s (gira la cámara para verte)"
+  de: "👁 Anprobe: {icone} {nom} — {reste} s (dreh die Kamera, um dich zu sehen)"
+  ja: 👁 試着中：{icone} {nom} — 残り{reste}秒（カメラを回して自分を見よう）
+- fr: ✦ Boutique de Velmaris ✦
+  en: ✦ Velmaris Shop ✦
+  es: ✦ Tienda de Velmaris ✦
+  de: ✦ Laden von Velmaris ✦
+  ja: ✦ ヴェルマリスのショップ ✦
+- fr: "Des cosmétiques seulement : rien ne rend plus fort, tout rend plus beau."
+  en: "Cosmetics only: nothing makes you stronger, everything makes you look better."
+  es: "Solo cosméticos: nada te hace más fuerte, todo te hace lucir mejor."
+  de: "Nur Kosmetik: Nichts macht dich stärker, alles macht dich schöner."
+  ja: 見た目アイテムのみ：強くはならないけれど、もっと素敵になれる。
+- fr: 🎒 Ma collection
+  en: 🎒 My collection
+  es: 🎒 Mi colección
+  de: 🎒 Meine Sammlung
+  ja: 🎒 コレクション
+- fr: ∞ illimité
+  en: ∞ unlimited
+  es: ∞ ilimitado
+  de: ∞ unbegrenzt
+  ja: ∞ 無制限
+- fr: ×{n} restantes
+  en: ×{n} left
+  es: ×{n} restantes
+  de: ×{n} übrig
+  ja: 残り×{n}
+- fr: ★ Porté
+  en: ★ Worn
+  es: ★ Puesto
+  de: ★ Getragen
+  ja: ★ 装着中
+- fr: ✓ Possédé
+  en: ✓ Owned
+  es: ✓ Comprado
+  de: ✓ Im Besitz
+  ja: ✓ 所持済み
+- fr: ← Retour aux articles
+  en: ← Back to items
+  es: ← Volver a los artículos
+  de: ← Zurück zu den Artikeln
+  ja: ← アイテム一覧に戻る
+- fr: <b>Contient :</b>
+  en: <b>Contains:</b>
+  es: <b>Contiene:</b>
+  de: <b>Enthält:</b>
+  ja: <b>内容：</b>
+- fr: "👑 Propriétaire : illimité."
+  en: "👑 Owner: unlimited."
+  es: "👑 Propietario: ilimitado."
+  de: "👑 Besitzer: unbegrenzt."
+  ja: 👑 オーナー：無制限。
+- fr: "Utilisations restantes : <b>{n}</b>"
+  en: "Uses left: <b>{n}</b>"
+  es: "Usos restantes: <b>{n}</b>"
+  de: "Verbleibende Nutzungen: <b>{n}</b>"
+  ja: 残り回数：<b>{n}</b>
+- fr: "{icone} Lancer maintenant"
+  en: "{icone} Launch now"
+  es: "{icone} Lanzar ahora"
+  de: "{icone} Jetzt zünden"
+  ja: "{icone} 今すぐ打ち上げる"
+- fr: "✓ Tu possèdes ce pack : ses articles sont dans « Ma collection »."
+  en: "✓ You own this pack: its items are in “My collection”."
+  es: "✓ Tienes este pack: sus artículos están en «Mi colección»."
+  de: "✓ Du besitzt dieses Paket: Seine Artikel findest du unter „Meine Sammlung“."
+  ja: ✓ このパックは所持済み。中身は「コレクション」にあるよ。
+- fr: Retirer
+  en: Remove
+  es: Quitar
+  de: Ablegen
+  ja: 外す
+- fr: ★ Porter
+  en: ★ Wear
+  es: ★ Ponerse
+  de: ★ Tragen
+  ja: ★ 装着する
+- fr: Acheter — {textePrix}
+  en: Buy — {textePrix}
+  es: Comprar — {textePrix}
+  de: Kaufen — {textePrix}
+  ja: 購入 — {textePrix}
+- fr: Bientôt en vente
+  en: Coming soon
+  es: Próximamente a la venta
+  de: Bald erhältlich
+  ja: 近日発売
+- fr: 🧪 Essai Studio (gratuit, non gardé)
+  en: 🧪 Studio test (free, not saved)
+  es: 🧪 Prueba en Studio (gratis, no se guarda)
+  de: 🧪 Studio-Test (kostenlos, nicht gespeichert)
+  ja: 🧪 Studioテスト（無料・保存されない）
+- fr: 🔮 Se voit en combat, sur tes sorts et tes flèches.
+  en: 🔮 Visible in combat, on your spells and arrows.
+  es: 🔮 Se ve en combate, en tus hechizos y flechas.
+  de: 🔮 Im Kampf sichtbar, auf deinen Zaubern und Pfeilen.
+  ja: 🔮 戦闘中、呪文や矢に表示される。
+- fr: 👁 Essayer 10 secondes
+  en: 👁 Try on for 10 seconds
+  es: 👁 Probar 10 segundos
+  de: 👁 10 Sekunden anprobieren
+  ja: 👁 10秒間試着する
+- fr: Achat sécurisé par Roblox. Les cosmétiques ne donnent aucun avantage en jeu.
+  en: Secure purchase through Roblox. Cosmetics give no in-game advantage.
+  es: Compra segura a través de Roblox. Los cosméticos no dan ninguna ventaja en el juego.
+  de: Sicherer Kauf über Roblox. Kosmetik verschafft keinen Vorteil im Spiel.
+  ja: 購入はRobloxで安全に行われます。見た目アイテムはゲーム上の有利にはなりません。
+- fr: <b>Porté en ce moment</b>
+  en: <b>Currently worn</b>
+  es: <b>Puesto ahora</b>
+  de: <b>Derzeit getragen</b>
+  ja: <b>現在の装着</b>
+- fr: <b>Ma collection</b> ({v} article{v2})
+  en: <b>My collection</b> ({v} item{v2})
+  es: <b>Mi colección</b> ({v} artículo{v2})
+  de: <b>Meine Sammlung</b> ({v} Artikel)
+  ja: <b>コレクション</b>（{v}個）
+- fr: Rien pour l'instant. Les articles achetés apparaîtront ici, et tu pourras les porter ou les retirer quand tu veux.
+  en: Nothing yet. Items you buy will appear here, and you can wear or remove them whenever you like.
+  es: Nada por ahora. Los artículos que compres aparecerán aquí y podrás ponértelos o quitártelos cuando quieras.
+  de: Noch nichts. Gekaufte Artikel erscheinen hier, und du kannst sie jederzeit tragen oder ablegen.
+  ja: まだ何もありません。購入したアイテムはここに表示され、いつでも装着・解除できます。
+- fr: "👑 Propriétaire du jeu : tout est débloqué pour toi (les autres joueurs voient les vrais prix)."
+  en: "👑 Game owner: everything is unlocked for you (other players see the real prices)."
+  es: "👑 Propietario del juego: todo está desbloqueado para ti (los demás jugadores ven los precios reales)."
+  de: "👑 Spielbesitzer: Für dich ist alles freigeschaltet (andere Spieler sehen die echten Preise)."
+  ja: 👑 ゲームオーナー：すべて解放済み（他のプレイヤーには実際の価格が表示されます）。
+- fr: "🧪 Studio : les achats Roblox sont des tests gratuits ; « Essai Studio » débloque un article jusqu'à la fin du test."
+  en: "🧪 Studio: Roblox purchases are free tests; “Studio test” unlocks an item until the end of the test."
+  es: "🧪 Studio: las compras de Roblox son pruebas gratuitas; «Prueba en Studio» desbloquea un artículo hasta el final de la prueba."
+  de: "🧪 Studio: Roblox-Käufe sind kostenlose Tests; „Studio-Test“ schaltet einen Artikel bis zum Ende des Tests frei."
+  ja: 🧪 Studio：Robloxの購入は無料テストです。「Studioテスト」でテスト終了までアイテムが解放されます。
+- fr: ✨ Merci !
+  en: ✨ Thank you!
+  es: ✨ ¡Gracias!
+  de: ✨ Danke!
+  ja: ✨ ありがとう！
+- fr: "{icone} {nom} est à toi. Tu peux le porter depuis « Ma collection »."
+  en: "{icone} {nom} is yours. You can wear it from “My collection”."
+  es: "{icone} {nom} es tuyo. Puedes ponértelo desde «Mi colección»."
+  de: "{icone} {nom} gehört dir. Du kannst es unter „Meine Sammlung“ tragen."
+  ja: "{icone} {nom}を手に入れた！「コレクション」から装着できます。"
+- fr: "{icone} {nom} : {n} utilisation{v} disponible{v2}."
+  en: "{icone} {nom}: {n} use{v} available."
+  es: "{icone} {nom}: {n} uso{v} disponible{v2}."
+  de: "{icone} {nom}: {n} Nutzung(en) verfügbar."
+  ja: "{icone} {nom}：{n}回使えます。"
+- fr: ⚔ <b>{nom}</b>  ·  Tour {tour}
+  en: ⚔ <b>{nom}</b>  ·  Turn {tour}
+  es: ⚔ <b>{nom}</b>  ·  Turno {tour}
+  de: ⚔ <b>{nom}</b>  ·  Runde {tour}
+  ja: ⚔ <b>{nom}</b>  ·  ターン{tour}
+- fr: "{pv}/{pvMax} PV{v} · {mana}/{manaMax} mana"
+  en: "{pv}/{pvMax} HP{v} · {mana}/{manaMax} mana"
+  es: "{pv}/{pvMax} PV{v} · {mana}/{manaMax} maná"
+  de: "{pv}/{pvMax} LP{v} · {mana}/{manaMax} Mana"
+  ja: HP {pv}/{pvMax}{v} · マナ {mana}/{manaMax}
+- fr: 🏆 Victoire !
+  en: 🏆 Victory!
+  es: 🏆 ¡Victoria!
+  de: 🏆 Sieg!
+  ja: 🏆 勝利！
+- fr: Défaite…
+  en: Defeat…
+  es: Derrota…
+  de: Niederlage …
+  ja: 敗北…
+- fr: Le groupe a fui
+  en: The group fled
+  es: El grupo ha huido
+  de: Die Gruppe ist geflohen
+  ja: パーティーは逃げ出した
+- fr: "Mort douce : personne ne meurt pour de bon. L'histoire continue."
+  en: "Soft death: nobody dies for good. The story goes on."
+  es: "Muerte suave: nadie muere para siempre. La historia continúa."
+  de: "Sanfter Tod: Niemand stirbt endgültig. Die Geschichte geht weiter."
+  ja: ソフトデス：誰も本当には死なない。物語は続く。
+- fr: Continuer
+  en: Continue
+  es: Continuar
+  de: Weiter
+  ja: 続ける
+- fr: Tour de <b>{esc}</b>{v}…
+  en: <b>{esc}</b>'s turn{v}…
+  es: Turno de <b>{esc}</b>{v}…
+  de: <b>{esc}</b> ist am Zug{v} …
+  ja: <b>{esc}</b>のターン{v}…
+- fr: 'À toi : <b>{esc}</b>  <font color="#beaf96">{pv}/{pvMax} PV · {mana} mana</font>'
+  en: 'Your turn: <b>{esc}</b>  <font color="#beaf96">{pv}/{pvMax} HP · {mana} mana</font>'
+  es: 'Te toca: <b>{esc}</b>  <font color="#beaf96">{pv}/{pvMax} PV · {mana} maná</font>'
+  de: 'Du bist dran: <b>{esc}</b>  <font color="#beaf96">{pv}/{pvMax} LP · {mana} Mana</font>'
+  ja: あなたの番：<b>{esc}</b>  <font color="#beaf96">HP {pv}/{pvMax} · マナ {mana}</font>
+- fr: "🎯 Choisis une cible : clique sur un personnage (contour doré) ou ci-dessous."
+  en: "🎯 Pick a target: click a character (golden outline) or below."
+  es: "🎯 Elige un objetivo: haz clic en un personaje (contorno dorado) o abajo."
+  de: "🎯 Wähle ein Ziel: Klicke auf eine Figur (goldener Umriss) oder unten."
+  ja: 🎯 対象を選ぼう：キャラクター（金色の輪郭）か下のリストをクリック。
+- fr: Aucune cible possible.
+  en: No possible target.
+  es: Ningún objetivo posible.
+  de: Kein mögliches Ziel.
+  ja: 選べる対象がいない。
+- fr: Annuler
+  en: Cancel
+  es: Cancelar
+  de: Abbrechen
+  ja: キャンセル
+- fr: "{cout} mana"
+  en: "{cout} mana"
+  es: "{cout} maná"
+  de: "{cout} Mana"
+  ja: マナ{cout}
+- fr: gratuit
+  en: free
+  es: gratis
+  de: kostenlos
+  ja: 無料
+- fr: 🧪 Potion ({potions})
+  en: 🧪 Potion ({potions})
+  es: 🧪 Poción ({potions})
+  de: 🧪 Trank ({potions})
+  ja: 🧪 ポーション（{potions}）
+- fr: 💣 Bombe ({bombes})
+  en: 💣 Bomb ({bombes})
+  es: 💣 Bomba ({bombes})
+  de: 💣 Bombe ({bombes})
+  ja: 💣 爆弾（{bombes}）
+- fr: ↔ Passer au rang {v}
+  en: ↔ Move to the {v} rank
+  es: ↔ Pasar a la fila {v}
+  de: ↔ In die Reihe „{v}“ wechseln
+  ja: ↔ {v}列に移動
+- fr: arrière
+  en: back
+  es: trasera
+  de: hinten
+  ja: 後
+- fr: 🙈 Se cacher
+  en: 🙈 Hide
+  es: 🙈 Esconderse
+  de: 🙈 Verstecken
+  ja: 🙈 隠れる
+- fr: 🕊 Pacifier
+  en: 🕊 Pacify
+  es: 🕊 Apaciguar
+  de: 🕊 Besänftigen
+  ja: 🕊 なだめる
+- fr: 🏃 Fuir
+  en: 🏃 Flee
+  es: 🏃 Huir
+  de: 🏃 Fliehen
+  ja: 🏃 逃げる
+- fr: ⟲ Second départ
+  en: ⟲ Second start
+  es: ⟲ Segundo comienzo
+  de: ⟲ Zweiter Anlauf
+  ja: ⟲ 仕切り直し
+- fr: Aucune proposition.
+  en: No suggestion.
+  es: Ninguna propuesta.
+  de: Kein Vorschlag.
+  ja: 提案はありません。
+- fr: Compétences
+  en: Skills
+  es: Habilidades
+  de: Fähigkeiten
+  ja: スキル
+- fr: Défendre
+  en: Defend
+  es: Defender
+  de: Verteidigen
+  ja: 防御
+- fr: "Trois propositions impossibles ce tour-ci : choisis parmi les conseils du jeu. Tu pourras de nouveau proposer au prochain tour."
+  en: "Three impossible suggestions this turn: pick from the game's advice. You can suggest again next turn."
+  es: "Tres propuestas imposibles este turno: elige entre los consejos del juego. Podrás volver a proponer en el próximo turno."
+  de: "Drei unmögliche Vorschläge in dieser Runde: Wähle aus den Tipps des Spiels. In der nächsten Runde kannst du wieder vorschlagen."
+  ja: このターンは不可能な提案が3回に達した。ゲームの助言から選ぼう。次のターンにまた提案できる。
+- fr: "💬 Ex. : je vise la tête du loup · je combine feu et glace · je me cache"
+  en: "💬 E.g.: je vise la tête du loup · je me cache (French only)"
+  es: "💬 Ej.: je vise la tête du loup · je me cache (solo en francés)"
+  de: "💬 Z. B.: je vise la tête du loup · je me cache (nur Französisch)"
+  ja: 💬 例：je vise la tête du loup · je me cache（フランス語のみ）
+- fr: Proposer
+  en: Suggest
+  es: Proponer
+  de: Vorschlagen
+  ja: 提案する
+- fr: "Propositions impossibles ce tour-ci : {essais} / {ESSAIS_MAX}"
+  en: "Impossible suggestions this turn: {essais} / {ESSAIS_MAX}"
+  es: "Propuestas imposibles este turno: {essais} / {ESSAIS_MAX}"
+  de: "Unmögliche Vorschläge in dieser Runde: {essais} / {ESSAIS_MAX}"
+  ja: このターンの不可能な提案：{essais} / {ESSAIS_MAX}
+- fr: Force
+  en: Strength
+  es: Fuerza
+  de: Stärke
+  ja: 筋力
+- fr: Agilité
+  en: Agility
+  es: Agilidad
+  de: Geschick
+  ja: 敏捷
+- fr: Intelligence
+  en: Intelligence
+  es: Inteligencia
+  de: Intelligenz
+  ja: 知力
+- fr: Vitalité
+  en: Vitality
+  es: Vitalidad
+  de: Vitalität
+  ja: 体力
+- fr: Esprit
+  en: Spirit
+  es: Espíritu
+  de: Geist
+  ja: 精神
+- fr: Charisme
+  en: Charisma
+  es: Carisma
+  de: Charisma
+  ja: 魅力
+- fr: "Pas assez d'or : il faut {min} or ({v})"
+  en: "Not enough gold: you need {min} gold ({v})"
+  es: "No tienes suficiente oro: hacen falta {min} de oro ({v})"
+  de: "Nicht genug Gold: Du brauchst {min} Gold ({v})"
+  ja: ゴールドが足りない：{min}G必要（{v}）
+- fr: '  <font color="#beaf96">· scène de groupe</font>'
+  en: '  <font color="#beaf96">· group scene</font>'
+  es: '  <font color="#beaf96">· escena de grupo</font>'
+  de: '  <font color="#beaf96">· Gruppenszene</font>'
+  ja: '  <font color="#beaf96">· パーティーシーン</font>'
+- fr: "Test de {v} ({esc}) : dé {jet} + {v2} = <b>{total}</b> contre {difficulte} → {v3}"
+  en: "{v} check ({esc}): roll {jet} + {v2} = <b>{total}</b> vs {difficulte} → {v3}"
+  es: "Prueba de {v} ({esc}): dado {jet} + {v2} = <b>{total}</b> contra {difficulte} → {v3}"
+  de: "{v}-Probe ({esc}): Wurf {jet} + {v2} = <b>{total}</b> gegen {difficulte} → {v3}"
+  ja: "{v}判定（{esc}）：出目{jet} + {v2} = <b>{total}</b> 対 {difficulte} → {v3}"
+- fr: réussite !
+  en: success!
+  es: ¡éxito!
+  de: Erfolg!
+  ja: 成功！
+- fr: échec.
+  en: failure.
+  es: fracaso.
+  de: Misserfolg.
+  ja: 失敗。
+- fr: <b>{pseudo} a répondu :</b> « {esc} »
+  en: <b>{pseudo} answered:</b> “{esc}”
+  es: <b>{pseudo} ha respondido:</b> «{esc}»
+  de: <b>{pseudo} hat geantwortet:</b> „{esc}“
+  ja: <b>{pseudo}の答え：</b>「{esc}」
+- fr: "Choix du groupe : <b>{esc}</b>"
+  en: "Group's choice: <b>{esc}</b>"
+  es: "Elección del grupo: <b>{esc}</b>"
+  de: "Wahl der Gruppe: <b>{esc}</b>"
+  ja: パーティーの選択：<b>{esc}</b>
+- fr: Continuer ▸ ({vues}/{v})
+  en: Continue ▸ ({vues}/{v})
+  es: Continuar ▸ ({vues}/{v})
+  de: Weiter ▸ ({vues}/{v})
+  ja: 続ける ▸（{vues}/{v}）
+- fr: Terminer la scène
+  en: End the scene
+  es: Terminar la escena
+  de: Szene beenden
+  ja: シーンを終える
+- fr: "C'est à toi de répondre :"
+  en: "Your turn to answer:"
+  es: "Te toca responder:"
+  de: "Du musst antworten:"
+  ja: あなたが答える番：
+- fr: <i>{esc} ({esc2}) réfléchit à sa réponse…</i>
+  en: <i>{esc} ({esc2}) is thinking about the answer…</i>
+  es: <i>{esc} ({esc2}) está pensando su respuesta…</i>
+  de: <i>{esc} ({esc2}) denkt über die Antwort nach …</i>
+  ja: <i>{esc}（{esc2}）が答えを考えている…</i>
+- fr: ⚔ Au combat !
+  en: ⚔ To battle!
+  es: ⚔ ¡Al combate!
+  de: ⚔ In den Kampf!
+  ja: ⚔ 戦闘開始！
+- fr: "🪙 Pari : {mise} pièces pour le groupe"
+  en: "🪙 Bet: {mise} coins for the group"
+  es: "🪙 Apuesta: {mise} monedas para el grupo"
+  de: "🪙 Wette: {mise} Münzen für die Gruppe"
+  ja: 🪙 賭け：パーティー全体で{mise}枚
+- fr: "La mise est partagée entre ceux qui misent{v}. Pari gagné : chacun récupère {gain} fois sa part. Pari perdu : la part est perdue."
+  en: "The stake is split among those who bet{v}. Bet won: everyone gets back {gain} times their share. Bet lost: the share is lost."
+  es: "La apuesta se reparte entre quienes apuestan{v}. Apuesta ganada: cada uno recupera {gain} veces su parte. Apuesta perdida: la parte se pierde."
+  de: "Der Einsatz wird unter denen aufgeteilt, die wetten{v}. Wette gewonnen: Jeder bekommt das {gain}-Fache seines Anteils zurück. Wette verloren: Der Anteil ist weg."
+  ja: 賭け金は賭けた人で分け合う{v}。勝てば各自の取り分が{gain}倍になって戻る。負ければ取り分は失われる。
+- fr: " (si tout le monde mise : {v})"
+  en: " (if everyone bets: {v})"
+  es: " (si todos apuestan: {v})"
+  de: " (wenn alle wetten: {v})"
+  ja: （全員が賭けた場合：{v}）
+- fr: <b>{pseudo}</b> ({esc}, {v} or){v2}
+  en: <b>{pseudo}</b> ({esc}, {v} gold){v2}
+  es: <b>{pseudo}</b> ({esc}, {v} de oro){v2}
+  de: <b>{pseudo}</b> ({esc}, {v} Gold){v2}
+  ja: <b>{pseudo}</b>（{esc}、{v}G）{v2}
+- fr: ne mise pas
+  en: won't bet
+  es: no apuesta
+  de: wettet nicht
+  ja: 賭けない
+- fr: Je mise
+  en: I'll bet
+  es: Apuesto
+  de: Ich wette
+  ja: 賭ける
+- fr: Je ne mise pas
+  en: I won't bet
+  es: No apuesto
+  de: Ich wette nicht
+  ja: 賭けない
+- fr: "Pas assez d'or : il faut au moins {partMin} pièces pour ta part."
+  en: "Not enough gold: you need at least {partMin} coins for your share."
+  es: "No tienes suficiente oro: necesitas al menos {partMin} monedas para tu parte."
+  de: "Nicht genug Gold: Du brauchst mindestens {partMin} Münzen für deinen Anteil."
+  ja: ゴールドが足りない：自分の取り分に最低{partMin}枚必要。
+- fr: réfléchit…
+  en: is thinking…
+  es: está pensando…
+  de: überlegt …
+  ja: 考え中…
+- fr: ' <font color="#beaf96">[test de {v}]</font>'
+  en: ' <font color="#beaf96">[{v} check]</font>'
+  es: ' <font color="#beaf96">[prueba de {v}]</font>'
+  de: ' <font color="#beaf96">[{v}-Probe]</font>'
+  ja: ' <font color="#beaf96">[{v}判定]</font>'
+- fr: ' <font color="#d9a441">[mise {mise} or{v}]</font>'
+  en: ' <font color="#d9a441">[bet {mise} gold{v}]</font>'
+  es: ' <font color="#d9a441">[apuesta {mise} de oro{v}]</font>'
+  de: ' <font color="#d9a441">[Einsatz {mise} Gold{v}]</font>'
+  ja: ' <font color="#d9a441">[賭け {mise}G{v}]</font>'
+- fr: " — pas assez d'or"
+  en: " — not enough gold"
+  es: " — no hay suficiente oro"
+  de: " — nicht genug Gold"
+  ja: " — ゴールド不足"
+- fr: '{libelle} <font color="#d9a441">({prix} or)</font>'
+  en: '{libelle} <font color="#d9a441">({prix} gold)</font>'
+  es: '{libelle} <font color="#d9a441">({prix} de oro)</font>'
+  de: '{libelle} <font color="#d9a441">({prix} Gold)</font>'
+  ja: '{libelle} <font color="#d9a441">（{prix}G）</font>'
+- fr: |-
+    
+    <font color="#d9a441">Votes : {v}</font>
+  en: |-
+    
+    <font color="#d9a441">Votes: {v}</font>
+  es: |-
+    
+    <font color="#d9a441">Votos: {v}</font>
+  de: |-
+    
+    <font color="#d9a441">Stimmen: {v}</font>
+  ja: |-
+    
+    <font color="#d9a441">投票：{v}</font>
+- fr: Voter
+  en: Vote
+  es: Votar
+  de: Abstimmen
+  ja: 投票する
+- fr: Choisir
+  en: Choose
+  es: Elegir
+  de: Wählen
+  ja: 選ぶ
+- fr: "En attente des votes : {v}."
+  en: "Waiting for votes: {v}."
+  es: "Esperando los votos: {v}."
+  de: "Warten auf Stimmen: {v}."
+  ja: 投票待ち：{v}。
+- fr: Trancher (meneur)
+  en: Decide (leader)
+  es: Decidir (líder)
+  de: Entscheiden (Anführer)
+  ja: 決定する（リーダー）
+- fr: Prêt ✔
+  en: Ready ✔
+  es: Listo ✔
+  de: Bereit ✔
+  ja: 準備OK ✔
+- fr: "Prêts : {v}/{v2}{v3}"
+  en: "Ready: {v}/{v2}{v3}"
+  es: "Listos: {v}/{v2}{v3}"
+  de: "Bereit: {v}/{v2}{v3}"
+  ja: 準備完了：{v}/{v2}{v3}
+- fr: " · en attente de {v}…"
+  en: " · waiting for {v}…"
+  es: " · esperando a {v}…"
+  de: " · warte auf {v} …"
+  ja: " · {v}を待っています…"
+- fr: Passer quand même (meneur)
+  en: Skip anyway (leader)
+  es: Pasar de todos modos (líder)
+  de: Trotzdem weiter (Anführer)
+  ja: それでも進む（リーダー）
+- fr: "Tu guides le groupe : marche, les événements se déclenchent sous tes pieds (lueur dorée)."
+  en: "You lead the group: walk, events trigger under your feet (golden glow)."
+  es: "Guías al grupo: camina, los eventos se activan bajo tus pies (brillo dorado)."
+  de: "Du führst die Gruppe: Lauf los, Ereignisse lösen unter deinen Füßen aus (goldenes Leuchten)."
+  ja: あなたがパーティーを導いている。歩くと足元でイベントが起こる（金色の光）。
+- fr: "{esc} guide le groupe : la lueur dorée montre où il est."
+  en: "{esc} leads the group: the golden glow shows where they are."
+  es: "{esc} guía al grupo: el brillo dorado muestra dónde está."
+  de: "{esc} führt die Gruppe: Das goldene Leuchten zeigt, wo die Gruppe ist."
+  ja: "{esc}がパーティーを導いている。金色の光が現在地を示す。"
+- fr: Le meneur
+  en: The leader
+  es: El líder
+  de: Der Anführer
+  ja: リーダー
+- fr: Le groupe avance prudemment…
+  en: The group moves forward carefully…
+  es: El grupo avanza con cautela…
+  de: Die Gruppe rückt vorsichtig vor …
+  ja: パーティーは慎重に進む…
+- fr: Rejoindre le groupe
+  en: Join the group
+  es: Unirse al grupo
+  de: Der Gruppe beitreten
+  ja: パーティーに合流
+- fr: Les Appelés de Velmaris
+  en: The Summoned of Velmaris
+  es: Los Llamados de Velmaris
+  de: Die Gerufenen von Velmaris
+  ja: ヴェルマリスの召喚者たち
+- fr: "JDR isekai en coopération : joue seul ou en groupe (6 au plus)."
+  en: "Co-op isekai RPG: play alone or in a group (up to 6)."
+  es: "JDR isekai cooperativo: juega solo o en grupo (hasta 6)."
+  de: "Kooperatives Isekai-Rollenspiel: Spiel allein oder in der Gruppe (bis zu 6)."
+  ja: 協力型の異世界RPG：ソロでもパーティー（最大6人）でも遊べる。
+- fr: Chargement de ta campagne…
+  en: Loading your campaign…
+  es: Cargando tu campaña…
+  de: Deine Kampagne wird geladen …
+  ja: キャンペーンを読み込み中…
+- fr: |-
+    Ton héros et ton histoire sont sauvegardés sur ton compte Roblox.
+    En groupe, vous jouez la campagne du chef ; tes gains te suivent dans ta campagne.
+  en: |-
+    Your hero and story are saved on your Roblox account.
+    In a group, you play the leader's campaign; your rewards follow you back to yours.
+  es: |-
+    Tu héroe y tu historia se guardan en tu cuenta de Roblox.
+    En grupo, jugáis la campaña del jefe; tus ganancias te acompañan a tu campaña.
+  de: |-
+    Dein Held und deine Geschichte werden in deinem Roblox-Konto gespeichert.
+    In der Gruppe spielt ihr die Kampagne des Anführers; deine Belohnungen kommen mit in deine Kampagne.
+  ja: |-
+    ヒーローと物語はRobloxアカウントに保存されます。
+    パーティーではリーダーのキャンペーンを遊び、得た報酬は自分のキャンペーンに持ち帰れます。
+- fr: Création de ton héros — {esc}
+  en: Creating your hero — {esc}
+  es: Creación de tu héroe — {esc}
+  de: Erschaffe deinen Helden — {esc}
+  ja: ヒーロー作成 — {esc}
+- fr: "La campagne a déjà commencé : ton héros arrivera au niveau moyen du groupe."
+  en: "The campaign has already started: your hero will arrive at the group's average level."
+  es: "La campaña ya ha empezado: tu héroe llegará al nivel medio del grupo."
+  de: "Die Kampagne hat schon begonnen: Dein Held startet mit dem Durchschnittslevel der Gruppe."
+  ja: キャンペーンはすでに始まっている。ヒーローはパーティーの平均レベルで参加する。
+- fr: 1. Origine
+  en: 1. Origin
+  es: 1. Origen
+  de: 1. Herkunft
+  ja: 1. 出自
+- fr: "Ton héros porte ton nom Roblox : <b>{esc}</b>."
+  en: "Your hero bears your Roblox name: <b>{esc}</b>."
+  es: "Tu héroe lleva tu nombre de Roblox: <b>{esc}</b>."
+  de: "Dein Held trägt deinen Roblox-Namen: <b>{esc}</b>."
+  ja: ヒーローの名前はRobloxの名前になる：<b>{esc}</b>。
+- fr: Un homme
+  en: A man
+  es: Un hombre
+  de: Ein Mann
+  ja: 男性
+- fr: Une femme
+  en: A woman
+  es: Una mujer
+  de: Eine Frau
+  ja: 女性
+- fr: Invoqué (adulte, appelé par l'Ordre)
+  en: Summoned (adult, called by the Order)
+  es: Invocado (adulto, llamado por la Orden)
+  de: Beschworen (erwachsen, vom Orden gerufen)
+  ja: 召喚者（大人、教団に呼ばれた）
+- fr: Réincarné (né dans ce monde en 994)
+  en: Reincarnated (born in this world in 994)
+  es: Reencarnado (nacido en este mundo en 994)
+  de: Wiedergeboren (in dieser Welt 994 geboren)
+  ja: 転生者（994年にこの世界で誕生）
+- fr: "Âge à l'arrivée ({age_invoque_min} à {age_invoque_max}) :"
+  en: "Age on arrival ({age_invoque_min} to {age_invoque_max}):"
+  es: "Edad al llegar ({age_invoque_min} a {age_invoque_max}):"
+  de: "Alter bei der Ankunft ({age_invoque_min} bis {age_invoque_max}):"
+  ja: 到着時の年齢（{age_invoque_min}〜{age_invoque_max}）：
+- fr: Tu joueras un court prologue d'enfance (6, 10, 14 et 17 ans) avant le chapitre 1.
+  en: You'll play a short childhood prologue (ages 6, 10, 14 and 17) before chapter 1.
+  es: Jugarás un breve prólogo de infancia (6, 10, 14 y 17 años) antes del capítulo 1.
+  de: Vor Kapitel 1 spielst du einen kurzen Kindheitsprolog (mit 6, 10, 14 und 17 Jahren).
+  ja: 第1章の前に、短い幼少期のプロローグ（6・10・14・17歳）を遊ぶ。
+- fr: 2. Race
+  en: 2. Race
+  es: 2. Raza
+  de: 2. Volk
+  ja: 2. 種族
+- fr: +1 / +1 et −1 / −1 au choix
+  en: +1 / +1 and −1 / −1 of your choice
+  es: +1 / +1 y −1 / −1 a elegir
+  de: +1 / +1 und −1 / −1 nach Wahl
+  ja: +1 / +1 と −1 / −1 を自由に
+- fr: |-
+    {mods}
+    <b>{nom}</b> : {avantage} <i>Défaut :</i> {defaut}
+  en: |-
+    {mods}
+    <b>{nom}</b>: {avantage} <i>Drawback:</i> {defaut}
+  es: |-
+    {mods}
+    <b>{nom}</b>: {avantage} <i>Defecto:</i> {defaut}
+  de: |-
+    {mods}
+    <b>{nom}</b>: {avantage} <i>Nachteil:</i> {defaut}
+  ja: |-
+    {mods}
+    <b>{nom}</b>：{avantage} <i>欠点：</i>{defaut}
+- fr: "Humain : choisis <b>deux</b> caractéristiques à +1 et <b>deux autres</b> à −1."
+  en: "Human: choose <b>two</b> attributes at +1 and <b>two others</b> at −1."
+  es: "Humano: elige <b>dos</b> características a +1 y <b>otras dos</b> a −1."
+  de: "Mensch: Wähle <b>zwei</b> Attribute mit +1 und <b>zwei andere</b> mit −1."
+  ja: 人間：能力値を<b>2つ</b>+1、<b>別の2つ</b>を−1にする。
+- fr: 3. Classe
+  en: 3. Class
+  es: 3. Clase
+  de: 3. Klasse
+  ja: 3. クラス
+- fr: |-
+    {description}
+    Passif : {nom} · Compétences : {comps}
+    <i>Fort :</i> {point_fort} <i>Faible :</i> {point_faible}
+  en: |-
+    {description}
+    Passive: {nom} · Skills: {comps}
+    <i>Strong:</i> {point_fort} <i>Weak:</i> {point_faible}
+  es: |-
+    {description}
+    Pasiva: {nom} · Habilidades: {comps}
+    <i>Fuerte:</i> {point_fort} <i>Débil:</i> {point_faible}
+  de: |-
+    {description}
+    Passiv: {nom} · Fähigkeiten: {comps}
+    <i>Stark:</i> {point_fort} <i>Schwach:</i> {point_faible}
+  ja: |-
+    {description}
+    パッシブ：{nom} · スキル：{comps}
+    <i>長所：</i>{point_fort} <i>短所：</i>{point_faible}
+- fr: 4. Don (unique dans la partie)
+  en: 4. Gift (unique in the game)
+  es: 4. Don (único en la partida)
+  de: 4. Gabe (einmalig in der Partie)
+  ja: 4. 天賦（ゲーム内で1人だけ）
+- fr: "{nom} (pris par {esc})"
+  en: "{nom} (taken by {esc})"
+  es: "{nom} (elegido por {esc})"
+  de: "{nom} (gewählt von {esc})"
+  ja: "{nom}（{esc}が選択済み）"
+- fr: |-
+    En combat : {combat}
+    Hors combat : {hors_combat}
+  en: |-
+    In combat: {combat}
+    Out of combat: {hors_combat}
+  es: |-
+    En combate: {combat}
+    Fuera de combate: {hors_combat}
+  de: |-
+    Im Kampf: {combat}
+    Außerhalb des Kampfes: {hors_combat}
+  ja: |-
+    戦闘中：{combat}
+    戦闘外：{hors_combat}
+- fr: Récapitulatif
+  en: Summary
+  es: Resumen
+  de: Zusammenfassung
+  ja: まとめ
+- fr: Créer mon héros
+  en: Create my hero
+  es: Crear mi héroe
+  de: Meinen Helden erschaffen
+  ja: ヒーローを作成
+- fr: Choisis un don.
+  en: Choose a gift.
+  es: Elige un don.
+  de: Wähle eine Gabe.
+  ja: 天賦を選ぼう。
+- fr: OK
+  en: OK
+  es: OK
+  de: OK
+  ja: OK
+- fr: Avertir, couper le chat (5 à 60 min), figer, aller vers un joueur, le renvoyer du serveur, lire le journal et les signalements.
+  en: Warn, mute chat (5 to 60 min), freeze, go to a player, kick them from the server, read the log and reports.
+  es: Avisar, silenciar el chat (5 a 60 min), congelar, ir hacia un jugador, expulsarlo del servidor, leer el registro y las denuncias.
+  de: Verwarnen, Chat stummschalten (5 bis 60 Min.), einfrieren, zu einem Spieler gehen, ihn vom Server werfen, Protokoll und Meldungen lesen.
+  ja: 警告、チャット停止（5〜60分）、凍結、プレイヤーの所へ移動、サーバーから追放、ログと通報の確認。
+- fr: "Tout ce que fait un modérateur, plus : amener un joueur, bannir (1 h à 7 jours), débannir, faire une annonce, nommer des modérateurs."
+  en: "Everything a moderator does, plus: bring a player, ban (1 h to 7 days), unban, make announcements, appoint moderators."
+  es: "Todo lo que hace un moderador, más: traer a un jugador, banear (1 h a 7 días), desbanear, hacer anuncios, nombrar moderadores."
+  de: "Alles, was ein Moderator kann, plus: Spieler herholen, bannen (1 Std. bis 7 Tage), entbannen, Ankündigungen machen, Moderatoren ernennen."
+  ja: モデレーターの権限に加えて：プレイヤーの呼び寄せ、BAN（1時間〜7日）、BAN解除、全体告知、モデレーターの任命。
+- fr: "Tout : bannir définitivement, nommer des administrateurs, arrêter le serveur, outils de jeu (or, XP). Personne ne peut agir sur toi."
+  en: "Everything: permanent bans, appoint administrators, shut down the server, game tools (gold, XP). Nobody can act on you."
+  es: "Todo: baneo definitivo, nombrar administradores, cerrar el servidor, herramientas de juego (oro, XP). Nadie puede actuar sobre ti."
+  de: "Alles: dauerhaft bannen, Administratoren ernennen, Server herunterfahren, Spielwerkzeuge (Gold, EP). Niemand kann etwas gegen dich tun."
+  ja: すべて：永久BAN、管理者の任命、サーバー停止、ゲームツール（ゴールド、経験値）。誰もあなたに手出しできない。
+- fr: Réservé à l'équipe de modération.
+  en: Reserved for the moderation team.
+  es: Reservado al equipo de moderación.
+  de: Nur für das Moderationsteam.
+  ja: モデレーションチーム専用。
+- fr: "🛡 Ton grade : {v}"
+  en: "🛡 Your rank: {v}"
+  es: "🛡 Tu rango: {v}"
+  de: "🛡 Dein Rang: {v}"
+  ja: 🛡 あなたの権限：{v}
+- fr: Joueurs sur ce serveur ({v})
+  en: Players on this server ({v})
+  es: Jugadores en este servidor ({v})
+  de: Spieler auf diesem Server ({v})
+  ja: このサーバーのプレイヤー（{v}）
+- fr: Personne d'autre pour l'instant.
+  en: Nobody else for now.
+  es: Nadie más por ahora.
+  de: Sonst noch niemand.
+  ja: 今は他に誰もいない。
+- fr: " · 🔇 chat coupé"
+  en: " · 🔇 chat muted"
+  es: " · 🔇 chat silenciado"
+  de: " · 🔇 Chat stumm"
+  ja: " · 🔇 チャット停止中"
+- fr: " · 🧊 figé"
+  en: " · 🧊 frozen"
+  es: " · 🧊 congelado"
+  de: " · 🧊 eingefroren"
+  ja: " · 🧊 凍結中"
+- fr: ▾ Choisi
+  en: ▾ Selected
+  es: ▾ Elegido
+  de: ▾ Ausgewählt
+  ja: ▾ 選択中
+- fr: Actions sur {esc}
+  en: Actions on {esc}
+  es: Acciones sobre {esc}
+  de: Aktionen für {esc}
+  ja: "{esc}への操作"
+- fr: "{esc} a un grade égal ou supérieur au tien : tu ne peux pas agir sur lui."
+  en: "{esc} has a rank equal to or higher than yours: you can't act on them."
+  es: "{esc} tiene un rango igual o superior al tuyo: no puedes actuar sobre esa persona."
+  de: "{esc} hat einen gleichen oder höheren Rang als du: Du kannst nichts gegen diese Person tun."
+  ja: "{esc}の権限はあなたと同じか上なので、操作できない。"
+- fr: "Raison :"
+  en: "Reason:"
+  es: "Motivo:"
+  de: "Grund:"
+  ja: 理由：
+- fr: ⚠ Avertir
+  en: ⚠ Warn
+  es: ⚠ Avisar
+  de: ⚠ Verwarnen
+  ja: ⚠ 警告
+- fr: ➜ Aller vers
+  en: ➜ Go to
+  es: ➜ Ir hacia
+  de: ➜ Hingehen
+  ja: ➜ 会いに行く
+- fr: ⇠ Amener ici
+  en: ⇠ Bring here
+  es: ⇠ Traer aquí
+  de: ⇠ Herholen
+  ja: ⇠ ここに呼ぶ
+- fr: Libérer
+  en: Release
+  es: Liberar
+  de: Freigeben
+  ja: 解除
+- fr: 🧊 Figer
+  en: 🧊 Freeze
+  es: 🧊 Congelar
+  de: 🧊 Einfrieren
+  ja: 🧊 凍結
+- fr: 🔊 Rendre le chat
+  en: 🔊 Unmute chat
+  es: 🔊 Devolver el chat
+  de: 🔊 Chat freigeben
+  ja: 🔊 チャット再開
+- fr: 🔇 Chat {texteDuree}
+  en: 🔇 Chat {texteDuree}
+  es: 🔇 Chat {texteDuree}
+  de: 🔇 Chat {texteDuree}
+  ja: 🔇 チャット {texteDuree}
+- fr: Renvoyer du serveur
+  en: Kick from server
+  es: Expulsar del servidor
+  de: Vom Server werfen
+  ja: サーバーから追放
+- fr: Bannir {texteDuree}
+  en: Ban {texteDuree}
+  es: Banear {texteDuree}
+  de: Bannen {texteDuree}
+  ja: BAN {texteDuree}
+- fr: ⛔ Bannir définitivement
+  en: ⛔ Ban permanently
+  es: ⛔ Banear definitivamente
+  de: ⛔ Dauerhaft bannen
+  ja: ⛔ 永久BAN
+- fr: "Grade :"
+  en: "Rank:"
+  es: "Rango:"
+  de: "Rang:"
+  ja: 権限：
+- fr: "Cadeau :"
+  en: "Gift:"
+  es: "Regalo:"
+  de: "Geschenk:"
+  ja: 贈り物：
+- fr: +100 or
+  en: +100 gold
+  es: +100 de oro
+  de: +100 Gold
+  ja: +100G
+- fr: +1000 or
+  en: +1000 gold
+  es: +1000 de oro
+  de: +1000 Gold
+  ja: +1000G
+- fr: +500 XP
+  en: +500 XP
+  es: +500 XP
+  de: +500 EP
+  ja: +500 経験値
+- fr: +5000 XP
+  en: +5000 XP
+  es: +5000 XP
+  de: +5000 EP
+  ja: +5000 経験値
+- fr: Outils du propriétaire
+  en: Owner tools
+  es: Herramientas del propietario
+  de: Besitzer-Werkzeuge
+  ja: オーナー用ツール
+- fr: "Pour toi :"
+  en: "For you:"
+  es: "Para ti:"
+  de: "Für dich:"
+  ja: 自分に：
+- fr: Arrêter le serveur…
+  en: Shut down the server…
+  es: Cerrar el servidor…
+  de: Server herunterfahren …
+  ja: サーバーを停止…
+- fr: Tout le monde sera renvoyé dans 10 s (progression sauvegardée).
+  en: Everyone will be sent away in 10 s (progress saved).
+  es: Todos serán expulsados en 10 s (progreso guardado).
+  de: Alle werden in 10 s hinausgeworfen (Fortschritt gespeichert).
+  ja: 10秒後に全員が退出させられる（進行は保存済み）。
+- fr: Confirmer
+  en: Confirm
+  es: Confirmar
+  de: Bestätigen
+  ja: 確認
+- fr: Annonce à tout le serveur
+  en: Announcement to the whole server
+  es: Anuncio a todo el servidor
+  de: Ankündigung an den ganzen Server
+  ja: サーバー全体への告知
+- fr: Ton message (200 caractères au plus)
+  en: Your message (200 characters max)
+  es: Tu mensaje (200 caracteres como máximo)
+  de: Deine Nachricht (höchstens 200 Zeichen)
+  ja: メッセージ（200文字まで）
+- fr: Envoyer
+  en: Send
+  es: Enviar
+  de: Senden
+  ja: 送信
+- fr: Équipe de modération
+  en: Moderation team
+  es: Equipo de moderación
+  de: Moderationsteam
+  ja: モデレーションチーム
+- fr: 👑 Le propriétaire (créateur du jeu) n'a pas besoin d'être nommé.
+  en: 👑 The owner (the game's creator) doesn't need to be appointed.
+  es: 👑 El propietario (creador del juego) no necesita ser nombrado.
+  de: 👑 Der Besitzer (Ersteller des Spiels) muss nicht ernannt werden.
+  ja: 👑 オーナー（ゲームの作者）は任命する必要がない。
+- fr: Personne n'a encore été nommé.
+  en: Nobody has been appointed yet.
+  es: Todavía no se ha nombrado a nadie.
+  de: Noch niemand wurde ernannt.
+  ja: まだ誰も任命されていない。
+- fr: Retirer le grade
+  en: Remove rank
+  es: Quitar el rango
+  de: Rang entziehen
+  ja: 権限を外す
+- fr: Bannis ({v})
+  en: Banned ({v})
+  es: Baneados ({v})
+  de: Gebannt ({v})
+  ja: BAN中（{v}）
+- fr: Personne n'est banni.
+  en: Nobody is banned.
+  es: Nadie está baneado.
+  de: Niemand ist gebannt.
+  ja: BANされている人はいない。
+- fr: définitif
+  en: permanent
+  es: definitivo
+  de: dauerhaft
+  ja: 永久
+- fr: Débannir
+  en: Unban
+  es: Desbanear
+  de: Entbannen
+  ja: BAN解除
+- fr: Journal de modération (60 derniers)
+  en: Moderation log (last 60)
+  es: Registro de moderación (últimos 60)
+  de: Moderationsprotokoll (letzte 60)
+  ja: モデレーションログ（直近60件）
+- fr: Rien pour l'instant.
+  en: Nothing yet.
+  es: Nada por ahora.
+  de: Noch nichts.
+  ja: まだ何もない。
+- fr: Quête principale
+  en: Main quest
+  es: Misión principal
+  de: Hauptquest
+  ja: メインクエスト
+- fr: Quête secondaire
+  en: Side quest
+  es: Misión secundaria
+  de: Nebenquest
+  ja: サブクエスト
+- fr: Quête de classe
+  en: Class quest
+  es: Misión de clase
+  de: Klassenquest
+  ja: クラスクエスト
+- fr: Quête de compagnon
+  en: Companion quest
+  es: Misión de compañera
+  de: Gefährtenquest
+  ja: 仲間クエスト
+- fr: Contrat
+  en: Contract
+  es: Contrato
+  de: Auftrag
+  ja: 依頼
+- fr: 🗺 Carte
+  en: 🗺 Map
+  es: 🗺 Mapa
+  de: 🗺 Karte
+  ja: 🗺 地図
+- fr: Personnage
+  en: Character
+  es: Personaje
+  de: Charakter
+  ja: キャラクター
+- fr: Compagnons
+  en: Companions
+  es: Compañeras
+  de: Gefährten
+  ja: 仲間
+- fr: Quêtes
+  en: Quests
+  es: Misiones
+  de: Quests
+  ja: クエスト
+- fr: Journal
+  en: Journal
+  es: Diario
+  de: Tagebuch
+  ja: 日誌
+- fr: 👥 Groupe
+  en: 👥 Group
+  es: 👥 Grupo
+  de: 👥 Gruppe
+  ja: 👥 パーティー
+- fr: <font color="{v}">{pv}/{max} PV</font>
+  en: <font color="{v}">{pv}/{max} HP</font>
+  es: <font color="{v}">{pv}/{max} PV</font>
+  de: <font color="{v}">{pv}/{max} LP</font>
+  ja: <font color="{v}">HP {pv}/{max}</font>
+- fr: <b>{formaterDate}</b> · Chapitre {chapitre} · {v}
+  en: <b>{formaterDate}</b> · Chapter {chapitre} · {v}
+  es: <b>{formaterDate}</b> · Capítulo {chapitre} · {v}
+  de: <b>{formaterDate}</b> · Kapitel {chapitre} · {v}
+  ja: <b>{formaterDate}</b> · 第{chapitre}章 · {v}
+- fr: <font color="#d9a441">{esc} · niv. {niveau} · rang {rangHeros} · {or} or</font> · {textePv}{v}
+  en: <font color="#d9a441">{esc} · lvl {niveau} · rank {rangHeros} · {or} gold</font> · {textePv}{v}
+  es: <font color="#d9a441">{esc} · nv. {niveau} · rango {rangHeros} · {or} de oro</font> · {textePv}{v}
+  de: <font color="#d9a441">{esc} · Lv. {niveau} · Rang {rangHeros} · {or} Gold</font> · {textePv}{v}
+  ja: <font color="#d9a441">{esc} · Lv.{niveau} · ランク{rangHeros} · {or}G</font> · {textePv}{v}
+- fr: " · Meneur : {esc}"
+  en: " · Leader: {esc}"
+  es: " · Líder: {esc}"
+  de: " · Anführer: {esc}"
+  ja: " · リーダー：{esc}"
+- fr: "📍 Tu es dans : <b>{nomLieu}</b>"
+  en: "📍 You are in: <b>{nomLieu}</b>"
+  es: "📍 Estás en: <b>{nomLieu}</b>"
+  de: "📍 Du bist in: <b>{nomLieu}</b>"
+  ja: 📍 現在地：<b>{nomLieu}</b>
+- fr: Que faire ici ?
+  en: What to do here?
+  es: ¿Qué hacer aquí?
+  de: Was gibt es hier zu tun?
+  ja: ここで何をする？
+- fr: <b>{esc}</b> est-il un homme ou une femme ? (pour accorder les textes)
+  en: Is <b>{esc}</b> a man or a woman? (to adapt the texts)
+  es: ¿<b>{esc}</b> es hombre o mujer? (para adaptar los textos)
+  de: Ist <b>{esc}</b> ein Mann oder eine Frau? (für die Texte)
+  ja: <b>{esc}</b>は男性？女性？（文章を合わせるため）
+- fr: "⚠ Moins de la moitié de tes PV : soigne-toi avant de te battre (repas à l'auberge, Temple, potion ou ration du sac, ou repos)."
+  en: "⚠ Less than half your HP: heal before fighting (meal at the inn, Temple, potion or ration from your bag, or rest)."
+  es: "⚠ Menos de la mitad de tus PV: cúrate antes de luchar (comida en la posada, Templo, poción o ración de la bolsa, o descanso)."
+  de: "⚠ Weniger als die Hälfte deiner LP: Heile dich vor dem Kampf (Mahlzeit im Gasthaus, Tempel, Trank oder Ration aus der Tasche, oder Ruhe)."
+  ja: ⚠ HPが半分を切っている。戦う前に回復しよう（宿屋の食事、神殿、袋のポーションや携帯食、休息）。
+- fr: 👥 <b>{esc}</b> t'invite dans son groupe (vous jouerez sa campagne, tes gains te suivent).
+  en: 👥 <b>{esc}</b> invites you to their group (you'll play their campaign; your rewards follow you).
+  es: 👥 <b>{esc}</b> te invita a su grupo (jugaréis su campaña; tus ganancias te acompañan).
+  de: 👥 <b>{esc}</b> lädt dich in die Gruppe ein (ihr spielt deren Kampagne; deine Belohnungen kommen mit).
+  ja: 👥 <b>{esc}</b>からパーティーに招待された（相手のキャンペーンを遊び、報酬は持ち帰れる）。
+- fr: Accepter
+  en: Accept
+  es: Aceptar
+  de: Annehmen
+  ja: 承諾
+- fr: Refuser
+  en: Decline
+  es: Rechazar
+  de: Ablehnen
+  ja: 断る
+- fr: 🛏 <b>{esc}</b> propose de dormir <b>{mois} mois</b> à l'auberge.
+  en: 🛏 <b>{esc}</b> suggests sleeping <b>{mois} month(s)</b> at the inn.
+  es: 🛏 <b>{esc}</b> propone dormir <b>{mois} mes(es)</b> en la posada.
+  de: 🛏 <b>{esc}</b> schlägt vor, <b>{mois} Monat(e)</b> im Gasthaus zu schlafen.
+  ja: 🛏 <b>{esc}</b>が宿屋で<b>{mois}か月</b>眠ることを提案している。
+- fr: Y aller
+  en: Go there
+  es: Ir allí
+  de: Hingehen
+  ja: 向かう
+- fr: Guider
+  en: Guide me
+  es: Guiarme
+  de: Führen
+  ja: 案内
+- fr: ➤ <b>Prochaine étape :</b> {objectif}
+  en: ➤ <b>Next step:</b> {objectif}
+  es: ➤ <b>Siguiente paso:</b> {objectif}
+  de: ➤ <b>Nächster Schritt:</b> {objectif}
+  ja: ➤ <b>次の目標：</b>{objectif}
+- fr: 🛡 Modération
+  en: 🛡 Moderation
+  es: 🛡 Moderación
+  de: 🛡 Moderation
+  ja: 🛡 モデレーション
+- fr: 🛍 Boutique
+  en: 🛍 Shop
+  es: 🛍 Tienda
+  de: 🛍 Laden
+  ja: 🛍 ショップ
+- fr: ✕ Fermer
+  en: ✕ Close
+  es: ✕ Cerrar
+  de: ✕ Schließen
+  ja: ✕ 閉じる
+- fr: Tout ce qu'on peut faire ici
+  en: Everything you can do here
+  es: Todo lo que se puede hacer aquí
+  de: Alles, was man hier tun kann
+  ja: ここでできること
+- fr: "Ici : {v}"
+  en: "Here: {v}"
+  es: "Aquí: {v}"
+  de: "Hier: {v}"
+  ja: ここにいる人：{v}
+- fr: Tu parles à <b>{v}</b>.
+  en: You're talking to <b>{v}</b>.
+  es: Hablas con <b>{v}</b>.
+  de: Du sprichst mit <b>{v}</b>.
+  ja: <b>{v}</b>と話している。
+- fr: « Rien de neuf pour l'instant. Repasse plus tard ! »
+  en: “Nothing new for now. Come back later!”
+  es: «Nada nuevo por ahora. ¡Vuelve más tarde!»
+  de: „Im Moment nichts Neues. Komm später wieder!“
+  ja: 「今のところ特に何もないよ。また来てね！」
+- fr: Avec le groupe
+  en: With the group
+  es: Con el grupo
+  de: Mit der Gruppe
+  ja: パーティーで
+- fr: quête principale
+  en: main quest
+  es: misión principal
+  de: Hauptquest
+  ja: メインクエスト
+- fr: quête
+  en: quest
+  es: misión
+  de: Quest
+  ja: クエスト
+- fr: Lancer
+  en: Launch
+  es: Iniciar
+  de: Starten
+  ja: 開始
+- fr: "Une scène de groupe implique tous les héros : les choix sont votés."
+  en: "A group scene involves every hero: choices are put to a vote."
+  es: "Una escena de grupo implica a todos los héroes: las decisiones se votan."
+  de: "An einer Gruppenszene nehmen alle Helden teil: Über Entscheidungen wird abgestimmt."
+  ja: パーティーシーンには全ヒーローが参加し、選択は投票で決める。
+- fr: Pour {esc} seul
+  en: For {esc} alone
+  es: Solo para {esc}
+  de: Nur für {esc}
+  ja: "{esc}ひとりで"
+- fr: "📜 Contrat : {titre} — étape {numero}/{total}"
+  en: "📜 Contract: {titre} — step {numero}/{total}"
+  es: "📜 Contrato: {titre} — etapa {numero}/{total}"
+  de: "📜 Auftrag: {titre} — Schritt {numero}/{total}"
+  ja: 📜 依頼：{titre} — ステップ{numero}/{total}
+- fr: Engager le combat
+  en: Start the fight
+  es: Entrar en combate
+  de: Kampf beginnen
+  ja: 戦闘を始める
+- fr: "{v} ({carac}, difficulté {difficulte})"
+  en: "{v} ({carac}, difficulty {difficulte})"
+  es: "{v} ({carac}, dificultad {difficulte})"
+  de: "{v} ({carac}, Schwierigkeit {difficulte})"
+  ja: "{v}（{carac}、難易度{difficulte}）"
+- fr: "🎖 Rang de Guilde : {rang}"
+  en: "🎖 Guild rank: {rang}"
+  es: "🎖 Rango del Gremio: {rang}"
+  de: "🎖 Gildenrang: {rang}"
+  ja: 🎖 ギルドランク：{rang}
+- fr: Tu as atteint le rang le plus haut de la Guilde.
+  en: You've reached the highest rank in the Guild.
+  es: Has alcanzado el rango más alto del Gremio.
+  de: Du hast den höchsten Rang der Gilde erreicht.
+  ja: ギルドの最高ランクに到達した。
+- fr: une épreuve en plusieurs étapes, qui se termine par un combat
+  en: a multi-step trial that ends with a fight
+  es: una prueba en varias etapas que termina con un combate
+  de: eine Prüfung in mehreren Schritten, die mit einem Kampf endet
+  ja: 最後に戦闘がある数段階の試練
+- fr: une épreuve qui arrive pendant l'histoire
+  en: a trial that happens during the story
+  es: una prueba que llega durante la historia
+  de: eine Prüfung, die während der Geschichte kommt
+  ja: 物語の中で訪れる試練
+- fr: un combat contre un examinateur
+  en: a fight against an examiner
+  es: un combate contra un examinador
+  de: ein Kampf gegen einen Prüfer
+  ja: 試験官との戦闘
+- fr: "Rang suivant : <b>{rang}</b>. Il faut {ok}, {ok2}, puis réussir {epreuve}."
+  en: "Next rank: <b>{rang}</b>. You need {ok}, {ok2}, then pass {epreuve}."
+  es: "Rango siguiente: <b>{rang}</b>. Hace falta {ok}, {ok2} y luego superar {epreuve}."
+  de: "Nächster Rang: <b>{rang}</b>. Du brauchst {ok}, {ok2} und musst dann {epreuve} bestehen."
+  ja: 次のランク：<b>{rang}</b>。{ok}、{ok2}が必要で、その後{epreuve}に合格すること。
+- fr: "{pointsRequis} points de Guilde ({points})"
+  en: "{pointsRequis} Guild points ({points})"
+  es: "{pointsRequis} puntos de Gremio ({points})"
+  de: "{pointsRequis} Gildenpunkte ({points})"
+  ja: ギルドポイント{pointsRequis}（{points}）
+- fr: le niveau {niveauRequis} ({niveau})
+  en: level {niveauRequis} ({niveau})
+  es: el nivel {niveauRequis} ({niveau})
+  de: Level {niveauRequis} ({niveau})
+  ja: レベル{niveauRequis}（{niveau}）
+- fr: "Aucun danger au combat d'examen : ni blessure, ni or perdu. En cas d'échec, on revient le lendemain."
+  en: "No danger in the exam fight: no wounds, no gold lost. If you fail, come back the next day."
+  es: "Ningún peligro en el combate del examen: ni heridas ni oro perdido. Si fallas, vuelves al día siguiente."
+  de: "Im Prüfungskampf droht keine Gefahr: keine Verletzung, kein Goldverlust. Bei einem Misserfolg kommst du am nächsten Tag wieder."
+  ja: 試験の戦闘に危険はない：負傷もゴールドの損失もなし。失敗したら翌日また挑戦できる。
+- fr: "Avec toi : {v} (prêts pour le même examen)."
+  en: "With you: {v} (ready for the same exam)."
+  es: "Contigo: {v} (listos para el mismo examen)."
+  de: "Mit dir: {v} (bereit für dieselbe Prüfung)."
+  ja: 一緒に受ける人：{v}（同じ試験の準備ができている）。
+- fr: Commencer l'épreuve du rang {rang}
+  en: Start the rank {rang} trial
+  es: Empezar la prueba del rango {rang}
+  de: Prüfung für Rang {rang} beginnen
+  ja: ランク{rang}の試練を始める
+- fr: ⚔ Passer l'examen du rang {rang}
+  en: ⚔ Take the rank {rang} exam
+  es: ⚔ Presentarse al examen del rango {rang}
+  de: ⚔ Prüfung für Rang {rang} ablegen
+  ja: ⚔ ランク{rang}の試験を受ける
+- fr: "Tableau des contrats (ton rang : {rang})"
+  en: "Contract board (your rank: {rang})"
+  es: "Tablón de contratos (tu rango: {rang})"
+  de: "Auftragsbrett (dein Rang: {rang})"
+  ja: 依頼掲示板（あなたのランク：{rang}）
+- fr: "<b>En cours : {titre}</b> (étape {numero}/{total})"
+  en: "<b>In progress: {titre}</b> (step {numero}/{total})"
+  es: "<b>En curso: {titre}</b> (etapa {numero}/{total})"
+  de: "<b>Laufend: {titre}</b> (Schritt {numero}/{total})"
+  ja: <b>進行中：{titre}</b>（ステップ{numero}/{total}）
+- fr: Abandonner ce contrat
+  en: Abandon this contract
+  es: Abandonar este contrato
+  de: Diesen Auftrag aufgeben
+  ja: この依頼を放棄する
+- fr: Un contrat se joue en plusieurs étapes, dans différents lieux (une balise lumineuse t'y attend). On revient ici toucher la récompense. Un seul contrat à la fois.
+  en: A contract is played in several steps, in different places (a glowing beacon waits for you there). Come back here to collect the reward. One contract at a time.
+  es: Un contrato se juega en varias etapas, en distintos lugares (te espera una baliza luminosa). Se vuelve aquí a cobrar la recompensa. Un solo contrato a la vez.
+  de: Ein Auftrag besteht aus mehreren Schritten an verschiedenen Orten (dort wartet ein leuchtendes Signal auf dich). Die Belohnung holst du dir hier ab. Immer nur ein Auftrag.
+  ja: 依頼は複数のステップで、さまざまな場所を巡る（光る目印が待っている）。報酬はここで受け取る。依頼は一度に1つだけ。
+- fr: <b>{titre}</b>  <font color="#beaf96">rang {rang_min}{v}</font>
+  en: <b>{titre}</b>  <font color="#beaf96">rank {rang_min}{v}</font>
+  es: <b>{titre}</b>  <font color="#beaf96">rango {rang_min}{v}</font>
+  de: <b>{titre}</b>  <font color="#beaf96">Rang {rang_min}{v}</font>
+  ja: <b>{titre}</b>  <font color="#beaf96">ランク{rang_min}{v}</font>
+- fr: " · {v} étapes"
+  en: " · {v} steps"
+  es: " · {v} etapas"
+  de: " · {v} Schritte"
+  ja: " · {v}ステップ"
+- fr: "{description} Récompense : {or} or, {xp} XP, {points_guilde} pts de guilde."
+  en: "{description} Reward: {or} gold, {xp} XP, {points_guilde} guild pts."
+  es: "{description} Recompensa: {or} de oro, {xp} XP, {points_guilde} pts de gremio."
+  de: "{description} Belohnung: {or} Gold, {xp} EP, {points_guilde} Gildenpunkte."
+  ja: "{description} 報酬：{or}G、経験値{xp}、ギルドポイント{points_guilde}。"
+- fr: "Rempli : revient dans {retour} jour{v}"
+  en: "Completed: back in {retour} day(s)"
+  es: "Cumplido: vuelve dentro de {retour} día(s)"
+  de: "Erledigt: wieder da in {retour} Tag(en)"
+  ja: 達成済み：{retour}日後に再掲示
+- fr: Termine d'abord ton contrat en cours
+  en: Finish your current contract first
+  es: Termina primero tu contrato en curso
+  de: Beende zuerst deinen laufenden Auftrag
+  ja: 先に進行中の依頼を終えよう
+- fr: Accepter (en solo)
+  en: Accept (solo)
+  es: Aceptar (en solitario)
+  de: Annehmen (allein)
+  ja: 受ける（ソロ）
+- fr: Rang {rang_min} requis
+  en: Rank {rang_min} required
+  es: Se requiere rango {rang_min}
+  de: Rang {rang_min} erforderlich
+  ja: ランク{rang_min}が必要
+- fr: 📖 Fusions que la Guilde peut t'enseigner
+  en: 📖 Fusions the Guild can teach you
+  es: 📖 Fusiones que el Gremio puede enseñarte
+  de: 📖 Fusionen, die dir die Gilde beibringen kann
+  ja: 📖 ギルドで習える融合技
+- fr: "Uniquement les fusions de ta classe et de tes compétences. Elles vont dans ton grimoire personnel : les autres joueurs ne le voient pas."
+  en: "Only fusions of your class and skills. They go into your personal grimoire: other players can't see it."
+  es: "Solo las fusiones de tu clase y de tus habilidades. Van a tu grimorio personal: los demás jugadores no lo ven."
+  de: "Nur Fusionen deiner Klasse und deiner Fähigkeiten. Sie kommen in dein persönliches Grimoire: Andere Spieler sehen es nicht."
+  ja: 自分のクラスとスキルの融合技のみ。個人の魔導書に記され、他のプレイヤーには見えない。
+- fr: <b>{nom}</b> — {description} {cout} mana, recharge {recharge}.
+  en: <b>{nom}</b> — {description} {cout} mana, cooldown {recharge}.
+  es: <b>{nom}</b> — {description} {cout} de maná, recarga {recharge}.
+  de: <b>{nom}</b> — {description} {cout} Mana, Abklingzeit {recharge}.
+  ja: <b>{nom}</b> — {description} マナ{cout}、クールダウン{recharge}。
+- fr: Apprendre
+  en: Learn
+  es: Aprender
+  de: Lernen
+  ja: 習得
+- fr: "Aucune fusion à apprendre pour l'instant : il faut deux compétences d'éléments différents."
+  en: "No fusion to learn for now: you need two skills of different elements."
+  es: "Ninguna fusión que aprender por ahora: hacen falta dos habilidades de elementos distintos."
+  de: "Im Moment keine Fusion zu lernen: Du brauchst zwei Fähigkeiten verschiedener Elemente."
+  ja: 今は習える融合技がない。異なる属性のスキルが2つ必要。
+- fr: Boutique ({or} or)
+  en: Shop ({or} gold)
+  es: Tienda ({or} de oro)
+  de: Laden ({or} Gold)
+  ja: 店（{or}G）
+- fr: "Pour d'autres classes ou plus tard :"
+  en: "For other classes or later:"
+  es: "Para otras clases o para más adelante:"
+  de: "Für andere Klassen oder für später:"
+  ja: 他のクラス向け・後で使えるもの：
+- fr: Déjà possédé dans la partie
+  en: Already owned in this game
+  es: Ya poseído en la partida
+  de: Bereits in dieser Partie im Besitz
+  ja: このゲームで所持済み
+- fr: Acheter · {prix} or
+  en: Buy · {prix} gold
+  es: Comprar · {prix} de oro
+  de: Kaufen · {prix} Gold
+  ja: 購入 · {prix}G
+- fr: Rien de particulier à faire ici pour le moment.
+  en: Nothing in particular to do here for now.
+  es: Nada en particular que hacer aquí por ahora.
+  de: Hier gibt es im Moment nichts Besonderes zu tun.
+  ja: 今ここで特にすることはない。
+- fr: 🍲 Un repas chaud
+  en: 🍲 A hot meal
+  es: 🍲 Una comida caliente
+  de: 🍲 Eine warme Mahlzeit
+  ja: 🍲 温かい食事
+- fr: ✨ Les soins des prêtres
+  en: ✨ The priests' care
+  es: ✨ Los cuidados de los sacerdotes
+  de: ✨ Die Pflege der Priester
+  ja: ✨ 神官の治療
+- fr: "{esc} : <b>{pv}/{max} PV</b>{v}"
+  en: "{esc}: <b>{pv}/{max} HP</b>{v}"
+  es: "{esc}: <b>{pv}/{max} PV</b>{v}"
+  de: "{esc}: <b>{pv}/{max} LP</b>{v}"
+  ja: "{esc}：<b>HP {pv}/{max}</b>{v}"
+- fr: ' · <font color="#e0605a">blessé</font>'
+  en: ' · <font color="#e0605a">wounded</font>'
+  es: ' · <font color="#e0605a">herido</font>'
+  de: ' · <font color="#e0605a">verletzt</font>'
+  ja: ' · <font color="#e0605a">負傷</font>'
+- fr: "{prix} or : rend {pourcent} % des PV."
+  en: "{prix} gold: restores {pourcent}% of HP."
+  es: "{prix} de oro: devuelve el {pourcent} % de los PV."
+  de: "{prix} Gold: stellt {pourcent} % der LP wieder her."
+  ja: "{prix}G：HPを{pourcent}%回復。"
+- fr: Manger ({prix} or)
+  en: Eat ({prix} gold)
+  es: Comer ({prix} de oro)
+  de: Essen ({prix} Gold)
+  ja: 食べる（{prix}G）
+- fr: "{prix} or : tous les PV, et la blessure est guérie."
+  en: "{prix} gold: all HP, and the wound is healed."
+  es: "{prix} de oro: todos los PV, y la herida se cura."
+  de: "{prix} Gold: alle LP, und die Verletzung heilt."
+  ja: "{prix}G：HP全回復、負傷も治る。"
+- fr: Se faire soigner ({prix} or)
+  en: Get healed ({prix} gold)
+  es: Recibir cuidados ({prix} de oro)
+  de: Heilen lassen ({prix} Gold)
+  ja: 治療を受ける（{prix}G）
+- fr: Le Temple
+  en: The Temple
+  es: El Templo
+  de: Der Tempel
+  ja: 神殿
+- fr: Déjà en pleine forme.
+  en: Already in top shape.
+  es: Ya estás en plena forma.
+  de: Schon topfit.
+  ja: すでに元気いっぱい。
+- fr: 🛏 La chambre du Chaudron Fêlé
+  en: 🛏 The room at the Cracked Cauldron
+  es: 🛏 La habitación del Caldero Rajado
+  de: 🛏 Das Zimmer im Gesprungenen Kessel
+  ja: 🛏 ひび割れ釜亭の部屋
+- fr: Les mois ne passent que si vous le décidez, ici. En jouant, seuls les jours avancent (jusqu'au dernier jour du mois).
+  en: Months only pass if you decide so, here. While playing, only days go by (up to the last day of the month).
+  es: Los meses solo pasan si lo decidís aquí. Jugando, solo avanzan los días (hasta el último día del mes).
+  de: Monate vergehen nur, wenn ihr es hier beschließt. Beim Spielen vergehen nur die Tage (bis zum letzten Tag des Monats).
+  ja: 月はここで決めたときだけ進む。遊んでいる間は日だけが進む（月末まで）。
+- fr: <b>{pseudo}</b> propose de dormir <b>{mois} mois</b>, jusqu'au {formaterDate}.
+  en: <b>{pseudo}</b> suggests sleeping <b>{mois} month(s)</b>, until {formaterDate}.
+  es: <b>{pseudo}</b> propone dormir <b>{mois} mes(es)</b>, hasta el {formaterDate}.
+  de: <b>{pseudo}</b> schlägt vor, <b>{mois} Monat(e)</b> zu schlafen, bis {formaterDate}.
+  ja: <b>{pseudo}</b>が<b>{mois}か月</b>眠ることを提案（{formaterDate}まで）。
+- fr: "En attente de : <b>{v}</b>"
+  en: "Waiting for: <b>{v}</b>"
+  es: "Esperando a: <b>{v}</b>"
+  de: "Warten auf: <b>{v}</b>"
+  ja: 待っている人：<b>{v}</b>
+- fr: Refuser et proposer autre chose
+  en: Decline and suggest something else
+  es: Rechazar y proponer otra cosa
+  de: Ablehnen und etwas anderes vorschlagen
+  ja: 断って別の案を出す
+- fr: Tu as accepté.
+  en: You've accepted.
+  es: Has aceptado.
+  de: Du hast zugestimmt.
+  ja: 承諾した。
+- fr: Dormir {mois} mois
+  en: Sleep {mois} month(s)
+  es: Dormir {mois} mes(es)
+  de: "{mois} Monat(e) schlafen"
+  ja: "{mois}か月眠る"
+- fr: Dormir jusqu'à la suite de l'histoire ({mois} mois) — {raison}
+  en: Sleep until the story continues ({mois} month(s)) — {raison}
+  es: Dormir hasta que siga la historia ({mois} mes(es)) — {raison}
+  de: Schlafen, bis die Geschichte weitergeht ({mois} Monat(e)) — {raison}
+  ja: 物語が進むまで眠る（{mois}か月）— {raison}
+- fr: ⭐ quête principale · ● autre chose à faire · ⚔ combat possible
+  en: ⭐ main quest · ● something else to do · ⚔ possible fight
+  es: ⭐ misión principal · ● otra cosa que hacer · ⚔ combate posible
+  de: ⭐ Hauptquest · ● etwas anderes zu tun · ⚔ möglicher Kampf
+  ja: ⭐ メインクエスト · ● その他の用事 · ⚔ 戦闘の可能性
+- fr: <font color="#ffd166">📍 étape en cours · </font>
+  en: <font color="#ffd166">📍 current step · </font>
+  es: <font color="#ffd166">📍 etapa en curso · </font>
+  de: <font color="#ffd166">📍 aktueller Schritt · </font>
+  ja: <font color="#ffd166">📍 進行中のステップ · </font>
+- fr: « Y aller » te téléporte près des pierres de voyage déjà activées ; « Guider » montre le chemin avec une flèche dorée. Une pierre s'active en passant à côté.
+  en: “Go there” teleports you near waystones you've already activated; “Guide me” shows the way with a golden arrow. A stone activates when you walk past it.
+  es: «Ir allí» te teletransporta junto a las piedras de viaje ya activadas; «Guiarme» muestra el camino con una flecha dorada. Una piedra se activa al pasar a su lado.
+  de: „Hingehen“ teleportiert dich zu bereits aktivierten Reisesteinen; „Führen“ zeigt den Weg mit einem goldenen Pfeil. Ein Stein wird aktiviert, wenn du an ihm vorbeigehst.
+  ja: 「向かう」は起動済みの旅の石の近くへテレポートする。「案内」は金色の矢印で道を示す。石はそばを通ると起動する。
+- fr: Le voyage rapide s'éveillera {texte}. En attendant, « Guider » montre le chemin avec une flèche dorée.
+  en: Fast travel will awaken {texte}. Until then, “Guide me” shows the way with a golden arrow.
+  es: El viaje rápido despertará {texte}. Mientras tanto, «Guiarme» muestra el camino con una flecha dorada.
+  de: Die Schnellreise erwacht {texte}. Bis dahin zeigt „Führen“ den Weg mit einem goldenen Pfeil.
+  ja: ファストトラベルは{texte}に目覚める。それまでは「案内」が金色の矢印で道を示す。
+- fr: 🌀 Pierres de voyage ({v}/{v2})
+  en: 🌀 Waystones ({v}/{v2})
+  es: 🌀 Piedras de viaje ({v}/{v2})
+  de: 🌀 Reisesteine ({v}/{v2})
+  ja: 🌀 旅の石（{v}/{v2}）
+- fr: "Les pierres dorment encore : le voyage rapide s'éveillera {texte}. Tu peux déjà les activer en passant à côté."
+  en: "The stones are still asleep: fast travel will awaken {texte}. You can already activate them by walking past."
+  es: "Las piedras aún duermen: el viaje rápido despertará {texte}. Ya puedes activarlas pasando a su lado."
+  de: "Die Steine schlafen noch: Die Schnellreise erwacht {texte}. Du kannst sie schon aktivieren, indem du vorbeigehst."
+  ja: 石はまだ眠っている。ファストトラベルは{texte}に目覚める。そばを通れば今から起動できる。
+- fr: Voyager
+  en: Travel
+  es: Viajar
+  de: Reisen
+  ja: 移動
+- fr: "Aucune pierre activée : la première est sur la grande place de Lysmont."
+  en: "No stone activated: the first one is on Lysmont's main square."
+  es: "Ninguna piedra activada: la primera está en la plaza mayor de Lysmont."
+  de: "Kein Stein aktiviert: Der erste steht auf dem großen Platz von Lysmont."
+  ja: 起動した石はない。最初の石はリスモンの大広場にある。
+- fr: "{nom} · {nom2} · {v} · {age} ans{v2}"
+  en: "{nom} · {nom2} · {v} · {age} years old{v2}"
+  es: "{nom} · {nom2} · {v} · {age} años{v2}"
+  de: "{nom} · {nom2} · {v} · {age} Jahre{v2}"
+  ja: "{nom} · {nom2} · {v} · {age}歳{v2}"
+- fr: Invoqué
+  en: Summoned
+  es: Invocado
+  de: Beschworen
+  ja: 召喚者
+- fr: Réincarné
+  en: Reincarnated
+  es: Reencarnado
+  de: Wiedergeboren
+  ja: 転生者
+- fr: ' · <font color="#c4483c">blessé</font>'
+  en: ' · <font color="#c4483c">wounded</font>'
+  es: ' · <font color="#c4483c">herido</font>'
+  de: ' · <font color="#c4483c">verletzt</font>'
+  ja: ' · <font color="#c4483c">負傷</font>'
+- fr: Niveau {niveau} — XP {xp} / {xpPourNiveau} · PV max {pvMax} · Mana {manaMax} · {or} or
+  en: Level {niveau} — XP {xp} / {xpPourNiveau} · Max HP {pvMax} · Mana {manaMax} · {or} gold
+  es: Nivel {niveau} — XP {xp} / {xpPourNiveau} · PV máx. {pvMax} · Maná {manaMax} · {or} de oro
+  de: Level {niveau} — EP {xp} / {xpPourNiveau} · Max. LP {pvMax} · Mana {manaMax} · {or} Gold
+  ja: レベル{niveau} — 経験値 {xp} / {xpPourNiveau} · 最大HP {pvMax} · マナ {manaMax} · {or}G
+- fr: "Si je suis absent :"
+  en: "If I'm absent:"
+  es: "Si estoy ausente:"
+  de: "Wenn ich fehle:"
+  ja: 不在のとき：
+- fr: joué par l'ordinateur
+  en: played by the computer
+  es: jugado por el ordenador
+  de: vom Computer gespielt
+  ja: コンピューターが操作
+- fr: reste au camp
+  en: stays at camp
+  es: se queda en el campamento
+  de: bleibt im Lager
+  ja: 野営地で待機
+- fr: Caractéristiques{v}
+  en: Attributes{v}
+  es: Características{v}
+  de: Attribute{v}
+  ja: 能力値{v}
+- fr: " — {pointsCaracDispo} point(s) à répartir"
+  en: " — {pointsCaracDispo} point(s) to spend"
+  es: " — {pointsCaracDispo} punto(s) por repartir"
+  de: " — {pointsCaracDispo} Punkt(e) zu verteilen"
+  ja: " — 割り振れるポイント{pointsCaracDispo}"
+- fr: Don, trait et passif
+  en: Gift, trait and passive
+  es: Don, rasgo y pasiva
+  de: Gabe, Merkmal und Passiv
+  ja: 天賦・特性・パッシブ
+- fr: "<b>Don : {nom}</b> — {combat} <i>Hors combat :</i> {hors_combat}"
+  en: "<b>Gift: {nom}</b> — {combat} <i>Out of combat:</i> {hors_combat}"
+  es: "<b>Don: {nom}</b> — {combat} <i>Fuera de combate:</i> {hors_combat}"
+  de: "<b>Gabe: {nom}</b> — {combat} <i>Außerhalb des Kampfes:</i> {hors_combat}"
+  ja: <b>天賦：{nom}</b> — {combat} <i>戦闘外：</i>{hors_combat}
+- fr: <b>{nom}</b> — {avantage} <i>Défaut :</i> {defaut}
+  en: <b>{nom}</b> — {avantage} <i>Drawback:</i> {defaut}
+  es: <b>{nom}</b> — {avantage} <i>Defecto:</i> {defaut}
+  de: <b>{nom}</b> — {avantage} <i>Nachteil:</i> {defaut}
+  ja: <b>{nom}</b> — {avantage} <i>欠点：</i>{defaut}
+- fr: "<b>Passif : {nom}</b> — {description}"
+  en: "<b>Passive: {nom}</b> — {description}"
+  es: "<b>Pasiva: {nom}</b> — {description}"
+  de: "<b>Passiv: {nom}</b> — {description}"
+  ja: <b>パッシブ：{nom}</b> — {description}
+- fr: Compétences{v}
+  en: Skills{v}
+  es: Habilidades{v}
+  de: Fähigkeiten{v}
+  ja: スキル{v}
+- fr: " — {pointsCompetenceDispo} point(s)"
+  en: " — {pointsCompetenceDispo} point(s)"
+  es: " — {pointsCompetenceDispo} punto(s)"
+  de: " — {pointsCompetenceDispo} Punkt(e)"
+  ja: " — {pointsCompetenceDispo}ポイント"
+- fr: Rang maximum {rang_competence_max} · {v}/{competences_equipees_max} équipées pour le combat.
+  en: Max rank {rang_competence_max} · {v}/{competences_equipees_max} equipped for combat.
+  es: Rango máximo {rang_competence_max} · {v}/{competences_equipees_max} equipadas para el combate.
+  de: Höchster Rang {rang_competence_max} · {v}/{competences_equipees_max} für den Kampf ausgerüstet.
+  ja: 最大ランク{rang_competence_max} · 戦闘用に{v}/{competences_equipees_max}個装備中。
+- fr: <b>{nom}</b> (rang {rang}/{rang_competence_max}) <font color="#beaf96">{description}</font>
+  en: <b>{nom}</b> (rank {rang}/{rang_competence_max}) <font color="#beaf96">{description}</font>
+  es: <b>{nom}</b> (rango {rang}/{rang_competence_max}) <font color="#beaf96">{description}</font>
+  de: <b>{nom}</b> (Rang {rang}/{rang_competence_max}) <font color="#beaf96">{description}</font>
+  ja: <b>{nom}</b>（ランク{rang}/{rang_competence_max}） <font color="#beaf96">{description}</font>
+- fr: Améliorer
+  en: Upgrade
+  es: Mejorar
+  de: Verbessern
+  ja: 強化
+- fr: "Variante active :"
+  en: "Active variant:"
+  es: "Variante activa:"
+  de: "Aktive Variante:"
+  ja: 使用中の派生：
+- fr: de base
+  en: basic
+  es: básica
+  de: Grundform
+  ja: 基本
+- fr: Oublier
+  en: Forget
+  es: Olvidar
+  de: Vergessen
+  ja: 忘れる
+- fr: <b>Choisis une branche :</b>
+  en: <b>Choose a branch:</b>
+  es: <b>Elige una rama:</b>
+  de: <b>Wähle einen Zweig:</b>
+  ja: <b>ブランチを選ぼう：</b>
+- fr: Choisir {nom}
+  en: Choose {nom}
+  es: Elegir {nom}
+  de: "{nom} wählen"
+  ja: "{nom}を選ぶ"
+- fr: "Au niveau {niveau_branche}, tu choisiras une branche : {v}."
+  en: "At level {niveau_branche}, you'll choose a branch: {v}."
+  es: "En el nivel {niveau_branche} elegirás una rama: {v}."
+  de: "Auf Level {niveau_branche} wählst du einen Zweig: {v}."
+  ja: レベル{niveau_branche}でブランチを選ぶ：{v}。
+- fr: "Ultime : {nom} — {description}"
+  en: "Ultimate: {nom} — {description}"
+  es: "Definitiva: {nom} — {description}"
+  de: "Ultimative Fähigkeit: {nom} — {description}"
+  ja: 奥義：{nom} — {description}
+- fr: Équipement porté
+  en: Equipment worn
+  es: Equipo puesto
+  de: Getragene Ausrüstung
+  ja: 装備中
+- fr: '{v} : <font color="#beaf96">rien ({v2})</font>'
+  en: '{v}: <font color="#beaf96">nothing ({v2})</font>'
+  es: '{v}: <font color="#beaf96">nada ({v2})</font>'
+  de: '{v}: <font color="#beaf96">nichts ({v2})</font>'
+  ja: '{v}：<font color="#beaf96">なし（{v2}）</font>'
+- fr: arme de base de la classe
+  en: class's basic weapon
+  es: arma básica de la clase
+  de: Grundwaffe der Klasse
+  ja: クラスの基本武器
+- fr: aucun bonus
+  en: no bonus
+  es: ninguna bonificación
+  de: kein Bonus
+  ja: ボーナスなし
+- fr: Sac ({or} or) · {pvHeros}/{pvMaxHeros} PV
+  en: Bag ({or} gold) · {pvHeros}/{pvMaxHeros} HP
+  es: Bolsa ({or} de oro) · {pvHeros}/{pvMaxHeros} PV
+  de: Tasche ({or} Gold) · {pvHeros}/{pvMaxHeros} LP
+  ja: 袋（{or}G） · HP {pvHeros}/{pvMaxHeros}
+- fr: Équiper
+  en: Equip
+  es: Equipar
+  de: Ausrüsten
+  ja: 装備
+- fr: Manger (+{ration_pourcent} % PV)
+  en: Eat (+{ration_pourcent}% HP)
+  es: Comer (+{ration_pourcent} % PV)
+  de: Essen (+{ration_pourcent} % LP)
+  ja: 食べる（HP+{ration_pourcent}%）
+- fr: Utiliser (hors combat)
+  en: Use (out of combat)
+  es: Usar (fuera de combate)
+  de: Benutzen (außerhalb des Kampfes)
+  ja: 使う（戦闘外）
+- fr: Vendre {prixVente} or
+  en: Sell {prixVente} gold
+  es: Vender {prixVente} de oro
+  de: Verkaufen {prixVente} Gold
+  ja: 売る {prixVente}G
+- fr: Ton sac est vide.
+  en: Your bag is empty.
+  es: Tu bolsa está vacía.
+  de: Deine Tasche ist leer.
+  ja: 袋は空っぽ。
+- fr: " · terminée"
+  en: " · completed"
+  es: " · terminada"
+  de: " · abgeschlossen"
+  ja: " · 完了"
+- fr: '<b>📜 Contrat : {titre}</b>  <font color="#beaf96">étape {numero}/{total}</font>'
+  en: '<b>📜 Contract: {titre}</b>  <font color="#beaf96">step {numero}/{total}</font>'
+  es: '<b>📜 Contrato: {titre}</b>  <font color="#beaf96">etapa {numero}/{total}</font>'
+  de: '<b>📜 Auftrag: {titre}</b>  <font color="#beaf96">Schritt {numero}/{total}</font>'
+  ja: <b>📜 依頼：{titre}</b>  <font color="#beaf96">ステップ{numero}/{total}</font>
+- fr: Aucune quête pour l'instant.
+  en: No quests for now.
+  es: Ninguna misión por ahora.
+  de: Im Moment keine Quests.
+  ja: 今はクエストがない。
+- fr: À vivre maintenant
+  en: To experience now
+  es: Para vivir ahora
+  de: Jetzt erleben
+  ja: 今すぐ遊べる
+- fr: Journal de la partie
+  en: Game journal
+  es: Diario de la partida
+  de: Tagebuch der Partie
+  ja: 冒険日誌
+- fr: Tu n'as encore rencontré personne.
+  en: You haven't met anyone yet.
+  es: Todavía no has conocido a nadie.
+  de: Du hast noch niemanden getroffen.
+  ja: まだ誰にも出会っていない。
+- fr: "{titre} · {age} ans"
+  en: "{titre} · {age} years old"
+  es: "{titre} · {age} años"
+  de: "{titre} · {age} Jahre"
+  ja: "{titre} · {age}歳"
+- fr: "<b>Palier : {nom}</b> ({points}/100){v}"
+  en: "<b>Tier: {nom}</b> ({points}/100){v}"
+  es: "<b>Nivel: {nom}</b> ({points}/100){v}"
+  de: "<b>Stufe: {nom}</b> ({points}/100){v}"
+  ja: <b>段階：{nom}</b>（{points}/100）{v}
+- fr: " — elle t'en veut, il faudra te faire pardonner"
+  en: " — she's upset with you, you'll have to make amends"
+  es: " — está dolida contigo, tendrás que hacerte perdonar"
+  de: " — sie ist dir böse, du musst es wiedergutmachen"
+  ja: " — 彼女は怒っている。許してもらう必要がある"
+- fr: <b>T'accompagne en combat</b>
+  en: <b>Fights at your side</b>
+  es: <b>Te acompaña en combate</b>
+  de: <b>Begleitet dich im Kampf</b>
+  ja: <b>戦闘に同行中</b>
+- fr: Laisser au camp
+  en: Leave at camp
+  es: Dejar en el campamento
+  de: Im Lager lassen
+  ja: 野営地に残す
+- fr: Palier « Alliée » requis pour l'emmener
+  en: “Ally” tier required to take her along
+  es: Se requiere el nivel «Aliada» para llevarla
+  de: Stufe „Verbündete“ nötig, um sie mitzunehmen
+  ja: 連れて行くには「味方」段階が必要
+- fr: L'emmener en combat
+  en: Take her into combat
+  es: Llevarla al combate
+  de: In den Kampf mitnehmen
+  ja: 戦闘に連れて行く
+- fr: "Offrir :"
+  en: "Give:"
+  es: "Regalar:"
+  de: "Schenken:"
+  ja: 贈る：
+- fr: Aucun cadeau dans ton sac. On en trouve dans les boutiques de Lysmont.
+  en: No gifts in your bag. You'll find some in Lysmont's shops.
+  es: No hay regalos en tu bolsa. Los encontrarás en las tiendas de Lysmont.
+  de: Keine Geschenke in deiner Tasche. Du findest welche in den Läden von Lysmont.
+  ja: 袋に贈り物がない。リスモンの店で手に入る。
+- fr: un joueur parti
+  en: a player who left
+  es: un jugador que se fue
+  de: ein Spieler, der gegangen ist
+  ja: 退出したプレイヤー
+- fr: 📋 Recherche de groupe
+  en: 📋 Looking for group
+  es: 📋 Búsqueda de grupo
+  de: 📋 Gruppensuche
+  ja: 📋 パーティー募集
+- fr: Aucune annonce pour l'instant.
+  en: No posts for now.
+  es: Ningún anuncio por ahora.
+  de: Im Moment keine Anzeigen.
+  ja: 今は募集がない。
+- fr: "<b>{esc}</b> (niv. {niveau}) cherche du monde : <b>{esc2}</b> · {places} place{v}"
+  en: "<b>{esc}</b> (lvl {niveau}) is looking for players: <b>{esc2}</b> · {places} spot(s)"
+  es: "<b>{esc}</b> (nv. {niveau}) busca gente: <b>{esc2}</b> · {places} plaza{v}"
+  de: "<b>{esc}</b> (Lv. {niveau}) sucht Mitspieler: <b>{esc2}</b> · {places} Platz/Plätze"
+  ja: <b>{esc}</b>（Lv.{niveau}）が仲間を募集中：<b>{esc2}</b> · 空き{places}
+- fr: Rejoindre
+  en: Join
+  es: Unirse
+  de: Beitreten
+  ja: 参加
+- fr: "Ton annonce : <b>{esc}</b>"
+  en: "Your post: <b>{esc}</b>"
+  es: "Tu anuncio: <b>{esc}</b>"
+  de: "Deine Anzeige: <b>{esc}</b>"
+  ja: あなたの募集：<b>{esc}</b>
+- fr: "Publier une annonce : que veux-tu faire ?"
+  en: "Post an ad: what do you want to do?"
+  es: "Publicar un anuncio: ¿qué quieres hacer?"
+  de: "Anzeige aufgeben: Was möchtest du tun?"
+  ja: 募集を出す：何をしたい？
+- fr: Publier
+  en: Post
+  es: Publicar
+  de: Veröffentlichen
+  ja: 掲載
+- fr: Tu joues la campagne de <b>{esc}</b>, en renfort. Ton XP, ton or, tes objets et tes compétences rentreront avec toi dans ta campagne quand tu quitteras le groupe. L'histoire de ta campagne, elle, n'avance pas.
+  en: You're playing <b>{esc}</b>'s campaign as reinforcement. Your XP, gold, items and skills will come back with you to your campaign when you leave the group. Your own campaign's story doesn't advance, though.
+  es: Juegas la campaña de <b>{esc}</b> como refuerzo. Tu XP, tu oro, tus objetos y tus habilidades volverán contigo a tu campaña cuando dejes el grupo. La historia de tu campaña, en cambio, no avanza.
+  de: Du spielst die Kampagne von <b>{esc}</b> als Verstärkung. Deine EP, dein Gold, deine Gegenstände und Fähigkeiten kommen mit dir in deine Kampagne zurück, wenn du die Gruppe verlässt. Die Geschichte deiner Kampagne geht dabei aber nicht weiter.
+  ja: <b>{esc}</b>のキャンペーンに援軍として参加中。パーティーを抜けると、経験値・ゴールド・アイテム・スキルは自分のキャンペーンに持ち帰れる。ただし自分のキャンペーンの物語は進まない。
+- fr: "Ta campagne : ton héros et ton histoire, sauvegardés sur ton compte Roblox. Invite d'autres joueurs du serveur pour la jouer en groupe."
+  en: "Your campaign: your hero and story, saved on your Roblox account. Invite other players on the server to play it as a group."
+  es: "Tu campaña: tu héroe y tu historia, guardados en tu cuenta de Roblox. Invita a otros jugadores del servidor para jugarla en grupo."
+  de: "Deine Kampagne: dein Held und deine Geschichte, gespeichert in deinem Roblox-Konto. Lade andere Spieler des Servers ein, um sie als Gruppe zu spielen."
+  ja: あなたのキャンペーン：ヒーローと物語はRobloxアカウントに保存されている。サーバーの他のプレイヤーを招待してパーティーで遊ぼう。
+- fr: Session {session}{v}
+  en: Session {session}{v}
+  es: Sesión {session}{v}
+  de: Sitzung {session}{v}
+  ja: セッション{session}{v}
+- fr: " · meneur du jour : {esc}"
+  en: " · today's leader: {esc}"
+  es: " · líder del día: {esc}"
+  de: " · Anführer des Tages: {esc}"
+  ja: " · 今日のリーダー：{esc}"
+- fr: 👥 Mon groupe
+  en: 👥 My group
+  es: 👥 Mi grupo
+  de: 👥 Meine Gruppe
+  ja: 👥 マイパーティー
+- fr: Tu joues seul. Invite quelqu'un ci-dessous, ou approche-toi d'un joueur (touche E).
+  en: You're playing alone. Invite someone below, or walk up to a player (E key).
+  es: Juegas solo. Invita a alguien abajo, o acércate a un jugador (tecla E).
+  de: Du spielst allein. Lade unten jemanden ein oder geh zu einem Spieler (Taste E).
+  ja: ソロで遊んでいる。下から誰かを招待するか、プレイヤーに近づいてEキーを押そう。
+- fr: " — {nom}, niv. {niveau}"
+  en: " — {nom}, lvl {niveau}"
+  es: " — {nom}, nv. {niveau}"
+  de: " — {nom}, Lv. {niveau}"
+  ja: " — {nom}、Lv.{niveau}"
+- fr: Dissoudre le groupe
+  en: Disband the group
+  es: Disolver el grupo
+  de: Gruppe auflösen
+  ja: パーティーを解散
+- fr: Quitter le groupe
+  en: Leave the group
+  es: Dejar el grupo
+  de: Gruppe verlassen
+  ja: パーティーを抜ける
+- fr: " — dans ton groupe"
+  en: " — in your group"
+  es: " — en tu grupo"
+  de: " — in deiner Gruppe"
+  ja: " — 同じパーティー"
+- fr: " — déjà en groupe"
+  en: " — already in a group"
+  es: " — ya en un grupo"
+  de: " — schon in einer Gruppe"
+  ja: " — 他のパーティーに参加中"
+- fr: Inviter
+  en: Invite
+  es: Invitar
+  de: Einladen
+  ja: 招待
+- fr: "Signaler pour :"
+  en: "Report for:"
+  es: "Denunciar por:"
+  de: "Melden wegen:"
+  ja: 通報の理由：
+- fr: Héros de cette campagne
+  en: Heroes of this campaign
+  es: Héroes de esta campaña
+  de: Helden dieser Kampagne
+  ja: このキャンペーンのヒーロー
+- fr: "{esc} ({nom}, niv. {niveau}) · {textePv}{v}{v2}"
+  en: "{esc} ({nom}, lvl {niveau}) · {textePv}{v}{v2}"
+  es: "{esc} ({nom}, nv. {niveau}) · {textePv}{v}{v2}"
+  de: "{esc} ({nom}, Lv. {niveau}) · {textePv}{v}{v2}"
+  ja: "{esc}（{nom}、Lv.{niveau}） · {textePv}{v}{v2}"
+- fr: ' <font color="#e0605a">blessé</font>'
+  en: ' <font color="#e0605a">wounded</font>'
+  es: ' <font color="#e0605a">herido</font>'
+  de: ' <font color="#e0605a">verletzt</font>'
+  ja: ' <font color="#e0605a">負傷</font>'
+- fr: " · renfort"
+  en: " · reinforcement"
+  es: " · refuerzo"
+  de: " · Verstärkung"
+  ja: " · 援軍"
+- fr: crée son héros…
+  en: is creating their hero…
+  es: está creando su héroe…
+  de: erschafft gerade einen Helden …
+  ja: ヒーローを作成中…
+- fr: Actions
+  en: Actions
+  es: Acciones
+  de: Aktionen
+  ja: 操作
+- fr: Nouvelle session (le meneur change)
+  en: New session (the leader changes)
+  es: Nueva sesión (cambia el líder)
+  de: Neue Sitzung (der Anführer wechselt)
+  ja: 新しいセッション（リーダー交代）
+- fr: "Pour arrêter, quitte simplement le serveur : tout est sauvegardé sur ton compte."
+  en: "To stop, just leave the server: everything is saved on your account."
+  es: "Para parar, simplemente sal del servidor: todo se guarda en tu cuenta."
+  de: "Zum Aufhören verlass einfach den Server: Alles ist in deinem Konto gespeichert."
+  ja: やめるときはサーバーを抜けるだけ。すべてアカウントに保存される。
+- fr: ⭐ Niveau {niveau} !
+  en: ⭐ Level {niveau}!
+  es: ⭐ ¡Nivel {niveau}!
+  de: ⭐ Level {niveau}!
+  ja: ⭐ レベル{niveau}！
+- fr: +{v} XP
+  en: +{v} XP
+  es: +{v} XP
+  de: +{v} EP
+  ja: 経験値+{v}
+- fr: 🎲 Test de {v} — <b>{nom}</b>
+  en: 🎲 {v} check — <b>{nom}</b>
+  es: 🎲 Prueba de {v} — <b>{nom}</b>
+  de: 🎲 {v}-Probe — <b>{nom}</b>
+  ja: 🎲 {v}判定 — <b>{nom}</b>
+- fr: "{jet} + {bonus} = <b>{total}</b> contre {difficulte}"
+  en: "{jet} + {bonus} = <b>{total}</b> vs {difficulte}"
+  es: "{jet} + {bonus} = <b>{total}</b> contra {difficulte}"
+  de: "{jet} + {bonus} = <b>{total}</b> gegen {difficulte}"
+  ja: "{jet} + {bonus} = <b>{total}</b> 対 {difficulte}"
+- fr: Réussi !
+  en: Success!
+  es: ¡Éxito!
+  de: Geschafft!
+  ja: 成功！
+- fr: Échoué…
+  en: Failed…
+  es: Fallido…
+  de: Gescheitert …
+  ja: 失敗…
+- fr: "Comparé à {esc} : mêmes valeurs de base."
+  en: "Compared with {esc}: same base values."
+  es: "Comparado con {esc}: mismos valores base."
+  de: "Verglichen mit {esc}: gleiche Grundwerte."
+  ja: "{esc}と比較：基本値は同じ。"
+- fr: "Comparé à {esc} : {v}"
+  en: "Compared with {esc}: {v}"
+  es: "Comparado con {esc}: {v}"
+  de: "Verglichen mit {esc}: {v}"
+  ja: "{esc}と比較：{v}"
+- fr: '  <font size="12" color="{v}">niv. {niveau}</font>'
+  en: '  <font size="12" color="{v}">lvl {niveau}</font>'
+  es: '  <font size="12" color="{v}">nv. {niveau}</font>'
+  de: '  <font size="12" color="{v}">Lv. {niveau}</font>'
+  ja: '  <font size="12" color="{v}">Lv.{niveau}</font>'
+- fr: '  <font size="12" color="#ff4a4a">unique</font>'
+  en: '  <font size="12" color="#ff4a4a">unique</font>'
+  es: '  <font size="12" color="#ff4a4a">único</font>'
+  de: '  <font size="12" color="#ff4a4a">einzigartig</font>'
+  ja: '  <font size="12" color="#ff4a4a">ユニーク</font>'
+- fr: "Pour : {v}"
+  en: "For: {v}"
+  es: "Para: {v}"
+  de: "Für: {v}"
+  ja: 対象：{v}
+- fr: |-
+    <font color="#d9a441">Nouvel objet !</font>
+    <b><font color="{hex}">{esc}</font></b>
+    <font size="12" color="#beaf96">{v}{v2}</font>
+  en: |-
+    <font color="#d9a441">New item!</font>
+    <b><font color="{hex}">{esc}</font></b>
+    <font size="12" color="#beaf96">{v}{v2}</font>
+  es: |-
+    <font color="#d9a441">¡Objeto nuevo!</font>
+    <b><font color="{hex}">{esc}</font></b>
+    <font size="12" color="#beaf96">{v}{v2}</font>
+  de: |-
+    <font color="#d9a441">Neuer Gegenstand!</font>
+    <b><font color="{hex}">{esc}</font></b>
+    <font size="12" color="#beaf96">{v}{v2}</font>
+  ja: |-
+    <font color="#d9a441">新しいアイテム！</font>
+    <b><font color="{hex}">{esc}</font></b>
+    <font size="12" color="#beaf96">{v}{v2}</font>
+- fr: " · niv. {niveau}"
+  en: " · lvl {niveau}"
+  es: " · nv. {niveau}"
+  de: " · Lv. {niveau}"
+  ja: " · Lv.{niveau}"
+- fr: Langue
+  en: Language
+  es: Idioma
+  de: Sprache
+  ja: 言語
+- fr: Les textes pas encore traduits restent en français. « Proposer mon action » en combat ne comprend que le français.
+  en: Texts not yet translated stay in French. “Suggest my action” in combat only understands French.
+  es: Los textos aún no traducidos quedan en francés. «Proponer mi acción» en combate solo entiende francés.
+  de: Noch nicht übersetzte Texte bleiben auf Französisch. „Meine Aktion vorschlagen“ im Kampf versteht nur Französisch.
+  ja: 未翻訳のテキストはフランス語のまま表示される。戦闘中の「行動を提案」はフランス語のみ対応。
+- fr: Son
+  en: Sound
+  es: Sonido
+  de: Ton
+  ja: サウンド
+- fr: Volume général
+  en: Master volume
+  es: Volumen general
+  de: Gesamtlautstärke
+  ja: 全体音量
+- fr: Musique et ambiance
+  en: Music and ambience
+  es: Música y ambiente
+  de: Musik und Atmosphäre
+  ja: 音楽・環境音
+- fr: Effets sonores
+  en: Sound effects
+  es: Efectos de sonido
+  de: Soundeffekte
+  ja: 効果音
+- fr: Interface
+  en: Interface
+  es: Interfaz
+  de: Oberfläche
+  ja: インターフェース
+- fr: Affichage
+  en: Display
+  es: Pantalla
+  de: Anzeige
+  ja: 表示
+- fr: Taille du texte
+  en: Text size
+  es: Tamaño del texto
+  de: Textgröße
+  ja: 文字サイズ
+- fr: Conseils du tutoriel
+  en: Tutorial tips
+  es: Consejos del tutorial
+  de: Tipps der Einführung
+  ja: チュートリアルのヒント
+- fr: La bulle d'aide en bas de l'écran pendant les premières minutes.
+  en: The help bubble at the bottom of the screen during the first minutes.
+  es: La burbuja de ayuda en la parte inferior de la pantalla durante los primeros minutos.
+  de: Die Hilfeblase unten am Bildschirm in den ersten Minuten.
+  ja: 最初の数分間、画面下に出るヘルプ。
+- fr: Cosmétiques des autres joueurs
+  en: Other players' cosmetics
+  es: Cosméticos de otros jugadores
+  de: Kosmetik anderer Spieler
+  ja: 他のプレイヤーの見た目アイテム
+- fr: Voir les auras, capes, titres et traces de pas des autres.
+  en: See other players' auras, capes, titles and footprints.
+  es: Ver las auras, capas, títulos y huellas de los demás.
+  de: Auren, Umhänge, Titel und Fußspuren der anderen sehen.
+  ja: 他の人のオーラ・マント・称号・足跡を表示する。
+- fr: Performances
+  en: Performance
+  es: Rendimiento
+  de: Leistung
+  ja: パフォーマンス
+- fr: Effets réduits
+  en: Reduced effects
+  es: Efectos reducidos
+  de: Reduzierte Effekte
+  ja: エフェクト軽減
+- fr: "Moins de particules (météo, auras des autres, moulins) : utile sur un appareil modeste."
+  en: "Fewer particles (weather, other players' auras, windmills): useful on a modest device."
+  es: "Menos partículas (clima, auras de los demás, molinos): útil en un dispositivo modesto."
+  de: "Weniger Partikel (Wetter, Auren anderer, Windmühlen): nützlich auf schwächeren Geräten."
+  ja: パーティクルを減らす（天気、他人のオーラ、風車）。性能の低い端末向け。
+- fr: Compteur d'images par seconde
+  en: FPS counter
+  es: Contador de FPS
+  de: FPS-Anzeige
+  ja: FPSカウンター
+- fr: Affiche les images par seconde en bas à gauche de l'écran.
+  en: Shows frames per second at the bottom left of the screen.
+  es: Muestra las imágenes por segundo abajo a la izquierda de la pantalla.
+  de: Zeigt die Bilder pro Sekunde unten links auf dem Bildschirm.
+  ja: 画面左下にフレームレートを表示する。
+- fr: "<b>60, 144 images par seconde ou plus</b> : c'est Roblox qui les règle, pas le jeu. Ouvre le menu de Roblox ({touche}) → Paramètres → fréquence d'images maximale, si ton appareil le permet. Le compteur ci-dessus montre la valeur réelle."
+  en: "<b>60, 144 frames per second or more</b>: Roblox sets this, not the game. Open the Roblox menu ({touche}) → Settings → maximum frame rate, if your device allows it. The counter above shows the real value."
+  es: "<b>60, 144 imágenes por segundo o más</b>: lo ajusta Roblox, no el juego. Abre el menú de Roblox ({touche}) → Configuración → velocidad de fotogramas máxima, si tu dispositivo lo permite. El contador de arriba muestra el valor real."
+  de: "<b>60, 144 Bilder pro Sekunde oder mehr</b>: Das stellt Roblox ein, nicht das Spiel. Öffne das Roblox-Menü ({touche}) → Einstellungen → maximale Bildrate, sofern dein Gerät das erlaubt. Die Anzeige oben zeigt den echten Wert."
+  ja: <b>60・144FPS以上</b>：設定するのはゲームではなくRobloxです。Robloxメニュー（{touche}）→ 設定 → 最大フレームレート を開いてください（端末が対応している場合）。上のカウンターで実際の値を確認できます。
+- fr: bouton Roblox en haut à gauche
+  en: Roblox button at the top left
+  es: botón de Roblox arriba a la izquierda
+  de: Roblox-Taste oben links
+  ja: 左上のRobloxボタン
+- fr: touche Échap
+  en: Esc key
+  es: tecla Esc
+  de: Esc-Taste
+  ja: Escキー
+- fr: "Les réglages sont enregistrés sur ton compte : tu les retrouves sur tous tes appareils."
+  en: "Settings are saved on your account: you'll find them on all your devices."
+  es: "Los ajustes se guardan en tu cuenta: los encontrarás en todos tus dispositivos."
+  de: "Die Einstellungen werden in deinem Konto gespeichert: Du findest sie auf all deinen Geräten wieder."
+  ja: 設定はアカウントに保存され、どの端末でも同じになる。
+- fr: Réglages
+  en: Settings
+  es: Ajustes
+  de: Einstellungen
+  ja: 設定
+- fr: Temps libre — {titre}
+  en: Free time — {titre}
+  es: Tiempo libre — {titre}
+  de: Freizeit — {titre}
+  ja: 自由時間 — {titre}
+- fr: "{mois} mois vont passer, jusqu'au {formaterDate}. Chaque joueur choisit {nb} activités ; les gains sont proportionnels à la durée."
+  en: "{mois} month(s) will pass, until {formaterDate}. Each player chooses {nb} activities; rewards scale with the duration."
+  es: Pasarán {mois} mes(es), hasta el {formaterDate}. Cada jugador elige {nb} actividades; las ganancias son proporcionales a la duración.
+  de: "{mois} Monat(e) vergehen, bis {formaterDate}. Jeder Spieler wählt {nb} Aktivitäten; die Erträge hängen von der Dauer ab."
+  ja: "{formaterDate}まで{mois}か月が過ぎる。各プレイヤーは活動を{nb}つ選ぶ。得られるものは期間に比例する。"
+- fr: Ce qui s'est passé
+  en: What happened
+  es: Lo que ha pasado
+  de: Was geschehen ist
+  ja: その間の出来事
+- fr: Reprendre l'aventure
+  en: Resume the adventure
+  es: Retomar la aventura
+  de: Das Abenteuer fortsetzen
+  ja: 冒険に戻る
+- fr: "Tes activités sont choisies. En attente de : {v}."
+  en: "Your activities are chosen. Waiting for: {v}."
+  es: "Tus actividades están elegidas. Esperando a: {v}."
+  de: "Deine Aktivitäten sind gewählt. Warten auf: {v}."
+  ja: 活動は決定済み。待っている人：{v}。
+- fr: Valider pour les absents (Repos + Contrats de guilde)
+  en: Confirm for absent players (Rest + Guild contracts)
+  es: Validar por los ausentes (Descanso + Contratos del gremio)
+  de: Für Abwesende bestätigen (Ruhe + Gildenaufträge)
+  ja: 不在の人の分を確定（休息＋ギルドの依頼）
+- fr: Activités de {esc} ({v}/{nb})
+  en: "{esc}'s activities ({v}/{nb})"
+  es: Actividades de {esc} ({v}/{nb})
+  de: Aktivitäten von {esc} ({v}/{nb})
+  ja: "{esc}の活動（{v}/{nb}）"
+- fr: Ajouter
+  en: Add
+  es: Añadir
+  de: Hinzufügen
+  ja: 追加
+- fr: Changer
+  en: Change
+  es: Cambiar
+  de: Ändern
+  ja: 変更
+- fr: Valider mes activités
+  en: Confirm my activities
+  es: Validar mis actividades
+  de: Meine Aktivitäten bestätigen
+  ja: 活動を確定
+- fr: Les Routes du Sud
+  en: The Southern Roads
+  es: Los Caminos del Sur
+  de: Die Straßen des Südens
+  ja: 南への道
+- fr: La Forêt qui se souvient
+  en: The Forest That Remembers
+  es: El Bosque que Recuerda
+  de: Der Wald, der sich erinnert
+  ja: 記憶する森
+- fr: Feu et Écailles
+  en: Fire and Scales
+  es: Fuego y Escamas
+  de: Feuer und Schuppen
+  ja: 炎と鱗
+- fr: La Guerre des Cendres
+  en: The War of Ashes
+  es: La Guerra de las Cenizas
+  de: Der Aschenkrieg
+  ja: 灰の戦争
+- fr: Le Souverain des Cendres
+  en: The Ash Sovereign
+  es: El Soberano de las Cenizas
+  de: Der Aschenherrscher
+  ja: 灰の君主
+- fr: A. Le Sceau
+  en: A. The Seal
+  es: A. El Sello
+  de: A. Das Siegel
+  ja: A. 封印
+- fr: B. Le Pacte
+  en: B. The Pact
+  es: B. El Pacto
+  de: B. Der Pakt
+  ja: B. 盟約
+- fr: C. La Couronne
+  en: C. The Crown
+  es: C. La Corona
+  de: C. Die Krone
+  ja: C. 王冠
+- fr: D. Le Retour
+  en: D. The Return
+  es: D. El Regreso
+  de: D. Die Rückkehr
+  ja: D. 帰還
+- fr: Fin de la saison 1
+  en: End of season 1
+  es: Fin de la temporada 1
+  de: Ende von Staffel 1
+  ja: シーズン1 終幕
+- fr: Fin du chapitre {n}
+  en: End of chapter {n}
+  es: Fin del capítulo {n}
+  de: Ende von Kapitel {n}
+  ja: 第{n}章 終幕
+- fr: <b>Fin {nom}</b>
+  en: <b>Ending {nom}</b>
+  es: <b>Final {nom}</b>
+  de: <b>Ende {nom}</b>
+  ja: <b>エンディング {nom}</b>
+- fr: "{annee}. Voici où en sont les héros."
+  en: "{annee}. Here is where the heroes stand."
+  es: "{annee}. Así están los héroes."
+  de: "{annee}. So steht es um die Helden."
+  ja: "{annee}。ヒーローたちの現在。"
+- fr: <b>{esc}</b> — {age} ans · niveau {niveau} · {or} or
+  en: <b>{esc}</b> — {age} years old · level {niveau} · {or} gold
+  es: <b>{esc}</b> — {age} años · nivel {niveau} · {or} de oro
+  de: <b>{esc}</b> — {age} Jahre · Level {niveau} · {or} Gold
+  ja: <b>{esc}</b> — {age}歳 · レベル{niveau} · {or}G
+- fr: <b>La saison 1 est terminée.</b> Vous pouvez continuer à parcourir Velmaris, finir vos contrats et vos quêtes de compagnes.
+  en: <b>Season 1 is over.</b> You can keep exploring Velmaris, finish your contracts and your companion quests.
+  es: <b>La temporada 1 ha terminado.</b> Podéis seguir recorriendo Velmaris, terminar vuestros contratos y las misiones de vuestras compañeras.
+  de: <b>Staffel 1 ist vorbei.</b> Ihr könnt Velmaris weiter erkunden und eure Aufträge und Gefährtenquests abschließen.
+  ja: <b>シーズン1は終わった。</b>ヴェルマリスの探索や、依頼・仲間クエストの続きを楽しめる。
+- fr: "La saison 2 arrivera dans une prochaine mise à jour : la sauvegarde sera reprise, et la fin obtenue décidera de son point de départ."
+  en: "Season 2 will arrive in a future update: your save will carry over, and the ending you reached will decide its starting point."
+  es: "La temporada 2 llegará en una próxima actualización: se conservará la partida guardada y el final obtenido decidirá su punto de partida."
+  de: "Staffel 2 kommt mit einem künftigen Update: Der Spielstand wird übernommen, und das erreichte Ende bestimmt den Ausgangspunkt."
+  ja: シーズン2は今後のアップデートで登場予定。セーブは引き継がれ、迎えたエンディングが始まりを決める。
+- fr: "<b>Un long moment va passer.</b> Quand tout le monde est prêt, retrouvez-vous dans une auberge et utilisez le lit : le groupe dormira jusqu'au début du chapitre suivant."
+  en: "<b>A long time is about to pass.</b> When everyone is ready, meet at an inn and use the bed: the group will sleep until the start of the next chapter."
+  es: "<b>Va a pasar mucho tiempo.</b> Cuando todos estén listos, reuníos en una posada y usad la cama: el grupo dormirá hasta el inicio del capítulo siguiente."
+  de: "<b>Es wird viel Zeit vergehen.</b> Wenn alle bereit sind, trefft euch in einem Gasthaus und benutzt das Bett: Die Gruppe schläft bis zum Beginn des nächsten Kapitels."
+  ja: <b>長い時が流れようとしている。</b>全員の準備ができたら宿屋に集まりベッドを使おう。パーティーは次の章の始まりまで眠る。
+- fr: "Chapitre {v} : « {v2} »."
+  en: "Chapter {v}: “{v2}”."
+  es: "Capítulo {v}: «{v2}»."
+  de: "Kapitel {v}: „{v2}“."
+  ja: 第{v}章：「{v2}」
+- fr: Masquer les conseils
+  en: Hide tips
+  es: Ocultar los consejos
+  de: Tipps ausblenden
+  ja: ヒントを隠す
+- fr: "⚔ <b>Combat au tour par tour</b> : à ton tour, choisis « Attaquer » ou une compétence, puis clique sur un ennemi (contour doré). « Conseils » propose une bonne action."
+  en: "⚔ <b>Turn-based combat</b>: on your turn, choose “Attack” or a skill, then click an enemy (golden outline). “Tips” suggests a good move."
+  es: "⚔ <b>Combate por turnos</b>: en tu turno, elige «Atacar» o una habilidad y luego haz clic en un enemigo (contorno dorado). «Consejos» propone una buena acción."
+  de: "⚔ <b>Rundenbasierter Kampf</b>: Wähle in deinem Zug „Angreifen“ oder eine Fähigkeit und klicke dann auf einen Gegner (goldener Umriss). „Tipps“ schlägt eine gute Aktion vor."
+  ja: ⚔ <b>ターン制バトル</b>：自分の番に「攻撃」かスキルを選び、敵（金色の輪郭）をクリック。「ヒント」が良い行動を提案してくれる。
+- fr: 💬 Lis les répliques avec « Continuer », puis choisis une réponse. À plusieurs, chacun vote et la majorité l'emporte.
+  en: 💬 Read the lines with “Continue”, then choose an answer. In a group, everyone votes and the majority wins.
+  es: 💬 Lee las réplicas con «Continuar» y luego elige una respuesta. En grupo, cada uno vota y gana la mayoría.
+  de: 💬 Lies die Dialoge mit „Weiter“ und wähle dann eine Antwort. In der Gruppe stimmt jeder ab, und die Mehrheit entscheidet.
+  ja: 💬 「続ける」でセリフを読み、返事を選ぼう。パーティーでは全員が投票し、多数決で決まる。
+- fr: "🕯 Avance avec ton avatar : les événements (coffres, pièges, monstres) se déclenchent sous les pieds du meneur, marqué par la lueur dorée."
+  en: "🕯 Move with your avatar: events (chests, traps, monsters) trigger under the leader's feet, marked by the golden glow."
+  es: "🕯 Avanza con tu avatar: los eventos (cofres, trampas, monstruos) se activan bajo los pies del líder, marcado por el brillo dorado."
+  de: "🕯 Bewege dich mit deinem Avatar: Ereignisse (Truhen, Fallen, Monster) lösen unter den Füßen des Anführers aus, den das goldene Leuchten markiert."
+  ja: 🕯 アバターで進もう。イベント（宝箱・罠・モンスター）は金色に光るリーダーの足元で起こる。
+- fr: 🗨 C'est ici ! Approche-toi du personnage marqué d'un <b>« ! » doré</b> et appuie sur <b>E</b> pour lui parler.
+  en: 🗨 This is the place! Walk up to the character marked with a <b>golden “!”</b> and press <b>E</b> to talk.
+  es: 🗨 ¡Es aquí! Acércate al personaje marcado con un <b>«!» dorado</b> y pulsa <b>E</b> para hablarle.
+  de: 🗨 Hier ist es! Geh zu der Figur mit dem <b>goldenen „!“</b> und drück <b>E</b>, um mit ihr zu sprechen.
+  ja: 🗨 ここだ！<b>金色の「！」</b>が付いたキャラクターに近づいて<b>E</b>で話しかけよう。
+- fr: "🚪 Ce n'est pas ici : sors par la porte (touche <b>E</b>), puis suis la flèche dorée jusqu'à <b>{nomCible}</b>."
+  en: "🚪 Not here: go out the door (<b>E</b> key), then follow the golden arrow to <b>{nomCible}</b>."
+  es: "🚪 No es aquí: sal por la puerta (tecla <b>E</b>) y sigue la flecha dorada hasta <b>{nomCible}</b>."
+  de: "🚪 Nicht hier: Geh durch die Tür hinaus (Taste <b>E</b>) und folge dann dem goldenen Pfeil bis <b>{nomCible}</b>."
+  ja: 🚪 ここではない。ドアから出て（<b>E</b>キー）、金色の矢印をたどって<b>{nomCible}</b>へ。
+- fr: "🎯 Objectif : <b>{objectif}</b>. L'histoire attend : va dormir au <b>Chaudron Fêlé</b> (la taverne) pour faire passer le temps."
+  en: "🎯 Objective: <b>{objectif}</b>. The story is waiting: go sleep at the <b>Cracked Cauldron</b> (the tavern) to let time pass."
+  es: "🎯 Objetivo: <b>{objectif}</b>. La historia espera: ve a dormir al <b>Caldero Rajado</b> (la taberna) para que pase el tiempo."
+  de: "🎯 Ziel: <b>{objectif}</b>. Die Geschichte wartet: Schlaf im <b>Gesprungenen Kessel</b> (der Taverne), damit Zeit vergeht."
+  ja: 🎯 目標：<b>{objectif}</b>。物語は時を待っている。<b>ひび割れ釜亭</b>（酒場）で眠って時間を進めよう。
+- fr: |-
+    
+    Astuce : le menu <b>👥 Groupe</b> permet de jouer à plusieurs.
+  en: |-
+    
+    Tip: the <b>👥 Group</b> menu lets you play with others.
+  es: |-
+    
+    Consejo: el menú <b>👥 Grupo</b> permite jugar con otros.
+  de: |-
+    
+    Tipp: Über das Menü <b>👥 Gruppe</b> kannst du mit anderen spielen.
+  ja: |-
+    
+    ヒント：<b>👥 パーティー</b>メニューで他の人と遊べる。
+- fr: "🎯 Objectif : <b>{objectif}</b>. Suis la <b>flèche dorée</b> jusqu'à <b>{nomCible}</b>, puis appuie sur <b>E</b> devant la porte. (Le bouton « Guider » de la barre du haut montre aussi le chemin.){astuce}"
+  en: "🎯 Objective: <b>{objectif}</b>. Follow the <b>golden arrow</b> to <b>{nomCible}</b>, then press <b>E</b> at the door. (The “Guide me” button in the top bar also shows the way.){astuce}"
+  es: "🎯 Objetivo: <b>{objectif}</b>. Sigue la <b>flecha dorada</b> hasta <b>{nomCible}</b> y pulsa <b>E</b> delante de la puerta. (El botón «Guiarme» de la barra superior también muestra el camino.){astuce}"
+  de: "🎯 Ziel: <b>{objectif}</b>. Folge dem <b>goldenen Pfeil</b> bis <b>{nomCible}</b> und drück dann <b>E</b> an der Tür. (Die Schaltfläche „Führen“ oben zeigt ebenfalls den Weg.){astuce}"
+  ja: 🎯 目標：<b>{objectif}</b>。<b>金色の矢印</b>をたどって<b>{nomCible}</b>へ行き、ドアの前で<b>E</b>を押そう。（上部バーの「案内」ボタンでも道がわかる）{astuce}

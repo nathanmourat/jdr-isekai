@@ -1,0 +1,100 @@
+# Textes de content/ennemis/chapitre-5.yaml
+# Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
+- fr: Diablotin
+- fr: Un petit démon rouge ailé, armé d'une fourche, qui ricane en permanence. Ils arrivent toujours par dizaines.
+- fr: Fourche
+- fr: pique {cible} de sa fourche
+- fr: Boule de feu
+- fr: lance une petite boule de feu sur {cible}
+- fr: Gelée cendrée
+- fr: Une gelée de cendre violette, avec des braises à l'intérieur. Elle étouffe ce qu'elle touche.
+- fr: Étouffement
+- fr: s'enroule autour de {cible}
+- fr: Projection de cendre
+- fr: projette de la cendre brûlante sur {cible}
+- fr: Nuage de cendre
+- fr: La gelée éclate en un nuage qui pique les yeux.
+- fr: Chien des enfers
+- fr: Un molosse noir à crinière de flammes. Il traque les vivants à l'odeur.
+- fr: Crocs ardents
+- fr: mord {cible} d'une gueule enflammée
+- fr: Bond
+- fr: se jette sur {cible}
+- fr: Hurlement infernal
+- fr: Un hurlement qui glace le sang.
+- fr: Légionnaire cendré
+- fr: Un soldat de la Légion en armure noire, bouclier rond et lance. Il avance au pas, comme une machine.
+- fr: Lance noire
+- fr: transperce {cible} de sa lance
+- fr: Mur de boucliers
+- fr: repousse {cible} d'un coup de bouclier
+- fr: Prêtre des Cendres
+- fr: Un cultiste en robe noire, couronné d'os. Il chante, et les démons blessés se relèvent.
+- fr: Trait d'ombre
+- fr: lance un trait d'ombre sur {cible}
+- fr: Malédiction
+- fr: maudit {cible}
+- fr: Chant de cendre
+- fr: Un chant qui referme les plaies des démons.
+- fr: Capitaine de la Légion
+- fr: Un officier démon en armure à pointes, cape déchirée, épée à deux mains entourée de runes violettes.
+- fr: Lame runique
+- fr: abat une lame aux runes violettes sur {cible}
+- fr: Coup d'épaule
+- fr: renverse {cible} d'un coup d'épaule
+- fr: Ordre de charge
+- fr: « En avant ! » Ses soldats frappent plus fort.
+- fr: Colosse de siège
+- fr: Un golem d'obsidienne haut comme une tour, veiné de lave, que la Légion pousse contre le Mur. Il ne s'arrête jamais.
+- fr: Poing d'obsidienne
+- fr: écrase {cible} d'un poing noir
+- fr: Coulée de lave
+- fr: laisse couler de la lave sur {cible}
+- fr: Secousse
+- fr: "Il frappe le sol : tout tremble."
+- fr: Vorthak, Seigneur de guerre
+- fr: L'émissaire de la Fête des Lanternes est revenu. Il a grandi, ses cornes aussi. Il commande l'assaut du Mur d'Aube.
+- fr: Lame cendrée
+- fr: abat sa lame noire sur {cible}
+- fr: Flammes violettes
+- fr: enveloppe {cible} de flammes violettes
+- fr: Vague violette
+- fr: Une vague de flammes violettes balaie le rempart.
+- fr: Rage du seigneur
+- fr: Ses blessures le rendent fou.
+- fr: Le Champion de l'épreuve
+- fr: "Un guerrier masqué, en armure d'argent sans blason. Personne ne connaît son visage : il est l'épreuve du rang S depuis cent ans."
+- fr: Lame d'argent
+- fr: frappe {cible} d'une lame d'argent
+- fr: Feinte
+- fr: trompe {cible} d'une feinte parfaite
+- fr: Mille lames
+- fr: Une pluie de coups, si rapides qu'on ne les voit pas.
+- fr: Garde parfaite
+- fr: Il ne laisse plus aucune ouverture.
+- fr: Aldric, le Prince Noir
+- fr: Le frère de Séraphine, disparu en 1009. Armure noire, cape bleue en lambeaux, et des yeux où brûle une lueur violette.
+- fr: Épée royale corrompue
+- fr: frappe {cible} de l'épée des princes d'Aubeclaire
+- fr: Revers de cape
+- fr: aveugle {cible} d'un revers de cape
+- fr: Serment brisé
+- fr: Il crie un serment de chevalier, à l'envers. L'ombre répond.
+- fr: Ombre protectrice
+- fr: L'ombre se referme sur ses blessures.
+- fr: Le Gardien de la Brèche
+- fr: Un colosse d'obsidienne enchaîné à la porte des Terres Cendrées. Il garde le passage depuis la première Déchirure.
+- fr: Chaîne d'obsidienne
+- fr: fouette {cible} de ses chaînes
+- fr: Poing de lave
+- fr: écrase {cible} d'un poing de lave
+- fr: Tremblement des Cendres
+- fr: "Le sol se fend : de la lave jaillit sous le groupe."
+- fr: Nuée de diablotins
+- fr: Les gelées cendrées
+- fr: Les chiens des enfers
+- fr: Une patrouille de la Légion
+- fr: Le capitaine de la Légion
+- fr: Le colosse de siège
+- fr: L'épreuve du rang S
+- fr: La contre-offensive

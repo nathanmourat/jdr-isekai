@@ -1,0 +1,16 @@
+# Textes de content/campagne/saison-1/donjons.yaml
+# Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
+- fr: Crypte de la Fontaine
+- fr: L'air est froid et humide. Quelque part, de l'eau goutte… et quelque chose gratte la pierre.
+- fr: Des gardes squelettes se dressent dans un cliquetis d'os !
+- fr: Une dalle s'enfonce sous vos pieds !
+- fr: Un coffre de garde rongé par l'humidité.
+- fr: Des toiles partout… et des yeux qui brillent dans le noir.
+- fr: Un fil tendu déclenche une pluie de fléchettes !
+- fr: Un vieux coffre d'offrandes.
+- fr: D'autres gardes se relèvent, plus grands, mieux armés.
+- fr: "La fontaine se fend. Une silhouette de pierre ruisselante se détache du mur : le gardien de la crypte !"
+- fr: Un râtelier oublié.
+- fr: Des ossements de gardes, en cercle autour d'un autel. Tous tournés vers le nord.
+- fr: Sur l'autel, une pierre noire marquée d'une rune violette pulse comme un cœur. Le sceau cendré.
+- fr: Vous n'avez pas encore trouvé la source des lueurs violettes. Rowena compte sur vous.

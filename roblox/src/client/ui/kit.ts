@@ -3,6 +3,7 @@
  * Tout est construit par le code : aucune interface à dessiner dans Studio.
  */
 import { UserInputService } from "@rbxts/services";
+import { facteurTexte } from "../reglages";
 
 export const COULEURS = {
 	fond: Color3.fromRGB(20, 15, 9),
@@ -110,7 +111,7 @@ export function texte(
 	const t = new Instance("TextLabel");
 	t.BackgroundTransparency = 1;
 	t.Text = contenu;
-	t.TextSize = MOBILE ? math.max(14, taille) : taille;
+	t.TextSize = math.floor((MOBILE ? math.max(14, taille) : taille) * facteurTexte() + 0.5);
 	t.Font = options.gras ? POLICE_GRAS : POLICE;
 	t.TextColor3 = options.couleur ?? COULEURS.texte;
 	t.TextWrapped = true;
@@ -131,7 +132,7 @@ export function bouton(
 	const b = new Instance("TextButton");
 	const actif = options.actif ?? true;
 	b.Text = libelle;
-	b.TextSize = MOBILE ? math.max(15, (options.taille ?? 16) + 1) : options.taille ?? 16;
+	b.TextSize = math.floor((MOBILE ? math.max(15, (options.taille ?? 16) + 1) : options.taille ?? 16) * facteurTexte() + 0.5);
 	b.Font = options.principal ? POLICE_GRAS : POLICE;
 	b.TextWrapped = true;
 	b.RichText = true;
@@ -179,7 +180,7 @@ export function champ(parent: Instance, indication: string, valeur: string, surC
 	t.PlaceholderText = indication;
 	t.Text = valeur;
 	t.ClearTextOnFocus = false;
-	t.TextSize = 17;
+	t.TextSize = math.floor(17 * facteurTexte() + 0.5);
 	t.Font = POLICE;
 	t.TextColor3 = COULEURS.texte;
 	t.PlaceholderColor3 = COULEURS.texte2;

@@ -1,0 +1,37 @@
+# Textes de content/dons/dons.yaml
+# Outil : npm run traductions:extraire (ne retire jamais une traduction). Voir scripts/traductions.ts.
+- fr: Œil du Seuil
+- fr: Voit les PV et faiblesses des ennemis ; +10 % de dégâts sur une faiblesse.
+- fr: Révèle les pièges, secrets et statistiques des objets.
+- fr: Réserve du Néant
+- fr: Une fois par combat, utiliser un objet ne coûte pas d'action.
+- fr: Inventaire illimité ; +10 % sur les ventes.
+- fr: Langue universelle
+- fr: Peut pacifier une bête ou un démon mineur affaibli (sous 30 % de PV).
+- fr: Comprend toutes les langues ; +20 % d'affinité en dialogue.
+- fr: Second départ
+- fr: Une fois par session, annule et rejoue le dernier tour du groupe.
+- fr: Une fois par chapitre, refaire un choix de dialogue.
+- fr: Croissance accélérée
+- fr: +15 % d'XP pour soi ; une activité « Entraînement » bonus par chapitre.
+- fr: Bénédiction de fortune
+- fr: Une fois par combat, relance un jet raté (toucher, critique, résistance).
+- fr: Meilleur butin (+1 objet rare par donjon).
+- fr: Mimétisme
+- fr: Copie une compétence active d'un ennemi vue pendant le combat, jusqu'à la fin du combat.
+- fr: Apprend les recettes d'artisanat en les voyant une fois.
+- fr: Cœur inépuisable
+- fr: Régénère 2 % de ses PV max par tour.
+- fr: Ignore la fatigue ; voyages 20 % plus rapides.
+- fr: Lien des bêtes
+- fr: Peut recruter une bête vaincue comme compagnon faible (un à la fois).
+- fr: Monture gratuite ; bonus contre les bêtes en exploration.
+- fr: Main de l'artisan
+- fr: Une fois par combat, fabrique un objet improvisé (potion ou bombe).
+- fr: Artisanat de qualité supérieure ; répare les reliques.
+- fr: Aura de l'Élu
+- fr: Les alliés gagnent +5 % de dégâts et +5 % de résistance.
+- fr: Première impression +5 d'affinité ; prestige auprès des PNJ.
+- fr: Pas de l'ombre
+- fr: Une fois par combat, esquive garantie puis le coup suivant est critique.
+- fr: Se faufile n'importe où, une fois par quête.
