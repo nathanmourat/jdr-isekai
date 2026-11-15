@@ -329,7 +329,7 @@ export function actionDuJoueur(joueur: Player, brute: ActionJoueur) {
 	// sur Roblox, le héros porte le nom affiché du joueur (déjà filtré par Roblox)
 	if (action.type === "creer_heros" && typeIs(action.heros, "table")) action.heros = { ...(action.heros as object), nom: joueur.DisplayName, portrait: undefined };
 	// rejoindre, renforts et retours : c'est le serveur seul qui les décide
-	if (action.type === "rejoindre" || action.type === "portrait" || action.type === "invite_arrive" || action.type === "heros_retour")
+	if (action.type === "rejoindre" || action.type === "portrait" || action.type === "invite_arrive" || action.type === "heros_retour" || action.type === "cadeau_admin")
 		return r.erreur.FireClient(joueur, "Action non disponible sur Roblox.");
 	const err = p.jouer(action);
 	if (err !== undefined) r.erreur.FireClient(joueur, err);

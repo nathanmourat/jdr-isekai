@@ -7,6 +7,7 @@ import { Players } from "@rbxts/services";
 import { reseau, type Commande, type ReponseCommande } from "shared/reseau";
 import { accueillir, actionDuJoueur, boucleJours, boucleSauvegarde, diffuserGroupes, inviter, messageErreur, partieDe, quitterGroupe, repondreInvitation, sortir, toutEnregistrer } from "./parties";
 import { sauvegardeActive } from "./stockage";
+import { diffuser as diffuserModeration, preparerModeration, verifierArrivee } from "./moderation";
 import { construireMonde } from "./monde";
 import { preparerModeles } from "./modeles";
 import { construireInterieurs } from "./interieurs";
@@ -73,9 +74,16 @@ r.commande.OnServerInvoke = (joueur: Player, c: unknown): ReponseCommande => {
 };
 
 r.action.OnServerEvent.Connect((joueur, a) => actionDuJoueur(joueur, a as never));
-// chaque joueur qui arrive retrouve sa campagne (créée la première fois)
-Players.GetPlayers().forEach(accueillir);
-Players.PlayerAdded.Connect(accueillir);
+// modération : grades, bannissements, sourdines, journal
+preparerModeration();
+// chaque joueur qui arrive (s'il n'est pas banni) retrouve sa campagne (créée la première fois)
+const arrivee = (p: Player) => {
+	if (!verifierArrivee(p)) return;
+	accueillir(p);
+	task.delay(1, diffuserModeration);
+};
+Players.GetPlayers().forEach(arrivee);
+Players.PlayerAdded.Connect(arrivee);
 Players.PlayerRemoving.Connect((joueur) => sortir(joueur));
 game.BindToClose(() => toutEnregistrer());
 task.spawn(boucleSauvegarde);

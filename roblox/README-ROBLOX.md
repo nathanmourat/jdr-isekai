@@ -360,6 +360,30 @@ Les 5 donjons (Crypte de la Fontaine, Ruines de Sel, Bibliothèque des Racines, 
 - [ ] À 2 parties en même temps sur le serveur : chaque groupe a son propre exemplaire du donjon (on ne voit pas les autres).
 - [ ] Ça ne rame pas (Maj + F5).
 
+### Liste de contrôle — modération et grades (15/11)
+Quatre grades (réglages dans `src/shared/grades.ts`) ; on n'agit que sur un grade **inférieur** au sien.
+
+| Grade | Peut faire |
+|---|---|
+| Joueur | signaler un joueur (🚩 dans « 👥 Groupe », raisons au choix, une fois toutes les 30 s) |
+| 🛡 Modérateur | avertir, couper le chat 5 / 15 / 60 min, figer / libérer, aller vers un joueur, le renvoyer du serveur, lire le journal et les signalements |
+| ⚔ Administrateur | tout ce que fait un modérateur + amener un joueur, bannir 1 h / 1 jour / 7 jours, débannir, annonce à tout le serveur, nommer ou retirer des modérateurs |
+| 👑 Propriétaire | tout : bannir définitivement, nommer ou retirer des administrateurs, arrêter le serveur, outils de jeu (or, XP pour toi ou un joueur). Personne ne peut agir sur lui |
+
+Le propriétaire est reconnu tout seul : le créateur du jeu (ou le rang 255 du groupe Roblox propriétaire). Si le jeu est publié par un groupe dont tu n'es pas le propriétaire, ajoute ton UserId dans `PROPRIETAIRES_EN_PLUS` (`src/shared/grades.ts`). Dans Studio : Player1 en test à plusieurs, ou toi en « Jouer » seul tant que le jeu n'est pas publié.
+- [ ] Test à 2 joueurs : Player1 a « 👑 Propriétaire » au-dessus de la tête et un onglet « 🛡 Modération » ; Player2 ne l'a pas.
+- [ ] Player1 → Modération → Player2 « Choisir » → une raison → « ⚠ Avertir » : fenêtre rouge chez Player2 ; une ligne dans le journal.
+- [ ] « 🔇 Chat 5 min » : Player2 ne peut plus écrire dans le chat (ses messages n'arrivent pas) ; « 🔊 Rendre le chat » le rétablit.
+- [ ] « 🧊 Figer » : Player2 ne peut plus bouger ; « Libérer ».
+- [ ] « ➜ Aller vers » et « ⇠ Amener ici » téléportent.
+- [ ] Grade : Player1 nomme Player2 « Modérateur » → étiquette « 🛡 Modérateur » et onglet Modération chez Player2 ; Player2 ne peut rien faire sur Player1 (« grade égal ou supérieur »).
+- [ ] « Bannir 1 h » : Player2 est renvoyé avec la raison ; il apparaît dans « Bannis » ; « Débannir » le retire. (Dans un jeu publié, le bannissement officiel de Roblox est aussi appliqué si *Players → BanningEnabled* est coché.)
+- [ ] Player2 signale Player1 (🚩 → raison) : fenêtre « Signalement » chez Player1, ligne 🚩 dans le journal.
+- [ ] Annonce : fenêtre dorée chez tout le monde (texte filtré par Roblox).
+- [ ] Outils du propriétaire : « +1000 or » et « +5000 XP » pour toi ou pour Player2 (il monte de niveau).
+- [ ] « Arrêter le serveur… » → « Confirmer » : tout le monde est renvoyé 10 s plus tard, progression sauvegardée.
+- [ ] Avec la sauvegarde activée : grades, bannissements et sourdines sont gardés d'un serveur à l'autre.
+
 ### Liste de contrôle — examens de rang et maîtrises d'équipement (test 2, changements 10 et 11)
 - [ ] Dans n'importe quel comptoir de la Guilde, le panneau « 🎖 Rang de Guilde » montre le rang suivant, ce qu'il manque (points, niveau) et le bouton de l'examen quand tout est prêt.
 - [ ] Rangs E, D et A : un combat contre un examinateur (A : Dame Rowena en personne). En cas d'échec, on retente le lendemain.

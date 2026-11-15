@@ -4,6 +4,7 @@
 import { Players } from "@rbxts/services";
 import { CONTENU } from "shared/donnees";
 import { appliquer, rejouer, type Action, type EtatPartie, type Heros } from "shared/moteur";
+import type { CommandeModeration, EtatModeration } from "shared/grades";
 import { idJoueur, reseau, type ActionJoueur, type Commande, type EtatGroupe, type ReponseCommande } from "shared/reseau";
 
 const r = reseau();
@@ -22,6 +23,8 @@ export const jeu = {
 	info: undefined as string | undefined,
 	/** Mon groupe et mes invitations (envoyés par le serveur). */
 	groupe: undefined as EtatGroupe | undefined,
+	/** Mon grade et, pour l'équipe de modération, les joueurs, bannis et le journal. */
+	moderation: undefined as EtatModeration | undefined,
 	moi,
 };
 
@@ -132,6 +135,22 @@ r.groupe.OnClientEvent.Connect((g) => {
 	jeu.groupe = g;
 	prevenir();
 });
+
+r.etatModeration.OnClientEvent.Connect((e) => {
+	jeu.moderation = e;
+	prevenir();
+});
+
+/** Commande de modération (ou signalement) : affiche l'erreur, ou l'information. */
+export function commandeModeration(c: CommandeModeration) {
+	task.spawn(() => {
+		const [ok, rep] = pcall(() => r.moderation.InvokeServer(c));
+		if (!ok) jeu.erreur = "Le serveur ne répond pas. Réessaie.";
+		else if (!rep.ok) jeu.erreur = rep.erreur;
+		else jeu.info = rep.info;
+		prevenir();
+	});
+}
 
 /** Commande de groupe : affiche l'erreur, ou l'information (« Invitation envoyée… »). */
 export function commandeGroupe(c: Commande) {

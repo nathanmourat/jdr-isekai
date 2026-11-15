@@ -42,7 +42,9 @@ import {
 	type Heros,
 	type RegionDef,
 } from "shared/moteur";
-import { agir, commandeGroupe, jeu, monHeros } from "../partie";
+import { agir, commandeGroupe, commandeModeration, jeu, monHeros } from "../partie";
+import { RAISONS } from "shared/grades";
+import { vueModeration } from "./moderation";
 import { affichage, type Panneau } from "../local";
 import { barre, bouton, carte, colonne, COULEURS, esc, ligne, texte } from "./kit";
 
@@ -130,7 +132,10 @@ export function barreHaut(parent: Frame, redessiner: () => void, allerA: (lieu: 
 		if (etape.lieu !== undefined && etape.disponible) bouton(l2, "Y aller", () => allerA(etape.lieu!), { principal: true, hauteur: 32 });
 	}
 	const l3 = ligne(c, 6);
-	for (const [id, nom] of ONGLETS) {
+	// l'équipe de modération a un onglet de plus
+	const onglets = [...ONGLETS];
+	if (jeu.moderation !== undefined && jeu.moderation.grade !== "joueur") onglets.push(["moderation", "🛡 Modération"]);
+	for (const [id, nom] of onglets) {
 		const pastille = (id === "fiche" && (h.pointsCaracDispo > 0 || h.pointsCompetenceDispo > 0)) ? " ●" : "";
 		bouton(
 			l3,
@@ -175,6 +180,9 @@ export function panneauLateral(parent: Frame, redessiner: () => void, allerA: (l
 			break;
 		case "compagnons":
 			vueCompagnons(parent);
+			break;
+		case "moderation":
+			vueModeration(parent, redessiner);
 			break;
 		case "partie":
 			vuePartie(parent, redessiner);
@@ -596,6 +604,9 @@ function vueCompagnons(parent: Frame) {
 
 // ───────────────────────────── Partie ─────────────────────────────
 
+/** Joueur qu'on est en train de signaler (on choisit ensuite la raison). */
+const signalement = { cible: undefined as number | undefined };
+
 function nomDe(userId: number): string {
 	return Players.GetPlayerByUserId(userId)?.DisplayName ?? "un joueur parti";
 }
@@ -639,8 +650,20 @@ function vuePartie(parent: Frame, _redessiner: () => void) {
 		const l = ligne(sv, 8);
 		const dansMonGroupe = g?.membres?.includes(p.UserId) === true;
 		const occupe = g?.occupes.includes(p.UserId) === true;
-		texte(l, `<b>${esc(p.DisplayName)}</b>${dansMonGroupe ? " — dans ton groupe" : occupe ? " — déjà en groupe" : ""}`, 15, { largeur: new UDim(1, -120) });
+		texte(l, `<b>${esc(p.DisplayName)}</b>${dansMonGroupe ? " — dans ton groupe" : occupe ? " — déjà en groupe" : ""}`, 15, { largeur: new UDim(1, -210) });
 		if (peutInviter && !dansMonGroupe && !occupe) bouton(l, "Inviter", () => commandeGroupe({ type: "inviter", cible: p.UserId }), { hauteur: 30, taille: 14 });
+		bouton(l, "🚩", () => ((signalement.cible = signalement.cible === p.UserId ? undefined : p.UserId), _redessiner()), { hauteur: 30, taille: 14, choisi: signalement.cible === p.UserId });
+		if (signalement.cible === p.UserId) {
+			const ls = ligne(sv, 6);
+			texte(ls, "Signaler pour :", 13, { largeur: new UDim(0, 100), couleur: COULEURS.texte2 });
+			RAISONS.forEach((rs, i) =>
+				bouton(ls, rs, () => {
+					commandeModeration({ type: "signaler", cible: p.UserId, raison: i });
+					signalement.cible = undefined;
+					_redessiner();
+				}, { hauteur: 26, taille: 12 }),
+			);
+		}
 	}
 
 	// les héros de cette campagne

@@ -86,4 +86,14 @@ describe('Héros voyageurs (Roblox : groupe dans la campagne du chef)', () => {
     expect(rejoue.erreurs).toEqual([]);
     expect(JSON.stringify(rejoue.etat.heros)).toBe(JSON.stringify(etat.heros));
   });
+
+  it('cadeau du propriétaire (Roblox) : or, XP et objet sur le héros du joueur', () => {
+    const solo = campagneSolo('cadeau', 'u1', 'Alice', dons[0], classes[0]);
+    const or0 = solo.etat.heros.h1.or;
+    const e = appliquer(c, solo.etat, { type: 'cadeau_admin', joueur: 'u1', or: 100, xp: 5000, objet: 'potion-soin-petite', quantite: 2 });
+    expect(e.heros.h1.or).toBe(or0 + 100);
+    expect(e.heros.h1.niveau).toBeGreaterThan(1);
+    expect(e.heros.h1.inventaire['potion-soin-petite']).toBeGreaterThanOrEqual(2);
+    expect(() => appliquer(c, solo.etat, { type: 'cadeau_admin', joueur: 'u1', objet: 'objet-qui-n-existe-pas' })).toThrow(/inconnu/);
+  });
 });

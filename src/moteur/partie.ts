@@ -193,6 +193,8 @@ export type Action =
   | { type: 'invite_arrive'; joueur: string; pseudo: string; voyageur: HerosVoyageur }
   /** Roblox : le héros revient de la campagne de son chef de groupe avec ses gains, voir voyage.ts. */
   | { type: 'heros_retour'; joueur: string; voyageur: HerosVoyageur }
+  /** Roblox : cadeau du propriétaire du jeu (outil de test réservé au propriétaire, décidé par le serveur). */
+  | { type: 'cadeau_admin'; joueur: string; or?: number; xp?: number; objet?: string; quantite?: number }
   /** Dormir à l'auberge : `mois` choisi, ou `histoire: true` pour aller jusqu'au prochain événement de l'histoire. */
   | { type: 'proposer_repos'; joueur: string; mois?: number; histoire?: boolean }
   | { type: 'repondre_repos'; joueur: string; accepte: boolean }
@@ -1342,6 +1344,24 @@ export function appliquer(contenu: Contenu, etatAvant: EtatPartie, action: Actio
       recopierProgression(h, action.voyageur.heros);
       recopierAutour(etat, h.id, action.voyageur);
       journal(contenu, etat, `${h.nom} revient d'une aventure en groupe (niveau ${h.niveau}).`);
+      break;
+    }
+    case 'cadeau_admin': {
+      const h = herosDuJoueur(etat, action.joueur);
+      const msgs: string[] = [];
+      if (vrai(action.or) && action.or > 0) { h.or += Math.floor(action.or); msgs.push(`+${Math.floor(action.or)} or`); }
+      if (vrai(action.xp) && action.xp > 0) {
+        const n = gagnerXp(contenu, h, Math.floor(action.xp));
+        msgs.push(`+${Math.floor(action.xp)} XP${vrai(n) ? ` (niveau ${h.niveau})` : ''}`);
+      }
+      if (vrai(action.objet)) {
+        if (!contenu.objets[action.objet]) refuser('Objet inconnu');
+        if (dejaUnique(contenu, etat, action.objet)) refuser('Cet objet est unique et existe déjà dans la partie');
+        const q = Math.max(1, Math.floor(action.quantite ?? 1));
+        h.inventaire[action.objet] = (h.inventaire[action.objet] ?? 0) + q;
+        msgs.push(`${contenu.objets[action.objet].nom} ×${q}`);
+      }
+      etat.dernieresNouvelles.push(`Cadeau du propriétaire du jeu pour ${h.nom} : ${msgs.join(', ')}.`);
       break;
     }
     case 'presence':

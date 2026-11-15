@@ -3,7 +3,7 @@
  * l'introduction a été lue, propositions impossibles par tour, façon de jouer en combat.
  */
 export type Section = "tout" | "parler" | "contrats" | "boutique" | "grimoire" | "auberge" | "etape";
-export type Panneau = "fiche" | "quetes" | "journal" | "compagnons" | "carte" | "partie" | "histoire";
+export type Panneau = "fiche" | "quetes" | "journal" | "compagnons" | "carte" | "partie" | "histoire" | "moderation";
 
 export const affichage = {
 	panneau: undefined as Panneau | undefined,

@@ -5,7 +5,16 @@
  *  - chaque joueur rejoue les actions avec le même moteur, donc tout le monde voit le même état.
  */
 import { ReplicatedStorage, RunService } from "@rbxts/services";
+import type { CommandeModeration, EtatModeration } from "./grades";
 import type { Action, EtatPartie } from "./moteur";
+
+/** Message affiché au milieu de l'écran (annonce, avertissement…). */
+export interface MessageServeur {
+	titre: string;
+	texte: string;
+	/** "annonce" (or), "avertissement" (rouge), "info" (gris) */
+	genre: "annonce" | "avertissement" | "info";
+}
 
 /** Action envoyée par un joueur : le serveur remplit lui-même le champ `joueur`. */
 export type ActionJoueur = { type: string; [cle: string]: unknown };
@@ -61,14 +70,16 @@ export function reseau() {
 		if (RunService.IsServer()) {
 			dossier = new Instance("Folder");
 			dossier.Name = NOM_DOSSIER;
-			for (const nom of ["Action", "NouvellesActions", "Erreur", "Campagne", "Groupe"]) {
+			for (const nom of ["Action", "NouvellesActions", "Erreur", "Campagne", "Groupe", "EtatModeration", "Message"]) {
 				const e = new Instance("RemoteEvent");
 				e.Name = nom;
 				e.Parent = dossier;
 			}
-			const f = new Instance("RemoteFunction");
-			f.Name = "Commande";
-			f.Parent = dossier;
+			for (const nom of ["Commande", "Moderation"]) {
+				const f = new Instance("RemoteFunction");
+				f.Name = nom;
+				f.Parent = dossier;
+			}
 			dossier.Parent = ReplicatedStorage;
 		} else {
 			dossier = ReplicatedStorage.WaitForChild(NOM_DOSSIER) as Folder;
@@ -87,6 +98,12 @@ export function reseau() {
 		groupe: dossier.WaitForChild("Groupe") as RemoteEvent<(g: EtatGroupe) => void>,
 		/** joueur → serveur : sa campagne (synchro), inviter, répondre, quitter le groupe */
 		commande: dossier.WaitForChild("Commande") as RemoteFunction<(c: Commande) => ReponseCommande>,
+		/** joueur → serveur : une commande de modération (vérifiée selon son grade), ou un signalement */
+		moderation: dossier.WaitForChild("Moderation") as RemoteFunction<(c: CommandeModeration) => ReponseCommande>,
+		/** serveur → joueur : son grade et, pour l'équipe de modération, joueurs, bannis, journal */
+		etatModeration: dossier.WaitForChild("EtatModeration") as RemoteEvent<(e: EtatModeration) => void>,
+		/** serveur → joueur : annonce, avertissement, signalement reçu… (fenêtre au milieu de l'écran) */
+		message: dossier.WaitForChild("Message") as RemoteEvent<(m: MessageServeur) => void>,
 	};
 }
 
