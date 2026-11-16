@@ -14,7 +14,7 @@
 | 5 | Cimes de Braise (dragons, nouveau) | ✅ validé le 15/11 |
 | 6 | Archipel des Brumes | ✅ validé le 15/11 |
 | 7 | Royaume Délié (État démoniaque) | ✅ validé le 16/11 |
-| 8 | État de la Lumière (nouveau) | à faire |
+| 8 | La Sérénité (État de la Lumière, nouveau) | ✅ validé le 16/11 |
 | 9 | Domaine nocturne (vampires, nouveau) | à faire |
 
 ---
@@ -62,7 +62,7 @@ Le plus grand royaume humain, au centre de Velmaris. Une **façade noble et lumi
 
 | Avec | Relation | Pourquoi |
 |---|---|---|
-| **État de la Lumière** | **Allié** | Le « grand frère » religieux : il soutient la Couronne… et la tient |
+| **La Sérénité** (Lumière) | **Allié** | Le « grand frère » religieux : il soutient la Couronne… et la tient |
 | **Concorde de Qarzim** | **Partenaire économique** | Commerce vital, dette croissante (Maison Dorvalle) |
 | **Archipel des Brumes** | Neutre | Accords de pêche ; pirates tolérés quand ils arrangent la Couronne |
 | **Domaine nocturne** | Neutre | Officiellement aucun lien ; officieusement, des vampires à la cour |
@@ -116,7 +116,7 @@ Une **ligue marchande** de cités-oasis au cœur d'un **désert mystique et mort
 | **Domaine nocturne** | **Allié économique** | Un **pacte** ancien : les vampires ont aidé la Concorde pendant un conflit (proposition : la **guerre des Puits**, contre les seigneurs pillards, quand les vampires tenaient le désert la nuit). Depuis, banques et contrats communs. |
 | **Monts Grisfer** | **Bonne entente** | Métal et machines naines contre épices, soieries et cristaux |
 | **Sylvenoire** | Neutre | Peu d'échanges ; les elfes désapprouvent en silence l'extraction des cristaux |
-| **État de la Lumière** | Neutre | Neutre en politique, même si l'Ordre est son meilleur client |
+| **La Sérénité** (Lumière) | Neutre | Neutre en politique, même si l'Ordre est son meilleur client |
 | **Royaume Délié** (démons) | Neutre | On ne parle pas d'eux… et on ne se demande pas où vont certaines cargaisons |
 | **Archipel des Brumes** | **Conflit** | La Concorde **ne reconnaît pas leurs valeurs** : des pirates qui ne respectent aucun contrat. Piraterie sur les routes maritimes, représailles, primes sur les capitaines. |
 
@@ -179,7 +179,7 @@ Une forêt primaire d'arbres géants, cachée sous une **brume bleue**. Un peupl
 | **Monts Grisfer** | **Allié** | Pendant la guerre, les nains ont **refusé de vendre des armes** à Aubeclaire et ont **accueilli des réfugiés**. Rancune commune envers Aubeclaire. Échanges : métal et pierre contre remèdes, sève et bois tombé. |
 | **Concorde de Qarzim** | Neutre | Peu d'échanges ; les elfes désapprouvent en silence l'extraction des cristaux |
 | **Archipel des Brumes** | Neutre | Peu de contacts |
-| **État de la Lumière** | **Méfiance** | Allié d'Aubeclaire et de l'Ordre ; il a béni la guerre des Racines. Pas de guerre, mais des relations froides. |
+| **La Sérénité** (Lumière) | **Méfiance** | Allié d'Aubeclaire et de l'Ordre ; il a béni la guerre des Racines. Pas de guerre, mais des relations froides. |
 | **Royaume Délié** (démons) | **Tension sans conflit** | La Légion a attaqué la forêt au chapitre 3 pour prendre le Cœur Immobile, sur ordre secret de **la Voix** ; le Royaume dément officiellement |
 | **Domaine nocturne** | **Ennemi** | Les elfes vénèrent la Vie ; les vampires ont refusé la Mort et vivent de la vie des autres. Le **sang elfe**, chargé d'éther, est le plus recherché : « **la Chasse Pâle** », des enlèvements à la lisière. Un vampire se tue à vue. |
 
@@ -251,7 +251,7 @@ Les forges volcaniques sont chauffées par le **souffle de Morghast**, qui remon
 | **Archipel des Brumes** | **Bons termes** | Les pirates sont les **meilleurs clients** des eaux-de-vie naines ; en échange, les nains reçoivent des marchandises « sans poser de questions » |
 | **Royaume Délié** (démons) | **Neutre des deux côtés** | Un **intérêt stratégique** : les nains sont alliés des elfes. L'État démoniaque évite de les provoquer (pas de second front) ; les nains restent neutres pour protéger leurs montagnes |
 | **Domaine nocturne** | **Tension** | Par solidarité avec les elfes (la Chasse Pâle), sans aller plus loin. Les nains **refusent de leur vendre des armes** |
-| **État de la Lumière** | Neutre | L'Ordre les juge hérétiques, mais a besoin de leur métal |
+| **La Sérénité** (Lumière) | Neutre | L'Ordre les juge hérétiques, mais a besoin de leur métal |
 | **Cimes de Braise** | **Allié** | Le **Pacte des Braises** : feu de dragon contre chaleur des volcans et garde des couvées |
 
 ### À créer plus tard
@@ -299,7 +299,7 @@ Quelques **pics volcaniques** à la lisière des Monts Grisfer, où vivent les *
 | **Concorde de Qarzim** | Neutre | Les marchands rêvent de leurs trésors, sans oser y toucher |
 | **Archipel des Brumes** | Cousins éloignés | Les deux branches de dragons se parlent peu |
 | **Royaume Délié** (démons) | **Ennemi** | Les Terres Cendrées sont nées de la chute des dragons-rois |
-| **État de la Lumière** | Méfiance | Pour l'Ordre, les dragons sont les restes d'un âge à oublier |
+| **La Sérénité** (Lumière) | Méfiance | Pour l'Ordre, les dragons sont les restes d'un âge à oublier |
 | **Domaine nocturne** | Neutre | Aucun intérêt commun |
 
 ### À créer plus tard
@@ -372,7 +372,7 @@ La brume est le **rêve de Xyrrha**. Personne n'a jamais atteint le centre de l'
 | **Monts Grisfer** | **Bons termes** | Les eaux-de-vie naines ; marchandises « sans poser de questions » |
 | **Cimes de Braise** | Cousins éloignés | Par les deux branches de dragons |
 | **Royaume Délié** (démons) | **Bonne entente** | Un ennemi commun (l'Ordre et l'État de la Lumière), de la contrebande… et les démons paient bien |
-| **État de la Lumière** | **Ennemi** | Il traite les pirates d'hérétiques, leur fait la chasse en mer et veut « purifier » la brume |
+| **La Sérénité** (Lumière) | **Ennemi** | Il traite les pirates d'hérétiques, leur fait la chasse en mer et veut « purifier » la brume |
 | **Domaine nocturne** | **Neutre, mais toléré** | Les vampires sont acceptés à Port-Vérane tant qu'ils paient et respectent le Code |
 
 ### À créer plus tard
@@ -434,7 +434,7 @@ Tous suivent d'abord le Roi démon… mais pas tous pour les mêmes raisons.
 | Avec | Relation | Pourquoi |
 |---|---|---|
 | **Aubeclaire** | **Ennemi majeur** | Le Mur d'Aube est la frontière ; la Couronne protège l'Ordre |
-| **État de la Lumière** | **Ennemi juré** | L'Ordre a trahi Orvan |
+| **La Sérénité** (Lumière) | **Ennemi juré** | L'Ordre a trahi Orvan |
 | **Concorde de Qarzim** | Neutre | Commerce discret : on ne se demande pas où vont certaines cargaisons |
 | **Sylvenoire** | **Tension sans conflit** | L'attaque de la forêt, officiellement démentie |
 | **Monts Grisfer** | Neutre | Intérêt stratégique : ne pas provoquer les alliés des elfes (pas de second front) |
@@ -446,3 +446,67 @@ Tous suivent d'abord le Roi démon… mais pas tous pour les mêmes raisons.
 - Les **noms des Trois Suprêmes** et des **Sept Familles**.
 - Ce que la Voix reçoit de l'Ordre, et qui est au courant du pacte.
 - Le vrai ennemi final (développement futur).
+
+---
+
+## 8. La Sérénité (l'État de la Lumière) — « la paix des statues » ✅ (nouveau)
+
+### En bref
+Le **cœur de l'Ordre de la Lumière Sereine** : une **cité volante** qui plane au-dessus de Velmaris. Tout y est blanc, propre, silencieux et ordonné, à l'image de **Sérène l'Immobile**. Un peuple **sincère mais aveugle**, qui croit protéger le monde… et une poignée de dirigeants qui savent ce que coûtent les Appels.
+
+### Ce qui vient de la V1 et des documents V2
+- L'**Ordre de la Lumière Sereine**, l'Église officielle, qui pratique les **Appels** au Temple du Seuil (Lysmont).
+- Son secret : **chaque Appel nourrit les Cendres** ; une partie du clergé l'ignore sincèrement. **Elianne** le découvre au chapitre 4.
+- En V2 : l'Ordre vénère **Sérène**, qui est l'**anomalie** ; il a trahi Orvan (« saint Aldebrand »), poussé à la guerre des Racines, fait disparaître Aldric, et conclu un **pacte secret avec la Voix**.
+- Les **anges Gardiens** défendent le Voile et sont alliés de l'Ordre.
+
+### La cité volante
+- **Haute-Clarté** (nom modifiable), la capitale, flotte au-dessus des nuages. Son ombre passe sur les plaines d'Aubeclaire : un rappel permanent de qui tient vraiment la Couronne.
+- **Proposition** : elle est portée par un **immense fragment de Sérène** enchâssé sous ses fondations. Pour rester en l'air, la cité **consomme des cristaux d'éther**, achetés à Qarzim. Si les cristaux viennent à manquer… elle descend.
+- On y monte par des **Escaliers de Lumière** (des passages ouverts seulement aux fidèles autorisés) ou à dos d'ange.
+- Le **Temple du Seuil** de Lysmont n'en est qu'une **branche** : le Grand Prieur **Auréliath** obéit à la Sérénité.
+
+### Le pouvoir : une théocratie à deux visages
+- **Le Hiérarque** : le chef suprême de l'Ordre et le supérieur d'Auréliath. Un humain. **Il connaît le secret** des Appels et le pacte avec la Voix.
+- **Le Conseil du Chœur** : **12 membres**, comme les Douze dieux, répartis en trois voix (proposition : 4 de chaque) :
+
+| Rang | Qui | Rôle |
+|---|---|---|
+| **Grands Prêtres** | Humains de l'Ordre | La doctrine, les Appels, les temples |
+| **Gardiens** | **Anges** Gardiens | La façade sainte et la défense du Voile ; ils y croient **sincèrement** et ignorent le secret |
+| **Exécuteurs** | Les chefs des Purificateurs | La justice et la chasse aux hérétiques |
+
+- **Ceux qui savent** : le Hiérarque et quelques membres du Chœur (à choisir). Le jour où les **anges** apprendront la vérité, ils pourraient devenir des alliés des héros.
+
+### Ambiance
+- **Sincère mais aveugle** : la plupart des habitants croient vraiment protéger le monde.
+- **Une paix parfaite… celle des statues** : tout est réglé, rien ne doit changer. C'est beau, mais on y étouffe.
+
+### Armée et justice
+- **Les Veilleurs Blancs** : des paladins appuyés par des anges.
+- **Les Purificateurs** (menés par les Exécuteurs) : ils chassent les hérétiques, cultes des Cendres, vampires, pirates.
+
+### Économie
+- Les **dîmes** d'Aubeclaire, les **pèlerinages**, les **reliques** (et la lutte contre les fausses).
+- Les **cristaux d'éther** achetés à Qarzim, pour les Appels… et pour faire voler la cité.
+
+### Le vrai ennemi final (piste pour plus tard)
+Si les démons sont le **faux** ennemi final, le vrai fil mène ici : le Hiérarque, ou **Sérène elle-même**, voudrait **figer le monde** pour toujours.
+
+### Relations
+
+| Avec | Relation | Pourquoi |
+|---|---|---|
+| **Aubeclaire** | **Allié** | Le « grand frère » religieux, qui soutient la Couronne… et la tient |
+| **Concorde de Qarzim** | Neutre | Son plus gros client en cristaux |
+| **Sylvenoire** | Méfiance | Il a béni la guerre des Racines et voulait le Cœur Immobile |
+| **Monts Grisfer** | Neutre | Des hérétiques, mais on a besoin de leur métal |
+| **Cimes de Braise** | Méfiance | Les dragons sont les restes d'un âge à oublier |
+| **Archipel des Brumes** | **Ennemi** | Pirates hérétiques ; il veut « purifier » la brume |
+| **Royaume Délié** | **Ennemi juré** | Orvan, trahi par l'Ordre (en secret : le pacte avec la Voix) |
+| **Domaine nocturne** | **Ennemi** | Les Purificateurs chassent les vampires |
+
+### À créer plus tard
+- Le **nom du Hiérarque** et des 12 membres du Chœur ; qui, parmi eux, connaît le secret.
+- La carte de Haute-Clarté (temples, Escaliers de Lumière, le fragment sous la cité).
+- Le développement du vrai ennemi final.
