@@ -1,4 +1,4 @@
-# Royaumes et États — V2 (en cours, royaume par royaume)
+# Royaumes et États — V2 (9 royaumes validés)
 
 > Document de travail pour la **V2**, construit avec le groupe, un royaume à la fois. **La V1 ne change pas.**
 > S'appuie sur la [cosmologie](COSMOLOGIE-V2.md) et les [races](RACES-V2.md). Tous les noms sont originaux et modifiables.
@@ -15,7 +15,7 @@
 | 6 | Archipel des Brumes | ✅ validé le 15/11 |
 | 7 | Royaume Délié (État démoniaque) | ✅ validé le 16/11 |
 | 8 | La Sérénité (État de la Lumière, nouveau) | ✅ validé le 16/11 |
-| 9 | Domaine nocturne (vampires, nouveau) | à faire |
+| 9 | La Vesprée (domaine nocturne, vampires, nouveau) | ✅ validé le 16/11 |
 
 ---
 
@@ -65,7 +65,7 @@ Le plus grand royaume humain, au centre de Velmaris. Une **façade noble et lumi
 | **La Sérénité** (Lumière) | **Allié** | Le « grand frère » religieux : il soutient la Couronne… et la tient |
 | **Concorde de Qarzim** | **Partenaire économique** | Commerce vital, dette croissante (Maison Dorvalle) |
 | **Archipel des Brumes** | Neutre | Accords de pêche ; pirates tolérés quand ils arrangent la Couronne |
-| **Domaine nocturne** | Neutre | Officiellement aucun lien ; officieusement, des vampires à la cour |
+| **La Vesprée** (vampires) | Neutre | Officiellement aucun lien ; officieusement, des vampires à la cour |
 | **Sylvenoire** | **Tension** | La **guerre des Racines** (vers 962 AV) : poussé par l'Ordre, Aubeclaire voulait le **Cœur Immobile**, le fragment de Sérène qui protège la forêt. Ses soldats ont rasé le village de **Thessaëlle** ; la forêt a écrasé « la Colonne perdue ». Chacun accuse l'autre. Les demi-elfes, nés de la paix d'avant, en paient encore le prix. |
 | **Monts Grisfer** | **Ancienne tension** | Les nains ont bâti le **Mur d'Aube** (702) ; Aubeclaire n'a jamais payé toute sa dette et s'en est attribué la gloire. On leur achète toujours des armes, à prix fort et avec rancune. |
 | **Royaume Délié** (démons) | **Ennemi majeur** | Le Mur d'Aube est la frontière |
@@ -113,7 +113,7 @@ Une **ligue marchande** de cités-oasis au cœur d'un **désert mystique et mort
 | Avec | Relation | Pourquoi |
 |---|---|---|
 | **Aubeclaire** | **Partenaire économique** | Commerce vital ; Aubeclaire s'endette (Maison Dorvalle) |
-| **Domaine nocturne** | **Allié économique** | Un **pacte** ancien : les vampires ont aidé la Concorde pendant un conflit (proposition : la **guerre des Puits**, contre les seigneurs pillards, quand les vampires tenaient le désert la nuit). Depuis, banques et contrats communs. |
+| **La Vesprée** (vampires) | **Allié économique** | Un **pacte** ancien : les vampires ont aidé la Concorde pendant un conflit (proposition : la **guerre des Puits**, contre les seigneurs pillards, quand les vampires tenaient le désert la nuit). Depuis, banques et contrats communs. |
 | **Monts Grisfer** | **Bonne entente** | Métal et machines naines contre épices, soieries et cristaux |
 | **Sylvenoire** | Neutre | Peu d'échanges ; les elfes désapprouvent en silence l'extraction des cristaux |
 | **La Sérénité** (Lumière) | Neutre | Neutre en politique, même si l'Ordre est son meilleur client |
@@ -181,7 +181,7 @@ Une forêt primaire d'arbres géants, cachée sous une **brume bleue**. Un peupl
 | **Archipel des Brumes** | Neutre | Peu de contacts |
 | **La Sérénité** (Lumière) | **Méfiance** | Allié d'Aubeclaire et de l'Ordre ; il a béni la guerre des Racines. Pas de guerre, mais des relations froides. |
 | **Royaume Délié** (démons) | **Tension sans conflit** | La Légion a attaqué la forêt au chapitre 3 pour prendre le Cœur Immobile, sur ordre secret de **la Voix** ; le Royaume dément officiellement |
-| **Domaine nocturne** | **Ennemi** | Les elfes vénèrent la Vie ; les vampires ont refusé la Mort et vivent de la vie des autres. Le **sang elfe**, chargé d'éther, est le plus recherché : « **la Chasse Pâle** », des enlèvements à la lisière. Un vampire se tue à vue. |
+| **La Vesprée** (vampires) | **Ennemi** | Les elfes vénèrent la Vie ; les vampires ont refusé la Mort et vivent de la vie des autres. Le **sang elfe**, chargé d'éther, est le plus recherché : « **la Chasse Pâle** », des enlèvements à la lisière. Un vampire se tue à vue. |
 
 ### À créer plus tard
 - Les grandes familles des **Lignées Premières** et leurs chefs.
@@ -250,7 +250,7 @@ Les forges volcaniques sont chauffées par le **souffle de Morghast**, qui remon
 | **Sylvenoire** | **Allié** | La guerre des Racines (refus de vendre des armes à Aubeclaire, réfugiés accueillis) et le **commerce du vin** |
 | **Archipel des Brumes** | **Bons termes** | Les pirates sont les **meilleurs clients** des eaux-de-vie naines ; en échange, les nains reçoivent des marchandises « sans poser de questions » |
 | **Royaume Délié** (démons) | **Neutre des deux côtés** | Un **intérêt stratégique** : les nains sont alliés des elfes. L'État démoniaque évite de les provoquer (pas de second front) ; les nains restent neutres pour protéger leurs montagnes |
-| **Domaine nocturne** | **Tension** | Par solidarité avec les elfes (la Chasse Pâle), sans aller plus loin. Les nains **refusent de leur vendre des armes** |
+| **La Vesprée** (vampires) | **Tension** | Par solidarité avec les elfes (la Chasse Pâle), sans aller plus loin. Les nains **refusent de leur vendre des armes** |
 | **La Sérénité** (Lumière) | Neutre | L'Ordre les juge hérétiques, mais a besoin de leur métal |
 | **Cimes de Braise** | **Allié** | Le **Pacte des Braises** : feu de dragon contre chaleur des volcans et garde des couvées |
 
@@ -300,7 +300,7 @@ Quelques **pics volcaniques** à la lisière des Monts Grisfer, où vivent les *
 | **Archipel des Brumes** | Cousins éloignés | Les deux branches de dragons se parlent peu |
 | **Royaume Délié** (démons) | **Ennemi** | Les Terres Cendrées sont nées de la chute des dragons-rois |
 | **La Sérénité** (Lumière) | Méfiance | Pour l'Ordre, les dragons sont les restes d'un âge à oublier |
-| **Domaine nocturne** | Neutre | Aucun intérêt commun |
+| **La Vesprée** (vampires) | Neutre | Aucun intérêt commun |
 
 ### À créer plus tard
 - Le **nom du roi-dragon** du Pacte et les noms des vieux dragons.
@@ -373,7 +373,7 @@ La brume est le **rêve de Xyrrha**. Personne n'a jamais atteint le centre de l'
 | **Cimes de Braise** | Cousins éloignés | Par les deux branches de dragons |
 | **Royaume Délié** (démons) | **Bonne entente** | Un ennemi commun (l'Ordre et l'État de la Lumière), de la contrebande… et les démons paient bien |
 | **La Sérénité** (Lumière) | **Ennemi** | Il traite les pirates d'hérétiques, leur fait la chasse en mer et veut « purifier » la brume |
-| **Domaine nocturne** | **Neutre, mais toléré** | Les vampires sont acceptés à Port-Vérane tant qu'ils paient et respectent le Code |
+| **La Vesprée** (vampires) | **Neutre, mais toléré** | Les vampires sont acceptés à Port-Vérane tant qu'ils paient et respectent le Code |
 
 ### À créer plus tard
 - Le **nom du Roi des Pirates**, son navire et son pavillon ; les autres capitaines de la Table.
@@ -440,7 +440,7 @@ Tous suivent d'abord le Roi démon… mais pas tous pour les mêmes raisons.
 | **Monts Grisfer** | Neutre | Intérêt stratégique : ne pas provoquer les alliés des elfes (pas de second front) |
 | **Cimes de Braise** | **Ennemi** | Les Terres Cendrées sont nées de la chute des dragons-rois |
 | **Archipel des Brumes** | **Bonne entente** | Ennemi commun, contrebande, et les démons paient bien |
-| **Domaine nocturne** | **Allié** | Deux peuples pourchassés par l'Ordre, qui refusent ce que les dieux leur ont imposé (la Mort pour les uns, le Voile pour les autres). Les vampires sont leurs ambassadeurs et leurs banquiers. |
+| **La Vesprée** (vampires) | **Allié** | Deux peuples pourchassés par l'Ordre, qui refusent ce que les dieux leur ont imposé (la Mort pour les uns, le Voile pour les autres). Les vampires sont leurs ambassadeurs et leurs banquiers. |
 
 ### À créer plus tard
 - Les **noms des Trois Suprêmes** et des **Sept Familles**.
@@ -504,9 +504,66 @@ Si les démons sont le **faux** ennemi final, le vrai fil mène ici : le Hiérar
 | **Cimes de Braise** | Méfiance | Les dragons sont les restes d'un âge à oublier |
 | **Archipel des Brumes** | **Ennemi** | Pirates hérétiques ; il veut « purifier » la brume |
 | **Royaume Délié** | **Ennemi juré** | Orvan, trahi par l'Ordre (en secret : le pacte avec la Voix) |
-| **Domaine nocturne** | **Ennemi** | Les Purificateurs chassent les vampires |
+| **La Vesprée** (vampires) | **Ennemi** | Les Purificateurs chassent les vampires |
 
 ### À créer plus tard
 - Le **nom du Hiérarque** et des 12 membres du Chœur ; qui, parmi eux, connaît le secret.
 - La carte de Haute-Clarté (temples, Escaliers de Lumière, le fragment sous la cité).
 - Le développement du vrai ennemi final.
+
+---
+
+## 9. La Vesprée (le domaine nocturne) — « l'élégance et la faim » ✅ (nouveau)
+
+### En bref
+Le royaume des **vampires**, les **Refusés**. Des montagnes sombres et des **marais brumeux** où le soleil perce à peine. Une cour **élégante et raffinée** (bals, salons, contrats signés à minuit), et derrière la politesse : **dettes de sang, chantage, et une faim qui ne s'éteint jamais**.
+
+### Ce qui vient de la fiche des races V2
+- Les Refusés ont **refusé de mourir** quand **Ossaria** est venue les chercher pendant la Rupture ; la Mort a reculé. Ils vivent presque sans fin, mais **sans mana propre** : ils doivent prendre la vie des autres à travers le **sang**.
+- Peau pâle, yeux de chat, crocs discrets ; **pas d'ombre sous une lanterne d'Ossaria** (Fête des Lanternes).
+- Une **aristocratie de la nuit** : banquiers, diplomates, espions, conseillers de cour. Ils honorent **Umbrë**, le dieu des ténèbres.
+
+### Le territoire
+- **Des montagnes sombres et des marais** couverts de brume, entre le désert de Qarzim et les Monts Grisfer (à placer précisément sur la carte).
+- Le soleil n'y perce presque jamais : les vampires y vivent librement, de jour comme de nuit.
+- C'est depuis ces terres qu'ils ont rejoint le désert pendant la **guerre des Puits**, quand ils le tenaient la nuit pour la Concorde.
+
+### Le pouvoir
+- **Le Premier Refusé** : celui qui a fait reculer la Mort. **Toujours vivant**, il règne depuis la Rupture. Un fondateur, comme Orvan pour les démons.
+- **Les quatre Maîtres du Sang** : chacun dirige l'une des **quatre grandes Maisons**, responsable d'un secteur (noms modifiables) :
+
+| Maison | Secteur | Rôle |
+|---|---|---|
+| **Maison Malvoile** | **Politique** | Diplomatie, ambassades, vampires placés dans les cours étrangères (dont celle d'Aubeclaire) |
+| **Maison Sang-d'Or** | **Économie** | Banques, contrats de sang, le pacte avec Qarzim, les comptes du Royaume Délié |
+| **Maison Nuitferre** | **Militaire** | La garde des marais et les troupes ; c'est chez elle que les **Affamés** sont les plus nombreux |
+| **Maison Tacite** | **Renseignement** | Espions, secrets, chantage ; elle sait toujours qui doit quoi à qui |
+
+### Les Sobres et les Affamés
+- **Les Sobres** gouvernent : ils boivent du sang **acheté sous contrat**, souvent à des **pauvres de Qarzim endettés**. C'est le côté sombre de leur alliance avec la Concorde.
+- **Les Affamés** chassent : la **Chasse Pâle** contre les elfes vient d'eux. La Vesprée la **condamne officiellement**… et la tolère.
+
+### Ambiance
+- **L'élégance et l'intrigue** : bals masqués, salons, duels de mots, contrats signés à minuit.
+- Tout se paie : une faveur crée une **dette de sang**, et une dette de sang ne s'efface jamais.
+
+### Secret (piste pour plus tard)
+Ossaria n'a peut-être pas reculé **par peur**. Elle attendrait quelque chose des Refusés.
+
+### Relations
+
+| Avec | Relation | Pourquoi |
+|---|---|---|
+| **Concorde de Qarzim** | **Allié économique** | Le pacte de la **guerre des Puits** ; banques et contrats communs ; le sang acheté aux endettés |
+| **Royaume Délié** | **Allié** | Deux peuples pourchassés par l'Ordre ; les vampires sont les ambassadeurs et les banquiers des démons |
+| **Aubeclaire** | Neutre | Officiellement aucun lien ; officieusement, des vampires à la cour (Maison Malvoile) |
+| **Archipel des Brumes** | Neutre, mais toléré | Bienvenus à Port-Vérane tant qu'ils paient et respectent le Code |
+| **Cimes de Braise** | Neutre | Aucun intérêt commun |
+| **Monts Grisfer** | Tension | Par solidarité avec les elfes ; les nains refusent de leur vendre des armes |
+| **Sylvenoire** | **Ennemi** | La **Chasse Pâle** : le sang elfe, chargé d'éther, est le plus recherché |
+| **La Sérénité** | **Ennemi** | Les Purificateurs chassent les vampires |
+
+### À créer plus tard
+- Le **nom du Premier Refusé** et des quatre Maîtres du Sang.
+- La **capitale** et la carte des marais.
+- Ce qu'Ossaria attend des Refusés.
