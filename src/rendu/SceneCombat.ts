@@ -154,7 +154,12 @@ export class SceneCombat extends Phaser.Scene {
       if (c.parti && !this.vues.has(c.id)) continue;
       const vue = this.vues.get(c.id) ?? this.creerVue(c, opts);
       const p = positions.get(c.id);
-      if (p) this.tweens.add({ targets: [vue.conteneur, vue.etiquette], x: p.x, y: p.y, duration: 250 });
+      if (p) {
+        this.tweens.add({ targets: vue.conteneur, x: p.x, y: p.y, duration: 250 });
+        // l'étiquette (nom + barres) reste entière dans le cadre visible : avec beaucoup de héros, celui du bout
+        // de la rangée était trop près du bord et la première lettre de son nom était rognée (« aya Lunecroc »)
+        this.tweens.add({ targets: vue.etiquette, x: this.xEtiquetteDansCadre(vue, p.x), y: p.y, duration: 250 });
+      }
       const cliquable = opts.ciblesCliquables.includes(c.id);
       vue.parti = !!c.parti;
       vue.nom.setColor(cliquable ? '#ffd166' : '#f3ead7');
@@ -175,6 +180,14 @@ export class SceneCombat extends Phaser.Scene {
     } else this.marqueurActif?.setVisible(false);
     this.animer(combat.evenements.slice(this.nbEvenements));
     this.nbEvenements = combat.evenements.length;
+  }
+
+  /** Position x de l'étiquette d'un combattant, décalée si besoin pour que le nom tienne entier dans le cadre visible. */
+  private xEtiquetteDansCadre(v: Vue, x: number): number {
+    const largeurVue = L / this.zoom;
+    const gauche = this.zoom > 1 ? SceneCombat.CENTRE_ACTION.x - largeurVue / 2 : 0;
+    const demi = Math.max(v.nom.width, 66) / 2 + 4;
+    return Math.min(Math.max(x, gauche + demi), gauche + largeurVue - demi);
   }
 
   /**
@@ -210,6 +223,24 @@ export class SceneCombat extends Phaser.Scene {
       if (v.parti || v.conteneur.alpha <= 0.05) continue;
       const wx = v.conteneur.x, wy = v.conteneur.y + v.zone.y;
       res.push({ id, x: ((wx - cam.worldView.x) * cam.zoom) / d.x, y: ((wy - cam.worldView.y) * cam.zoom) / d.y });
+    }
+    return res;
+  }
+
+  /**
+   * Tests navigateur (mise à jour 5, point 2) : étiquette de nom de chaque combattant, en pixels CSS dans le canvas
+   * (gauche, droite, haut, bas), avec le texte affiché et la largeur visible du canvas.
+   */
+  etiquettesEcran(): { id: string; texte: string; gauche: number; droite: number; haut: number; bas: number; largeur: number; hauteur: number }[] {
+    const cam = this.cameras.main;
+    const d = this.scale.displayScale;
+    const versX = (wx: number) => ((wx - cam.worldView.x) * cam.zoom) / d.x;
+    const versY = (wy: number) => ((wy - cam.worldView.y) * cam.zoom) / d.y;
+    const res = [];
+    for (const [id, v] of this.vues) {
+      if (v.parti || v.conteneur.alpha <= 0.05) continue;
+      const b = v.nom.getBounds();
+      res.push({ id, texte: v.nom.text.replace(/\n/g, ' '), gauche: versX(b.left), droite: versX(b.right), haut: versY(b.top), bas: versY(b.bottom), largeur: (cam.width) / d.x, hauteur: cam.height / d.y });
     }
     return res;
   }

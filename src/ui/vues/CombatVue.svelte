@@ -181,7 +181,7 @@
   let dernierClic = $state('');
   $effect(() => {
     const w = window as unknown as { __velmarisCombat?: unknown };
-    w.__velmarisCombat = { positions: () => scene?.positionsEcran() ?? [], calques: () => scene?.etatCalques() ?? [], animer: (nom: string) => scene?.animerHeros(nom) };
+    w.__velmarisCombat = { positions: () => scene?.positionsEcran() ?? [], calques: () => scene?.etatCalques() ?? [], etiquettes: () => scene?.etiquettesEcran() ?? [], animer: (nom: string) => scene?.animerHeros(nom) };
     return () => { delete w.__velmarisCombat; };
   });
   let minuteurMessage: ReturnType<typeof setTimeout> | undefined;
