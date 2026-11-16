@@ -1,8 +1,9 @@
 /**
- * Test 4, point 8 : soins au Temple avec la petite scène animée (environ 10 s) chez le joueur soigné.
- * Vérifie : la scène s'ouvre au clic, les 3 répliques du prêtre se suivent, la lumière descend, les PV remontent,
- * la notification « +X PV » n'arrive qu'à la fin ; « Passer » ferme tout de suite ; version courte (2 s) avec
- * prefers-reduced-motion. Captures dans rapports/captures-test-4/.
+ * Soins au Temple avec la petite scène animée (environ 10 s) chez le joueur soigné (test 4, point 8 ; mise à jour 5,
+ * point 1 : décor du Temple, sprites du héros et du prêtre, mains, rayon de la rosace, halo, lueurs, particules, flash).
+ * Vérifie : la scène s'ouvre au clic, les phases se suivent aux bons moments (data-phase), les 3 répliques du prêtre,
+ * les PV remontent, la notification « +X PV » n'arrive qu'à la fin ; « Passer » ferme tout de suite ; version courte
+ * (2 s) avec prefers-reduced-motion. Captures de chaque phase dans rapports/captures-test-5/.
  *
  * Usage : `npx tsx tests/e2e/soins.mjs [url]`. Prérequis : `npm run build` + `npx vite preview --port 4173`.
  */
@@ -17,7 +18,7 @@ import { finirCombats, jouer, nouvellePartieDeTest } from '../robot.ts';
 
 const { chromium } = createRequire(import.meta.url)('playwright');
 const url = process.argv[2] ?? 'http://localhost:4173/';
-const dossier = resolve('rapports/captures-test-4');
+const dossier = resolve('rapports/captures-test-5');
 mkdirSync(dossier, { recursive: true });
 const c = contenuDisque();
 
@@ -61,13 +62,25 @@ const debutDe = (t) => t.replace(/\{\{.*$/, '').slice(0, 25);
   const t0 = Date.now();
   if (!(await soins.innerText()).includes(debutDe(lignes[0]))) erreurs.push('réplique 1 absente');
   if (await page.locator('.pile-notifs .gain').count()) erreurs.push('une notification de gain s\'affiche avant la fin des soins');
-  await page.waitForTimeout(4200);
-  if (!(await page.locator('.soins .scene.lumiere').count())) erreurs.push('la lumière ne descend pas');
+  if (!(await page.locator('.soins .cadre .sprite').count())) erreurs.push('le sprite du héros n\'est pas affiché');
+  /** Attend un instant de la scène (ms depuis l'ouverture), vérifie la phase, fait une capture. */
+  async function moment(ms, phase, capture) {
+    await page.waitForTimeout(Math.max(0, ms - (Date.now() - t0)));
+    const p = Number(await page.locator('.soins .scene').getAttribute('data-phase'));
+    if (p !== phase) erreurs.push(`à ${ms / 1000} s : phase ${p} au lieu de ${phase}`);
+    if (capture) await page.locator('.soins').screenshot({ path: join(dossier, `soins-${capture}.png`) });
+  }
+  await moment(900, 0, '1-debut');
+  await moment(2700, 1, '2-approche');
+  await moment(4300, 2, '3-mains');
+  if (!(await page.locator('.soins .scene.lumiere').count())) erreurs.push('la lumière ne vient pas');
   if (!(await soins.innerText()).includes(debutDe(lignes[1]))) erreurs.push('réplique 2 absente');
-  await page.screenshot({ path: join(dossier, 'soins-lumiere.png') });
-  await page.waitForTimeout(3600);
+  await moment(6000, 3, '4-rayon');
+  await moment(7300, 4, '5-halo');
+  await moment(8250, 5, '6-flash');
   if (!(await soins.innerText()).includes(debutDe(lignes[2].replace('{{guéri|guérie}}', 'guéri')))) erreurs.push('réplique 3 absente');
-  await page.screenshot({ path: join(dossier, 'soins-fin.png') });
+  await moment(9300, 6, '7-calme');
+  if (!(await soins.innerText()).match(/(\d+) \/ \1 PV/)) erreurs.push('les PV ne sont pas remontés au maximum');
   await soins.waitFor({ state: 'detached', timeout: 6000 });
   const duree = (Date.now() - t0) / 1000;
   if (duree < 8 || duree > 13) erreurs.push(`durée de la scène : ${duree.toFixed(1)} s (environ 10 attendues)`);
@@ -79,6 +92,7 @@ const debutDe = (t) => t.replace(/\{\{.*$/, '').slice(0, 25);
 {
   const page = await ouvrir({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 3 });
   await page.locator('.soins').waitFor();
+  await page.waitForTimeout(4500);
   await page.screenshot({ path: join(dossier, 'soins-telephone.png') });
   await page.getByRole('button', { name: /Passer/ }).click();
   await page.waitForTimeout(200);
