@@ -161,8 +161,8 @@ export class SceneCombat extends Phaser.Scene {
       this.majBarre(vue, c);
       this.majEtats(vue, c);
       if (c.parti && vue.conteneur.alpha > 0) this.tweens.add({ targets: [vue.conteneur, vue.etiquette], alpha: 0, duration: 500 });
-      if (c.ko && !c.parti) { vue.conteneur.setAlpha(0.45); vue.etiquette.setAlpha(0.45); vue.sprite.setAngle(c.camp === 'heros' ? -80 : 80); }
-      else if (!c.parti) { vue.conteneur.setAlpha(1); vue.etiquette.setAlpha(1); vue.sprite.setAngle(0); }
+      if (c.ko && !c.parti) { vue.conteneur.setAlpha(0.45); vue.etiquette.setAlpha(0.45); for (const o of corps(vue)) o.setAngle(c.camp === 'heros' ? -80 : 80); }
+      else if (!c.parti) { vue.conteneur.setAlpha(1); vue.etiquette.setAlpha(1); for (const o of corps(vue)) o.setAngle(0); }
       // invisible (Pas d'ombre, se cacher) : le personnage devient semi-transparent
       const furtif = !c.ko && c.etats.some((e) => e.id === 'furtif');
       vue.sprite.setAlpha(furtif ? 0.4 : 1);
@@ -212,6 +212,21 @@ export class SceneCombat extends Phaser.Scene {
       res.push({ id, x: ((wx - cam.worldView.x) * cam.zoom) / d.x, y: ((wy - cam.worldView.y) * cam.zoom) / d.y });
     }
     return res;
+  }
+
+  /** Tests navigateur (mise à jour 5, point 5) : image du corps et du calque de race de chaque héros, et leurs mouvements. */
+  etatCalques(): { id: string; corps: string; calque: string; angleCorps: number; angleCalque: number; xCorps: number; xCalque: number }[] {
+    const res = [];
+    for (const [id, v] of this.vues) {
+      if (!v.calque) continue;
+      res.push({ id, corps: String(v.sprite.frame.name), calque: String(v.calque.frame.name), angleCorps: v.sprite.angle, angleCalque: v.calque.angle, xCorps: v.sprite.x, xCalque: v.calque.x });
+    }
+    return res;
+  }
+
+  /** Tests navigateur : fait jouer une animation (attaque, sort, touché…) à tous les héros, comme pendant un tour. */
+  animerHeros(nom: string) {
+    for (const v of this.vues.values()) if (v.calque) this.jouerAnim(v, nom);
   }
 
   /** Court message au-dessus d'un combattant (cible impossible : « Hors de portée »…). */
@@ -305,12 +320,23 @@ export class SceneCombat extends Phaser.Scene {
     if (c.teinte) sprite.setTint(Phaser.Display.Color.HexStringToColor(c.teinte).color);
     let calque: Phaser.GameObjects.Sprite | null = null;
     if (c.race && c.type === 'heros') {
-      const cheminCalque = `personnages/races/${c.race}/calque-combat`;
+      // héroïne : calque féminin de sa race s'il existe (naine : tresses au lieu de la barbe), sinon le calque commun
+      const cheminFeminin = `personnages/races/${c.race}/calque-combat-f`;
+      const cheminCalque = c.sexe === 'f' && this.textures.exists(cheminFeminin) ? cheminFeminin : `personnages/races/${c.race}/calque-combat`;
       const calqueAnime = anime && creerAnimations(this, cheminCalque, LIGNES_HEROS);
       const cleCalque = calqueAnime ? cheminCalque : calqueProvisoire(this, c.race, taille, versDroite);
       if (cleCalque) {
         calque = this.add.sprite(0, 0, cleCalque).setOrigin(0.5, 1).setScale(echelle * (calqueAnime ? echelleCase(this, cheminCalque, taille) : 1));
-        if (calqueAnime) calque.play(`${cheminCalque}:attente`);
+        // Mise à jour 5, point 5 : le calque de race (barbe, oreilles, cornes, queue) ne joue pas sa propre animation,
+        // il recopie l'image du corps à chaque changement (attente, attaque, sort, touché, K.O.) : les planches ont les
+        // mêmes cases, image par image (NOTE-CALQUES.md). Avant, seul le corps jouait l'attaque et la barbe restait
+        // sur « attente ».
+        if (calqueAnime) {
+          const c2 = calque;
+          const suivre = () => { if (c2.texture.has(sprite.frame.name)) c2.setFrame(sprite.frame.name); };
+          for (const ev of ['animationstart', 'animationupdate', 'animationrepeat', 'animationrestart', 'animationcomplete']) sprite.on(ev, suivre);
+          suivre();
+        }
       }
     }
     const barre = this.add.graphics();
@@ -357,6 +383,9 @@ export class SceneCombat extends Phaser.Scene {
     if (empoisonne) v.sprite.setTint(0x9be89b);
     else if (v.teinte !== null) v.sprite.setTint(v.teinte);
     else v.sprite.clearTint();
+    // le calque prend le vert du poison avec le corps, mais jamais la teinte de peau (barbe, cornes : couleur fixe)
+    if (empoisonne) v.calque?.setTint(0x9be89b);
+    else v.calque?.clearTint();
     if (empoisonne && !v.bulles) {
       v.bulles = this.time.addEvent({ delay: 420, loop: true, callback: () => {
         const b = this.add.circle(v.conteneur.x + Phaser.Math.Between(-18, 18), v.conteneur.y - Phaser.Math.Between(20, 60), Phaser.Math.Between(2, 5), 0x6fd36f, 0.85).setDepth(54);
@@ -395,7 +424,7 @@ export class SceneCombat extends Phaser.Scene {
           }).setOrigin(0.5).setDepth(60);
           this.tweens.add({ targets: t, y: t.y - 40, alpha: 0, duration: 900, onComplete: () => t.destroy() });
           if (e.type === 'degats') {
-            this.tweens.add({ targets: cib.sprite, x: { from: -4, to: 4 }, yoyo: true, repeat: 2, duration: 40, onComplete: () => cib.sprite.setX(0) });
+            this.tweens.add({ targets: corps(cib), x: { from: -4, to: 4 }, yoyo: true, repeat: 2, duration: 40, onComplete: () => corps(cib).forEach((o) => o.setX(0)) });
             this.jouerAnim(cib, 'touche');
             this.effet(cib, e.effet ?? EFFET_ELEMENT[e.element ?? 'physique'] ?? 'impact');
             if (e.critique) this.time.delayedCall(120, () => this.effet(cib, 'critique', 1.9));
@@ -408,7 +437,7 @@ export class SceneCombat extends Phaser.Scene {
           this.tweens.add({ targets: t, y: t.y - 30, alpha: 0, duration: 800, onComplete: () => t.destroy() });
           // la cible esquive d'un petit pas en arrière
           const dir = cib.conteneur.x < L / 2 ? -1 : 1;
-          this.tweens.add({ targets: cib.sprite, x: 10 * dir, yoyo: true, duration: 110, onComplete: () => cib.sprite.setX(0) });
+          this.tweens.add({ targets: corps(cib), x: 10 * dir, yoyo: true, duration: 110, onComplete: () => corps(cib).forEach((o) => o.setX(0)) });
         }
         if (e.type === 'ko' && cib) this.jouerAnim(cib, 'ko');
       });
@@ -455,4 +484,9 @@ export class SceneCombat extends Phaser.Scene {
 /** Vrai si le combattant dépense du mana (héros, compagnons) ; les ennemis ont une réserve illimitée. */
 export function utiliseMana(c: Combattant): boolean {
   return c.manaMax > 0 && c.manaMax < 999;
+}
+
+/** Le corps d'un combattant et son calque de race : ils bougent toujours ensemble (secousse, esquive, K.O.). */
+function corps(v: { sprite: Phaser.GameObjects.Sprite; calque: Phaser.GameObjects.Sprite | null }): Phaser.GameObjects.Sprite[] {
+  return v.calque ? [v.sprite, v.calque] : [v.sprite];
 }

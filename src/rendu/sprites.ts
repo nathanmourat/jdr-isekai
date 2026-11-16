@@ -40,7 +40,7 @@ export function prechargerTout(scene: Phaser.Scene, tailleCombat: number, taille
   for (const chemin of assetsPresents()) {
     const url = urlAsset(chemin)!;
     if (scene.textures.exists(chemin) || scene.textures.exists(`brut:${chemin}`)) continue;
-    if (chemin.endsWith('/combat') || chemin.endsWith('/calque-combat') || chemin.endsWith('/exploration') || chemin.endsWith('/calque-exploration')) {
+    if (/\/(calque-)?(combat|exploration)(-f)?$/.test(chemin)) {
       // la taille des cases se déduit de la largeur de l'image (8 colonnes en combat, 4 en exploration) au chargement :
       // les planches normales et HD (deux fois plus de pixels) marchent toutes les deux
       scene.load.image(`brut:${chemin}`, url);
@@ -56,7 +56,7 @@ export function prechargerTout(scene: Phaser.Scene, tailleCombat: number, taille
       const brut = `brut:${chemin}`;
       if (!scene.textures.exists(brut) || scene.textures.exists(chemin)) continue;
       const img = scene.textures.get(brut).getSourceImage() as HTMLImageElement;
-      const exploration = chemin.endsWith('exploration');
+      const exploration = /exploration(-f)?$/.test(chemin);
       const taille = Math.round(img.width / (exploration ? COLONNES_EXPLORATION : COLONNES)) || (exploration ? tailleExploration : tailleCombat);
       scene.textures.addSpriteSheet(chemin, img, { frameWidth: taille, frameHeight: taille });
     }

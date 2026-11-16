@@ -84,6 +84,8 @@ export interface Combattant {
   echelle: number;
   teinte: string | null;
   race: string | null;
+  /** Sexe du héros (calque féminin de la race, mise à jour 5) ; absent pour les autres combattants. */
+  sexe?: 'm' | 'f';
   /** Attaques de base nommées (ennemis) : une est tirée à chaque attaque. */
   attaques: { nom: string; phrase: string; element?: string; effet?: string }[];
   /** Phrase et effet de l'attaque nommée en cours (le temps de la résoudre). */
@@ -276,6 +278,7 @@ export function combattantHeros(contenu: Contenu, h: Heros, controle: boolean, t
     echelle: race.echelle,
     teinte: race.teinte ?? null,
     race: h.race,
+    sexe: h.sexe === 'f' ? 'f' : 'm',
     attaques: [],
     phrase: null,
     effetAttaque: null,

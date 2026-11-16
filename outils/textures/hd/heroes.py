@@ -745,6 +745,19 @@ def draw_race_side(p, race, cx, hip, top, hx, hy, ph, lean, decal=False):
         p.rect(hx + 2, hy + 8, hx + 3, hy + 11, b)  # tresse
         p.line(hx + 2, hy + 9, hx + 3, hy + 9, c['ring'])
         p.line(hx + 3, hy + 2, hx + 6, hy + 2, shade(b, 0.8))  # moustache
+    elif race == 'nain-f':
+        # héroïne naine (mise à jour 5) : pas de barbe ; deux tresses châtain roux (même couleur que la barbe),
+        # une derrière l'oreille, une ramenée sur l'épaule, perles de métal au bout
+        b, bl = c['beard'], c['beard_l']
+        p.rect(hx - 5, hy - 2, hx - 4, hy + 9, b)            # tresse arrière
+        for k in range(0, 11, 2): p.px(hx - 5 + (k // 2) % 2, hy - 1 + k, bl)
+        p.line(hx - 5, hy + 10, hx - 4, hy + 10, c['ring'])
+        p.px(hx - 5, hy + 11, b); p.px(hx - 4, hy + 11, shade(b, 0.8))
+        p.thick(hx - 2, hy + 1, hx, hy + 11, b, 1)           # tresse avant, sur l'épaule
+        for k in range(2, 11, 2): p.px(hx - 2 + k // 5, hy + k, bl)
+        p.line(hx, hy + 12, hx + 1, hy + 12, c['ring'])
+        p.px(hx, hy + 13, b)
+        p.line(hx - 3, hy - 3, hx + 1, hy - 4, shade(b, 0.8))  # bandeau tressé au-dessus du front
     elif race == 'ourvalis':
         draw_tail(p, tx, ty, sway, 'wolf')
         p.poly([(hx - 5, hy - 4), (hx - 1, hy - 6), (hx - 5, hy - 13)], c['wolf'])
@@ -1071,6 +1084,12 @@ def draw_race_explore(p, race, d, cx, hy, ty0, ty1, step):
             p.px(cx - 3, hy + 5, c['beard_l']); p.px(cx + 3, hy + 5, c['beard_l'])
         elif race == 'nain':
             p.rect(cx - 6, hy + 1, cx - 5, hy + 4, c['beard']); p.rect(cx + 5, hy + 1, cx + 6, hy + 4, c['beard'])
+        elif race == 'nain-f':
+            # deux tresses de chaque côté du visage (de face) ou dans le dos (de dos), perles au bout
+            b = c['beard']
+            both(lambda k: (p.rect(cx + k * 6, hy, cx + k * 6 + (1 if k > 0 else -1), hy + 8, b),
+                            p.px(cx + k * 6, hy + 2, c['beard_l']), p.px(cx + k * 6, hy + 5, c['beard_l']),
+                            p.px(cx + k * 6, hy + 9, c['ring'])))
         elif race in ('ourvalis', 'vulpin'):
             fur = c['wolf'] if race == 'ourvalis' else c['fox']
             inner = c['wolf_in'] if race == 'ourvalis' else c['fox_w']
@@ -1110,6 +1129,11 @@ def draw_race_explore(p, race, d, cx, hy, ty0, ty1, step):
             p.poly([(cx + 1, hy + 3), (cx + 5, hy + 3), (cx + 5, hy + 5), (cx + 3, hy + 9), (cx + 1, hy + 9), (cx - 1, hy + 5)], b)
             p.rect(cx - 2, hy, cx - 1, hy + 3, b)
             p.line(cx + 1, hy + 8, cx + 3, hy + 8, c['ring'])
+        elif race == 'nain-f':
+            b = c['beard']
+            p.rect(cx - 3, hy, cx - 2, hy + 8, b)
+            p.px(cx - 3, hy + 3, c['beard_l']); p.px(cx - 2, hy + 6, c['beard_l'])
+            p.line(cx - 3, hy + 9, cx - 2, hy + 9, c['ring'])
         elif race in ('ourvalis', 'vulpin'):
             fur = c['wolf'] if race == 'ourvalis' else c['fox']
             h = 11 if race == 'ourvalis' else 12

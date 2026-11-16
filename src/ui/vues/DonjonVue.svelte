@@ -27,7 +27,7 @@
     scene?.afficher(etat, {
       contenu: c,
       echelle: c.config.graphismes.echelle_pixel_art ?? 2,
-      meneur: herosMeneur ? { classe: herosMeneur.classe, race: herosMeneur.race, teinte: c.races[herosMeneur.race].teinte ?? null } : null,
+      meneur: herosMeneur ? { classe: herosMeneur.classe, race: herosMeneur.race, teinte: c.races[herosMeneur.race].teinte ?? null, sexe: herosMeneur.sexe === 'f' ? 'f' : 'm' } : null,
       peutBouger: !!guide,
       surDeplacement: bouger,
     });

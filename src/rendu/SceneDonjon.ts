@@ -28,7 +28,7 @@ interface Correspondance {
 export interface OptionsDonjon {
   contenu: Contenu;
   echelle: number;
-  meneur: { classe: string; race: string; teinte: string | null } | null;
+  meneur: { classe: string; race: string; teinte: string | null; sexe?: 'm' | 'f' } | null;
   peutBouger: boolean;
   surDeplacement: (dx: number, dy: number) => void;
 }
@@ -243,10 +243,11 @@ export class SceneDonjon extends Phaser.Scene {
       const s = this.add.sprite(0, 0, cle, 0).setScale(opts.echelle * echelleCase(this, cle, this.tailles.tailleExploration));
       if (m.teinte) s.setTint(Phaser.Display.Color.HexStringToColor(m.teinte).color);
       items.push(s);
-      const cleCalque = `personnages/races/${m.race}/calque-exploration`;
+      const cleFeminin = `personnages/races/${m.race}/calque-exploration-f`;
+      const cleCalque = m.sexe === 'f' && this.textures.exists(cleFeminin) ? cleFeminin : `personnages/races/${m.race}/calque-exploration`;
       if (this.textures.exists(cleCalque)) {
+        // même règle qu'en combat : le calque (barbe, cornes…) garde sa couleur, la teinte de peau ne va qu'au corps
         const c = this.add.sprite(0, 0, cleCalque, 0).setScale(opts.echelle * echelleCase(this, cleCalque, this.tailles.tailleExploration));
-        if (m.teinte) c.setTint(Phaser.Display.Color.HexStringToColor(m.teinte).color);
         items.push(c);
       }
     } else {
