@@ -93,6 +93,13 @@ export const migrations: Record<number, Migration> = {
     s.version = 9;
     return s;
   },
+  // v9 → v10 (mise à jour 5) : le sexe du héros ne change plus après la création. Les changements déjà joués
+  // pendant le premier mois se rejouent avec l'ancienne règle ; la nouvelle vaut à partir de la prochaine action.
+  9: (s) => {
+    (s.depart as { regleSexeDepuis?: number }).regleSexeDepuis = s.actions.length;
+    s.version = 10;
+    return s;
+  },
 };
 
 export class ErreurSauvegarde extends Error {

@@ -39,10 +39,33 @@ describe('sexe du héros', () => {
     expect(e.heros.h1.sexe).toBe('f');
     expect(e.heros.h1.sexeChoisi).toBe(true);
   });
-  it('le sexe ne change plus après le premier mois', () => {
+  it('mise à jour 5 : le sexe ne change plus après la création, même le premier jour', () => {
     const e = partie(['m']);
+    expect(e.jour).toBeLessThan(30);
+    expect(() => appliquer(c, e, { type: 'changer_sexe', joueur: 'j0', sexe: 'f' })).toThrow(/ne change plus/);
     e.jour = 40;
     expect(() => appliquer(c, e, { type: 'changer_sexe', joueur: 'j0', sexe: 'f' })).toThrow();
+  });
+  it('ancienne partie : la question n\'est posée qu\'une fois', () => {
+    let e = partie([undefined]);
+    e = appliquer(c, e, { type: 'changer_sexe', joueur: 'j0', sexe: 'm' });
+    expect(() => appliquer(c, e, { type: 'changer_sexe', joueur: 'j0', sexe: 'f' })).toThrow(/ne change plus/);
+  });
+  it('migration 9 → 10 : un changement du premier mois déjà joué se rejoue, plus aucun ensuite', () => {
+    const depart = nouvellePartie(c, 'v', 'V', 'v');
+    const actions: Action[] = [
+      { type: 'rejoindre', joueur: 'j0', pseudo: 'P0' },
+      { type: 'creer_heros', joueur: 'j0', heros: { nom: 'H0', classe: 'ombre', race: 'humain', don: 'oeil-du-seuil', origine: 'invoque', age: 24, sexe: 'm' } } as Action,
+      { type: 'changer_sexe', joueur: 'j0', sexe: 'f' },
+    ];
+    const s = creerSauvegarde(depart, actions, '2026-11-15');
+    s.version = 9;
+    const m = migrer(s);
+    expect(m.version).toBe(VERSION_ETAT);
+    let e = m.depart;
+    for (const a of m.actions) e = appliquer(c, e, a);
+    expect(e.heros.h1.sexe).toBe('f');
+    expect(() => appliquer(c, e, { type: 'changer_sexe', joueur: 'j0', sexe: 'm' })).toThrow(/ne change plus/);
   });
   it('migration 7 → 8', () => {
     const depart = nouvellePartie(c, 'v', 'V', 'v');

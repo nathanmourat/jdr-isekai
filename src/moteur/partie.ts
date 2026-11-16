@@ -24,7 +24,7 @@ import { exemplaires, problemeEquipement } from './equipement';
 import { anneeDepart, chapitreDe, fetesEntre, formaterDate, joursParMois, versDate, versJour } from './temps';
 import { appliquerHistoire, memePointHistoire, recopierAutour, recopierProgression, type DeltaHistoire, type HerosVoyageur } from './voyage';
 
-export const VERSION_ETAT = 9;
+export const VERSION_ETAT = 10;
 export const MAX_JOUEURS = 6;
 
 export interface Joueur { id: string; pseudo: string; herosId: string | null; present: boolean }
@@ -161,6 +161,9 @@ export interface EtatPartie {
   /** Partie d'avant le format 9 : la règle du retour des contrats ne s'applique qu'à partir de cette action
    * (les anciennes actions se rejouent telles quelles). */
   regleContratsDepuis?: number;
+  /** Partie d'avant le format 10 (mise à jour 5) : les changements de sexe du premier mois déjà joués se rejouent
+   * avec l'ancienne règle jusqu'à cette action ; ensuite, le sexe ne change plus. */
+  regleSexeDepuis?: number;
 }
 
 export type Action =
@@ -1505,10 +1508,13 @@ export function appliquer(contenu: Contenu, etatAvant: EtatPartie, action: Actio
       break;
     }
     case 'changer_sexe': {
-      // au premier choix (ancienne partie), pendant le prologue ou avant la fin du premier mois de jeu
+      // Mise à jour 5 : le sexe se choisit à la création, puis ne change plus. Cette action ne sert plus qu'une fois,
+      // pour un héros d'une ancienne partie qui n'a jamais choisi (sexeChoisi faux).
+      // Les actions d'une partie d'avant le format 10 se rejouent avec l'ancienne règle (premier mois).
       const h = herosDuJoueur(etat, action.joueur);
       if (action.sexe !== 'm' && action.sexe !== 'f') refuser('Choix impossible');
-      if (h.sexeChoisi !== false && etat.jour >= 30) refuser('Le sexe du héros ne peut plus changer après le premier mois de jeu');
+      const ancienneRegle = etat.numeroAction < (etat.regleSexeDepuis ?? 0);
+      if (ancienneRegle ? h.sexeChoisi !== false && etat.jour >= 30 : h.sexeChoisi !== false) refuser('Le sexe du héros se choisit à la création et ne change plus');
       h.sexe = action.sexe;
       h.sexeChoisi = true;
       break;

@@ -125,7 +125,7 @@
           <legend>Votre héros est…</legend>
           <label class="choix"><input type="radio" bind:group={sexe} value="m" /> <strong>un homme</strong></label>
           <label class="choix"><input type="radio" bind:group={sexe} value="f" /> <strong>une femme</strong></label>
-          <small class="discret">L'histoire s'accorde (« accueilli » ou « accueillie », « Messire » ou « Dame »…).</small>
+          <small class="discret">L'histoire s'accorde (« accueilli » ou « accueillie », « Messire » ou « Dame »…). Ce choix est définitif.</small>
         </fieldset>
         <fieldset>
           <legend>Arrivée dans ce monde</legend>

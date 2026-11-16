@@ -258,15 +258,15 @@
 
   {#if jeu.info && !jeu.erreur}<p class="info-envoi flottant" role="status">⏳ {jeu.info}</p>{/if}
   {#if jeu.erreur}<p class="erreur flottant" role="alert">{jeu.erreur} <button class="petit" onclick={() => (jeu.erreur = null)}>OK</button></p>{/if}
-  <!-- ancienne partie (format 7) : on demande une fois le sexe du héros (test 3) -->
+  <!-- ancienne partie (format 7) : on demande une seule fois le sexe du héros (test 3), puis il ne change plus (mise à jour 5) -->
   {#if h.sexeChoisi === false && vue === 'monde'}
     <Fenetre titre="Votre héros">
-      <p>Nouveauté : l'histoire s'accorde maintenant au sexe de votre héros. <strong>{h.nom}</strong> est…</p>
+      <p>L'histoire s'accorde au sexe de votre héros. <strong>{h.nom}</strong> est…</p>
       <div class="ligne">
         <button class="principal" onclick={() => jeu.agir({ type: 'changer_sexe', sexe: 'm' })}>un homme</button>
         <button class="principal" onclick={() => jeu.agir({ type: 'changer_sexe', sexe: 'f' })}>une femme</button>
       </div>
-      <p class="discret">Vous pourrez encore changer d'avis dans la fiche « Personnage » pendant le premier mois.</p>
+      <p class="discret">Ce choix est définitif : il ne pourra plus être changé.</p>
     </Fenetre>
   {/if}
   <!-- notifications empilées en haut à droite (gains de 5 s, puis messages), sans bloquer les clics -->
