@@ -93,10 +93,14 @@ export const migrations: Record<number, Migration> = {
     s.version = 9;
     return s;
   },
-  // v9 → v10 (mise à jour 5) : le sexe du héros ne change plus après la création. Les changements déjà joués
-  // pendant le premier mois se rejouent avec l'ancienne règle ; la nouvelle vaut à partir de la prochaine action.
+  // v9 → v10 (mise à jour 5) : le sexe du héros ne change plus après la création, et une scène de groupe n'emmène
+  // plus un héros occupé. Les actions déjà jouées se rejouent avec les anciennes règles ; les nouvelles valent
+  // à partir de la prochaine action.
   9: (s) => {
-    (s.depart as { regleSexeDepuis?: number }).regleSexeDepuis = s.actions.length;
+    const d = s.depart as { regleSexeDepuis?: number; regleOccupesDepuis?: number };
+    d.regleSexeDepuis = s.actions.length;
+    // point 7 : une scène de groupe n'emmène plus les héros occupés ; les anciennes actions gardent l'ancienne règle
+    d.regleOccupesDepuis = s.actions.length;
     s.version = 10;
     return s;
   },

@@ -11,7 +11,7 @@
   import { activiteChangee, signatureActivite } from '../activite';
   import { jeu } from '../jeu.svelte';
   import { aideDate, formaterDate, saisonDe } from '../../moteur/temps';
-  import { attenteRepos, listeHeros, noeudCourant, rangHeros, sceneEstDisponible } from '../../moteur/partie';
+  import { attenteRepos, herosDeScene, listeHeros, noeudCourant, occupationHeros, rangHeros, sceneEstDisponible } from '../../moteur/partie';
   import Carte from '../vues/Carte.svelte';
   import Lieu from '../vues/Lieu.svelte';
   import Dialogue from '../vues/Dialogue.svelte';
@@ -81,10 +81,13 @@
   }));
 
   // Ce qui doit s'afficher dans la scène, par ordre de priorité
+  // Mise à jour 5, point 7 : on n'affiche que ce à quoi MON héros participe (jamais le combat ou la scène du groupe
+  // quand je suis occupé ailleurs). Mon propre combat d'abord, puis celui du groupe, puis celui d'une quête où je suis invité.
   const combatCle = $derived.by(() => {
-    for (const k of ['groupe', h.id]) {
+    const cles = [h.id, 'groupe', ...Object.keys(etat.combats).filter((k) => k !== h.id && k !== 'groupe')];
+    for (const k of cles) {
       const e = etat.combats[k];
-      if (!e) continue;
+      if (!e || !e.combat.combattants.some((x) => x.id === `h:${h.id}`)) continue;
       // un combat lancé par une scène s'affiche après la lecture de son introduction
       const sc = e.contexte.sceneCle ? etat.scenes[e.contexte.sceneCle] : null;
       const intro = sc ? noeudCourant(c, etat, e.contexte.sceneCle!)?.repliques.length ?? 0 : 0;
@@ -92,11 +95,16 @@
     }
     return null;
   });
-  const sceneGroupeActive = $derived(!!etat.scenes.groupe);
-  const sceneMoi = $derived(etat.scenes[h.id] ? h.id : null);
+  const sceneGroupeActive = $derived(!!etat.scenes.groupe && herosDeScene(etat, 'groupe').includes(h.id));
+  /** Ma scène individuelle, ou celle d'un autre héros qui m'a invité (quête solo à plusieurs). */
+  const sceneMoi = $derived(etat.scenes[h.id] ? h.id : Object.keys(etat.scenes).find((k) => k !== 'groupe' && etat.scenes[k].heros.includes(h.id)) ?? null);
+  const dansDonjon = $derived(!!etat.donjon && herosDeScene(etat, etat.donjon.sceneCle).includes(h.id));
+  /** Scène de groupe commencée sans moi : je pourrai la rejoindre quand je serai libre. */
+  const sceneSansMoi = $derived(etat.scenes.groupe && etat.scenes.groupe.noeud !== '__fin__' && !herosDeScene(etat, 'groupe').includes(h.id) ? etat.scenes.groupe : null);
+  const raisonOccupe = $derived(sceneSansMoi ? occupationHeros(etat, h.id, 'groupe') ?? (etat.combats.groupe ? 'le groupe est en combat' : null) : null);
   const vue = $derived.by(() => {
     if (combatCle) return 'combat';
-    if (etat.donjon) return 'donjon';
+    if (dansDonjon) return 'donjon';
     if (sceneGroupeActive) return 'scene-groupe';
     if (sceneMoi) return 'scene-moi';
     if (etat.tempsLibre) return 'temps-libre';
@@ -257,6 +265,13 @@
   {/if}
 
   {#if jeu.info && !jeu.erreur}<p class="info-envoi flottant" role="status">⏳ {jeu.info}</p>{/if}
+  {#if sceneSansMoi && !jeu.info && !jeu.erreur && vue === 'monde'}
+    <p class="info-envoi flottant bandeau-groupe" role="status">
+      Le groupe joue « {c.scenes[sceneSansMoi.sceneId].titre} ».
+      {#if raisonOccupe}<span class="discret">Vous le rejoindrez quand vous aurez fini ({raisonOccupe}).</span>
+      {:else}<button class="petit principal" onclick={() => jeu.agir({ type: 'rejoindre_scene', cle: 'groupe' })}>Rejoindre la scène</button>{/if}
+    </p>
+  {/if}
   {#if jeu.erreur}<p class="erreur flottant" role="alert">{jeu.erreur} <button class="petit" onclick={() => (jeu.erreur = null)}>OK</button></p>{/if}
   <!-- ancienne partie (format 7) : on demande une seule fois le sexe du héros (test 3), puis il ne change plus (mise à jour 5) -->
   {#if h.sexeChoisi === false && vue === 'monde'}
@@ -319,6 +334,7 @@
   .languette { position: absolute; top: 0; left: 50%; translate: -50% 0; z-index: 70; min-width: 64px; min-height: 28px; padding: 0 1rem; border-radius: 0 0 10px 10px; border-top: none; background: #0d0b14cc; font-size: 0.9rem; }
   .bandeau-repos { position: absolute; z-index: 65; top: 3.4rem; left: 50%; translate: -50% 0; width: min(720px, calc(100% - 1rem)); display: flex; justify-content: space-between; align-items: center; gap: 0.6rem; flex-wrap: wrap; border-color: var(--or); padding: 0.5rem 0.8rem; }
   .info-envoi { background: #2a2333f2; border: 1px solid var(--or); border-radius: var(--rayon); padding: 0.4rem 0.8rem; margin: 0; }
+  .bandeau-groupe { display: flex; gap: 0.6rem; align-items: center; flex-wrap: wrap; }
   .flottant { position: fixed; top: 3.6rem; left: 50%; translate: -50% 0; z-index: 95; max-width: 90vw; box-shadow: var(--ombre); }
   /* téléphone : une barre sur une seule ligne (la date reste dans la fiche rapide du héros) */
   @media (max-width: 640px), (max-height: 500px) {

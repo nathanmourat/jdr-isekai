@@ -51,6 +51,8 @@ export interface EtatScene {
   resultatVote?: { choix: { texte: string; joueurs: string[] }[]; retenu: number } | null;
   /** Dernière réponse à un `parole_a` : « <pseudo> a répondu : … ». */
   reponseParole?: { joueur: string; texte: string } | null;
+  /** Héros occupés quand la scène de groupe a commencé (combat, autre scène…) : ils pourront la rejoindre (mise à jour 5). */
+  enAttente?: string[];
 }
 
 /** Contrat en cours d'un héros : numéro de l'étape à jouer, et ce qui vient de se passer. */
@@ -164,6 +166,9 @@ export interface EtatPartie {
   /** Partie d'avant le format 10 (mise à jour 5) : les changements de sexe du premier mois déjà joués se rejouent
    * avec l'ancienne règle jusqu'à cette action ; ensuite, le sexe ne change plus. */
   regleSexeDepuis?: number;
+  /** Partie d'avant le format 10 : jusqu'à cette action, une scène de groupe prend tous les héros présents
+   * (ancienne règle) ; ensuite, seulement ceux qui ne sont pas occupés (mise à jour 5, point 7). */
+  regleOccupesDepuis?: number;
 }
 
 export type Action =
@@ -182,6 +187,8 @@ export type Action =
   | { type: 'continuer'; joueur: string; cle: string }
   | { type: 'pret_dialogue'; joueur: string; cle: string }
   | { type: 'changer_sexe'; joueur: string; sexe: 'm' | 'f' }
+  /** Un héros qui était occupé (ou absent) au début d'une scène de groupe la rejoint (mise à jour 5, point 7). */
+  | { type: 'rejoindre_scene'; joueur: string; cle: string }
   | { type: 'se_soigner'; joueur: string; moyen: 'repas' | 'temple' | 'ration' | 'objet'; lieu?: string; objet?: string }
   | { type: 'quitter_scene'; joueur: string; cle: string }
   | { type: 'combat'; joueur: string; cle: string; action: ActionCombat }
@@ -759,6 +766,59 @@ function participantsGroupe(etat: EtatPartie): string[] {
   return listeHeros(etat).filter((h) => etat.joueurs[h.joueurId]?.present || h.siAbsent === 'ia').map((h) => h.id);
 }
 
+/** Vrai quand la règle « on n'interrompt jamais un héros occupé » s'applique (toute action d'une partie au format 10). */
+function regleOccupes(etat: EtatPartie): boolean {
+  return etat.numeroAction >= (etat.regleOccupesDepuis ?? 0);
+}
+
+/**
+ * Ce qui occupe un héros (mise à jour 5, point 7), ou null s'il est libre : un combat (le sien, celui du groupe ou celui
+ * d'une quête où il est invité), une scène en cours où il joue, un donjon. Une scène de groupe ou une invitation
+ * ne l'interrompt jamais : elle attend qu'il soit libre, ou continue sans lui.
+ * `sauf` : clé de scène à ne pas compter (celle que l'on vérifie).
+ */
+export function occupationHeros(etat: EtatPartie, herosId: string, sauf: string | null = null): string | null {
+  for (const [k, e] of entrees(etat.combats)) {
+    if (k === sauf) continue;
+    if (e.combat.combattants.some((c) => c.id === `h:${herosId}`)) return 'en combat';
+  }
+  if (etat.donjon && etat.donjon.sceneCle !== sauf && herosDeScene(etat, etat.donjon.sceneCle).includes(herosId)) return 'dans un donjon';
+  for (const [k, es] of entrees(etat.scenes)) {
+    if (k === sauf || es.noeud === '__fin__') continue;
+    if (es.heros.includes(herosId)) return 'dans une scène';
+  }
+  return null;
+}
+
+/** Phrase pour les autres joueurs : « Kael est en combat, il vous rejoindra. » */
+export function phraseOccupe(etat: EtatPartie, herosId: string, raison: string): string {
+  const h = etat.heros[herosId];
+  return `${h.nom} est ${raison}, ${h.sexe === 'f' ? 'elle' : 'il'} vous rejoindra.`;
+}
+
+/** Héros qui jouent une scène : ceux de la scène ; ancienne règle (partie d'avant le format 10) : tous les présents. */
+export function herosDeScene(etat: EtatPartie, cle: string): string[] {
+  const es = etat.scenes[cle];
+  if (cle === 'groupe' && (!es || !regleOccupes(etat))) return participantsGroupe(etat);
+  return es ? es.heros : [];
+}
+
+/** Joueurs (présents) dont le héros joue la scène. */
+export function joueursDeScene(etat: EtatPartie, cle: string): string[] {
+  const heros = herosDeScene(etat, cle);
+  return etat.ordreJoueurs.filter((x) => etat.joueurs[x].present && vrai(etat.joueurs[x].herosId) && heros.includes(etat.joueurs[x].herosId!));
+}
+
+/**
+ * Qui tranche et guide pour une scène de groupe : le meneur du jour s'il y joue et qu'il est présent, sinon le premier
+ * joueur présent de la scène (le meneur peut être en combat ailleurs).
+ */
+export function meneurDeScene(etat: EtatPartie, cle = 'groupe'): string | null {
+  const joueurs = joueursDeScene(etat, cle);
+  if (vrai(etat.meneur) && (joueurs.includes(etat.meneur) || !regleOccupes(etat))) return etat.meneur;
+  return joueurs[0] ?? etat.meneur ?? null;
+}
+
 function entrerNoeud(contenu: Contenu, etat: EtatPartie, cle: string, noeudId: string) {
   const es = etat.scenes[cle];
   const scene = contenu.scenes[es.sceneId];
@@ -797,7 +857,7 @@ function entrerNoeud(contenu: Contenu, etat: EtatPartie, cle: string, noeudId: s
     return;
   }
   if (n.combat) {
-    lancerCombat(contenu, etat, n.combat.rencontre, cle === 'groupe' ? 'groupe' : cle, { cle: cle === 'groupe' ? 'groupe' : cle, origine: 'scene', sceneCle: cle, victoire: n.combat.victoire, defaite: n.combat.defaite, evenementDonjon: null, contrat: null, bilan: null }, scene.lieu ?? null);
+    lancerCombat(contenu, etat, n.combat.rencontre, cle === 'groupe' ? 'groupe' : cle, { cle: cle === 'groupe' ? 'groupe' : cle, origine: 'scene', sceneCle: cle, victoire: n.combat.victoire, defaite: n.combat.defaite, evenementDonjon: null, contrat: null, bilan: null }, scene.lieu ?? null, herosDeScene(etat, cle));
   } else if (n.donjon) {
     const d = contenu.donjons[n.donjon.id];
     etat.donjon = { id: d.id, x: d.depart.x, y: d.depart.y, faits: [], sceneCle: cle, sortie: n.donjon.sortie, messages: [`Le groupe entre dans : ${d.nom}.`], vus: [] };
@@ -1163,7 +1223,7 @@ function deplacerDonjon(contenu: Contenu, etat: EtatPartie, dx: number, dy: numb
   const nx = dj.x + dx, ny = dj.y + dy;
   const t = caseDonjon(contenu, dj.id, nx, ny);
   const d = contenu.donjons[dj.id];
-  const ev = d.evenements.find((e) => e.x === nx && e.y === ny && !(e.unique && dj.faits.includes(e.id)) && conditionScene(contenu, etat, e.si, participantsGroupe(etat)));
+  const ev = d.evenements.find((e) => e.x === nx && e.y === ny && !(e.unique && dj.faits.includes(e.id)) && conditionScene(contenu, etat, e.si, herosDeScene(etat, dj.sceneCle)));
   if (INFRANCHISSABLE.some((m) => t.startsWith(m))) {
     if (ev?.type === 'texte' && vrai(ev.texte)) dj.messages = [ev.texte];
     else refuser('Passage bloqué');
@@ -1186,10 +1246,10 @@ function deplacerDonjon(contenu: Contenu, etat: EtatPartie, dx: number, dy: numb
     return;
   }
   if (!ev) return;
-  const heros = participantsGroupe(etat);
+  const heros = herosDeScene(etat, dj.sceneCle);
   switch (ev.type) {
     case 'combat':
-      lancerCombat(contenu, etat, ev.rencontre!, 'groupe', { cle: 'groupe', origine: 'donjon', sceneCle: dj.sceneCle, victoire: null, defaite: null, evenementDonjon: ev.id, contrat: null, bilan: null });
+      lancerCombat(contenu, etat, ev.rencontre!, 'groupe', { cle: 'groupe', origine: 'donjon', sceneCle: dj.sceneCle, victoire: null, defaite: null, evenementDonjon: ev.id, contrat: null, bilan: null }, null, heros);
       if (vrai(ev.texte)) dj.messages.push(ev.texte);
       return;
     case 'coffre': {
@@ -1445,8 +1505,20 @@ export function appliquer(contenu: Contenu, etatAvant: EtatPartie, action: Actio
         if (etat.scenes.groupe && etat.scenes.groupe.noeud !== '__fin__') refuser('Une scène de groupe est déjà en cours');
         if (etat.donjon) refuser('Le groupe est dans un donjon');
         if (!sceneEstDisponible(contenu, etat, s, h.id)) refuser('Cette scène n\'est pas disponible');
-        etat.scenes.groupe = { sceneId: s.id, noeud: s.debut, heros: participantsGroupe(etat), votes: {}, dernierTest: null, messages: [], parole: null };
+        // Mise à jour 5, point 7 : un héros occupé (combat, autre scène, donjon) n'est jamais arraché à ce qu'il fait.
+        // La scène commence sans lui ; il pourra la rejoindre quand il sera libre (action rejoindre_scene).
+        let heros = participantsGroupe(etat);
+        let enAttente: string[] = [];
+        if (regleOccupes(etat)) {
+          const raison = occupationHeros(etat, h.id);
+          if (vrai(raison)) refuser(`Vous êtes ${raison} : terminez d'abord`);
+          enAttente = heros.filter((id) => occupationHeros(etat, id) !== null);
+          heros = heros.filter((id) => !enAttente.includes(id));
+        }
+        etat.scenes.groupe = { sceneId: s.id, noeud: s.debut, heros, votes: {}, dernierTest: null, messages: [], parole: null };
+        if (enAttente.length > 0) etat.scenes.groupe.enAttente = enAttente;
         if (etat.tempsLibre?.resultats) etat.tempsLibre = null;
+        for (const id of enAttente) journal(contenu, etat, `« ${s.titre} » commence : ${phraseOccupe(etat, id, occupationHeros(etat, id) ?? 'occupé')}`);
         entrerNoeud(contenu, etat, 'groupe', s.debut);
       } else {
         if (etat.scenes[h.id] && etat.scenes[h.id].noeud !== '__fin__') refuser('Vous êtes déjà dans une scène');
@@ -1467,9 +1539,10 @@ export function appliquer(contenu: Contenu, etatAvant: EtatPartie, action: Actio
       const mise = miseDuChoix(c!.choix);
       if (mise > 0 && vrai(j.herosId) && etat.heros[j.herosId].or < mise) refuser(`Pas assez d'or pour miser ${mise} pièces (vous en avez ${etat.heros[j.herosId].or})`);
       if (action.cle !== 'groupe') { resoudreChoix(contenu, etat, action.cle, action.index, [action.joueur]); break; }
+      // tous les joueurs présents de la scène ont voté → résolution (un joueur occupé ailleurs ne vote pas)
+      const presents = regleOccupes(etat) ? joueursDeScene(etat, 'groupe') : etat.ordreJoueurs.filter((x) => etat.joueurs[x].present && vrai(etat.joueurs[x].herosId));
+      if (regleOccupes(etat) && !presents.includes(action.joueur)) refuser('Votre héros ne joue pas cette scène');
       es.votes[action.joueur] = action.index;
-      // tous les joueurs présents ont voté → résolution
-      const presents = etat.ordreJoueurs.filter((x) => etat.joueurs[x].present && vrai(etat.joueurs[x].herosId));
       if (presents.every((p) => es.votes[p] !== undefined)) resoudreVote(contenu, etat);
       break;
     }
@@ -1496,14 +1569,29 @@ export function appliquer(contenu: Contenu, etatAvant: EtatPartie, action: Actio
       break;
     }
     case 'trancher': {
-      if (etat.meneur !== action.joueur) refuser('Seul le meneur du jour peut trancher');
+      if (meneurDeScene(etat) !== action.joueur) refuser('Seul le meneur du jour peut trancher');
       const es = etat.scenes.groupe ?? refuser('Aucune scène de groupe');
       if (cles(es.votes).length === 0) refuser('Personne n\'a encore voté');
       resoudreVote(contenu, etat);
       break;
     }
+    case 'rejoindre_scene': {
+      const es = etat.scenes[action.cle] ?? refuser('Aucune scène');
+      const h = herosDuJoueur(etat, action.joueur);
+      if (action.cle !== 'groupe') refuser('On ne peut rejoindre que la scène du groupe');
+      if (es.noeud === '__fin__') refuser('La scène est terminée');
+      if (es.heros.includes(h.id)) refuser('Vous jouez déjà cette scène');
+      const raison = occupationHeros(etat, h.id, action.cle);
+      if (vrai(raison)) refuser(`Vous êtes encore ${raison}`);
+      if (etat.combats[action.cle]) refuser('Le groupe est en plein combat : vous le rejoindrez juste après');
+      es.heros.push(h.id);
+      es.enAttente = (es.enAttente ?? []).filter((x) => x !== h.id);
+      journal(contenu, etat, `${h.nom} rejoint le groupe dans « ${contenu.scenes[es.sceneId].titre} ».`);
+      break;
+    }
     case 'continuer': {
       if (action.cle !== 'groupe' && j.herosId !== action.cle) refuser('Ce n\'est pas votre scène');
+      if (action.cle === 'groupe' && regleOccupes(etat) && !joueursDeScene(etat, 'groupe').includes(action.joueur)) refuser('Votre héros ne joue pas cette scène');
       avancerScene(contenu, etat, action.cle);
       break;
     }
@@ -1574,6 +1662,7 @@ export function appliquer(contenu: Contenu, etatAvant: EtatPartie, action: Actio
     case 'pret_dialogue': {
       // scène de groupe : on passe à la suite quand chaque joueur présent a cliqué « Continuer » (test 3, point 8)
       if (action.cle !== 'groupe' && j.herosId !== action.cle) refuser('Ce n\'est pas votre scène');
+      if (action.cle === 'groupe' && regleOccupes(etat) && !joueursDeScene(etat, 'groupe').includes(action.joueur)) refuser('Votre héros ne joue pas cette scène');
       const es = etat.scenes[action.cle] ?? refuser('Aucune scène');
       verifierAvancee(contenu, etat, action.cle);
       es.prets ??= [];
@@ -1619,7 +1708,10 @@ export function appliquer(contenu: Contenu, etatAvant: EtatPartie, action: Actio
       break;
     }
     case 'donjon_deplacer':
-      if (etat.meneur !== action.joueur && etat.joueurs[etat.meneur ?? '']?.present) refuser('C\'est le meneur du jour qui guide le groupe');
+      {
+        const guide = etat.donjon ? meneurDeScene(etat, etat.donjon.sceneCle) : etat.meneur;
+        if (guide !== action.joueur && etat.joueurs[guide ?? '']?.present) refuser('C\'est le meneur du jour qui guide le groupe');
+      }
       deplacerDonjon(contenu, etat, action.dx, action.dy);
       break;
     case 'temps_libre': {
@@ -2154,7 +2246,8 @@ function resoudreVote(contenu: Contenu, etat: EtatPartie) {
   for (const [joueur, idx] of entrees(es.votes)) comptes.set(idx, [...(comptes.get(idx) ?? []), joueur]);
   let meilleur = -1, max = -1;
   for (const [idx, v] of comptes) {
-    if (v.length > max || (v.length === max && vrai(etat.meneur) && v.includes(etat.meneur))) { meilleur = idx; max = v.length; }
+    const m = meneurDeScene(etat);
+    if (v.length > max || (v.length === max && vrai(m) && v.includes(m!))) { meilleur = idx; max = v.length; }
   }
   // ce que chacun a choisi, gardé quelques secondes à l'écran (test 3, point 7)
   const n = noeudCourant(contenu, etat, 'groupe');

@@ -2,14 +2,17 @@
   import { jeu } from '../jeu.svelte';
   import PhaserHote from '../PhaserHote.svelte';
   import type { SceneDonjon } from '../../rendu/SceneDonjon';
+  import { meneurDeScene } from '../../moteur/partie';
 
   const c = jeu.contenu!;
   const etat = $derived(jeu.etat!);
   const dj = $derived(etat.donjon!);
-  const meneurPresent = $derived(!!etat.meneur && !!etat.joueurs[etat.meneur]?.present);
+  /** Meneur du donjon : le meneur du jour s'il est dans le donjon, sinon le premier joueur du groupe (mise à jour 5). */
+  const meneur = $derived(meneurDeScene(etat, dj.sceneCle));
+  const meneurPresent = $derived(!!meneur && !!etat.joueurs[meneur]?.present);
   /** Le meneur guide ; s'il est absent, n'importe quel joueur présent peut guider. */
-  const guide = $derived(etat.meneur && jeu.joueursLocaux.includes(etat.meneur) ? etat.meneur : !meneurPresent ? jeu.joueurActif : null);
-  const herosMeneur = $derived(etat.meneur && etat.joueurs[etat.meneur]?.herosId ? etat.heros[etat.joueurs[etat.meneur].herosId!] : jeu.monHeros);
+  const guide = $derived(meneur && jeu.joueursLocaux.includes(meneur) ? meneur : !meneurPresent ? jeu.joueurActif : null);
+  const herosMeneur = $derived(meneur && etat.joueurs[meneur]?.herosId ? etat.heros[etat.joueurs[meneur].herosId!] : jeu.monHeros);
   let scene: SceneDonjon | null = null;
   let envoi = false;
 
@@ -35,7 +38,7 @@
   <PhaserHote plein scene="donjon" surPret={(s) => (scene = s as SceneDonjon)} />
   <div class="ligne entete">
     <h2>{c.donjons[dj.id].nom}</h2>
-    <span class="discret">{guide ? 'Flèches, ZQSD ou clic pour avancer.' : `${etat.joueurs[etat.meneur ?? '']?.pseudo} guide le groupe.`}</span>
+    <span class="discret">{guide ? 'Flèches, ZQSD ou clic pour avancer.' : `${etat.joueurs[meneur ?? '']?.pseudo} guide le groupe.`}</span>
   </div>
   <div class="bas">
     <div class="carte-ui messages" aria-live="polite">

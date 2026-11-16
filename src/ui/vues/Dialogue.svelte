@@ -1,7 +1,7 @@
 <script lang="ts">
   /** Scène de dialogue : décor, portrait, répliques une par une, choix (votés en groupe), tests de caractéristique. */
   import { jeu } from '../jeu.svelte';
-  import { choixVisibles, conditionScene, joueursAttendusDialogue, joueursDuPari, miseDuChoix, noeudAffiche, partMinimaleDePari, partsDeMise, remplacerVariables } from '../../moteur/partie';
+  import { choixVisibles, conditionScene, joueursAttendusDialogue, joueursDeScene, joueursDuPari, meneurDeScene, miseDuChoix, noeudAffiche, occupationHeros, partMinimaleDePari, partsDeMise, phraseOccupe, remplacerVariables } from '../../moteur/partie';
   import { imageDecor } from '../../rendu/assets';
   import { NOMS_CARACS, estVraiPortrait, nomPersonnage, portraitHeros, portraitPersonnage } from '../outils';
   import PortraitAnime from '../PortraitAnime.svelte';
@@ -28,7 +28,11 @@
   const replique = $derived(repliques[Math.min(vues, repliques.length) - 1]);
   const choix = $derived(choixVisibles(c, etat, cle));
   const groupe = $derived(cle === 'groupe');
-  const presents = $derived(etat.ordreJoueurs.filter((j) => etat.joueurs[j].present && etat.joueurs[j].herosId));
+  // joueurs présents dont le héros joue la scène (un joueur occupé ailleurs n'est pas attendu : mise à jour 5, point 7)
+  const presents = $derived(joueursDeScene(etat, cle));
+  /** Héros occupés au début de la scène et toujours occupés : « Kael est en combat, il vous rejoindra. » */
+  const occupes = $derived(groupe ? (es.enAttente ?? []).filter((id) => !es.heros.includes(id)).map((id) => ({ id, raison: occupationHeros(etat, id, cle) })).filter((x) => x.raison) : []);
+  const meneur = $derived(groupe ? meneurDeScene(etat, cle) : null);
   const mesJoueurs = $derived(groupe ? jeu.joueursLocaux.filter((j) => presents.includes(j)) : [jeu.joueurActif]);
   const fini = $derived(es.noeud === '__fin__');
   const combatEnAttente = $derived(!!etat.combats[cle === 'groupe' ? 'groupe' : cle]);
@@ -52,7 +56,7 @@
     const t = setTimeout(() => (peutForcer = true), ATTENTE_FORCER_MS);
     return () => clearTimeout(t);
   });
-  const jeSuisMeneur = $derived(!!etat.meneur && jeu.joueursLocaux.includes(etat.meneur));
+  const jeSuisMeneur = $derived(!!meneur && jeu.joueursLocaux.includes(meneur));
 
   // ───────────── Résultat d'un vote ou d'une réponse, montré 3 secondes (test 3, point 7) ─────────────
   const DUREE_RESULTAT_MS = 3000;
@@ -127,6 +131,9 @@
         Test de {NOMS_CARACS[es.dernierTest.carac]} ({etat.heros[es.dernierTest.heros]?.nom}) : dé {es.dernierTest.jet} + {es.dernierTest.total - es.dernierTest.jet} = <strong>{es.dernierTest.total}</strong>
         contre {es.dernierTest.difficulte} → {es.dernierTest.reussi ? 'réussite !' : 'échec.'}
       </p>
+    {/if}
+    {#if occupes.length}
+      <p class="occupes discret" role="status">{#each occupes as o (o.id)}<span>⏳ {phraseOccupe(etat, o.id, o.raison!)}</span> {/each}</p>
     {/if}
     {#if es.messages.length && vues === 1}
       <ul class="gains">{#each es.messages as m, i (i)}<li>{m}</li>{/each}</ul>
@@ -231,8 +238,8 @@
         </div>
         {#if groupe}
           <p class="discret">En attente des votes : {presents.filter((j) => !aVote(j)).map((j) => etat.joueurs[j].pseudo).join(', ') || 'personne'}.
-            {#if etat.meneur && jeu.joueursLocaux.includes(etat.meneur) && Object.keys(es.votes).length}
-              <button class="petit" onclick={() => jeu.agir({ type: 'trancher', joueur: etat.meneur!, cle })}>Trancher (meneur)</button>
+            {#if jeSuisMeneur && Object.keys(es.votes).length}
+              <button class="petit" onclick={() => jeu.agir({ type: 'trancher', joueur: meneur!, cle })}>Trancher (meneur)</button>
             {/if}
           </p>
         {/if}
@@ -241,7 +248,7 @@
           <div class="ligne attente-prets">
             <button class="principal" disabled={jeSuisPret} onclick={continuer}>{jeSuisPret ? 'Prêt ✔' : 'Continuer'}</button>
             <span class="discret">Prêts : {prets.length}/{presents.length}{#if attendus.length} · en attente de {attendus.map(pseudo).join(', ')}…{/if}</span>
-            {#if peutForcer && jeSuisMeneur}<button class="petit" onclick={() => jeu.agir({ type: 'continuer', joueur: etat.meneur!, cle })}>Passer quand même (meneur)</button>{/if}
+            {#if peutForcer && jeSuisMeneur}<button class="petit" onclick={() => jeu.agir({ type: 'continuer', joueur: meneur!, cle })}>Passer quand même (meneur)</button>{/if}
           </div>
         {:else}
           <button class="principal" onclick={continuer}>Continuer</button>
@@ -271,6 +278,7 @@
   .rouvrir { position: absolute; z-index: 5; left: 50%; translate: -50% 0; bottom: max(0.6rem, env(safe-area-inset-bottom)); min-height: 44px; background: #14111cf0; border-color: var(--or); }
   .replique { display: flex; gap: 0.9rem; align-items: flex-start; cursor: pointer; }
   .portrait { width: clamp(72px, 14vw, 140px); aspect-ratio: 1; border-radius: 8px; border: 2px solid var(--or); object-fit: cover; object-position: top; background: var(--fond); flex: none; }
+  .occupes { margin: 0 0 0.3rem; font-size: 0.85rem; }
   .qui { margin: 0; color: var(--or-2); font-weight: 700; font-family: 'Cinzel', serif; }
   .dit { margin: 0.2em 0 0; font-size: 1.08rem; }
   .narration { font-style: italic; color: #e9e1f3; }
