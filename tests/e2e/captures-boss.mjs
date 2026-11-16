@@ -53,7 +53,7 @@ const navigateur = await chromium.launch();
 for (const [ecran, viewport] of [['ordinateur', { width: 1280, height: 720 }], ['telephone', { width: 740, height: 360 }]]) {
   const page = await navigateur.newPage({ viewport, deviceScaleFactor: ecran === 'telephone' ? 2 : 1 });
   page.on('pageerror', (e) => erreurs.push(`${ecran} › ${e.message}`));
-  await page.goto(url);
+  await page.goto(url, { timeout: 90000 });
   await page.locator('input[type="file"]').setInputFiles(fichier);
   await page.locator('section.combat canvas').waitFor({ timeout: 15000 });
   await page.waitForTimeout(2000);
