@@ -25,6 +25,8 @@ interface Vue {
   parti?: boolean;
   /** Icônes d'état avec le nombre de tours restants (☠3 🔥2). */
   etats: Phaser.GameObjects.Text;
+  /** Haut de la silhouette visible, par rapport aux pieds (négatif) : marqueur « à vous » et icônes d'état au-dessus. */
+  haut: number;
   /** Bulles vertes qui montent tant que le combattant est empoisonné. */
   bulles: Phaser.Time.TimerEvent | null;
   teinte: number | null;
@@ -176,10 +178,43 @@ export class SceneCombat extends Phaser.Scene {
     // marqueur au-dessus du combattant qui doit jouer
     const actif = opts.actif ? this.vues.get(opts.actif) : null;
     if (actif && this.marqueurActif) {
-      this.marqueurActif.setVisible(true).setPosition(actif.conteneur.x, actif.conteneur.y - 46 * opts.echelle - 18);
+      // au-dessus de la tête, quelle que soit la taille (un boss de 128 n'a plus le marqueur au milieu du corps)
+      this.marqueurActif.setVisible(true).setPosition(actif.conteneur.x, actif.conteneur.y + actif.haut - 20);
     } else this.marqueurActif?.setVisible(false);
     this.animer(combat.evenements.slice(this.nbEvenements));
     this.nbEvenements = combat.evenements.length;
+  }
+
+  private boites = new Map<string, { haut: number; bas: number; taille: number } | null>();
+  /**
+   * Partie visible (pixels non transparents) de la première image d'une planche : haut et bas, en pixels de la case.
+   * Lue une seule fois par planche (planches du groupe et silhouettes provisoires).
+   */
+  private boiteVisible(cle: string): { haut: number; bas: number; taille: number } | null {
+    if (this.boites.has(cle)) return this.boites.get(cle)!;
+    let res: { haut: number; bas: number; taille: number } | null = null;
+    try {
+      const f = this.textures.getFrame(cle, 0) ?? this.textures.getFrame(cle);
+      const source = f?.source.image as CanvasImageSource | undefined;
+      if (f && source) {
+        const toile = document.createElement('canvas');
+        toile.width = f.cutWidth; toile.height = f.cutHeight;
+        const ctx = toile.getContext('2d', { willReadFrequently: true });
+        if (ctx) {
+          ctx.drawImage(source, f.cutX, f.cutY, f.cutWidth, f.cutHeight, 0, 0, f.cutWidth, f.cutHeight);
+          const px = ctx.getImageData(0, 0, f.cutWidth, f.cutHeight).data;
+          let haut = -1, bas = -1;
+          for (let y = 0; y < f.cutHeight; y++) {
+            for (let x = 0; x < f.cutWidth; x++) {
+              if (px[(y * f.cutWidth + x) * 4 + 3] > 40) { if (haut < 0) haut = y; bas = y; break; }
+            }
+          }
+          if (haut >= 0) res = { haut, bas, taille: f.cutHeight };
+        }
+      }
+    } catch { res = null; }
+    this.boites.set(cle, res);
+    return res;
   }
 
   /** Position x de l'étiquette d'un combattant, décalée si besoin pour que le nom tienne entier dans le cadre visible. */
@@ -231,7 +266,7 @@ export class SceneCombat extends Phaser.Scene {
    * Tests navigateur (mise à jour 5, point 2) : étiquette de nom de chaque combattant, en pixels CSS dans le canvas
    * (gauche, droite, haut, bas), avec le texte affiché et la largeur visible du canvas.
    */
-  etiquettesEcran(): { id: string; texte: string; gauche: number; droite: number; haut: number; bas: number; largeur: number; hauteur: number }[] {
+  etiquettesEcran(): { id: string; texte: string; gauche: number; droite: number; haut: number; bas: number; largeur: number; hauteur: number; pieds: number; tete: number; barre: number; sol: number; marqueur: number | null }[] {
     const cam = this.cameras.main;
     const d = this.scale.displayScale;
     const versX = (wx: number) => ((wx - cam.worldView.x) * cam.zoom) / d.x;
@@ -240,7 +275,8 @@ export class SceneCombat extends Phaser.Scene {
     for (const [id, v] of this.vues) {
       if (v.parti || v.conteneur.alpha <= 0.05) continue;
       const b = v.nom.getBounds();
-      res.push({ id, texte: v.nom.text.replace(/\n/g, ' '), gauche: versX(b.left), droite: versX(b.right), haut: versY(b.top), bas: versY(b.bottom), largeur: (cam.width) / d.x, hauteur: cam.height / d.y });
+      res.push({ id, texte: v.nom.text.replace(/\n/g, ' '), gauche: versX(b.left), droite: versX(b.right), haut: versY(b.top), bas: versY(b.bottom), largeur: (cam.width) / d.x, hauteur: cam.height / d.y,
+        pieds: versY(v.conteneur.y), tete: versY(v.conteneur.y + v.haut), barre: versY(v.etiquette.y + 3), sol: versY(H * 0.62), marqueur: this.marqueurActif?.visible && Math.abs((this.marqueurActif.x) - v.conteneur.x) < 1 ? versY(this.marqueurActif.y) : null });
     }
     return res;
   }
@@ -376,15 +412,27 @@ export class SceneCombat extends Phaser.Scene {
     const nom = this.add.text(0, 10, libelleNom, { fontFamily: 'Source Sans 3', fontSize: '13px', color: '#f3ead7', stroke: '#000', strokeThickness: 3, align: 'center', wordWrap: { width: 120 } }).setOrigin(0.5, 0).setResolution(2);
     // un nom n'est jamais coupé : s'il reste trop large (un seul long mot), la police réduit jusqu'à 80 %
     for (let px = 13; nom.width > 124 && px > 10.4; ) { px -= 0.5; nom.setFontSize(px); }
-    const zone = this.add.zone(0, -taille * echelle / 2, taille * echelle * 0.7, taille * echelle);
-    const etats = this.add.text(0, -taille * echelle - 6, '', { fontFamily: 'Source Sans 3', fontSize: '14px', color: '#f3ead7', stroke: '#000', strokeThickness: 3 }).setOrigin(0.5, 1).setResolution(2);
+    // Mise à jour 5, point 4 : les pieds visibles du dessin sont posés sur la ligne du conteneur, juste au-dessus du
+    // nom et des barres. Avant, le bas de la CASE était posé là : un dessin qui ne touche pas le bas de sa case
+    // (silhouette provisoire d'un boss : 1/8 de vide) flottait au-dessus de son nom.
+    const boite = this.boiteVisible(cleTexture);
+    const echelleY = sprite.scaleY;
+    let haut = -taille * echelle;
+    if (boite) {
+      const decalage = (boite.taille - 1 - boite.bas) * echelleY;
+      sprite.setY(decalage);
+      calque?.setY(decalage);
+      haut = -(boite.bas - boite.haut + 1) * echelleY;
+    }
+    const zone = this.add.zone(0, haut / 2, taille * echelle * 0.7, -haut);
+    const etats = this.add.text(0, haut - 6, '', { fontFamily: 'Source Sans 3', fontSize: '14px', color: '#f3ead7', stroke: '#000', strokeThickness: 3 }).setOrigin(0.5, 1).setResolution(2);
     const items: Phaser.GameObjects.GameObject[] = [sprite];
     if (calque) items.push(calque);
     items.push(zone, etats);
     const conteneur = this.add.container(versDroite ? -100 : L + 100, H * 0.7, items);
     conteneur.setDepth(10);
     const etiquette = this.add.container(conteneur.x, conteneur.y, [barre, nom]).setDepth(40);
-    const v: Vue = { conteneur, etiquette, sprite, calque, barre, nom, cleTexture, anime, zone, etats, bulles: null, teinte: c.teinte ? Phaser.Display.Color.HexStringToColor(c.teinte).color : null };
+    const v: Vue = { conteneur, etiquette, sprite, calque, barre, nom, cleTexture, anime, zone, etats, haut, bulles: null, teinte: c.teinte ? Phaser.Display.Color.HexStringToColor(c.teinte).color : null };
     this.vues.set(c.id, v);
     return v;
   }

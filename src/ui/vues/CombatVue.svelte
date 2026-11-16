@@ -6,7 +6,7 @@
   import { jeu } from '../jeu.svelte';
   import PhaserHote from '../PhaserHote.svelte';
   import ActionsLibres from './ActionsLibres.svelte';
-  import { utiliseMana, type SceneCombat } from '../../rendu/SceneCombat';
+  import { utiliseMana, type OptionsCombat, type SceneCombat } from '../../rendu/SceneCombat';
   import { actionsDisponibles, estimerAction, NOMS_ETATS, raisonCibleRefusee, type ActionCombat, type Combat, type Combattant, type EvenementCombat } from '../../moteur/combat';
   import type { Competence } from '../../contenu/schemas';
   import { etapeContrat } from '../../moteur/partie';
@@ -137,19 +137,24 @@
     if (etape) return Object.values(c.regions).flatMap((r) => r.lieux).find((l) => l.id === etape.etape.lieu)?.decor ?? null;
     return null;
   });
-  $effect(() => {
-    void decorLieu;
-    scene?.afficher(vu, {
+  const optionsAffichage = (): OptionsCombat => ({
       echelle: c.config.graphismes.echelle_combat ?? 3,
       tailleCombat: c.config.graphismes.taille_sprite_combat ?? 64,
       tailleBoss: c.config.graphismes.taille_sprite_boss ?? 128,
       tailleExploration: c.config.graphismes.taille_sprite_exploration ?? 32,
       ciblesCliquables: termine ? cibles : [],
       actif: termine ? combat.enAttente : null,
-      surClic: (id) => { dernierClic = id; if (!termine) return; if (cibles.includes(id)) viser(id); else signalerCible(id); },
+      surClic: (id: string) => { dernierClic = id; if (!termine) return; if (cibles.includes(id)) viser(id); else signalerCible(id); },
       contenu: c,
       decorLieu,
     });
+  /** Tests navigateur : combat préparé par le test, affiché à la place du vrai (le vrai n'est plus redessiné). */
+  let combatEssai: Combat | null = null;
+  $effect(() => {
+    void decorLieu;
+    const o = optionsAffichage();
+    if (combatEssai) return;
+    scene?.afficher(vu, o);
   });
   $effect(() => { void combat.enAttente; selection = null; });
 
@@ -181,7 +186,9 @@
   let dernierClic = $state('');
   $effect(() => {
     const w = window as unknown as { __velmarisCombat?: unknown };
-    w.__velmarisCombat = { positions: () => scene?.positionsEcran() ?? [], calques: () => scene?.etatCalques() ?? [], etiquettes: () => scene?.etiquettesEcran() ?? [], animer: (nom: string) => scene?.animerHeros(nom) };
+    w.__velmarisCombat = { positions: () => scene?.positionsEcran() ?? [], calques: () => scene?.etatCalques() ?? [], etiquettes: () => scene?.etiquettesEcran() ?? [], animer: (nom: string) => scene?.animerHeros(nom),
+      // tests navigateur (mise à jour 5, point 4) : affiche un autre combat préparé par le test (boss…), marqueur sur le boss
+      essai: (autre: Combat) => (combatEssai = autre) && scene?.afficher(autre, { ...optionsAffichage(), ciblesCliquables: [], actif: autre.combattants.find((x) => x.boss)?.id ?? null, surClic: () => undefined }) };
     return () => { delete w.__velmarisCombat; };
   });
   let minuteurMessage: ReturnType<typeof setTimeout> | undefined;
