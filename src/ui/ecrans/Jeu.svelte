@@ -98,7 +98,12 @@
   });
   const sceneGroupeActive = $derived(!!etat.scenes.groupe && herosDeScene(etat, 'groupe').includes(h.id));
   /** Ma scène individuelle, ou celle d'un autre héros qui m'a invité (quête solo à plusieurs). */
-  const sceneMoi = $derived(etat.scenes[h.id] ? h.id : Object.keys(etat.scenes).find((k) => k !== 'groupe' && etat.scenes[k].heros.includes(h.id)) ?? null);
+  const sceneMoi = $derived.by(() => {
+    // une scène en cours d'abord (la mienne, ou la quête d'un autre héros où je suis invité), puis une scène finie
+    const miennes = Object.keys(etat.scenes).filter((k) => k !== 'groupe' && etat.scenes[k].heros.includes(h.id));
+    const enCours = miennes.filter((k) => etat.scenes[k].noeud !== '__fin__');
+    return enCours.includes(h.id) ? h.id : enCours[0] ?? (miennes.includes(h.id) ? h.id : miennes[0] ?? null);
+  });
   const dansDonjon = $derived(!!etat.donjon && herosDeScene(etat, etat.donjon.sceneCle).includes(h.id));
   /** Scène de groupe commencée sans moi : je pourrai la rejoindre quand je serai libre. */
   const sceneSansMoi = $derived(etat.scenes.groupe && etat.scenes.groupe.noeud !== '__fin__' && !herosDeScene(etat, 'groupe').includes(h.id) ? etat.scenes.groupe : null);

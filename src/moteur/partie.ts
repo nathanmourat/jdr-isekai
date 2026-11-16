@@ -206,6 +206,9 @@ export type Action =
   /** Le lanceur commence sans attendre ceux qui n'ont pas répondu (ou annule). */
   | { type: 'demarrer_quete'; joueur: string }
   | { type: 'annuler_invitation'; joueur: string }
+  /** Partie d'avant le format 10 (navigateur, en ligne) : envoyée une fois au chargement ; les règles du format 10
+   * valent à partir d'elle (les actions d'avant se rejouent avec les anciennes règles). */
+  | { type: 'format_moteur'; joueur: string }
   | { type: 'se_soigner'; joueur: string; moyen: 'repas' | 'temple' | 'ration' | 'objet'; lieu?: string; objet?: string }
   | { type: 'quitter_scene'; joueur: string; cle: string }
   | { type: 'combat'; joueur: string; cle: string; action: ActionCombat }
@@ -787,9 +790,27 @@ function participantsGroupe(etat: EtatPartie): string[] {
   return listeHeros(etat).filter((h) => etat.joueurs[h.joueurId]?.present || h.siAbsent === 'ia').map((h) => h.id);
 }
 
-/** Vrai quand la règle « on n'interrompt jamais un héros occupé » s'applique (toute action d'une partie au format 10). */
+/**
+ * Vrai quand une règle du format 10 s'applique à l'action en cours. Partie créée au format 10 : toujours.
+ * Sauvegarde importée (migration 9 → 10) : à partir de l'action notée par la migration. Partie en cours d'avant le
+ * format 10 gardée dans le navigateur ou en ligne (jamais migrée) : à partir de l'action « format_moteur » que le jeu
+ * envoie une fois au chargement ; avant elle, les anciennes actions se rejouent avec les anciennes règles.
+ */
+function regleFormat10(etat: EtatPartie, depuis: number | undefined): boolean {
+  if (depuis !== undefined) return etat.numeroAction >= depuis;
+  return etat.version >= 10;
+}
+
+/** Vrai quand la règle « on n'interrompt jamais un héros occupé » s'applique. */
 function regleOccupes(etat: EtatPartie): boolean {
-  return etat.numeroAction >= (etat.regleOccupesDepuis ?? 0);
+  return regleFormat10(etat, etat.regleOccupesDepuis);
+}
+
+/** Refuse l'action si le héros est occupé ailleurs (règle du format 10) ; `seulementCombat` : seulement s'il se bat. */
+function refuserSiOccupe(etat: EtatPartie, herosId: string, seulementCombat = false) {
+  if (!regleOccupes(etat)) return;
+  const raison = occupationHeros(etat, herosId);
+  if (vrai(raison) && (!seulementCombat || raison === 'en combat')) refuser(`Vous êtes ${raison}`);
 }
 
 /**
@@ -1693,6 +1714,14 @@ export function appliquer(contenu: Contenu, etatAvant: EtatPartie, action: Actio
       demarrerQuete(contenu, etat, inv);
       break;
     }
+    case 'format_moteur': {
+      if (etat.version < VERSION_ETAT) {
+        if (etat.regleSexeDepuis === undefined) etat.regleSexeDepuis = etat.numeroAction;
+        if (etat.regleOccupesDepuis === undefined) etat.regleOccupesDepuis = etat.numeroAction;
+        etat.version = VERSION_ETAT;
+      }
+      break;
+    }
     case 'annuler_invitation': {
       const h = herosDuJoueur(etat, action.joueur);
       if (etat.invitations?.[h.id]) delete etat.invitations[h.id];
@@ -1710,7 +1739,7 @@ export function appliquer(contenu: Contenu, etatAvant: EtatPartie, action: Actio
       // Les actions d'une partie d'avant le format 10 se rejouent avec l'ancienne règle (premier mois).
       const h = herosDuJoueur(etat, action.joueur);
       if (action.sexe !== 'm' && action.sexe !== 'f') refuser('Choix impossible');
-      const ancienneRegle = etat.numeroAction < (etat.regleSexeDepuis ?? 0);
+      const ancienneRegle = !regleFormat10(etat, etat.regleSexeDepuis);
       if (ancienneRegle ? h.sexeChoisi !== false && etat.jour >= 30 : h.sexeChoisi !== false) refuser('Le sexe du héros se choisit à la création et ne change plus');
       h.sexe = action.sexe;
       h.sexeChoisi = true;
@@ -1719,6 +1748,7 @@ export function appliquer(contenu: Contenu, etatAvant: EtatPartie, action: Actio
     case 'se_soigner': {
       const h = herosDuJoueur(etat, action.joueur);
       if (etat.combats[h.id] || etat.combats.groupe) refuser('Pas pendant un combat');
+      refuserSiOccupe(etat, h.id, true); // invité qui se bat dans la quête d'un autre
       const max = pvMaxHorsCombat(contenu, h);
       const pv = h.pv ?? max;
       const cfg = contenu.config.soins;
@@ -2006,6 +2036,7 @@ export function appliquer(contenu: Contenu, etatAvant: EtatPartie, action: Actio
       const h = herosDuJoueur(etat, action.joueur);
       const ct = contenu.contrats[action.contrat] ?? refuser('Contrat inconnu');
       if (etat.combats[h.id]) refuser('Vous êtes déjà en combat');
+      refuserSiOccupe(etat, h.id, true);
       if (vrai(ct.examen_rang)) refuser('Cette épreuve se demande à la Guilde, en passant l\'examen de rang');
       if (ordreRangs.indexOf(rangHeros(etat, h.id)) < ordreRangs.indexOf(ct.rang_min)) refuser(`Contrat réservé au rang ${ct.rang_min}`);
       if (!conditionHeros(contenu, etat, ct.disponible_si, h)) refuser('Contrat indisponible');
@@ -2054,7 +2085,9 @@ export function appliquer(contenu: Contenu, etatAvant: EtatPartie, action: Actio
       if (etat.donjon) refuser('Le groupe est dans un donjon');
       if (etat.tempsLibre && !etat.tempsLibre.resultats) refuser('Terminez d\'abord le temps libre');
       // les héros présents et prêts pour le même rang passent l'examen ensemble (difficulté de groupe habituelle)
-      const candidats = candidatsExamen(contenu, etat, h.id).filter((id) => !etat.combats[id]);
+      // un héros occupé ailleurs (scène, quête où il est invité, donjon) n'est jamais emmené (mise à jour 5, point 7)
+      refuserSiOccupe(etat, h.id);
+      const candidats = candidatsExamen(contenu, etat, h.id).filter((id) => !etat.combats[id] && (!regleOccupes(etat) || id === h.id || occupationHeros(etat, id) === null));
       etat.dernieresNouvelles.push(`Examen du rang ${ex.rang} : ${candidats.map((id) => etat.heros[id].nom).join(', ')} ${candidats.length > 1 ? 'entrent' : 'entre'} dans l'arène d'entraînement.`);
       lancerCombat(contenu, etat, def.rencontre!, 'groupe', { cle: 'groupe', origine: 'examen', sceneCle: null, victoire: null, defaite: null, evenementDonjon: null, contrat: null, bilan: null, examen: { rang: ex.rang, heros: candidats } }, null, candidats);
       break;
@@ -2065,6 +2098,8 @@ export function appliquer(contenu: Contenu, etatAvant: EtatPartie, action: Actio
       const st = etat.contrats[h.id];
       const e = x.etape;
       if (etat.combats[h.id]) refuser('Vous êtes déjà en combat');
+      // pas d'étape de contrat en pleine scène, quête ou combat ailleurs : la scène attendrait ce héros (mise à jour 5)
+      refuserSiOccupe(etat, h.id);
       if (vrai(e.combat)) {
         st.notes = [];
         lancerCombat(contenu, etat, e.combat, h.id, { cle: h.id, origine: 'contrat', sceneCle: null, victoire: null, defaite: null, evenementDonjon: null, contrat: x.contrat.id, bilan: null }, e.lieu);

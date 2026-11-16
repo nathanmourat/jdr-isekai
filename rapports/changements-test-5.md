@@ -4,7 +4,9 @@ Les 8 points demandés, un commit par point, sur `claude/festive-mccarthy-ahagx5
 Contrôles : `npm test` (245 tests, dont 12 nouveaux), `svelte-check`, `npm run roblox:verifier`, `npm run build`, et les tests navigateur `noms`, `captures-hd`, `captures-combat`, `captures-ecran`, `soins` et le nouveau `captures-boss`.
 Captures : `rapports/captures-test-5/` (soins), `rapports/captures-boss/` (20 combats de boss), `rapports/captures-hd/calques/` (calques de race).
 
-Les anciennes parties continuent de fonctionner : la sauvegarde passe au **format v10**, et ce qui a déjà été joué se rejoue à l'identique (y compris un changement de sexe déjà fait pendant le premier mois).
+Les anciennes parties continuent de fonctionner : la sauvegarde passe au **format v10**, et ce qui a déjà été joué se rejoue à l'identique (y compris un changement de sexe déjà fait pendant le premier mois). C'est vrai aussi pour une partie gardée dans le navigateur : au premier chargement, le jeu note discrètement que les nouvelles règles valent à partir de ce moment.
+
+**Vérification avant envoi (relecture complète)** : 6 problèmes trouvés et corrigés : une partie en cours gardée dans le navigateur aurait été rejouée avec les nouvelles règles (un changement de sexe déjà fait aurait été annulé) ; l'examen de rang emmenait encore un héros occupé dans sa scène ; un invité en plein combat pouvait lancer une étape de contrat ou se soigner ; une étape de contrat pouvait démarrer en pleine scène ; un invité pouvait voir son ancienne scène finie au lieu de la quête ; le demi-démon n'avait pas sa couleur de peau dans les soins du Temple.
 
 L'image du Golem de la Fontaine (point 3) et le calque de l'héroïne naine à tresses (point 5) ont été validés le 16/11.
 

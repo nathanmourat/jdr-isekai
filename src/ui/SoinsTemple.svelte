@@ -68,6 +68,7 @@
     ? (h.sexe === 'f' ? urlAsset(`personnages/races/${h.race}/calque-combat-f`) : null) ?? urlAsset(`personnages/races/${h.race}/calque-combat`)
     : null);
 
+  const teinte = $derived(h && c ? c.races[h.race]?.teinte ?? null : null);
   const particules = Array.from({ length: 26 }, (_, i) => ({ x: 20 + ((i * 37) % 60), delai: (i * 173) % 1500, taille: 3 + (i % 3) * 2, derive: ((i * 29) % 21) - 10 }));
   /** Petites lueurs sur le corps du héros (en % de sa case) : les blessures qui se referment. */
   const lueurs = [{ x: 50, y: 40, d: 0 }, { x: 44, y: 55, d: 250 }, { x: 57, y: 63, d: 500 }, { x: 47, y: 74, d: 750 }, { x: 54, y: 48, d: 1000 }];
@@ -85,6 +86,8 @@
           <div class="halo"></div>
           {#if planche}
             <div class="sprite" style={`background-image:url("${planche}")`}></div>
+            <!-- teinte de peau de la race (demi-démon), multipliée sur le corps seulement, comme en combat -->
+            {#if teinte}<div class="sprite teinte" style={`background-color:${teinte};mask-image:url("${planche}");-webkit-mask-image:url("${planche}")`}></div>{/if}
             {#if calque}<div class="sprite" style={`background-image:url("${calque}")`}></div>{/if}
           {:else}
             <div class="silhouette"></div>
@@ -144,6 +147,8 @@
   .heros { position: absolute; left: 44%; bottom: 10%; width: 22%; aspect-ratio: 1; translate: -50% 0; }
   .sprite { position: absolute; inset: 0; background-size: 800% 600%; background-repeat: no-repeat; image-rendering: pixelated; animation: attente 0.8s steps(4) infinite; }
   @keyframes attente { from { background-position: 0 0; } to { background-position: calc(400% / 7) 0; } }
+  .teinte { mix-blend-mode: multiply; -webkit-mask-size: 800% 600%; mask-size: 800% 600%; -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat; animation-name: attente-masque; }
+  @keyframes attente-masque { from { -webkit-mask-position: 0 0; mask-position: 0 0; } to { -webkit-mask-position: calc(400% / 7) 0; mask-position: calc(400% / 7) 0; } }
   .silhouette { position: absolute; left: 38%; right: 38%; top: 22%; bottom: 8%; border-radius: 40% 40% 12% 12%; background: #3a3348; }
   .halo { position: absolute; left: 50%; top: 52%; width: 70%; height: 92%; translate: -50% -50%; border-radius: 50%; background: radial-gradient(#fff3c066, #f3c45a33 55%, transparent 72%); box-shadow: 0 0 0 2px #ffe9a066 inset; opacity: 0; scale: 0.6; transition: opacity 0.8s ease, scale 0.8s ease; }
   [data-phase='4'] .halo, [data-phase='5'] .halo { opacity: 1; scale: 1; animation: pulse 1.2s ease-in-out infinite; }

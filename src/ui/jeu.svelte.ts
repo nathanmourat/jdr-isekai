@@ -5,7 +5,7 @@
 import type { Contenu } from '../contenu/charger';
 import type { TestCarac } from '../moteur/partie';
 import { contenuNavigateur } from '../contenu/navigateur';
-import { appliquer, ErreurAction, jourPeutPasser, type Action, type EtatPartie } from '../moteur/partie';
+import { appliquer, ErreurAction, jourPeutPasser, VERSION_ETAT, type Action, type EtatPartie } from '../moteur/partie';
 import { creerSauvegarde } from '../sauvegarde/migrations';
 import { genererId, type Canal } from '../sync/types';
 import { calculerGains, type Gain } from './gains';
@@ -95,6 +95,10 @@ class Jeu {
       this.minuteur = setInterval(() => this.battement(), Jeu.BATTEMENT_MS);
       // présence : les joueurs de cet appareil sont présents
       for (const j of this.joueursLocaux) if (this.etat?.joueurs[j] && !this.etat.joueurs[j].present) await this.envoyer({ type: 'presence', joueur: j, present: true });
+      // partie d'avant le format actuel gardée dans le navigateur ou en ligne : les nouvelles règles valent à partir
+      // de maintenant (les actions déjà jouées se rejouent avec les anciennes) ; une seule fois, par le premier joueur
+      const membre = this.joueursLocaux.find((j) => this.etat?.joueurs[j]);
+      if (this.etat && this.etat.version < VERSION_ETAT && membre) await this.envoyer({ type: 'format_moteur', joueur: membre });
     } finally {
       this.chargement = false;
     }
