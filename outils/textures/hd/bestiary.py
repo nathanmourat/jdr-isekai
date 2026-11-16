@@ -75,6 +75,9 @@ MOBS = [
      lambda: creature_sheet(quadruped(dict(col=hexc('c8422a'), dark=hexc('8a2a1a'), light=hexc('f0a040'), s=0.95, head='lizard',
                                            tail='lizard', tail_fire=True, low=True, scales=True, breath=True,
                                            eye=hexc('ffd84a'))), fx_y=44)),
+    # mise à jour 5 : le gardien de la crypte du chapitre 1 a sa propre image (golem_fontaine.py)
+    ('golem-fontaine', 'Golem de la Fontaine', 'Aubeclaire', '5', 'boss', 'Pierre ruisselante sortie du mur de la fontaine : vasque fendue sur le dos, mousse, eau qui coule, yeux et runes cyan.',
+     lambda: __import__('golem_fontaine').planche()),
     ('golem-de-pierre', 'Golem de pierre', 'Grisfer', '25–28', 'fort', 'Golem de granite, rune bleue sur le torse.',
      lambda: creature_sheet(golem(dict(col=hexc('8a8478'), dark=hexc('5a564e'), light=hexc('aaa498'), rune=hexc('5fd3ff'),
                                        moss=hexc('5a7a3a'))), ko='crumble', fx_y=50)),

@@ -39,3 +39,5 @@ Rang : faible < standard < fort < élite.
 
 Les n° 5, 6 et 7 correspondent aux n° 52, 53 et 54 de LISTE-TEXTURES.md (araignée géante, bandit, cultiste).
 Le loup gris, le gobelin cendré et le squelette (priorité 1) complètent le début de l'Aubeclaire, niveaux 1 à 5.
+
+**Boss du chapitre 1 (mise à jour 5)** : `golem-fontaine/combat.png`, le Golem de la Fontaine, gardien de la crypte (niveau 5) : pierre gris-vert ruisselante sortie du mur de la fontaine, vasque fendue sur le dos, mousse, flaque, yeux et runes cyan. Même gabarit HD que les autres (1024 × 512, cases de 128), affiché en boss (128). Générateur : `outils/textures/hd/golem_fontaine.py` (`python bestiary.py golem-fontaine`).
