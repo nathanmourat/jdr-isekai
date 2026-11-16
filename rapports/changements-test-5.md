@@ -6,7 +6,7 @@ Captures : `rapports/captures-test-5/` (soins), `rapports/captures-boss/` (20 co
 
 Les anciennes parties continuent de fonctionner : la sauvegarde passe au **format v10**, et ce qui a déjà été joué se rejoue à l'identique (y compris un changement de sexe déjà fait pendant le premier mois).
 
-**À valider par le groupe avant de les garder** : l'image du Golem de la Fontaine (point 3) et le calque de l'héroïne naine à tresses (point 5).
+L'image du Golem de la Fontaine (point 3) et le calque de l'héroïne naine à tresses (point 5) ont été validés le 16/11.
 
 ---
 
@@ -35,8 +35,8 @@ Les anciennes parties continuent de fonctionner : la sauvegarde passe au **forma
 ## 3. Nouveau Golem de la Fontaine
 **Ce qu'il y avait** : le golem n'avait aucune image (il ne partageait pas celle du golem de pierre) : le jeu dessinait une silhouette violette provisoire.
 **Ce qui a changé** : il a sa propre planche, `assets/ennemis/golem-fontaine/combat.png` (1024 × 512, mêmes cases et mêmes animations que les autres monstres), dessinée par `outils/textures/hd/golem_fontaine.py` : silhouette de pierre gris-vert voûtée, vasque de fontaine fendue sur le dos d'où l'eau déborde, mousse sur les épaules et les genoux, ruisseaux d'eau sur le corps, flaque aux pieds, yeux et runes cyan qui luisent. Les autres golems ne changent pas.
-**À vérifier (et à valider)**
-- [ ] Le dessin vous plaît (capture `rapports/captures-boss/crypte-golem.png`) ; sinon, dites ce qu'il faut changer.
+**À vérifier**
+- [ ] Le dessin en combat (capture `rapports/captures-boss/crypte-golem.png`).
 - [ ] Dans la crypte, « La fontaine se fend… » : le golem apparaît avec ce nouveau dessin.
 
 ## 4. Le golem n'était pas à la hauteur de son nom
@@ -49,11 +49,11 @@ Les anciennes parties continuent de fonctionner : la sauvegarde passe au **forma
 ## 5. La barbe du nain ne suivait pas le personnage
 **La cause** : les images étaient bonnes (la barbe tombe juste sur les 10 classes, image par image). C'était le combat : quand le héros attaquait, lançait un sort ou était touché, seul le corps jouait l'animation ; la barbe restait sur la pose « attente ». Les secousses, l'esquive, la chute au K.O. et le vert du poison ne touchaient aussi que le corps. Les oreilles, cornes et queues des autres races avaient le même problème. En exploration, le calque prenait aussi la couleur de peau de la race.
 **Ce qui a changé** : en combat, le calque recopie à chaque instant l'image du corps et bouge avec lui ; il ne prend jamais la couleur de peau. Le test `captures-hd` vérifie les 10 classes avec un nain et avec une autre race, pendant l'attaque, le sort et le touché, et garde une capture par classe (`rapports/captures-hd/calques/`).
-**Héroïne naine (proposition à confirmer)** : un calque sans barbe, avec deux tresses châtain roux (même couleur que la barbe) à perles de métal, une derrière l'oreille et une sur l'épaule. Le jeu l'utilise pour une héroïne naine dès que l'image est gardée.
+**Héroïne naine (validée)** : un calque sans barbe, avec deux tresses châtain roux (même couleur que la barbe) à perles de métal, une derrière l'oreille et une sur l'épaule (`calque-combat-f.png`, `calque-exploration-f.png`). Captures : `rapports/captures-hd/calques/naine-*.png`.
 **À vérifier**
 - [ ] Un nain (n'importe quelle classe) en combat : la barbe suit l'attaque, le sort, le coup reçu et le K.O.
 - [ ] Un elfe, un vulpin, un demi-démon : oreilles, queue et cornes suivent aussi.
-- [ ] Le calque à tresses de l'héroïne naine vous convient (capture jointe au message).
+- [ ] Une héroïne naine a des tresses et pas de barbe, en combat et dans les donjons.
 
 ## 6. Quêtes solo : choisir avec qui on les fait
 **Ce qui a changé** : quand on lance une quête solo (quêtes de classe, de compagnes, d'Aveline, « Premiers pas au Comptoir » ; jamais une scène romantique, le prologue ni l'épilogue), une fenêtre demande « Avec qui partez-vous ? » : seul, avec tout le groupe présent, ou avec certains joueurs (cases à cocher). Un joueur occupé (combat, scène, donjon, autre invitation) ou absent est grisé, avec la raison.
