@@ -35,6 +35,9 @@
   const meneur = $derived(groupe ? meneurDeScene(etat, cle) : null);
   const mesJoueurs = $derived(groupe ? jeu.joueursLocaux.filter((j) => presents.includes(j)) : [jeu.joueurActif]);
   const fini = $derived(es.noeud === '__fin__');
+  /** Quête solo à plusieurs (mise à jour 5, point 6) : seul le lanceur fait les choix, ses invités suivent. */
+  const jeMene = $derived(groupe || jeu.monHeros?.id === cle);
+  const lanceur = $derived(groupe ? null : etat.heros[cle]);
   const combatEnAttente = $derived(!!etat.combats[cle === 'groupe' ? 'groupe' : cle]);
 
   // ───────────── Coop : « Continuer » quand tout le monde est prêt (test 3, point 8) ─────────────
@@ -72,7 +75,7 @@
   });
   const pseudo = (j: string) => etat.joueurs[j]?.pseudo ?? '?';
 
-  function texte(t: string) { return remplacerVariables(c, etat, t, es.heros); }
+  function texte(t: string) { return remplacerVariables(c, etat, t, es.heros, undefined, groupe ? undefined : cle); }
   /** Prix d'un choix payant (or retiré par ses effets), affiché sur le bouton s'il n'est pas déjà écrit (test 3, point 13). */
   function libelleChoix(ch: (typeof choix)[number]): string {
     const t = texte(ch.choix.texte);
@@ -219,6 +222,11 @@
             </div>
           {/each}
         </div>
+      {:else if choix.length && !jeMene}
+        <p class="discret">C'est la quête de {lanceur?.nom} : {lanceur?.sexe === 'f' ? 'elle' : 'il'} choisit.</p>
+        <ul class="discret">{#each choix as ch (ch.index)}<li>{libelleChoix(ch)}</li>{/each}</ul>
+      {:else if noeud?.suite && !jeMene}
+        <p class="discret">En attente de {lanceur?.nom}…</p>
       {:else if choix.length}
         <div class="choix">
           {#each choix as ch (ch.index)}

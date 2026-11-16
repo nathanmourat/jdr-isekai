@@ -7,6 +7,7 @@
   import { onMount } from 'svelte';
   import LancerDe from '../LancerDe.svelte';
   import SoinsTemple from '../SoinsTemple.svelte';
+  import Invitations from '../Invitations.svelte';
   import { annoncer, premierPlan } from '../premierPlan.svelte';
   import { activiteChangee, signatureActivite } from '../activite';
   import { jeu } from '../jeu.svelte';
@@ -288,6 +289,7 @@
   <div class="pile-notifs"><Gains /><Notifications /></div>
   <LancerDe />
   <SoinsTemple />
+  <Invitations libre={vue === 'monde'} />
   <PiecesAnimees />
 </div>
 

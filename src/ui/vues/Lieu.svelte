@@ -9,7 +9,8 @@
   import { tick } from 'svelte';
   import { annoncer, premierPlan } from '../premierPlan.svelte';
   import { jeu } from '../jeu.svelte';
-  import { candidatsExamen, conditionHeros, conditionScene, etapeContrat, listeHeros, retourContrat, objetConnu, palierCompagnon, prochainExamen, rangHeros, scenesDisponibles } from '../../moteur/partie';
+  import { candidatsExamen, conditionHeros, conditionScene, etapeContrat, listeHeros, retourContrat, objetConnu, palierCompagnon, prochainExamen, queteInvitable, rangHeros, scenesDisponibles } from '../../moteur/partie';
+  import InviterQuete from '../InviterQuete.svelte';
   import ObjetInfo from '../ObjetInfo.svelte';
   import { activiteChangee, signatureActivite } from '../activite';
   import { alertesSante, santeHeros } from '../sante';
@@ -82,8 +83,11 @@
     const groupe = niveauGroupe(etat);
     return couleurNiveau(niveau, groupe) === 'rouge' && !confirm(`${aideNiveau(niveau, groupe)}\n\nY aller quand même ?`);
   }
+  /** Quête solo à plusieurs (mise à jour 5, point 6) : on demande d'abord avec qui la faire. */
+  let queteAInviter = $state<Scene | null>(null);
   function lancer(s: Scene) {
     if (sceneAvecCombat(s) && tropFort(niveauScene(c, s))) return;
+    if (queteInvitable(c, s) && listeHeros(etat).length > 1) { queteAInviter = s; return; }
     jeu.agir({ type: 'lancer_scene', scene: s.id });
   }
   function combatDuContrat() {
@@ -418,6 +422,9 @@
     {/if}
   </div>
 
+  {#if queteAInviter}
+    <InviterQuete scene={queteAInviter} fermer={() => (queteAInviter = null)} />
+  {/if}
   {#if boutiqueOuverte && lieu.boutique.length}
     <Fenetre cle="boutique" titre={`Boutique — ${lieu.gerant ? nomPnj(lieu.gerant) : lieu.nom}`} fermer={() => (boutiqueOuverte = false)}><Boutique lieu={id} objets={lieu.boutique} /></Fenetre>
   {/if}

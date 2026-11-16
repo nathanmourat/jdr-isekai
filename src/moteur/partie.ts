@@ -169,6 +169,17 @@ export interface EtatPartie {
   /** Partie d'avant le format 10 : jusqu'à cette action, une scène de groupe prend tous les héros présents
    * (ancienne règle) ; ensuite, seulement ceux qui ne sont pas occupés (mise à jour 5, point 7). */
   regleOccupesDepuis?: number;
+  /** Quêtes solo à plusieurs (mise à jour 5, point 6) : invitation en cours, par héros qui lance la quête. */
+  invitations?: Record<string, InvitationQuete>;
+}
+
+/** Invitation à une quête solo : le lanceur garde la quête, les invités acceptent ou refusent. */
+export interface InvitationQuete {
+  scene: string;
+  lanceur: string;
+  invites: string[];
+  /** Réponse de chaque invité (héros) : true = accepte, false = refuse ; absent = pas encore répondu. */
+  reponses: Record<string, boolean>;
 }
 
 export type Action =
@@ -189,6 +200,12 @@ export type Action =
   | { type: 'changer_sexe'; joueur: string; sexe: 'm' | 'f' }
   /** Un héros qui était occupé (ou absent) au début d'une scène de groupe la rejoint (mise à jour 5, point 7). */
   | { type: 'rejoindre_scene'; joueur: string; cle: string }
+  /** Quête solo à plusieurs (mise à jour 5, point 6) : le lanceur invite des héros (seul = lancer_scene). */
+  | { type: 'inviter_quete'; joueur: string; scene: string; invites: string[] }
+  | { type: 'repondre_invitation'; joueur: string; lanceur: string; accepte: boolean }
+  /** Le lanceur commence sans attendre ceux qui n'ont pas répondu (ou annule). */
+  | { type: 'demarrer_quete'; joueur: string }
+  | { type: 'annuler_invitation'; joueur: string }
   | { type: 'se_soigner'; joueur: string; moyen: 'repas' | 'temple' | 'ration' | 'objet'; lieu?: string; objet?: string }
   | { type: 'quitter_scene'; joueur: string; cle: string }
   | { type: 'combat'; joueur: string; cle: string; action: ActionCombat }
@@ -724,11 +741,15 @@ function accorder(texte: string, seul: boolean): string {
 /**
  * @param interroge héros à qui un personnage s'adresse : {pseudo} = pseudo de son joueur, {nom} = son nom
  */
-export function remplacerVariables(contenu: Contenu, etat: EtatPartie, texteBrut: string, heros: string[], interroge?: string): string {
+export function remplacerVariables(contenu: Contenu, etat: EtatPartie, texteBrut: string, heros: string[], interroge?: string, principal?: string): string {
   const hi = vrai(interroge) ? etat.heros[interroge] : null;
   const herosScene = heros.map((h) => etat.heros[h]).filter((x): x is Heros => vrai(x));
   const herosMeneur = vrai(etat.meneur) && vrai(etat.joueurs[etat.meneur]?.herosId) ? etat.heros[etat.joueurs[etat.meneur].herosId!] ?? null : null;
-  const concerne = hi ?? (herosScene.length === 1 ? herosScene[0] : herosMeneur ?? herosScene[0] ?? null);
+  // accord {{masc|fém}} : héros interrogé, sinon le lanceur d'une quête solo (mise à jour 5), sinon le seul héros,
+  // sinon le meneur s'il joue la scène, sinon le premier héros de la scène
+  const hp = vrai(principal) ? etat.heros[principal] ?? null : null;
+  const meneurDansScene = herosMeneur && herosScene.includes(herosMeneur) ? herosMeneur : null;
+  const concerne = hi ?? hp ?? (herosScene.length === 1 ? herosScene[0] : meneurDansScene ?? herosScene[0] ?? herosMeneur ?? null);
   let texte = accorder(accorderSexe(texteBrut, concerne, herosScene), heros.length <= 1);
   if (hi) texte = texte.replaceAll('{pseudo}', etat.joueurs[hi.joueurId]?.pseudo ?? hi.nom).replaceAll('{nom}', hi.nom);
   const noms = heros.map((h) => etat.heros[h]?.nom).filter((n): n is string => vrai(n));
@@ -787,7 +808,54 @@ export function occupationHeros(etat: EtatPartie, herosId: string, sauf: string 
     if (k === sauf || es.noeud === '__fin__') continue;
     if (es.heros.includes(herosId)) return 'dans une scène';
   }
+  for (const inv of valeurs(etat.invitations ?? {})) {
+    if (inv.lanceur === herosId) return 'en train de préparer une quête';
+    if (inv.invites.includes(herosId) && inv.reponses[herosId] !== false) return 'invité à une quête';
+  }
   return null;
+}
+
+/**
+ * Héros dont on regarde les conditions et à qui vont les conséquences personnelles : tous ceux de la scène de groupe,
+ * mais seulement le lanceur d'une quête solo (ses invités l'accompagnent, la quête reste la sienne).
+ */
+function herosPrincipaux(etat: EtatPartie, cle: string): string[] {
+  return cle === 'groupe' ? etat.scenes[cle].heros : [cle];
+}
+
+/** Une quête solo où l'on peut inviter d'autres joueurs : scène individuelle d'une quête, jamais romantique. */
+export function queteInvitable(contenu: Contenu, s: Scene): boolean {
+  return s.type === 'individuel' && !s.romance && vrai(s.quete);
+}
+
+/**
+ * Applique les conséquences d'une scène. Quête solo à plusieurs : tout pour le lanceur ; ses invités gagnent
+ * seulement l'XP et l'or gagné (pas les pertes, ni l'avancée de la quête, ni ses récompenses propres).
+ */
+function appliquerEffetsScene(contenu: Contenu, etat: EtatPartie, cle: string, eff: Consequence, heros: string[], messages: string[]) {
+  if (cle === 'groupe' || etat.scenes[cle].heros.length <= 1) { appliquerConsequence(contenu, etat, eff, heros, messages); return; }
+  appliquerConsequence(contenu, etat, eff, heros.filter((h) => h === cle), messages);
+  const invites = etat.scenes[cle].heros.filter((h) => h !== cle);
+  const or = vrai(eff.or) && eff.or > 0 ? eff.or : undefined;
+  if (heros.includes(cle) && (vrai(eff.xp) || or !== undefined)) appliquerConsequence(contenu, etat, { xp: eff.xp, or }, invites, messages);
+}
+
+/** Héros qu'on peut inviter à une quête solo, avec la raison quand on ne peut pas (grisé dans l'interface). */
+export function invitablesQuete(etat: EtatPartie, lanceur: string): { heros: string; raison: string | null }[] {
+  return listeHeros(etat).filter((h) => h.id !== lanceur && !h.invite).map((h) => {
+    const present = etat.joueurs[h.joueurId]?.present ?? false;
+    return { heros: h.id, raison: !present ? 'absent' : occupationHeros(etat, h.id) };
+  });
+}
+
+/** Démarre une quête solo avec le lanceur et les invités qui ont accepté (et sont toujours libres). */
+function demarrerQuete(contenu: Contenu, etat: EtatPartie, inv: InvitationQuete) {
+  delete etat.invitations![inv.lanceur];
+  const s = contenu.scenes[inv.scene];
+  const avec = inv.invites.filter((h) => inv.reponses[h] === true && occupationHeros(etat, h) === null);
+  etat.scenes[inv.lanceur] = { sceneId: s.id, noeud: s.debut, heros: [inv.lanceur, ...avec], votes: {}, dernierTest: null, messages: [], parole: null };
+  if (avec.length > 0) journal(contenu, etat, `${etat.heros[inv.lanceur].nom} part pour « ${s.titre} » avec ${avec.map((h) => etat.heros[h].nom).join(', ')}.`);
+  entrerNoeud(contenu, etat, inv.lanceur, s.debut);
 }
 
 /** Phrase pour les autres joueurs : « Kael est en combat, il vous rejoindra. » */
@@ -831,7 +899,7 @@ function entrerNoeud(contenu: Contenu, etat: EtatPartie, cle: string, noeudId: s
   es.prets = [];
   es.resultatVote = null;
   es.reponseParole = null;
-  for (const eff of n.effets) appliquerConsequence(contenu, etat, eff, es.heros, es.messages);
+  for (const eff of n.effets) appliquerEffetsScene(contenu, etat, cle, eff, es.heros, es.messages);
   if (n.pari) {
     // Pari partagé : chaque joueur présent répond ; un joueur absent ne mise pas
     es.pari = {};
@@ -841,8 +909,9 @@ function entrerNoeud(contenu: Contenu, etat: EtatPartie, cle: string, noeudId: s
   if (n.parole_a) {
     // Un personnage s'adresse à un joueur précis : on choisit lequel (règle, puis hasard à graine)
     const pa = n.parole_a;
-    let candidats = es.heros.filter((h) => conditionHeros(contenu, etat, pa.regle, etat.heros[h]));
-    if (candidats.length === 0) candidats = es.heros;
+    const principaux = herosPrincipaux(etat, cle);
+    let candidats = principaux.filter((h) => conditionHeros(contenu, etat, pa.regle, etat.heros[h]));
+    if (candidats.length === 0) candidats = principaux;
     const elu = choisirAuHasard(etat.rng, candidats);
     const h = etat.heros[elu];
     const specifiques: number[] = [];
@@ -979,7 +1048,7 @@ export function choixVisibles(contenu: Contenu, etat: EtatPartie, cle: string): 
   if (!n) return [];
   const es = etat.scenes[cle];
   return n.choix
-    .map((choix, index) => ({ choix, index, possible: conditionScene(contenu, etat, choix.si, es.heros) }))
+    .map((choix, index) => ({ choix, index, possible: conditionScene(contenu, etat, choix.si, herosPrincipaux(etat, cle)) }))
     .filter((c) => c.possible || c.choix.visible_si_bloque);
 }
 
@@ -1000,7 +1069,7 @@ function resoudreChoix(contenu: Contenu, etat: EtatPartie, cle: string, index: n
     const flags = flag === undefined ? [] : Array.isArray(flag) ? flag : [flag];
     const perso = flags.filter((f) => f.startsWith('heros:'));
     const communs = flags.filter((f) => !f.startsWith('heros:'));
-    appliquerConsequence(contenu, etat, { ...reste, flag: communs }, es.heros, msgs);
+    appliquerEffetsScene(contenu, etat, cle, { ...reste, flag: communs }, es.heros, msgs);
     if (aff || perso.length > 0 || miser !== undefined) appliquerConsequence(contenu, etat, { affinite: aff, flag: perso, miser }, herosVotants.length > 0 ? herosVotants : es.heros, msgs);
   }
   let suite = ch.aller;
@@ -1522,6 +1591,7 @@ export function appliquer(contenu: Contenu, etatAvant: EtatPartie, action: Actio
         entrerNoeud(contenu, etat, 'groupe', s.debut);
       } else {
         if (etat.scenes[h.id] && etat.scenes[h.id].noeud !== '__fin__') refuser('Vous êtes déjà dans une scène');
+        if (regleOccupes(etat)) { const raison = occupationHeros(etat, h.id); if (vrai(raison)) refuser(`Vous êtes ${raison}`); }
         if (!sceneEstDisponible(contenu, etat, s, h.id)) refuser('Cette scène n\'est pas disponible');
         etat.scenes[h.id] = { sceneId: s.id, noeud: s.debut, heros: [h.id], votes: {}, dernierTest: null, messages: [], parole: null };
         entrerNoeud(contenu, etat, h.id, s.debut);
@@ -1587,6 +1657,45 @@ export function appliquer(contenu: Contenu, etatAvant: EtatPartie, action: Actio
       es.heros.push(h.id);
       es.enAttente = (es.enAttente ?? []).filter((x) => x !== h.id);
       journal(contenu, etat, `${h.nom} rejoint le groupe dans « ${contenu.scenes[es.sceneId].titre} ».`);
+      break;
+    }
+    case 'inviter_quete': {
+      const s = contenu.scenes[action.scene] ?? refuser('Scène inconnue');
+      const h = herosDuJoueur(etat, action.joueur);
+      if (!queteInvitable(contenu, s)) refuser('Cette scène se joue seul');
+      if (etat.scenes[h.id] && etat.scenes[h.id].noeud !== '__fin__') refuser('Vous êtes déjà dans une scène');
+      const raison = occupationHeros(etat, h.id);
+      if (vrai(raison)) refuser(`Vous êtes ${raison}`);
+      if (!sceneEstDisponible(contenu, etat, s, h.id)) refuser('Cette scène n\'est pas disponible');
+      if (action.invites.length === 0) refuser('Choisissez au moins un joueur (ou partez seul)');
+      const possibles = invitablesQuete(etat, h.id);
+      for (const id of action.invites) {
+        const p = possibles.find((x) => x.heros === id) ?? refuser('Héros inconnu');
+        if (vrai(p.raison)) refuser(`${etat.heros[id].nom} ne peut pas venir : ${p.raison}`);
+      }
+      etat.invitations ??= {};
+      etat.invitations[h.id] = { scene: s.id, lanceur: h.id, invites: [...action.invites], reponses: {} };
+      break;
+    }
+    case 'repondre_invitation': {
+      const inv = etat.invitations?.[action.lanceur] ?? refuser('Cette invitation n\'existe plus');
+      const h = herosDuJoueur(etat, action.joueur);
+      if (!inv.invites.includes(h.id)) refuser('Vous n\'êtes pas invité');
+      if (inv.reponses[h.id] !== undefined) refuser('Vous avez déjà répondu');
+      inv.reponses[h.id] = action.accepte === true;
+      if (!action.accepte) journal(contenu, etat, `${h.nom} ne peut pas accompagner ${etat.heros[inv.lanceur].nom} cette fois.`);
+      if (inv.invites.every((x) => inv.reponses[x] !== undefined)) demarrerQuete(contenu, etat, inv);
+      break;
+    }
+    case 'demarrer_quete': {
+      const h = herosDuJoueur(etat, action.joueur);
+      const inv = etat.invitations?.[h.id] ?? refuser('Aucune invitation en cours');
+      demarrerQuete(contenu, etat, inv);
+      break;
+    }
+    case 'annuler_invitation': {
+      const h = herosDuJoueur(etat, action.joueur);
+      if (etat.invitations?.[h.id]) delete etat.invitations[h.id];
       break;
     }
     case 'continuer': {
@@ -1673,6 +1782,12 @@ export function appliquer(contenu: Contenu, etatAvant: EtatPartie, action: Actio
     case 'quitter_scene': {
       const es = etat.scenes[action.cle];
       if (!es) break;
+      // invité d'une quête solo terminée : il la quitte seul, le lanceur garde sa scène
+      if (action.cle !== 'groupe' && vrai(j.herosId) && j.herosId !== action.cle && es.heros.includes(j.herosId!)) {
+        if (es.noeud !== '__fin__') refuser('Cette quête doit être menée jusqu\'au bout');
+        es.heros = es.heros.filter((x) => x !== j.herosId);
+        break;
+      }
       if (es.noeud !== '__fin__') {
         const s = contenu.scenes[es.sceneId];
         if (!s.repetable || etat.combats[action.cle]) refuser('Cette scène doit être menée jusqu\'au bout');
@@ -2178,7 +2293,7 @@ function avancerScene(contenu: Contenu, etat: EtatPartie, cle: string) {
   const n = verifierAvancee(contenu, etat, cle);
   let dest = n.suite!;
   for (const a of n.aiguillage ?? []) {
-    if (conditionScene(contenu, etat, a.si, etat.scenes[cle].heros)) { dest = a.aller; break; }
+    if (conditionScene(contenu, etat, a.si, herosPrincipaux(etat, cle))) { dest = a.aller; break; }
   }
   entrerNoeud(contenu, etat, cle, dest);
 }
