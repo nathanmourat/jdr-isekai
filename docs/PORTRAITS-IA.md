@@ -166,7 +166,8 @@ Démonstration : artefact « Portrait animé — Aveline » (lien donné au grou
 **Scripts** (`outils/portraits/`, Python + OpenCV + rembg) :
 - `preparer_portrait.py <source> <sortie>` : détourage (modèle `isnet-anime`) et 512 × 512 ;
 - `preparer_animation.py <sources> <portraits 512> <sortie> <id> <bouche_x> <bouche_y>` : recale chaque expression sur le neutre (ECC affine) et fabrique `yeux.png`, `carte.png` et `anim.json` ;
-- `aligner.py` : recalage seul, pour vérifier.
+- `aligner.py` : recalage seul, pour vérifier ;
+- `anim_sans_yeux.py <source> <portrait 512> <sortie>/<expression> <bouche_x> <bouche_y> <largeur> [barbe]` : calques pour un portrait qui n'a pas encore d'image « yeux fermés » (`yeux.png` vide, donc pas de clignement ; option `barbe` : la barbe claire ondule et suit la tête). Utilisé pour Auréliath le 18/11 (bouche 695, 482, largeur 0,09).
 
 Les originaux IA (1254 × 1254) restent sur le PC du graphiste dans `portraits-sources/` (ignoré par Git).
 
@@ -226,3 +227,10 @@ Même conversation ChatGPT que Lysmont, chaque invite commence par « New image,
 | 6 — Terres Cendrées | `terres-cendrees.png` | `The Ashen Lands, a vast plain of grey ash under a dim red sky, with slow rivers of glowing lava, ruined black fortresses and broken stone pillars, dead trees, ash falling like snow. On the far horizon, a huge citadel of black obsidian with sharp spires, lit from below by lava. Ominous but beautiful, no gore.` |
 
 **À retoucher** : `mur-d-aube.png`, les bannières portent un motif doré qui ressemble à une fleur de lys → le remplacer par le soleil levant d'Aubeclaire (même règle que pour Aveline).
+
+### 6.5 Versions préparées (18/11, pas encore dans le jeu)
+
+Sur le PC du graphiste, dans `portraits-sources/…/prepares/` :
+- **Paysages** en 1280 × 720, JPEG qualité 86, de 210 à 300 Ko chacun (`lysmont-aube.jpg` = la version retouchée). Pour les écrans de chapitre et de chargement.
+- **Essai de conversion en pixel art** (`essai-pixel-lysmont.png` : 320 × 180, 40 couleurs, agrandi ×4 sans lissage). Le résultat ressemble à une peinture pixelisée, différente des décors actuels (aplats simples) : c'est au groupe de choisir.
+- **Auréliath** : `portrait-neutre.png` 512 × 512 détouré et `anim/` (respiration, tête, barbe, bouche ; clignement quand l'image « yeux fermés » existera).
