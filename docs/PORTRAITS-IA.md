@@ -130,7 +130,7 @@ Traductions (pour vérifier) :
 
 #### Auréliath — `aureliath` (PNJ, Grand Prieur)
 
-- **Fichiers** : `assets/personnages/pnj/aureliath/portrait-<expression>.png` (à préparer) ; original `portraits-sources/aureliath/aureliath-neutre.png` (**neutre fait le 18/11**).
+- **Fichiers** : `assets/personnages/pnj/aureliath/portrait-<expression>.png` (à préparer) ; original `portraits-sources/aureliath/aureliath-neutre.png` (**neutre fait le 18/11**). **Expressions faites avec Gemini le 18/11** à partir de ce neutre (`portraits-sources/aureliath/aureliath-<expression>.png`, préparés dans `prepares-gemini/`, neutre ramené à 1024 px, bouche 567, 394). Démonstration : artefact « Portrait animé — Auréliath (essai Gemini) ». Colère = « le masque bienveillant tombe ».
 - **Qui** : Grand Prieur de l'Ordre de la Lumière Sereine (`content/monde/pnj.yaml` : « Crâne rasé, barbe blanche, sourire bienveillant un peu trop parfait »). Sert aussi à la cinématique « L'Appel ».
 
 ```
@@ -152,7 +152,7 @@ Expressions : ajouter « showing two small wolf fangs » à la joie et à la col
 
 **Méthode Gemini** : 1) générer le neutre (bloc STYLE + personnage + « Avoid: … ») ; 2) l'ajouter au Drive puis « + → Ajouter depuis Drive » dans une nouvelle discussion ; 3) une demande par expression : « Edit the first image I sent (the neutral one). Keep exactly the same character, framing, outfit, lighting and background, same size and position. Change only the facial expression: … ». Toujours repartir du neutre, pas de la dernière image. Gemini donne du 1024 × 1024 ; pour le détourage, passer la boîte du neutre aux autres expressions (`preparer_portrait.py <source> <sortie> 0,0,1024,1024`) pour garder exactement le même cadrage.
 
-À venir : Nadja, Séraphine, Elianne, Ilyssë, Ysoria, Morra ; Halvine, Rowena, Auréliath, Bram, Ferrand…
+À venir : Nadja, Séraphine, Elianne, Ilyssë, Ysoria, Morra ; Halvine, Rowena, Bram, Ferrand…
 
 ## 5. Animation des portraits (15/11, version « réaliste »)
 
