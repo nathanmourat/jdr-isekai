@@ -128,6 +128,18 @@ Traductions (pour vérifier) :
 
 ### 4.3 Autres compagnes et PNJ importants
 
+#### Auréliath — `aureliath` (PNJ, Grand Prieur)
+
+- **Fichiers** : `assets/personnages/pnj/aureliath/portrait-<expression>.png` (à préparer) ; original `portraits-sources/aureliath/aureliath-neutre.png` (**neutre fait le 18/11**).
+- **Qui** : Grand Prieur de l'Ordre de la Lumière Sereine (`content/monde/pnj.yaml` : « Crâne rasé, barbe blanche, sourire bienveillant un peu trop parfait »). Sert aussi à la cinématique « L'Appel ».
+
+```
+Aureliath, the Grand Prior of the Order of Serene Light, an older man around 60. Shaved head, neat white beard, pale blue-grey eyes, light warm skin with fine wrinkles. White ceremonial robes with gold embroidery and a high stiff collar, a simple gold pendant shaped like a circle of light on his chest. Dignified and serene. Neutral expression: calm and benevolent, a faint polite smile that feels a little too perfect, looking straight at the viewer.
+```
+
+> Homme d'environ 60 ans, crâne rasé, barbe blanche soignée, yeux gris-bleu, robe de cérémonie blanche brodée d'or à col haut, pendentif doré en forme de cercle de lumière. Expression : calme et bienveillant, petit sourire poli un peu trop parfait. Ajouter « any real-world religious symbol » à la liste à éviter.
+
+
 À venir : Kaya, Nadja, Séraphine, Elianne, Ilyssë, Ysoria, Morra ; Halvine, Rowena, Auréliath, Bram, Ferrand…
 
 ## 5. Animation des portraits (15/11, version « réaliste »)
@@ -197,3 +209,20 @@ Lysmont, the capital of the kingdom of Aubeclaire, seen at dawn from a hill abov
 > Lysmont, capitale du royaume d'Aubeclaire, vue à l'aube depuis une colline au-dessus de la rivière : tours de pierre blanche aux toits d'ardoise bleue, en étages autour d'un château sur une butte ; un grand temple blanc à rosace sur sa propre hauteur ; ponts de pierre sur une large rivière calme ; plaines, champs et moulins au sud. Brume du matin, lumière dorée. Au loin vers le nord, à l'horizon, une longue muraille fortifiée sous un ciel sombre et enfumé.
 
 **Fait le 18/11** (1672 × 941). Écart avec le monde : la muraille du nord paraît collée à la ville, alors que le Mur d'Aube est à la frontière ; à retoucher si le groupe garde l'image. Fichier : `portraits-sources/paysages/lysmont-aube.png`, puis version jeu `assets/illustrations/lysmont-aube.png` (1280 × 720) si le groupe la garde.
+
+**Retouche faite le 18/11** (`lysmont-aube-v2.png`, version retenue) : *« Change only one thing: the long fortified wall under the smoky sky must be much farther away… a thin line on the far northern horizon, beyond several layers of distant hills and plains »*. Le reste de l'image est inchangé.
+
+### 6.4 Paysages des chapitres 2 à 6 (faits le 18/11)
+
+Même conversation ChatGPT que Lysmont, chaque invite commence par « New image, same style as the previous landscapes. » puis le bloc STYLE du § 6.2. Originaux dans `portraits-sources/paysages/` (1672 × 941).
+
+| Chapitre | Fichier | Description (anglais, après le bloc STYLE) |
+|---|---|---|
+| 2 — Marche des Sables | `qarzim.png` | `Qarzim, a great merchant city in the desert of the Sand March, seen from a high dune in warm late-afternoon light. Sandstone walls and domed towers around a turquoise oasis lake lined with palm trees, a huge covered grand bazaar with colorful striped awnings, a long caravan of camels arriving across the golden dunes, red canyons and salt ruins far in the distance.` |
+| 3 — Sylvenoire | `ithrael.png` | `Ithrael, an elven city built in and around one colossal ancient tree in the primeval forest of Sylvenoire. Giant trees all around, wooden walkways, spiral stairs and round houses on the branches, soft glowing lanterns, roots like bridges over a clear stream, thick blue mist between the trunks, shafts of morning light through the canopy.` |
+| 4 — Monts Grisfer | `ardenclume.png` | `Ardenclume, a dwarven forge-city carved into the grey Grisfer mountains, at dusk. Enormous stone gates and terraces cut into the cliff, many chimneys with glowing orange forge fires, stone bridges over a deep chasm, mine carts on rails, snow on the high peaks, and a smoking volcano in the background lighting the clouds from below.` |
+| 4 — Archipel des Brumes | `port-verane.png` | `Port-Verane, a harbor town on a volcanic island of the Mist Archipelago, in permanent soft fog. Wooden docks and stilt houses, tall sailing ships at anchor, a lighthouse on black basalt cliffs, sea stacks and reefs, a half-sunken old lighthouse in the distance, and the faint silhouette of a dragon flying through the mist.` |
+| 5 — Mur d'Aube | `mur-d-aube.png` | `The Wall of Dawn, a colossal fortified wall of pale stone stretching from horizon to horizon across the land, seen from the south at sunrise. Tall towers with blue and gold banners, siege engines on the ramparts, army camps with tents and campfire smoke at its foot, a road leading to a great fortified gate. Beyond the wall, to the north, the sky turns red and is filled with ash and dark smoke.` |
+| 6 — Terres Cendrées | `terres-cendrees.png` | `The Ashen Lands, a vast plain of grey ash under a dim red sky, with slow rivers of glowing lava, ruined black fortresses and broken stone pillars, dead trees, ash falling like snow. On the far horizon, a huge citadel of black obsidian with sharp spires, lit from below by lava. Ominous but beautiful, no gore.` |
+
+**À retoucher** : `mur-d-aube.png`, les bannières portent un motif doré qui ressemble à une fleur de lys → le remplacer par le soleil levant d'Aubeclaire (même règle que pour Aveline).
