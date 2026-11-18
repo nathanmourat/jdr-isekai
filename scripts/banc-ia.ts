@@ -7,12 +7,15 @@ import { writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { contenuDisque, RACINE } from '../src/contenu/node';
 import { evaluer, resume } from '../tests/ia/evaluer';
+import { CONTROLE } from '../tests/ia/controle';
 
 const c = contenuDisque();
-const res = evaluer(c);
+// --controle : le jeu de contrôle (phrases écrites après les réglages, jamais utilisées pour régler l'IA)
+const controle = process.argv.includes('--controle');
+const res = evaluer(c, controle ? CONTROLE : undefined);
 const r = resume(res);
 const pc = (ok: number, n: number) => `${((100 * ok) / Math.max(1, n)).toFixed(1).replace('.', ',')} %`;
-console.log(`Banc d'essai : ${r.total.ok} / ${r.total.n} (${pc(r.total.ok, r.total.n)}) ; erreurs graves : ${r.graves.length}`);
+console.log(`${controle ? 'Jeu de contrôle' : "Banc d'essai"} : ${r.total.ok} / ${r.total.n} (${pc(r.total.ok, r.total.n)}) ; erreurs graves : ${r.graves.length}`);
 console.log('\nPar intention :');
 for (const [k, v] of r.parCategorie) console.log(`  ${k.padEnd(13)} ${String(v.ok).padStart(3)} / ${String(v.n).padEnd(3)} ${pc(v.ok, v.n)}`);
 console.log('\nPar difficulté (1 propre, 2 fautes/SMS, 3 long/indirect/créatif) :');
@@ -27,6 +30,6 @@ if (process.argv.includes('--echecs')) {
 }
 const quand = process.argv.find((a) => a === 'avant' || a === 'apres');
 if (quand) {
-  writeFileSync(join(RACINE, 'rapports', `ia-combat-${quand}.json`), JSON.stringify({ resume: { total: r.total, graves: r.graves.length, parCategorie: r.parCategorie, parNiveau: r.parNiveau }, details: res.map((x) => ({ qui: x.phrase.qui, niveau: x.phrase.niveau, categorie: x.phrase.categorie, texte: x.phrase.texte, attendu: x.phrase.attendu, obtenu: x.obtenu, ok: x.ok, grave: x.grave })) }, null, 1));
-  console.log(`\nDétail écrit dans rapports/ia-combat-${quand}.json`);
+  writeFileSync(join(RACINE, 'rapports', `ia-combat-${quand}${controle ? '-controle' : ''}.json`), JSON.stringify({ resume: { total: r.total, graves: r.graves.length, parCategorie: r.parCategorie, parNiveau: r.parNiveau }, details: res.map((x) => ({ qui: x.phrase.qui, niveau: x.phrase.niveau, categorie: x.phrase.categorie, texte: x.phrase.texte, attendu: x.phrase.attendu, obtenu: x.obtenu, ok: x.ok, grave: x.grave })) }, null, 1));
+  console.log(`\nDétail écrit dans rapports/ia-combat-${quand}${controle ? '-controle' : ''}.json`);
 }

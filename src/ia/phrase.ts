@@ -129,4 +129,14 @@ export function suite(m: string[], a: string, b: string): boolean {
   for (let i = 0; i < m.length - 1; i++) if (m[i] === a && m[i + 1] === b) return true;
   return false;
 }
+/** Mots remis en phrase lisible (« j attaque » → « j'attaque »). */
+export function afficher(m: string[]): string {
+  let res = '';
+  for (let i = 0; i < m.length; i++) {
+    const t = m[i];
+    res += t;
+    if (i < m.length - 1) res += ['j', 'l', 'd', 'm', 'qu', 's', 'n', 'c', 't'].includes(t) ? "'" : ' ';
+  }
+  return res;
+}
 export { vrai };

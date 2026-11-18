@@ -1,0 +1,1143 @@
+{
+ "resume": {
+  "total": {
+   "ok": 53,
+   "n": 60
+  },
+  "graves": 0,
+  "parCategorie": [
+   [
+    "analyser",
+    {
+     "ok": 1,
+     "n": 1
+    }
+   ],
+   [
+    "attaquer",
+    {
+     "ok": 8,
+     "n": 8
+    }
+   ],
+   [
+    "bombe",
+    {
+     "ok": 1,
+     "n": 1
+    }
+   ],
+   [
+    "changer_rang",
+    {
+     "ok": 0,
+     "n": 1
+    }
+   ],
+   [
+    "cibles",
+    {
+     "ok": 4,
+     "n": 4
+    }
+   ],
+   [
+    "competence",
+    {
+     "ok": 4,
+     "n": 6
+    }
+   ],
+   [
+    "creatif",
+    {
+     "ok": 3,
+     "n": 3
+    }
+   ],
+   [
+    "defendre",
+    {
+     "ok": 1,
+     "n": 2
+    }
+   ],
+   [
+    "fuir",
+    {
+     "ok": 2,
+     "n": 2
+    }
+   ],
+   [
+    "fusion",
+    {
+     "ok": 1,
+     "n": 1
+    }
+   ],
+   [
+    "hors_sujet",
+    {
+     "ok": 1,
+     "n": 2
+    }
+   ],
+   [
+    "multi",
+    {
+     "ok": 3,
+     "n": 3
+    }
+   ],
+   [
+    "negation",
+    {
+     "ok": 3,
+     "n": 3
+    }
+   ],
+   [
+    "pacifier",
+    {
+     "ok": 1,
+     "n": 1
+    }
+   ],
+   [
+    "potion",
+    {
+     "ok": 3,
+     "n": 3
+    }
+   ],
+   [
+    "proteger",
+    {
+     "ok": 3,
+     "n": 3
+    }
+   ],
+   [
+    "provoquer",
+    {
+     "ok": 1,
+     "n": 2
+    }
+   ],
+   [
+    "question",
+    {
+     "ok": 4,
+     "n": 5
+    }
+   ],
+   [
+    "se_cacher",
+    {
+     "ok": 1,
+     "n": 1
+    }
+   ],
+   [
+    "soigner",
+    {
+     "ok": 7,
+     "n": 7
+    }
+   ],
+   [
+    "voler",
+    {
+     "ok": 1,
+     "n": 1
+    }
+   ]
+  ],
+  "parNiveau": [
+   [
+    "1",
+    {
+     "ok": 4,
+     "n": 4
+    }
+   ],
+   [
+    "2",
+    {
+     "ok": 42,
+     "n": 47
+    }
+   ],
+   [
+    "3",
+    {
+     "ok": 7,
+     "n": 9
+    }
+   ]
+  ]
+ },
+ "details": [
+  {
+   "qui": "G-brann",
+   "niveau": 2,
+   "categorie": "attaquer",
+   "texte": "jlui colle un coup de marteau au gobelin c",
+   "attendu": {
+    "a": "attaque",
+    "c": "gobC"
+   },
+   "obtenu": {
+    "a": "attaque",
+    "c": "gobC"
+   },
+   "ok": true,
+   "grave": null
+  },
+  {
+   "qui": "G-brann",
+   "niveau": 2,
+   "categorie": "attaquer",
+   "texte": "je cogne le b",
+   "attendu": {
+    "a": "attaque",
+    "c": "gobB"
+   },
+   "obtenu": {
+    "a": "attaque",
+    "c": "gobB"
+   },
+   "ok": true,
+   "grave": null
+  },
+  {
+   "qui": "G-brann",
+   "niveau": 3,
+   "categorie": "attaquer",
+   "texte": "Je fais tournoyer mon marteau et je le fracasse sur le gobelin A",
+   "attendu": {
+    "a": "attaque",
+    "c": "gobA"
+   },
+   "obtenu": {
+    "a": "attaque",
+    "c": "gobA"
+   },
+   "ok": true,
+   "grave": null
+  },
+  {
+   "qui": "G-lyra",
+   "niveau": 2,
+   "categorie": "attaquer",
+   "texte": "coup de baton sur le gob c",
+   "attendu": {
+    "a": "attaque",
+    "c": "gobC"
+   },
+   "obtenu": {
+    "a": "attaque",
+    "c": "gobC"
+   },
+   "ok": true,
+   "grave": null
+  },
+  {
+   "qui": "L-sylvan",
+   "niveau": 2,
+   "categorie": "attaquer",
+   "texte": "tir sur le loup c",
+   "attendu": {
+    "a": "attaque",
+    "c": "loupC"
+   },
+   "obtenu": {
+    "a": "attaque",
+    "c": "loupC"
+   },
+   "ok": true,
+   "grave": null
+  },
+  {
+   "qui": "L-sylvan",
+   "niveau": 1,
+   "categorie": "attaquer",
+   "texte": "J'envoie une flèche au loup A",
+   "attendu": {
+    "a": "attaque",
+    "c": "loupA"
+   },
+   "obtenu": {
+    "a": "attaque",
+    "c": "loupA"
+   },
+   "ok": true,
+   "grave": null
+  },
+  {
+   "qui": "V-brann",
+   "niveau": 2,
+   "categorie": "attaquer",
+   "texte": "tape vorthak fort",
+   "attendu": {
+    "a": "attaque",
+    "c": "vorthak"
+   },
+   "obtenu": {
+    "a": "attaque",
+    "c": "vorthak"
+   },
+   "ok": true,
+   "grave": null
+  },
+  {
+   "qui": "A-nox",
+   "niveau": 2,
+   "categorie": "attaquer",
+   "texte": "jattaque le loup qui a le moins de pv",
+   "attendu": {
+    "a": "attaque",
+    "c": "loupA"
+   },
+   "obtenu": {
+    "a": "attaque",
+    "c": "loupA"
+   },
+   "ok": true,
+   "grave": null
+  },
+  {
+   "qui": "G-zed",
+   "niveau": 2,
+   "categorie": "cibles",
+   "texte": "javelot sur celui du fond",
+   "attendu": {
+    "a": "competence",
+    "k": "javelot-de-flamme",
+    "c": "cult"
+   },
+   "obtenu": {
+    "a": "competence",
+    "c": "cult",
+    "k": "javelot-de-flamme"
+   },
+   "ok": true,
+   "grave": null
+  },
+  {
+   "qui": "G-brann",
+   "niveau": 2,
+   "categorie": "cibles",
+   "texte": "je finis le gobelin presque mort",
+   "attendu": {
+    "a": "attaque",
+    "c": "gobB"
+   },
+   "obtenu": {
+    "a": "attaque",
+    "c": "gobB"
+   },
+   "ok": true,
+   "grave": null
+  },
+  {
+   "qui": "G-brann",
+   "niveau": 2,
+   "categorie": "cibles",
+   "texte": "remet lui un coup",
+   "attendu": {
+    "a": "attaque",
+    "c": "gobC"
+   },
+   "obtenu": {
+    "a": "attaque",
+    "c": "gobC"
+   },
+   "ok": true,
+   "grave": null
+  },
+  {
+   "qui": "L-sylvan",
+   "niveau": 2,
+   "categorie": "cibles",
+   "texte": "achève le plus faible",
+   "attendu": {
+    "a": "attaque",
+    "c": "loupB"
+   },
+   "obtenu": {
+    "a": "attaque",
+    "c": "loupB"
+   },
+   "ok": true,
+   "grave": null
+  },
+  {
+   "qui": "G-zed",
+   "niveau": 1,
+   "categorie": "competence",
+   "texte": "Éclair en chaîne",
+   "attendu": {
+    "a": "competence",
+    "k": "eclair-en-chaine"
+   },
+   "obtenu": {
+    "a": "competence",
+    "k": "eclair-en-chaine"
+   },
+   "ok": true,
+   "grave": null
+  },
+  {
+   "qui": "G-zed",
+   "niveau": 2,
+   "categorie": "competence",
+   "texte": "je balance de la glace sur tout le monde",
+   "attendu": {
+    "a": "competence",
+    "k": "onde-de-givre"
+   },
+   "obtenu": {
+    "a": "competence",
+    "k": "onde-de-givre"
+   },
+   "ok": true,
+   "grave": null
+  },
+  {
+   "qui": "G-zed",
+   "niveau": 2,
+   "categorie": "competence",
+   "texte": "fireball sur le cultiste",
+   "attendu": {
+    "a": "competence",
+    "k": "javelot-de-flamme",
+    "c": "cult"
+   },
+   "obtenu": {
+    "a": "attaque",
+    "c": "cult"
+   },
+   "ok": false,
+   "grave": null
+  },
+  {
+   "qui": "L-sylvan",
+   "niveau": 2,
+   "categorie": "competence",
+   "texte": "volee desprits",
+   "attendu": {
+    "a": "competence",
+    "k": "volee-d-esprits"
+   },
+   "obtenu": {
+    "a": "competence",
+    "k": "volee-d-esprits"
+   },
+   "ok": true,
+   "grave": null
+  },
+  {
+   "qui": "A-nox",
+   "niveau": 2,
+   "categorie": "competence",
+   "texte": "tourelle !",
+   "attendu": {
+    "a": "competence",
+    "k": "tourelle-mecanique"
+   },
+   "obtenu": {
+    "a": "competence",
+    "k": "tourelle-mecanique"
+   },
+   "ok": true,
+   "grave": null
+  },
+  {
+   "qui": "A-nox",
+   "niveau": 3,
+   "categorie": "competence",
+   "texte": "Je lance un pot de colle explosive sur le loup B pour qu'il reste collé au sol",
+   "attendu": {
+    "a": "competence",
+    "k": "bombe-collante",
+    "c": "loupB"
+   },
+   "obtenu": {
+    "a": "attaque",
+    "c": "loupB"
+   },
+   "ok": false,
+   "grave": null
+  },
+  {
+   "qui": "G-lyra",
+   "niveau": 2,
+   "categorie": "soigner",
+   "texte": "soigne zed vite il va mourir",
+   "attendu": {
+    "a": "competence",
+    "k": "lumiere-apaisante",
+    "c": "zed"
+   },
+   "obtenu": {
+    "a": "competence",
+    "c": "zed",
+    "k": "lumiere-apaisante"
+   },
+   "ok": true,
+   "grave": null
+  },
+  {
+   "qui": "G-lyra",
+   "niveau": 2,
+   "categorie": "soigner",
+   "texte": "jsoigne la naine",
+   "attendu": {
+    "a": "competence",
+    "k": "lumiere-apaisante",
+    "c": "brann"
+   },
+   "obtenu": {
+    "a": "competence",
+    "c": "brann",
+    "k": "lumiere-apaisante"
+   },
+   "ok": true,
+   "grave": null
+  },
+  {
+   "qui": "G-lyra",
+   "niveau": 2,
+   "categorie": "soigner",
+   "texte": "soin a toto",
+   "attendu": {
+    "a": "competence",
+    "k": "lumiere-apaisante",
+    "c": "brann"
+   },
+   "obtenu": {
+    "a": "competence",
+    "c": "brann",
+    "k": "lumiere-apaisante"
+   },
+   "ok": true,
+   "grave": null
+  },
+  {
+   "qui": "G-lyra",
+   "niveau": 1,
+   "categorie": "soigner",
+   "texte": "Je soigne Kaya, elle saigne",
+   "attendu": {
+    "a": "competence",
+    "k": "lumiere-apaisante",
+    "c": "kaya"
+   },
+   "obtenu": {
+    "a": "competence",
+    "c": "kaya",
+    "k": "lumiere-apaisante"
+   },
+   "ok": true,
+   "grave": null
+  },
+  {
+   "qui": "G-lyra",
+   "niveau": 2,
+   "categorie": "soigner",
+   "texte": "soin de groupe stp",
+   "attendu": {
+    "a": "competence",
+    "k": [
+     "priere-de-groupe",
+     "purification"
+    ]
+   },
+   "obtenu": {
+    "a": "competence",
+    "k": "purification"
+   },
+   "ok": true,
+   "grave": null
+  },
+  {
+   "qui": "G-lyra",
+   "niveau": 3,
+   "categorie": "soigner",
+   "texte": "J'impose les mains sur Brann pour refermer ses blessures",
+   "attendu": {
+    "a": "competence",
+    "k": "lumiere-apaisante",
+    "c": "brann"
+   },
+   "obtenu": {
+    "a": "competence",
+    "c": "brann",
+    "k": "lumiere-apaisante"
+   },
+   "ok": true,
+   "grave": null
+  },
+  {
+   "qui": "G-lyra",
+   "niveau": 2,
+   "categorie": "soigner",
+   "texte": "heal moi",
+   "attendu": {
+    "a": "competence",
+    "k": "lumiere-apaisante",
+    "c": "lyra"
+   },
+   "obtenu": {
+    "a": "competence",
+    "c": "lyra",
+    "k": "lumiere-apaisante"
+   },
+   "ok": true,
+   "grave": null
+  },
+  {
+   "qui": "G-zed",
+   "niveau": 2,
+   "categorie": "potion",
+   "texte": "je bois une popo de soin",
+   "attendu": {
+    "a": "potion",
+    "c": "zed"
+   },
+   "obtenu": {
+    "a": "potion",
+    "c": "zed"
+   },
+   "ok": true,
+   "grave": null
+  },
+  {
+   "qui": "G-brann",
+   "niveau": 2,
+   "categorie": "potion",
+   "texte": "potion pour la louve",
+   "attendu": {
+    "a": "potion",
+    "c": "kaya"
+   },
+   "obtenu": {
+    "a": "potion",
+    "c": "kaya"
+   },
+   "ok": true,
+   "grave": null
+  },
+  {
+   "qui": "A-nox",
+   "niveau": 1,
+   "categorie": "potion",
+   "texte": "Je bois une potion de soin",
+   "attendu": {
+    "a": "potion",
+    "c": "nox"
+   },
+   "obtenu": {
+    "a": "potion",
+    "c": "nox"
+   },
+   "ok": true,
+   "grave": null
+  },
+  {
+   "qui": "G-brann",
+   "niveau": 2,
+   "categorie": "proteger",
+   "texte": "bouclier sur kaya",
+   "attendu": {
+    "a": "competence",
+    "k": "bouclier-d-aube",
+    "c": "kaya"
+   },
+   "obtenu": {
+    "a": "competence",
+    "c": "kaya",
+    "k": "bouclier-d-aube"
+   },
+   "ok": true,
+   "grave": null
+  },
+  {
+   "qui": "G-brann",
+   "niveau": 2,
+   "categorie": "proteger",
+   "texte": "protege la prêtresse",
+   "attendu": {
+    "a": "competence",
+    "k": "bouclier-d-aube",
+    "c": "lyra"
+   },
+   "obtenu": {
+    "a": "competence",
+    "c": "lyra",
+    "k": "bouclier-d-aube"
+   },
+   "ok": true,
+   "grave": null
+  },
+  {
+   "qui": "V-brann",
+   "niveau": 3,
+   "categorie": "proteger",
+   "texte": "Je m'interpose entre Vorthak et Zed",
+   "attendu": {
+    "a": "competence",
+    "k": "bouclier-d-aube",
+    "c": "zed"
+   },
+   "obtenu": {
+    "a": "competence",
+    "c": "zed",
+    "k": "bouclier-d-aube"
+   },
+   "ok": true,
+   "grave": null
+  },
+  {
+   "qui": "G-brann",
+   "niveau": 2,
+   "categorie": "defendre",
+   "texte": "je me met en garde",
+   "attendu": {
+    "a": "defendre"
+   },
+   "obtenu": {
+    "a": "defendre"
+   },
+   "ok": true,
+   "grave": null
+  },
+  {
+   "qui": "L-sylvan",
+   "niveau": 2,
+   "categorie": "defendre",
+   "texte": "jesquive",
+   "attendu": {
+    "a": "defendre"
+   },
+   "obtenu": {
+    "a": "refus"
+   },
+   "ok": false,
+   "grave": null
+  },
+  {
+   "qui": "G-brann",
+   "niveau": 2,
+   "categorie": "provoquer",
+   "texte": "jles provoc",
+   "attendu": {
+    "a": "competence",
+    "k": "provocation-sainte"
+   },
+   "obtenu": {
+    "a": "competence",
+    "k": "provocation-sainte"
+   },
+   "ok": true,
+   "grave": null
+  },
+  {
+   "qui": "G-brann",
+   "niveau": 3,
+   "categorie": "provoquer",
+   "texte": "Je tape sur mon bouclier en criant pour que les gobelins viennent sur moi",
+   "attendu": {
+    "a": "competence",
+    "k": "provocation-sainte"
+   },
+   "obtenu": {
+    "a": "attaque",
+    "c": "gobC"
+   },
+   "ok": false,
+   "grave": null
+  },
+  {
+   "qui": "L-sylvan",
+   "niveau": 2,
+   "categorie": "fuir",
+   "texte": "on se tire",
+   "attendu": {
+    "a": "fuir"
+   },
+   "obtenu": {
+    "a": "fuir"
+   },
+   "ok": true,
+   "grave": null
+  },
+  {
+   "qui": "A-nox",
+   "niveau": 2,
+   "categorie": "fuir",
+   "texte": "jme sauve",
+   "attendu": {
+    "a": "fuir"
+   },
+   "obtenu": {
+    "a": "fuir"
+   },
+   "ok": true,
+   "grave": null
+  },
+  {
+   "qui": "L-sylvan",
+   "niveau": 2,
+   "categorie": "se_cacher",
+   "texte": "je me cache derriere un rocher",
+   "attendu": {
+    "a": "se_cacher"
+   },
+   "obtenu": {
+    "a": "se_cacher"
+   },
+   "ok": true,
+   "grave": null
+  },
+  {
+   "qui": "G-brann",
+   "niveau": 2,
+   "categorie": "changer_rang",
+   "texte": "jvais derriere",
+   "attendu": {
+    "a": "changer_rang"
+   },
+   "obtenu": {
+    "a": "question"
+   },
+   "ok": false,
+   "grave": null
+  },
+  {
+   "qui": "A-nox",
+   "niveau": 2,
+   "categorie": "bombe",
+   "texte": "jlance ma bombe",
+   "attendu": {
+    "a": "bombe"
+   },
+   "obtenu": {
+    "a": "bombe"
+   },
+   "ok": true,
+   "grave": null
+  },
+  {
+   "qui": "L-sylvan",
+   "niveau": 2,
+   "categorie": "pacifier",
+   "texte": "je parle au loup qui boite",
+   "attendu": {
+    "a": "pacifier",
+    "c": "loupB"
+   },
+   "obtenu": {
+    "a": "pacifier",
+    "c": "loupB"
+   },
+   "ok": true,
+   "grave": null
+  },
+  {
+   "qui": "G-zed",
+   "niveau": 2,
+   "categorie": "analyser",
+   "texte": "jregarde leurs pv",
+   "attendu": {
+    "a": "analyser"
+   },
+   "obtenu": {
+    "a": "analyser"
+   },
+   "ok": true,
+   "grave": null
+  },
+  {
+   "qui": "G-zed",
+   "niveau": 2,
+   "categorie": "fusion",
+   "texte": "combo feu glace sur le cultiste",
+   "attendu": {
+    "a": "fusion"
+   },
+   "obtenu": {
+    "a": "fusion",
+    "c": "cult",
+    "k": "javelot-de-flamme"
+   },
+   "ok": true,
+   "grave": null
+  },
+  {
+   "qui": "G-lyra",
+   "niveau": 2,
+   "categorie": "voler",
+   "texte": "je saute et je vole",
+   "attendu": {
+    "a": "refus"
+   },
+   "obtenu": {
+    "a": "refus"
+   },
+   "ok": true,
+   "grave": null
+  },
+  {
+   "qui": "G-zed",
+   "niveau": 2,
+   "categorie": "multi",
+   "texte": "je me cache et je lance un sort",
+   "attendu": {
+    "a": "se_cacher"
+   },
+   "obtenu": {
+    "a": "se_cacher"
+   },
+   "ok": true,
+   "grave": null
+  },
+  {
+   "qui": "G-brann",
+   "niveau": 2,
+   "categorie": "multi",
+   "texte": "protege kaya puis attaque",
+   "attendu": {
+    "a": "competence",
+    "k": "bouclier-d-aube",
+    "c": "kaya"
+   },
+   "obtenu": {
+    "a": "competence",
+    "c": "kaya",
+    "k": "bouclier-d-aube"
+   },
+   "ok": true,
+   "grave": null
+  },
+  {
+   "qui": "L-sylvan",
+   "niveau": 3,
+   "categorie": "multi",
+   "texte": "D'abord je bois une potion, ensuite je tire sur le loup B",
+   "attendu": {
+    "a": "potion",
+    "c": "sylvan"
+   },
+   "obtenu": {
+    "a": "potion",
+    "c": "sylvan"
+   },
+   "ok": true,
+   "grave": null
+  },
+  {
+   "qui": "G-brann",
+   "niveau": 2,
+   "categorie": "negation",
+   "texte": "je fuis pas, je tape le gobelin c",
+   "attendu": {
+    "a": "attaque",
+    "c": "gobC"
+   },
+   "obtenu": {
+    "a": "attaque",
+    "c": "gobC"
+   },
+   "ok": true,
+   "grave": null
+  },
+  {
+   "qui": "G-zed",
+   "niveau": 2,
+   "categorie": "negation",
+   "texte": "pas de glace, du feu sur le cultiste",
+   "attendu": {
+    "a": "competence",
+    "k": "javelot-de-flamme",
+    "c": "cult"
+   },
+   "obtenu": {
+    "a": "competence",
+    "c": "cult",
+    "k": "javelot-de-flamme"
+   },
+   "ok": true,
+   "grave": null
+  },
+  {
+   "qui": "G-lyra",
+   "niveau": 2,
+   "categorie": "negation",
+   "texte": "je soigne pas brann, je soigne kaya",
+   "attendu": {
+    "a": "competence",
+    "k": "lumiere-apaisante",
+    "c": "kaya"
+   },
+   "obtenu": {
+    "a": "competence",
+    "c": "kaya",
+    "k": "lumiere-apaisante"
+   },
+   "ok": true,
+   "grave": null
+  },
+  {
+   "qui": "G-brann",
+   "niveau": 3,
+   "categorie": "creatif",
+   "texte": "Je lance un tabouret sur le gobelin A",
+   "attendu": {
+    "a": "attaque",
+    "c": "gobA"
+   },
+   "obtenu": {
+    "a": "attaque",
+    "c": "gobA"
+   },
+   "ok": true,
+   "grave": null
+  },
+  {
+   "qui": "L-sylvan",
+   "niveau": 3,
+   "categorie": "creatif",
+   "texte": "Je lui jette de la poussière dans les yeux",
+   "attendu": {
+    "a": "viser",
+    "p": "tete"
+   },
+   "obtenu": {
+    "a": "viser",
+    "c": "loupA",
+    "p": "tete"
+   },
+   "ok": true,
+   "grave": null
+  },
+  {
+   "qui": "G-brann",
+   "niveau": 3,
+   "categorie": "creatif",
+   "texte": "Je fais un croche-patte au gobelin B",
+   "attendu": {
+    "a": "viser",
+    "p": "jambes",
+    "c": "gobB"
+   },
+   "obtenu": {
+    "a": "viser",
+    "c": "gobB",
+    "p": "jambes"
+   },
+   "ok": true,
+   "grave": null
+  },
+  {
+   "qui": "G-zed",
+   "niveau": 2,
+   "categorie": "question",
+   "texte": "onde de givre ou eclair en chaine",
+   "attendu": {
+    "a": "question"
+   },
+   "obtenu": {
+    "a": "question"
+   },
+   "ok": true,
+   "grave": null
+  },
+  {
+   "qui": "G-lyra",
+   "niveau": 2,
+   "categorie": "question",
+   "texte": "jsoigne brann ou kaya ?",
+   "attendu": {
+    "a": "question"
+   },
+   "obtenu": {
+    "a": "question"
+   },
+   "ok": true,
+   "grave": null
+  },
+  {
+   "qui": "G-zed",
+   "niveau": 2,
+   "categorie": "question",
+   "texte": "une idee ?",
+   "attendu": {
+    "a": "question"
+   },
+   "obtenu": {
+    "a": "question"
+   },
+   "ok": true,
+   "grave": null
+  },
+  {
+   "qui": "V-zed",
+   "niveau": 2,
+   "categorie": "question",
+   "texte": "je fais quoi",
+   "attendu": {
+    "a": "question"
+   },
+   "obtenu": {
+    "a": "inconnu"
+   },
+   "ok": false,
+   "grave": null
+  },
+  {
+   "qui": "G-zed",
+   "niveau": 2,
+   "categorie": "hors_sujet",
+   "texte": "mdr",
+   "attendu": {
+    "a": "question"
+   },
+   "obtenu": {
+    "a": "inconnu"
+   },
+   "ok": true,
+   "grave": null
+  },
+  {
+   "qui": "G-zed",
+   "niveau": 2,
+   "categorie": "hors_sujet",
+   "texte": "il fait beau",
+   "attendu": {
+    "a": "question"
+   },
+   "obtenu": {
+    "a": "refus"
+   },
+   "ok": false,
+   "grave": null
+  },
+  {
+   "qui": "G-brann",
+   "niveau": 2,
+   "categorie": "question",
+   "texte": "jtape le cultiste du fond",
+   "attendu": {
+    "a": "question"
+   },
+   "obtenu": {
+    "a": "question"
+   },
+   "ok": true,
+   "grave": null
+  }
+ ]
+}

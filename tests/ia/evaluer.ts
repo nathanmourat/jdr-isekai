@@ -79,9 +79,9 @@ export function grave(c: Contenu, ph: PhraseBanc, o: Obtenu): string | null {
   return null;
 }
 
-export function evaluer(c: Contenu): Resultat[] {
+export function evaluer(c: Contenu, phrases: PhraseBanc[] = BANC): Resultat[] {
   const res: Resultat[] = [];
-  for (const ph of BANC) {
+  for (const ph of phrases) {
     // scénarios reconstruits à chaque phrase : aucune phrase n'influence la suivante
     const sc: Record<string, Scenario> = construireScenarios(c);
     const ctx = contexte(c, sc, ph.qui);

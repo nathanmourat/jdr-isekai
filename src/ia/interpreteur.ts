@@ -16,7 +16,7 @@ import { creerTechnique, elementDe, idFusion, NOM_ELEMENT, peutApprendre, type T
 import { competencesConnues, type Heros } from '../moteur/personnage';
 import { predire, type ModeleIA, type Prediction } from './classificateur';
 import { cibleAlliee, cibleEnnemie, plusBlesse, ressembleNom, type CibleEnnemie } from './cibles';
-import { contient, decouper, motsNettoyes, sansNegation, suite } from './phrase';
+import { afficher, contient, decouper, motsNettoyes, sansNegation, suite } from './phrase';
 import type { Intention } from './corpus';
 import * as modeleBrut from './modele.json';
 import { correspondance, hachage, mots, MOTS_VIDES, normaliser, racine, ressemble } from './texte';
@@ -753,7 +753,7 @@ export function interpreter(ctx: ContexteIA, texte: string): Interpretation {
       const intentionDe = (mm: string[], p: Prediction) => motsCles(mm)[0] ?? p.classe;
       const memeAction = intentionDe(a.p.mots, a.pred) === intentionDe(principale.p.mots, pred) && !autreCible && !contient(a.p.mots, MOTS_POTION);
       if (memeAction && analyses.indexOf(a) > analyses.indexOf(principale)) motsPrincipaux.push(...a.p.mots);
-      else if (analyses.indexOf(a) > analyses.indexOf(principale)) nonFaits.push(a.p.texte);
+      else if (analyses.indexOf(a) > analyses.indexOf(principale)) nonFaits.push(afficher(a.p.mots));
       else motsPrincipaux.push(...a.p.mots);
     }
   } else {

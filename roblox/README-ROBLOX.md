@@ -524,6 +524,13 @@ Le moteur a changé : régénérer `moteur.lua` (`npm run roblox:moteur`, puis `
 - **Combattant.sexe** (`'m'`/`'f'`) pour les héros : le web choisit le calque féminin de la race (`calque-combat-f`) ; sur Roblox, rien à faire (avatars).
 - Interface web seulement (rien à reprendre) : soins au Temple animés (décor, sprites, rayon, halo), calques de race synchronisés au corps, étiquettes de nom gardées dans le cadre du combat, pieds des boss posés sur leur nom, image du Golem de la Fontaine (Roblox : modèle 3D à part si le groupe le veut).
 
+### À reprendre — IA de combat améliorée (18/11, écrit par la session web)
+Le code de `src/ia` est partagé (traduit par TypeScriptToLua) : régénérer, puis adapter l'écran « Proposer mon action » de Roblox.
+- Nouveaux fichiers `src/ia/phrase.ts` (nettoyage SMS, découpage, négations) et `src/ia/cibles.ts` (cibles et alliés) ; modèle réentraîné (`src/ia/modele.json`, 118 Ko).
+- `ContexteIA.pseudos` (facultatif) : pseudo du joueur de chaque héros (`herosId → pseudo`), pour « soigne Pixel ».
+- `Interpretation` a de nouveaux champs : `question` (`{ texte, options: Proposition[] }` : afficher 2 ou 3 boutons, ne compte pas comme un essai), `nonFait` (ce qui n'est pas fait ce tour-ci), `note` (cible choisie sans être nommée), `rapprochement` (action créative expliquée). Le message commence par « J'ai compris : … ».
+- Interface à reprendre : boutons de la question, « Valider » et « Corriger » (sans coût). Le carnet local (`src/ui/carnetIA.ts`) est propre au web.
+
 ## Publier sur Roblox (quand tout marche)
 
 1. **Fichier → Publier sur Roblox**, si ce n'est pas déjà fait.

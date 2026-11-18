@@ -1,0 +1,200 @@
+[
+ {
+  "ecran": "ordinateur",
+  "nom": "sms",
+  "phrase": "jtape le gob le plus blessé stp",
+  "message": "J'ai compris : Attaque sur Gobelin cendré A (le plus blessé).",
+  "question": false,
+  "duree": 119,
+  "essais": "Propositions impossibles ce tour-ci : 0 / 3"
+ },
+ {
+  "ecran": "ordinateur",
+  "nom": "competence",
+  "phrase": "boule de feu sur le gobelin",
+  "message": "J'ai compris : Javelot de flamme sur Gobelin cendré A (le plus blessé).",
+  "question": false,
+  "duree": 83,
+  "essais": "Propositions impossibles ce tour-ci : 0 / 3"
+ },
+ {
+  "ecran": "ordinateur",
+  "nom": "hesitation",
+  "phrase": "feu ou glace ?",
+  "message": "Vous hésitez entre deux actions : laquelle ?",
+  "question": true,
+  "duree": 100,
+  "essais": "Propositions impossibles ce tour-ci : 0 / 3"
+ },
+ {
+  "ecran": "ordinateur",
+  "nom": "aide",
+  "phrase": "jsp quoi faire",
+  "message": "Voici trois idées pour ce tour :",
+  "question": true,
+  "duree": 77,
+  "essais": "Propositions impossibles ce tour-ci : 0 / 3"
+ },
+ {
+  "ecran": "ordinateur",
+  "nom": "negation",
+  "phrase": "je n'attaque pas, je me défends",
+  "message": "J'ai compris : Se défendre.",
+  "question": false,
+  "duree": 98,
+  "essais": "Propositions impossibles ce tour-ci : 0 / 3"
+ },
+ {
+  "ecran": "ordinateur",
+  "nom": "plusieurs",
+  "phrase": "je bois une potion puis j'attaque",
+  "message": "J'ai compris : Potion de soin pour Zed. Une seule action par tour : « j'attaque » n'est pas fait ce tour-ci.",
+  "question": false,
+  "duree": 98,
+  "essais": "Propositions impossibles ce tour-ci : 0 / 3"
+ },
+ {
+  "ecran": "ordinateur",
+  "nom": "creatif",
+  "phrase": "je renverse la table sur eux",
+  "message": "J'ai compris : Attaque sur Gobelin cendré A (le plus blessé à votre portée). Je l'interprète ainsi : lancer ou faire tomber un objet sur l'ennemi compte comme une attaque.",
+  "question": false,
+  "duree": 80,
+  "essais": "Propositions impossibles ce tour-ci : 0 / 3"
+ },
+ {
+  "ecran": "ordinateur",
+  "nom": "viser",
+  "phrase": "je vise la tete du gobelin",
+  "message": "J'ai compris : Viser la tête de Gobelin cendré A (le plus blessé).",
+  "question": false,
+  "duree": 80,
+  "essais": "Propositions impossibles ce tour-ci : 0 / 3"
+ },
+ {
+  "ecran": "ordinateur",
+  "nom": "meme",
+  "phrase": "je frappe le même",
+  "message": "J'ai compris : Attaque sur Gobelin cendré A (le plus blessé à votre portée).",
+  "question": false,
+  "duree": 79,
+  "essais": "Propositions impossibles ce tour-ci : 0 / 3"
+ },
+ {
+  "ecran": "ordinateur",
+  "nom": "incomprise",
+  "phrase": "zorglub bidule machin",
+  "message": "Ça ne marchera pas : Je n'ai pas compris l'action. Essayez par exemple « j'attaque le loup », « je vise la tête », « je lance Javelot de flamme sur le mage » ou « je me cache ». Voici ce que vous pouvez faire à la place :",
+  "question": false,
+  "duree": 78,
+  "essais": "Propositions impossibles ce tour-ci : 1 / 3"
+ },
+ {
+  "ecran": "ordinateur",
+  "nom": "observer",
+  "phrase": "c koi leurs faiblesses",
+  "message": "Vous observez le champ de bataille (Œil du Seuil). Cela ne vous coûte pas votre tour.",
+  "question": false,
+  "duree": 73,
+  "essais": "Propositions impossibles ce tour-ci : 1 / 3"
+ },
+ {
+  "ecran": "telephone",
+  "nom": "sms",
+  "phrase": "jtape le gob le plus blessé stp",
+  "message": "J'ai compris : Attaque sur Gobelin cendré A (le plus blessé).",
+  "question": false,
+  "duree": 268,
+  "essais": "Propositions impossibles ce tour-ci : 0 / 3"
+ },
+ {
+  "ecran": "telephone",
+  "nom": "competence",
+  "phrase": "boule de feu sur le gobelin",
+  "message": "J'ai compris : Javelot de flamme sur Gobelin cendré A (le plus blessé).",
+  "question": false,
+  "duree": 281,
+  "essais": "Propositions impossibles ce tour-ci : 0 / 3"
+ },
+ {
+  "ecran": "telephone",
+  "nom": "hesitation",
+  "phrase": "feu ou glace ?",
+  "message": "Vous hésitez entre deux actions : laquelle ?",
+  "question": true,
+  "duree": 280,
+  "essais": "Propositions impossibles ce tour-ci : 0 / 3"
+ },
+ {
+  "ecran": "telephone",
+  "nom": "aide",
+  "phrase": "jsp quoi faire",
+  "message": "Voici trois idées pour ce tour :",
+  "question": true,
+  "duree": 255,
+  "essais": "Propositions impossibles ce tour-ci : 0 / 3"
+ },
+ {
+  "ecran": "telephone",
+  "nom": "negation",
+  "phrase": "je n'attaque pas, je me défends",
+  "message": "J'ai compris : Se défendre.",
+  "question": false,
+  "duree": 279,
+  "essais": "Propositions impossibles ce tour-ci : 0 / 3"
+ },
+ {
+  "ecran": "telephone",
+  "nom": "plusieurs",
+  "phrase": "je bois une potion puis j'attaque",
+  "message": "J'ai compris : Potion de soin pour Zed. Une seule action par tour : « j'attaque » n'est pas fait ce tour-ci.",
+  "question": false,
+  "duree": 272,
+  "essais": "Propositions impossibles ce tour-ci : 0 / 3"
+ },
+ {
+  "ecran": "telephone",
+  "nom": "creatif",
+  "phrase": "je renverse la table sur eux",
+  "message": "J'ai compris : Attaque sur Gobelin cendré A (le plus blessé à votre portée). Je l'interprète ainsi : lancer ou faire tomber un objet sur l'ennemi compte comme une attaque.",
+  "question": false,
+  "duree": 244,
+  "essais": "Propositions impossibles ce tour-ci : 0 / 3"
+ },
+ {
+  "ecran": "telephone",
+  "nom": "viser",
+  "phrase": "je vise la tete du gobelin",
+  "message": "J'ai compris : Viser la tête de Gobelin cendré A (le plus blessé).",
+  "question": false,
+  "duree": 259,
+  "essais": "Propositions impossibles ce tour-ci : 0 / 3"
+ },
+ {
+  "ecran": "telephone",
+  "nom": "meme",
+  "phrase": "je frappe le même",
+  "message": "J'ai compris : Attaque sur Gobelin cendré A (le plus blessé à votre portée).",
+  "question": false,
+  "duree": 238,
+  "essais": "Propositions impossibles ce tour-ci : 0 / 3"
+ },
+ {
+  "ecran": "telephone",
+  "nom": "incomprise",
+  "phrase": "zorglub bidule machin",
+  "message": "Ça ne marchera pas : Je n'ai pas compris l'action. Essayez par exemple « j'attaque le loup », « je vise la tête », « je lance Javelot de flamme sur le mage » ou « je me cache ». Voici ce que vous pouvez faire à la place :",
+  "question": false,
+  "duree": 251,
+  "essais": "Propositions impossibles ce tour-ci : 1 / 3"
+ },
+ {
+  "ecran": "telephone",
+  "nom": "observer",
+  "phrase": "c koi leurs faiblesses",
+  "message": "Vous observez le champ de bataille (Œil du Seuil). Cela ne vous coûte pas votre tour.",
+  "question": false,
+  "duree": 268,
+  "essais": "Propositions impossibles ce tour-ci : 1 / 3"
+ }
+]

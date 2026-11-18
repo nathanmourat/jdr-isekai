@@ -8,6 +8,7 @@
   import { jeu } from '../jeu.svelte';
   import { interpreter, propositionsScript, type ContexteIA, type Interpretation, type Proposition } from '../../ia/interpreteur';
   import type { Combattant } from '../../moteur/combat';
+  import { noterDansCarnet } from '../carnetIA';
 
   let { cle, acteur }: { cle: string; acteur: Combattant } = $props();
   const c = jeu.contenu!;
@@ -15,7 +16,9 @@
   const etat = $derived(jeu.etat!);
   const combat = $derived(etat.combats[cle].combat);
   const heros = $derived(acteur.herosId ? etat.heros[acteur.herosId] ?? null : null);
-  const ctx = $derived<ContexteIA>({ contenu: c, combat, acteur: acteur.id, heros, grimoire: heros?.grimoire ?? {} });
+  /** pseudo de chaque héros (« soigne Pixel ») */
+  const pseudos = $derived(Object.fromEntries(Object.values(etat.joueurs).filter((j) => j.herosId).map((j) => [j.herosId!, j.pseudo])));
+  const ctx = $derived<ContexteIA>({ contenu: c, combat, acteur: acteur.id, heros, grimoire: heros?.grimoire ?? {}, pseudos });
   const cleEssais = $derived(`${combat.id}:${combat.tour}:${acteur.id}`);
   const essais = $derived(jeu.essais[cleEssais] ?? 0);
   const bloque = $derived(essais >= ESSAIS_MAX);
@@ -42,6 +45,17 @@
     if (bloque || !texte.trim()) return;
     reponse = interpreter(ctx, texte);
     if (reponse.compteCommeEssai) jeu.essais = { ...jeu.essais, [cleEssais]: essais + 1 };
+    // carnet local des phrases mal comprises (sur cet appareil seulement)
+    if (reponse.question) noterDansCarnet({ texte, compris: reponse.question.texte, statut: 'question' });
+    else if (reponse.compteCommeEssai) noterDansCarnet({ texte, compris: reponse.message, statut: reponse.intention === 'inconnu' ? 'incomprise' : 'impossible' });
+  }
+  let champ: HTMLInputElement | undefined = $state();
+  /** « Corriger » : on réécrit la phrase, sans coût. */
+  function corriger() {
+    if (reponse?.proposition) noterDansCarnet({ texte, compris: reponse.proposition.libelle, statut: 'corrigee' });
+    reponse = null;
+    champ?.focus();
+    champ?.select();
   }
 
   function jouer(p: Proposition) {
@@ -59,7 +73,7 @@
 
   {#if mode === 'libre' && !bloque}
     <form class="saisie" onsubmit={proposer}>
-      <input bind:value={texte} placeholder="Ex. : je vise la tête du loup · je combine feu et glace · je me cache derrière le pilier" aria-label="Votre action, en toutes lettres" maxlength="200" />
+      <input bind:this={champ} bind:value={texte} placeholder="Ex. : je vise la tête du loup · je combine feu et glace · je me cache derrière le pilier" aria-label="Votre action, en toutes lettres" maxlength="200" />
       <button class="principal" type="submit" disabled={!texte.trim()}>Proposer</button>
     </form>
     <p class="discret essais">Propositions impossibles ce tour-ci : {essais} / {ESSAIS_MAX}</p>
@@ -67,13 +81,27 @@
     {#if reponse}
       <div class="reponse" class:ok={reponse.possible} aria-live="polite">
         <p class="message">{reponse.message}</p>
+        {#if reponse.question}
+          <div class="question">
+            {#each reponse.question.options as p (p.libelle)}
+              <div class="carte-prop">
+                <div><strong>{p.libelle}</strong>{#if p.source} <small class="source">({p.source})</small>{/if}<br /><small>{p.details}</small>{#if p.conseil}<br /><small class="conseil">💡 {p.conseil}</small>{/if}</div>
+                <button class="principal" onclick={() => jouer(p)}>Choisir</button>
+              </div>
+            {/each}
+            <button class="petit" onclick={corriger}>Corriger ma phrase</button> <small class="discret">(une question ne coûte pas d'essai)</small>
+          </div>
+        {/if}
         {#if reponse.proposition && reponse.possible}
           <div class="carte-prop principale">
             <div><strong>{reponse.proposition.libelle}</strong>{#if reponse.proposition.source} <small class="source">({reponse.proposition.source})</small>{/if}<br /><small>{reponse.proposition.details}</small>
               {#if reponse.proposition.estimation.effets.length}<br /><small class="discret">Effets : {reponse.proposition.estimation.effets.join(', ')}</small>{/if}
               {#if reponse.proposition.conseil}<br /><small class="conseil">💡 {reponse.proposition.conseil}</small>{/if}
             </div>
-            <button class="principal" onclick={() => jouer(reponse!.proposition!)}>Valider</button>
+            <div class="boutons">
+              <button class="principal" onclick={() => jouer(reponse!.proposition!)}>Valider</button>
+              <button class="petit" onclick={corriger} title="Réécrire la phrase : ne coûte pas d'essai">Corriger</button>
+            </div>
           </div>
         {/if}
         {#each reponse.informations as info, i (i)}<p class="info">🔎 {info}</p>{/each}
@@ -118,5 +146,8 @@
   .conseil { color: var(--or-2) !important; }
   .source { font-style: italic; }
   .info { margin: 0.2rem 0; font-size: 0.9rem; }
+  .boutons { display: flex; flex-direction: column; gap: 0.3rem; align-items: stretch; }
+  .question { border-left: 3px solid var(--or); padding-left: 0.5rem; }
+  .reponse:has(.question) { border-left-color: var(--or); }
   .alerte { background: #3a2a14; border: 1px solid #7a5a20; padding: 0.5rem 0.7rem; border-radius: 8px; }
 </style>

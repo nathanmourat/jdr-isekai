@@ -145,7 +145,7 @@ export function cibleEnnemie(combat: Combat, x: Combattant, m: string[], valides
   if (nomsDeBase.length === 1) return res(nomsDeBase[0], true);
   if (nomsDeBase.length > 1 && !tous) {
     const f = plusFaible(parmiValides(nomsDeBase));
-    return res(f, true, `le plus blessé des ${nomEtLettre(f!).base.join(' ')}s`);
+    return res(f, true, 'le plus blessé');
   }
   // 4. « le même », « lui » : la dernière cible
   const derniere = vrai(x.derniereCible) ? ennemis.find((e) => e.id === x.derniereCible) : undefined;

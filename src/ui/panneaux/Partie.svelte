@@ -1,10 +1,19 @@
 <script lang="ts">
   import { jeu } from '../jeu.svelte';
   import { telecharger } from '../outils';
+  import { exporterCarnet, lireCarnet, viderCarnet } from '../carnetIA';
 
   const etat = $derived(jeu.etat!);
   const infos = $derived(jeu.canal!.infos);
   const moi = $derived(etat.joueurs[jeu.joueurActif]);
+  /** Carnet des phrases mal comprises par l'IA de combat (sur cet appareil seulement). */
+  let carnet = $state(lireCarnet().length);
+  let carnetCopie = $state(false);
+  async function copierCarnet() {
+    const t = exporterCarnet();
+    try { await navigator.clipboard.writeText(t); carnetCopie = true; setTimeout(() => (carnetCopie = false), 2500); }
+    catch { telecharger('velmaris-carnet-ia.txt', t); }
+  }
   function exporter() {
     telecharger(`velmaris-${infos.nom.replace(/[^\p{L}\p{N}]+/gu, '-')}-${new Date().toISOString().slice(0, 10)}.json`, jeu.exporter());
   }
@@ -41,6 +50,15 @@
       {#if infos.mode === 'local' && jeu.joueursLocaux.length < 6}<button class="petit" onclick={() => jeu.ajouterJoueurLocal()}>+ Ajouter un joueur sur cet appareil</button>{/if}
     </div>
     <p class="discret">Un joueur absent ne bloque rien : les votes se font entre présents, et son héros est joué par l'ordinateur ou reste au camp (réglage dans « Personnage »).</p>
+  </div>
+  <div class="carte-ui">
+    <h2>Carnet de l'IA de combat</h2>
+    <p class="discret">Les phrases que l'IA a mal comprises, que vous avez corrigées ou sur lesquelles elle a posé une question, gardées sur cet appareil seulement (rien n'est envoyé, rien n'entre dans la partie). Copiez-les après une séance de test pour améliorer l'IA.</p>
+    <p><strong>{carnet}</strong> phrase{carnet > 1 ? 's' : ''} notée{carnet > 1 ? 's' : ''}.</p>
+    <div class="ligne">
+      <button class="petit" disabled={!carnet} onclick={copierCarnet}>{carnetCopie ? 'Copié !' : 'Copier le carnet'}</button>
+      <button class="petit" disabled={!carnet} onclick={() => { viderCarnet(); carnet = 0; }}>Vider</button>
+    </div>
   </div>
 </section>
 
