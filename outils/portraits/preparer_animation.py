@@ -113,7 +113,10 @@ def main():
     Mf = recaler(neutre, fermes)
     fermes_al = vers(fermes, Mf, neutre.shape, inverse=True)
     diff = adoucir(np.abs(neutre.astype(np.float32) - fermes_al.astype(np.float32)).mean(axis=2), 5)
-    zone = np.zeros_like(diff); zone[int(0.20 * H):int(0.40 * H), int(0.38 * W):int(0.75 * W)] = 1
+    # zone des yeux placée d'après la bouche (visage pas toujours au même endroit)
+    zy0, zy1 = max(0, int(MY - 0.26 * H)), int(MY - 0.06 * H)
+    zx0, zx1 = max(0, int(MX - 0.22 * W)), min(W, int(MX + 0.17 * W))
+    zone = np.zeros_like(diff); zone[zy0:zy1, zx0:zx1] = 1
     yeux = ((diff > 14) & (zone > 0)).astype(np.uint8)
     yeux = cv2.morphologyEx(yeux, cv2.MORPH_CLOSE, np.ones((15, 15), np.uint8))
     yeux = cv2.dilate(yeux, np.ones((17, 17), np.uint8))
@@ -138,6 +141,7 @@ def main():
         # yeux : patch du neutre-yeux-fermés amené dans le repère de l'expression
         f_e = vers(fermes_al, M, img.shape, inverse=False)
         m_e = vers(yeux_m, M, img.shape, inverse=False)
+        m_e = m_e * (alpha > 0).astype(np.float32)  # rien en dehors de la silhouette
         rgba = np.dstack([f_e, (m_e * 255).astype(np.uint8)])
         png512(rgba, os.path.join(dos, "yeux.png"))
 

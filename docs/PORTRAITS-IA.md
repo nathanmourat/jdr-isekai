@@ -154,7 +154,25 @@ Expressions : ajouter « showing two small wolf fangs » à la joie et à la col
 
 **Séraphine et Elianne (18/11, Gemini)** : 6 expressions + yeux fermés chacune, préparées et ajoutées à la branche `textures-portraits-2` (`compagnes/seraphine/`, `compagnes/elianne/`). Leçons : Gemini dessine souvent un buste « flottant » et ouvre les cols ; écrire « close bust portrait, the shoulders and chest are cut by the bottom edge », « fully closed with a high collar, no opening » et, dans « Avoid », « floating bust with empty space below, neckline opening, cutout ». Si le buste flotte quand même : `preparer_portrait.py <source> <sortie> bas` (le cadre s'arrête au bas du buste), puis recadrer les sources avec la même boîte avant `preparer_animation.py` (il suppose que la source entière = le portrait). Ne jamais cliquer sur une image dans Gemini (ça ouvre l'éditeur et bloque la discussion) ; si les réponses deviennent vides, vérifier `gemini.google.com/usage` (limite à 100 %) ou ouvrir une nouvelle discussion.
 
-À venir : Nadja, Séraphine, Elianne, Ilyssë, Ysoria, Morra ; Halvine, Rowena, Bram, Ferrand…
+#### Rowena, Edmund IV, Vorthak (PNJ, 18 et 19/11, Gemini)
+
+- **Rowena** (`rowena`, maîtresse de la Guilde) : neutre et joie seulement (`portraits-sources/rowena/`). La discussion Gemini ne renvoie plus d'image (réponses vides) ; les autres expressions demandent une nouvelle discussion avec le neutre importé depuis Drive. Sans `neutre-yeux-fermes`, pas d'animation : portraits fixes.
+- **Edmund IV** (`edmund-iv`) : neutre, colère, tristesse, yeux fermés (`portraits-sources/edmund-iv/`). Boîte (0, 27, 997, 1024), bouche (594, 461) dans l'image recadrée.
+- **Vorthak** (`vorthak`) : neutre, colère, joie cruelle, yeux fermés (`portraits-sources/vorthak/`). Recadrage `bas` (buste flottant), boîte (46, 0, 1012, 966), bouche (401, 456).
+
+```
+Edmund IV, the king of Aubeclaire, an adult man around 55. Heavy gold crown with blue gems and sun-rise motifs (no cross), short grey beard and grey hair, deep lines on his face, tired but hard grey eyes. Royal blue mantle with a white ermine collar over a dark tunic with gold trim, a gold chain with a rising-sun medallion. Neutral expression: weary, stern, dignified, looking straight at the viewer.
+```
+
+```
+Vorthak, the Emissary of the Ashes, an adult male demon who looks around 35. Angular ash-grey face with sharp cheekbones, two curved black horns sweeping back from his temples, long straight black hair, glowing violet eyes. Black plate armor with jagged edges and a high gorget, thin wisps of violet flame rising from the shoulder plates, faint ember particles. Neutral expression: calm, arrogant, a faint cruel half-smile, looking straight at the viewer.
+```
+
+> Edmund IV : roi d'environ 55 ans, couronne d'or lourde (soleils levants, pas de croix), barbe grise courte, yeux gris fatigués et durs, manteau bleu royal à col d'hermine, médaillon au soleil levant. Vorthak : démon adulte d'environ 35 ans, visage gris cendre anguleux, cornes noires recourbées, longs cheveux noirs, yeux violets lumineux, armure noire dentelée, flammes violettes aux épaules. Ajouter à la liste « à éviter » : `gore, blood, any real-world religious symbol (no cross)`.
+
+**Outil modifié** : dans `preparer_animation.py`, la zone des yeux suit maintenant la bouche (le visage de Vorthak est à gauche de l'image) ; les calques `yeux.png` sont ensuite coupés par la silhouette du portrait (sinon une tache grise apparaît près des cheveux d'Edmund pendant le clignement).
+
+À venir : Nadja, Ilyssë, Ysoria, Morra ; Halvine, Bram, Ferrand…
 
 ## 5. Animation des portraits (15/11, version « réaliste »)
 
