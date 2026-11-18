@@ -287,7 +287,7 @@ scenes:
         repliques:
           - { dit: "Aurore 1023. Le Temple du Seuil, où tout a commencé. Le grand cercle de l'Appel brille toujours au sol. Le Grand Prieur Auréliath vous attend devant l'autel, seul." }
           - { qui: aureliath, dit: "« Les Registres des nains. » Il ne fait même pas semblant d'être surpris. « Je savais qu'un jour, quelqu'un descendrait. J'espérais que ce serait après ma mort. »" }
-          - { qui: aureliath, dit: "« Oui, chaque Appel nourrit les Cendres. Oui, l'Ordre le sait. Mais sans Appel, il y a six cents ans, les dragons nous auraient tous brûlés. Et sans vous, la Légion serait déjà à Lysmont. » Il ouvre les mains. « Nous avons choisi le moindre mal. Six cents ans de moindre mal. »" }
+          - { qui: aureliath, expression: colere, dit: "« Oui, chaque Appel nourrit les Cendres. Oui, l'Ordre le sait. Mais sans Appel, il y a six cents ans, les dragons nous auraient tous brûlés. Et sans vous, la Légion serait déjà à Lysmont. » Il ouvre les mains. « Nous avons choisi le moindre mal. Six cents ans de moindre mal. »" }
           - { qui: aureliath, dit: "« Et maintenant, il faut un nouvel Appel. Vingt Appelés, cent peut-être. Pour gagner la guerre. » Il vous regarde. « Je vous demande de vous taire. Le peuple ne comprendrait pas. »" }
           - { qui: elianne, expression: colere, dit: "Elianne, d'une voix que vous ne lui connaissiez pas : « Le peuple comprendrait très bien. C'est pour ça que vous avez peur. »", si: { flag: elianne-recrutee } }
           - { qui: aveline, expression: colere, dit: "Aveline a la main sur son épée. « Valgrane. Vous avez laissé exécuter mon père pour cacher votre échec. »", si: { flag: aveline-rencontree } }
@@ -305,19 +305,19 @@ scenes:
       revele:
         repliques:
           - { dit: "Le lendemain, sur la place de Lysmont, vous lisez les Registres devant des milliers de gens. Le silence est total. Puis quelqu'un jette une pierre contre la porte du Temple. Puis une autre." }
-          - { qui: aureliath, dit: "Le soir même, le Grand Prieur est démis par le roi. On dit qu'il a quitté la ville, seul, vers le nord. Il n'a rien dit en partant. Sauf une phrase, à Elianne : « Tu feras mieux que moi. »" }
+          - { qui: aureliath, expression: tristesse, dit: "Le soir même, le Grand Prieur est démis par le roi. On dit qu'il a quitté la ville, seul, vers le nord. Il n'a rien dit en partant. Sauf une phrase, à Elianne : « Tu feras mieux que moi. »" }
           - { qui: elianne, dit: "Elianne pleure, et sourit en même temps. « L'Ordre ne sera plus jamais le même. Il faudra le reconstruire. Sans mensonges, cette fois. »", si: { flag: elianne-recrutee } }
         effets: [{ flag: aureliath-demis }]
         suite: fin
       garde:
         repliques:
-          - { qui: aureliath, dit: "Auréliath vous regarde longtemps. Puis il s'incline. « Plus aucun Appel. Vous avez ma parole. » Il soupire. « Je ne sais pas si vous venez de sauver le monde ou de le perdre. »" }
+          - { qui: aureliath, expression: tristesse, dit: "Auréliath vous regarde longtemps. Puis il s'incline. « Plus aucun Appel. Vous avez ma parole. » Il soupire. « Je ne sais pas si vous venez de sauver le monde ou de le perdre. »" }
           - { qui: elianne, expression: tristesse, dit: "Elianne ne dit rien sur le chemin du retour. Le soir, elle vous demande seulement : « Vous croyez qu'on peut bâtir quelque chose de juste sur un mensonge ? »", si: { flag: elianne-recrutee } }
         effets: [{ affinite: { elianne: -5 } }]
         suite: fin
       appel:
         repliques:
-          - { qui: aureliath, dit: "Le Grand Prieur sourit, soulagé. « Vous êtes sages. Plus sages que je ne l'étais à votre âge. » Il pose la main sur le cercle de l'Appel. « Dans un an, de nouveaux héros arriveront. »" }
+          - { qui: aureliath, expression: joie, dit: "Le Grand Prieur sourit, soulagé. « Vous êtes sages. Plus sages que je ne l'étais à votre âge. » Il pose la main sur le cercle de l'Appel. « Dans un an, de nouveaux héros arriveront. »" }
           - { qui: elianne, expression: colere, dit: "Elianne se lève et sort du Temple sans un mot. Sur le parvis, elle arrache le voile de l'Ordre de ses cheveux.", si: { flag: elianne-recrutee } }
           - { qui: ilysse, expression: colere, dit: "Ilyssë, glaciale : « Vous venez de décider d'ouvrir une nouvelle déchirure. J'espère que vous aimerez le monde qui en sortira. »", si: { flag: ilysse-recrutee } }
         effets: [{ affinite: { elianne: -15, ilysse: -10 } }]

@@ -139,7 +139,7 @@ Description : femme de 24 ans, chevalière, cheveux châtain cuivré en tresse c
 | [x] | 52 | `ennemis/araignee-geante/combat.png` | 512 × 256 | Araignée de la taille d'un chien, carapace noire et violette. |
 | [x] | 53 | `ennemis/bandit/combat.png` | 512 × 256 | Bandit humain, foulard sur le visage, gourdin ou dague. |
 | [x] | 54 | `ennemis/cultiste/combat.png` | 512 × 256 | Cultiste des Cendres en robe grise à capuche, sceau violet brillant sur la main. |
-| [ ] | 55 | `ennemis/golem-fontaine/combat.png` | 1024 × 512 | **Mini-boss** (cases de 128 × 128) : golem de pierre couvert de mousse, avec une fontaine dans le dos et de l'eau qui coule de ses bras. |
+| [x] | 55 | `ennemis/golem-fontaine/combat.png` | 1024 × 512 | **Mini-boss** (cases de 128 × 128) : golem de pierre couvert de mousse, avec une fontaine dans le dos et de l'eau qui coule de ses bras. |
 | [ ] | 56 | `ennemis/vorthak/combat.png` | 1024 × 512 | **Boss du chapitre 1** (cases de 128 × 128) : Vorthak, émissaire démon, grand, armure noire, cornes, épée à deux mains entourée de flammes violettes. |
 
 ### 2.5 Aveline en combat et en exploration
@@ -159,11 +159,14 @@ Description : femme de 24 ans, chevalière, cheveux châtain cuivré en tresse c
 | [ ] | 62 | `personnages/pnj/elianne/portrait-neutre.png` | 512 × 512 | Prêtresse, 23 ans : cheveux noirs au carré, yeux ambre, robe blanche et voile brodé d'un soleil. — expression : **neutre**. |
 | [ ] | 63 | `personnages/pnj/elianne/portrait-joie.png` | 512 × 512 | Même personnage — expression : **joie**. |
 | [ ] | 64 | `personnages/pnj/elianne/portrait-tristesse.png` | 512 × 512 | Même personnage — expression : **tristesse**. |
-| [ ] | 65 | `personnages/pnj/kaya/portrait-neutre.png` | 512 × 512 | Ourvalis (femme-loup), 22 ans : oreilles et queue de loup argentées, cheveux argent en bataille, yeux jaunes, tenue de cuir, bandeau rouge. — expression : **neutre**. |
-| [ ] | 66 | `personnages/pnj/kaya/portrait-joie.png` | 512 × 512 | Même personnage — expression : **joie**. |
-| [ ] | 67 | `personnages/pnj/kaya/portrait-colere.png` | 512 × 512 | Même personnage — expression : **colere**. |
-| [ ] | 68 | `personnages/pnj/aureliath/portrait-neutre.png` | 512 × 512 | Grand Prieur de l'Ordre, environ 60 ans : crâne rasé, barbe blanche taillée, sourire bienveillant un peu trop parfait, robe blanche et or. — expression : **neutre**. |
-| [ ] | 69 | `personnages/pnj/aureliath/portrait-colere.png` | 512 × 512 | Même personnage — expression : **colere**. |
+| [x] | 65 | `personnages/compagnes/kaya/portrait-neutre.png` | 512 × 512 | Ourvalis (femme-loup), 22 ans : oreilles et queue de loup argentées, cheveux argent en bataille, yeux jaunes, tenue de cuir, bandeau rouge. — expression : **neutre**. |
+| [x] | 66 | `personnages/compagnes/kaya/portrait-joie.png` | 512 × 512 | Même personnage — expression : **joie**. |
+| [x] | 67 | `personnages/compagnes/kaya/portrait-colere.png` | 512 × 512 | Même personnage — expression : **colere**. |
+| [x] | 68 | `personnages/pnj/aureliath/portrait-neutre.png` | 512 × 512 | Grand Prieur de l'Ordre, environ 60 ans : crâne rasé, barbe blanche taillée, sourire bienveillant un peu trop parfait, robe blanche et or. — expression : **neutre**. |
+| [x] | 69 | `personnages/pnj/aureliath/portrait-colere.png` | 512 × 512 | Même personnage — expression : **colere**. |
+
+> Livrés le 18/11 (branche `textures-portraits-2`) : Kaya et Auréliath ont aussi **tristesse, gêne et surprise** (et Auréliath **joie**), avec leurs calques d'animation (`anim/`). Kaya est une compagne : ses images vont dans `personnages/compagnes/kaya/`. **Attention** : les n° 62 à 64 (Elianne) devront aller dans `personnages/compagnes/elianne/`, car Elianne est aussi une compagne.
+
 | [ ] | 70 | `personnages/pnj/rowena/portrait-neutre.png` | 512 × 512 | Maîtresse de la Guilde, environ 45 ans : cheveux gris coupés court, cicatrice sur l'œil, veste d'aventurière, pipe. — expression : **neutre**. |
 | [ ] | 71 | `personnages/pnj/rowena/portrait-joie.png` | 512 × 512 | Même personnage — expression : **joie**. |
 | [ ] | 72 | `personnages/pnj/edmund-iv/portrait-neutre.png` | 512 × 512 | Roi d'Aubeclaire, environ 55 ans : couronne, barbe grise, air fatigué et dur, manteau d'hermine bleu. — expression : **neutre**. |

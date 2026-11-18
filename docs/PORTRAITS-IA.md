@@ -155,3 +155,8 @@ Démonstration : artefact « Portrait animé — Aveline » (lien donné au grou
 - `aligner.py` : recalage seul, pour vérifier.
 
 Les originaux IA (1254 × 1254) restent sur le PC du graphiste dans `portraits-sources/` (ignoré par Git).
+
+**Vérifier les calques d'un nouveau personnage** (18/11, Kaya et Auréliath) :
+- `carte.png`, canal rouge = ce qui ondule comme des cheveux. Il ne doit couvrir que les cheveux (pas les vêtements). Chez Auréliath, le col et les galons de la robe sont marqués : ils ondulent un peu. Chez Kaya, presque rien n'est marqué (seulement le ruban du bandeau) : ses cheveux bougent avec la tête, sans onduler.
+- Canal bleu = la tête. Les oreilles de Kaya et la barbe d'Auréliath y sont : elles suivent la tête sans se déformer.
+- Contrôle visuel : `npx tsx tests/e2e/captures-portraits-2.mjs` (gros plans à 8 instants dans `rapports/captures-portraits-2/gros-plans.png`).

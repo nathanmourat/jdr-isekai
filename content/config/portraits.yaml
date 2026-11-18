@@ -15,3 +15,5 @@ portraits:
   defaut: { lueur: null, particules: null }
   personnages:
     aveline: { lueur: "#f3c45a", particules: lucioles }
+    kaya: { lueur: "#c8d8f0", particules: null }
+    aureliath: { lueur: "#f3d58a", particules: magie }

@@ -321,7 +321,7 @@ scenes:
       debut:
         repliques:
           - { dit: "Solaire 1017. Grâce à la carte de Nadja, vous êtes à deux jours des Ruines de Sel quand le ciel devient jaune." }
-          - { qui: kaya, expression: peur, dit: "Kaya renifle l'air, puis attrape la bride du premier chameau. « La grande tempête ! Il faut un abri. Maintenant ! »" }
+          - { qui: kaya, expression: surprise, dit: "Kaya renifle l'air, puis attrape la bride du premier chameau. « La grande tempête ! Il faut un abri. Maintenant ! »" }
           - { dit: "Un mur de sable haut comme une montagne avale l'horizon. Vous courez. Devant vous, des colonnes blanches sortent des dunes : les Ruines." }
         choix:
           - texte: "Se réfugier dans les Ruines."

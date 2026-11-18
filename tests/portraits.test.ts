@@ -20,13 +20,31 @@ describe('Portraits animés de dialogue (essai)', () => {
     expect(portraitAnimePersonnage(c, 'aveline')!.effets).toEqual({ lueur: '#f3c45a', particules: 'lucioles' });
   });
 
+  it('Kaya (dossier des compagnes) et Auréliath (dossier des PNJ) : 6 expressions, avec leurs effets', () => {
+    for (const e of ['neutre', 'joie', 'colere', 'tristesse', 'gene', 'surprise']) {
+      expect(portraitAnimePersonnage(c, 'kaya', e)!.cle).toBe(`personnages/compagnes/kaya/${e}`);
+      expect(portraitAnimePersonnage(c, 'aureliath', e)!.cle).toBe(`personnages/pnj/aureliath/${e}`);
+    }
+    expect(portraitAnimePersonnage(c, 'kaya')!.effets).toEqual({ lueur: '#c8d8f0', particules: null });
+    expect(portraitAnimePersonnage(c, 'aureliath')!.effets).toEqual({ lueur: '#f3d58a', particules: 'magie' });
+  });
+
+  it("toutes les expressions des répliques de Kaya et d'Auréliath ont leur portrait", () => {
+    const manquantes: string[] = [];
+    for (const s of Object.values(c.scenes)) for (const [n, nd] of Object.entries(s.noeuds)) {
+      const reps = [...nd.repliques, ...(nd.parole_a ? [nd.parole_a.question] : [])];
+      for (const r of reps) if ((r.qui === 'kaya' || r.qui === 'aureliath') && portraitAnimePersonnage(c, r.qui, r.expression)!.cle.split('/').pop() !== r.expression) manquantes.push(`${s.id} › ${n} : ${r.qui} ${r.expression}`);
+    }
+    expect(manquantes).toEqual([]);
+  });
+
   it("une expression qui n'existe pas prend « neutre »", () => {
     expect(portraitAnimePersonnage(c, 'aveline', 'boudeuse')!.cle).toBe('personnages/compagnes/aveline/neutre');
   });
 
   it('sans vrais portraits ni anim.json : pas de portrait animé (image fixe comme avant)', () => {
-    expect(portraitAnimePersonnage(c, 'kaya', 'joie')).toBeNull();
-    expect(portraitAnimePersonnage(c, 'aureliath')).toBeNull();
+    expect(portraitAnimePersonnage(c, 'nadja', 'joie')).toBeNull();
+    expect(portraitAnimePersonnage(c, 'rowena')).toBeNull();
     expect(portraitAnimePersonnage(c, 'narrateur')).toBeNull();
     // portrait présent mais pas de réglages d'animation : image fixe
     expect(portraitAnimePersonnage(c, 'aveline', 'neutre', {})).toBeNull();

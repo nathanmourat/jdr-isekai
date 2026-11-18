@@ -29,12 +29,12 @@ scenes:
             aller: humour
       enthousiaste:
         repliques:
-          - { qui: aureliath, dit: "Le Grand Prieur sourit largement. « Voilà l'esprit des héros ! »" }
+          - { qui: aureliath, expression: joie, dit: "Le Grand Prieur sourit largement. « Voilà l'esprit des héros ! »" }
           - { qui: aveline, dit: "Aveline soupire. « Les derniers à avoir dit ça sont enterrés sous le Mur d'Aube. »" }
         suite: question
       mefiant:
         repliques:
-          - { qui: aureliath, dit: "Le sourire du Grand Prieur se fige une fraction de seconde. « La Lumière a ses raisons. [[Tu les comprendras||Vous les comprendrez]]. »" }
+          - { qui: aureliath, expression: gene, dit: "Le sourire du Grand Prieur se fige une fraction de seconde. « La Lumière a ses raisons. [[Tu les comprendras||Vous les comprendrez]]. »" }
           - { qui: aveline, dit: "Aveline [[te||vous]] jette un regard nouveau. Presque… approbateur." }
         suite: question
       humour:
