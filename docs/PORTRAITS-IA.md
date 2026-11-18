@@ -234,3 +234,15 @@ Sur le PC du graphiste, dans `portraits-sources/…/prepares/` :
 - **Paysages** en 1280 × 720, JPEG qualité 86, de 210 à 300 Ko chacun (`lysmont-aube.jpg` = la version retouchée). Pour les écrans de chapitre et de chargement.
 - **Essai de conversion en pixel art** (`essai-pixel-lysmont.png` : 320 × 180, 40 couleurs, agrandi ×4 sans lissage). Le résultat ressemble à une peinture pixelisée, différente des décors actuels (aplats simples) : c'est au groupe de choisir.
 - **Auréliath** : `portrait-neutre.png` 512 × 512 détouré et `anim/` (respiration, tête, barbe, bouche ; clignement quand l'image « yeux fermés » existera).
+
+### 6.6 Conversion en pixel art détaillé (18/11)
+
+Script `outils/portraits/pixel_art.py <source> <sortie> [largeur_native] [couleurs] [facteur]` : recadrage 16:9, lissage qui garde les bords, réduction à la taille native, palette k-means (espace Lab), nettoyage des pixels isolés, contours légèrement assombris, agrandissement sans lissage.
+
+| Réglage | Rendu |
+|---|---|
+| `640 128 3` → 1920 × 1080 | **recommandé** : vrai pixel art, très détaillé (pixels de 3) |
+| `960 160 2` → 1920 × 1080 | le plus détaillé ; ressemble presque à l'illustration |
+| `427 48 3` → 1280 × 720 | plus « rétro », moins de détails |
+
+Essai sur Ithrael : `portraits-sources/paysages/prepares/ithrael-pixel-640.png` et `ithrael-pixel-960.png`. Usage possible : décors des lieux, fonds de combat, écrans de chapitre. Pas pour les sprites animés des héros (images d'animation impossibles à aligner avec un générateur d'images).
