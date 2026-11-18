@@ -130,7 +130,11 @@ D'après la scène des lanternes (`lanternes-faites`). Elle s'enchaîne avec le 
 
 - **Plan 3 de « L'Appel » : réussi du premier coup.** Style anime net, temple blanc, acolytes en cercle, runes puis anneau de lumière bleue et étincelles. Aucun filigrane visible ; 8 s en 1280 × 720. Original : `portraits-sources/cinematiques/appel-plan3-essai1.mp4`.
 - Coût : **Veo 3.1 Lite = 10 crédits par vidéo** (le réglage « x2 » en fait 2, soit 20 crédits). Avec 50 crédits par jour, on peut faire **5 vidéos par jour**. Les crédits reviennent chaque jour vers 23 h 13 (heure de La Réunion).
-- **Plan 4 : « Échec de la génération de l'audio »** sur les 2 vidéos. Flow rembourse les crédits, mais le remboursement prend quelques minutes. Cause probable : le mot « Silence » dans l'invite. À retenter avec une indication de son, par exemple `Ambient sound: soft wind and a distant choir fading out.`
+- **Plan 4, premier envoi : « Échec de la génération de l'audio »** sur les 2 vidéos. Flow a rendu les crédits en quelques minutes. Cause probable : le mot « Silence » dans l'invite. **Deuxième envoi réussi** : « Silence » retiré et `Ambient sound: soft wind and a distant choir fading out.` ajouté à la fin. Résultat : 2 versions.
+  - Essai 1 : 4 jeunes adultes de dos, détaillés (cheveux, sweat rouge), éclairage chaud.
+  - Essai 2 : 5 vraies silhouettes noires, l'une se protège les yeux, plus proche du script.
+  - Fichiers : `portraits-sources/cinematiques/appel-plan4-essai{1,2}.mp4`.
+- **Règle** : ne jamais écrire « silence » dans une invite Veo, toujours décrire un son d'ambiance.
 - Dans Flow, les **images avec Nano Banana 2.1 coûtent 0 crédit** (offre gratuite) : une piste pour les fiches de référence et les décors, à ajouter au tableau des droits avant de s'en servir.
 - Le téléchargement se fait par clic droit sur la vidéo, puis « Télécharger ». Le fichier arrive dans « Téléchargements » sous un nom en `.tmp` : il faut le renommer en `.mp4`.
 
