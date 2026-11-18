@@ -1,4 +1,7 @@
-"""Prépare un portrait IA pour le jeu : détourage, recadrage 512x512, PNG transparent."""
+"""Prépare un portrait IA pour le jeu : détourage, recadrage 512x512, PNG transparent.
+
+Usage : python3 preparer_portrait.py <source> <sortie> [x0,y0,x1,y1]
+Donner la boîte du neutre aux autres expressions pour qu'elles aient exactement le même cadrage."""
 import sys
 import numpy as np
 from PIL import Image
@@ -18,6 +21,8 @@ cx = int(np.median(xs))
 side = min(H - max(0, top - int(0.06 * H)), W)
 y0 = max(0, top - int(0.06 * H)); y1 = min(H, y0 + side)
 x0 = max(0, min(W - side, cx - side // 2)); x1 = x0 + side
+if len(sys.argv) > 3:
+    x0, y0, x1, y1 = (int(v) for v in sys.argv[3].split(','))
 crop = rgba.crop((x0, y0, x1, y1)).resize((512, 512), Image.LANCZOS)
 crop.save(dst, optimize=True)
 print("boîte", (x0, y0, x1, y1), "->", dst)

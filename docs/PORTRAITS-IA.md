@@ -140,7 +140,19 @@ Aureliath, the Grand Prior of the Order of Serene Light, an older man around 60.
 > Homme d'environ 60 ans, crâne rasé, barbe blanche soignée, yeux gris-bleu, robe de cérémonie blanche brodée d'or à col haut, pendentif doré en forme de cercle de lumière. Expression : calme et bienveillant, petit sourire poli un peu trop parfait. Ajouter « any real-world religious symbol » à la liste à éviter.
 
 
-À venir : Kaya, Nadja, Séraphine, Elianne, Ilyssë, Ysoria, Morra ; Halvine, Rowena, Auréliath, Bram, Ferrand…
+#### Kaya Lunecroc — `kaya` (future compagne, aventurière ourvalis)
+
+- **Fichiers** : `assets/personnages/pnj/kaya/portrait-<expression>.png` (à intégrer après validation) ; originaux `portraits-sources/kaya/` ; préparés `portraits-sources/kaya/prepares/` (6 portraits 512, calques d'animation, bouche 585, 515). **Fait avec Gemini le 18/11** (essai). Démonstration : artefact « Portrait animé — Kaya (essai Gemini) ».
+
+```
+Character: Kaya Lunecroc, an adult woman of 25 from the Ourvalis, a wolf-folk people. Wolf ears with silver-grey fur on top of her head, messy shoulder-length silver hair, golden-yellow eyes, athletic build. Worn brown leather adventurer armor with a fur-trimmed collar, a red cloth headband tied around her forehead. Clearly an adult woman.
+```
+
+Expressions : ajouter « showing two small wolf fangs » à la joie et à la colère ; « wolf ears drooping a little » à la tristesse ; « wolf ears perked up » à la surprise.
+
+**Méthode Gemini** : 1) générer le neutre (bloc STYLE + personnage + « Avoid: … ») ; 2) l'ajouter au Drive puis « + → Ajouter depuis Drive » dans une nouvelle discussion ; 3) une demande par expression : « Edit the first image I sent (the neutral one). Keep exactly the same character, framing, outfit, lighting and background, same size and position. Change only the facial expression: … ». Toujours repartir du neutre, pas de la dernière image. Gemini donne du 1024 × 1024 ; pour le détourage, passer la boîte du neutre aux autres expressions (`preparer_portrait.py <source> <sortie> 0,0,1024,1024`) pour garder exactement le même cadrage.
+
+À venir : Nadja, Séraphine, Elianne, Ilyssë, Ysoria, Morra ; Halvine, Rowena, Auréliath, Bram, Ferrand…
 
 ## 5. Animation des portraits (15/11, version « réaliste »)
 
