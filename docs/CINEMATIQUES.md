@@ -126,9 +126,17 @@ D'après la scène des lanternes (`lanternes-faites`). Elle s'enchaîne avec le 
 ```
 > Un mur de flammes violettes s'écarte. Un grand démon en armure noire sort lentement, une épée longue nimbée de feu violet à la main, des cendres tourbillonnent autour de lui. Contre-plongée, lent rapprochement sur son casque, ses yeux s'allument. Menaçant, calme.
 
-## 5. Ordre de travail conseillé
+## 5. Premier essai (18/11)
 
-1. Faire **un seul plan d'essai** : le plan 3 de « L'Appel », sans personnage. On y juge le style, le filigrane et la qualité.
+- **Plan 3 de « L'Appel » : réussi du premier coup.** Style anime net, temple blanc, acolytes en cercle, runes puis anneau de lumière bleue et étincelles. Aucun filigrane visible ; 8 s en 1280 × 720. Original : `portraits-sources/cinematiques/appel-plan3-essai1.mp4`.
+- Coût : **Veo 3.1 Lite = 10 crédits par vidéo** (le réglage « x2 » en fait 2, soit 20 crédits). Avec 50 crédits par jour, on peut faire **5 vidéos par jour**. Les crédits reviennent chaque jour vers 23 h 13 (heure de La Réunion).
+- **Plan 4 : « Échec de la génération de l'audio »** sur les 2 vidéos. Flow rembourse les crédits, mais le remboursement prend quelques minutes. Cause probable : le mot « Silence » dans l'invite. À retenter avec une indication de son, par exemple `Ambient sound: soft wind and a distant choir fading out.`
+- Dans Flow, les **images avec Nano Banana 2.1 coûtent 0 crédit** (offre gratuite) : une piste pour les fiches de référence et les décors, à ajouter au tableau des droits avant de s'en servir.
+- Le téléchargement se fait par clic droit sur la vidéo, puis « Télécharger ». Le fichier arrive dans « Téléchargements » sous un nom en `.tmp` : il faut le renommer en `.mp4`.
+
+## 6. Ordre de travail conseillé
+
+1. ~~Faire un seul plan d'essai~~ (fait le 18/11, voir § 5) : le groupe juge le style.
 2. Si le groupe valide le rendu : finir les portraits manquants (Vorthak), puis la fiche corps entier de chaque PNJ qui apparaît.
 3. Générer les plans un par un, avec 2 essais au plus par plan (50 crédits par jour).
 4. Monter dans Shotcut ou Kdenlive : enchaîner les plans, couper le son de Flow, ajouter la musique du groupe et les textes du jeu.
