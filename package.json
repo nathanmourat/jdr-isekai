@@ -26,7 +26,8 @@
     "traductions:rapport": "tsx scripts/traductions.ts rapport",
     "roblox:verifier": "tsx scripts/verifier-luau.ts",
     "roblox:moteur": "npm run moteur --prefix roblox",
-    "roblox:parite": "tsx scripts/roblox-parite.ts"
+    "roblox:parite": "tsx scripts/roblox-parite.ts",
+    "ia:banc": "tsx scripts/banc-ia.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.119.0",
