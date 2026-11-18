@@ -134,6 +134,9 @@ D'après la scène des lanternes (`lanternes-faites`). Elle s'enchaîne avec le 
   - Essai 1 : 4 jeunes adultes de dos, détaillés (cheveux, sweat rouge), éclairage chaud.
   - Essai 2 : 5 vraies silhouettes noires, l'une se protège les yeux, plus proche du script.
   - Fichiers : `portraits-sources/cinematiques/appel-plan4-essai{1,2}.mp4`.
+- **Plan 1 (Lysmont à l'aube), sans image de référence** : belle ville blanche, rivière, brume, moulins, oiseaux. Mais le temple est collé au château au lieu d'être sur sa propre butte : la prochaine fois, joindre `lysmont-aube-v2.png` en « Ingrédient ». Fichier : `portraits-sources/cinematiques/appel-plan1-essai1.mp4`.
+- **Montage d'essai** sans le son : plan 1 + plan 3 + plan 4 (essai 2), soit 24 s. Fichier : `portraits-sources/cinematiques/appel-montage-essai.mp4`.
+- Bilan du 18/11 : 50 crédits = 5 vidéos réussies + 2 échecs remboursés.
 - **Règle** : ne jamais écrire « silence » dans une invite Veo, toujours décrire un son d'ambiance.
 - Dans Flow, les **images avec Nano Banana 2.1 coûtent 0 crédit** (offre gratuite) : une piste pour les fiches de référence et les décors, à ajouter au tableau des droits avant de s'en servir.
 - Le téléchargement se fait par clic droit sur la vidéo, puis « Télécharger ». Le fichier arrive dans « Téléchargements » sous un nom en `.tmp` : il faut le renommer en `.mp4`.
