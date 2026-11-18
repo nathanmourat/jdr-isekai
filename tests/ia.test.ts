@@ -65,15 +65,16 @@ describe('IA maison : compréhension', () => {
     expect(i.alternatives.some((a) => a.libelle.startsWith('Attaque'))).toBe(true);
   });
 
-  it('corps à corps contre le rang arrière : refus et alternative', () => {
+  it('corps à corps contre le rang arrière : une question (sans coût) avec des actions possibles', () => {
     const i = interpreter(contexte('tanneurs-cultistes'), "j'attaque le cultiste");
     expect(i.possible).toBe(false);
-    expect(i.message).toMatch(/rang arrière/);
-    expect(i.alternatives.some((a) => a.libelle.includes('Bandit'))).toBe(true);
+    expect(i.compteCommeEssai).toBe(false);
+    expect(i.question?.texte).toMatch(/hors de portée/);
+    expect(i.question?.options.some((a) => a.libelle.includes('Bandit'))).toBe(true);
   });
 
   it('une phrase incompréhensible compte comme un essai', () => {
-    const i = interpreter(contexte('ref-brute'), 'zorglub bidule truc');
+    const i = interpreter(contexte('ref-brute'), 'zorglub bidule machin');
     expect(i.possible).toBe(false);
     expect(i.compteCommeEssai).toBe(true);
   });

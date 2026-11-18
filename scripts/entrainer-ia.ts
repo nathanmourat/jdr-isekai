@@ -7,7 +7,13 @@ import { writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { contenuDisque, RACINE } from '../src/contenu/node';
 import { entrainer, predire } from '../src/ia/classificateur';
-import { INTENTIONS, MODELES, REMPLISSAGE } from '../src/ia/corpus';
+import { INTENTIONS, MODELES, MODELES_SUPPLEMENTAIRES, REMPLISSAGE } from '../src/ia/corpus';
+import { motsNettoyes } from '../src/ia/phrase';
+import { BANC } from '../tests/ia/banc';
+
+// le banc d'essai n'est JAMAIS vu à l'entraînement : toute phrase identique à une phrase du banc est écartée
+const DU_BANC = new Set(BANC.map((b) => motsNettoyes(b.texte).join(' ')));
+let ecartees = 0;
 import { PHRASES_TEST } from '../src/ia/phrases-test';
 import { aleatoire, choisir, creerRng } from '../src/moteur/rng';
 
@@ -39,10 +45,13 @@ const exemples: { texte: string; classe: string }[] = [];
 const PAR_INTENTION = 320;
 for (const intention of INTENTIONS) {
   for (let k = 0; k < PAR_INTENTION; k++) {
-    const base = remplir(choisir(rng, MODELES[intention]));
+    const base = remplir(choisir(rng, [...MODELES[intention], ...(MODELES_SUPPLEMENTAIRES[intention] ?? [])]));
     let texte = `${choisir(rng, REMPLISSAGE.INTRO)}${base}${choisir(rng, REMPLISSAGE.FIN)}`;
     if (aleatoire(rng) < 0.5) texte = bruiter(texte);
-    exemples.push({ texte, classe: intention });
+    // même nettoyage qu'en jeu (langage SMS, mots collés)
+    const propre = motsNettoyes(texte).join(' ');
+    if (DU_BANC.has(propre) || DU_BANC.has(motsNettoyes(base).join(' '))) { ecartees++; continue; }
+    exemples.push({ texte: propre, classe: intention });
   }
 }
 // mélange puis découpe 85 % entraînement / 15 % validation
@@ -67,6 +76,7 @@ const tauxTest = ok / PHRASES_TEST.length;
 const json = JSON.stringify(modele);
 writeFileSync(join(RACINE, 'src', 'ia', 'modele.json'), json + '\n');
 
+console.log(`Phrases écartées car identiques à une phrase du banc d'essai : ${ecartees}`);
 console.log(`Corpus : ${exemples.length} phrases générées (${INTENTIONS.length} intentions, ${PAR_INTENTION} par intention), vocabulaire ${modele.vocab.length} traits`);
 console.log(`Précision sur la validation (phrases générées non vues) : ${(tauxValidation * 100).toFixed(1).replace('.', ',')} %`);
 console.log(`Précision sur les ${PHRASES_TEST.length} phrases écrites à la main : ${(tauxTest * 100).toFixed(1).replace('.', ',')} %`);

@@ -47,9 +47,16 @@ export function mots(t: string): string[] {
 
 /** Traits utilisés par le classificateur : racines + paires de racines voisines. */
 export function traits(t: string): string[] {
-  const r = mots(t).map((m) => racine(m));
+  const m = mots(t);
+  const r = m.map((x) => racine(x));
   const res = [...r];
   for (let i = 0; i < r.length - 1; i++) res.push(`${r[i]}_${r[i + 1]}`);
+  // morceaux de 3 lettres des mots de 4 lettres ou plus (« #ta », « tap », « ape », « pe# ») : tolérance aux fautes et au langage SMS
+  for (const x of m) {
+    if (x.length < 4) continue;
+    const b = `#${x}#`;
+    for (let i = 0; i + 3 <= b.length; i++) res.push(`~${b.slice(i, i + 3)}`);
+  }
   return res;
 }
 

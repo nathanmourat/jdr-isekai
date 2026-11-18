@@ -111,3 +111,62 @@ export const REMPLISSAGE = {
   INTRO: ['', '', '', '', 'je vais ', 'je veux ', 'allez ', 'bon ', 'ok ', 'vas y ', 'maintenant ', 'tant pis ', "j'essaie de ", 'du coup '],
   FIN: ['', '', '', '', ' !', ' vite', ' de toutes mes forces', ' tout de suite', ' sans réfléchir', ' fort'],
 };
+
+/**
+ * Modèles ajoutés avec le banc d'essai (18/11) : verbes familiers, langage SMS, tournures longues.
+ * Écrits à part : AUCUNE phrase du banc (tests/ia/banc.ts) n'est recopiée ici.
+ */
+export const MODELES_SUPPLEMENTAIRES: Partial<Record<(typeof INTENTIONS)[number], string[]>> = {
+  attaquer: [
+    'je pique {E}', 'je pique {E} avec ma dague', 'je sors mon arme et je frappe {E}', "je m'occupe de {E}", 'je règle son compte à {E}', 'je finis {E}',
+    'je défonce {E}', "j'abats mon arme sur {E}", 'je décoche sur {E}', 'je bande mon arc et je décoche', 'tir sur {E}', 'je tire sur {E}', 'je tire dans {E}',
+    'je fonce dans le tas', 'je tape celui qui', 'je cogne celui qui', 'je frappe celui qui est', 'je tape dessus', 'go frapper {E}', 'je lui mets une droite',
+    'je lui en mets une', 'je lui file une tarte', 'je bastonne {E}', 'je tabasse {E}', 'je lui écrase la figure', 'je lui rentre dans le lard', 'coup de marteau sur {E}',
+    'coup de bâton sur {E}', 'je lui tranche la gorge', 'je massacre {E}', 'je défouraille sur {E}', 'je tire une flèche', 'flèche sur {E}', 'je shoote {E}',
+    "j'enchaîne les coups sur {E}", 'je ressors ma lame et je frappe', 'je prends mon élan et je frappe {E}', 'je pique dans le tas', 'je dégomme {E}',
+    "j'élimine {E}", 'je bute {E}', 'je tue {E}', 'je termine le travail sur {E}', 'je lui fais la peau', 'je frappe de toutes mes forces',
+    'je frappe encore', 'je refrappe {E}', 'je retape {E}', 'je le frappe à nouveau', 'je tape le même',
+  ],
+  competence: [
+    'je projette une lance de feu sur {E}', 'je lance une boule de {EL}', 'je fais tomber la {EL} sur {E}', "j'envoie la {EL}", 'je gèle tout le monde',
+    'je crame {E}', 'je brûle {E} avec ma magie', "je l'électrocute", 'je fige {E} dans la glace', 'un sort de {EL} sur {E}', 'ma magie de {EL}',
+    'je canalise mon mana dans un sort', 'je concentre ma magie et je la projette', 'je lance ma meilleure technique', "j'utilise ma compétence",
+    'je déchaîne mes pouvoirs', 'je balance un sort', 'sort sur {E}', 'je lance un truc de {EL}', 'du {EL} sur {E}',
+  ],
+  viser: [
+    'je vise les yeux de {E}', 'je lui crève les yeux', 'je vise entre les deux yeux', 'je lui coupe les pattes', 'je vise ses pattes',
+    'je frappe ses genoux', 'je vise sa main', "je vise l'arme de {E}", 'je lui tire dans la tête', 'tir à la tête', 'je vise le crâne',
+  ],
+  defendre: [
+    'je lève mon bouclier', 'je lève mon bouclier pour encaisser', 'je plante mes pieds et je tiens', "je tiens bon et j'encaisse", 'je me prépare à encaisser',
+    'je me mets en défense', 'défense', 'je bloque son attaque', 'je pare son coup', 'je ne bouge pas', 'je reste en garde', "j'attends qu'ils viennent",
+    'je fais le dos rond', 'je me protège derrière mon bouclier', 'je me protège', 'je me défends', 'je défends ma position',
+  ],
+  proteger: [
+    "je l'entoure d'une barrière", "j'entoure {A} d'une barrière", 'je couvre {A} de ma lumière', 'barrière sur {A}', 'je mets {A} à l abri sous un bouclier',
+    'je protège le soigneur', 'je protège le mage', 'je protège la guérisseuse', 'bouclier pour {A}', 'je fais barrage devant {A}', 'je me place devant {A}',
+  ],
+  fuir: [
+    'je me tire', 'je me tire de là', 'je me barre d ici', 'je cours vers la sortie', 'je tourne les talons et je cours', 'je prends mes jambes à mon cou',
+    'je file en courant', 'fuite', 'on décampe', 'je fiche le camp', 'je me casse', 'je me sauve en courant', 'je déserte le combat',
+  ],
+  se_cacher: [
+    'je me cache dans les buissons', 'je me glisse derrière {OB}', 'je me fonds dans l ombre', 'je me tapis', 'je me planque dans un coin',
+    'je disparais de leur vue', 'je me dissimule derrière {OB}', 'je reste caché',
+  ],
+  soigner: [
+    'je referme ses plaies', 'je soigne ses blessures', 'je remets {A} sur pied', 'je rends de la vie à {A}', 'je lui rends un peu de vie', 'je panse {A}',
+    'je canalise la lumière pour soigner {A}', 'je soigne celui qui a le moins de vie', 'soin', 'soin sur {A}', 'un soin pour {A}', 'je soigne le mage',
+    'je soigne le tank', 'je soigne le nain', 'je fais un soin', 'soin de groupe', 'je soigne toute l équipe', "je m'agenouille et je soigne {A}",
+  ],
+  pacifier: [
+    'je parle à {E} pour le calmer', 'je calme {E} doucement', 'je murmure à {E} de partir', "je dis à {E} qu'il peut partir", 'je rassure {E}',
+  ],
+  analyser: [
+    "j'observe les ennemis", "j'observe le champ de bataille", "j'étudie leurs mouvements", 'je cherche une faille', 'je regarde combien de vie il reste',
+    'c est quoi leurs faiblesses', 'quels sont leurs pv', "j'examine les ennemis", 'je jauge les ennemis', "j'étudie {E}",
+  ],
+  voler: ['je vole vers {E}', 'je vole au dessus', 'je saute en volant', 'je vole', 'je plane'],
+  changer_rang: ["je m'avance en première ligne", 'je me mets devant', 'je retourne derrière', 'je passe au second rang', 'je passe en première ligne'],
+  provoquer: ['je hurle pour attirer leur attention', 'je les provoque', 'je crie pour les attirer', 'viens te battre', 'je les défie'],
+};
