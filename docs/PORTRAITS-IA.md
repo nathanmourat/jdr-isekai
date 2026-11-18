@@ -71,10 +71,10 @@ Les formulations peuvent être ajustées au caractère du personnage (exemple : 
 - **Couleurs de référence** (relevées sur `decor.png`, pour l'harmonisation) : armure `#c9d3e0` (ombre `#737b8c`), bleu royal `#2d499b` (ombre `#233979`), or `#eac054` (ombre `#ba9330`), cheveux `#ba6931` (reflets `#c37d4c`), peau `#f2caa2`.
 
 ```
-Aveline, an adult woman aged 24, a knight and captain of the royal guard. Mature adult face. Copper-chestnut hair tied in a short braid resting on her left shoulder, a few loose strands framing her face. Grey-green eyes, straight steady gaze, defined eyebrows, a small pale scar on the right side of her chin. Light warm skin. Polished silver plate armor with blue and gold trim, rounded pauldrons and a gorget, a royal blue cape fastened at the shoulders with a gold clasp. Dignified, disciplined bearing.
+Aveline, an adult woman aged 24, a knight and captain of the royal guard. Mature adult face. Copper-chestnut hair tied in a short braid resting on her right shoulder (left side of the image), a few loose strands framing her face. Grey-green eyes, straight steady gaze, defined eyebrows, a small pale scar on the right side of her chin. Light warm skin. Polished silver plate armor with blue and gold trim, rounded pauldrons and a gorget, a royal blue cape fastened at the shoulders with a gold clasp. Dignified, disciplined bearing.
 ```
 
-> Aveline, femme adulte de 24 ans, chevalière et capitaine de la garde royale. Visage d'adulte. Cheveux châtain cuivré attachés en une tresse courte posée sur son épaule gauche, quelques mèches libres autour du visage. Yeux gris-vert, regard droit et ferme, sourcils marqués, petite cicatrice pâle du côté droit du menton. Peau claire et chaude. Armure de plates argentée et polie, liserés bleus et or, épaulières arrondies et gorgerin, cape bleu royal attachée aux épaules par une agrafe dorée. Allure digne et disciplinée.
+> Aveline, femme adulte de 24 ans, chevalière et capitaine de la garde royale. Visage d'adulte. Cheveux châtain cuivré attachés en une tresse courte posée sur son épaule droite (à gauche de l'image), quelques mèches libres autour du visage. Yeux gris-vert, regard droit et ferme, sourcils marqués, petite cicatrice pâle du côté droit du menton. Peau claire et chaude. Armure de plates argentée et polie, liserés bleus et or, épaulières arrondies et gorgerin, cape bleu royal attachée aux épaules par une agrafe dorée. Allure digne et disciplinée.
 
 Retouche validée le 15/11 : tresse courte, **emblème du soleil levant** (or) à la place des fleurs de lys sur les agrafes et le plastron.
 
@@ -174,7 +174,9 @@ Using the attached portrait as the exact reference for the face, hair, eyes, sca
 
 Pour Aveline, ajouter : `Her silver plate armor goes down to armored boots; the royal blue cape reaches her knees; a sheathed longsword hangs at her left hip.` (Armure jusqu'aux bottes, cape bleue jusqu'aux genoux, épée longue au fourreau à la hanche gauche.)
 
-Fichier : `portraits-sources/aveline/aveline-fiche.png` (référence seulement, pas dans le jeu pour l'instant).
+Fichier : `portraits-sources/aveline/aveline-fiche.png` (référence seulement, pas dans le jeu pour l'instant). **Fait le 18/11** (1536 × 1024), dans la conversation ChatGPT du portrait neutre, qui sert de référence sans renvoyer l'image.
+
+> Côté de la tresse : sur toutes les images validées, elle tombe sur l'**épaule droite** d'Aveline (à gauche de l'image). Les invites ont été corrigées le 18/11 pour correspondre.
 
 ### 6.2 Bloc STYLE des paysages (à coller mot pour mot)
 
@@ -194,4 +196,4 @@ Lysmont, the capital of the kingdom of Aubeclaire, seen at dawn from a hill abov
 
 > Lysmont, capitale du royaume d'Aubeclaire, vue à l'aube depuis une colline au-dessus de la rivière : tours de pierre blanche aux toits d'ardoise bleue, en étages autour d'un château sur une butte ; un grand temple blanc à rosace sur sa propre hauteur ; ponts de pierre sur une large rivière calme ; plaines, champs et moulins au sud. Brume du matin, lumière dorée. Au loin vers le nord, à l'horizon, une longue muraille fortifiée sous un ciel sombre et enfumé.
 
-Fichier : `portraits-sources/paysages/lysmont-aube.png`, puis version jeu `assets/illustrations/lysmont-aube.png` (1280 × 720) si le groupe la garde.
+**Fait le 18/11** (1672 × 941). Écart avec le monde : la muraille du nord paraît collée à la ville, alors que le Mur d'Aube est à la frontière ; à retoucher si le groupe garde l'image. Fichier : `portraits-sources/paysages/lysmont-aube.png`, puis version jeu `assets/illustrations/lysmont-aube.png` (1280 × 720) si le groupe la garde.

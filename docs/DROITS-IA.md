@@ -38,3 +38,5 @@ Avoir le droit de **vendre** une image n'est pas la même chose que pouvoir **em
 | Date | Fichiers | Outil et offre | Invites | Retouches du groupe |
 |---|---|---|---|---|
 | 15/11/2026 | Aveline : 6 expressions + yeux fermés (`personnages/compagnes/aveline/`) | ChatGPT Images, offre gratuite (compte du graphiste) | `docs/PORTRAITS-IA.md` § 2 à 4.1 | Choix entre variantes, retouche demandée (tresse, emblème du soleil, angle), détourage, recadrage, calques et animation (`outils/portraits/`) |
+| 18/11/2026 | Aveline : fiche de référence corps entier (face, trois quarts, dos), référence seulement | ChatGPT Images, offre gratuite | `docs/PORTRAITS-IA.md` § 6.1 | Choix du cadrage, contrôle de cohérence avec les portraits |
+| 18/11/2026 | Paysage « Lysmont à l'aube », pas encore dans le jeu | ChatGPT Images, offre gratuite | `docs/PORTRAITS-IA.md` § 6.2 et 6.3 | Description du lieu écrite d'après le contenu du jeu ; retouche à prévoir (muraille du nord) |
