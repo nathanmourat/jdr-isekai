@@ -3,6 +3,8 @@
 Ce fichier sert au groupe pour générer les **portraits 512 × 512** avec un générateur d'images IA, tous dans le même style.
 Il complète `docs/GRAPHISMES.md` (§ 2 et § 6) et `docs/LISTE-TEXTURES.md` (noms de fichiers).
 
+> **Droits** : le jeu pourra être vendu. Outils autorisés, règles (aucun artiste ni œuvre dans les invites, preuves à garder, crédits) et registre des générations : [`DROITS-IA.md`](DROITS-IA.md). À lire avant toute nouvelle génération.
+
 ## 1. Chaîne de production
 
 1. **Générer** l'image avec le bloc STYLE (§ 2), puis le bloc PERSONNAGE et l'expression (§ 4).
@@ -155,3 +157,41 @@ Démonstration : artefact « Portrait animé — Aveline » (lien donné au grou
 - `aligner.py` : recalage seul, pour vérifier.
 
 Les originaux IA (1254 × 1254) restent sur le PC du graphiste dans `portraits-sources/` (ignoré par Git).
+
+## 6. Fiches de référence et paysages (18/11)
+
+Principe : **les images d'abord, la vidéo ensuite.** Les fiches de référence et les paysages servent dans le jeu **et** comme références pour les cinématiques (Atlabs), pour que la vidéo ressemble au jeu. On n'extrait pas d'images des vidéos (compressées, floues, sans transparence).
+
+### 6.1 Fiche de référence d'un personnage (corps entier)
+
+Sert de référence aux cinématiques et aux futurs sprites. Dans ChatGPT : **joindre le portrait neutre approuvé** (`portrait-neutre.png`) au message, puis :
+
+```
+Using the attached portrait as the exact reference for the face, hair, eyes, scar, armor, colors and art style, create an original character reference sheet of the same adult woman. Full body, standing, shown three times side by side at the same scale: front view, three-quarter view, back view. Neutral pose, arms relaxed, feet visible, same outfit in every view. Plain flat light-gray background, even lighting from the upper left, no shadows on the background. No text, no labels, no logo, no frame. Wide image.
+```
+
+> En utilisant le portrait joint comme référence exacte (visage, cheveux, yeux, cicatrice, armure, couleurs, style), crée une fiche de référence originale de la même femme adulte : corps entier, debout, vue trois fois côte à côte à la même échelle (face, trois quarts, dos). Pose neutre, bras relâchés, pieds visibles, même tenue partout. Fond gris clair uni, lumière égale venant du haut à gauche. Aucun texte, aucune étiquette, aucun logo, aucun cadre. Image large.
+
+Pour Aveline, ajouter : `Her silver plate armor goes down to armored boots; the royal blue cape reaches her knees; a sheathed longsword hangs at her left hip.` (Armure jusqu'aux bottes, cape bleue jusqu'aux genoux, épée longue au fourreau à la hanche gauche.)
+
+Fichier : `portraits-sources/aveline/aveline-fiche.png` (référence seulement, pas dans le jeu pour l'instant).
+
+### 6.2 Bloc STYLE des paysages (à coller mot pour mot)
+
+```
+Original fantasy landscape illustration for an anime JRPG, painted background art. Wide cinematic view, 16:9. Clean shapes, soft painterly shading, rich but slightly muted colors like a modern 16-bit JRPG palette. Main light from the upper left. No characters in the foreground (tiny distant figures allowed), no text, no logo, no frame, no signature.
+```
+
+> Illustration originale de paysage de fantasy pour un JRPG anime, décor peint. Vue large cinématographique, 16:9. Formes nettes, ombrage doux et peint, couleurs riches mais un peu adoucies. Lumière principale en haut à gauche. Aucun personnage au premier plan (minuscules silhouettes lointaines permises), aucun texte, logo, cadre ni signature.
+
+Usage prévu : écrans de chapitre, écrans de chargement, carte du monde illustrée, référence des cinématiques. **Pas comme décor jouable** (le monde reste en pixel art) ; si le groupe le décide, conversion en pixel art par script (réduction + palette du jeu).
+
+### 6.3 Paysage n° 1 : Lysmont à l'aube
+
+```
+Lysmont, the capital of the kingdom of Aubeclaire, seen at dawn from a hill above the river. A city of white stone towers with blue slate roofs, rising in tiers around a castle on a small hill. A large white temple with a rose window stands apart on its own rise. Stone bridges cross a wide calm river; green plains, fields and windmills to the south. Morning mist on the water, warm golden light. Far away to the north, on the horizon, a long fortified wall under a dark, smoky sky.
+```
+
+> Lysmont, capitale du royaume d'Aubeclaire, vue à l'aube depuis une colline au-dessus de la rivière : tours de pierre blanche aux toits d'ardoise bleue, en étages autour d'un château sur une butte ; un grand temple blanc à rosace sur sa propre hauteur ; ponts de pierre sur une large rivière calme ; plaines, champs et moulins au sud. Brume du matin, lumière dorée. Au loin vers le nord, à l'horizon, une longue muraille fortifiée sous un ciel sombre et enfumé.
+
+Fichier : `portraits-sources/paysages/lysmont-aube.png`, puis version jeu `assets/illustrations/lysmont-aube.png` (1280 × 720) si le groupe la garde.
