@@ -1,0 +1,74 @@
+# Chapitre 6 — quête secondaire « du monde » (ajoutée le 18/11) : le dernier écuyer du Premier Appelé.
+# Pétrifié dans la Forêt pétrifiée depuis 437, il raconte la trahison de l'Ordre avant la Citadelle.
+quetes:
+  - id: q-dernier-ecuyer
+    titre: "Le dernier écuyer"
+    type: secondaire
+    chapitre: 6
+    niveau: 36
+    region: terres-cendrees
+    resume: "Dans la Forêt pétrifiée, une statue de chevalier murmure. Les ombres du Voile se nourrissent de ses souvenirs."
+    etapes:
+      - { id: foret, objectif: "Trouver la statue qui murmure, dans la Forêt pétrifiée.", scene: sq-ecuyer-foret, lieu: foret-petrifiee }
+      - { id: retour, objectif: "Montrer l'insigne à la Sergente Valka, au Relais de la Guilde du camp.", scene: sq-ecuyer-retour, lieu: guilde-camp }
+
+objets:
+  - { id: insigne-du-premier, nom: "Insigne de la Compagnie du Seuil", type: quete, description: "Un insigne de bronze en forme de porte entrouverte, fendu en deux. Celui des compagnons du Premier Appelé, en 430." }
+
+scenes:
+  - id: sq-ecuyer-foret
+    titre: "Le dernier écuyer"
+    type: groupe
+    lieu: foret-petrifiee
+    decor: foret-petrifiee
+    quete: q-dernier-ecuyer
+    disponible_si: { flag: ch6-depart-fait, pas_flag: ecuyer-trouve }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "Entre les arbres de pierre, une statue de jeune chevalier, à genoux, l'épée plantée devant lui. Ses lèvres de pierre bougent. « Messire… c'est vous ? Vous êtes revenu ? »" }
+          - { dit: "Autour de la statue, des ombres sans visage tournent lentement, comme des corbeaux autour d'un champ. Chaque fois qu'elles la frôlent, la voix devient plus faible." }
+        choix:
+          - texte: "Chasser les ombres."
+            effets: [{ flag: ecuyer-trouve }]
+            aller: combat
+      combat:
+        combat: { rencontre: cendres-ombres, victoire: recit, defaite: recit-dur }
+      recit-dur:
+        repliques:
+          - { dit: "Les ombres reculent enfin dans la brume, rassasiées ou lassées. La statue respire encore." }
+        suite: recit
+      recit:
+        repliques:
+          - { dit: "« Je m'appelle Lucan. J'étais l'écuyer du Premier Appelé, mon seigneur Orvan. » La voix de pierre tremble. « En 437, il avait compris ce que coûtaient les Appels. Il voulait le dire au monde. Les paladins de l'Ordre nous ont attendus ici. »" }
+          - { dit: "« Ils ne l'ont pas tué. Ils l'ont scellé dans la cendre, vivant. Moi, ils m'ont changé en pierre pour que je ne raconte rien. Six siècles à genoux. » Un silence. « Les ombres disent qu'il règne maintenant sur ce pays. Je ne veux pas les croire. »" }
+          - { qui: morra, expression: tristesse, dit: "Morra a baissé sa faux. « Les démons de ma garnison racontent la même histoire, à voix basse. On les fouettait pour ça. »", si: { flag: morra-recrutee } }
+        choix:
+          - texte: "« Nous le retrouverons. Nous lui dirons que tu as tenu parole. »"
+            effets: [{ flag: promesse-ecuyer }]
+            aller: adieu
+          - texte: "« Repose-toi, Lucan. Ton service est fini. »"
+            effets: [{ flag: repos-ecuyer }]
+            aller: adieu
+      adieu:
+        repliques:
+          - { dit: "La statue sourit. Puis elle se fend, lentement, et tombe en poussière fine que le vent emporte vers la Citadelle. Il ne reste dans la cendre qu'un insigne de bronze fendu, en forme de porte entrouverte." }
+        effets: [{ objet: insigne-du-premier, quete: { id: q-dernier-ecuyer, etape: retour }, journal: "Dans la Forêt pétrifiée, Lucan, écuyer du Premier Appelé, raconte la trahison de 437 avant de tomber en poussière." }]
+        fin: true
+
+  - id: sq-ecuyer-retour
+    pnj: valka
+    titre: "Le dernier écuyer : l'insigne"
+    type: groupe
+    lieu: guilde-camp
+    decor: guilde
+    quete: q-dernier-ecuyer
+    rend_quete: true
+    disponible_si: { quete_etape: { q-dernier-ecuyer: retour } }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: valka, dit: "La Sergente Valka prend l'insigne et le retourne longtemps. Ses oreilles déchirées se couchent. « La Compagnie du Seuil. Les chroniques de la Guilde en parlent : les premiers aventuriers à avoir suivi un Appelé. Officiellement, ils sont tous morts en héros avec lui. »" }
+          - { qui: valka, dit: "« Officiellement. » Elle vous rend l'insigne. « Gardez-le. Si vous montez à la Citadelle, il vaut mieux qu'il soit avec vous qu'au fond d'un tiroir. »" }
+        effets: [{ terminer_quete: q-dernier-ecuyer, xp: 5000, or: 850, points_guilde: 400 }]
+        fin: true

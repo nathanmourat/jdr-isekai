@@ -1,0 +1,131 @@
+# Chapitre 2 — quête secondaire « du monde » (ajoutée le 18/11) : un cristal d'éther qui murmure.
+# Elle prépare la révélation du chapitre : les cristaux sont des fragments du Voile.
+quetes:
+  - id: q-cristal-murmure
+    titre: "Le cristal qui murmure"
+    type: secondaire
+    chapitre: 2
+    niveau: 12
+    region: marche-des-sables
+    resume: "Maître Ouzram a serti un cristal d'éther dans une dague. Depuis, son client entend des voix et ne dort plus."
+    etapes:
+      - { id: ouzram, objectif: "Écouter Maître Ouzram, au Grand Bazar.", scene: sq-cristal-ouzram, lieu: qarzim-bazar }
+      - { id: idris, objectif: "Rendre visite à Idris, chez Mère Ziyane, à l'Oasis Bleue.", scene: sq-cristal-idris, lieu: qarzim-oasis }
+      - { id: mine, objectif: "Rapporter le cristal à la veine d'où il vient, dans les mines d'éther.", scene: sq-cristal-mine, lieu: mines-ether, niveau: 13 }
+      - { id: retour, objectif: "Retourner à l'Oasis Bleue.", scene: sq-cristal-retour, lieu: qarzim-oasis }
+
+objets:
+  - { id: cristal-murmurant, nom: "Cristal murmurant", type: quete, description: "Un éclat d'éther gros comme une noix. La nuit, si on l'approche de l'oreille, on entend une voix lointaine qui pleure dans une langue que seuls les Appelés comprennent." }
+
+scenes:
+  - id: sq-cristal-ouzram
+    pnj: ouzram
+    titre: "Le cristal qui murmure : l'armurier"
+    type: groupe
+    lieu: qarzim-bazar
+    decor: qarzim-bazar
+    quete: q-cristal-murmure
+    disponible_si: { flag: sables-ouverts, pas_flag: cristal-accepte }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: ouzram, dit: "Ouzram ne vante pas ses lames, aujourd'hui. Il tourne une dague entre ses doigts brûlés : au pommeau, un cristal d'éther pâle. « J'en ai serti des centaines. Celui-ci, je l'ai vendu au jeune Idris, un scribe du Palais. Trois jours après, il me l'a rapporté en tremblant. Il dit que le cristal lui parle. »" }
+          - { qui: ouzram, dit: "« Moi, je n'entends rien. Mais Idris ne dort plus, ne mange plus. Il est chez Mère Ziyane. Je me sens responsable. Allez le voir, et prenez cette maudite dague avec vous. »" }
+        choix:
+          - texte: "« On y va. »"
+            effets: [{ flag: cristal-accepte, objet: cristal-murmurant, quete: { id: q-cristal-murmure, etape: idris } }]
+            aller: fin
+      fin:
+        repliques:
+          - { qui: ouzram, dit: "« Si c'est une malédiction, je rembourse. Si c'est autre chose… je ne veux pas le savoir. »" }
+        fin: true
+
+  - id: sq-cristal-idris
+    pnj: ziyane
+    titre: "Le cristal qui murmure : Idris"
+    type: groupe
+    lieu: qarzim-oasis
+    decor: qarzim-oasis
+    quete: q-cristal-murmure
+    disponible_si: { quete_etape: { q-cristal-murmure: idris } }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: ziyane, dit: "Mère Ziyane a installé Idris sous les voiles, avec du thé et une couverture. Le jeune scribe a les yeux cernés jusqu'aux joues. « Ne l'approchez pas de moi », souffle-t-il en voyant la dague. « Il pleure toute la nuit. Il appelle quelqu'un. »" }
+        choix:
+          - texte: "Écouter le cristal de très près. (Esprit, difficulté 18)"
+            test: { carac: ESP, difficulte: 18, reussite: voix, echec: bruit }
+          - texte: "Ne pas écouter : emporter le cristal loin d'Idris."
+            aller: bruit
+      voix:
+        repliques:
+          - { dit: "D'abord, un bruit de vent. Puis une voix, très loin, comme au fond d'un puits. Et vous comprenez chaque mot, parce que c'est votre langue. Celle de votre monde. Quelqu'un pleure, donne un nom de rue que vous connaissez presque, et répète : « Je ne trouve plus la sortie. »" }
+          - { dit: "Idris vous regarde, bouche ouverte. « Vous… vous la comprenez ? » Personne d'autre à Qarzim ne pourrait." }
+          - { qui: kaya, dit: "Kaya a les oreilles plaquées en arrière. « Les anciens disent que l'éther, c'est du ciel cassé. J'ai toujours cru que c'était une façon de parler. »", si: { flag: kaya-recrutee } }
+        effets: [{ flag: cristal-voix, journal: "À l'Oasis Bleue, {groupe} entend dans un cristal d'éther une voix de son propre monde." }, { quete: { id: q-cristal-murmure, etape: mine } }]
+        fin: true
+      bruit:
+        repliques:
+          - { dit: "Vous n'entendez qu'un bourdonnement qui vous laisse un mal de crâne. Idris, lui, se détend dès que la dague quitte la pièce. « Rendez-le à la mine. Il veut rentrer chez lui, j'en suis sûr. »" }
+        effets: [{ quete: { id: q-cristal-murmure, etape: mine } }]
+        fin: true
+
+  - id: sq-cristal-mine
+    titre: "Le cristal qui murmure : la veine"
+    type: groupe
+    lieu: mines-ether
+    decor: mines-ether
+    quete: q-cristal-murmure
+    disponible_si: { quete_etape: { q-cristal-murmure: mine } }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "Au fond d'une galerie abandonnée, la veine d'éther brille faiblement, comme une plaie mal refermée. Mais deux hommes de la Concorde montent la garde. « Personne ne touche aux veines sans un sceau du Prévôt. Encore moins pour y rapporter quelque chose. »" }
+        choix:
+          - texte: "Les convaincre de vous laisser passer. (Charisme, difficulté 19)"
+            test: { carac: CHA, difficulte: 19, reussite: veine, echec: combat }
+          - texte: "Passer de force."
+            aller: combat
+      combat:
+        combat: { rencontre: mercenaires-mines, victoire: veine, defaite: veine-dur }
+      veine-dur:
+        repliques:
+          - { dit: "Les gardes vous repoussent, puis partent chercher du renfort. Il vous reste quelques instants, seuls devant la veine." }
+        suite: veine
+      veine:
+        repliques:
+          - { dit: "Le cristal tremble dans votre main quand vous l'approchez de la paroi. La voix, à l'intérieur, se tait, comme si elle écoutait." }
+        choix:
+          - texte: "Briser le cristal contre la veine, pour que la voix retourne d'où elle vient."
+            effets: [{ flag: cristal-brise, retirer_objet: cristal-murmurant, reputation: { concorde: -3 } }]
+            aller: brise
+          - texte: "Le garder, pour comprendre un jour ce qu'il contient."
+            effets: [{ flag: cristal-garde }]
+            aller: garde
+      brise:
+        repliques:
+          - { dit: "L'éclat se brise sans bruit. Un souffle froid traverse la galerie, et pendant une seconde, toutes les veines de la mine s'éteignent, puis se rallument. Vous ne saurez jamais si la voix a trouvé la sortie." }
+        effets: [{ quete: { id: q-cristal-murmure, etape: retour } }]
+        fin: true
+      garde:
+        repliques:
+          - { dit: "Vous enveloppez le cristal dans un tissu épais. À travers l'étoffe, la voix continue, très bas. Elle a l'air un peu moins seule." }
+        effets: [{ quete: { id: q-cristal-murmure, etape: retour } }]
+        fin: true
+
+  - id: sq-cristal-retour
+    pnj: ziyane
+    titre: "Le cristal qui murmure : le sommeil d'Idris"
+    type: groupe
+    lieu: qarzim-oasis
+    decor: qarzim-oasis
+    quete: q-cristal-murmure
+    rend_quete: true
+    disponible_si: { quete_etape: { q-cristal-murmure: retour } }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: ziyane, dit: "« Il a dormi douze heures d'affilée ! » Mère Ziyane rit si fort que ses bracelets tintent. « Et Ouzram a envoyé ça pour vous. Il dit qu'il ne sertira plus jamais d'éther. Pour un armurier de Qarzim, c'est presque un vœu religieux. »" }
+          - { qui: ziyane, dit: "Elle baisse la voix. « Combien de cristaux dorment dans les palais de la Concorde, d'après vous ? Et combien pleurent sans que personne les entende ? »", si: { flag: cristal-voix } }
+        effets: [{ terminer_quete: q-cristal-murmure, xp: 280, or: 70, reputation: { ourvalis: 2 } }]
+        fin: true

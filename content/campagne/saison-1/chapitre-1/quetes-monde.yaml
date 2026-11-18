@@ -1,0 +1,237 @@
+# Chapitre 1 — quêtes secondaires « du monde » (ajoutées le 18/11) : elles relient la vie de Lysmont à l'histoire.
+# « Les veuves de Valgrane » : la Couronne paie l'Ordre pour les Appels au lieu de payer ses soldats morts.
+# « La lanterne noire » : après la Fête des Lanternes, un culte cendré se cache sous la ville.
+quetes:
+  - id: q-pensions-valgrane
+    titre: "Les veuves de Valgrane"
+    type: secondaire
+    chapitre: 1
+    niveau: 3
+    resume: "Depuis la chute de Valgrane, les veuves des soldats ne touchent plus leur pension. Personne au château ne sait pourquoi."
+    etapes:
+      - { id: demande, objectif: "Écouter Dame Rowena, à la Guilde.", scene: sq-pensions-rowena, lieu: guilde }
+      - { id: tresor, objectif: "Demander l'aide de la princesse Séraphine, au château.", scene: sq-pensions-seraphine, lieu: chateau }
+      - { id: veuves, objectif: "Retrouver les veuves sur la place de Lysmont.", scene: sq-pensions-place, lieu: lysmont-place }
+      - { id: retour, objectif: "Raconter la fin de l'affaire à Dame Rowena.", scene: sq-pensions-retour, lieu: guilde }
+  - id: q-lanterne-noire
+    titre: "La lanterne noire"
+    type: secondaire
+    chapitre: 1
+    niveau: 5
+    resume: "Depuis l'attaque de la Fête des Lanternes, des silhouettes encapuchonnées descendent la nuit sous le quartier des Tanneurs."
+    etapes:
+      - { id: rumeur, objectif: "Écouter Bram, au Chaudron Fêlé.", scene: sq-lanterne-bram, lieu: taverne }
+      - { id: egouts, objectif: "Descendre dans les égouts sous les Tanneurs.", scene: sq-lanterne-egouts, lieu: egouts }
+      - { id: cache, objectif: "Trouver la cache des porteurs de la lanterne noire.", scene: sq-lanterne-cache, lieu: egouts, niveau: 6 }
+      - { id: retour, objectif: "Montrer la lettre à Dame Rowena, à la Guilde.", scene: sq-lanterne-retour, lieu: guilde }
+
+objets:
+  - { id: registre-pensions, nom: "Registre des pensions", type: quete, description: "Un registre du Trésor royal. Depuis 1004, la ligne « Pensions de Valgrane » est barrée et remplacée par « Contribution au Temple du Seuil »." }
+  - { id: lanterne-noire, nom: "Lanterne noire", type: quete, description: "Une lanterne de fer peinte en noir. Sa flamme est violette et ne chauffe pas." }
+
+scenes:
+  # ── Les veuves de Valgrane ─────────────────────────────────────
+  - id: sq-pensions-rowena
+    pnj: rowena
+    titre: "Les veuves de Valgrane : la pétition"
+    type: groupe
+    lieu: guilde
+    decor: guilde
+    quete: q-pensions-valgrane
+    disponible_si: { flag: examen-reussi, pas_flag: pensions-acceptees }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: rowena, dit: "Rowena pose une feuille froissée sur le comptoir. Quarante noms, certains écrits d'une main tremblante, d'autres juste une croix. « Les veuves des soldats tombés à Valgrane. Ça fait neuf ans qu'elles ne touchent plus leur pension. Neuf ans. »" }
+          - { qui: rowena, dit: "« La Guilde ne se mêle pas des affaires de la Couronne. C'est notre règle. » Elle tapote la pile de contrats. « Mais [[tu es nouveau||vous êtes nouveaux]], personne au château ne connaît [[ta tête||vos têtes]]. Et un contrat, c'est un contrat. »" }
+          - { qui: aveline, dit: "Aveline a pâli. « Valgrane… Mon père y commandait. Si ces femmes ont faim, c'est aussi à cause de son nom. »", si: { flag: aveline-rencontree } }
+        choix:
+          - texte: "« On s'en occupe. »"
+            effets: [{ flag: pensions-acceptees, quete: { id: q-pensions-valgrane, etape: tresor } }]
+            aller: fin
+      fin:
+        repliques:
+          - { qui: rowena, dit: "« Le Trésor est au château. La princesse Séraphine a la réputation de lire les registres que personne ne lit. Commencez par elle. »" }
+        fin: true
+
+  - id: sq-pensions-seraphine
+    pnj: seraphine
+    titre: "Les veuves de Valgrane : le registre du Trésor"
+    type: groupe
+    lieu: chateau
+    decor: chateau-trone
+    quete: q-pensions-valgrane
+    disponible_si: { quete_etape: { q-pensions-valgrane: tresor } }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: seraphine, dit: "Séraphine écoute sans vous interrompre, ce qui est rare. Puis elle jette un coup d'œil vers les gardes et baisse la voix. « Les pensions de Valgrane ? Je croyais qu'elles étaient payées. Mon père le croit aussi, j'en suis sûre. »" }
+          - { qui: seraphine, expression: joie, dit: "Un sourire espiègle. « Les archives du Trésor ferment au coucher du soleil. Moi, j'en ai la clé depuis mes douze ans. Ne le répétez pas. »" }
+        choix:
+          - texte: "Fouiller les registres avec elle. (Intelligence, difficulté 16)"
+            test: { carac: INT, difficulte: 16, reussite: trouve, echec: lent }
+      trouve:
+        repliques:
+          - { dit: "Au milieu de la nuit, entre deux piles poussiéreuses, vous la trouvez : l'année 1004. La ligne « Pensions de Valgrane » est barrée d'un trait net. Juste en dessous, de la même main : « Contribution au Temple du Seuil — préparation des Appels »." }
+          - { qui: seraphine, expression: colere, dit: "Séraphine relit trois fois. « On a pris l'argent des veuves… pour payer vos invocations. » Elle serre le registre contre elle. « Je veux savoir qui a signé ça. »" }
+        effets: [{ objet: registre-pensions, affinite: { seraphine: 3 }, flag: pensions-preuve, quete: { id: q-pensions-valgrane, etape: veuves } }]
+        fin: true
+      lent:
+        repliques:
+          - { dit: "Les colonnes de chiffres se mélangent. C'est Séraphine qui trouve, à l'aube, l'année 1004 : la ligne « Pensions de Valgrane » barrée, remplacée par « Contribution au Temple du Seuil — préparation des Appels »." }
+          - { qui: seraphine, expression: tristesse, dit: "« On a pris l'argent des veuves pour payer les Appels. » Elle vous tend le registre. « Allez les voir. Moi, je dois réfléchir à ce que je vais dire à mon père. »" }
+        effets: [{ objet: registre-pensions, affinite: { seraphine: 1 }, flag: pensions-preuve, quete: { id: q-pensions-valgrane, etape: veuves } }]
+        fin: true
+
+  - id: sq-pensions-place
+    titre: "Les veuves de Valgrane : la place"
+    type: groupe
+    lieu: lysmont-place
+    decor: lysmont-place
+    quete: q-pensions-valgrane
+    disponible_si: { quete_etape: { q-pensions-valgrane: veuves } }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "Les veuves se retrouvent chaque semaine près de la fontaine, pour partager ce qu'elles ont. La plus âgée, Mère Odile, a gardé le manteau de son mari. Elle regarde le registre longtemps, sans rien dire." }
+          - { dit: "« Alors c'est ça. Nos hommes sont morts sur le Mur, et leur solde a servi à en appeler d'autres. » Elle relève la tête vers vous, sans colère. « Ce n'est pas votre faute, vous. Vous non plus, on ne vous a pas demandé votre avis. »" }
+        choix:
+          - texte: "Lire le registre à voix haute, devant toute la place."
+            effets: [{ flag: pensions-revelees, reputation: { couronne: -8, ordre: -5, guilde: 5 }, journal: "{groupe} révèle sur la place de Lysmont que l'argent des veuves de Valgrane finance les Appels." }]
+            aller: revele
+          - texte: "Confier le registre à Séraphine, pour qu'elle plaide au Conseil du roi."
+            effets: [{ flag: pensions-conseil, retirer_objet: registre-pensions, affinite: { seraphine: 3 }, reputation: { couronne: 3 } }]
+            aller: conseil
+          - texte: "Donner de votre poche, en attendant mieux. (20 or)"
+            si: { or_min: 20 }
+            visible_si_bloque: true
+            effets: [{ or: -20, flag: pensions-dons, reputation: { guilde: 3 } }]
+            aller: dons
+      revele:
+        repliques:
+          - { dit: "La foule grossit à chaque ligne. Un marchand crache par terre. Un garde s'éloigne, l'air gêné. Le soir même, tout Lysmont en parle, et deux prêtres du Temple traversent la place sans oser lever les yeux." }
+        effets: [{ quete: { id: q-pensions-valgrane, etape: retour } }]
+        fin: true
+      conseil:
+        repliques:
+          - { dit: "Mère Odile hoche la tête. « Une princesse qui lit les registres… On aura tout vu. » Une semaine plus tard, un héraut annonce que les pensions de Valgrane seront « réexaminées ». Ce n'est pas une victoire. Mais ce n'est plus le silence." }
+        effets: [{ quete: { id: q-pensions-valgrane, etape: retour } }]
+        fin: true
+      dons:
+        repliques:
+          - { dit: "Mère Odile refuse d'abord, puis accepte « pour les petits ». Elle garde le registre caché sous son manteau. « Un jour, quelqu'un devra rendre des comptes. Ce jour-là, on aura la preuve. »" }
+        effets: [{ quete: { id: q-pensions-valgrane, etape: retour } }]
+        fin: true
+
+  - id: sq-pensions-retour
+    pnj: rowena
+    titre: "Les veuves de Valgrane : le rapport"
+    type: groupe
+    lieu: guilde
+    decor: guilde
+    quete: q-pensions-valgrane
+    rend_quete: true
+    disponible_si: { quete_etape: { q-pensions-valgrane: retour } }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: rowena, dit: "Rowena écoute, mâchonnant sa pipe éteinte. « Vous avez fait du bruit sur la place. Le château va s'en souvenir. Moi aussi. » Elle a presque l'air fière.", si: { flag: pensions-revelees } }
+          - { qui: rowena, dit: "« La princesse au Conseil… Malin. Si ça marche, on dira que c'est son idée. Si ça rate, on dira que c'est la vôtre. Bienvenue en politique. »", si: { flag: pensions-conseil } }
+          - { qui: rowena, dit: "« De votre poche ? » Elle secoue la tête, mais elle sourit. « La Guilde vous rembourse. Ne le dites à personne, j'ai une réputation de radine. »", si: { flag: pensions-dons } }
+          - { qui: aveline, expression: tristesse, dit: "Aveline vous attend à la porte. « Merci. Mon père aurait voulu qu'on s'occupe d'elles avant de s'occuper de lui. »", si: { flag: aveline-rencontree } }
+        effets: [{ terminer_quete: q-pensions-valgrane, points_guilde: 30, or: 20, reputation: { guilde: 3 }, affinite: { aveline: 2 } }]
+        fin: true
+
+  # ── La lanterne noire ──────────────────────────────────────────
+  - id: sq-lanterne-bram
+    pnj: bram
+    titre: "La lanterne noire : la rumeur"
+    type: groupe
+    lieu: taverne
+    decor: taverne
+    quete: q-lanterne-noire
+    disponible_si: { flag: lanternes-faites, pas_flag: lanterne-acceptee }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: bram, dit: "Bram essuie la même chope depuis cinq minutes. « Depuis la Fête, la ville ne dort plus. Et le petit Nello, le ramoneur, raconte des choses. Des capuches, la nuit, qui descendent dans les égouts sous les Tanneurs. Avec une lanterne noire. Une flamme violette. »" }
+          - { qui: bram, dit: "« Les gardes ont ri. Moi, j'ai vu la même couleur le soir où ce démon a brûlé la place. Je ne ris pas. »" }
+        choix:
+          - texte: "« On descend voir. »"
+            effets: [{ flag: lanterne-acceptee, quete: { id: q-lanterne-noire, etape: egouts } }]
+            aller: fin
+      fin:
+        repliques:
+          - { qui: bram, dit: "« Prenez une torche. Et quand vous remonterez, la première tournée est pour moi. »" }
+        fin: true
+
+  - id: sq-lanterne-egouts
+    titre: "La lanterne noire : les égouts"
+    type: groupe
+    lieu: egouts
+    decor: egouts
+    quete: q-lanterne-noire
+    disponible_si: { quete_etape: { q-lanterne-noire: egouts } }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "Une eau noire jusqu'aux chevilles, une odeur de cuir pourri. Sur les pierres, des gouttes de cire violette, comme un chemin. Quelque chose de gros bouge dans l'obscurité, et ce n'est pas un cultiste." }
+        combat: { rencontre: egouts-lysmont, victoire: piste, defaite: piste }
+      piste:
+        repliques:
+          - { dit: "Les gouttes de cire mènent à une grille rouillée, sciée récemment. Derrière, une lueur violette." }
+        effets: [{ quete: { id: q-lanterne-noire, etape: cache } }]
+        fin: true
+
+  - id: sq-lanterne-cache
+    titre: "La lanterne noire : la cache"
+    type: groupe
+    lieu: egouts
+    decor: egouts
+    quete: q-lanterne-noire
+    disponible_si: { quete_etape: { q-lanterne-noire: cache } }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "Une ancienne citerne, transformée en chapelle. Des bougies violettes, un autel fait de caisses, et deux silhouettes qui se retournent d'un bond. « Les Appelés ! Le Premier nous l'avait dit : ils viendront. »" }
+        combat: { rencontre: tanneurs-cultistes, victoire: lettre, defaite: fuite }
+      fuite:
+        repliques:
+          - { dit: "Les cultistes s'enfuient par un boyau trop étroit pour vous suivre. Dans leur précipitation, ils ont laissé la lanterne… et une lettre à moitié brûlée." }
+        suite: lettre
+      lettre:
+        repliques:
+          - { dit: "Sur l'autel, la lanterne noire brûle toujours, sans chaleur. À côté, une lettre à moitié brûlée : « … chaque Appel ouvre la porte un peu plus. Que l'Ordre continue d'appeler. Le Premier attend, et il a de la patience. »" }
+        effets: [{ objet: lanterne-noire, flag: lettre-du-premier, quete: { id: q-lanterne-noire, etape: retour }, journal: "Sous Lysmont, {groupe} trouve une lettre du culte cendré : « chaque Appel ouvre la porte un peu plus »." }]
+        fin: true
+
+  - id: sq-lanterne-retour
+    pnj: rowena
+    titre: "La lanterne noire : la lettre"
+    type: groupe
+    lieu: guilde
+    decor: guilde
+    quete: q-lanterne-noire
+    rend_quete: true
+    disponible_si: { quete_etape: { q-lanterne-noire: retour } }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: rowena, dit: "Rowena lit la lettre deux fois, puis la pose loin de la lanterne, comme si elle allait mordre. « Le Premier. Les vieux livres de la Guilde parlent d'un Premier Appelé, mort en héros il y a six cents ans. Les cultistes adorent un mort ? Ou quelqu'un se sert de son nom ? »" }
+          - { qui: rowena, dit: "« Je vais en parler au Conseil de la Guilde. Seulement au Conseil. » Elle vous regarde. « Et vous, vous en parlez à qui ? »" }
+        choix:
+          - texte: "« À personne. On garde ça entre nous et la Guilde. »"
+            effets: [{ reputation: { guilde: 4 }, flag: lettre-gardee }]
+            aller: fin
+          - texte: "« À Sœur Elianne. Elle cherche la vérité, elle aussi. »"
+            effets: [{ affinite: { elianne: 3 }, reputation: { ordre: -2 }, flag: lettre-elianne }]
+            aller: elianne
+      elianne:
+        repliques:
+          - { qui: elianne, expression: surprise, dit: "Plus tard, au Temple, Elianne lit la lettre dans un coin de la nef. Ses mains tremblent un peu. « Chaque Appel ouvre la porte… Non. C'est un mensonge de cultistes. Forcément. » Elle vous la rend. Elle ne l'oubliera pas." }
+        suite: fin
+      fin:
+        repliques:
+          - { qui: rowena, dit: "« Bon travail. Et n'allumez jamais cette lanterne chez vous. »" }
+        effets: [{ terminer_quete: q-lanterne-noire, points_guilde: 40, or: 30 }]
+        fin: true

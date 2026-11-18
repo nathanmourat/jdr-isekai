@@ -1,0 +1,92 @@
+# Chapitre 3 — quête secondaire « du monde » (ajoutée le 18/11) : l'Arbre des Noms, près de la Clairière de la Déchirure.
+# Chaque âme qui traverse le Voile y fait pousser une feuille. Celle du Premier Appelé est toujours verte.
+quetes:
+  - id: q-arbre-des-noms
+    titre: "L'Arbre des Noms"
+    type: secondaire
+    chapitre: 3
+    niveau: 18
+    region: sylvenoire
+    resume: "Des éclaireurs de la Légion coupent les feuilles d'un arbre blanc, près de la Clairière de la Déchirure. Les elfes disent qu'une feuille y pousse pour chaque âme venue de l'autre côté du Voile."
+    etapes:
+      - { id: orsa, objectif: "Écouter Orsa, au Relais de la Guilde d'Ithrael.", scene: sq-arbre-orsa, lieu: guilde-ithrael }
+      - { id: clairiere, objectif: "Protéger l'Arbre des Noms, à la Clairière de la Déchirure.", scene: sq-arbre-clairiere, lieu: clairiere-dechirure, niveau: 19 }
+      - { id: retour, objectif: "Faire votre rapport à Orsa.", scene: sq-arbre-retour, lieu: guilde-ithrael }
+
+scenes:
+  - id: sq-arbre-orsa
+    pnj: orsa
+    titre: "L'Arbre des Noms : le contrat"
+    type: groupe
+    lieu: guilde-ithrael
+    decor: guilde
+    quete: q-arbre-des-noms
+    disponible_si: { flag: sylvenoire-ouverte, pas_flag: arbre-accepte }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: orsa, dit: "Orsa tape du plat de sa hache sur le comptoir. « Contrat bizarre, payé par les elfes, donc bien payé. Des éclaireurs de la Légion rôdent près de la Clairière de la Déchirure. Ils ne tuent personne. Ils coupent des feuilles. »" }
+          - { qui: orsa, dit: "« Un arbre blanc, l'Arbre des Noms. Les elfes jurent qu'une feuille y pousse chaque fois qu'une âme traverse le Voile. Moi, je suis naine : un arbre, c'est du bois de chauffage. Mais quand la Légion s'intéresse à quelque chose, je m'y intéresse aussi. »" }
+        choix:
+          - texte: "« On prend le contrat. »"
+            effets: [{ flag: arbre-accepte, quete: { id: q-arbre-des-noms, etape: clairiere } }]
+            aller: fin
+      fin:
+        repliques:
+          - { qui: orsa, dit: "« Rapportez-moi une de ces feuilles, si elles sont si spéciales. Pour voir. »" }
+        fin: true
+
+  - id: sq-arbre-clairiere
+    titre: "L'Arbre des Noms : la clairière"
+    type: groupe
+    lieu: clairiere-dechirure
+    decor: clairiere-dechirure
+    quete: q-arbre-des-noms
+    disponible_si: { quete_etape: { q-arbre-des-noms: clairiere } }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "Au bord de la clairière, un arbre au tronc blanc comme de l'os, couvert de milliers de petites feuilles argentées. Trois éclaireurs cendrés coupent les branches basses et rangent les feuilles dans des sacs, une par une, avec soin." }
+          - { dit: "« Les feuilles des nouveaux Appelés, souffle l'un d'eux. Le Souverain les veut toutes. » Ils se retournent." }
+        combat: { rencontre: eclaireurs-legion, victoire: arbre, defaite: arbre-dur }
+      arbre-dur:
+        repliques:
+          - { dit: "Les éclaireurs s'enfuient avec un sac, mais en laissent tomber deux autres. Les feuilles s'éparpillent dans l'herbe, et l'arbre est à vous." }
+        suite: arbre
+      arbre:
+        repliques:
+          - { dit: "Sur chaque feuille, une écriture fine, comme gravée par la sève : un nom et une date. Des centaines d'Appelés, sur quatre siècles. Et, sur les branches les plus jeunes, des noms que vous connaissez très bien : les vôtres." }
+          - { qui: ilysse, dit: "Ilyssë effleure une feuille du bout des doigts. « L'arbre se souvient de chaque passage. Le Voile, lui, se souvient de chaque déchirure. »", si: { flag: ilysse-recrutee } }
+        choix:
+          - texte: "Chercher la plus ancienne feuille de l'arbre. (Intelligence, difficulté 22)"
+            test: { carac: INT, difficulte: 22, reussite: premier, echec: rien }
+          - texte: "Ramasser les feuilles tombées et repartir."
+            aller: rien
+      premier:
+        repliques:
+          - { dit: "Tout au cœur de l'arbre, sur une branche noueuse, une seule feuille porte la date 430 et un nom : Orvan. Le Premier Appelé, « mort en héros » il y a six siècles, d'après tous les livres." }
+          - { dit: "Autour de lui, toutes les feuilles des Appelés morts sont devenues grises et sèches. La sienne est toujours verte." }
+        effets: [{ flag: arbre-orvan-vert, journal: "Sur l'Arbre des Noms, la feuille d'Orvan, le Premier Appelé, est toujours verte." }, { quete: { id: q-arbre-des-noms, etape: retour } }]
+        fin: true
+      rien:
+        repliques:
+          - { dit: "Vous ramassez les feuilles tombées. Elles sont tièdes, comme une main." }
+        effets: [{ quete: { id: q-arbre-des-noms, etape: retour } }]
+        fin: true
+
+  - id: sq-arbre-retour
+    pnj: orsa
+    titre: "L'Arbre des Noms : le rapport"
+    type: groupe
+    lieu: guilde-ithrael
+    decor: guilde
+    quete: q-arbre-des-noms
+    rend_quete: true
+    disponible_si: { quete_etape: { q-arbre-des-noms: retour } }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: orsa, dit: "Orsa retourne une feuille entre ses gros doigts. « Tiède. » Elle la pose très doucement sur le comptoir, ce qui, pour une naine, est un immense compliment. « Bon. Ce n'est peut-être pas du bois de chauffage. »" }
+          - { qui: orsa, dit: "Puis, plus bas : « Une feuille verte pour un mort de six cents ans ? Si j'étais vous, je ne le raconterais pas au Temple. Pas encore. »", si: { flag: arbre-orvan-vert } }
+        effets: [{ terminer_quete: q-arbre-des-noms, xp: 480, or: 130, reputation: { elfes: 6 } }]
+        fin: true

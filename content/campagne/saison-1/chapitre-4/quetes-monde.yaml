@@ -1,0 +1,100 @@
+# Chapitre 4 — quête secondaire « du monde » (ajoutée le 18/11) : un Appelé oublié sur l'Île aux Épaves.
+# Son carnet confirme ce qu'Elianne découvre ce chapitre : chaque Appel déchire un peu plus le Voile.
+quetes:
+  - id: q-appele-oublie
+    titre: "L'Appelé de l'Île aux Épaves"
+    type: secondaire
+    chapitre: 4
+    niveau: 25
+    region: archipel-des-brumes
+    resume: "Un vieil ermite vit sur l'Île aux Épaves. Il parle une langue que personne ne comprend, et les noyés rôdent autour de sa cabane."
+    etapes:
+      - { id: brann, objectif: "Écouter le Vieux Brann, au Requin Ivre.", scene: sq-oublie-brann, lieu: port-taverne }
+      - { id: ile, objectif: "Trouver l'ermite sur l'Île aux Épaves.", scene: sq-oublie-ile, lieu: ile-aux-epaves, niveau: 26 }
+      - { id: retour, objectif: "Retourner voir Brann, au Requin Ivre.", scene: sq-oublie-retour, lieu: port-taverne }
+
+objets:
+  - { id: carnet-de-julien, nom: "Carnet d'un Appelé", type: quete, description: "Un carnet couvert de dates, écrit dans votre langue. À chaque Appel de l'Ordre correspond, quelques jours plus tard, une nouvelle fissure rouge dans le ciel du nord." }
+
+scenes:
+  - id: sq-oublie-brann
+    pnj: brann
+    titre: "L'Appelé de l'Île aux Épaves : la rumeur"
+    type: groupe
+    lieu: port-taverne
+    decor: port-taverne
+    quete: q-appele-oublie
+    disponible_si: { flag: carte-du-nid, pas_flag: oublie-accepte }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: brann, dit: "Le Vieux Brann pose une petite barrique devant vous. « Pour le Fou des Épaves. Il vit dans une cabane faite de coques de navires, sur l'île d'en face. Il échange du poisson séché contre mon rhum depuis trente ans. Ça fait deux mois qu'il n'est pas venu. »" }
+          - { qui: brann, dit: "« Il parle une langue bizarre, toute ronde. Il écrit des lettres que personne ne sait lire. » Le tavernier vous regarde mieux. « D'ailleurs… ça ressemble un peu à votre accent, à vous. »" }
+        choix:
+          - texte: "« On lui apporte son rhum. »"
+            effets: [{ flag: oublie-accepte, quete: { id: q-appele-oublie, etape: ile } }]
+            aller: fin
+      fin:
+        repliques:
+          - { qui: brann, dit: "« Méfiez-vous des noyés. Ils aiment les épaves, et ils n'aiment pas les visites. »" }
+        fin: true
+
+  - id: sq-oublie-ile
+    titre: "L'Appelé de l'Île aux Épaves : la cabane"
+    type: groupe
+    lieu: ile-aux-epaves
+    decor: ile-aux-epaves
+    quete: q-appele-oublie
+    disponible_si: { quete_etape: { q-appele-oublie: ile } }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "La cabane est faite de trois coques retournées. Autour, dans l'eau peu profonde, des silhouettes ruisselantes se redressent lentement, couvertes d'algues." }
+        combat: { rencontre: archipel-noyes, victoire: ermite, defaite: ermite-dur }
+      ermite-dur:
+        repliques:
+          - { dit: "Un coup de tromblon claque depuis la cabane, puis un deuxième. Les noyés reculent dans l'eau en grognant." }
+        suite: ermite
+      ermite:
+        repliques:
+          - { dit: "Un vieil homme maigre sort de la cabane, un vieux tromblon à la main. Il vous dévisage, puis il parle. Et cette fois, vous comprenez tout : c'est votre langue, avec un accent que vous n'aviez pas entendu depuis votre arrivée." }
+          - { dit: "« Je m'appelle Julien. Julien Marceau. J'ai été appelé en 981, au Temple du Seuil, comme vous. » Il rit, un rire cassé. « Ma fenêtre d'état est bloquée au niveau 19 depuis trente ans. J'ai arrêté de la regarder. »" }
+          - { dit: "« J'ai déserté en 984. Parce que j'avais compris. À chaque Appel, quelques jours après, le ciel du nord se fissure un peu plus. J'ai tout noté. Personne n'a voulu me lire. »" }
+          - { qui: elianne, expression: tristesse, dit: "Elianne est devenue très pâle. « C'est exactement ce que je crains… depuis des mois. »", si: { flag: elianne-recrutee } }
+        choix:
+          - texte: "Lui demander son carnet. (Charisme, difficulté 26)"
+            test: { carac: CHA, difficulte: 26, reussite: carnet, echec: page }
+          - texte: "Lui proposer de revenir avec vous à Port-Vérane."
+            aller: refus
+      carnet:
+        repliques:
+          - { dit: "Julien hésite longtemps, puis vous tend un carnet gonflé d'humidité. « Prenez-le. Vous avez l'âge que j'avais. Vous, peut-être, on vous écoutera. »" }
+        effets: [{ objet: carnet-de-julien, flag: carnet-appele, quete: { id: q-appele-oublie, etape: retour }, journal: "Sur l'Île aux Épaves, Julien, Appelé de 981, confie son carnet à {groupe} : chaque Appel fissure le ciel du nord." }]
+        fin: true
+      page:
+        repliques:
+          - { dit: "Julien serre son carnet contre lui. « C'est tout ce qui me reste de raison. » Il arrache une seule page et vous la donne : une liste de dates, et à côté de chacune, le mot « fissure »." }
+        effets: [{ flag: page-appele, quete: { id: q-appele-oublie, etape: retour } }]
+        fin: true
+      refus:
+        repliques:
+          - { dit: "Julien secoue la tête doucement. « Revenir ? Ici, personne ne m'appelle plus. C'est la première fois depuis longtemps que je me sens libre. » Il vous tend quand même une page de son carnet, une liste de dates avec le mot « fissure »." }
+        effets: [{ flag: page-appele, quete: { id: q-appele-oublie, etape: retour } }]
+        fin: true
+
+  - id: sq-oublie-retour
+    pnj: brann
+    titre: "L'Appelé de l'Île aux Épaves : le retour"
+    type: groupe
+    lieu: port-taverne
+    decor: port-taverne
+    quete: q-appele-oublie
+    rend_quete: true
+    disponible_si: { quete_etape: { q-appele-oublie: retour } }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: brann, dit: "« Il est vivant ? Ce vieux fou ! » Brann se sert un verre, ce qu'il ne fait jamais. « Trente ans que je lui vends du rhum sans savoir son nom. Julien… Je l'écrirai sur la barrique, la prochaine fois. »" }
+          - { qui: brann, dit: "Il vous regarde un moment. « Vous êtes de son pays, hein ? Alors vous savez ce que ça fait, d'être loin de chez soi. Le rhum est pour moi, ce soir. »" }
+        effets: [{ terminer_quete: q-appele-oublie, xp: 560, or: 350, objet: rhum-des-brumes }]
+        fin: true

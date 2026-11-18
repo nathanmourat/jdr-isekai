@@ -1,0 +1,105 @@
+# Chapitre 5 — quête secondaire « du monde » (ajoutée le 18/11) : l'hôpital de la Gamelle, après la chute du Mur.
+# Un choix de triage sans bonne réponse : la guerre, vue depuis la cantine.
+quetes:
+  - id: q-hopital-gamelle
+    titre: "L'hôpital de la Gamelle"
+    type: secondaire
+    chapitre: 5
+    niveau: 30
+    region: mur-d-aube
+    resume: "Depuis la chute du Mur, la cantine de Mère Brisac est devenue un hôpital. Il n'y a plus de bandages, plus d'onguents, et chaque nuit amène de nouveaux blessés."
+    etapes:
+      - { id: brisac, objectif: "Écouter Mère Brisac, à la Gamelle.", scene: sq-hopital-brisac, lieu: fort-aube-cantine }
+      - { id: village, objectif: "Fouiller l'apothicairerie du village évacué.", scene: sq-hopital-village, lieu: village-evacue, niveau: 31 }
+      - { id: triage, objectif: "Rapporter les remèdes à Mère Brisac.", scene: sq-hopital-triage, lieu: fort-aube-cantine }
+
+scenes:
+  - id: sq-hopital-brisac
+    pnj: mere-brisac
+    titre: "L'hôpital de la Gamelle : les blessés"
+    type: groupe
+    lieu: fort-aube-cantine
+    decor: fort-aube-cantine
+    quete: q-hopital-gamelle
+    disponible_si: { flag: mur-tombe, pas_flag: hopital-accepte }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: mere-brisac, dit: "Les tables de la cantine ont été poussées contre les murs. Des blessés partout, des soldats, des fermiers, deux enfants. Mère Brisac a remplacé sa louche par des ciseaux. « Les chirurgiens sont au rempart. Ici, c'est moi, et ce que j'ai. C'est-à-dire plus rien. »" }
+          - { qui: mere-brisac, dit: "« L'apothicaire du village a été évacué sans ses réserves. Des onguents, des bandes, de l'eau-de-vie de soin. Mais les chiens des Cendres rôdent dans les rues vides. »" }
+        choix:
+          - texte: "« On va chercher les remèdes. »"
+            effets: [{ flag: hopital-accepte, quete: { id: q-hopital-gamelle, etape: village } }]
+            aller: fin
+      fin:
+        repliques:
+          - { qui: mere-brisac, dit: "« Faites vite. Et revenez entiers : je n'ai plus de lit. »" }
+        fin: true
+
+  - id: sq-hopital-village
+    titre: "L'hôpital de la Gamelle : le village évacué"
+    type: groupe
+    lieu: village-evacue
+    decor: village-evacue
+    quete: q-hopital-gamelle
+    disponible_si: { quete_etape: { q-hopital-gamelle: village } }
+    noeuds:
+      debut:
+        repliques:
+          - { dit: "Le village est intact, ce qui le rend plus sinistre encore : du linge sèche toujours aux fenêtres. Devant l'apothicairerie, deux chiens des enfers grattent la porte, attirés par l'odeur des herbes." }
+        combat: { rencontre: mur-chiens, victoire: reserve, defaite: reserve-dur }
+      reserve-dur:
+        repliques:
+          - { dit: "Les chiens finissent par s'enfuir, blessés, mais ils ont eu le temps de renverser une partie des étagères." }
+        suite: reserve
+      reserve:
+        repliques:
+          - { dit: "Dans la cave, des caisses d'onguents, des rouleaux de bandes, quelques flacons d'eau-de-vie de soin. C'est beaucoup. Ce n'est pas assez pour tout le monde." }
+        effets: [{ quete: { id: q-hopital-gamelle, etape: triage } }]
+        fin: true
+
+  - id: sq-hopital-triage
+    pnj: mere-brisac
+    titre: "L'hôpital de la Gamelle : le triage"
+    type: groupe
+    lieu: fort-aube-cantine
+    decor: fort-aube-cantine
+    quete: q-hopital-gamelle
+    rend_quete: true
+    disponible_si: { quete_etape: { q-hopital-gamelle: triage } }
+    noeuds:
+      debut:
+        repliques:
+          - { qui: mere-brisac, dit: "Mère Brisac compte les flacons deux fois. Puis elle vous regarde, et pour la première fois, elle a l'air vieille. « Il y en a pour la moitié. La Maréchale veut ses soldats sur le rempart demain. Les familles du village veulent leurs enfants vivants. Moi, je ne choisis pas. Pas cette fois. Choisissez, vous. »" }
+        choix:
+          - texte: "Les soldats d'abord : sans eux, le fort tombe, et tout le monde avec."
+            effets: [{ flag: triage-soldats, reputation: { troupes: 6, couronne: 3 } }]
+            aller: soldats
+          - texte: "Les civils et les enfants d'abord : on se bat pour eux."
+            effets: [{ flag: triage-civils, reputation: { troupes: -3, guilde: 5 } }]
+            aller: civils
+          - texte: "Utiliser le regard du Seuil pour voir qui peut attendre et qui ne peut pas. (Esprit, difficulté 30)"
+            test: { carac: ESP, difficulte: 30, reussite: regard, echec: civils-dur }
+      soldats:
+        repliques:
+          - { dit: "Le lendemain, quarante soldats remontent sur le rempart, pansés de frais. Le soir, trois familles du village ne parlent plus à personne de la Guilde. La guerre fait ses comptes, et ils ne tombent jamais juste." }
+        suite: fin
+      civils:
+        repliques:
+          - { dit: "Les enfants guérissent. Les familles pleurent de soulagement. Le lendemain, le rempart est un peu plus vide, et la Maréchale vous regarde passer sans un mot." }
+        suite: fin
+      civils-dur:
+        repliques:
+          - { dit: "Le regard du Seuil se brouille : trop de douleur, trop de visages. Vous choisissez à l'instinct, et l'instinct vous dit : les plus petits d'abord. Les enfants guérissent. Le rempart, lui, devra tenir avec ce qu'il a." }
+        effets: [{ flag: triage-civils, reputation: { troupes: -3, guilde: 5 } }]
+        suite: fin
+      regard:
+        repliques:
+          - { dit: "Les fenêtres d'état ne sont pas faites pour ça, mais elles le font : au-dessus de chaque blessé, une lueur, plus ou moins vive. Vous soignez d'abord ceux dont la lueur vacille, quels qu'ils soient. Personne n'est oublié. Pas cette nuit." }
+        effets: [{ flag: triage-regard, reputation: { troupes: 4, guilde: 4 } }]
+        suite: fin
+      fin:
+        repliques:
+          - { qui: mere-brisac, dit: "Mère Brisac vous pose un bol de soupe devant chacun, sans rien demander. « Mangez. Ça, au moins, il y en a pour tout le monde. »" }
+        effets: [{ terminer_quete: q-hopital-gamelle, xp: 1700, or: 550, objet: potion-soin-supreme }]
+        fin: true
