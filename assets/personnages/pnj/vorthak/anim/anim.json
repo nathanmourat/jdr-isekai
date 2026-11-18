@@ -1,0 +1,41 @@
+{
+ "taille": 512,
+ "expressions": {
+  "neutre": {
+   "bouche": [
+    0.4151,
+    0.472
+   ],
+   "largeur": 0.06,
+   "ouverte": false,
+   "cou": [
+    0.4151,
+    0.547
+   ]
+  },
+  "joie": {
+   "bouche": [
+    0.4151,
+    0.4721
+   ],
+   "largeur": 0.06,
+   "ouverte": true,
+   "cou": [
+    0.4151,
+    0.5471
+   ]
+  },
+  "colere": {
+   "bouche": [
+    0.4151,
+    0.4722
+   ],
+   "largeur": 0.06,
+   "ouverte": false,
+   "cou": [
+    0.4151,
+    0.5472
+   ]
+  }
+ }
+}
