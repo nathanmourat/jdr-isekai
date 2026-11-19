@@ -17,3 +17,8 @@ portraits:
     aveline: { lueur: "#f3c45a", particules: lucioles }
     kaya: { lueur: "#c8d8f0", particules: null }
     aureliath: { lueur: "#f3d58a", particules: magie }
+    seraphine: { lueur: "#f0dca0", particules: null }
+    elianne: { lueur: "#a8e0b0", particules: lucioles }
+    edmund-iv: { lueur: null, particules: null }
+    rowena: { lueur: null, particules: null }
+    vorthak: { lueur: "#a070e0", particules: braises }

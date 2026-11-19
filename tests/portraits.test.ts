@@ -38,13 +38,28 @@ describe('Portraits animés de dialogue (essai)', () => {
     expect(manquantes).toEqual([]);
   });
 
+  it('Séraphine et Elianne (compagnes, 6 expressions), Edmund IV, Vorthak et Rowena (PNJ) : portraits animés et effets', () => {
+    for (const e of ['neutre', 'joie', 'colere', 'tristesse', 'gene', 'surprise']) {
+      expect(portraitAnimePersonnage(c, 'seraphine', e)!.cle).toBe(`personnages/compagnes/seraphine/${e}`);
+      expect(portraitAnimePersonnage(c, 'elianne', e)!.cle).toBe(`personnages/compagnes/elianne/${e}`);
+    }
+    for (const [qui, exprs] of [['edmund-iv', ['neutre', 'colere', 'tristesse']], ['vorthak', ['neutre', 'colere', 'joie']], ['rowena', ['neutre', 'joie', 'colere', 'surprise']]] as const) {
+      for (const e of exprs) expect(portraitAnimePersonnage(c, qui, e)!.cle).toBe(`personnages/pnj/${qui}/${e}`);
+    }
+    // expression absente : le neutre
+    expect(portraitAnimePersonnage(c, 'vorthak', 'tristesse')!.cle).toBe('personnages/pnj/vorthak/neutre');
+    expect(portraitAnimePersonnage(c, 'edmund-iv', 'gene')!.cle).toBe('personnages/pnj/edmund-iv/neutre');
+    expect(portraitAnimePersonnage(c, 'vorthak')!.effets).toEqual({ lueur: '#a070e0', particules: 'braises' });
+    expect(portraitAnimePersonnage(c, 'elianne')!.effets).toEqual({ lueur: '#a8e0b0', particules: 'lucioles' });
+  });
+
   it("une expression qui n'existe pas prend « neutre »", () => {
     expect(portraitAnimePersonnage(c, 'aveline', 'boudeuse')!.cle).toBe('personnages/compagnes/aveline/neutre');
   });
 
   it('sans vrais portraits ni anim.json : pas de portrait animé (image fixe comme avant)', () => {
     expect(portraitAnimePersonnage(c, 'nadja', 'joie')).toBeNull();
-    expect(portraitAnimePersonnage(c, 'rowena')).toBeNull();
+    expect(portraitAnimePersonnage(c, 'bram')).toBeNull();
     expect(portraitAnimePersonnage(c, 'narrateur')).toBeNull();
     // portrait présent mais pas de réglages d'animation : image fixe
     expect(portraitAnimePersonnage(c, 'aveline', 'neutre', {})).toBeNull();

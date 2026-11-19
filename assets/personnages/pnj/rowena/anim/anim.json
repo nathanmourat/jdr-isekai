@@ -1,0 +1,53 @@
+{
+ "taille": 512,
+ "expressions": {
+  "neutre": {
+   "bouche": [
+    0.5921,
+    0.4834
+   ],
+   "largeur": 0.06,
+   "ouverte": false,
+   "cou": [
+    0.5921,
+    0.5584
+   ]
+  },
+  "joie": {
+   "bouche": [
+    0.5924,
+    0.4837
+   ],
+   "largeur": 0.06,
+   "ouverte": true,
+   "cou": [
+    0.5924,
+    0.5587
+   ]
+  },
+  "colere": {
+   "bouche": [
+    0.5921,
+    0.4833
+   ],
+   "largeur": 0.06,
+   "ouverte": false,
+   "cou": [
+    0.5921,
+    0.5583
+   ]
+  },
+  "surprise": {
+   "bouche": [
+    0.5923,
+    0.4836
+   ],
+   "largeur": 0.06,
+   "ouverte": true,
+   "cou": [
+    0.5923,
+    0.5586
+   ]
+  }
+ }
+}
