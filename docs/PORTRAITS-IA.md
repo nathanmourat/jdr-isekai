@@ -172,7 +172,22 @@ Vorthak, the Emissary of the Ashes, an adult male demon who looks around 35. Ang
 
 **Outil modifié** : dans `preparer_animation.py`, la zone des yeux suit maintenant la bouche (le visage de Vorthak est à gauche de l'image) ; les calques `yeux.png` sont ensuite coupés par la silhouette du portrait (sinon une tache grise apparaît près des cheveux d'Edmund pendant le clignement).
 
-À venir : Nadja, Ilyssë, Ysoria, Morra ; Halvine, Bram, Ferrand…
+#### Nadja et Ilyssë (compagnes, 19/11, Gemini)
+
+- **Nadja** (`nadja`) : 6 expressions + yeux fermés (`portraits-sources/nadja/`). Boîte (16, 49, 991, 1024), bouche (568, 416). Lueur ocre.
+- **Ilyssë** (`ilysse`) : 6 expressions + yeux fermés (`portraits-sources/ilysse/`). Boîte (5, 50, 979, 1024), bouche (578, 466). Lueur violette + magie. Ses lunettes restent sur le calque des yeux fermés.
+
+```
+Nadja Kesh, an adult woman of 27, a shrewd caravan broker from the desert. Warm tan skin, wavy black hair tied back with a few loose strands, green eyes lined with dark kohl, a sly half-smile. A fully closed high-collared turquoise silk tunic with ochre trim and a light ochre scarf over the shoulders, several thin gold bracelets and small gold earrings, a small abacus charm on a cord. Neutral expression: confident, amused, appraising the viewer.
+```
+
+```
+Ilyssë, an adult elf woman who looks about 25, a scholarly mage. Long straight sea-green hair falling over the shoulders, long pointed elf ears, violet eyes behind thin round gold-rimmed glasses, calm intelligent face. A fully closed high-collared midnight-blue mage robe embroidered with small silver runes along the collar and shoulders, a thin silver chain clasp. Neutral expression: calm, attentive, a faint polite smile.
+```
+
+> Nadja : femme de 27 ans, courtière des caravanes du désert, peau hâlée, cheveux noirs ondulés, yeux verts au khôl, tunique de soie turquoise et ocre, bracelets d'or, petit boulier. Ilyssë : elfe adulte (environ 25 ans en apparence), cheveux vert d'eau, yeux violets, lunettes rondes, robe de mage bleu nuit brodée de runes. Astuce : si l'image du site n'est pas un « blob », la télécharger par « Télécharger l'image en taille réelle » (2048 × 2048) puis la réduire à 1024.
+
+À venir : Ysoria, Morra ; Halvine, Bram, Ferrand…
 
 ## 5. Animation des portraits (15/11, version « réaliste »)
 
