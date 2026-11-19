@@ -152,7 +152,17 @@ D'après la scène des lanternes (`lanternes-faites`). Elle s'enchaîne avec le 
   - **Plan 3 des Lanternes (explosion) : retiré par le filtre de Flow** (« La vidéo a été supprimée »), sans doute à cause des gens projetés par l'explosion. À réécrire sans victimes : lanternes qui virent au violet, puis un éclair violet et de la cendre qui tombe sur une foule qui recule.
 - Défaut à surveiller : le temple du plan 1 ressemble à une église (clocher). Pour la version finale, préciser « round domed temple, no bell tower » ou joindre le paysage du groupe.
 
-## 7. Ordre de travail conseillé
+## 7. Corrections sans crédits (19/11)
+
+- **Images gratuites** : avec le forfait étudiant, une image Nano Banana 2.1 dans Flow coûte **0 crédit** (l'agent l'annonce avant de lancer). Une image fixe + un lent mouvement de caméra fait par nous (ffmpeg, effet « Ken Burns ») remplace très bien un plan large sans personnage.
+  - Lysmont : image `lysmont-rotonde.jpg` (temple rond à dôme doré, sans clocher), animée en 8 s vers le temple → `appel-plan1-rotonde.mp4`.
+- **Couper au montage** : Aveline coupée à 4,6 s (avant le casque), puis 1,5 s de lent zoom sur l'image figée → `appel-plan6-corrige.mp4`.
+- **Explosion** réécrite sans victimes (« nobody hurt », éclair violet, cendres, la foule recule) : acceptée par le filtre (10 crédits) → `lanternes-plan3-essai2.mp4`.
+- Montages à jour (sans son) : `appel-montage-v3.mp4` (46 s) et `lanternes-montage-v2.mp4` (40 s).
+- **Dans le jeu** : le lecteur existe (champ `cinematique` de la scène). Une fois le style validé par le groupe, il suffit de copier le montage dans `assets/cinematiques/appel.mp4` et `assets/cinematiques/lanternes.mp4`.
+- Crédits Flow restants ce mois-ci : environ 100.
+
+## 8. Ordre de travail conseillé
 
 1. ~~Faire un seul plan d'essai~~ (fait le 18/11, voir § 5) : le groupe juge le style.
 2. Si le groupe valide le rendu : finir les portraits manquants (Vorthak), puis la fiche corps entier de chaque PNJ qui apparaît.
