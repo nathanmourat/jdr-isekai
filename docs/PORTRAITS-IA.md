@@ -156,7 +156,7 @@ Expressions : ajouter « showing two small wolf fangs » à la joie et à la col
 
 #### Rowena, Edmund IV, Vorthak (PNJ, 18 et 19/11, Gemini)
 
-- **Rowena** (`rowena`, maîtresse de la Guilde) : neutre et joie seulement (`portraits-sources/rowena/`). La discussion Gemini ne renvoie plus d'image (réponses vides) ; les autres expressions demandent une nouvelle discussion avec le neutre importé depuis Drive. Sans `neutre-yeux-fermes`, pas d'animation : portraits fixes.
+- **Rowena** (`rowena`, maîtresse de la Guilde) : neutre, joie, colère, surprise, yeux fermés (`portraits-sources/rowena/`). La première discussion ne renvoyait plus d'image ; colère, surprise et yeux fermés faits le 19/11 dans une nouvelle discussion, avec le neutre importé depuis Drive (dans Gmail, « Ajouter à Drive » ne marche que si la fenêtre est assez large). Boîte (0, 31, 993, 1024), bouche (588, 480).
 - **Edmund IV** (`edmund-iv`) : neutre, colère, tristesse, yeux fermés (`portraits-sources/edmund-iv/`). Boîte (0, 27, 997, 1024), bouche (594, 461) dans l'image recadrée.
 - **Vorthak** (`vorthak`) : neutre, colère, joie cruelle, yeux fermés (`portraits-sources/vorthak/`). Recadrage `bas` (buste flottant), boîte (46, 0, 1012, 966), bouche (401, 456).
 
