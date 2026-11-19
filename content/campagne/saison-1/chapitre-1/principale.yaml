@@ -3,6 +3,7 @@ scenes:
   # ─────────────────────────────────────────────────────────────
   - id: ch1-appel
     pnj: aureliath
+    cinematique: appel
     titre: "L'Appel"
     type: groupe
     lieu: temple-du-seuil
@@ -192,6 +193,7 @@ scenes:
   # ─────────────────────────────────────────────────────────────
   - id: ch1-lanternes
     titre: "La Nuit des Lanternes"
+    cinematique: lanternes
     type: groupe
     lieu: lysmont-place
     decor: lysmont-lanternes-nuit

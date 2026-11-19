@@ -4,6 +4,7 @@
   import { choixVisibles, conditionScene, joueursAttendusDialogue, joueursDeScene, joueursDuPari, meneurDeScene, miseDuChoix, noeudAffiche, occupationHeros, partMinimaleDePari, partsDeMise, phraseOccupe, remplacerVariables } from '../../moteur/partie';
   import { imageDecor } from '../../rendu/assets';
   import { NOMS_CARACS, estVraiPortrait, nomPersonnage, portraitHeros, portraitPersonnage } from '../outils';
+  import Cinematique from '../Cinematique.svelte';
   import PortraitAnime from '../PortraitAnime.svelte';
   import { portraitAnimeHeros, portraitAnimePersonnage } from '../portraits';
 
@@ -121,6 +122,7 @@
 </script>
 
 <section class="scene" style={`--decor: url(${imageDecor(decor, scene.titre)})`}>
+  {#if scene.cinematique && es.noeud === scene.debut}<Cinematique id={scene.cinematique} partie={`${etat.id}:${etat.graine}`} />{/if}
   <div class="decor pixel" role="img" aria-label={`Décor : ${scene.titre}`}></div>
   <div class="bandeau"><h2>{scene.titre}</h2>{#if groupe}<span class="badge">scène de groupe</span>{/if}</div>
 

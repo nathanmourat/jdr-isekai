@@ -418,6 +418,8 @@ export const zScene = z.object({
   pnj: z.string().optional(),
   /** true : la scène sert à rendre une quête (symbole « ? » au-dessus du PNJ). */
   rend_quete: z.boolean().default(false),
+  /** Cinématique jouée au début de la scène (web) : assets/cinematiques/<id>.mp4 ; sans fichier, rien ne se passe. */
+  cinematique: z.string().optional(),
   noeuds: z.record(z.string(), zNoeud),
 });
 export type Scene = z.infer<typeof zScene>;
