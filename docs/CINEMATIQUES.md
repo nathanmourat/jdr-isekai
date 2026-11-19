@@ -141,7 +141,18 @@ D'après la scène des lanternes (`lanternes-faites`). Elle s'enchaîne avec le 
 - Dans Flow, les **images avec Nano Banana 2.1 coûtent 0 crédit** (offre gratuite) : une piste pour les fiches de référence et les décors, à ajouter au tableau des droits avant de s'en servir.
 - Le téléchargement se fait par clic droit sur la vidéo, puis « Télécharger ». Le fichier arrive dans « Téléchargements » sous un nom en `.tmp` : il faut le renommer en `.mp4`.
 
-## 6. Ordre de travail conseillé
+## 6. Deuxième série (19/11, compte étudiant)
+
+- Le compte a maintenant **200 crédits Flow par mois** (forfait étudiant « Plus », renouvelés le 19 de chaque mois), et non plus 50 par jour : on compte chaque vidéo (10 crédits avec Veo 3.1 Lite).
+- Flow passe par un « agent » : on écrit la demande, il annonce le coût et attend « Approuver » (réglage « Confirmer avant de générer : Toujours », à garder).
+- Images de référence (« Ingrédients ») : nos portraits du jeu (Auréliath, Aveline, Séraphine, Vorthak), importés après avoir confirmé « Droits d'utilisation de cette image » (accord de Sasha le 19/11). Les visages restent très fidèles.
+- 9 plans demandés (90 crédits), 8 réussis :
+  - **L'Appel** : plan 1 refait (temple enfin séparé du château), plan 2 (chants, la rosace s'embrase), plan 5 (Auréliath accueille), plan 6 (Aveline jauge ; vers 7 s un casque apparaît : couper avant). Montage complet de 47 s, sans son : `portraits-sources/cinematiques/appel-montage-v2.mp4`.
+  - **Lanternes** : plan 1 (lanternes sur la ville), plan 2 (fête puis Séraphine au balcon), plan 4 (Aveline face aux gobelins), plan 5 (Vorthak sort des flammes). Montage de 32 s : `lanternes-montage-v1.mp4`.
+  - **Plan 3 des Lanternes (explosion) : retiré par le filtre de Flow** (« La vidéo a été supprimée »), sans doute à cause des gens projetés par l'explosion. À réécrire sans victimes : lanternes qui virent au violet, puis un éclair violet et de la cendre qui tombe sur une foule qui recule.
+- Défaut à surveiller : le temple du plan 1 ressemble à une église (clocher). Pour la version finale, préciser « round domed temple, no bell tower » ou joindre le paysage du groupe.
+
+## 7. Ordre de travail conseillé
 
 1. ~~Faire un seul plan d'essai~~ (fait le 18/11, voir § 5) : le groupe juge le style.
 2. Si le groupe valide le rendu : finir les portraits manquants (Vorthak), puis la fiche corps entier de chaque PNJ qui apparaît.
