@@ -1,0 +1,77 @@
+{
+ "taille": 512,
+ "expressions": {
+  "neutre": {
+   "bouche": [
+    0.5934,
+    0.4784
+   ],
+   "largeur": 0.06,
+   "ouverte": false,
+   "cou": [
+    0.5934,
+    0.5534
+   ]
+  },
+  "joie": {
+   "bouche": [
+    0.5935,
+    0.4786
+   ],
+   "largeur": 0.06,
+   "ouverte": true,
+   "cou": [
+    0.5935,
+    0.5536
+   ]
+  },
+  "colere": {
+   "bouche": [
+    0.5935,
+    0.4786
+   ],
+   "largeur": 0.06,
+   "ouverte": false,
+   "cou": [
+    0.5935,
+    0.5536
+   ]
+  },
+  "tristesse": {
+   "bouche": [
+    0.5935,
+    0.4786
+   ],
+   "largeur": 0.06,
+   "ouverte": false,
+   "cou": [
+    0.5935,
+    0.5536
+   ]
+  },
+  "gene": {
+   "bouche": [
+    0.5934,
+    0.4784
+   ],
+   "largeur": 0.06,
+   "ouverte": false,
+   "cou": [
+    0.5934,
+    0.5534
+   ]
+  },
+  "surprise": {
+   "bouche": [
+    0.5935,
+    0.4786
+   ],
+   "largeur": 0.06,
+   "ouverte": true,
+   "cou": [
+    0.5935,
+    0.5536
+   ]
+  }
+ }
+}

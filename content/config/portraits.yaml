@@ -19,6 +19,8 @@ portraits:
     aureliath: { lueur: "#f3d58a", particules: magie }
     seraphine: { lueur: "#f0dca0", particules: null }
     elianne: { lueur: "#a8e0b0", particules: lucioles }
+    nadja: { lueur: "#e8c27a", particules: null }
+    ilysse: { lueur: "#b0a8f0", particules: magie }
     edmund-iv: { lueur: null, particules: null }
     rowena: { lueur: null, particules: null }
     vorthak: { lueur: "#a070e0", particules: braises }
