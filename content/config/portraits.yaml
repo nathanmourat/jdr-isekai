@@ -44,3 +44,4 @@ portraits:
     ouzram: { lueur: null, particules: null }
     sorha: { lueur: null, particules: null }
     ziyane: { lueur: null, particules: null }
+    durna: { lueur: "#f09040", particules: braises }
