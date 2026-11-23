@@ -35,3 +35,12 @@ portraits:
     mere-brisac: { lueur: null, particules: null }
     marechale: { lueur: null, particules: null }
     brann: { lueur: null, particules: null }
+    aldric: { lueur: "#9060e0", particules: ombre }
+    ashka: { lueur: null, particules: null }
+    bram: { lueur: null, particules: null }
+    faelis: { lueur: null, particules: lucioles }
+    grumli: { lueur: null, particules: null }
+    halvine: { lueur: null, particules: null }
+    ouzram: { lueur: null, particules: null }
+    sorha: { lueur: null, particules: null }
+    ziyane: { lueur: null, particules: null }

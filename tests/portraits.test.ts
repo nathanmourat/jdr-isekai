@@ -51,10 +51,12 @@ describe('Portraits animés de dialogue (essai)', () => {
       for (const e of exprs) expect(portraitAnimePersonnage(c, qui, e)!.cle).toBe(`personnages/pnj/${qui}/${e}`);
     }
     // PNJ du 23/11 : neutre (+ colère pour Vaelor)
-    for (const qui of ['orlan', 'orvan', 'reine-seve', 'bardrek', 'vaelor', 'valka', 'mere-brisac', 'marechale', 'brann']) {
+    for (const qui of ['orlan', 'orvan', 'reine-seve', 'bardrek', 'vaelor', 'valka', 'mere-brisac', 'marechale', 'brann', 'aldric', 'ashka', 'bram', 'faelis', 'grumli', 'halvine', 'ouzram', 'sorha', 'ziyane']) {
       expect(portraitAnimePersonnage(c, qui, 'neutre')!.cle).toBe(`personnages/pnj/${qui}/neutre`);
     }
     expect(portraitAnimePersonnage(c, 'vaelor', 'colere')!.cle).toBe('personnages/pnj/vaelor/colere');
+    expect(portraitAnimePersonnage(c, 'sorha', 'joie')!.cle).toBe('personnages/pnj/sorha/joie');
+    expect(portraitAnimePersonnage(c, 'faelis', 'surprise')!.cle).toBe('personnages/pnj/faelis/surprise');
     expect(portraitAnimePersonnage(c, 'orvan')!.effets).toEqual({ lueur: '#c04020', particules: 'braises' });
     // expression absente : le neutre
     expect(portraitAnimePersonnage(c, 'vorthak', 'tristesse')!.cle).toBe('personnages/pnj/vorthak/neutre');
@@ -70,7 +72,7 @@ describe('Portraits animés de dialogue (essai)', () => {
   });
 
   it('sans vrais portraits ni anim.json : pas de portrait animé (image fixe comme avant)', () => {
-    expect(portraitAnimePersonnage(c, 'bram')).toBeNull();
+    expect(portraitAnimePersonnage(c, 'ferrand')).toBeNull();
     expect(portraitAnimePersonnage(c, 'narrateur')).toBeNull();
     // portrait présent mais pas de réglages d'animation : image fixe
     expect(portraitAnimePersonnage(c, 'aveline', 'neutre', {})).toBeNull();
