@@ -187,7 +187,22 @@ Ilyssë, an adult elf woman who looks about 25, a scholarly mage. Long straight 
 
 > Nadja : femme de 27 ans, courtière des caravanes du désert, peau hâlée, cheveux noirs ondulés, yeux verts au khôl, tunique de soie turquoise et ocre, bracelets d'or, petit boulier. Ilyssë : elfe adulte (environ 25 ans en apparence), cheveux vert d'eau, yeux violets, lunettes rondes, robe de mage bleu nuit brodée de runes. Astuce : si l'image du site n'est pas un « blob », la télécharger par « Télécharger l'image en taille réelle » (2048 × 2048) puis la réduire à 1024.
 
-À venir : Ysoria, Morra ; Halvine, Bram, Ferrand…
+#### Ysoria et Morra (compagnes, 23/11, Gemini)
+
+- **Ysoria** (`ysoria`) : 6 expressions + yeux fermés (`portraits-sources/ysoria/`). Boîte (0, 30, 994, 1024), bouche (590, 497). Lueur orangée + braises.
+- **Morra** (`morra`) : 6 expressions + yeux fermés (`portraits-sources/morra/`). Boîte (0, 0, 1024, 1024), bouche (582, 452). Lueur rouge sombre + ombre. Son neutre sourit en montrant les dents : `ouverte: true` pour « neutre » dans `anim.json`. Première version refusée (`morra-v1-neutre-rejete.png`) : cuirasse moulante ; refaite avec une cuirasse plate de mercenaire.
+
+```
+Ysoria, an ancient dragon in human form, appearing as a regal adult woman of about 30. Long flowing ember-red hair, golden eyes with vertical slit pupils, a few small red scales on the upper cheekbones, two small swept-back dark horns rising from the hair. A fully closed high-collared ancient gown of deep purple with gold embroidery and a gold collar ornament, small gold earrings. Neutral expression: serene, majestic, slightly amused, ageless wisdom in the gaze.
+```
+
+```
+Morra, an adult demon mercenary woman who looks about 28. Pale grey-lilac skin, long black hair with crimson-red tips, two curved black horns rising from the head, red eyes, a sharp mocking half-smile. Practical light armor: a dark padded gambeson with a high closed collar under a plain flat black leather cuirass and layered black steel pauldrons with dark red trim, a torn dark crimson cloak over the shoulders. Neutral expression: sardonic, confident, amused, looking straight at the viewer.
+```
+
+> Ysoria : dragonne sous forme humaine (environ 30 ans en apparence), cheveux rouge braise, yeux dorés à pupilles fendues, petites écailles, petites cornes, robe ancienne violet et or. Morra : démone mercenaire (environ 28 ans), peau gris lilas, cheveux noirs aux pointes rouges, cornes noires, yeux rouges, cuirasse plate et cape déchirée. Pour une armure de femme, ajouter « sculpted or shaped breastplate, form-fitting » à la liste « à éviter ».
+
+**Les 8 compagnes ont maintenant leur portrait animé.** À venir : PNJ (Halvine, Bram, Ferrand…).
 
 ## 5. Animation des portraits (15/11, version « réaliste »)
 
