@@ -8,6 +8,7 @@
   import LancerDe from '../LancerDe.svelte';
   import SoinsTemple from '../SoinsTemple.svelte';
   import Invitations from '../Invitations.svelte';
+  import EcranChapitre from '../EcranChapitre.svelte';
   import { annoncer, premierPlan } from '../premierPlan.svelte';
   import { activiteChangee, signatureActivite } from '../activite';
   import { jeu } from '../jeu.svelte';
@@ -295,6 +296,8 @@
   <LancerDe />
   <SoinsTemple />
   <Invitations libre={vue === 'monde'} />
+  <!-- écran de début de chapitre (illustration peinte), une fois par partie, seulement quand on est libre -->
+  <EcranChapitre chapitre={etat.chapitre} partie={`${etat.id}:${etat.graine}`} libre={vue === 'monde' && !etat.repos && !sceneSansMoi && h.sexeChoisi !== false} />
   <PiecesAnimees />
 </div>
 

@@ -2,7 +2,7 @@
  * Type du contenu chargé, sans dépendance à zod ni à YAML : le moteur l'importe sur le web comme sur Roblox.
  */
 import type {
-  Activite, Ambiance, FondCombat, Portraits, Classe, Compagnon, Competence, Config, Contrat, Don, Donjon, Ennemi, Objet, Pnj, Quete, Race, Region, Rencontre, Scene,
+  Activite, Ambiance, EcranChapitre, FondCombat, Portraits, Classe, Compagnon, Competence, Config, Contrat, Don, Donjon, Ennemi, Objet, Pnj, Quete, Race, Region, Rencontre, Scene,
 } from './schemas';
 
 export interface Contenu {
@@ -27,4 +27,6 @@ export interface Contenu {
   fondsCombat: Record<string, FondCombat>;
   /** Effets des portraits animés (content/config/portraits.yaml). Affichage web seulement. */
   portraits: Portraits;
+  /** Écrans de début de chapitre (content/config/illustrations.yaml). Affichage web seulement. */
+  ecransChapitre: EcranChapitre[];
 }

@@ -2,12 +2,14 @@
   /** Cinématique jouée au début d'une scène (voir cinematiques.ts). Chaque appareil retient qu'il l'a vue, par partie. */
   import { cleCinematiqueVue, urlCinematique } from './cinematiques';
   import { lireTexte, ecrireTexte } from './preferences';
+  import { masqueParRobot } from './illustrations';
 
   let { id, partie, surFin }: { id: string; partie: string; surFin?: () => void } = $props();
   const url = $derived(urlCinematique(id));
   const cleVue = $derived(cleCinematiqueVue(partie, id));
   let finie = $state(false);
-  const visible = $derived(!!url && !finie && lireTexte(cleVue) !== 'vue');
+  const robot = masqueParRobot('cinematique');
+  const visible = $derived(!!url && !robot && !finie && lireTexte(cleVue) !== 'vue');
   let bouton: HTMLButtonElement | undefined = $state();
 
   function terminer() {

@@ -21,3 +21,13 @@ describe('Cinématiques (web)', () => {
     expect(cleCinematiqueVue('p1', 'appel')).not.toBe(cleCinematiqueVue('p2', 'appel'));
   });
 });
+
+describe('Cinématiques livrées (23/11)', () => {
+  it('chaque scène avec une cinématique a sa vidéo dans assets/cinematiques/', async () => {
+    const { existsSync } = await import('node:fs');
+    for (const s of Object.values(c.scenes)) if (s.cinematique) {
+      const ok = ['mp4', 'webm'].some((e) => existsSync(`assets/cinematiques/${s.cinematique}.${e}`));
+      expect(ok, `${s.id} › cinematique: ${s.cinematique}`).toBe(true);
+    }
+  });
+});

@@ -14,7 +14,8 @@ import { dormirJusquaLHistoire, finirTempsLibre, groupeDeDeux, jouer, jouerProlo
 
 if (!existsSync('assets/cinematiques/appel.mp4')) { console.log('Pas de assets/cinematiques/appel.mp4 : rien à vérifier.'); process.exit(0); }
 const { chromium } = createRequire(import.meta.url)('playwright');
-const url = process.argv[2] ?? 'http://localhost:4173/';
+// `?cinematique` : sans ce paramètre, la vidéo est masquée quand un robot pilote le navigateur
+const url = (process.argv[2] ?? 'http://localhost:4173/') + '?cinematique';
 const dossier = resolve('rapports/captures-cinematique');
 mkdirSync(dossier, { recursive: true });
 

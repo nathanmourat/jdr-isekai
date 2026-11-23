@@ -1,0 +1,33 @@
+# ─────────────────────────────────────────────────────────────
+#  Écrans de début de chapitre (version web seulement).
+#  Quand un chapitre commence, une grande illustration s'affiche avec son titre, une seule fois par partie
+#  et par appareil (« Continuer » ou Échap pour fermer). Jamais pendant une scène, un combat ou un donjon.
+#  Images : assets/illustrations/<id>.jpg (1280 × 720). Plusieurs images = elles se succèdent en fondu.
+#  Sans image, l'écran n'apparaît pas.
+# ─────────────────────────────────────────────────────────────
+
+ecrans_chapitre:
+  - chapitre: 1
+    titre: "L'Appel"
+    sous_titre: "Lysmont, capitale du royaume d'Aubeclaire"
+    illustrations: [lysmont-aube]
+  - chapitre: 2
+    titre: "Les Routes du Sud"
+    sous_titre: "Qarzim, cité marchande de la Marche des Sables"
+    illustrations: [qarzim]
+  - chapitre: 3
+    titre: "La Forêt qui se souvient"
+    sous_titre: "Ithrael, cité elfique de Sylvenoire"
+    illustrations: [ithrael]
+  - chapitre: 4
+    titre: "Feu et Écailles"
+    sous_titre: "Ardenclume et Port-Vérane"
+    illustrations: [ardenclume, port-verane]
+  - chapitre: 5
+    titre: "La Guerre des Cendres"
+    sous_titre: "Le Mur d'Aube"
+    illustrations: [mur-d-aube]
+  - chapitre: 6
+    titre: "Le Souverain des Cendres"
+    sous_titre: "Les Terres Cendrées"
+    illustrations: [terres-cendrees]

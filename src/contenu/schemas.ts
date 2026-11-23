@@ -621,6 +621,18 @@ export const zPortraits = z.object({
 });
 export type Portraits = z.infer<typeof zPortraits>;
 
+/** Écran de début de chapitre (content/config/illustrations.yaml) : grande illustration + titre. Affichage seulement. */
+export const zEcranChapitre = z.object({
+  chapitre: z.number().int().min(1),
+  titre: z.string().min(1),
+  /** ids des images de assets/illustrations/ (une ou plusieurs : elles se succèdent en fondu) */
+  illustrations: z.array(z.string().min(1)).min(1),
+  /** phrase sous le titre (facultative) */
+  sous_titre: z.string().optional(),
+});
+export type EcranChapitre = z.infer<typeof zEcranChapitre>;
+export const zEcransChapitre = z.array(zEcranChapitre);
+
 export const zDifficulte = z.object({ puissance: z.number(), pv: z.number(), degats: z.number(), ennemis_en_plus: z.number().int() });
 
 export const zConfig = z.object({
