@@ -290,6 +290,8 @@ Même conversation ChatGPT que Lysmont, chaque invite commence par « New image,
 
 **À retoucher** : `mur-d-aube.png`, les bannières portent un motif doré qui ressemble à une fleur de lys → le remplacer par le soleil levant d'Aubeclaire (même règle que pour Aveline).
 
+**Retouche faite le 23/11** (`mur-d-aube-v2.png`, version retenue, dans le jeu) : *« Keep everything exactly the same… Change only the gold emblem on all the blue banners: replace it with a simple gold rising sun with short rays (no fleur-de-lis, no cross, no other symbol) »*. Le reste de l'image est inchangé (seul l'ornement au-dessus de la grande porte garde une petite pointe dorée).
+
 ### 6.5 Versions préparées (18/11, pas encore dans le jeu)
 
 Sur le PC du graphiste, dans `portraits-sources/…/prepares/` :
