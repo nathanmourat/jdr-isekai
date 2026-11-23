@@ -202,7 +202,27 @@ Morra, an adult demon mercenary woman who looks about 28. Pale grey-lilac skin, 
 
 > Ysoria : dragonne sous forme humaine (environ 30 ans en apparence), cheveux rouge braise, yeux dorés à pupilles fendues, petites écailles, petites cornes, robe ancienne violet et or. Morra : démone mercenaire (environ 28 ans), peau gris lilas, cheveux noirs aux pointes rouges, cornes noires, yeux rouges, cuirasse plate et cape déchirée. Pour une armure de femme, ajouter « sculpted or shaped breastplate, form-fitting » à la liste « à éviter ».
 
-**Les 8 compagnes ont maintenant leur portrait animé.** À venir : PNJ (Halvine, Bram, Ferrand…).
+**Les 8 compagnes ont maintenant leur portrait animé.**
+
+#### PNJ du 23/11 (Gemini, neutre + yeux fermés)
+
+Leurs répliques n'utilisent que « neutre » (sauf Vaelor : une colère), donc 2 images par PNJ suffisent. Même bloc STYLE ; dans « Avoid » : `revealing or form-fitting clothing, gore, blood`. Originaux dans `portraits-sources/pnj/<id>/`.
+
+| PNJ | Boîte | Bouche | Effets | Notes |
+|---|---|---|---|---|
+| `orlan` | (14, 44, 994, 1024) | (545, 430) | — | sourire de vendeur, bouche ouverte (`ouverte: true` sur le neutre) |
+| `orvan` | (0, 0, 1024, 1024) | (565, 493) | lueur rouge + braises | couronne de flammes noires |
+| `reine-seve` | (0, 39, 985, 1024) | (600, 465) | lueur verte + lucioles | cheveux comme des racines blanches |
+| `bardrek` | (19, 66, 977, 1024) | (565, 418) | lueur orange + braises | bouche cachée par la barbe |
+| `vaelor` | (0, 2, 1022, 1024) | (612, 508) | — | neutre + colère |
+| `valka` | (0, 26, 998, 1024) | (605, 533) | — | Ourvalis, oreilles déchirées |
+| `mere-brisac` | (0, 0, 1024, 1024) | (462, 388) | — | la louche ressemble un peu à une houe |
+| `marechale` | (0, 34, 990, 1024) | (600, 482) | — | tabard au soleil levant |
+| `brann` | (21, 40, 1005, 1024) | (515, 425) | — | yeux fermés à récupérer |
+
+Gemini s'est arrêté à la limite d'usage après Brann (retour vers 14 h). À venir : Durna, Ziyane, Sorha, Bram, Faelis, Ashka, Aldric, Ouzram, Grumli, Halvine…
+
+Astuce : un téléchargement lancé sans clic récent ouvre parfois une fenêtre « Enregistrer sous » dans l'app Claude (impossible à cliquer pour Claude) : toujours cliquer dans la zone de saisie juste avant `sauverIdx`.
 
 ## 5. Animation des portraits (15/11, version « réaliste »)
 
