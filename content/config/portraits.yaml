@@ -21,6 +21,8 @@ portraits:
     elianne: { lueur: "#a8e0b0", particules: lucioles }
     nadja: { lueur: "#e8c27a", particules: null }
     ilysse: { lueur: "#b0a8f0", particules: magie }
+    ysoria: { lueur: "#f0a060", particules: braises }
+    morra: { lueur: "#c03040", particules: ombre }
     edmund-iv: { lueur: null, particules: null }
     rowena: { lueur: null, particules: null }
     vorthak: { lueur: "#a070e0", particules: braises }

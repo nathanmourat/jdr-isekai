@@ -38,12 +38,14 @@ describe('Portraits animés de dialogue (essai)', () => {
     expect(manquantes).toEqual([]);
   });
 
-  it('Séraphine, Elianne, Nadja et Ilyssë (compagnes, 6 expressions), Edmund IV, Vorthak et Rowena (PNJ) : portraits animés et effets', () => {
+  it('Séraphine, Elianne, Nadja, Ilyssë, Ysoria et Morra (compagnes, 6 expressions), Edmund IV, Vorthak et Rowena (PNJ) : portraits animés et effets', () => {
     for (const e of ['neutre', 'joie', 'colere', 'tristesse', 'gene', 'surprise']) {
       expect(portraitAnimePersonnage(c, 'seraphine', e)!.cle).toBe(`personnages/compagnes/seraphine/${e}`);
       expect(portraitAnimePersonnage(c, 'elianne', e)!.cle).toBe(`personnages/compagnes/elianne/${e}`);
       expect(portraitAnimePersonnage(c, 'nadja', e)!.cle).toBe(`personnages/compagnes/nadja/${e}`);
       expect(portraitAnimePersonnage(c, 'ilysse', e)!.cle).toBe(`personnages/compagnes/ilysse/${e}`);
+      expect(portraitAnimePersonnage(c, 'ysoria', e)!.cle).toBe(`personnages/compagnes/ysoria/${e}`);
+      expect(portraitAnimePersonnage(c, 'morra', e)!.cle).toBe(`personnages/compagnes/morra/${e}`);
     }
     for (const [qui, exprs] of [['edmund-iv', ['neutre', 'colere', 'tristesse']], ['vorthak', ['neutre', 'colere', 'joie']], ['rowena', ['neutre', 'joie', 'colere', 'surprise']]] as const) {
       for (const e of exprs) expect(portraitAnimePersonnage(c, qui, e)!.cle).toBe(`personnages/pnj/${qui}/${e}`);
@@ -53,6 +55,7 @@ describe('Portraits animés de dialogue (essai)', () => {
     expect(portraitAnimePersonnage(c, 'edmund-iv', 'gene')!.cle).toBe('personnages/pnj/edmund-iv/neutre');
     expect(portraitAnimePersonnage(c, 'vorthak')!.effets).toEqual({ lueur: '#a070e0', particules: 'braises' });
     expect(portraitAnimePersonnage(c, 'elianne')!.effets).toEqual({ lueur: '#a8e0b0', particules: 'lucioles' });
+    expect(portraitAnimePersonnage(c, 'morra')!.effets).toEqual({ lueur: '#c03040', particules: 'ombre' });
     expect(portraitAnimePersonnage(c, 'ilysse')!.effets).toEqual({ lueur: '#b0a8f0', particules: 'magie' });
   });
 
