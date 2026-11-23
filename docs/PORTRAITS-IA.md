@@ -229,7 +229,7 @@ Leurs répliques n'utilisent que « neutre » (sauf Vaelor : une colère), donc 
 | `sorha` | (0, 0, 1024, 1024) | (580, 520) | — | neutre + joie, œil gauche aveugle |
 | `ziyane` | (0, 33, 991, 1024) | (570, 445) | — | sourire ouvert : `ouverte: true` ; buste « flottant » |
 
-Deuxième série faite à 14 h. **Durna** : neutre fait, yeux fermés en attente (fenêtre « Enregistrer sous »). Plusieurs bustes de la 2e série ont un bas arrondi malgré la consigne : à refaire si le groupe trouve que ça se voit trop dans les dialogues.
+Deuxième série faite à 14 h. **Durna** (49, 55, 1018, 1024), bouche (392, 410), lueur orange + braises : faite. Plusieurs bustes de la 2e série ont un bas arrondi malgré la consigne : à refaire si le groupe trouve que ça se voit trop dans les dialogues.
 
 Astuce : un téléchargement lancé sans clic récent ouvre parfois une fenêtre « Enregistrer sous » dans l'app Claude (impossible à cliquer pour Claude) : toujours cliquer dans la zone de saisie juste avant `sauverIdx`.
 
