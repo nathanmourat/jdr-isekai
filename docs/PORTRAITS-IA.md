@@ -218,9 +218,18 @@ Leurs répliques n'utilisent que « neutre » (sauf Vaelor : une colère), donc 
 | `valka` | (0, 26, 998, 1024) | (605, 533) | — | Ourvalis, oreilles déchirées |
 | `mere-brisac` | (0, 0, 1024, 1024) | (462, 388) | — | la louche ressemble un peu à une houe |
 | `marechale` | (0, 34, 990, 1024) | (600, 482) | — | tabard au soleil levant |
-| `brann` | (21, 40, 1005, 1024) | (515, 425) | — | yeux fermés à récupérer |
+| `brann` | (21, 40, 1005, 1024) | (515, 425) | — | perroquet sur l'épaule |
+| `aldric` | (23, 85, 962, 1024) | (565, 350) | lueur violette + ombre | prince corrompu |
+| `ashka` | (14, 59, 979, 1024) | (575, 430) | — | buste « flottant » (bas arrondi) |
+| `bram` | (33, 82, 975, 1024) | (530, 325) | — | |
+| `faelis` | (0, 20, 1004, 1024) | (590, 430) | lucioles | neutre + surprise |
+| `grumli` | (59, 99, 984, 1024) | (390, 345) | — | grand sourire : `ouverte: true` sur le neutre |
+| `halvine` | (0, 27, 997, 1024) | (570, 420) | — | buste « flottant » |
+| `ouzram` | (36, 46, 1014, 1024) | (400, 410) | — | buste « flottant » |
+| `sorha` | (0, 0, 1024, 1024) | (580, 520) | — | neutre + joie, œil gauche aveugle |
+| `ziyane` | (0, 33, 991, 1024) | (570, 445) | — | sourire ouvert : `ouverte: true` ; buste « flottant » |
 
-Gemini s'est arrêté à la limite d'usage après Brann (retour vers 14 h). À venir : Durna, Ziyane, Sorha, Bram, Faelis, Ashka, Aldric, Ouzram, Grumli, Halvine…
+Deuxième série faite à 14 h. **Durna** : neutre fait, yeux fermés en attente (fenêtre « Enregistrer sous »). Plusieurs bustes de la 2e série ont un bas arrondi malgré la consigne : à refaire si le groupe trouve que ça se voit trop dans les dialogues.
 
 Astuce : un téléchargement lancé sans clic récent ouvre parfois une fenêtre « Enregistrer sous » dans l'app Claude (impossible à cliquer pour Claude) : toujours cliquer dans la zone de saisie juste avant `sauverIdx`.
 
