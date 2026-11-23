@@ -26,3 +26,11 @@ portraits:
     edmund-iv: { lueur: null, particules: null }
     rowena: { lueur: null, particules: null }
     vorthak: { lueur: "#a070e0", particules: braises }
+    orvan: { lueur: "#c04020", particules: braises }
+    reine-seve: { lueur: "#c8f0b0", particules: lucioles }
+    bardrek: { lueur: "#f09040", particules: braises }
+    orlan: { lueur: null, particules: null }
+    vaelor: { lueur: null, particules: null }
+    valka: { lueur: null, particules: null }
+    mere-brisac: { lueur: null, particules: null }
+    marechale: { lueur: null, particules: null }

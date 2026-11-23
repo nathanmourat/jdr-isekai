@@ -50,6 +50,12 @@ describe('Portraits animés de dialogue (essai)', () => {
     for (const [qui, exprs] of [['edmund-iv', ['neutre', 'colere', 'tristesse']], ['vorthak', ['neutre', 'colere', 'joie']], ['rowena', ['neutre', 'joie', 'colere', 'surprise']]] as const) {
       for (const e of exprs) expect(portraitAnimePersonnage(c, qui, e)!.cle).toBe(`personnages/pnj/${qui}/${e}`);
     }
+    // PNJ du 23/11 : neutre (+ colère pour Vaelor)
+    for (const qui of ['orlan', 'orvan', 'reine-seve', 'bardrek', 'vaelor', 'valka', 'mere-brisac', 'marechale']) {
+      expect(portraitAnimePersonnage(c, qui, 'neutre')!.cle).toBe(`personnages/pnj/${qui}/neutre`);
+    }
+    expect(portraitAnimePersonnage(c, 'vaelor', 'colere')!.cle).toBe('personnages/pnj/vaelor/colere');
+    expect(portraitAnimePersonnage(c, 'orvan')!.effets).toEqual({ lueur: '#c04020', particules: 'braises' });
     // expression absente : le neutre
     expect(portraitAnimePersonnage(c, 'vorthak', 'tristesse')!.cle).toBe('personnages/pnj/vorthak/neutre');
     expect(portraitAnimePersonnage(c, 'edmund-iv', 'gene')!.cle).toBe('personnages/pnj/edmund-iv/neutre');
