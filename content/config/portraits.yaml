@@ -45,3 +45,9 @@ portraits:
     sorha: { lueur: null, particules: null }
     ziyane: { lueur: null, particules: null }
     durna: { lueur: "#f09040", particules: braises }
+    corail: { lueur: "#a0e0e0", particules: null }
+    corsa: { lueur: null, particules: null }
+    hassad: { lueur: null, particules: null }
+    orsa: { lueur: null, particules: null }
+    tavek: { lueur: null, particules: null }
+    tolvan: { lueur: null, particules: null }
