@@ -235,6 +235,9 @@ Leurs répliques n'utilisent que « neutre » (sauf Vaelor : une colère), donc 
 | `tavek` | (0, 0, 1024, 1024) | (605, 462) | — | Ourvalis, peintures de guerre (26/11) |
 | `tolvan` | (26, 80, 970, 1024) | (580, 405) | — | loupe vissée à l'œil (26/11) |
 | `intendant-domaine` | (24, 24, 1024, 1024) | (425, 400) | — | Maître Aubin (26/11) |
+| `vashti` | (0, 0, 1024, 1024) | (510, 592) | — | (26/11) |
+| `vask` | (3, 14, 1013, 1024) | (595, 410) | — | (26/11) |
+| `ibrek` | (0, 0, 1024, 1024) | (602, 525) | — | Vulpin (26/11) |
 
 Deuxième série faite à 14 h. **Durna** (49, 55, 1018, 1024), bouche (392, 410), lueur orange + braises : faite. Le 26/11, Gemini renvoyait souvent « I encountered an error » sur les retouches (yeux fermés) : relancer la même demande, compter 3 à 5 min par image. Plusieurs bustes de la 2e série ont un bas arrondi malgré la consigne : à refaire si le groupe trouve que ça se voit trop dans les dialogues.
 
