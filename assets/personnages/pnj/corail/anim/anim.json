@@ -1,0 +1,17 @@
+{
+ "taille": 512,
+ "expressions": {
+  "neutre": {
+   "bouche": [
+    0.6053,
+    0.4626
+   ],
+   "largeur": 0.06,
+   "ouverte": false,
+   "cou": [
+    0.6053,
+    0.5376
+   ]
+  }
+ }
+}
