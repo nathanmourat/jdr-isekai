@@ -228,8 +228,15 @@ Leurs répliques n'utilisent que « neutre » (sauf Vaelor : une colère), donc 
 | `ouzram` | (36, 46, 1014, 1024) | (400, 410) | — | buste « flottant » |
 | `sorha` | (0, 0, 1024, 1024) | (580, 520) | — | neutre + joie, œil gauche aveugle |
 | `ziyane` | (0, 33, 991, 1024) | (570, 445) | — | sourire ouvert : `ouverte: true` ; buste « flottant » |
+| `corail` | (0, 8, 1016, 1024) | (615, 470) | lueur bleu clair | sang-dragon, écailles nacrées (26/11) |
+| `corsa` | (0, 0, 1024, 1024) | (572, 432) | — | grand sourire : `ouverte: true` (26/11) |
+| `hassad` | (0, 0, 1024, 1024) | (597, 430) | — | (26/11) |
+| `orsa` | (2, 28, 998, 1024) | (612, 433) | — | naine, buste « flottant » (26/11) |
+| `tavek` | (0, 0, 1024, 1024) | (605, 462) | — | Ourvalis, peintures de guerre (26/11) |
+| `tolvan` | (26, 80, 970, 1024) | (580, 405) | — | loupe vissée à l'œil (26/11) |
+| `intendant-domaine` | (24, 24, 1024, 1024) | (425, 400) | — | Maître Aubin (26/11) |
 
-Deuxième série faite à 14 h. **Durna** (49, 55, 1018, 1024), bouche (392, 410), lueur orange + braises : faite. Plusieurs bustes de la 2e série ont un bas arrondi malgré la consigne : à refaire si le groupe trouve que ça se voit trop dans les dialogues.
+Deuxième série faite à 14 h. **Durna** (49, 55, 1018, 1024), bouche (392, 410), lueur orange + braises : faite. Le 26/11, Gemini renvoyait souvent « I encountered an error » sur les retouches (yeux fermés) : relancer la même demande, compter 3 à 5 min par image. Plusieurs bustes de la 2e série ont un bas arrondi malgré la consigne : à refaire si le groupe trouve que ça se voit trop dans les dialogues.
 
 Astuce : un téléchargement lancé sans clic récent ouvre parfois une fenêtre « Enregistrer sous » dans l'app Claude (impossible à cliquer pour Claude) : toujours cliquer dans la zone de saisie juste avant `sauverIdx`.
 
